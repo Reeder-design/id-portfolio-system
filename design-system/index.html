@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Portfolio Design System</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background-color: #F7F8F5;
+            color: #4D5359;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .color-card {
+            background-color: white;
+            border: 1px solid #C9CECB;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 160px;
+        }
+
+        .taupe {
+            background-color: #4A4238;
+        }
+
+        .charcoal {
+            background-color: #4D5359;
+        }
+
+        .pine-blue {
+            background-color: #508484;
+        }
+
+        .mint-leaf {
+            background-color: #79C99E;
+        }
+
+        .yellow-green {
+            background-color: #97DB4F;
+        }
+
+        .color-info {
+            padding: 16px;
+        }
+
+        .color-info h3 {
+            margin: 0 0 8px 0;
+        }
+
+        .color-info p {
+            margin: 0;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+        <header>
+
+            <h1>Portfolio Design System</h1>
+
+            <p>
+                Reusable visual standards for my portfolio,
+                instructional interactions, Rise, and Storyline projects.
+            </p>
+
+        </header>
+
+
+        <section>
+
+            <h2>Brand Colors</h2>
+
+            <p>
+                Core colors used throughout portfolio and instructional
+                design projects.
+            </p>
+
+
+            <div class="color-grid">
+
+                <div class="color-card">
+
+                    <div class="color-swatch taupe"></div>
+
+                    <div class="color-info">
+                        <h3>Taupe</h3>
+                        <p>#4A4238</p>
+                    </div>
+
+                </div>
+
+
+                <div class="color-card">
+
+                    <div class="color-swatch charcoal"></div>
+
+                    <div class="color-info">
+                        <h3>Charcoal</h3>
+                        <p>#4D5359</p>
+                    </div>
+
+                </div>
+
+
+                <div class="color-card">
+
+                    <div class="color-swatch pine-blue"></div>
+
+                    <div class="color-info">
+                        <h3>Pine Blue</h3>
+                        <p>#508484</p>
+                    </div>
+
+                </div>
+
+
+                <div class="color-card">
+
+                    <div class="color-swatch mint-leaf"></div>
+
+                    <div class="color-info">
+                        <h3>Mint Leaf</h3>
+                        <p>#79C99E</p>
+                    </div>
+
+                </div>
+
+
+                <div class="color-card">
+
+                    <div class="color-swatch yellow-green"></div>
+
+                    <div class="color-info">
+                        <h3>Yellow Green</h3>
+                        <p>#97DB4F</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

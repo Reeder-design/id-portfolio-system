@@ -1,0 +1,146 @@
+/* ========================================
+   DESIGN TOKENS
+   ======================================== */
+
+:root {
+
+    /* Brand Colors */
+    --taupe: #4A4238;
+    --charcoal: #4D5359;
+    --pine-blue: #508484;
+    --mint-leaf: #79C99E;
+    --yellow-green: #97DB4F;
+
+    /* Utility Colors */
+    --white: #FFFFFF;
+    --off-white: #F7F8F5;
+    --light-gray: #E8EBE8;
+    --medium-gray: #C9CECB;
+
+    /* Functional Roles */
+    --color-primary: var(--pine-blue);
+    --color-secondary: var(--mint-leaf);
+    --color-highlight: var(--yellow-green);
+    --color-text: var(--charcoal);
+    --color-dark: var(--taupe);
+    --color-background: var(--off-white);
+}
+
+
+/* ========================================
+   PAGE BASE
+   ======================================== */
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+
+.page-header {
+    margin-bottom: 64px;
+}
+
+
+.page-header h1 {
+    margin-top: 0;
+}
+
+
+/* ========================================
+   COLOR SECTION
+   ======================================== */
+
+.color-section {
+    margin-bottom: 64px;
+}
+
+
+.color-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 24px;
+    margin-top: 32px;
+}
+
+
+/* ========================================
+   COLOR CARDS
+   ======================================== */
+
+.color-card {
+    background-color: var(--white);
+    border: 1px solid var(--medium-gray);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+/* Visible color rectangle */
+
+.color-swatch {
+    width: 100%;
+    height: 160px;
+}
+
+
+/* ========================================
+   COLOR VALUES
+   ======================================== */
+
+.taupe {
+    background-color: var(--taupe);
+}
+
+
+.charcoal {
+    background-color: var(--charcoal);
+}
+
+
+.pine-blue {
+    background-color: var(--pine-blue);
+}
+
+
+.mint-leaf {
+    background-color: var(--mint-leaf);
+}
+
+
+.yellow-green {
+    background-color: var(--yellow-green);
+}
+
+
+/* ========================================
+   CARD TEXT
+   ======================================== */
+
+.color-info {
+    padding: 16px;
+}
+
+
+.color-info h3 {
+    margin: 0 0 8px 0;
+}
+
+
+.color-info p {
+    margin: 0;
+}
