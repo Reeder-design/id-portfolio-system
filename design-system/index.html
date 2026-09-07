@@ -1,109 +1,119 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Portfolio Design System</title>
 
-    <style>
+    <!-- Google Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-        body {
-            margin: 0;
-            background-color: #F7F8F5;
-            color: #4D5359;
-            font-family: Arial, sans-serif;
-        }
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 48px 0;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
 
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .color-card {
-            background-color: white;
-            border: 1px solid #C9CECB;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .color-swatch {
-            width: 100%;
-            height: 160px;
-        }
-
-        .taupe {
-            background-color: #4A4238;
-        }
-
-        .charcoal {
-            background-color: #4D5359;
-        }
-
-        .pine-blue {
-            background-color: #508484;
-        }
-
-        .mint-leaf {
-            background-color: #79C99E;
-        }
-
-        .yellow-green {
-            background-color: #97DB4F;
-        }
-
-        .color-info {
-            padding: 16px;
-        }
-
-        .color-info h3 {
-            margin: 0 0 8px 0;
-        }
-
-        .color-info p {
-            margin: 0;
-        }
-
-    </style>
-
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet"
+          href="./css/styles.css">
 </head>
 
 
 <body>
 
-    <main class="container">
+    <!-- ========================================
+         PAGE HEADER
+         ======================================== -->
 
-        <header>
+    <header class="site-header">
 
-            <h1>Portfolio Design System</h1>
+        <div class="header-container">
 
-            <p>
+            <a class="brand"
+               href="#top">
+                Portfolio Design System
+            </a>
+
+            <nav class="site-nav"
+                 aria-label="Design system navigation">
+
+                <a href="#colors">Colors</a>
+
+                <a href="#typography">Typography</a>
+
+                <a href="#buttons">Buttons</a>
+
+                <a href="#cards">Cards</a>
+
+                <a href="#forms">Forms</a>
+
+                <a href="#alerts">Alerts</a>
+
+                <a href="#spacing">Layout</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container"
+          id="top">
+
+        <!-- ========================================
+             INTRO
+             ======================================== -->
+
+        <section class="intro-section">
+
+            <p class="eyebrow">
+                Design Reference
+            </p>
+
+            <h1>
+                Portfolio Design System
+            </h1>
+
+            <p class="body-large reading-width">
                 Reusable visual standards for my portfolio,
-                instructional interactions, Rise, and Storyline projects.
+                custom instructional interactions, web projects,
+                and future learning-development templates.
             </p>
 
-        </header>
+        </section>
 
 
-        <section>
+        <!-- ========================================
+             COLORS
+             ======================================== -->
 
-            <h2>Brand Colors</h2>
+        <section class="design-section"
+                 id="colors">
 
-            <p>
-                Core colors used throughout portfolio and instructional
-                design projects.
-            </p>
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Foundations
+                </p>
+
+                <h2>
+                    Brand Colors
+                </h2>
+
+                <p class="reading-width">
+                    Core brand and utility colors used throughout
+                    portfolio and instructional design projects.
+                </p>
+
+            </div>
 
 
             <div class="color-grid">
@@ -113,8 +123,15 @@
                     <div class="color-swatch taupe"></div>
 
                     <div class="color-info">
+
                         <h3>Taupe</h3>
+
                         <p>#4A4238</p>
+
+                        <p class="body-small text-muted">
+                            Dark backgrounds, emphasis, footer areas
+                        </p>
+
                     </div>
 
                 </div>
@@ -125,8 +142,15 @@
                     <div class="color-swatch charcoal"></div>
 
                     <div class="color-info">
+
                         <h3>Charcoal</h3>
+
                         <p>#4D5359</p>
+
+                        <p class="body-small text-muted">
+                            Primary text, structural elements
+                        </p>
+
                     </div>
 
                 </div>
@@ -137,8 +161,15 @@
                     <div class="color-swatch pine-blue"></div>
 
                     <div class="color-info">
+
                         <h3>Pine Blue</h3>
+
                         <p>#508484</p>
+
+                        <p class="body-small text-muted">
+                            Primary action and interaction color
+                        </p>
+
                     </div>
 
                 </div>
@@ -149,8 +180,15 @@
                     <div class="color-swatch mint-leaf"></div>
 
                     <div class="color-info">
+
                         <h3>Mint Leaf</h3>
+
                         <p>#79C99E</p>
+
+                        <p class="body-small text-muted">
+                            Secondary accents and learning elements
+                        </p>
+
                     </div>
 
                 </div>
@@ -161,9 +199,862 @@
                     <div class="color-swatch yellow-green"></div>
 
                     <div class="color-info">
+
                         <h3>Yellow Green</h3>
+
                         <p>#97DB4F</p>
+
+                        <p class="body-small text-muted">
+                            Highlights, selected states, progress
+                        </p>
+
                     </div>
+
+                </div>
+
+            </div>
+
+
+            <h3 class="subsection-title">
+                Utility Colors
+            </h3>
+
+
+            <div class="utility-color-grid">
+
+                <div class="utility-color">
+
+                    <div class="utility-swatch white-swatch"></div>
+
+                    <strong>White</strong>
+
+                    <span>#FFFFFF</span>
+
+                </div>
+
+
+                <div class="utility-color">
+
+                    <div class="utility-swatch off-white-swatch"></div>
+
+                    <strong>Off White</strong>
+
+                    <span>#F7F8F5</span>
+
+                </div>
+
+
+                <div class="utility-color">
+
+                    <div class="utility-swatch light-gray-swatch"></div>
+
+                    <strong>Light Gray</strong>
+
+                    <span>#E8EBE8</span>
+
+                </div>
+
+
+                <div class="utility-color">
+
+                    <div class="utility-swatch medium-gray-swatch"></div>
+
+                    <strong>Medium Gray</strong>
+
+                    <span>#C9CECB</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             TYPOGRAPHY
+             ======================================== -->
+
+        <section class="design-section"
+                 id="typography">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Typography
+                </p>
+
+                <h2>
+                    Type System
+                </h2>
+
+                <p class="reading-width">
+                    Montserrat is used for headings and display text.
+                    Open Sans is used for body copy and interface text.
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Heading 1
+                </p>
+
+                <h1>
+                    Learning experiences that solve real problems.
+                </h1>
+
+                <p class="type-details">
+                    Montserrat Bold · 40px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Heading 2
+                </p>
+
+                <h2>
+                    Custom Learning Interactions
+                </h2>
+
+                <p class="type-details">
+                    Montserrat Bold · 32px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Heading 3
+                </p>
+
+                <h3>
+                    Scenario-Based Learning
+                </h3>
+
+                <p class="type-details">
+                    Montserrat Semibold · 24px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Heading 4
+                </p>
+
+                <h4>
+                    Learning Objective
+                </h4>
+
+                <p class="type-details">
+                    Montserrat Semibold · 20px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Large Body
+                </p>
+
+                <p class="body-large">
+                    This style works well for introductions,
+                    scenario setup, summaries, and important
+                    instructional text.
+                </p>
+
+                <p class="type-details">
+                    Open Sans Regular · 18px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Body
+                </p>
+
+                <p class="body-regular">
+                    This is the standard body style used for
+                    portfolio descriptions, instructions, learning
+                    content, and supporting explanations.
+                </p>
+
+                <p class="type-details">
+                    Open Sans Regular · 16px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Small Text
+                </p>
+
+                <p class="body-small">
+                    Used for captions, metadata, supporting information,
+                    and secondary details.
+                </p>
+
+                <p class="type-details">
+                    Open Sans Regular · 14px
+                </p>
+
+            </div>
+
+
+            <div class="type-example">
+
+                <p class="example-label">
+                    Link
+                </p>
+
+                <a href="#projects-example">
+                    View project →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             BUTTONS
+             ======================================== -->
+
+        <section class="design-section"
+                 id="buttons">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Components
+                </p>
+
+                <h2>
+                    Buttons & Interactive States
+                </h2>
+
+                <p class="reading-width">
+                    Reusable action styles for navigation,
+                    portfolio calls to action, and learning interactions.
+                </p>
+
+            </div>
+
+
+            <div class="component-demo">
+
+                <div class="button-row">
+
+                    <button class="btn btn-primary">
+                        Primary Button
+                    </button>
+
+                    <button class="btn btn-secondary">
+                        Secondary Button
+                    </button>
+
+                    <button class="btn btn-dark">
+                        Dark Button
+                    </button>
+
+                    <button class="btn btn-highlight">
+                        Highlight Button
+                    </button>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button class="btn btn-primary"
+                            disabled>
+                        Disabled Button
+                    </button>
+
+                    <a class="text-link"
+                       href="#cards">
+                        Text Link →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="state-grid">
+
+                <div class="state-card">
+
+                    <span class="state-dot default-dot"></span>
+
+                    <strong>Default</strong>
+
+                    <p>
+                        Standard resting state.
+                    </p>
+
+                </div>
+
+
+                <div class="state-card">
+
+                    <span class="state-dot hover-dot"></span>
+
+                    <strong>Hover</strong>
+
+                    <p>
+                        Indicates mouse interaction.
+                    </p>
+
+                </div>
+
+
+                <div class="state-card">
+
+                    <span class="state-dot focus-dot"></span>
+
+                    <strong>Focus</strong>
+
+                    <p>
+                        Indicates keyboard focus.
+                    </p>
+
+                </div>
+
+
+                <div class="state-card">
+
+                    <span class="state-dot selected-dot"></span>
+
+                    <strong>Selected</strong>
+
+                    <p>
+                        Indicates an active choice.
+                    </p>
+
+                </div>
+
+
+                <div class="state-card">
+
+                    <span class="state-dot disabled-dot"></span>
+
+                    <strong>Disabled</strong>
+
+                    <p>
+                        Indicates unavailable actions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             CARDS
+             ======================================== -->
+
+        <section class="design-section"
+                 id="cards">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Components
+                </p>
+
+                <h2>
+                    Cards
+                </h2>
+
+                <p class="reading-width">
+                    Reusable content containers for portfolio projects,
+                    scenarios, resources, objectives, and learning content.
+                </p>
+
+            </div>
+
+
+            <div class="card-grid"
+                 id="projects-example">
+
+
+                <article class="project-card">
+
+                    <div class="card-accent"></div>
+
+                    <div class="card-content">
+
+                        <p class="eyebrow">
+                            Interactive Learning
+                        </p>
+
+                        <h3>
+                            Customer Discovery Simulator
+                        </h3>
+
+                        <p>
+                            Scenario-based practice designed to help
+                            sales learners identify strong customer
+                            discovery questions.
+                        </p>
+
+
+                        <div class="tag-row">
+
+                            <span class="tag">HTML</span>
+
+                            <span class="tag">CSS</span>
+
+                            <span class="tag">JavaScript</span>
+
+                        </div>
+
+
+                        <a class="text-link"
+                           href="#">
+                            View Project →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <article class="content-card">
+
+                    <p class="eyebrow">
+                        Learning Objective
+                    </p>
+
+                    <h3>
+                        Identify customer needs
+                    </h3>
+
+                    <p>
+                        Determine which questions reveal business,
+                        technical, and implementation requirements.
+                    </p>
+
+                </article>
+
+
+                <article class="scenario-card">
+
+                    <p class="eyebrow">
+                        Scenario
+                    </p>
+
+                    <h3>
+                        Atlas Manufacturing
+                    </h3>
+
+                    <p>
+                        The customer is experiencing unreliable
+                        connectivity throughout a large warehouse.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             FORMS
+             ======================================== -->
+
+        <section class="design-section"
+                 id="forms">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Components
+                </p>
+
+                <h2>
+                    Forms & Inputs
+                </h2>
+
+                <p class="reading-width">
+                    Standard controls for future scenario builders,
+                    custom assessments, configuration tools, and forms.
+                </p>
+
+            </div>
+
+
+            <div class="form-demo">
+
+                <div class="form-group">
+
+                    <label for="project-title">
+                        Project Title
+                    </label>
+
+                    <input type="text"
+                           id="project-title"
+                           placeholder="Enter a project title">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="project-type">
+                        Project Type
+                    </label>
+
+                    <select id="project-type">
+
+                        <option>
+                            Select an option
+                        </option>
+
+                        <option>
+                            Rise Course
+                        </option>
+
+                        <option>
+                            Storyline Interaction
+                        </option>
+
+                        <option>
+                            Custom Web Interaction
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea id="description"
+                              rows="5"
+                              placeholder="Enter a description"></textarea>
+
+                </div>
+
+
+                <fieldset class="form-group">
+
+                    <legend>
+                        Interaction Type
+                    </legend>
+
+                    <label class="choice-control">
+
+                        <input type="radio"
+                               name="interaction"
+                               checked>
+
+                        Scenario
+
+                    </label>
+
+                    <label class="choice-control">
+
+                        <input type="radio"
+                               name="interaction">
+
+                        Assessment
+
+                    </label>
+
+                    <label class="choice-control">
+
+                        <input type="radio"
+                               name="interaction">
+
+                        Simulation
+
+                    </label>
+
+                </fieldset>
+
+
+                <div class="form-group">
+
+                    <label class="choice-control">
+
+                        <input type="checkbox"
+                               checked>
+
+                        Include scoring
+
+                    </label>
+
+                </div>
+
+
+                <button class="btn btn-primary">
+                    Save Configuration
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             ALERTS
+             ======================================== -->
+
+        <section class="design-section"
+                 id="alerts">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Feedback
+                </p>
+
+                <h2>
+                    Alerts & Status Messages
+                </h2>
+
+                <p class="reading-width">
+                    Feedback components for system messages,
+                    assessments, learning activities, and interface states.
+                </p>
+
+            </div>
+
+
+            <div class="alert-stack">
+
+                <div class="alert alert-info">
+
+                    <strong>Information</strong>
+
+                    <p>
+                        Review the customer profile before continuing.
+                    </p>
+
+                </div>
+
+
+                <div class="alert alert-success">
+
+                    <strong>Success</strong>
+
+                    <p>
+                        Your response demonstrates strong discovery strategy.
+                    </p>
+
+                </div>
+
+
+                <div class="alert alert-warning">
+
+                    <strong>Attention</strong>
+
+                    <p>
+                        Consider gathering additional information
+                        before recommending a solution.
+                    </p>
+
+                </div>
+
+
+                <div class="alert alert-error">
+
+                    <strong>Needs Review</strong>
+
+                    <p>
+                        This response skips an important customer requirement.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             SPACING & LAYOUT
+             ======================================== -->
+
+        <section class="design-section"
+                 id="spacing">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    Foundations
+                </p>
+
+                <h2>
+                    Spacing & Layout
+                </h2>
+
+                <p class="reading-width">
+                    An 8-pixel-based spacing system keeps layouts
+                    visually consistent and easier to reuse.
+                </p>
+
+            </div>
+
+
+            <div class="spacing-list">
+
+                <div class="spacing-item">
+
+                    <span>4px</span>
+
+                    <div class="spacing-bar space-xs-demo"></div>
+
+                    <code>--space-xs</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>8px</span>
+
+                    <div class="spacing-bar space-sm-demo"></div>
+
+                    <code>--space-sm</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>16px</span>
+
+                    <div class="spacing-bar space-md-demo"></div>
+
+                    <code>--space-md</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>24px</span>
+
+                    <div class="spacing-bar space-lg-demo"></div>
+
+                    <code>--space-lg</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>32px</span>
+
+                    <div class="spacing-bar space-xl-demo"></div>
+
+                    <code>--space-xl</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>48px</span>
+
+                    <div class="spacing-bar space-2xl-demo"></div>
+
+                    <code>--space-2xl</code>
+
+                </div>
+
+
+                <div class="spacing-item">
+
+                    <span>64px</span>
+
+                    <div class="spacing-bar space-3xl-demo"></div>
+
+                    <code>--space-3xl</code>
+
+                </div>
+
+            </div>
+
+
+            <div class="layout-reference">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Maximum Page Width
+                    </p>
+
+                    <strong>
+                        1200px
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        Reading Width
+                    </p>
+
+                    <strong>
+                        720px
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        Button Radius
+                    </p>
+
+                    <strong>
+                        8px
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        Card Radius
+                    </p>
+
+                    <strong>
+                        12px
+                    </strong>
 
                 </div>
 
@@ -172,6 +1063,27 @@
         </section>
 
     </main>
+
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <p>
+                Portfolio Design System
+            </p>
+
+            <a href="#top">
+                Back to top ↑
+            </a>
+
+        </div>
+
+    </footer>
 
 </body>
 
