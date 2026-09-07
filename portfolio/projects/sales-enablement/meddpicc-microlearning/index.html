@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        MEDDPICC in Practice | Haley Reeder
+    </title>
+
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        :root {
+            --taupe: #4A4238;
+            --charcoal: #4D5359;
+            --pine-blue: #508484;
+            --mint-leaf: #79C99E;
+            --yellow-green: #97DB4F;
+            --white: #FFFFFF;
+            --off-white: #F7F8F5;
+            --light-gray: #E8EBE8;
+            --medium-gray: #C9CECB;
+            --muted-text: #6F777D;
+            --font-heading: "Montserrat", Arial, sans-serif;
+            --font-body: "Open Sans", Arial, sans-serif;
+            --radius: 12px;
+            --content-width: 1150px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--off-white);
+            color: var(--charcoal);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: 0;
+            font-family: var(--font-heading);
+            line-height: 1.15;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+        }
+
+        .container {
+            width: 90%;
+            max-width: var(--content-width);
+            margin: 0 auto;
+        }
+
+        .site-header {
+            background: var(--taupe);
+            color: var(--white);
+        }
+
+        .nav {
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            color: var(--white);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: var(--mint-leaf);
+        }
+
+        .back-link {
+            color: var(--mint-leaf);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .hero {
+            padding: 64px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(80, 132, 132, 0.16),
+                    rgba(151, 219, 79, 0.10)
+                );
+        }
+
+        .hero p {
+            max-width: 780px;
+            font-size: 1.1rem;
+        }
+
+        .eyebrow {
+            margin-bottom: 8px;
+            color: var(--pine-blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .lesson {
+            padding: 56px 0;
+        }
+
+        .callout {
+            margin-bottom: 40px;
+            padding: 22px;
+
+            background: #EAF7F0;
+
+            border-left: 6px solid var(--mint-leaf);
+            border-radius: var(--radius);
+        }
+
+        .meddpicc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 28px 0;
+        }
+
+        .meddpicc-button {
+            min-height: 110px;
+            padding: 16px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: var(--white);
+            color: var(--charcoal);
+
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius);
+
+            cursor: pointer;
+            text-align: left;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background-color 0.2s ease;
+        }
+
+        .meddpicc-button:hover {
+            transform: translateY(-3px);
+            border-color: var(--mint-leaf);
+        }
+
+        .meddpicc-button.active {
+            background: var(--pine-blue);
+            color: var(--white);
+            border-color: var(--pine-blue);
+        }
+
+        .letter {
+            margin-bottom: 5px;
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--yellow-green);
+        }
+
+        .meddpicc-button strong {
+            font-family: var(--font-heading);
+        }
+
+        .detail-panel {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 28px;
+
+            padding: 30px;
+
+            background: var(--taupe);
+            color: var(--white);
+
+            border-radius: var(--radius);
+        }
+
+        .detail-panel h2,
+        .detail-panel h3,
+        .detail-panel h4 {
+            color: var(--white);
+        }
+
+        .detail-card {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .detail-card + .detail-card {
+            margin-top: 12px;
+        }
+
+        .detail-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--mint-leaf);
+            font-weight: 700;
+        }
+
+        .apply-section {
+            margin-top: 64px;
+        }
+
+        .challenge-card {
+            padding: 30px;
+
+            background: var(--white);
+
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius);
+        }
+
+        .progress {
+            height: 8px;
+
+            margin-bottom: 28px;
+
+            overflow: hidden;
+
+            background: var(--light-gray);
+            border-radius: 999px;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+
+            background: var(--pine-blue);
+
+            transition: width 0.3s ease;
+        }
+
+        .scenario {
+            margin: 22px 0;
+            padding: 22px;
+
+            background: var(--off-white);
+
+            border-left: 5px solid var(--mint-leaf);
+            border-radius: 8px;
+        }
+
+        .answer-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .answer-button {
+            width: 100%;
+            padding: 15px 18px;
+
+            background: var(--white);
+            color: var(--charcoal);
+
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .answer-button:hover {
+            border-color: var(--mint-leaf);
+        }
+
+        .answer-button.correct {
+            background: rgba(121, 201, 158, 0.18);
+            border-color: var(--mint-leaf);
+        }
+
+        .answer-button.incorrect {
+            background: rgba(74, 66, 56, 0.07);
+            border-color: var(--taupe);
+        }
+
+        .answer-button:disabled {
+            cursor: default;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+
+            background: var(--taupe);
+            color: var(--white);
+
+            border-radius: 10px;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback h3 {
+            color: var(--white);
+        }
+
+        .btn {
+            min-height: 44px;
+            padding: 10px 18px;
+
+            border: 2px solid transparent;
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: var(--pine-blue);
+            color: var(--white);
+        }
+
+        .btn-highlight {
+            background: var(--yellow-green);
+            color: var(--taupe);
+        }
+
+        .next-button {
+            display: none;
+            margin-top: 18px;
+        }
+
+        .next-button.show {
+            display: inline-flex;
+        }
+
+        .final-result {
+            display: none;
+            padding: 32px;
+
+            background: var(--taupe);
+            color: var(--white);
+
+            border-radius: var(--radius);
+        }
+
+        .final-result.show {
+            display: block;
+        }
+
+        .final-result h2 {
+            color: var(--white);
+        }
+
+        .score {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--yellow-green);
+        }
+
+        .footer {
+            padding: 32px 0;
+            background: var(--taupe);
+            color: var(--white);
+        }
+
+        @media (max-width: 850px) {
+
+            .meddpicc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detail-panel {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .nav {
+                padding: 16px 0;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .meddpicc-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container nav">
+
+        <a class="brand"
+           href="../../../index.html">
+            Haley <span>Reeder</span>
+        </a>
+
+        <a class="back-link"
+           href="../index.html">
+            ← Back to Sales Enablement Case Study
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <section class="hero">
+
+        <div class="container">
+
+            <p class="eyebrow">
+                MEDDPICC in Practice
+            </p>
+
+            <h1>
+                Qualification is about evidence.
+            </h1>
+
+            <p>
+                Explore the MEDDPICC framework, then apply it to short
+                fictional pursuit scenarios. The goal isn't to memorize
+                eight letters—it's to recognize what evidence is present,
+                what is missing, and what the seller should learn next.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="lesson">
+
+        <div class="container">
+
+
+            <div class="callout">
+
+                <strong>
+                    How to use this:
+                </strong>
+
+                Click each MEDDPICC element below. Pay particular attention
+                to the difference between knowing a label and having real
+                evidence in the pursuit.
+
+            </div>
+
+
+
+            <!-- EXPLORE -->
+
+            <p class="eyebrow">
+                Part 1 • Explore
+            </p>
+
+            <h2>
+                What does each element tell us?
+            </h2>
+
+
+            <div class="meddpicc-grid">
+
+
+                <button class="meddpicc-button active"
+                        type="button"
+                        data-element="metrics">
+
+                    <span class="letter">
+                        M
+                    </span>
+
+                    <strong>
+                        Metrics
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="economicBuyer">
+
+                    <span class="letter">
+                        E
+                    </span>
+
+                    <strong>
+                        Economic Buyer
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="decisionCriteria">
+
+                    <span class="letter">
+                        D
+                    </span>
+
+                    <strong>
+                        Decision Criteria
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="decisionProcess">
+
+                    <span class="letter">
+                        D
+                    </span>
+
+                    <strong>
+                        Decision Process
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="paperProcess">
+
+                    <span class="letter">
+                        P
+                    </span>
+
+                    <strong>
+                        Paper Process
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="pain">
+
+                    <span class="letter">
+                        I
+                    </span>
+
+                    <strong>
+                        Identify Pain
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="champion">
+
+                    <span class="letter">
+                        C
+                    </span>
+
+                    <strong>
+                        Champion
+                    </strong>
+
+                </button>
+
+
+                <button class="meddpicc-button"
+                        type="button"
+                        data-element="competition">
+
+                    <span class="letter">
+                        C
+                    </span>
+
+                    <strong>
+                        Competition
+                    </strong>
+
+                </button>
+
+
+            </div>
+
+
+
+            <div class="detail-panel">
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        Current Element
+                    </p>
+
+                    <h2 id="elementTitle">
+                        Metrics
+                    </h2>
+
+                    <p id="elementMeaning">
+                        Quantifiable measures that connect the customer's
+                        problem and desired outcome to business impact.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-label">
+                            Evidence might look like
+                        </span>
+
+                        <p id="elementEvidence">
+                            A quantified reduction in downtime, faster
+                            deployment, lower cost, or another measurable
+                            customer outcome.
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-label">
+                            Seller question
+                        </span>
+
+                        <p id="elementQuestion">
+                            “What happens to the business when this problem occurs?”
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-card">
+
+                        <span class="detail-label">
+                            Common mistake
+                        </span>
+
+                        <p id="elementMistake">
+                            Using a generic ROI statistic instead of a metric
+                            connected to this customer's priorities.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- APPLY -->
+
+            <div class="apply-section">
+
+                <p class="eyebrow">
+                    Part 2 • Apply
+                </p>
+
+                <h2>
+                    Find the gap.
+                </h2>
+
+                <p>
+                    Read each fictional pursuit and choose the MEDDPICC
+                    element that matters most.
+                </p>
+
+
+
+                <div class="challenge-card"
+                     id="challengeCard">
+
+
+                    <div class="progress">
+
+                        <div class="progress-fill"
+                             id="progressFill">
+                        </div>
+
+                    </div>
+
+
+                    <p class="eyebrow"
+                       id="questionCounter">
+                        Scenario 1 of 3
+                    </p>
+
+
+                    <h3 id="challengeQuestion">
+                        What is the most important MEDDPICC gap?
+                    </h3>
+
+
+                    <div class="scenario"
+                         id="scenarioText">
+                    </div>
+
+
+                    <div class="answer-list"
+                         id="answerList">
+                    </div>
+
+
+                    <div class="feedback"
+                         id="feedback">
+
+                        <h3 id="feedbackTitle">
+                        Feedback
+                        </h3>
+
+                        <p id="feedbackText">
+                        Feedback appears here.
+                        </p>
+
+                    </div>
+
+
+                    <button class="btn btn-primary next-button"
+                            type="button"
+                            id="nextButton">
+                        Next Scenario
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="final-result"
+                     id="finalResult">
+
+                    <p class="eyebrow">
+                        Complete
+                    </p>
+
+                    <h2>
+                        Your Score
+                    </h2>
+
+                    <div class="score"
+                         id="finalScore">
+                        0 / 3
+                    </div>
+
+                    <p id="finalMessage">
+                    </p>
+
+                    <button class="btn btn-highlight"
+                            type="button"
+                            id="restartButton">
+                        Try Again
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<footer class="footer">
+
+    <div class="container">
+
+        MEDDPICC in Practice • Fictional portfolio microlearning
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+
+    /* ========================================
+       MEDDPICC CONTENT
+       ======================================== */
+
+    const meddpiccData = {
+
+
+        metrics: {
+
+            title:
+                "Metrics",
+
+            meaning:
+                "Quantifiable measures that connect the customer's problem and desired outcome to business impact.",
+
+            evidence:
+                "A quantified reduction in downtime, faster deployment, lower operating cost, improved productivity, or another measurable customer outcome.",
+
+            question:
+                "“What happens to the business when this problem occurs, and how would you measure improvement?”",
+
+            mistake:
+                "Using a generic ROI statistic instead of a metric connected to this customer's priorities."
+
+        },
+
+
+        economicBuyer: {
+
+            title:
+                "Economic Buyer",
+
+            meaning:
+                "The person with the authority to approve the investment and commit the organization financially.",
+
+            evidence:
+                "The seller knows who can authorize the spend, understands that person's priorities, and ideally has direct or credible access.",
+
+            question:
+                "“Who ultimately approves an investment like this, and what will matter most to them?”",
+
+            mistake:
+                "Assuming the primary contact or project lead is automatically the economic buyer."
+
+        },
+
+
+        decisionCriteria: {
+
+            title:
+                "Decision Criteria",
+
+            meaning:
+                "The standards the customer will use to compare options and determine what solution best meets their needs.",
+
+            evidence:
+                "Documented technical, financial, operational, security, service, or business requirements used to evaluate alternatives.",
+
+            question:
+                "“What will the team use to determine which option is the best fit?”",
+
+            mistake:
+                "Assuming your differentiators matter before understanding how the customer will actually evaluate the decision."
+
+        },
+
+
+        decisionProcess: {
+
+            title:
+                "Decision Process",
+
+            meaning:
+                "The people, activities, sequence, and timeline through which the customer will reach a decision.",
+
+            evidence:
+                "Known evaluation steps, stakeholder roles, approval meetings, milestones, and target decision dates.",
+
+            question:
+                "“What has to happen internally between evaluation and a final decision?”",
+
+            mistake:
+                "Knowing the decision criteria but not how, when, or by whom those criteria will be applied."
+
+        },
+
+
+        paperProcess: {
+
+            title:
+                "Paper Process",
+
+            meaning:
+                "The contractual, procurement, legal, security, finance, and administrative steps required after a purchase decision.",
+
+            evidence:
+                "Known procurement requirements, contract review, security review, vendor setup, legal approvals, and expected timelines.",
+
+            question:
+                "“Once the business decides to move forward, what has to happen before an agreement can be signed?”",
+
+            mistake:
+                "Treating verbal approval as the end of the deal while ignoring procurement or contractual steps."
+
+        },
+
+
+        pain: {
+
+            title:
+                "Identify Pain",
+
+            meaning:
+                "The meaningful business or operational problem creating a reason for the customer to change.",
+
+            evidence:
+                "A clearly understood current-state problem, its consequences, who is affected, and why maintaining the status quo is costly or risky.",
+
+            question:
+                "“What happens if nothing changes?”",
+
+            mistake:
+                "Confusing interest in a product with a compelling reason to act."
+
+        },
+
+
+        champion: {
+
+            title:
+                "Champion",
+
+            meaning:
+                "An influential person who has a vested interest in the solution succeeding and actively helps the seller navigate the organization.",
+
+            evidence:
+                "They provide internal insight, coach the seller, help gain stakeholder access, and advocate when the seller is not in the room.",
+
+            question:
+                "“Who inside the organization has both influence and a reason to help this initiative succeed?”",
+
+            mistake:
+                "Calling a friendly contact a champion when they are not actually influencing the buying process."
+
+        },
+
+
+        competition: {
+
+            title:
+                "Competition",
+
+            meaning:
+                "The alternatives competing for the customer's decision—including other vendors, internal solutions, different priorities, or doing nothing.",
+
+            evidence:
+                "The seller understands what alternatives the customer is considering and why each may be attractive.",
+
+            question:
+                "“What other options are being considered, including maintaining the current approach?”",
+
+            mistake:
+                "Thinking competition only means another vendor and ignoring the status quo."
+
+        }
+
+    };
+
+
+
+    const meddpiccButtons =
+        document.querySelectorAll(".meddpicc-button");
+
+
+    const elementTitle =
+        document.getElementById("elementTitle");
+
+    const elementMeaning =
+        document.getElementById("elementMeaning");
+
+    const elementEvidence =
+        document.getElementById("elementEvidence");
+
+    const elementQuestion =
+        document.getElementById("elementQuestion");
+
+    const elementMistake =
+        document.getElementById("elementMistake");
+
+
+
+    meddpiccButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+
+            meddpiccButtons.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            button.classList.add("active");
+
+
+            const data =
+                meddpiccData[
+                    button.dataset.element
+                ];
+
+
+            elementTitle.textContent =
+                data.title;
+
+            elementMeaning.textContent =
+                data.meaning;
+
+            elementEvidence.textContent =
+                data.evidence;
+
+            elementQuestion.textContent =
+                data.question;
+
+            elementMistake.textContent =
+                data.mistake;
+
+        });
+
+    });
+
+
+
+    /* ========================================
+       APPLICATION CHALLENGES
+       ======================================== */
+
+    const challenges = [
+
+
+        {
+
+            scenario:
+                "Atlas Manufacturing wants to modernize connectivity across three facilities. The technical lead likes the proposed solution and has shared detailed requirements. The team has discussed possible productivity improvements, but nobody on the sales team has spoken with the CFO or confirmed who can authorize the investment.",
+
+            question:
+                "What is the most important MEDDPICC gap to address next?",
+
+            answers: [
+                "Metrics",
+                "Economic Buyer",
+                "Competition",
+                "Paper Process"
+            ],
+
+            correct:
+                1,
+
+            feedback:
+                "Economic Buyer is the clearest gap. The team has technical engagement and some business-value discussion, but it still does not know who has final financial authority or what matters to that person."
+
+        },
+
+
+        {
+
+            scenario:
+                "A buying team tells you proposals will be compared on implementation timeline, security requirements, integration with existing systems, service coverage, and total cost of ownership.",
+
+            question:
+                "Which MEDDPICC element is this evidence primarily describing?",
+
+            answers: [
+                "Decision Criteria",
+                "Decision Process",
+                "Champion",
+                "Metrics"
+            ],
+
+            correct:
+                0,
+
+            feedback:
+                "These are Decision Criteria—the standards the customer plans to use when evaluating the available options."
+
+        },
+
+
+        {
+
+            scenario:
+                "An operations director has repeatedly shared internal context, helped the seller understand stakeholder concerns, arranged an introduction to the executive sponsor, and is actively pushing the initiative forward inside the company.",
+
+            question:
+                "Which MEDDPICC element is best demonstrated?",
+
+            answers: [
+                "Economic Buyer",
+                "Champion",
+                "Paper Process",
+                "Competition"
+            ],
+
+            correct:
+                1,
+
+            feedback:
+                "This is strong Champion evidence. The contact is doing more than being friendly—they are providing internal insight, creating access, and actively advocating for the initiative."
+
+        }
+
+
+    ];
+
+
+
+    let currentQuestion =
+        0;
+
+
+    let score =
+        0;
+
+
+    let answered =
+        false;
+
+
+
+    const scenarioText =
+        document.getElementById("scenarioText");
+
+    const challengeQuestion =
+        document.getElementById("challengeQuestion");
+
+    const answerList =
+        document.getElementById("answerList");
+
+    const feedback =
+        document.getElementById("feedback");
+
+    const feedbackTitle =
+        document.getElementById("feedbackTitle");
+
+    const feedbackText =
+        document.getElementById("feedbackText");
+
+    const nextButton =
+        document.getElementById("nextButton");
+
+    const questionCounter =
+        document.getElementById("questionCounter");
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    const challengeCard =
+        document.getElementById("challengeCard");
+
+    const finalResult =
+        document.getElementById("finalResult");
+
+    const finalScore =
+        document.getElementById("finalScore");
+
+    const finalMessage =
+        document.getElementById("finalMessage");
+
+
+
+    function renderQuestion() {
+
+
+        answered =
+            false;
+
+
+        const data =
+            challenges[currentQuestion];
+
+
+        questionCounter.textContent =
+            `Scenario ${currentQuestion + 1} of ${challenges.length}`;
+
+
+        progressFill.style.width =
+            `${(currentQuestion / challenges.length) * 100}%`;
+
+
+        challengeQuestion.textContent =
+            data.question;
+
+
+        scenarioText.textContent =
+            data.scenario;
+
+
+        answerList.innerHTML =
+            "";
+
+
+        feedback.classList.remove(
+            "show"
+        );
+
+
+        nextButton.classList.remove(
+            "show"
+        );
+
+
+
+        data.answers.forEach(function (answer, index) {
+
+
+            const button =
+                document.createElement("button");
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "answer-button";
+
+
+            button.textContent =
+                answer;
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    evaluateAnswer(
+                        index,
+                        button
+                    );
+
+                }
+            );
+
+
+            answerList.appendChild(
+                button
+            );
+
+
+        });
+
+    }
+
+
+
+    function evaluateAnswer(index, selectedButton) {
+
+
+        if (answered) {
+
+            return;
+
+        }
+
+
+        answered =
+            true;
+
+
+        const data =
+            challenges[currentQuestion];
+
+
+        const answerButtons =
+            document.querySelectorAll(
+                ".answer-button"
+            );
+
+
+
+        answerButtons.forEach(function (button, buttonIndex) {
+
+
+            button.disabled =
+                true;
+
+
+            if (buttonIndex === data.correct) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+        });
+
+
+
+        if (index === data.correct) {
+
+
+            score += 1;
+
+
+            feedbackTitle.textContent =
+                "Correct";
+
+
+        } else {
+
+
+            selectedButton.classList.add(
+                "incorrect"
+            );
+
+
+            feedbackTitle.textContent =
+                "Not quite";
+
+
+        }
+
+
+
+        feedbackText.textContent =
+            data.feedback;
+
+
+        feedback.classList.add(
+            "show"
+        );
+
+
+        nextButton.textContent =
+            currentQuestion === challenges.length - 1
+                ? "See Results"
+                : "Next Scenario";
+
+
+        nextButton.classList.add(
+            "show"
+        );
+
+    }
+
+
+
+    nextButton.addEventListener(
+        "click",
+        function () {
+
+
+            if (currentQuestion <
+                challenges.length - 1) {
+
+
+                currentQuestion += 1;
+
+
+                renderQuestion();
+
+
+            } else {
+
+
+                showResults();
+
+
+            }
+
+
+        }
+    );
+
+
+
+    function showResults() {
+
+
+        challengeCard.style.display =
+            "none";
+
+
+        finalResult.classList.add(
+            "show"
+        );
+
+
+        finalScore.textContent =
+            `${score} / ${challenges.length}`;
+
+
+
+        if (score === challenges.length) {
+
+
+            finalMessage.textContent =
+                "Strong work. You consistently identified the evidence and qualification gap that mattered most.";
+
+
+        } else if (score >= 2) {
+
+
+            finalMessage.textContent =
+                "Nice work. The key is continuing to focus on evidence rather than simply recognizing the MEDDPICC vocabulary.";
+
+
+        } else {
+
+
+            finalMessage.textContent =
+                "Review the elements above and try again. Focus on what evidence the scenario actually provides—and what is still missing.";
+
+
+        }
+
+    }
+
+
+
+    document
+        .getElementById("restartButton")
+        .addEventListener(
+            "click",
+            function () {
+
+
+                currentQuestion =
+                    0;
+
+
+                score =
+                    0;
+
+
+                challengeCard.style.display =
+                    "block";
+
+
+                finalResult.classList.remove(
+                    "show"
+                );
+
+
+                renderQuestion();
+
+
+            }
+        );
+
+
+
+    renderQuestion();
+
+
+</script>
+
+
+</body>
+
+</html>

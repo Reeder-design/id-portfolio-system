@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Pursuit Positioning Lab | Haley Reeder
+    </title>
+
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        :root {
+            --taupe: #4A4238;
+            --charcoal: #4D5359;
+            --pine-blue: #508484;
+            --mint-leaf: #79C99E;
+            --yellow-green: #97DB4F;
+            --white: #FFFFFF;
+            --off-white: #F7F8F5;
+            --light-gray: #E8EBE8;
+            --medium-gray: #C9CECB;
+            --muted-text: #6F777D;
+            --font-heading: "Montserrat", Arial, sans-serif;
+            --font-body: "Open Sans", Arial, sans-serif;
+            --radius: 12px;
+            --content-width: 1250px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--off-white);
+            color: var(--charcoal);
+            font-family: var(--font-body);
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: 0;
+            font-family: var(--font-heading);
+            line-height: 1.15;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+        }
+
+        .container {
+            width: 90%;
+            max-width: var(--content-width);
+            margin: 0 auto;
+        }
+
+        .site-header {
+            background: var(--taupe);
+            color: var(--white);
+        }
+
+        .nav {
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            color: var(--white);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: var(--mint-leaf);
+        }
+
+        .back-link {
+            color: var(--mint-leaf);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .hero {
+            padding: 64px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(80, 132, 132, 0.16),
+                    rgba(151, 219, 79, 0.10)
+                );
+        }
+
+        .hero p {
+            max-width: 760px;
+            font-size: 1.1rem;
+        }
+
+        .eyebrow {
+            margin-bottom: 8px;
+            color: var(--pine-blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .disclaimer {
+            margin-top: 24px;
+            padding: 16px 20px;
+            max-width: 760px;
+
+            background: var(--white);
+            border-left: 5px solid var(--yellow-green);
+            border-radius: 8px;
+        }
+
+        .workspace {
+            padding: 56px 0;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+            gap: 32px;
+            align-items: start;
+        }
+
+        .panel {
+            padding: 28px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius);
+        }
+
+        .criterion-group {
+            margin-bottom: 34px;
+        }
+
+        .criterion-group-header {
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .criterion {
+            margin-bottom: 24px;
+        }
+
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 6px;
+        }
+
+        .criterion label {
+            font-weight: 700;
+        }
+
+        .value-badge {
+            min-width: 34px;
+            padding: 3px 8px;
+
+            background: var(--pine-blue);
+            color: var(--white);
+
+            border-radius: 999px;
+
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .criterion small {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--muted-text);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--pine-blue);
+        }
+
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted-text);
+            font-size: 0.75rem;
+        }
+
+        .matrix-card {
+            padding: 28px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius);
+        }
+
+        .matrix-wrapper {
+            position: relative;
+            margin: 34px auto 50px;
+            max-width: 600px;
+        }
+
+        .matrix {
+            position: relative;
+
+            width: 100%;
+            aspect-ratio: 1 / 1;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+
+            overflow: hidden;
+
+            border: 2px solid var(--charcoal);
+            border-radius: 12px;
+        }
+
+        .quadrant {
+            padding: 18px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            font-size: 0.84rem;
+        }
+
+        .quadrant strong {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+        }
+
+        .develop {
+            background: rgba(121, 201, 158, 0.17);
+            border-right: 1px solid var(--charcoal);
+            border-bottom: 1px solid var(--charcoal);
+        }
+
+        .prioritize {
+            background: rgba(151, 219, 79, 0.22);
+            border-bottom: 1px solid var(--charcoal);
+        }
+
+        .deprioritize {
+            background: rgba(201, 206, 203, 0.28);
+            border-right: 1px solid var(--charcoal);
+        }
+
+        .nurture {
+            background: rgba(80, 132, 132, 0.13);
+        }
+
+        .pursuit-marker {
+            position: absolute;
+
+            width: 28px;
+            height: 28px;
+
+            left: 50%;
+            bottom: 50%;
+
+            transform: translate(-50%, 50%);
+
+            background: var(--taupe);
+            border: 5px solid var(--white);
+            border-radius: 50%;
+
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25);
+
+            transition:
+                left 0.4s ease,
+                bottom 0.4s ease;
+        }
+
+        .x-axis-label {
+            position: absolute;
+            left: 50%;
+            bottom: -42px;
+            transform: translateX(-50%);
+            font-weight: 700;
+        }
+
+        .y-axis-label {
+            position: absolute;
+            top: 50%;
+            left: -112px;
+            transform: rotate(-90deg) translateY(-50%);
+            font-weight: 700;
+        }
+
+        .matrix-low-x,
+        .matrix-high-x,
+        .matrix-low-y,
+        .matrix-high-y {
+            position: absolute;
+            color: var(--muted-text);
+            font-size: 0.75rem;
+        }
+
+        .matrix-low-x {
+            bottom: -25px;
+            left: 0;
+        }
+
+        .matrix-high-x {
+            bottom: -25px;
+            right: 0;
+        }
+
+        .matrix-low-y {
+            left: -42px;
+            bottom: 0;
+        }
+
+        .matrix-high-y {
+            left: -42px;
+            top: 0;
+        }
+
+        .result-panel {
+            margin-top: 28px;
+            padding: 26px;
+
+            background: var(--taupe);
+            color: var(--white);
+
+            border-radius: var(--radius);
+        }
+
+        .result-panel h2,
+        .result-panel h3 {
+            color: var(--white);
+        }
+
+        .position-status {
+            display: inline-block;
+            margin-bottom: 16px;
+            padding: 7px 14px;
+
+            background: var(--yellow-green);
+            color: var(--taupe);
+
+            border-radius: 999px;
+
+            font-weight: 700;
+        }
+
+        .score-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .score-box {
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .score-box span {
+            display: block;
+            font-size: 1.8rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--mint-leaf);
+        }
+
+        .signal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .signal-box {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+        }
+
+        .signal-box h3 {
+            font-size: 1rem;
+        }
+
+        .signal-box ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            min-height: 44px;
+            padding: 10px 18px;
+
+            border: 2px solid transparent;
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--pine-blue);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pine-blue);
+            border-color: var(--pine-blue);
+        }
+
+        .footer {
+            padding: 32px 0;
+            background: var(--taupe);
+            color: var(--white);
+        }
+
+        @media (max-width: 950px) {
+
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .y-axis-label,
+            .matrix-low-y,
+            .matrix-high-y {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .nav {
+                padding: 16px 0;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .score-row,
+            .signal-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="container nav">
+
+        <a class="brand"
+           href="../../../index.html">
+            Haley <span>Reeder</span>
+        </a>
+
+        <a class="back-link"
+           href="../index.html">
+            ← Back to Sales Enablement Case Study
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <section class="hero">
+
+        <div class="container">
+
+            <p class="eyebrow">
+                Pursuit Positioning Lab
+            </p>
+
+            <h1>
+                Where should the seller focus?
+            </h1>
+
+            <p>
+                Evaluate a fictional pursuit across solution fit and
+                pursuit strength. As you change the inputs, the opportunity
+                moves on the positioning matrix and the recommended next
+                action updates.
+            </p>
+
+
+            <div class="disclaimer">
+
+                <strong>
+                    Portfolio demo:
+                </strong>
+
+                This is a fictional instructional decision-support exercise,
+                not a real opportunity forecasting model or proprietary
+                sales methodology.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="workspace">
+
+        <div class="container workspace-grid">
+
+
+            <!-- CONTROLS -->
+
+            <div class="panel">
+
+                <p class="eyebrow">
+                    Fictional Opportunity
+                </p>
+
+                <h2>
+                    Atlas Manufacturing
+                </h2>
+
+                <p>
+                    Atlas Manufacturing is considering a network modernization
+                    project across three facilities. Adjust the evidence based
+                    on what the seller has learned so far.
+                </p>
+
+
+
+                <!-- SOLUTION FIT -->
+
+                <div class="criterion-group">
+
+                    <div class="criterion-group-header">
+
+                        <h3>
+                            Solution Fit
+                        </h3>
+
+                        <p>
+                            How strongly does the solution align to the
+                            customer's actual situation?
+                        </p>
+
+                    </div>
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="problemFit">
+                                Problem-to-Solution Fit
+                            </label>
+
+                            <span class="value-badge"
+                                  id="problemFitValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            How clearly does the solution address the
+                            customer's identified problem?
+                        </small>
+
+                        <input type="range"
+                               id="problemFit"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="differentiation">
+                                Differentiation
+                            </label>
+
+                            <span class="value-badge"
+                                  id="differentiationValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Is there meaningful differentiation based on
+                            the customer's priorities?
+                        </small>
+
+                        <input type="range"
+                               id="differentiation"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="deliveryFit">
+                                Operational Fit
+                            </label>
+
+                            <span class="value-badge"
+                                  id="deliveryFitValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Does the solution fit the customer's technical
+                            and operational environment?
+                        </small>
+
+                        <input type="range"
+                               id="deliveryFit"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PURSUIT STRENGTH -->
+
+                <div class="criterion-group">
+
+                    <div class="criterion-group-header">
+
+                        <h3>
+                            Pursuit Strength
+                        </h3>
+
+                        <p>
+                            How much evidence suggests this is a real,
+                            actionable opportunity?
+                        </p>
+
+                    </div>
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="pain">
+                                Pain & Urgency
+                            </label>
+
+                            <span class="value-badge"
+                                  id="painValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Is there a meaningful problem with enough
+                            urgency to support action?
+                        </small>
+
+                        <input type="range"
+                               id="pain"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="access">
+                                Stakeholder Access
+                            </label>
+
+                            <span class="value-badge"
+                                  id="accessValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Does the seller have access to the people
+                            who shape and approve the decision?
+                        </small>
+
+                        <input type="range"
+                               id="access"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="criterion">
+
+                        <div class="criterion-header">
+
+                            <label for="momentum">
+                                Buying Momentum
+                            </label>
+
+                            <span class="value-badge"
+                                  id="momentumValue">
+                                3
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Is there evidence of a decision path,
+                            timeline, and internal movement?
+                        </small>
+
+                        <input type="range"
+                               id="momentum"
+                               min="1"
+                               max="5"
+                               value="3">
+
+                        <div class="scale">
+                            <span>Weak</span>
+                            <span>Strong</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button class="btn btn-secondary"
+                            id="resetButton"
+                            type="button">
+                        Reset Scenario
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MATRIX -->
+
+            <div class="matrix-card">
+
+                <p class="eyebrow">
+                    Live Positioning
+                </p>
+
+                <h2>
+                    Pursuit Position
+                </h2>
+
+
+                <div class="matrix-wrapper">
+
+
+                    <div class="matrix">
+
+
+                        <div class="quadrant develop">
+
+                            <strong>
+                                DEVELOP FIT
+                            </strong>
+
+                            <span>
+                                Pursuit strength exists, but solution
+                                alignment needs work.
+                            </span>
+
+                        </div>
+
+
+                        <div class="quadrant prioritize">
+
+                            <strong>
+                                PRIORITIZE
+                            </strong>
+
+                            <span>
+                                Strong opportunity with strong solution fit.
+                            </span>
+
+                        </div>
+
+
+                        <div class="quadrant deprioritize">
+
+                            <strong>
+                                DEPRIORITIZE
+                            </strong>
+
+                            <span>
+                                Weak pursuit evidence and weak fit.
+                            </span>
+
+                        </div>
+
+
+                        <div class="quadrant nurture">
+
+                            <strong>
+                                NURTURE
+                            </strong>
+
+                            <span>
+                                Good fit, but the pursuit is not strong enough yet.
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="pursuit-marker"
+                         id="pursuitMarker"
+                         aria-label="Current pursuit position">
+                    </div>
+
+
+                    <div class="x-axis-label">
+                        Solution Fit →
+                    </div>
+
+                    <div class="y-axis-label">
+                        Pursuit Strength →
+                    </div>
+
+                    <span class="matrix-low-x">
+                        Low Fit
+                    </span>
+
+                    <span class="matrix-high-x">
+                        High Fit
+                    </span>
+
+                    <span class="matrix-low-y">
+                        Low
+                    </span>
+
+                    <span class="matrix-high-y">
+                        High
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- RESULT -->
+
+                <div class="result-panel">
+
+                    <p class="eyebrow">
+                        Recommendation
+                    </p>
+
+                    <div class="position-status"
+                         id="positionStatus">
+                        DEPRIORITIZE
+                    </div>
+
+                    <h2 id="recommendationTitle">
+                        Validate before investing further.
+                    </h2>
+
+                    <p id="recommendationText">
+                        Both solution fit and pursuit strength are still
+                        uncertain. The seller needs more evidence before
+                        committing significant pursuit resources.
+                    </p>
+
+
+                    <div class="score-row">
+
+                        <div class="score-box">
+
+                            Solution Fit
+
+                            <span id="solutionScore">
+                                3.0
+                            </span>
+
+                            / 5
+
+                        </div>
+
+
+                        <div class="score-box">
+
+                            Pursuit Strength
+
+                            <span id="pursuitScore">
+                                3.0
+                            </span>
+
+                            / 5
+
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Recommended Next Move
+                    </h3>
+
+                    <p id="nextMove">
+                        Gather stronger evidence about customer pain,
+                        solution alignment, stakeholders, and buying intent.
+                    </p>
+
+
+                    <div class="signal-grid">
+
+
+                        <div class="signal-box">
+
+                            <h3>
+                                Strong Signals
+                            </h3>
+
+                            <ul id="strengthList">
+                                <li>
+                                    No strong signals yet
+                                </li>
+                            </ul>
+
+                        </div>
+
+
+                        <div class="signal-box">
+
+                            <h3>
+                                Gaps to Address
+                            </h3>
+
+                            <ul id="gapList">
+                                <li>
+                                    More evidence needed
+                                </li>
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<footer class="footer">
+
+    <div class="container">
+
+        Pursuit Positioning Lab • Fictional portfolio demonstration
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+
+    const criteria = {
+
+        problemFit: {
+            label: "Problem-to-solution fit",
+            axis: "solution"
+        },
+
+        differentiation: {
+            label: "Differentiation",
+            axis: "solution"
+        },
+
+        deliveryFit: {
+            label: "Operational fit",
+            axis: "solution"
+        },
+
+        pain: {
+            label: "Pain and urgency",
+            axis: "pursuit"
+        },
+
+        access: {
+            label: "Stakeholder access",
+            axis: "pursuit"
+        },
+
+        momentum: {
+            label: "Buying momentum",
+            axis: "pursuit"
+        }
+
+    };
+
+
+    const sliders =
+        document.querySelectorAll('input[type="range"]');
+
+
+    const marker =
+        document.getElementById("pursuitMarker");
+
+
+    const solutionScore =
+        document.getElementById("solutionScore");
+
+
+    const pursuitScore =
+        document.getElementById("pursuitScore");
+
+
+    const positionStatus =
+        document.getElementById("positionStatus");
+
+
+    const recommendationTitle =
+        document.getElementById("recommendationTitle");
+
+
+    const recommendationText =
+        document.getElementById("recommendationText");
+
+
+    const nextMove =
+        document.getElementById("nextMove");
+
+
+    const strengthList =
+        document.getElementById("strengthList");
+
+
+    const gapList =
+        document.getElementById("gapList");
+
+
+
+    function average(values) {
+
+        const total =
+            values.reduce(function (sum, value) {
+
+                return sum + value;
+
+            }, 0);
+
+
+        return total / values.length;
+
+    }
+
+
+
+    function renderList(element, items, fallback) {
+
+        element.innerHTML = "";
+
+
+        if (items.length === 0) {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent =
+                fallback;
+
+            element.appendChild(li);
+
+            return;
+
+        }
+
+
+        items.forEach(function (item) {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent =
+                item;
+
+            element.appendChild(li);
+
+        });
+
+    }
+
+
+
+    function updatePosition() {
+
+
+        const values = {};
+
+
+        sliders.forEach(function (slider) {
+
+            const value =
+                Number(slider.value);
+
+
+            values[slider.id] =
+                value;
+
+
+            document
+                .getElementById(
+                    slider.id + "Value"
+                )
+                .textContent =
+                value;
+
+        });
+
+
+
+        const solutionValues = [
+            values.problemFit,
+            values.differentiation,
+            values.deliveryFit
+        ];
+
+
+        const pursuitValues = [
+            values.pain,
+            values.access,
+            values.momentum
+        ];
+
+
+
+        const solution =
+            average(solutionValues);
+
+
+        const pursuit =
+            average(pursuitValues);
+
+
+
+        solutionScore.textContent =
+            solution.toFixed(1);
+
+
+        pursuitScore.textContent =
+            pursuit.toFixed(1);
+
+
+
+        /*
+            Converts our 1–5 score into a position
+            between 10% and 90% so the dot never
+            touches the outside edge.
+        */
+
+        const xPosition =
+            10 + ((solution - 1) / 4) * 80;
+
+
+        const yPosition =
+            10 + ((pursuit - 1) / 4) * 80;
+
+
+        marker.style.left =
+            xPosition + "%";
+
+
+        marker.style.bottom =
+            yPosition + "%";
+
+
+
+        const strongSolution =
+            solution >= 3.5;
+
+
+        const strongPursuit =
+            pursuit >= 3.5;
+
+
+
+        let status;
+        let title;
+        let text;
+
+
+
+        if (strongSolution && strongPursuit) {
+
+            status =
+                "PRIORITIZE";
+
+            title =
+                "This pursuit deserves focused attention.";
+
+            text =
+                "The opportunity shows both meaningful pursuit strength and strong solution alignment. The seller should advance while continuing to close remaining qualification gaps.";
+
+        } else if (!strongSolution && strongPursuit) {
+
+            status =
+                "DEVELOP FIT";
+
+            title =
+                "The opportunity may be real, but the fit needs work.";
+
+            text =
+                "Customer momentum exists, but solution alignment or differentiation is not strong enough yet. Avoid forcing a fit—validate whether the offering genuinely supports the customer's priorities.";
+
+        } else if (strongSolution && !strongPursuit) {
+
+            status =
+                "NURTURE";
+
+            title =
+                "Good fit does not automatically mean a good pursuit.";
+
+            text =
+                "The solution appears relevant, but the opportunity lacks enough pursuit evidence. Strengthen customer pain, stakeholder access, and buying momentum before heavily investing.";
+
+        } else {
+
+            status =
+                "DEPRIORITIZE";
+
+            title =
+                "Validate before investing further.";
+
+            text =
+                "Both solution fit and pursuit strength are still uncertain. The seller needs more evidence before committing significant pursuit resources.";
+
+        }
+
+
+
+        positionStatus.textContent =
+            status;
+
+
+        recommendationTitle.textContent =
+            title;
+
+
+        recommendationText.textContent =
+            text;
+
+
+
+        const strengths = [];
+        const gaps = [];
+
+
+        Object.keys(criteria).forEach(function (key) {
+
+            const value =
+                values[key];
+
+
+            const label =
+                criteria[key].label;
+
+
+            if (value >= 4) {
+
+                strengths.push(label);
+
+            }
+
+
+            if (value <= 2) {
+
+                gaps.push(label);
+
+            }
+
+        });
+
+
+
+        renderList(
+            strengthList,
+            strengths,
+            "No especially strong signals yet"
+        );
+
+
+        renderList(
+            gapList,
+            gaps,
+            "No critical gaps based on current ratings"
+        );
+
+
+
+        /*
+            Recommend the weakest individual area
+            as the most obvious next action.
+        */
+
+        let lowestKey =
+            Object.keys(criteria)[0];
+
+
+        Object.keys(criteria).forEach(function (key) {
+
+            if (values[key] < values[lowestKey]) {
+
+                lowestKey =
+                    key;
+
+            }
+
+        });
+
+
+
+        const nextMoveText = {
+
+            problemFit:
+                "Return to discovery and validate whether the customer's most important problem actually maps to the solution.",
+
+            differentiation:
+                "Clarify which customer priorities create meaningful differentiation rather than relying on generic product strengths.",
+
+            deliveryFit:
+                "Validate the customer's technical and operational environment before advancing the solution.",
+
+            pain:
+                "Deepen discovery around business impact and urgency. A problem without consequence may not become a funded initiative.",
+
+            access:
+                "Expand stakeholder access and determine who influences, evaluates, and ultimately approves the decision.",
+
+            momentum:
+                "Clarify the customer's decision path, timing, and evidence of internal movement toward action."
+
+        };
+
+
+        nextMove.textContent =
+            nextMoveText[lowestKey];
+
+    }
+
+
+
+    sliders.forEach(function (slider) {
+
+        slider.addEventListener(
+            "input",
+            updatePosition
+        );
+
+    });
+
+
+
+    document
+        .getElementById("resetButton")
+        .addEventListener(
+            "click",
+            function () {
+
+                sliders.forEach(function (slider) {
+
+                    slider.value = 3;
+
+                });
+
+
+                updatePosition();
+
+            }
+        );
+
+
+
+    updatePosition();
+
+
+</script>
+
+
+</body>
+
+</html>
