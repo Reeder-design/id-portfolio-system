@@ -107,6 +107,15 @@
       "uniqueItems": true,
       "items": {"type": "string"}
     },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "live_project": {"type": ["string", "null"]},
+        "repository": {"type": ["string", "null"]},
+        "download": {"type": ["string", "null"]}
+      }
+    },
     "assets": {
       "type": "array",
       "items": {
