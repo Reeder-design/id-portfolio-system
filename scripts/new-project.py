@@ -14,6 +14,7 @@ DATA_ROOT = ROOT / "portfolio-data"
 PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 RENDERER_PATH = ROOT / "scripts" / "render-project.py"
+DOCS_UPDATER_PATH = ROOT / "scripts" / "update-docs.py"
 
 
 def load_json(path: Path) -> dict:
@@ -82,10 +83,9 @@ def prompt_choice(
     allow_none: bool = False,
 ) -> dict | None:
     print(f"\n{label}")
-    start = 1
     if allow_none:
         print("  0. None")
-    for index, item in enumerate(items, start=start):
+    for index, item in enumerate(items, start=1):
         marker = " (default)" if item.get("id") == default_id else ""
         print(f"  {index}. {item.get('label', item.get('id'))}{marker}")
 
@@ -237,9 +237,7 @@ def preflight(record: dict) -> tuple[Path, Path]:
 
 
 def run_validation(include_site: bool) -> tuple[bool, str]:
-    commands = [
-        [sys.executable, str(ROOT / "scripts" / "check-content.py")],
-    ]
+    commands = [[sys.executable, str(ROOT / "scripts" / "check-content.py")]]
     if include_site:
         commands.append([sys.executable, str(ROOT / "scripts" / "check-site.py")])
 
@@ -252,6 +250,22 @@ def run_validation(include_site: bool) -> tuple[bool, str]:
         if result.returncode != 0:
             return False, "\n".join(output).strip()
     return True, "\n".join(output).strip()
+
+
+def refresh_documentation() -> str:
+    result = subprocess.run(
+        [sys.executable, str(DOCS_UPDATER_PATH)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    output = "\n".join(part for part in [result.stdout, result.stderr] if part).strip()
+    if result.returncode != 0:
+        raise ValueError(
+            "Project files were created, but documentation refresh failed. "
+            "Run `python3 scripts/update-docs.py` after resolving the error.\n" + output
+        )
+    return output
 
 
 def cleanup_empty_parents(path: Path, stop: Path) -> None:
@@ -306,11 +320,7 @@ def prompt_assets(taxonomy: dict) -> list[dict]:
         path = prompt_required("Repository path or public URL")
         alt = prompt_optional("Alt text")
         caption = prompt_optional("Caption")
-        asset = {
-            "type": asset_type["id"],
-            "path": path,
-            "publish": True,
-        }
+        asset = {"type": asset_type["id"], "path": path, "publish": True}
         if alt:
             asset["alt"] = alt
         if caption:
@@ -332,16 +342,12 @@ def collect_project(taxonomy: dict) -> dict:
     category = prompt_choice("Portfolio category", taxonomy.get("categories", []))
     assert category is not None
     subcategories = category.get("subcategories", [])
-    subcategory = None
-    if subcategories:
-        subcategory = prompt_choice("Subcategory", subcategories, allow_none=True)
+    subcategory = prompt_choice("Subcategory", subcategories, allow_none=True) if subcategories else None
 
     status_item = prompt_choice("Project status", taxonomy.get("statuses", []), default_id="building")
     assert status_item is not None
     confidentiality_item = prompt_choice(
-        "Confidentiality",
-        taxonomy.get("confidentiality", []),
-        default_id="public",
+        "Confidentiality", taxonomy.get("confidentiality", []), default_id="public"
     )
     assert confidentiality_item is not None
 
@@ -405,7 +411,9 @@ def print_summary(record: dict) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Create a new structured portfolio project and standard case-study page.")
+    parser = argparse.ArgumentParser(
+        description="Create a new structured portfolio project and standard case-study page."
+    )
     parser.add_argument("--dry-run", action="store_true", help="Collect and preview the project without writing files.")
     parser.add_argument("--no-render", action="store_true", help="Create the JSON record without generating the HTML page.")
     parser.add_argument("--yes", action="store_true", help="Skip the final confirmation prompt.")
@@ -434,6 +442,13 @@ def main() -> int:
         print(f"\nERROR: {exc}")
         return 1
 
+    try:
+        refresh_documentation()
+        docs_refreshed = True
+    except ValueError as exc:
+        docs_refreshed = False
+        docs_error = str(exc)
+
     print("\nProject created successfully.")
     print(f"  Data: {record_path.relative_to(ROOT)}")
     if page_path:
@@ -442,6 +457,14 @@ def main() -> int:
         print("  Page: not generated because the project still needs sanitization")
     else:
         print("  Page: not generated (--no-render)")
+
+    if docs_refreshed:
+        print("  Documentation: refreshed")
+    else:
+        print("  Documentation: refresh failed")
+        print(f"\n{docs_error}")
+        return 1
+
     print("\nNext: review the files in VS Code, then commit them on a feature/content branch.")
     return 0
 
