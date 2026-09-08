@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "id": "pursuit-positioning",
+  "title": "Pursuit Positioning Lab",
+  "slug": "pursuit-positioning",
+  "category": "instructional-design",
+  "subcategory": "interactive-learning",
+  "status": "live",
+  "summary": "A scenario-based sales practice experience that asks learners to evaluate opportunity evidence, judge solution fit and pursuit strength, and choose the next action.",
+  "page_path": "portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Provide realistic practice for evaluating a sales opportunity using incomplete discovery evidence rather than simple recall.",
+    "audience": "Sales learners practicing opportunity strategy and positioning judgment.",
+    "learning_objectives": [
+      "Interpret customer discovery evidence.",
+      "Evaluate solution fit and pursuit strength.",
+      "Identify positioning risks and red flags.",
+      "Choose an evidence-based next action."
+    ],
+    "role": "Instructional design, scenario design, interaction design, copywriting, and front-end development.",
+    "design_approach": "Use a fictional opportunity, customer evidence, scoring decisions, an expert benchmark, and targeted feedback to create practice before performance.",
+    "development_process": "Built as a custom HTML, CSS, and JavaScript interaction with fictionalized scenario data to demonstrate reusable sales-learning patterns without exposing proprietary content.",
+    "outcomes": [
+      "Demonstrates scenario-based sales enablement design.",
+      "Demonstrates evidence-based feedback and scoring logic.",
+      "Provides a reusable interaction pattern for future opportunity-practice scenarios."
+    ]
+  },
+  "skills": [
+    "Instructional Design",
+    "Scenario-Based Learning",
+    "Sales Enablement",
+    "Assessment",
+    "Interaction Design",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "tools": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "assets": [],
+  "source_material_notes": "Public project uses fictional companies, products, customers, and opportunity data.",
+  "dates": {
+    "created": null,
+    "updated": "2026-09-08"
+  }
+}

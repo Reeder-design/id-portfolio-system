@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "id": "meddpicc-practice",
+  "title": "MEDDPICC Qualification Lab",
+  "slug": "meddpicc-practice",
+  "category": "instructional-design",
+  "subcategory": "interactive-learning",
+  "status": "live",
+  "summary": "A qualification practice experience that asks learners to classify discovery evidence, score MEDDPICC categories, compare their judgment with an expert benchmark, and identify next discovery actions.",
+  "page_path": "portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Create applied practice for evaluating the strength of sales qualification using a realistic but fictional opportunity.",
+    "audience": "Sales learners practicing structured opportunity qualification.",
+    "learning_objectives": [
+      "Classify discovery evidence by MEDDPICC category.",
+      "Judge how strongly each category is qualified.",
+      "Compare learner judgment with an expert benchmark.",
+      "Identify qualification gaps and next discovery actions."
+    ],
+    "role": "Instructional design, scenario design, interaction design, copywriting, and front-end development.",
+    "design_approach": "Combine a reference explorer, fictional customer scenario, evidence-classification activity, category scorecard, expert comparison, and corrective feedback.",
+    "development_process": "Built as a custom HTML, CSS, and JavaScript interaction using fictionalized sales information so the learning pattern can be demonstrated publicly.",
+    "outcomes": [
+      "Demonstrates applied qualification practice rather than recall-only assessment.",
+      "Demonstrates structured scoring and expert calibration.",
+      "Provides a reusable pattern for future evidence-classification and qualification interactions."
+    ]
+  },
+  "skills": [
+    "Instructional Design",
+    "Scenario-Based Learning",
+    "Sales Enablement",
+    "Assessment",
+    "Interaction Design",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "tools": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "assets": [],
+  "source_material_notes": "Public project uses fictional companies, products, customers, and opportunity data.",
+  "dates": {
+    "created": null,
+    "updated": "2026-09-08"
+  }
+}

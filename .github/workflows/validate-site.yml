@@ -4,7 +4,9 @@ on:
   pull_request:
     paths:
       - "portfolio/**"
+      - "portfolio-data/**"
       - "scripts/check-site.py"
+      - "scripts/check-content.py"
       - ".github/workflows/validate-site.yml"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
@@ -27,3 +29,6 @@ jobs:
 
       - name: Validate portfolio
         run: python scripts/check-site.py
+
+      - name: Validate structured content
+        run: python scripts/check-content.py

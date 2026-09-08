@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ai-training-and-evaluation-demo",
+  "title": "AI Training and Evaluation Demo",
+  "slug": "ai-training-and-evaluation-demo",
+  "category": "ai-training-and-evaluation",
+  "subcategory": null,
+  "status": "live",
+  "summary": "An interactive AI evaluation practice dashboard focused on issue classification, severity assessment, source grounding, feedback writing, and evaluator calibration.",
+  "page_path": "portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Demonstrate how AI-generated content can be evaluated systematically for accuracy, clarity, grounding, severity, and usefulness.",
+    "audience": "Reviewers, evaluators, and hiring teams assessing AI training and evaluation capabilities.",
+    "learning_objectives": [
+      "Identify and classify issues in AI-generated content.",
+      "Assess issue severity and likely user impact.",
+      "Check whether claims are supported by provided source material.",
+      "Write concise, actionable evaluator feedback.",
+      "Compare judgments against an expert calibration model."
+    ],
+    "role": "Evaluation framework design, scenario design, rubric development, interaction design, copywriting, and front-end development.",
+    "design_approach": "Use fictional and sanitized scenarios, explicit evaluation criteria, severity distinctions, and expert comparisons to make evaluator reasoning visible and repeatable.",
+    "development_process": "Built as a custom HTML, CSS, and JavaScript demo to showcase AI training and evaluation workflows without exposing client or employer information.",
+    "outcomes": [
+      "Demonstrates AI output evaluation and model assessment skills.",
+      "Demonstrates actionable feedback writing and calibration logic.",
+      "Provides a reusable interaction pattern for future evaluator-training examples."
+    ]
+  },
+  "skills": [
+    "AI Evaluation",
+    "Analytical Reading",
+    "Error Detection",
+    "Rubric Design",
+    "Feedback Writing",
+    "Quality Assurance",
+    "Interaction Design",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "tools": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "assets": [],
+  "source_material_notes": "Public demo uses fictional and sanitized evaluation scenarios.",
+  "dates": {
+    "created": null,
+    "updated": "2026-09-08"
+  }
+}
