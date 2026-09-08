@@ -40,5 +40,8 @@ jobs:
       - name: Validate new project generator
         run: python scripts/check-new-project.py
 
+      - name: Validate documentation versioning
+        run: python scripts/check-docs.py
+
       - name: Validate generated documentation
         run: python scripts/update-docs.py --check
