@@ -1,0 +1,29 @@
+name: Validate Portfolio
+
+on:
+  pull_request:
+    paths:
+      - "portfolio/**"
+      - "scripts/check-site.py"
+      - ".github/workflows/validate-site.yml"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate portfolio
+        run: python scripts/check-site.py
