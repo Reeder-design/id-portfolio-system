@@ -14,7 +14,7 @@ Maintain a professional, reliable, reusable portfolio system that is easy to upd
 - `design-system/` — supporting design-system materials and reusable development resources
 - `.github/workflows/` — repository automation and GitHub Pages deployment
 - `docs/` — repository and maintenance documentation
-- `scripts/` — maintenance, rendering, and validation scripts
+- `scripts/` — maintenance, creation, rendering, and validation scripts
 
 ## Public Portfolio Categories
 The portfolio is organized around three primary areas:
@@ -27,7 +27,9 @@ Instructional Design includes interactive learning, multimedia training content,
 ## Structured Content and Templates
 Standard project case-study pages should use structured records in `portfolio-data/projects/` and the reusable template in `templates/project-page/` when the shared layout fits the project.
 
-Use `python scripts/render-project.py <project-json>` to generate a standard project page. The renderer refuses to overwrite an existing page unless `--force` is explicitly supplied.
+For new standard projects, prefer `python scripts/new-project.py` rather than manually creating the project JSON, folder structure, and rendered page. The generator calculates canonical paths, creates the structured record, renders the page, and validates the result.
+
+Use `python scripts/render-project.py <project-json>` when re-rendering an existing structured project page. The renderer refuses to overwrite an existing page unless `--force` is explicitly supplied.
 
 Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study template.
 
@@ -55,6 +57,8 @@ Do not invent accomplishments, metrics, tools, credentials, clients, or project 
 
 Reference/source files are not public assets by default. Only explicitly approved public assets should be committed and rendered onto public pages.
 
+Projects marked `needs-sanitization` must not be rendered as public pages until they are reviewed and moved to a public-safe confidentiality state.
+
 ## Workflow Rules for Agents
 For substantial changes:
 1. Work on a separate branch.
@@ -63,9 +67,10 @@ For substantial changes:
 4. Run `python scripts/check-site.py`.
 5. Run `python scripts/check-content.py` when structured content changes.
 6. Run `python scripts/check-renderer.py` when templates, structured project data, or the renderer changes.
-7. Check links, paths, navigation, responsive behavior, and obvious accessibility issues.
-8. Open a pull request describing what changed and what the user should review.
-9. Do not merge into `main` unless the user explicitly approves it.
+7. Run `python scripts/check-new-project.py` when the generator or project-creation rules change.
+8. Check links, paths, navigation, responsive behavior, and obvious accessibility issues.
+9. Open a pull request describing what changed and what the user should review.
+10. Do not merge into `main` unless the user explicitly approves it.
 
 For deterministic maintenance tasks, use existing scripts and automation instead of manually reproducing the work.
 
