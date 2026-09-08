@@ -5,8 +5,11 @@ on:
     paths:
       - "portfolio/**"
       - "portfolio-data/**"
+      - "templates/**"
       - "scripts/check-site.py"
       - "scripts/check-content.py"
+      - "scripts/check-renderer.py"
+      - "scripts/render-project.py"
       - ".github/workflows/validate-site.yml"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
@@ -32,3 +35,6 @@ jobs:
 
       - name: Validate structured content
         run: python scripts/check-content.py
+
+      - name: Validate project renderer
+        run: python scripts/check-renderer.py

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <title>{{PAGE_TITLE}}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{CSS_PATH}}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-container">
+            <a class="site-brand" href="{{HOME_PATH}}">Haley <span>Reeder</span></a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="{{HOME_PATH}}">Home</a>
+                <a href="{{ABOUT_PATH}}">About Me</a>
+                <a class="active" href="{{PROJECTS_PATH}}">Projects</a>
+                <a href="{{CONTACT_PATH}}">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-hero">
+            <div class="container">
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    {{BREADCRUMBS}}
+                </nav>
+
+                <div class="project-hero-content">
+                    <p class="eyebrow">{{CATEGORY_LABEL}}</p>
+                    <h1>{{TITLE}}</h1>
+                    <p class="body-large">{{SUMMARY}}</p>
+                    <div class="tag-row">{{TAGS}}</div>
+                    <div class="button-row" style="margin-top: 32px;">
+                        {{PRIMARY_ACTION}}
+                        <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
+                    </div>
+                </div>
+
+                <div class="project-summary">
+                    <div class="project-summary-item">
+                        <h3>My Role</h3>
+                        <p>{{ROLE}}</p>
+                    </div>
+                    <div class="project-summary-item">
+                        <h3>Audience</h3>
+                        <p>{{AUDIENCE}}</p>
+                    </div>
+                    <div class="project-summary-item">
+                        <h3>Tools</h3>
+                        <p>{{TOOLS_SUMMARY}}</p>
+                    </div>
+                    <div class="project-summary-item">
+                        <h3>Project Type</h3>
+                        <p>{{PROJECT_TYPE}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container case-study-layout">
+                <div class="case-study-content">
+                    <section>
+                        <p class="eyebrow">The Challenge</p>
+                        <h2>What problem was I trying to solve?</h2>
+                        <p>{{BUSINESS_NEED}}</p>
+                    </section>
+
+                    <section>
+                        <p class="eyebrow">Audience</p>
+                        <h2>Who was this for?</h2>
+                        <p>{{AUDIENCE}}</p>
+                    </section>
+
+                    <section>
+                        <p class="eyebrow">Learning Goals</p>
+                        <h2>What should learners be able to do?</h2>
+                        <ul>{{LEARNING_OBJECTIVES}}</ul>
+                    </section>
+
+                    <section>
+                        <p class="eyebrow">Design Approach</p>
+                        <h2>How I approached it.</h2>
+                        <p>{{DESIGN_APPROACH}}</p>
+                    </section>
+
+                    <section>
+                        <p class="eyebrow">Development</p>
+                        <h2>How I built it.</h2>
+                        <p>{{DEVELOPMENT_PROCESS}}</p>
+                    </section>
+
+                    {{ASSETS_SECTION}}
+
+                    <section>
+                        <p class="eyebrow">Results</p>
+                        <h2>What came out of it?</h2>
+                        <div class="results-card">
+                            <ul>{{OUTCOMES}}</ul>
+                        </div>
+                    </section>
+
+                    {{CONFIDENTIALITY_NOTE}}
+
+                    <section>
+                        <div class="cta">
+                            <p class="eyebrow" style="color: var(--mint-leaf);">Keep Exploring</p>
+                            <h2>{{CTA_HEADING}}</h2>
+                            <div class="button-row">
+                                {{PRIMARY_ACTION_CTA}}
+                                <a class="btn btn-secondary" href="{{BACK_PATH}}" style="color: white; border-color: white;">{{BACK_LABEL}}</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="case-study-sidebar">
+                    <p class="eyebrow">Project Details</p>
+                    <h3>Tools</h3>
+                    <ul class="sidebar-list">{{TOOLS_LIST}}</ul>
+                    <h3 style="margin-top: 32px;">Skills</h3>
+                    <ul class="sidebar-list">{{SKILLS_LIST}}</ul>
+                    <h3 style="margin-top: 32px;">Status</h3>
+                    <p><span class="status-badge {{STATUS_CLASS}}">{{STATUS_LABEL}}</span></p>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <p>© Haley Reeder</p>
+            <div class="footer-links">
+                <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="{{RESUME_PATH}}" target="_blank">Résumé</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
