@@ -3,14 +3,16 @@ from __future__ import annotations
 import re
 import sys
 from html.parser import HTMLParser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = ROOT / "portfolio"
 
 SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
-FORBIDDEN_PATH_PARTS = {"mutimedia"}
+FORBIDDEN_PATH_PARTS = {"mutimedia", "learning-pathways"}
+FORBIDDEN_EXACT_PATHS = {SITE_ROOT / "projects" / "ai"}
+FORBIDDEN_REFERENCE_PARTS = {"mutimedia", "learning-pathways", "ai"}
 
 
 class ReferenceParser(HTMLParser):
@@ -48,6 +50,16 @@ def resolve_local_reference(html_file: Path, raw_value: str) -> Path | None:
     return candidate
 
 
+def reference_uses_legacy_path(raw_value: str) -> str | None:
+    if not raw_value or raw_value.startswith("#") or raw_value.startswith(SKIP_SCHEMES):
+        return None
+
+    path_value = urlsplit(raw_value).path
+    parts = set(PurePosixPath(path_value).parts)
+    matches = sorted(parts & FORBIDDEN_REFERENCE_PARTS)
+    return matches[0] if matches else None
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -61,6 +73,12 @@ def main() -> int:
         for match in matches:
             errors.append(
                 f"{match.relative_to(ROOT)}: forbidden legacy path segment '{forbidden_part}'"
+            )
+
+    for forbidden_path in FORBIDDEN_EXACT_PATHS:
+        if forbidden_path.exists():
+            errors.append(
+                f"{forbidden_path.relative_to(ROOT)}: forbidden legacy project path"
             )
 
     html_files = sorted(SITE_ROOT.rglob("*.html"))
@@ -84,9 +102,6 @@ def main() -> int:
         if 'target="\\_blank"' in text or "target='\\_blank'" in text:
             errors.append(f"{relative}: escaped target=_blank detected")
 
-        if "mutimedia" in text:
-            errors.append(f"{relative}: legacy 'mutimedia' reference detected")
-
         if not re.search(r"<title>.*?</title>", text, flags=re.IGNORECASE | re.DOTALL):
             warnings.append(f"{relative}: missing <title>")
 
@@ -101,6 +116,12 @@ def main() -> int:
             continue
 
         for attribute, raw_value in parser.references:
+            legacy_part = reference_uses_legacy_path(raw_value)
+            if legacy_part:
+                errors.append(
+                    f"{relative}: legacy path reference '{legacy_part}' in {attribute}='{raw_value}'"
+                )
+
             candidate = resolve_local_reference(html_file, raw_value)
             if candidate is None:
                 continue
