@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = ROOT / "portfolio"
 
 SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
+FORBIDDEN_PATH_PARTS = {"mutimedia"}
 
 
 class ReferenceParser(HTMLParser):
@@ -55,6 +56,13 @@ def main() -> int:
         print("ERROR: portfolio/ directory does not exist.")
         return 1
 
+    for forbidden_part in FORBIDDEN_PATH_PARTS:
+        matches = [path for path in SITE_ROOT.rglob("*") if forbidden_part in path.parts]
+        for match in matches:
+            errors.append(
+                f"{match.relative_to(ROOT)}: forbidden legacy path segment '{forbidden_part}'"
+            )
+
     html_files = sorted(SITE_ROOT.rglob("*.html"))
     if not html_files:
         print("ERROR: No HTML files found under portfolio/.")
@@ -75,6 +83,9 @@ def main() -> int:
 
         if 'target="\\_blank"' in text or "target='\\_blank'" in text:
             errors.append(f"{relative}: escaped target=_blank detected")
+
+        if "mutimedia" in text:
+            errors.append(f"{relative}: legacy 'mutimedia' reference detected")
 
         if not re.search(r"<title>.*?</title>", text, flags=re.IGNORECASE | re.DOTALL):
             warnings.append(f"{relative}: missing <title>")
