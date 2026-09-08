@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "categories": [
+    {
+      "id": "instructional-design",
+      "label": "Instructional Design",
+      "subcategories": [
+        {
+          "id": "interactive-learning",
+          "label": "Interactive Learning"
+        },
+        {
+          "id": "multimedia",
+          "label": "Multimedia Training Content"
+        },
+        {
+          "id": "complete-learning-paths",
+          "label": "Complete Learning Pathways"
+        }
+      ]
+    },
+    {
+      "id": "ai-training-and-evaluation",
+      "label": "AI Training and Evaluation",
+      "subcategories": []
+    },
+    {
+      "id": "workflows",
+      "label": "Workflows",
+      "subcategories": [
+        {
+          "id": "design-development",
+          "label": "Design + Development"
+        },
+        {
+          "id": "ai-automation",
+          "label": "AI + Automation"
+        },
+        {
+          "id": "data-reporting",
+          "label": "Data + Reporting"
+        }
+      ]
+    }
+  ],
+  "statuses": [
+    {
+      "id": "live",
+      "label": "Live"
+    },
+    {
+      "id": "building",
+      "label": "Building"
+    },
+    {
+      "id": "planned",
+      "label": "Planned"
+    },
+    {
+      "id": "archived",
+      "label": "Archived"
+    }
+  ],
+  "confidentiality": [
+    {
+      "id": "public",
+      "label": "Public"
+    },
+    {
+      "id": "sanitized",
+      "label": "Sanitized / Fictionalized"
+    },
+    {
+      "id": "needs-sanitization",
+      "label": "Needs Sanitization Before Publishing"
+    }
+  ],
+  "asset_types": [
+    "image",
+    "video",
+    "pdf",
+    "document",
+    "download",
+    "embed",
+    "code",
+    "other"
+  ]
+}
