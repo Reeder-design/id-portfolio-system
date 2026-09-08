@@ -5,40 +5,58 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Explore instructional design, AI, and workflow projects by instructional designer Haley Reeder.">
 
     <title>
         Projects | Haley Reeder
     </title>
 
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts -->
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
 
 
-    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Main Stylesheet -->
+
+    <link rel="stylesheet"
+          href="../css/styles.css">
 
 </head>
+
 
 
 <body>
 
 
+    <!-- ========================================
+         NAVIGATION
+         ======================================== -->
+
     <header class="site-header">
 
         <div class="container nav-container">
 
-            <a class="site-brand" href="../index.html">
+            <a class="site-brand"
+               href="../index.html">
                 Haley <span>Reeder</span>
             </a>
 
 
-            <nav class="site-nav">
+            <nav class="site-nav"
+                 aria-label="Main navigation">
 
                 <a href="../index.html">
                     Home
@@ -48,7 +66,8 @@
                     About Me
                 </a>
 
-                <a class="active" href="./index.html">
+                <a class="active"
+                   href="./index.html">
                     Projects
                 </a>
 
@@ -66,145 +85,47 @@
 
     <main>
 
+
+        <!-- ========================================
+             PAGE HERO
+             ======================================== -->
+
         <section class="page-hero">
 
             <div class="container">
 
-                <p class="eyebrow">
-                    Portfolio
-                </p>
+                <div class="projects-intro">
 
-                <h1>
-                    Projects
-                </h1>
+                    <p class="eyebrow">
+                        Portfolio
+                    </p>
 
-                <p class="body-large reading-width">
-                    Instructional design, interactive learning,
-                    automation, learning technology, and AI projects.
-                </p>
+                    <h1>
+                        Explore my work.
+                    </h1>
 
-            </div>
-
-        </section>
-
-
-        <section class="section">
-
-            <div class="container">
-
-                <div class="project-grid">
-
-                    <a class="project-card project-card-link" href="./project-template/index.html">
-
-                        <div class="project-placeholder">
-                            Interactive Learning
-                        </div>
-
-                        <div class="project-content">
-
-                            <h3>
-                                Interactive Learning
-                            </h3>
-
-                            <p>
-                                Storyline interactions, scenarios,
-                                simulations, and custom HTML learning
-                                experiences.
-                            </p>
-
-                            <span class="project-link">
-                                View Case Study →
-                            </span>
-
-                        </div>
-
-                    </a>
+                    <p class="body-large">
+                        My portfolio is organized around three areas:
+                        instructional design, AI, and workflows.
+                        Together they show both what I build and the
+                        systems, processes, and decisions behind the work.
+                    </p>
 
 
-                    <a class="project-card project-card-link" href="./sales-enablement/index.html">
+                    <div class="button-row">
 
-                        <div class="project-placeholder">
-                            Enterprise Sales Enablement
-                        </div>
+                        <a class="btn btn-primary"
+                           href="#project-families">
+                            Browse Projects
+                        </a>
 
-                        <div class="project-content">
+                        <a class="btn btn-secondary"
+                           href="../assets/documents/Haley-Reeder-Resume.pdf"
+                           target="_blank">
+                            View Résumé
+                        </a>
 
-                            <p class="eyebrow">
-                                Sales + Partner Enablement
-                            </p>
-
-                            <h3>
-                                Enterprise Sales Enablement
-                            </h3>
-
-                            <p>
-                                Certification, scenario-based learning,
-                                pursuit qualification, partner enablement,
-                                and tools designed to help sellers move
-                                from product knowledge to better decisions.
-                            </p>
-
-                            <span class="project-link">
-                                View Case Study →
-                            </span>
-
-                        </div>
-
-                    </a>
-
-
-                    <a class="project-card project-card-link" href="./ai-evaluation-training/index.html">
-
-                        <div class="project-placeholder">
-                            AI Training + Model Evaluation
-                        </div>
-
-                        <div class="project-content">
-
-                            <p class="eyebrow">
-                                AI + Evaluation
-                            </p>
-
-                            <h3>
-                                AI Training & Model Evaluation
-                            </h3>
-
-                            <p>
-                                Model-output evaluation, structured feedback,
-                                error detection, data annotation, and the
-                                intersection between AI quality and
-                                instructional-design judgment.
-                            </p>
-
-                            <span class="project-link">
-                                View Case Study →
-                            </span>
-
-                        </div>
-
-                    </a>
-
-
-                    <article class="project-card">
-
-                        <div class="project-placeholder">
-                            Learning Technology
-                        </div>
-
-                        <div class="project-content">
-
-                            <h3>
-                                Learning Technology
-                            </h3>
-
-                            <p>
-                                LMS, analytics, xAPI, system design,
-                                and learning-operations projects.
-                            </p>
-
-                        </div>
-
-                    </article>
+                    </div>
 
                 </div>
 
@@ -212,9 +133,409 @@
 
         </section>
 
+
+
+        <!-- ========================================
+             PROJECT FAMILIES
+             ======================================== -->
+
+        <section class="section"
+                 id="project-families">
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        Project Types
+                    </p>
+
+                    <h2>
+                        Three sides of my work.
+                    </h2>
+
+                    <p class="body-large reading-width">
+                        Choose a category to explore project examples,
+                        interactive demos, complete learning structures,
+                        AI evaluation work, and the workflows that support
+                        learning development.
+                    </p>
+
+                </div>
+
+
+
+                <div class="project-family-grid">
+
+
+                    <!-- ========================================
+                         INSTRUCTIONAL DESIGN
+                         ======================================== -->
+
+                    <article class="project-family-card">
+
+
+                        <div class="project-family-header">
+
+                            <p class="eyebrow">
+                                Learning Experiences
+                            </p>
+
+                            <h2>
+                                Instructional Design
+                            </h2>
+
+                            <p>
+                                Learning design, development, assessment,
+                                multimedia, and complete learning ecosystems.
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="project-family-body">
+
+                            <p>
+                                Explore examples ranging from individual
+                                interactions to complete certification
+                                and learning-pathway structures.
+                            </p>
+
+
+                            <ul class="project-family-list">
+
+
+                                <li>
+                                    Interactive Learning Examples
+
+                                    <ul class="project-family-sublist">
+
+                                        <li>
+                                            Sales Enablement
+                                        </li>
+
+                                        <li>
+                                            Assessment Scenario
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+
+                                <li>
+                                    Multimedia Examples
+
+                                    <ul class="project-family-sublist">
+
+                                        <li>
+                                            Video Project Template
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+
+                                <li>
+                                    Complete Learning Pathways
+
+                                    <ul class="project-family-sublist">
+
+                                        <li>
+                                            Certification Structures
+                                        </li>
+
+                                        <li>
+                                            Assessments
+                                        </li>
+
+                                        <li>
+                                            Reporting
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+
+                            </ul>
+
+
+                            <a class="project-family-link"
+                               href="./instructional-design/index.html">
+
+                                Explore Instructional Design →
+
+                            </a>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- ========================================
+                         AI training and evaluation
+                         ======================================== -->
+
+                    <article class="project-family-card">
+
+
+                        <div class="project-family-header">
+
+                            <p class="eyebrow">
+                                AI + Quality
+                            </p>
+
+                            <h2>
+                                AI Training and Evaluation
+                            </h2>
+
+                            <p>
+                                Model training, evaluation, quality assurance,
+                                feedback, and AI-assisted development.
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="project-family-body">
+
+                            <p>
+                                Explore how I evaluate AI-generated work,
+                                identify meaningful issues, write actionable
+                                feedback, and apply AI within professional
+                                learning workflows.
+                            </p>
+
+
+                            <ul class="project-family-list">
+
+
+                                <li>
+                                    Training + Evaluation
+
+                                    <ul class="project-family-sublist">
+
+                                        <li>
+                                            Evaluation Demo
+                                        </li>
+
+                                        <li>
+                                            Interactive Rubric
+                                        </li>
+
+                                        <li>
+                                            Evaluation Workflow
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+
+                            </ul>
+
+
+                            <a class="project-family-link"
+                               href="./ai-training-and-evaluation/index.html">
+
+                                Explore AI →
+
+                            </a>
+
+                        </div>
+
+
+                    </article>
+
+
+
+                    <!-- ========================================
+                         WORKFLOWS
+                         ======================================== -->
+
+                    <article class="project-family-card">
+
+
+                        <div class="project-family-header">
+
+                            <p class="eyebrow">
+                                Systems + Process
+                            </p>
+
+                            <h2>
+                                Workflows
+                            </h2>
+
+                            <p>
+                                The processes, systems, automation,
+                                and data behind scalable learning work.
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="project-family-body">
+
+                            <p>
+                                Explore how I structure the work behind
+                                instructional design—from planning and
+                                development through automation, analytics,
+                                and reporting.
+                            </p>
+
+
+                            <ul class="project-family-list">
+
+
+                                <li>
+                                    AI Training and Evaluation
+                                </li>
+
+
+                                <li>
+                                    Design
+                                </li>
+
+
+                                <li>
+                                    Development
+                                </li>
+
+
+                                <li>
+                                    Data + Analytics
+                                </li>
+
+
+                                <li>
+                                    Reporting
+                                </li>
+
+
+                            </ul>
+
+
+                            <a class="project-family-link"
+                               href="./workflows/index.html">
+
+                                Explore Workflows →
+
+                            </a>
+
+                        </div>
+
+
+                    </article>
+
+
+                </div>
+
+
+
+                <!-- ========================================
+                     RESUME CTA
+                     ======================================== -->
+
+                <div class="resume-strip">
+
+
+                    <div>
+
+                        <p class="eyebrow"
+                           style="color: var(--mint-leaf);">
+                            Professional Experience
+                        </p>
+
+                        <h2>
+                            Looking for the traditional version?
+                        </h2>
+
+                        <p>
+                            View my résumé for a concise overview of my
+                            instructional design, learning technology,
+                            sales enablement, AI, LMS, and development
+                            experience.
+                        </p>
+
+                    </div>
+
+
+                    <div class="button-row">
+
+                        <a class="btn btn-highlight"
+                           href="../assets/documents/Haley-Reeder-Resume.pdf"
+                           target="_blank">
+                            View Résumé
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================================
+             CTA
+             ======================================== -->
+
+        <section class="section section-soft">
+
+            <div class="container">
+
+                <div class="cta">
+
+                    <p class="eyebrow"
+                       style="color: var(--mint-leaf);">
+                        Keep Exploring
+                    </p>
+
+                    <h2>
+                        Want to know more about how I approach the work?
+                    </h2>
+
+                    <div class="button-row">
+
+                        <a class="btn btn-highlight"
+                           href="../about/index.html">
+                            About Me
+                        </a>
+
+                        <a class="btn btn-secondary"
+                           href="../contact/index.html"
+                           style="color: white; border-color: white;">
+                            Contact Me
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
     </main>
 
 
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
 
     <footer class="site-footer">
 
@@ -227,15 +548,20 @@
 
             <div class="footer-links">
 
-                <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/reeder-design"
+                   target="_blank"
+                   rel="noopener noreferrer">
                     GitHub
                 </a>
 
-                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/haley-reeder"
+                   target="_blank"
+                   rel="noopener noreferrer">
                     LinkedIn
                 </a>
 
-                <a href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank">
+                <a href="../assets/documents/Haley-Reeder-Resume.pdf"
+                   target="_blank">
                     Résumé
                 </a>
 

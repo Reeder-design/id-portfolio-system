@@ -8,10 +8,15 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
+    <meta name="description"
+          content="About instructional designer Haley Reeder and her approach to learning design, learner experience, feedback, scalable systems, AI evaluation, and reusable development.">
+
     <title>
         About Me | Haley Reeder
     </title>
 
+
+    <!-- Google Fonts -->
 
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
@@ -24,14 +29,306 @@
           rel="stylesheet">
 
 
+    <!-- Main Stylesheet -->
+
     <link rel="stylesheet"
           href="../css/styles.css">
+
+
+    <!-- About Page Specific Styles -->
+
+    <style>
+
+        /* ========================================
+           CAREER INTRO
+           ======================================== */
+
+        .career-focus-row {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 24px;
+
+        }
+
+
+        .career-focus-tag {
+
+            padding: 7px 12px;
+
+            background: var(--white);
+
+            border: 1px solid var(--light-gray);
+
+            border-radius: 999px;
+
+            color: var(--charcoal);
+
+            font-size: 0.8rem;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ========================================
+           COMMON THREAD EXPLORER
+           ======================================== */
+
+        .thread-explorer {
+
+            margin-top: 32px;
+
+            padding: 32px;
+
+            background: var(--white);
+
+            border: 1px solid var(--light-gray);
+
+            border-radius: 20px;
+
+        }
+
+
+        .thread-options {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 12px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .thread-option {
+
+            min-height: 96px;
+
+            padding: 16px;
+
+            background: var(--off-white);
+
+            color: var(--charcoal);
+
+            border: 2px solid var(--light-gray);
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition:
+                transform 0.15s ease,
+                border-color 0.15s ease,
+                background-color 0.15s ease;
+
+        }
+
+
+        .thread-option:hover {
+
+            transform: translateY(-2px);
+
+            border-color: var(--mint-leaf);
+
+        }
+
+
+        .thread-option.active {
+
+            background: var(--pine-blue);
+
+            color: var(--white);
+
+            border-color: var(--pine-blue);
+
+        }
+
+
+        .thread-option-number {
+
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: var(--pine-blue);
+
+            font-size: 0.72rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+
+        }
+
+
+        .thread-option.active .thread-option-number {
+            color: var(--yellow-green);
+        }
+
+
+        .thread-option-title {
+
+            display: block;
+
+            font-family: var(--font-heading);
+
+            font-weight: 700;
+
+            line-height: 1.3;
+
+        }
+
+
+        .thread-detail {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 16px;
+
+            padding: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(80, 132, 132, 0.11),
+                    rgba(121, 201, 158, 0.12)
+                );
+
+            border-radius: 14px;
+
+        }
+
+
+        .thread-detail-card {
+
+            padding: 18px;
+
+            background:
+                rgba(255, 255, 255, 0.78);
+
+            border-radius: 10px;
+
+        }
+
+
+        .thread-detail-card h3 {
+
+            margin-bottom: 8px;
+
+            color: var(--pine-blue);
+
+            font-size: 0.95rem;
+
+        }
+
+
+        .thread-detail-card p {
+            margin-bottom: 0;
+        }
+
+
+        .thread-question {
+
+            margin-top: 20px;
+
+            padding: 22px;
+
+            background: var(--taupe);
+
+            color: var(--white);
+
+            border-radius: 14px;
+
+            text-align: center;
+
+        }
+
+
+        .thread-question span {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--mint-leaf);
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .thread-question strong {
+
+            font-family: var(--font-heading);
+
+            font-size: clamp(1.1rem, 3vw, 1.45rem);
+
+            line-height: 1.4;
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .thread-options {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+
+            .thread-detail {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .thread-options {
+                grid-template-columns: 1fr;
+            }
+
+
+            .thread-explorer {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
+
 <body>
 
+
+    <!-- ========================================
+         NAVIGATION
+         ======================================== -->
 
     <header class="site-header">
 
@@ -43,7 +340,8 @@
             </a>
 
 
-            <nav class="site-nav">
+            <nav class="site-nav"
+                 aria-label="Main navigation">
 
                 <a href="../index.html">
                     Home
@@ -73,7 +371,9 @@
     <main>
 
 
-        <!-- ABOUT HERO -->
+        <!-- ========================================
+             PROFESSIONAL INTRO
+             ======================================== -->
 
         <section class="page-hero">
 
@@ -87,17 +387,52 @@
                     </p>
 
                     <h1>
-                        I like figuring out how to make
-                        complicated things easier to learn.
+                        Leaning design and development for clarity, usefulness, and performance.
+
                     </h1>
 
+
                     <p class="body-large">
-                        I'm an instructional designer and learning &
-                        development professional with a background
-                        spanning classroom teaching, corporate learning,
-                        enterprise technology, sales enablement,
-                        and AI-related work.
+                        I've worked in various fields creating instructional design content. 
+                        From public to private sectors, adults to children, humans to bots, I can design for all. 
+                        My most recent work has focused around building content for enterprise learning environments for audiences
+                        such as sales and partner enablement, product launch support, and customer support.
+                        My projects range from interactive learning and certification pathways to LMS processes, analytics,
+                        workflow automation and project management, and custom digital content.
+                
                     </p>
+
+
+                    <p>
+                        Before moving into corporate L&D, I taught high school history and english. That classroom background,
+                         along with my Master of Education, still shapes how I think about clarity, practice, feedback, assessment,
+                        and whether learning actually supports performance.
+                    </p>
+
+
+                    <div class="career-focus-row">
+
+                        <span class="career-focus-tag">
+                            Learning Design
+                        </span>
+
+                        <span class="career-focus-tag">
+                            Sales Enablement
+                        </span>
+
+                        <span class="career-focus-tag">
+                            Learning Technology
+                        </span>
+
+                        <span class="career-focus-tag">
+                            AI Training + Evaluation
+                        </span>
+
+                        <span class="career-focus-tag">
+                            Workflow Systems
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -115,73 +450,14 @@
 
 
 
-        <!-- HOW I GOT HERE -->
-
-        <section class="section">
-
-            <div class="container story-block">
-
-                <p class="eyebrow">
-                    How I Got Here
-                </p>
-
-                <h2>
-                    Education, technology, and a lot of curiosity.
-                </h2>
-
-
-                <p>
-                    I actually started my career as a high school
-                    history and English teacher.
-                </p>
-
-
-                <p>
-                    That experience still has a huge influence on
-                    the way I design learning. Teaching made me think
-                    a lot about what people really understand versus
-                    what they've simply been exposed to, how to
-                    scaffold difficult information, how to give useful
-                    feedback, and how to tell whether an assessment is
-                    actually measuring what you intended it to measure.
-                </p>
-
-
-                <p>
-                    I eventually moved from classroom education into
-                    instructional design and corporate learning.
-                    That gave me the chance to combine the part of
-                    education I loved with something else I've always
-                    been interested in: technology.
-                </p>
-
-
-                <p>
-                    Since then, my work has expanded into digital
-                    learning development, sales enablement, LMS
-                    administration, learning analytics, automation,
-                    AI evaluation, and custom interactive development.
-                </p>
-
-
-                <p>
-                    I also hold a Master of Education, so my approach
-                    tends to live somewhere between learning theory,
-                    practical instructional design, and figuring out
-                    how technology can make the whole thing work better.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- PRINCIPLES -->
+        <!-- ========================================
+             L&D APPROACH
+             ======================================== -->
 
         <section class="section section-soft">
 
             <div class="container">
+
 
                 <div class="section-heading">
 
@@ -190,96 +466,146 @@
                     </p>
 
                     <h2>
-                        A few things I keep coming back to.
+                        My L&D approach.
                     </h2>
+
+                    <p class="body-large reading-width">
+                        The format of a learning solution may change,
+                        but these are the ideas I keep coming back to
+                        when I'm deciding what to build, how it should
+                        work, and how I'll know whether it's useful.
+                    </p>
 
                 </div>
 
 
-                <div class="principles-grid">
+
+                <div class="approach-explorer">
 
 
-                    <article class="principle">
+                    <!-- APPROACH BUTTONS -->
 
-                        <h3>
-                            Start with what people need to do.
-                        </h3>
+                    <div class="approach-buttons"
+                         role="tablist"
+                         aria-label="Learning and development approach">
 
-                        <p>
-                            I don't like starting with,
-                            “What slides should we make?”
-                            I'd rather start with what someone
-                            should actually be able to do differently
-                            afterward.
+
+                        <button class="approach-button active"
+                                type="button"
+                                role="tab"
+                                aria-selected="true"
+                                data-approach="needs">
+
+                            <span class="approach-index">
+                                01
+                            </span>
+
+                            <span class="approach-button-title">
+                                The nuance of learning needs
+                            </span>
+
+                        </button>
+
+
+                        <button class="approach-button"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-approach="experience">
+
+                            <span class="approach-index">
+                                02
+                            </span>
+
+                            <span class="approach-button-title">
+                                Let people learn
+                            </span>
+
+                        </button>
+
+
+                        <button class="approach-button"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-approach="feedback">
+
+                            <span class="approach-index">
+                                03
+                            </span>
+
+                            <span class="approach-button-title">
+                                Feedback loops for life
+                            </span>
+
+                        </button>
+
+
+                        <button class="approach-button"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-approach="reuse">
+
+                            <span class="approach-index">
+                                04
+                            </span>
+
+                            <span class="approach-button-title">
+                                Build things that can be reused
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- APPROACH DETAIL -->
+
+                    <div class="approach-detail"
+                         id="approachDetail">
+
+                        <p class="eyebrow"
+                           id="approachEyebrow">
+                            Learning Needs
                         </p>
 
-                    </article>
-
-
-                    <article class="principle">
-
-                        <h3>
-                            Let people practice.
+                        <h3 id="approachTitle">
+                            The nuance of learning needs.
                         </h3>
 
-                        <p>
-                            I'm a big believer in scenarios,
-                            decisions, application, and feedback.
-                            If someone has to use the information
-                            later, the learning should give them a
-                            chance to practice using it.
+                        <p class="body-large"
+                           id="approachText">
+
+                            My job isn't to turn every piece of SME
+                            knowledge into training. It's to figure out
+                            what the learner actually needs and organize
+                            it in a way that makes sense.
+
                         </p>
 
-                    </article>
+                        <p id="approachTextSecondary">
 
+                            From the learning need, I can determine the
+                            most effective learning solution to pursue—
+                            whether that's a course, scenario, resource,
+                            pathway, performance support, or something
+                            else entirely.
 
-                    <article class="principle">
-
-                        <h3>
-                            Make complexity manageable.
-                        </h3>
-
-                        <p>
-                            My job isn't to turn every piece of
-                            SME knowledge into training. It's to
-                            figure out what the learner actually
-                            needs and organize it in a way that makes sense.
                         </p>
 
-                    </article>
 
+                        <div class="approach-detail-callout"
+                             id="approachCallout">
 
-                    <article class="principle">
+                            Start with the performance need.
+                            Then decide what learning actually belongs there.
 
-                        <h3>
-                            Build things that can be reused.
-                        </h3>
+                        </div>
 
-                        <p>
-                            If I know I'm going to need something
-                            again, I'd rather build a template,
-                            component, workflow, or system than
-                            rebuild it from scratch every time.
-                        </p>
-
-                    </article>
-
-
-                    <article class="principle">
-
-                        <h3>
-                            Good learning has to work.
-                        </h3>
-
-                        <p>
-                            I care about polish, but I also care
-                            about accuracy, usability, accessibility,
-                            technical functionality, instructional
-                            alignment, and whether the learner can
-                            actually use it.
-                        </p>
-
-                    </article>
+                    </div>
 
 
                 </div>
@@ -290,119 +616,196 @@
 
 
 
-        <!-- EXPERTISE -->
+        <!-- ========================================
+             COMMON THREAD
+             ======================================== -->
 
         <section class="section">
 
             <div class="container">
+
 
                 <div class="section-heading">
 
                     <p class="eyebrow">
-                        What I Work On
+                        The Common Thread
                     </p>
 
                     <h2>
-                        Areas of expertise.
+                        Different projects. Same design instinct.
                     </h2>
+
+                    <p class="body-large reading-width">
+                        The deliverable may change, but I tend to approach
+                        the work through the same lens. Select an area
+                        to see what that looks like in practice.
+                    </p>
 
                 </div>
 
 
-                <div class="expertise-grid">
+
+                <div class="thread-explorer">
 
 
-                    <article class="expertise-card">
+                    <!-- THREAD OPTIONS -->
 
-                        <h3>
-                            Instructional Design + Curriculum
-                        </h3>
-
-                        <p>
-                            Needs analysis, learning objectives,
-                            curriculum architecture, scenario-based
-                            learning, assessments, certifications,
-                            QA, and full learning-program development.
-                        </p>
-
-                    </article>
+                    <div class="thread-options"
+                         role="tablist"
+                         aria-label="Common thread project areas">
 
 
-                    <article class="expertise-card">
+                        <button class="thread-option active"
+                                type="button"
+                                role="tab"
+                                aria-selected="true"
+                                data-thread="learning">
 
-                        <h3>
-                            Sales Enablement
-                        </h3>
+                            <span class="thread-option-number">
+                                01
+                            </span>
 
-                        <p>
-                            Product training, solution training,
-                            technical foundations for sales,
-                            customer scenarios, partner enablement,
-                            and certification programs.
-                        </p>
+                            <span class="thread-option-title">
+                                Learning Design
+                            </span>
 
-                    </article>
-
-
-                    <article class="expertise-card">
-
-                        <h3>
-                            Digital Learning Development
-                        </h3>
-
-                        <p>
-                            Rise 360, Storyline 360, interactive
-                            learning, multimedia, assessments,
-                            and custom learning experiences.
-                        </p>
-
-                    </article>
+                        </button>
 
 
-                    <article class="expertise-card">
+                        <button class="thread-option"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-thread="systems">
 
-                        <h3>
-                            Learning Technology + LMS
-                        </h3>
+                            <span class="thread-option-number">
+                                02
+                            </span>
 
-                        <p>
-                            LMS administration, deployment, reporting,
-                            learning paths, certifications, analytics,
-                            and learning-system workflows.
-                        </p>
+                            <span class="thread-option-title">
+                                Systems + Data
+                            </span>
 
-                    </article>
-
-
-                    <article class="expertise-card">
-
-                        <h3>
-                            AI + Evaluation
-                        </h3>
-
-                        <p>
-                            AI-generated content evaluation,
-                            model-output assessment, prompt refinement,
-                            rubric-based scoring, error detection,
-                            actionable feedback, and AI-assisted development.
-                        </p>
-
-                    </article>
+                        </button>
 
 
-                    <article class="expertise-card">
+                        <button class="thread-option"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-thread="ai">
 
-                        <h3>
-                            Data + Automation
-                        </h3>
+                            <span class="thread-option-number">
+                                03
+                            </span>
 
-                        <p>
-                            Reporting workflows, data cleaning,
-                            Python automation, Excel, pandas,
-                            openpyxl, and workflow improvement.
-                        </p>
+                            <span class="thread-option-title">
+                                AI Evaluation
+                            </span>
 
-                    </article>
+                        </button>
+
+
+                        <button class="thread-option"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                data-thread="development">
+
+                            <span class="thread-option-number">
+                                04
+                            </span>
+
+                            <span class="thread-option-title">
+                                Custom Development
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- DYNAMIC DETAIL -->
+
+                    <div class="thread-detail">
+
+
+                        <article class="thread-detail-card">
+
+                            <p class="eyebrow">
+                                The Work
+                            </p>
+
+                            <h3 id="threadWorkTitle">
+                                Learning Design
+                            </h3>
+
+                            <p id="threadWork">
+                                Turn a performance need into a learning
+                                experience people can understand and apply.
+                            </p>
+
+                        </article>
+
+
+                        <article class="thread-detail-card">
+
+                            <p class="eyebrow">
+                                What I'm Looking At
+                            </p>
+
+                            <h3>
+                                The friction
+                            </h3>
+
+                            <p id="threadFocus">
+                                What does the learner actually need?
+                                What is unnecessary? Where does practice,
+                                feedback, or better sequencing help?
+                            </p>
+
+                        </article>
+
+
+                        <article class="thread-detail-card">
+
+                            <p class="eyebrow">
+                                Better Looks Like
+                            </p>
+
+                            <h3>
+                                The outcome
+                            </h3>
+
+                            <p id="threadOutcome">
+                                A clear, relevant experience that makes
+                                the expected performance easier to understand
+                                and practice.
+                            </p>
+
+                        </article>
+
+
+                    </div>
+
+
+
+                    <!-- SHARED QUESTION -->
+
+                    <div class="thread-question">
+
+                        <span>
+                            The question underneath all of it
+                        </span>
+
+                        <strong>
+                            How can I make this clearer, more useful,
+                            and easier for someone to actually use?
+                        </strong>
+
+                    </div>
 
 
                 </div>
@@ -413,260 +816,37 @@
 
 
 
-        <!-- TOOLKIT -->
+        <!-- ========================================
+             CTA
+             ======================================== -->
 
         <section class="section section-soft">
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        Tools & Technology
-                    </p>
-
-                    <h2>
-                        The platforms and tools I use.
-                    </h2>
-
-                </div>
-
-
-                <div class="toolkit-grid">
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Authoring
-                        </h3>
-
-                        <p>
-                            Articulate Rise 360 • Storyline 360 •
-                            PowerPoint • Camtasia
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Design + Media
-                        </h3>
-
-                        <p>
-                            Adobe Creative Cloud • Canva
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Learning Management Systems
-                        </h3>
-
-                        <p>
-                            Docebo • Absorb • Canvas • Schoology •
-                            Cornerstone • Workday Learning
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Learning Technology
-                        </h3>
-
-                        <p>
-                            SCORM • xAPI • Learning Analytics •
-                            Certification Tracking • LMS Reporting
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Data + Automation
-                        </h3>
-
-                        <p>
-                            Excel • Python • pandas • openpyxl •
-                            Workflow Automation
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            AI Tools + Evaluation
-                        </h3>
-
-                        <p>
-                            Generative AI • Model Evaluation •
-                            Prompt Design • Rubric-Based Evaluation •
-                            Error Detection • AI-Assisted Development
-                        </p>
-
-                    </div>
-
-
-                    <div class="toolkit-group">
-
-                        <h3>
-                            Web Development
-                        </h3>
-
-                        <p>
-                            HTML • CSS • JavaScript • Git • GitHub •
-                            Custom Learning Interactions
-                        </p>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- LEARNING NOW -->
-
-        <section class="section">
-
-            <div class="container">
-
-                <div class="feature-callout">
-
-                    <p class="eyebrow">
-                        What I'm Learning Now
-                    </p>
-
-                    <h2>
-                        More control over what I can build.
-                    </h2>
-
-
-                    <p>
-                        Right now, one of my biggest professional
-                        development projects is learning how to build
-                        custom web-based learning components.
-                    </p>
-
-
-                    <p>
-                        I'm creating a private library of HTML,
-                        CSS, and JavaScript templates, interaction
-                        patterns, Storyline and Rise assets, design
-                        systems, scoring logic, and development
-                        workflows that I can reuse in future projects.
-                    </p>
-
-
-                    <p>
-                        I'm not trying to become a software engineer
-                        instead of an instructional designer.
-                        I'm interested in understanding enough development
-                        to have more control over what I can build as
-                        an instructional designer.
-                    </p>
-
-
-                    <p>
-                        I also want to understand what AI-generated
-                        code is actually doing instead of treating it
-                        like a magic box.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- COMMON THREAD -->
-
-        <section class="section section-soft">
-
-            <div class="container story-block">
-
-                <p class="eyebrow">
-                    The Common Thread
-                </p>
-
-                <h2>
-                    Different projects. Same question.
-                </h2>
-
-
-                <p class="body-large">
-                    I might be designing a sales certification one day,
-                    cleaning LMS data with Python another day,
-                    reviewing an AI-generated artifact, or figuring
-                    out how to make JavaScript talk to a learning
-                    interaction.
-                </p>
-
-
-                <p class="body-large">
-
-                    But the question underneath all of it is usually:
-
-                    <strong>
-                        How can I make this clearer, more useful,
-                        and easier for someone to actually use?
-                    </strong>
-
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- RESUME CTA -->
-
-        <section class="section">
 
             <div class="container">
 
                 <div class="cta">
 
-                    <p class="eyebrow">
-                        Want the résumé version?
+                    <p class="eyebrow"
+                       style="color: var(--mint-leaf);">
+                        Keep Exploring
                     </p>
 
                     <h2>
-                        Work history, education, and skills.
+                        Want to see how that approach shows up in the work?
                     </h2>
 
 
                     <div class="button-row">
 
                         <a class="btn btn-highlight"
-                           href="../assets/documents/Haley-Reeder-Resume.pdf"
-                           target="_blank">
-                            View Résumé
+                           href="../projects/index.html">
+                            View Projects
                         </a>
 
                         <a class="btn btn-secondary"
-                           href="../projects/index.html"
+                           href="../contact/index.html"
                            style="color: white; border-color: white;">
-                            View Projects
+                            Contact Me
                         </a>
 
                     </div>
@@ -681,6 +861,10 @@
     </main>
 
 
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
 
     <footer class="site-footer">
 
@@ -715,6 +899,406 @@
         </div>
 
     </footer>
+
+
+
+    <!-- ========================================
+         L&D APPROACH JAVASCRIPT
+         ======================================== -->
+
+    <script>
+
+        const approachData = {
+
+
+            needs: {
+
+                eyebrow:
+                    "Learning Needs",
+
+                title:
+                    "The nuance of learning needs.",
+
+                text:
+                    "My job isn't to turn every piece of SME knowledge into training. It's to figure out what the learner actually needs and organize it in a way that makes sense.",
+
+                secondary:
+                    "From the learning need, I can determine the most effective learning solution to pursue—whether that's a course, scenario, resource, pathway, performance support, or something else entirely.",
+
+                callout:
+                    "Start with the performance need. Then decide what learning actually belongs there."
+
+            },
+
+
+            experience: {
+
+                eyebrow:
+                    "Learner Experience",
+
+                title:
+                    "Let people learn.",
+
+                text:
+                    "When it comes to learner engagement, I believe many of the problems we tend to see come from learning design and experience rather than learner motivation alone.",
+
+                secondary:
+                    "Clarity, relevance, and usefulness are important for learner buy-in, but user experience, accessibility, and functionality matter just as much. Creating instructional alignment through a smooth experience that is accurate, interactive, and useful gives learning a chance to happen naturally.",
+
+                callout:
+                    "Good learning design removes unnecessary friction so the learner can focus on the thing they're actually there to learn."
+
+            },
+
+
+            feedback: {
+
+                eyebrow:
+                    "Measurement + Improvement",
+
+                title:
+                    "Feedback loops for life.",
+
+                text:
+                    "I bridge the gap between learning instruction, real-world application, and business outcomes.",
+
+                secondary:
+                    "My approach uses data-driven feedback loops, reporting, learner and stakeholder input, assessment evidence, and structured documentation to create learning solutions that can improve over time instead of becoming static after launch.",
+
+                callout:
+                    "Launch isn't the end of the learning solution. It's where the next round of evidence begins."
+
+            },
+
+
+            reuse: {
+
+                eyebrow:
+                    "Scalability + Reuse",
+
+                title:
+                    "Build things that can be reused.",
+
+                text:
+                    "If I know I'm going to need something again, I'd rather build a template, component, workflow, or system than rebuild it from scratch every time.",
+
+                secondary:
+                    "Reusable structures make development faster, improve consistency, simplify maintenance, and free up more time for the parts of the work that actually require new thinking.",
+
+                callout:
+                    "Build it once, understand how it works, and make it reusable."
+
+            }
+
+        };
+
+
+
+        const approachButtons =
+            document.querySelectorAll(
+                ".approach-button"
+            );
+
+
+        const approachEyebrow =
+            document.getElementById(
+                "approachEyebrow"
+            );
+
+
+        const approachTitle =
+            document.getElementById(
+                "approachTitle"
+            );
+
+
+        const approachText =
+            document.getElementById(
+                "approachText"
+            );
+
+
+        const approachTextSecondary =
+            document.getElementById(
+                "approachTextSecondary"
+            );
+
+
+        const approachCallout =
+            document.getElementById(
+                "approachCallout"
+            );
+
+
+
+        function renderApproach(
+            approach
+        ) {
+
+            const data =
+                approachData[
+                    approach
+                ];
+
+
+            approachEyebrow.textContent =
+                data.eyebrow;
+
+
+            approachTitle.textContent =
+                data.title;
+
+
+            approachText.textContent =
+                data.text;
+
+
+            approachTextSecondary.textContent =
+                data.secondary;
+
+
+            approachCallout.textContent =
+                data.callout;
+
+        }
+
+
+
+        approachButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        approachButtons.forEach(
+                            function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+
+                                item.setAttribute(
+                                    "aria-selected",
+                                    "false"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        button.setAttribute(
+                            "aria-selected",
+                            "true"
+                        );
+
+
+                        renderApproach(
+                            button.dataset.approach
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+
+    <!-- ========================================
+         COMMON THREAD JAVASCRIPT
+         ======================================== -->
+
+    <script>
+
+        const threadData = {
+
+
+            learning: {
+
+                title:
+                    "Learning Design",
+
+                work:
+                    "Turn a performance need into a learning experience people can understand and apply.",
+
+                focus:
+                    "What does the learner actually need? What is unnecessary? Where does practice, feedback, or better sequencing help?",
+
+                outcome:
+                    "A clear, relevant experience that makes the expected performance easier to understand and practice."
+
+            },
+
+
+            systems: {
+
+                title:
+                    "Systems + Data",
+
+                work:
+                    "Connect learning delivery, LMS processes, reporting, and data into a system that people can actually manage.",
+
+                focus:
+                    "Where is information getting lost? What is repetitive? What needs cleaner data, clearer ownership, or a more reliable process?",
+
+                outcome:
+                    "A learning ecosystem that is easier to operate, measure, maintain, and improve over time."
+
+            },
+
+
+            ai: {
+
+                title:
+                    "AI Evaluation",
+
+                work:
+                    "Determine whether AI-generated work is accurate, grounded, complete, aligned to the task, and useful to the person relying on it.",
+
+                focus:
+                    "What does the evidence support? Where are the material errors or gaps? How serious are they, and what feedback would improve the next result?",
+
+                outcome:
+                    "A more reliable output—and evaluation data that is consistent, explainable, and useful for model improvement."
+
+            },
+
+
+            development: {
+
+                title:
+                    "Custom Development",
+
+                work:
+                    "Build learning interactions and reusable components when standard authoring patterns aren't enough.",
+
+                focus:
+                    "What does the interaction need to do? How can the logic stay understandable, reusable, accessible, and maintainable?",
+
+                outcome:
+                    "More control over the learner experience without creating something unnecessarily complicated to support later."
+
+            }
+
+        };
+
+
+
+        const threadButtons =
+            document.querySelectorAll(
+                ".thread-option"
+            );
+
+
+        const threadWorkTitle =
+            document.getElementById(
+                "threadWorkTitle"
+            );
+
+
+        const threadWork =
+            document.getElementById(
+                "threadWork"
+            );
+
+
+        const threadFocus =
+            document.getElementById(
+                "threadFocus"
+            );
+
+
+        const threadOutcome =
+            document.getElementById(
+                "threadOutcome"
+            );
+
+
+
+        function renderThread(
+            thread
+        ) {
+
+            const data =
+                threadData[
+                    thread
+                ];
+
+
+            threadWorkTitle.textContent =
+                data.title;
+
+
+            threadWork.textContent =
+                data.work;
+
+
+            threadFocus.textContent =
+                data.focus;
+
+
+            threadOutcome.textContent =
+                data.outcome;
+
+        }
+
+
+
+        threadButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        threadButtons.forEach(
+                            function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+
+                                item.setAttribute(
+                                    "aria-selected",
+                                    "false"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        button.setAttribute(
+                            "aria-selected",
+                            "true"
+                        );
+
+
+                        renderThread(
+                            button.dataset.thread
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
 
 
 </body>

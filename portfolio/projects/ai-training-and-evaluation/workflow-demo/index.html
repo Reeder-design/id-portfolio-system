@@ -1,0 +1,2464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Interactive AI training and evaluation workflow demonstration by Haley Reeder, showing task analysis, grounding, artifact-specific QA, severity classification, actionable feedback, and evaluator calibration.">
+
+    <title>
+        AI Evaluation Workflow | Haley Reeder
+    </title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        :root {
+
+            --taupe: #4A4238;
+            --charcoal: #4D5359;
+            --pine-blue: #508484;
+            --mint-leaf: #79C99E;
+            --yellow-green: #97DB4F;
+
+            --white: #FFFFFF;
+            --off-white: #F7F8F5;
+            --light-gray: #E8EBE8;
+            --medium-gray: #C9CECB;
+            --muted-text: #6F777D;
+
+            --font-heading:
+                "Montserrat",
+                Arial,
+                sans-serif;
+
+            --font-body:
+                "Open Sans",
+                Arial,
+                sans-serif;
+
+            --content-width: 1200px;
+
+            --radius-small: 8px;
+            --radius: 12px;
+            --radius-large: 20px;
+            --radius-pill: 999px;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: var(--off-white);
+
+            color: var(--charcoal);
+
+            font-family: var(--font-body);
+
+            line-height: 1.65;
+
+        }
+
+
+        h1,
+        h2,
+        h3,
+        h4 {
+
+            margin-top: 0;
+
+            color: var(--charcoal);
+
+            font-family: var(--font-heading);
+
+            line-height: 1.15;
+
+        }
+
+
+        h1 {
+            font-size:
+                clamp(2.5rem, 6vw, 4.5rem);
+        }
+
+
+        h2 {
+            font-size:
+                clamp(1.7rem, 4vw, 2.6rem);
+        }
+
+
+        p {
+            margin-top: 0;
+        }
+
+
+        button {
+            font: inherit;
+        }
+
+
+        button:focus-visible,
+        a:focus-visible {
+
+            outline:
+                3px solid var(--yellow-green);
+
+            outline-offset: 4px;
+
+        }
+
+
+        .container {
+
+            width: 90%;
+
+            max-width: var(--content-width);
+
+            margin: 0 auto;
+
+        }
+
+
+        .eyebrow {
+
+            margin-bottom: 8px;
+
+            color: var(--pine-blue);
+
+            font-size: 0.78rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.11em;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .body-large {
+
+            font-size: 1.08rem;
+
+            line-height: 1.75;
+
+        }
+
+
+        /* ========================================
+           HEADER
+           ======================================== */
+
+        .site-header {
+
+            background: var(--taupe);
+
+            color: var(--white);
+
+        }
+
+
+        .nav {
+
+            min-height: 68px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 24px;
+
+        }
+
+
+        .brand {
+
+            color: var(--white);
+
+            font-family: var(--font-heading);
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+        }
+
+
+        .brand span {
+            color: var(--mint-leaf);
+        }
+
+
+        .back-link {
+
+            color: var(--mint-leaf);
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+        }
+
+
+        .back-link:hover {
+            color: var(--yellow-green);
+        }
+
+
+        /* ========================================
+           HERO
+           ======================================== */
+
+        .hero {
+
+            padding: 72px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(80, 132, 132, 0.16),
+                    rgba(151, 219, 79, 0.10)
+                );
+
+        }
+
+
+        .hero-copy {
+
+            max-width: 830px;
+
+            font-size: 1.15rem;
+
+        }
+
+
+        .tag-row {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 24px;
+
+        }
+
+
+        .tag {
+
+            padding: 6px 11px;
+
+            background: var(--white);
+
+            border:
+                1px solid var(--light-gray);
+
+            border-radius: var(--radius-pill);
+
+            font-size: 0.78rem;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ========================================
+           WORKSPACE
+           ======================================== */
+
+        .workspace {
+            padding: 64px 0 80px;
+        }
+
+
+        .intro-callout {
+
+            margin-bottom: 40px;
+
+            padding: 24px;
+
+            background: #EAF7F0;
+
+            border-left:
+                6px solid var(--mint-leaf);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .intro-callout p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* ========================================
+           ARTIFACT SELECTOR
+           ======================================== */
+
+        .selector {
+
+            margin-bottom: 40px;
+
+            padding: 26px;
+
+            background: var(--white);
+
+            border:
+                1px solid var(--light-gray);
+
+            border-radius: var(--radius-large);
+
+        }
+
+
+        .selector h2 {
+            margin-bottom: 8px;
+        }
+
+
+        .content-buttons {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .type-button {
+
+            min-height: 44px;
+
+            padding:
+                10px
+                16px;
+
+            background: var(--off-white);
+
+            color: var(--charcoal);
+
+            border:
+                2px solid var(--light-gray);
+
+            border-radius: var(--radius-pill);
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                border-color 0.15s ease,
+                background-color 0.15s ease;
+
+        }
+
+
+        .type-button:hover {
+
+            transform: translateY(-2px);
+
+            border-color: var(--mint-leaf);
+
+        }
+
+
+        .type-button.active {
+
+            background: var(--pine-blue);
+
+            color: var(--white);
+
+            border-color: var(--pine-blue);
+
+        }
+
+
+        /* ========================================
+           ARTIFACT SUMMARY
+           ======================================== */
+
+        .content-summary {
+
+            margin-bottom: 48px;
+
+            padding: 30px;
+
+            background: #EAF7F0;
+
+            border-left:
+                7px solid var(--mint-leaf);
+
+            border-radius: var(--radius-large);
+
+        }
+
+
+        .content-summary > p {
+            max-width: 860px;
+        }
+
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 16px;
+
+            margin-top: 24px;
+
+        }
+
+
+        .summary-card {
+
+            padding: 20px;
+
+            background: var(--white);
+
+            border:
+                1px solid
+                rgba(74, 66, 56, 0.07);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .summary-card h3 {
+
+            margin-bottom: 8px;
+
+            color: var(--pine-blue);
+
+            font-size: 1rem;
+
+        }
+
+
+        .summary-card ul {
+
+            margin-bottom: 0;
+
+            padding-left: 20px;
+
+        }
+
+
+        .summary-card li {
+            margin-bottom: 6px;
+        }
+
+
+        .human-impact {
+
+            margin-top: 18px;
+
+            padding: 18px;
+
+            background:
+                rgba(80, 132, 132, 0.09);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .human-impact strong {
+            color: var(--pine-blue);
+        }
+
+
+        /* ========================================
+           WORKFLOW
+           ======================================== */
+
+        .workflow-intro {
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .workflow {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(7, minmax(145px, 1fr));
+
+            gap: 12px;
+
+            align-items: stretch;
+
+            overflow-x: auto;
+
+            padding-bottom: 14px;
+
+        }
+
+
+        .workflow-step {
+
+            min-width: 145px;
+
+            padding:
+                20px
+                15px;
+
+            background: var(--white);
+
+            color: var(--charcoal);
+
+            border:
+                2px solid var(--light-gray);
+
+            border-radius: var(--radius);
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition:
+                transform 0.15s ease,
+                border-color 0.15s ease,
+                background-color 0.15s ease;
+
+        }
+
+
+        .workflow-step:hover {
+
+            transform: translateY(-3px);
+
+            border-color: var(--mint-leaf);
+
+        }
+
+
+        .workflow-step.active {
+
+            background: var(--pine-blue);
+
+            color: var(--white);
+
+            border-color: var(--pine-blue);
+
+        }
+
+
+        .step-number {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 12px;
+
+            background: var(--yellow-green);
+
+            color: var(--taupe);
+
+            border-radius: 50%;
+
+            font-family: var(--font-heading);
+
+            font-weight: 700;
+
+        }
+
+
+        .workflow-step strong {
+
+            display: block;
+
+            font-family: var(--font-heading);
+
+            line-height: 1.3;
+
+        }
+
+
+        /* ========================================
+           DETAIL PANEL
+           ======================================== */
+
+        .detail-panel {
+
+            margin-top: 36px;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(260px, 0.72fr)
+                minmax(0, 1.28fr);
+
+            gap: 28px;
+
+            padding: 32px;
+
+            background: var(--taupe);
+
+            color: var(--white);
+
+            border-radius: var(--radius-large);
+
+        }
+
+
+        .detail-panel h2,
+        .detail-panel h3,
+        .detail-panel h4 {
+            color: var(--white);
+        }
+
+
+        .detail-panel .eyebrow {
+            color: var(--mint-leaf);
+        }
+
+
+        .detail-number {
+
+            width: 64px;
+
+            height: 64px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            background: var(--yellow-green);
+
+            color: var(--taupe);
+
+            border-radius: 50%;
+
+            font-family: var(--font-heading);
+
+            font-size: 1.4rem;
+
+            font-weight: 700;
+
+        }
+
+
+        .detail-description {
+            max-width: 500px;
+        }
+
+
+        .questions {
+
+            padding: 24px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .questions ul {
+
+            margin-bottom: 0;
+
+            padding-left: 20px;
+
+        }
+
+
+        .questions li {
+            margin-bottom: 8px;
+        }
+
+
+        .decision-box {
+
+            margin-top: 18px;
+
+            padding: 18px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border-left:
+                4px solid var(--yellow-green);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .decision-box p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* ========================================
+           EVALUATOR PRINCIPLES
+           ======================================== */
+
+        .principles-section {
+
+            margin-top: 64px;
+
+        }
+
+
+        .principles-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-top: 24px;
+
+        }
+
+
+        .principle-card {
+
+            padding: 22px;
+
+            background: var(--white);
+
+            border:
+                1px solid var(--light-gray);
+
+            border-top:
+                5px solid var(--pine-blue);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .principle-card h3 {
+            font-size: 1.05rem;
+        }
+
+
+        .principle-card p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* ========================================
+           CTA
+           ======================================== */
+
+        .cta {
+
+            margin-top: 64px;
+
+            padding: 30px;
+
+            background: var(--taupe);
+
+            color: var(--white);
+
+            border-radius: var(--radius-large);
+
+        }
+
+
+        .cta h2 {
+            color: var(--white);
+        }
+
+
+        .cta .eyebrow {
+            color: var(--mint-leaf);
+        }
+
+
+        .button-row {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .btn {
+
+            min-height: 44px;
+
+            padding:
+                10px
+                18px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                2px solid transparent;
+
+            border-radius: var(--radius-small);
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+        }
+
+
+        .btn-highlight {
+
+            background: var(--yellow-green);
+
+            color: var(--taupe);
+
+        }
+
+
+        .btn-secondary {
+
+            background: transparent;
+
+            color: var(--white);
+
+            border-color: var(--white);
+
+        }
+
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+
+        .site-footer {
+
+            padding: 32px 0;
+
+            background: var(--taupe);
+
+            color: var(--white);
+
+        }
+
+
+        .footer-content {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .footer-content a {
+
+            color: var(--mint-leaf);
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+        }
+
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+
+        @media (max-width: 1000px) {
+
+            .summary-grid,
+            .principles-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .workflow {
+
+                grid-template-columns:
+                    repeat(7, 165px);
+
+            }
+
+
+            .detail-panel {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .summary-grid,
+            .principles-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .content-buttons {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .type-button {
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .nav {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                padding: 16px 0;
+
+            }
+
+
+            .button-row {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .btn {
+                width: 100%;
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+
+            *,
+            *::before,
+            *::after {
+
+                transition-duration:
+                    0.01ms !important;
+
+                animation-duration:
+                    0.01ms !important;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- ========================================
+         HEADER
+         ======================================== -->
+
+    <header class="site-header">
+
+        <div class="container nav">
+
+            <a class="brand"
+               href="../../../index.html">
+                Haley <span>Reeder</span>
+            </a>
+
+
+            <a class="back-link"
+               href="../index.html">
+                ← Back to AI Training and Evaluation
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- ========================================
+             HERO
+             ======================================== -->
+
+        <section class="hero">
+
+            <div class="container">
+
+                <p class="eyebrow">
+                    AI Training and Evaluation
+                </p>
+
+                <h1>
+                    Evaluation changes with the task.
+                </h1>
+
+                <p class="hero-copy">
+                    AI evaluation is not one universal checklist.
+                    A spreadsheet, facilitator guide, assessment,
+                    slide deck, and business document may all require
+                    accuracy and instruction adherence—but the risks,
+                    failure modes, and human consequences can be very different.
+                </p>
+
+
+                <div class="tag-row">
+
+                    <span class="tag">
+                        Task Analysis
+                    </span>
+
+                    <span class="tag">
+                        Grounding
+                    </span>
+
+                    <span class="tag">
+                        Artifact-Specific QA
+                    </span>
+
+                    <span class="tag">
+                        Severity Classification
+                    </span>
+
+                    <span class="tag">
+                        Evaluator Calibration
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================================
+             WORKSPACE
+             ======================================== -->
+
+        <section class="workspace">
+
+            <div class="container">
+
+
+                <div class="intro-callout">
+
+                    <strong>
+                        Evaluation principle:
+                    </strong>
+
+                    <p>
+                        The goal is not to ask,
+                        “Do I like this output?”
+                        The goal is to determine whether the output
+                        satisfies the task, is supported by available
+                        evidence, works for the intended human audience,
+                        and can be trusted for the context in which it
+                        will actually be used.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ========================================
+                     ARTIFACT SELECTOR
+                     ======================================== -->
+
+                <div class="selector">
+
+                    <p class="eyebrow">
+                        Evaluation Context
+                    </p>
+
+                    <h2>
+                        What did the model generate?
+                    </h2>
+
+                    <p>
+                        Select an artifact to see how the evaluation
+                        priorities, risks, and human-use considerations
+                        change.
+                    </p>
+
+
+                    <div class="content-buttons">
+
+                        <button class="type-button active"
+                                type="button"
+                                data-type="learning">
+                            Learning Content
+                        </button>
+
+                        <button class="type-button"
+                                type="button"
+                                data-type="slides">
+                            Slide Deck
+                        </button>
+
+                        <button class="type-button"
+                                type="button"
+                                data-type="spreadsheet">
+                            Spreadsheet
+                        </button>
+
+                        <button class="type-button"
+                                type="button"
+                                data-type="assessment">
+                            Assessment
+                        </button>
+
+                        <button class="type-button"
+                                type="button"
+                                data-type="facilitator">
+                            Facilitator Guide
+                        </button>
+
+                        <button class="type-button"
+                                type="button"
+                                data-type="business">
+                            Business Document
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================
+                     ARTIFACT SUMMARY
+                     ======================================== -->
+
+                <div class="content-summary">
+
+                    <p class="eyebrow">
+                        Evaluation Focus
+                    </p>
+
+                    <h2 id="contentTitle">
+                        Learning Content
+                    </h2>
+
+                    <p id="contentDescription">
+                    </p>
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-card">
+
+                            <h3>
+                                Priority Checks
+                            </h3>
+
+                            <ul id="priorityList">
+                            </ul>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <h3>
+                                Common Failure Modes
+                            </h3>
+
+                            <ul id="riskList">
+                            </ul>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <h3>
+                                Evidence I Would Verify
+                            </h3>
+
+                            <ul id="verificationList">
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="human-impact">
+
+                        <strong>
+                            Human-use consideration:
+                        </strong>
+
+                        <span id="humanImpact">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================
+                     WORKFLOW
+                     ======================================== -->
+
+                <div class="workflow-intro">
+
+                    <p class="eyebrow">
+                        Interactive Evaluation Workflow
+                    </p>
+
+                    <h2>
+                        Follow the review from task definition to evaluator QA.
+                    </h2>
+
+                    <p class="body-large">
+                        Click each step to see the questions an evaluator
+                        might use to make a defensible quality decision.
+                    </p>
+
+                </div>
+
+
+
+                <div class="workflow"
+                     id="workflow">
+
+
+                    <button class="workflow-step active"
+                            type="button"
+                            data-step="0">
+
+                        <span class="step-number">
+                            1
+                        </span>
+
+                        <strong>
+                            Understand Task + User
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="1">
+
+                        <span class="step-number">
+                            2
+                        </span>
+
+                        <strong>
+                            Establish Ground Truth
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="2">
+
+                        <span class="step-number">
+                            3
+                        </span>
+
+                        <strong>
+                            Review Task Completion
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="3">
+
+                        <span class="step-number">
+                            4
+                        </span>
+
+                        <strong>
+                            Apply Artifact-Specific QA
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="4">
+
+                        <span class="step-number">
+                            5
+                        </span>
+
+                        <strong>
+                            Classify Severity + Score
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="5">
+
+                        <span class="step-number">
+                            6
+                        </span>
+
+                        <strong>
+                            Write Actionable Feedback
+                        </strong>
+
+                    </button>
+
+
+                    <button class="workflow-step"
+                            type="button"
+                            data-step="6">
+
+                        <span class="step-number">
+                            7
+                        </span>
+
+                        <strong>
+                            Final QA + Calibration
+                        </strong>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- ========================================
+                     STEP DETAIL
+                     ======================================== -->
+
+                <div class="detail-panel">
+
+
+                    <div>
+
+                        <div class="detail-number"
+                             id="detailNumber">
+                            1
+                        </div>
+
+                        <p class="eyebrow">
+                            Current Step
+                        </p>
+
+                        <h2 id="detailTitle">
+                        </h2>
+
+                        <p class="detail-description"
+                           id="detailDescription">
+                        </p>
+
+
+                        <div class="decision-box">
+
+                            <p class="eyebrow">
+                                Evaluator Decision
+                            </p>
+
+                            <p id="decisionText">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="questions">
+
+                        <h3>
+                            Questions I'm asking
+                        </h3>
+
+                        <ul id="questionList">
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ========================================
+                     PROFESSIONAL PRINCIPLES
+                     ======================================== -->
+
+                <section class="principles-section">
+
+                    <p class="eyebrow">
+                        Professional Evaluation Principles
+                    </p>
+
+                    <h2>
+                        What keeps the evaluation useful and defensible.
+                    </h2>
+
+
+                    <div class="principles-grid">
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                Evaluate Against Requirements
+                            </h3>
+
+                            <p>
+                                Personal writing preference is not the same
+                                as a quality failure. I anchor judgments to
+                                instructions, source evidence, rubric criteria,
+                                and intended use.
+                            </p>
+
+                        </article>
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                Don't Fill In Missing Context
+                            </h3>
+
+                            <p>
+                                If the output leaves out required information,
+                                I evaluate what is actually present rather than
+                                mentally repairing the response for the model.
+                            </p>
+
+                        </article>
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                Match Severity to Impact
+                            </h3>
+
+                            <p>
+                                A typo and a fabricated financial assumption
+                                are not equivalent. Severity should reflect
+                                how much an issue changes trust, usefulness,
+                                safety, or task success.
+                            </p>
+
+                        </article>
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                Consider the Human User
+                            </h3>
+
+                            <p>
+                                Quality depends partly on what a real person
+                                needs to do with the output. I consider
+                                discoverability, comprehension, maintenance,
+                                decision-making, and downstream consequences.
+                            </p>
+
+                        </article>
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                Make Feedback Diagnostic
+                            </h3>
+
+                            <p>
+                                Strong feedback identifies the issue, explains
+                                why it matters, and describes what a better
+                                result should do differently.
+                            </p>
+
+                        </article>
+
+
+                        <article class="principle-card">
+
+                            <h3>
+                                QA the Evaluation Too
+                            </h3>
+
+                            <p>
+                                The evaluator can introduce inconsistency.
+                                I recheck whether the score, severity,
+                                written rationale, and evidence all agree
+                                before finalizing the review.
+                            </p>
+
+                        </article>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ========================================
+                     CTA
+                     ======================================== -->
+
+                <div class="cta">
+
+                    <p class="eyebrow">
+                        Continue Exploring
+                    </p>
+
+                    <h2>
+                        See how the same standards become a scoring rubric.
+                    </h2>
+
+                    <p>
+                        The workflow establishes what to inspect.
+                        The rubric translates those observations into
+                        structured ratings that can be applied consistently.
+                    </p>
+
+
+                    <div class="button-row">
+
+                        <a class="btn btn-highlight"
+                           href="../rubric-demo/index.html">
+                            Try the Evaluation Rubric
+                        </a>
+
+                        <a class="btn btn-secondary"
+                           href="../index.html">
+                            Back to AI Training and Evaluation
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-content">
+
+            <span>
+                AI Evaluation Workflow • Haley Reeder
+            </span>
+
+            <a href="../index.html">
+                Return to AI Training and Evaluation
+            </a>
+
+        </div>
+
+    </footer>
+
+
+
+    <script>
+
+
+        /* ========================================
+           ARTIFACT-SPECIFIC EVALUATION DATA
+           ======================================== */
+
+        const contentTypes = {
+
+
+            learning: {
+
+                title:
+                    "Learning Content",
+
+                description:
+                    "Learning content must be accurate and instructionally useful. The evaluator needs to determine whether the model has created an experience that helps the intended learner reach a defined objective—not merely a polished summary of information.",
+
+                priorities: [
+                    "Instruction and objective alignment",
+                    "Accuracy of instructional content",
+                    "Audience and prerequisite fit",
+                    "Practice that supports the intended behavior",
+                    "Feedback and assessment alignment"
+                ],
+
+                risks: [
+                    "Content dumping without instructional purpose",
+                    "Objectives that do not match the activities",
+                    "Passive practice for a performance-based skill",
+                    "Incorrect or oversimplified explanations",
+                    "Assessment items that measure recall instead of the objective"
+                ],
+
+                verification: [
+                    "Source material or SME-approved content",
+                    "Learning objectives",
+                    "Audience profile and prerequisites",
+                    "Assessment answer keys",
+                    "Required terminology or policy language"
+                ],
+
+                humanImpact:
+                    "A learner may rely on this content to perform a job, pass a certification, or make a real workplace decision. Incorrect or poorly aligned instruction can create performance problems even when the material looks polished.",
+
+                specialQuestions: [
+                    "Does each section support the stated objective?",
+                    "Is the learner being asked to practice the actual target behavior?",
+                    "Could the learner complete the content successfully without being able to perform the real task?",
+                    "Does feedback explain why a response is effective or ineffective?",
+                    "Is the level of complexity appropriate for the intended audience?"
+                ]
+
+            },
+
+
+            slides: {
+
+                title:
+                    "Slide Deck",
+
+                description:
+                    "A slide deck is both an information artifact and a communication tool. Evaluation needs to consider whether the deck supports a real presenter and audience—not simply whether the slides contain accurate text.",
+
+                priorities: [
+                    "Narrative and message hierarchy",
+                    "Accuracy of claims and supporting evidence",
+                    "Slide-level clarity",
+                    "Visual hierarchy and scannability",
+                    "Fit for presentation context"
+                ],
+
+                risks: [
+                    "Paragraphs pasted onto slides",
+                    "Inconsistent message hierarchy",
+                    "Decorative visuals that imply false meaning",
+                    "Repeated content without narrative progression",
+                    "Presenter notes that contradict the slide"
+                ],
+
+                verification: [
+                    "Source data and cited facts",
+                    "Required brand or formatting guidance",
+                    "Audience and meeting purpose",
+                    "Presenter notes",
+                    "Charts and numerical claims"
+                ],
+
+                humanImpact:
+                    "A presenter may use the deck to brief executives, train employees, pitch a customer, or support a decision. A visually polished deck can still create confusion if the narrative, evidence, or message hierarchy is weak.",
+
+                specialQuestions: [
+                    "Can the audience identify the main message of each slide quickly?",
+                    "Does the sequence build a coherent narrative?",
+                    "Do charts and visuals accurately represent the underlying information?",
+                    "Could a presenter realistically deliver this deck without rewriting it?",
+                    "Is any critical context hidden in dense text or notes?"
+                ]
+
+            },
+
+
+            spreadsheet: {
+
+                title:
+                    "Spreadsheet",
+
+                description:
+                    "Spreadsheet evaluation requires both presentation review and technical verification. A clean-looking workbook can still fail completely if the formulas, assumptions, joins, labels, or source data are wrong.",
+
+                priorities: [
+                    "Data integrity",
+                    "Formula and logic accuracy",
+                    "Traceability",
+                    "Clear field definitions",
+                    "Maintainability and decision usefulness"
+                ],
+
+                risks: [
+                    "Incorrect formulas",
+                    "Hard-coded values inside calculated fields",
+                    "Inconsistent definitions",
+                    "Hidden assumptions",
+                    "Correct-looking dashboards built on incorrect data"
+                ],
+
+                verification: [
+                    "Source datasets",
+                    "Formula logic",
+                    "Row and column definitions",
+                    "Expected totals or control values",
+                    "Assumptions used in calculations"
+                ],
+
+                humanImpact:
+                    "A human may use the workbook to make financial, staffing, operational, or performance decisions. A single formula error can propagate through a dashboard and create confident but incorrect conclusions.",
+
+                specialQuestions: [
+                    "Can each calculated value be traced back to its inputs?",
+                    "Do formulas behave correctly when copied or extended?",
+                    "Are totals and subtotals internally consistent?",
+                    "Are assumptions labeled rather than hidden?",
+                    "Could another person maintain the workbook without reverse-engineering it?"
+                ]
+
+            },
+
+
+            assessment: {
+
+                title:
+                    "Assessment",
+
+                description:
+                    "Assessment evaluation centers on validity. A question may be grammatically correct and factually accurate while still failing to measure the intended knowledge, skill, or decision.",
+
+                priorities: [
+                    "Objective alignment",
+                    "Appropriate cognitive demand",
+                    "Defensible correct answer",
+                    "Plausible distractors",
+                    "Clear and unbiased wording"
+                ],
+
+                risks: [
+                    "Testing trivia instead of the target skill",
+                    "Multiple defensible answers",
+                    "Distractors that are obviously wrong",
+                    "Accidental clues in wording",
+                    "Reading difficulty unrelated to the objective"
+                ],
+
+                verification: [
+                    "Learning objectives",
+                    "Source content",
+                    "Answer key",
+                    "Scoring rules",
+                    "Required passing criteria"
+                ],
+
+                humanImpact:
+                    "Assessment results may determine certification, readiness, remediation, or access to later work. Weak items can misclassify capable learners or falsely certify someone who has not demonstrated the required skill.",
+
+                specialQuestions: [
+                    "What exact objective does this item measure?",
+                    "Would a knowledgeable SME defend one answer as clearly best?",
+                    "Could a learner answer correctly through test-taking strategy alone?",
+                    "Do distractors represent realistic misconceptions?",
+                    "Does the item measure the intended level of thinking?"
+                ]
+
+            },
+
+
+            facilitator: {
+
+                title:
+                    "Facilitator Guide",
+
+                description:
+                    "A facilitator guide must work operationally for another human. The evaluator needs to determine whether a qualified facilitator can actually run the session without guessing what the designer intended.",
+
+                priorities: [
+                    "Facilitator actions",
+                    "Participant actions",
+                    "Timing and pacing",
+                    "Activity instructions",
+                    "Debrief and transition guidance"
+                ],
+
+                risks: [
+                    "Missing facilitator directions",
+                    "Unrealistic timing",
+                    "Activities without debriefs",
+                    "Undefined participant outputs",
+                    "Instructions that depend on undocumented designer knowledge"
+                ],
+
+                verification: [
+                    "Session objectives",
+                    "Agenda and timing",
+                    "Participant materials",
+                    "Slides or supporting assets",
+                    "Required facilitation procedures"
+                ],
+
+                humanImpact:
+                    "A facilitator may be delivering this content to dozens or hundreds of people. Ambiguous directions can create inconsistent learner experiences, missed objectives, and unnecessary reliance on the original designer.",
+
+                specialQuestions: [
+                    "Could a qualified facilitator deliver this without contacting the designer?",
+                    "Are participant instructions clear enough to read aloud or adapt?",
+                    "Is timing realistic for the actual activity?",
+                    "Are expected responses and debrief prompts provided?",
+                    "Are transitions clear enough to maintain flow?"
+                ]
+
+            },
+
+
+            business: {
+
+                title:
+                    "Business Document",
+
+                description:
+                    "Business-document evaluation focuses on whether the artifact supports a real decision, communication, or operational need. Professional tone alone does not make a recommendation accurate, useful, or defensible.",
+
+                priorities: [
+                    "Purpose and audience alignment",
+                    "Accuracy and evidence",
+                    "Information architecture",
+                    "Decision usefulness",
+                    "Clear ownership and next actions"
+                ],
+
+                risks: [
+                    "Generic recommendations",
+                    "Unsupported assumptions",
+                    "Missing requirements",
+                    "Overconfident conclusions",
+                    "Professional wording masking weak analysis"
+                ],
+
+                verification: [
+                    "Source documents",
+                    "Business requirements",
+                    "Dates and numerical claims",
+                    "Stakeholder roles",
+                    "Recommendations and supporting evidence"
+                ],
+
+                humanImpact:
+                    "A manager, client, executive, or project team may use the document to make a decision or take action. Unsupported assumptions can become operational problems once they are treated as established facts.",
+
+                specialQuestions: [
+                    "Does the document answer the actual business question?",
+                    "Can the reader distinguish facts, assumptions, and recommendations?",
+                    "Are conclusions supported by evidence?",
+                    "Can the intended reader find critical information quickly?",
+                    "Are next actions specific enough for someone to execute?"
+                ]
+
+            }
+
+        };
+
+
+
+        /* ========================================
+           GENERIC EVALUATION WORKFLOW
+           ======================================== */
+
+        const workflowSteps = [
+
+
+            {
+
+                title:
+                    "Understand Task + User",
+
+                description:
+                    "Before evaluating the output, I establish what the model was actually asked to do and who will use the result.",
+
+                decision:
+                    "Define the evaluation target before judging quality. If the task itself is ambiguous, note that ambiguity instead of inventing requirements.",
+
+                questions: [
+                    "What exactly was requested?",
+                    "Who is the intended human user or audience?",
+                    "What format, constraints, tone, or required components were specified?",
+                    "What action, decision, or performance should this artifact support?",
+                    "What would constitute successful task completion?"
+                ]
+
+            },
+
+
+            {
+
+                title:
+                    "Establish Ground Truth",
+
+                description:
+                    "I identify the evidence that should govern the evaluation: source material, reference data, explicit requirements, or other verifiable information.",
+
+                decision:
+                    "Separate what can be verified from what is unknown. Unsupported model claims should not receive credit simply because they sound plausible.",
+
+                questions: [
+                    "What source material or reference information is available?",
+                    "Which facts can be directly verified?",
+                    "Which claims require SME or external validation?",
+                    "Has the model introduced information that was never provided?",
+                    "Are facts, assumptions, and recommendations clearly distinguished?"
+                ]
+
+            },
+
+
+            {
+
+                title:
+                    "Review Task Completion",
+
+                description:
+                    "I evaluate the artifact as a whole before focusing on isolated wording or formatting defects.",
+
+                decision:
+                    "Determine whether the model solved the requested problem at all before spending time on minor polish.",
+
+                questions: [
+                    "Did the model actually complete the requested task?",
+                    "Are any required sections, fields, calculations, or deliverables missing?",
+                    "Does the overall structure make sense for the intended use?",
+                    "Are there major contradictions or logic failures?",
+                    "Would a real user recognize this as the artifact they asked for?"
+                ]
+
+            },
+
+
+            {
+
+                title:
+                    "Apply Artifact-Specific QA",
+
+                description:
+                    "The evaluation now shifts to the standards that matter most for the selected artifact type.",
+
+                decision:
+                    "Apply criteria that reflect how this artifact will actually be used rather than forcing every output through the same generic checklist.",
+
+                questions: []
+
+            },
+
+
+            {
+
+                title:
+                    "Classify Severity + Score",
+
+                description:
+                    "I translate observed defects into a structured judgment based on their impact on task success, reliability, usability, or human decision-making.",
+
+                decision:
+                    "Prioritize material defects over preferences. Severity should reflect consequences, not how noticeable an issue looks.",
+
+                questions: [
+                    "Does this issue materially change the meaning or outcome?",
+                    "Could it cause a human to make an incorrect decision?",
+                    "Does it prevent the artifact from being usable?",
+                    "Is the defect isolated or systematic?",
+                    "Does the assigned score match the actual severity of the evidence?"
+                ]
+
+            },
+
+
+            {
+
+                title:
+                    "Write Actionable Feedback",
+
+                description:
+                    "I document the problem in a way that explains what failed, why it matters, and what a stronger output should do differently.",
+
+                decision:
+                    "Feedback should help improve future performance. Avoid vague comments such as 'needs work' when the actual failure can be described precisely.",
+
+                questions: [
+                    "Where exactly does the problem occur?",
+                    "What requirement or criterion does it violate?",
+                    "Why does the issue matter to the human user or task?",
+                    "What should a corrected output do differently?",
+                    "Can the feedback be acted on without needing additional interpretation?"
+                ]
+
+            },
+
+
+            {
+
+                title:
+                    "Final QA + Calibration",
+
+                description:
+                    "Before finalizing the evaluation, I review my own work for consistency and compare judgments against established standards when calibration guidance is available.",
+
+                decision:
+                    "The evaluation itself is data. It should be internally consistent, reproducible, and defensible.",
+
+                questions: [
+                    "Does the written rationale support the assigned score?",
+                    "Does the severity label match the actual impact?",
+                    "Did I apply the same standard across the entire artifact?",
+                    "Did I accidentally evaluate personal preference instead of requirements?",
+                    "Would another trained evaluator understand how I reached this conclusion?",
+                    "If calibration examples exist, is my judgment consistent with them?"
+                ]
+
+            }
+
+        ];
+
+
+
+        /* ========================================
+           DOM ELEMENTS
+           ======================================== */
+
+        const typeButtons =
+            document.querySelectorAll(
+                ".type-button"
+            );
+
+
+        const workflowButtons =
+            document.querySelectorAll(
+                ".workflow-step"
+            );
+
+
+        const contentTitle =
+            document.getElementById(
+                "contentTitle"
+            );
+
+
+        const contentDescription =
+            document.getElementById(
+                "contentDescription"
+            );
+
+
+        const priorityList =
+            document.getElementById(
+                "priorityList"
+            );
+
+
+        const riskList =
+            document.getElementById(
+                "riskList"
+            );
+
+
+        const verificationList =
+            document.getElementById(
+                "verificationList"
+            );
+
+
+        const humanImpact =
+            document.getElementById(
+                "humanImpact"
+            );
+
+
+        const detailNumber =
+            document.getElementById(
+                "detailNumber"
+            );
+
+
+        const detailTitle =
+            document.getElementById(
+                "detailTitle"
+            );
+
+
+        const detailDescription =
+            document.getElementById(
+                "detailDescription"
+            );
+
+
+        const decisionText =
+            document.getElementById(
+                "decisionText"
+            );
+
+
+        const questionList =
+            document.getElementById(
+                "questionList"
+            );
+
+
+        let currentType =
+            "learning";
+
+
+        let currentStep =
+            0;
+
+
+
+        /* ========================================
+           HELPERS
+           ======================================== */
+
+        function renderList(
+            element,
+            items
+        ) {
+
+            element.innerHTML =
+                "";
+
+
+            items.forEach(
+                function (item) {
+
+                    const listItem =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    listItem.textContent =
+                        item;
+
+
+                    element.appendChild(
+                        listItem
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* ========================================
+           RENDER ARTIFACT TYPE
+           ======================================== */
+
+        function renderContentType() {
+
+            const data =
+                contentTypes[
+                    currentType
+                ];
+
+
+            contentTitle.textContent =
+                data.title;
+
+
+            contentDescription.textContent =
+                data.description;
+
+
+            renderList(
+                priorityList,
+                data.priorities
+            );
+
+
+            renderList(
+                riskList,
+                data.risks
+            );
+
+
+            renderList(
+                verificationList,
+                data.verification
+            );
+
+
+            humanImpact.textContent =
+                data.humanImpact;
+
+
+            renderStep();
+
+        }
+
+
+
+        /* ========================================
+           RENDER WORKFLOW STEP
+           ======================================== */
+
+        function renderStep() {
+
+            const step =
+                workflowSteps[
+                    currentStep
+                ];
+
+
+            detailNumber.textContent =
+                currentStep + 1;
+
+
+            detailTitle.textContent =
+                step.title;
+
+
+            detailDescription.textContent =
+                step.description;
+
+
+            decisionText.textContent =
+                step.decision;
+
+
+            let questions =
+                step.questions;
+
+
+            /*
+                Step 4 uses artifact-specific
+                evaluation questions.
+            */
+
+            if (
+                currentStep === 3
+            ) {
+
+                questions =
+                    contentTypes[
+                        currentType
+                    ].specialQuestions;
+
+            }
+
+
+            renderList(
+                questionList,
+                questions
+            );
+
+        }
+
+
+
+        /* ========================================
+           ARTIFACT BUTTON EVENTS
+           ======================================== */
+
+        typeButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        typeButtons.forEach(
+                            function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        currentType =
+                            button.dataset.type;
+
+
+                        renderContentType();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* ========================================
+           WORKFLOW BUTTON EVENTS
+           ======================================== */
+
+        workflowButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        workflowButtons.forEach(
+                            function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        currentStep =
+                            Number(
+                                button.dataset.step
+                            );
+
+
+                        renderStep();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* ========================================
+           INITIALIZE
+           ======================================== */
+
+        renderContentType();
+
+
+    </script>
+
+
+</body>
+
+</html>
