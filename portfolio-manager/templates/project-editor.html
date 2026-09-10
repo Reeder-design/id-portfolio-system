@@ -19,6 +19,7 @@
                 <p class="hero-copy">Edit the structured source content for this project.</p>
             </div>
             <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                 <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Content</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
@@ -70,6 +71,13 @@
                         <div><dt>Subcategory</dt><dd>{{ project.subcategory or 'None' }}</dd></div>
                         <div><dt>Page path</dt><dd>{{ project.page_path }}</dd></div>
                     </dl>
+                </section>
+
+                <section class="dashboard-card">
+                    <p class="eyebrow">Project Assets</p>
+                    <div class="action-title-row"><h2>{{ project.assets|length }} Asset{% if project.assets|length != 1 %}s{% endif %}</h2><button class="inline-help" type="button" data-help-key="assets" data-help-label="Public Asset Library">?</button></div>
+                    <p class="section-copy">Assets are stored as structured project metadata and managed separately from custom page code.</p>
+                    <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
                 </section>
 
                 <section class="dashboard-card">
