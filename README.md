@@ -163,9 +163,10 @@ python3 scripts/check-new-project.py
 python3 scripts/check-docs.py
 python3 scripts/update-docs.py --check
 python3 scripts/check-portfolio-manager.py
+python3 scripts/check-portfolio-manager-runtime.py
 ```
 
-These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, and Portfolio Manager safety requirements.
+These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Portfolio Manager safety requirements, and authenticated dashboard/Asset Library rendering.
 
 ## Agent Guidance
 
