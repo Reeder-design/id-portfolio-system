@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general-content.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -40,7 +41,7 @@
                 </div>
                 <p class="action-note">Saving updates <code>portfolio-data/site-content.json</code> and the approved text locations in <code>{{ page.page_path }}</code>. It does not change navigation, links, layout, CSS, JavaScript, Git, or the live site.</p>
 
-                <form method="post" action="{{ url_for('site_content.save_page', page_id=page_id) }}" class="general-content-form">
+                <form method="post" action="{{ url_for('site_content.save_page', page_id=page_id) }}" class="general-content-form" data-confirm-action="general-save">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                     {% for field_id, field in page.fields.items() %}
@@ -59,7 +60,7 @@
                     </div>
 
                     <div class="button-row">
-                        <button class="btn btn-primary" type="submit" data-confirm-general-save>Save Page Copy</button>
+                        <button class="btn btn-primary" type="submit">Save Page Copy</button>
                         <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">Cancel</a>
                     </div>
                 </form>
