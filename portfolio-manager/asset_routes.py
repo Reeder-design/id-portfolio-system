@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-import os
+import sys
 
 from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
 from werkzeug.utils import secure_filename
@@ -95,7 +95,7 @@ def load_asset(project_id: str, asset_index: int) -> tuple[dict, Path, dict]:
 
 
 def validate_project_change(project_path: Path, original_text: str) -> tuple[bool, str]:
-    valid, output = run_command([os.fspath(REPO_ROOT / ".venv" / "bin" / "python") if (REPO_ROOT / ".venv" / "bin" / "python").exists() else "python", "scripts/check-content.py"])
+    valid, output = run_command([sys.executable, "scripts/check-content.py"])
     if not valid:
         project_path.write_text(original_text, encoding="utf-8")
         return False, (
@@ -261,7 +261,7 @@ def replace_asset(project_id: str, asset_index: int):
         upload.save(path)
 
         site_ok, site_output = run_command([
-            "python",
+            sys.executable,
             "scripts/check-site.py",
         ])
         if not site_ok:
@@ -294,8 +294,8 @@ def remove_asset(project_id: str, asset_index: int):
         if path.exists():
             path.unlink()
 
-        content_ok, content_output = run_command(["python", "scripts/check-content.py"])
-        site_ok, site_output = run_command(["python", "scripts/check-site.py"])
+        content_ok, content_output = run_command([sys.executable, "scripts/check-content.py"])
+        site_ok, site_output = run_command([sys.executable, "scripts/check-site.py"])
         if not content_ok or not site_ok:
             project_path.write_text(original_text, encoding="utf-8")
             if original_bytes is not None:
