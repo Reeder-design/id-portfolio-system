@@ -5,9 +5,12 @@ on:
     paths:
       - "portfolio/**"
       - "portfolio-data/**"
+      - "portfolio-manager/**"
       - "templates/**"
       - "scripts/**"
       - "docs/**"
+      - ".env.example"
+      - ".gitignore"
       - ".github/workflows/validate-site.yml"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
@@ -45,3 +48,8 @@ jobs:
 
       - name: Validate generated documentation
         run: python scripts/update-docs.py --check
+
+      - name: Validate Portfolio Manager security
+        run: |
+          python -m py_compile portfolio-manager/*.py
+          python scripts/check-portfolio-manager.py
