@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 
 from asset_routes import asset_bp
 from content_routes import content_bp
+from site_content_routes import site_content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
 
 
@@ -48,6 +49,7 @@ app.config.update(
 )
 app.register_blueprint(content_bp)
 app.register_blueprint(asset_bp)
+app.register_blueprint(site_content_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
@@ -153,6 +155,7 @@ def run_full_validation() -> tuple[bool, str]:
     commands = [
         ("Public site", [sys.executable, "scripts/check-site.py"]),
         ("Structured content", [sys.executable, "scripts/check-content.py"]),
+        ("General site content", [sys.executable, "scripts/check-site-content.py"]),
         ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
