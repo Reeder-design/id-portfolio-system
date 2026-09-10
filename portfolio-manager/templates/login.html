@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+</head>
+<body>
+    <main class="auth-shell">
+        <section class="auth-card">
+            <p class="eyebrow">Portfolio Manager</p>
+            <h1>Sign In</h1>
+            <p class="section-copy">This local dashboard can modify files in your portfolio repository, so access is protected with a password stored only on this Mac.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-stack">
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="post" action="{{ url_for('login') }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="next" value="{{ next }}">
+                <div class="full-span">
+                    <label for="password">Portfolio Manager password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+                </div>
+                <div class="full-span">
+                    <button class="btn btn-primary" type="submit">Sign In</button>
+                </div>
+            </form>
+
+            <p class="auth-note">Runs only on <code>127.0.0.1</code>. Your real password is never stored in this repository.</p>
+        </section>
+    </main>
+</body>
+</html>
