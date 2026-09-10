@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from content_routes import content_bp
 from pathlib import Path
 from datetime import datetime
 import subprocess
@@ -25,6 +26,7 @@ UPLOADS_ROOT.mkdir(parents=True, exist_ok=True)
 app = Flask(__name__)
 app.secret_key = "portfolio-manager-local-dev-key"
 
+app.register_blueprint(content_bp)
 
 def slugify(value: str) -> str:
     value = value.strip().lower()
