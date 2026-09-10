@@ -12,6 +12,7 @@ APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
 ENV_PATH = REPO_ROOT / ".env"
 PRIVATE_ROOT = REPO_ROOT / ".portfolio-manager"
+PASSWORD_HASH_METHOD = "pbkdf2:sha256:600000"
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,7 +50,10 @@ def main() -> int:
 
     password = collect_password()
     secret_key = secrets.token_urlsafe(48)
-    password_hash = generate_password_hash(password)
+    password_hash = generate_password_hash(
+        password,
+        method=PASSWORD_HASH_METHOD,
+    )
 
     env_text = (
         "# Local Portfolio Manager security. NEVER commit this file.\n"
@@ -68,6 +72,7 @@ def main() -> int:
     print("\nPortfolio Manager security configured locally.")
     print(f"  Credentials: {ENV_PATH.relative_to(REPO_ROOT)} (Git-ignored)")
     print(f"  Private data: {PRIVATE_ROOT.relative_to(REPO_ROOT)}/ (Git-ignored)")
+    print("  Password hash: PBKDF2-SHA256 (portable across supported local Python builds)")
     print("\nStart the app with:")
     print("  python portfolio-manager/app.py")
     return 0
