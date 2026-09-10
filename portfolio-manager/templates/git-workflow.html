@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Workflow | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='git-workflow.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Portfolio Manager</p>
+                <h1>Git Workflow</h1>
+                <p class="hero-copy">Review local changes, create a safe feature branch, stage exact files, validate, commit, push, and open a pull request without giving Portfolio Manager permission to merge.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="git-safety-banner">
+            <div>
+                <p class="eyebrow">Safety boundary</p>
+                <h2>Merge is intentionally outside Portfolio Manager.</h2>
+                <p>This tool never runs force-push, never pushes <code>main</code>, never commits on <code>main</code>, and never stages private Portfolio Manager runtime files. Pull-request merge still requires your explicit review and approval.</p>
+            </div>
+            <button class="inline-help" type="button" data-help-key="git-workflow" data-help-label="Git Workflow Safety">?</button>
+        </section>
+
+        <main class="git-workflow-grid">
+            <section class="dashboard-card git-status-card">
+                <p class="eyebrow">Repository state</p>
+                <h2>{{ branch or 'Detached / unknown branch' }}</h2>
+                <div class="git-stat-grid">
+                    <div><span>Working tree</span><strong>{{ 'Clean' if clean else files|length ~ ' changed file(s)' }}</strong></div>
+                    <div><span>Upstream</span><strong>{{ tracking.upstream or 'Not set' }}</strong></div>
+                    <div><span>Ahead</span><strong>{{ tracking.ahead if tracking.ahead is not none else '—' }}</strong></div>
+                    <div><span>Behind</span><strong>{{ tracking.behind if tracking.behind is not none else '—' }}</strong></div>
+                    <div><span>Commits beyond main</span><strong>{{ commit_count }}</strong></div>
+                    <div><span>GitHub CLI</span><strong>{% if gh.authenticated %}Authenticated{% elif gh.installed %}Installed, not authenticated{% else %}Not installed{% endif %}</strong></div>
+                </div>
+
+                {% if branch == base_branch %}
+                <div class="git-action-block">
+                    <h3>Start from main</h3>
+                    <p>Sync uses <code>git pull --ff-only</code>, so it refuses any update that would require a merge commit.</p>
+                    <form method="post" action="{{ url_for('git_workflow.sync_main') }}" data-confirm-action="git-sync-main">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit" {% if not clean %}disabled{% endif %}>Sync Main Safely</button>
+                    </form>
+
+                    <form method="post" action="{{ url_for('git_workflow.create_branch') }}" class="git-branch-form" data-confirm-action="git-create-branch">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label for="prefix">Branch type</label>
+                        <select id="prefix" name="prefix">{% for prefix in branch_prefixes %}<option value="{{ prefix }}" {% if prefix == 'feature' %}selected{% endif %}>{{ prefix }}/</option>{% endfor %}</select>
+                        <label for="branch_slug">Branch name</label>
+                        <input id="branch_slug" name="branch_slug" type="text" placeholder="about-page-refresh" required>
+                        <button class="btn btn-primary" type="submit" {% if not clean %}disabled{% endif %}>Create & Switch Branch</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="git-action-block">
+                    <h3>Feature branch active</h3>
+                    <p>You are protected from committing or pushing directly to <code>main</code>. Make your portfolio edits, then use the file review below.</p>
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="dashboard-card">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Step 1</p><h2>Review Changed Files</h2></div>
+                    <button class="inline-help" type="button" data-help-key="git-stage" data-help-label="Review and Stage Files">?</button>
+                </div>
+                {% if files %}
+                <div class="git-file-list">
+                    {% for item in files %}
+                    <div class="git-file-row {% if not item.safe %}blocked{% endif %}">
+                        <span class="git-code">{{ item.code }}</span>
+                        <code>{{ item.display_path }}</code>
+                        {% if item.staged %}<span class="git-pill staged">Staged</span>{% endif %}
+                        {% if item.untracked %}<span class="git-pill">New</span>{% endif %}
+                        {% if item.conflict %}<span class="git-pill danger">Conflict</span>{% endif %}
+                        {% if not item.safe %}<span class="git-pill danger">Blocked path</span>{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% set stageable = files|selectattr('unstaged')|selectattr('safe')|list %}
+                {% if stageable and branch != base_branch %}
+                <form method="post" action="{{ url_for('git_workflow.stage_files') }}" class="git-selection-form" data-confirm-action="git-stage">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <fieldset>
+                        <legend>Select files to stage</legend>
+                        {% for item in stageable %}
+                        <label class="git-check"><input type="checkbox" name="paths" value="{{ item.path }}"> <code>{{ item.display_path }}</code></label>
+                        {% endfor %}
+                    </fieldset>
+                    <button class="btn btn-primary" type="submit">Stage Selected Files</button>
+                </form>
+                {% endif %}
+
+                {% set staged_items = files|selectattr('staged')|selectattr('safe')|list %}
+                {% if staged_items and branch != base_branch %}
+                <form method="post" action="{{ url_for('git_workflow.unstage_files') }}" class="git-selection-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <fieldset>
+                        <legend>Need to remove something from the next commit?</legend>
+                        {% for item in staged_items %}
+                        <label class="git-check"><input type="checkbox" name="paths" value="{{ item.path }}"> <code>{{ item.display_path }}</code></label>
+                        {% endfor %}
+                    </fieldset>
+                    <button class="btn btn-secondary" type="submit">Unstage Selected</button>
+                </form>
+                {% endif %}
+                {% else %}
+                <p class="empty-note">Working tree clean. There are no local file changes to stage.</p>
+                {% endif %}
+            </section>
+
+            <section class="dashboard-card full-width">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Diff review</p><h2>What Actually Changed</h2></div>
+                    <button class="inline-help" type="button" data-help-key="git-diff" data-help-label="Diff Review">?</button>
+                </div>
+                <div class="diff-grid">
+                    <div>
+                        <h3>Staged for next commit</h3>
+                        {% if staged_diff %}<pre class="git-diff">{{ staged_diff }}</pre>{% else %}<p class="empty-note">Nothing staged.</p>{% endif %}
+                    </div>
+                    <div>
+                        <h3>Not staged yet</h3>
+                        {% if unstaged_diff %}<pre class="git-diff">{{ unstaged_diff }}</pre>{% else %}<p class="empty-note">No unstaged tracked-file diff.</p>{% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-card">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Step 2</p><h2>Validate & Commit</h2></div>
+                    <button class="inline-help" type="button" data-help-key="git-commit" data-help-label="Validate and Commit">?</button>
+                </div>
+                <p class="section-copy">Portfolio Manager runs the full validation suite before Git is allowed to create the commit. A failed validation blocks the commit.</p>
+                <form method="post" action="{{ url_for('git_workflow.commit_changes') }}" data-confirm-action="git-commit">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label for="commit_message">Commit message</label>
+                    <input id="commit_message" name="commit_message" type="text" maxlength="120" placeholder="Update About page portfolio copy" required>
+                    <button class="btn btn-primary" type="submit" {% if branch == base_branch %}disabled{% endif %}>Run Validation & Commit</button>
+                </form>
+            </section>
+
+            <section class="dashboard-card">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Step 3</p><h2>Push Feature Branch</h2></div>
+                    <button class="inline-help" type="button" data-help-key="git-push" data-help-label="Push Feature Branch">?</button>
+                </div>
+                <p class="section-copy">Push uses a normal upstream push only. Force-push and pushes to <code>main</code> do not exist in this interface.</p>
+                <form method="post" action="{{ url_for('git_workflow.push_branch') }}" data-confirm-action="git-push">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-primary" type="submit" {% if branch == base_branch or not clean or commit_count < 1 %}disabled{% endif %}>Push Branch to GitHub</button>
+                </form>
+            </section>
+
+            <section class="dashboard-card full-width">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Step 4</p><h2>Open Pull Request</h2></div>
+                    <button class="inline-help" type="button" data-help-key="git-pr" data-help-label="Open Pull Request">?</button>
+                </div>
+
+                {% if gh.existing_pr_url %}
+                <p class="success-note">A pull request already exists for this branch.</p>
+                <a class="btn btn-primary" href="{{ gh.existing_pr_url }}" target="_blank" rel="noopener noreferrer">Open Existing Pull Request</a>
+                {% elif branch != base_branch %}
+                    {% if gh.authenticated %}
+                    <form method="post" action="{{ url_for('git_workflow.create_pr') }}" class="form-grid" data-confirm-action="git-create-pr">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="full-span"><label for="pr_title">Pull request title</label><input id="pr_title" name="pr_title" type="text" maxlength="160" required></div>
+                        <div class="full-span"><label for="pr_body">What changed / what should I review?</label><textarea id="pr_body" name="pr_body" rows="6" placeholder="Summarize the change, validation, and review focus."></textarea></div>
+                        <div class="full-span"><button class="btn btn-primary" type="submit" {% if not clean or not tracking.upstream or commit_count < 1 %}disabled{% endif %}>Create Pull Request</button></div>
+                    </form>
+                    {% else %}
+                    <p>GitHub CLI is not authenticated on this Mac, so Portfolio Manager will not ask you to store a GitHub token. Push the branch, then use GitHub’s normal pre-filled PR page.</p>
+                    {% if compare_url and tracking.upstream %}<a class="btn btn-primary" href="{{ compare_url }}" target="_blank" rel="noopener noreferrer">Open Pre-filled GitHub PR Page</a>{% else %}<p class="empty-note">Push the feature branch first; the PR link will appear afterward.</p>{% endif %}
+                    {% endif %}
+                {% else %}
+                <p class="empty-note">Create a feature branch before opening a pull request.</p>
+                {% endif %}
+
+                <div class="no-merge-box">
+                    <strong>There is intentionally no Merge button here.</strong>
+                    <span>Review the PR and explicitly approve merge separately, just like we have been doing.</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
