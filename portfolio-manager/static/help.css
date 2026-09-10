@@ -1,0 +1,192 @@
+.manager-top-actions,
+.header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.inline-help {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+    border: 1px solid rgba(201, 217, 199, 0.65);
+    border-radius: 50%;
+    background: rgba(243, 240, 232, 0.08);
+    color: var(--moonstone);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.help-launcher {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1001;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(243, 240, 232, 0.35);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dusty-mint), var(--dusty-lavender));
+    color: #2c3935;
+    font-size: 1.35rem;
+    font-weight: 800;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.help-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1003;
+    width: min(430px, 92vw);
+    height: 100vh;
+    padding: 24px;
+    transform: translateX(105%);
+    transition: transform 0.2s ease;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #46524d, #313b39);
+    border-left: 1px solid rgba(232, 221, 199, 0.28);
+    box-shadow: -18px 0 45px rgba(0, 0, 0, 0.28);
+}
+
+.help-drawer.is-open {
+    transform: translateX(0);
+}
+
+.help-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.help-drawer-header h2 {
+    color: var(--cream);
+}
+
+.help-close {
+    border: 0;
+    background: transparent;
+    color: var(--cream);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.help-drawer-body {
+    color: var(--text-soft);
+}
+
+.help-drawer-body code,
+.guide-section code {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(243, 240, 232, 0.1);
+    color: var(--moonstone);
+}
+
+.help-quick-links {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.help-quick-links a,
+.help-quick-links button {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid rgba(201, 217, 199, 0.3);
+    border-radius: 10px;
+    background: rgba(243, 240, 232, 0.07);
+    color: var(--cream);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.help-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1002;
+    background: rgba(20, 25, 24, 0.45);
+}
+
+.auth-shell {
+    width: min(520px, 92%);
+    margin: 10vh auto 0;
+}
+
+.auth-card {
+    padding: 30px;
+    border: 1px solid rgba(232, 221, 199, 0.25);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(70, 82, 77, 0.97), rgba(56, 68, 64, 0.97));
+    box-shadow: var(--shadow);
+}
+
+.auth-card h1 {
+    color: var(--cream);
+}
+
+.auth-note,
+.security-note,
+.action-note {
+    padding: 13px 15px;
+    border-radius: 12px;
+    background: rgba(201, 217, 199, 0.12);
+    border: 1px solid rgba(201, 217, 199, 0.22);
+    color: var(--text-soft);
+}
+
+.help-search {
+    margin: 0 0 22px;
+}
+
+.guide-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+}
+
+.guide-section {
+    padding: 22px;
+    border: 1px solid rgba(232, 221, 199, 0.16);
+    border-radius: 16px;
+    background: rgba(243, 240, 232, 0.07);
+}
+
+.guide-section h2 {
+    color: var(--cream);
+}
+
+.guide-section h3 {
+    margin-top: 22px;
+    color: var(--moonstone);
+}
+
+.guide-section li + li {
+    margin-top: 7px;
+}
+
+.action-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .help-launcher {
+        right: 16px;
+        bottom: 16px;
+    }
+}

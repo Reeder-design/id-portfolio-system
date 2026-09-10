@@ -1,168 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Manager | Haley Reeder</title>
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
 </head>
-
 <body>
-
     <div class="manager-shell">
-
         <header class="manager-header">
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">
-                    A local dashboard for managing portfolio edits, new content,
-                    documentation, validation, and versioning.
-                </p>
+                <p class="hero-copy">A local dashboard for managing portfolio edits, new content, documentation, validation, and versioning.</p>
+                <div class="manager-top-actions">
+                    <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                    <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy & Security</button>
+                    <form method="post" action="{{ url_for('logout') }}" class="logout-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Sign Out</button>
+                    </form>
+                </div>
             </div>
 
             <div class="header-badge-group">
-                <div class="header-badge">
-                    <span class="badge-label">Repo</span>
-                    <strong>{{ repo_name }}</strong>
-                </div>
-
-                <div class="header-badge">
-                    <span class="badge-label">Current Version</span>
-                    <strong>{{ version }}</strong>
-                </div>
-
-                <div class="header-badge">
-                    <span class="badge-label">Pages</span>
-                    <strong>{{ page_count }}</strong>
-                </div>
+                <div class="header-badge"><span class="badge-label">Repo</span><strong>{{ repo_name }}</strong></div>
+                <div class="header-badge"><span class="badge-label">Current Version</span><strong>{{ version }}</strong></div>
+                <div class="header-badge"><span class="badge-label">Pages</span><strong>{{ page_count }}</strong></div>
+                <div class="header-badge"><span class="badge-label">Private Workspace</span><strong>{{ private_workspace }}/</strong></div>
             </div>
         </header>
-
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <section class="flash-stack">
             {% for category, message in messages %}
-            <div class="flash-message {{ category }}">
-                {{ message }}
-            </div>
+            <div class="flash-message {{ category }}">{{ message }}</div>
             {% endfor %}
         </section>
         {% endif %}
         {% endwith %}
 
-
         <main class="dashboard-grid">
-
             <section class="dashboard-card">
                 <p class="eyebrow">Quick Actions</p>
-                <h2>Portfolio Maintenance</h2>
-                <p class="section-copy">
-                    Run your most common repo maintenance actions without leaving the dashboard.
-                </p>
+                <div class="action-title-row">
+                    <h2>Portfolio Maintenance</h2>
+                    <button class="inline-help" type="button" data-help-key="validation" data-help-label="Portfolio Maintenance">?</button>
+                </div>
+                <p class="section-copy">Run maintenance actions locally. None of these buttons commit, push, merge, or publish.</p>
 
                 <div class="action-stack">
-
-                    <form method="post"
-                          action="{{ url_for('run_action') }}">
-                        <input type="hidden"
-                               name="action"
-                               value="validate">
-                        <button class="btn btn-primary"
-                                type="submit">
-                            Validate Portfolio
-                        </button>
+                    <form method="post" action="{{ url_for('run_action') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="validate">
+                        <button class="btn btn-primary" type="submit">Run Full Validation</button>
                     </form>
 
-                    <form method="post"
-                          action="{{ url_for('run_action') }}">
-                        <input type="hidden"
-                               name="action"
-                               value="refresh_docs">
-                        <button class="btn btn-secondary"
-                                type="submit">
-                            Refresh Docs
-                        </button>
+                    <form method="post" action="{{ url_for('run_action') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="refresh_docs">
+                        <button class="btn btn-secondary" type="submit">Refresh Docs</button>
+                        <button class="inline-help" type="button" data-help-key="refresh-docs" data-help-label="Refresh Docs">?</button>
                     </form>
-
                 </div>
 
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Open Content Manager</a>
+
                 <div class="release-box">
-                    <h3>Version Release</h3>
-                    <p>
-                        Use this only when you intentionally want to record a release.
-                    </p>
-
-                    <form method="post"
-                          action="{{ url_for('run_action') }}"
-                          class="release-form">
-
-                        <label for="release_message">
-                            Release message
-                        </label>
-                        <input type="text"
-                               id="release_message"
-                               name="release_message"
-                               placeholder="Example: Add AI dashboard and improve workflow docs"
-                               required>
-
+                    <div class="action-title-row">
+                        <h3>Version Release</h3>
+                        <button class="inline-help" type="button" data-help-key="versioning" data-help-label="Version Releases">?</button>
+                    </div>
+                    <p>Use this only when you intentionally want to record a release.</p>
+                    <form method="post" action="{{ url_for('run_action') }}" class="release-form" data-confirm-action="version">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label for="release_message">Release message</label>
+                        <input type="text" id="release_message" name="release_message" placeholder="Example: Add secure Portfolio Manager help system" required>
                         <div class="button-row">
-                            <button class="btn btn-secondary"
-                                    type="submit"
-                                    name="action"
-                                    value="patch">
-                                Patch
-                            </button>
-
-                            <button class="btn btn-secondary"
-                                    type="submit"
-                                    name="action"
-                                    value="minor">
-                                Minor
-                            </button>
-
-                            <button class="btn btn-secondary"
-                                    type="submit"
-                                    name="action"
-                                    value="major">
-                                Major
-                            </button>
+                            <button class="btn btn-secondary" type="submit" name="action" value="patch">Patch</button>
+                            <button class="btn btn-secondary" type="submit" name="action" value="minor">Minor</button>
+                            <button class="btn btn-secondary" type="submit" name="action" value="major">Major</button>
                         </div>
                     </form>
                 </div>
             </section>
 
-
             <section class="dashboard-card">
                 <p class="eyebrow">New Content</p>
-                <h2>Add a Project or Page Request</h2>
-                <p class="section-copy">
-                    Use this form when you want to add a new project, landing page, demo, or supporting content.
-                </p>
-
-                <form method="post"
-                      action="{{ url_for('submit_new_content') }}"
-                      enctype="multipart/form-data"
-                      class="form-grid">
-
+                <div class="action-title-row">
+                    <h2>Add a Project or Page Request</h2>
+                    <button class="inline-help" type="button" data-help-key="requests" data-help-label="New Content Requests">?</button>
+                </div>
+                <p class="section-copy">Capture an idea or source material for later. This saves a private work request; it does not create a public project.</p>
+                <form method="post" action="{{ url_for('submit_new_content') }}" enctype="multipart/form-data" class="form-grid">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div>
                         <label for="content_type">Content type</label>
-                        <select id="content_type"
-                                name="content_type">
+                        <select id="content_type" name="content_type">
                             <option value="project-page">Project page</option>
                             <option value="landing-page">Landing page</option>
                             <option value="interactive-demo">Interactive demo</option>
@@ -171,238 +110,82 @@
                             <option value="multimedia-page">Multimedia page</option>
                         </select>
                     </div>
-
                     <div>
                         <label for="parent_section">Parent section</label>
-                        <select id="parent_section"
-                                name="parent_section">
+                        <select id="parent_section" name="parent_section">
                             <option value="instructional-design">Instructional Design</option>
                             <option value="ai">AI Training and Evaluation</option>
                             <option value="workflows">Workflows</option>
                         </select>
                     </div>
-
-                    <div class="full-span">
-                        <label for="title">Title</label>
-                        <input type="text"
-                               id="title"
-                               name="title"
-                               placeholder="Example: Sales Discovery Simulation"
-                               required>
-                    </div>
-
-                    <div>
-                        <label for="slug">Slug</label>
-                        <input type="text"
-                               id="slug"
-                               name="slug"
-                               placeholder="sales-discovery-simulation">
-                    </div>
-
-                    <div class="full-span">
-                        <label for="summary">Short summary</label>
-                        <textarea id="summary"
-                                  name="summary"
-                                  rows="3"
-                                  placeholder="What is this page or project about?"></textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="goals">Goals / outcomes</label>
-                        <textarea id="goals"
-                                  name="goals"
-                                  rows="4"
-                                  placeholder="What should this content do, show, or help communicate?"></textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="notes">Notes / build instructions</label>
-                        <textarea id="notes"
-                                  name="notes"
-                                  rows="5"
-                                  placeholder="Add structure notes, copy direction, interaction ideas, link notes, etc."></textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="content_files">Upload supporting files</label>
-                        <input type="file"
-                               id="content_files"
-                               name="content_files"
-                               multiple>
-                    </div>
-
-                    <div class="full-span">
-                        <button class="btn btn-primary"
-                                type="submit">
-                            Save New Content Request
-                        </button>
-                    </div>
+                    <div class="full-span"><label for="title">Title</label><input type="text" id="title" name="title" required></div>
+                    <div><label for="slug">Slug</label><input type="text" id="slug" name="slug" placeholder="Auto-generated if blank"></div>
+                    <div class="full-span"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="3"></textarea></div>
+                    <div class="full-span"><label for="goals">Goals / outcomes</label><textarea id="goals" name="goals" rows="4"></textarea></div>
+                    <div class="full-span"><label for="notes">Notes / build instructions</label><textarea id="notes" name="notes" rows="5"></textarea></div>
+                    <div class="full-span"><label for="content_files">Private supporting files</label><input type="file" id="content_files" name="content_files" multiple><p class="field-help">Stored under .portfolio-manager/uploads/ and ignored by Git.</p></div>
+                    <div class="full-span"><button class="btn btn-primary" type="submit">Save New Content Request</button></div>
                 </form>
             </section>
-
 
             <section class="dashboard-card">
                 <p class="eyebrow">Portfolio Edits</p>
-                <h2>Request a Change</h2>
-                <p class="section-copy">
-                    Use this when you want to revise existing content, remove content, fix links, update copy, or change structure.
-                </p>
-
-                <form method="post"
-                      action="{{ url_for('submit_edit_request') }}"
-                      enctype="multipart/form-data"
-                      class="form-grid">
-
-                    <div>
-                        <label for="page_area">Page / area</label>
-                        <input type="text"
-                               id="page_area"
-                               name="page_area"
-                               placeholder="Example: About page / homepage / AI landing page">
-                    </div>
-
-                    <div>
-                        <label for="edit_type">Edit type</label>
-                        <select id="edit_type"
-                                name="edit_type">
-                            <option value="content-update">Content update</option>
-                            <option value="link-fix">Link fix</option>
-                            <option value="layout-change">Layout change</option>
-                            <option value="rename">Rename / restructure</option>
-                            <option value="remove">Remove content</option>
-                            <option value="new-section">Add section</option>
-                        </select>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="request_title">Request title</label>
-                        <input type="text"
-                               id="request_title"
-                               name="request_title"
-                               placeholder="Example: Update homepage featured work panel"
-                               required>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="instructions">Instructions</label>
-                        <textarea id="instructions"
-                                  name="instructions"
-                                  rows="6"
-                                  placeholder="Describe exactly what needs to change, what should stay the same, and any notes about structure, tone, or links."
-                                  required></textarea>
-                    </div>
-
-                    <div>
-                        <label for="priority">Priority</label>
-                        <select id="priority"
-                                name="priority">
-                            <option value="low">Low</option>
-                            <option value="normal"
-                                    selected>Normal</option>
-                            <option value="high">High</option>
-                        </select>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="support_files">Upload reference files</label>
-                        <input type="file"
-                               id="support_files"
-                               name="support_files"
-                               multiple>
-                    </div>
-
-                    <div class="full-span">
-                        <button class="btn btn-primary"
-                                type="submit">
-                            Save Edit Request
-                        </button>
-                    </div>
+                <div class="action-title-row">
+                    <h2>Request a Change</h2>
+                    <button class="inline-help" type="button" data-help-key="requests" data-help-label="Edit Requests">?</button>
+                </div>
+                <p class="section-copy">Save a future change request without modifying the portfolio yet.</p>
+                <form method="post" action="{{ url_for('submit_edit_request') }}" enctype="multipart/form-data" class="form-grid">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div><label for="page_area">Page / area</label><input type="text" id="page_area" name="page_area"></div>
+                    <div><label for="edit_type">Edit type</label><select id="edit_type" name="edit_type"><option value="content-update">Content update</option><option value="link-fix">Link fix</option><option value="layout-change">Layout change</option><option value="rename">Rename / restructure</option><option value="remove">Remove content</option><option value="new-section">Add section</option></select></div>
+                    <div class="full-span"><label for="request_title">Request title</label><input type="text" id="request_title" name="request_title" required></div>
+                    <div class="full-span"><label for="instructions">Instructions</label><textarea id="instructions" name="instructions" rows="6" required></textarea></div>
+                    <div><label for="priority">Priority</label><select id="priority" name="priority"><option value="low">Low</option><option value="normal" selected>Normal</option><option value="high">High</option></select></div>
+                    <div class="full-span"><label for="support_files">Private reference files</label><input type="file" id="support_files" name="support_files" multiple><p class="field-help">Stored locally outside Git tracking.</p></div>
+                    <div class="full-span"><button class="btn btn-primary" type="submit">Save Edit Request</button></div>
                 </form>
             </section>
-
 
             <section class="dashboard-card">
                 <p class="eyebrow">Portfolio Map</p>
                 <h2>Current Project Structure</h2>
-                <p class="section-copy">
-                    Quick visibility into your main project areas and child pages.
-                </p>
-
+                <p class="section-copy">A quick scan of the public project folders currently present under portfolio/projects/.</p>
                 <div class="category-stack">
                     {% for category in categories %}
                     <article class="category-card">
-                        <div class="category-header">
-                            <h3>{{ category.name }}</h3>
-                            <span class="count-pill">{{ category.count }}</span>
-                        </div>
-
+                        <div class="category-header"><h3>{{ category.name }}</h3><span class="count-pill">{{ category.count }}</span></div>
                         <p class="path-label">{{ category.index_path }}</p>
-
                         {% if category.children %}
-                        <ul class="child-list">
-                            {% for child in category.children %}
-                            <li>
-                                <strong>{{ child.name }}</strong>
-                                <span>{{ child.path }}</span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        <p class="empty-note">No child pages found yet.</p>
-                        {% endif %}
+                        <ul class="child-list">{% for child in category.children %}<li><strong>{{ child.name }}</strong><span>{{ child.path }}</span></li>{% endfor %}</ul>
+                        {% else %}<p class="empty-note">No child pages found yet.</p>{% endif %}
                     </article>
                     {% endfor %}
                 </div>
             </section>
 
-
             <section class="dashboard-card full-width">
                 <p class="eyebrow">Recent Activity</p>
-                <h2>Saved Dashboard Requests</h2>
-
+                <h2>Private Saved Requests</h2>
                 {% if recent_requests %}
                 <div class="request-list">
                     {% for item in recent_requests %}
                     <article class="request-card">
-                        <div class="request-topline">
-                            <h3>{{ item.request_title if item.request_title else item.title }}</h3>
-                            <span class="status-pill">{{ item.status }}</span>
-                        </div>
-
-                        <p class="request-meta">
-                            {{ item.type }} • {{ item.created_at }}
-                        </p>
-
-                        {% if item.page_area %}
-                        <p><strong>Area:</strong> {{ item.page_area }}</p>
-                        {% endif %}
-
-                        {% if item.parent_section %}
-                        <p><strong>Parent:</strong> {{ item.parent_section }}</p>
-                        {% endif %}
-
-                        {% if item.instructions %}
-                        <p>{{ item.instructions }}</p>
-                        {% endif %}
-
-                        {% if item.summary %}
-                        <p>{{ item.summary }}</p>
-                        {% endif %}
+                        <div class="request-topline"><h3>{{ item.request_title if item.request_title else item.title }}</h3><span class="status-pill">{{ item.status }}</span></div>
+                        <p class="request-meta">{{ item.type }} • {{ item.created_at }}</p>
+                        {% if item.page_area %}<p><strong>Area:</strong> {{ item.page_area }}</p>{% endif %}
+                        {% if item.parent_section %}<p><strong>Parent:</strong> {{ item.parent_section }}</p>{% endif %}
+                        {% if item.instructions %}<p>{{ item.instructions }}</p>{% endif %}
+                        {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
                     </article>
                     {% endfor %}
                 </div>
-                {% else %}
-                <p class="empty-note">
-                    No requests saved yet. Once you submit new content or edit requests,
-                    they’ll appear here.
-                </p>
-                {% endif %}
+                {% else %}<p class="empty-note">No private requests saved yet.</p>{% endif %}
             </section>
-
         </main>
-
     </div>
 
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
 </body>
-
 </html>

@@ -12,11 +12,50 @@ https://reeder-design.github.io/id-portfolio-system/
 - `portfolio/css/styles.css` — shared site styles and design system
 - `portfolio/projects/` — portfolio project pages and demos
 - `portfolio-data/` — structured project content, taxonomy, schemas, and portfolio version source data
+- `portfolio-manager/` — local-only Flask dashboard for portfolio maintenance
 - `templates/` — reusable HTML templates for generated portfolio pages
 - `design-system/` — reusable design-system resources
 - `scripts/` — project creation, rendering, documentation, maintenance, and validation scripts
 - `docs/` — maintenance docs, generated inventory/map/changelog, and version snapshots
 - `.github/workflows/` — automated validation and deployment
+
+Local-only Portfolio Manager credentials and runtime data are intentionally excluded from Git:
+
+- `.env` — local Flask secret and password hash
+- `.portfolio-manager/` — private requests, uploads, temporary files, and backups
+
+## Portfolio Manager
+
+Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, protects modifying forms with CSRF, and does not commit, push, merge, or publish automatically.
+
+From the repository root, activate the project virtual environment and install the dashboard dependency:
+
+```bash
+source .venv/bin/activate
+python -m pip install -r portfolio-manager/requirements.txt
+```
+
+Configure local-only credentials once:
+
+```bash
+python portfolio-manager/setup.py
+```
+
+The setup script asks for a password locally, stores only its hash plus a generated Flask secret in the Git-ignored `.env` file, and creates the Git-ignored `.portfolio-manager/` private workspace.
+
+Start the dashboard:
+
+```bash
+python portfolio-manager/app.py
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5000
+```
+
+The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
 
 ## Publishing Workflow
 
@@ -25,11 +64,17 @@ The `main` branch is the approved source for the live portfolio.
 When portfolio changes are merged into `main`:
 
 1. GitHub Actions checks out the repository.
-2. Portfolio HTML, structured content, generated documentation, project creation rules, and template rendering are validated.
+2. Portfolio HTML, structured content, generated documentation, project creation rules, template rendering, and Portfolio Manager safety rules are validated.
 3. If validation passes, the contents of `portfolio/` are uploaded.
 4. GitHub Pages deploys the latest approved version.
 
 For substantial changes, work on a separate branch and open a pull request before merging into `main`.
+
+Portfolio Manager can change local project/data/documentation files, but the publishing path still remains:
+
+```text
+local change → commit → push branch → pull request → review → merge → GitHub Pages
+```
 
 ## Create a New Project
 
@@ -89,17 +134,21 @@ See `docs/versioning-guide.md` for patch/minor/major rules and the release workf
 
 ## Local Validation
 
-Run:
+The Portfolio Manager **Run Full Validation** button runs the same core suite used by the pull-request workflow.
+
+From the terminal, run:
 
 ```bash
 python3 scripts/check-site.py
 python3 scripts/check-content.py
 python3 scripts/check-renderer.py
 python3 scripts/check-new-project.py
+python3 scripts/check-docs.py
 python3 scripts/update-docs.py --check
+python3 scripts/check-portfolio-manager.py
 ```
 
-These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, and generated documentation freshness.
+These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, and Portfolio Manager safety requirements.
 
 ## Agent Guidance
 
