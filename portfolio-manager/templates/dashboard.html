@@ -16,7 +16,7 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">A local dashboard for managing portfolio edits, new content, documentation, validation, and versioning.</p>
+                <p class="hero-copy">A local dashboard for managing portfolio content, public assets, documentation, validation, and versioning.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                     <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy & Security</button>
@@ -69,7 +69,10 @@
                     </form>
                 </div>
 
-                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Open Content Manager</a>
+                <div class="button-row">
+                    <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Open Content Manager</a>
+                    <a class="btn btn-secondary" href="{{ url_for('assets.asset_library') }}">Open Asset Library</a>
+                </div>
 
                 <div class="release-box">
                     <div class="action-title-row">

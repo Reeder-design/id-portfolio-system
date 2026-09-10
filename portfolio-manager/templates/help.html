@@ -36,7 +36,7 @@
                 <p>The system has four layers:</p>
                 <ul>
                     <li><strong>Structured source:</strong> <code>portfolio-data/projects/*.json</code> contains project information the dashboard can understand.</li>
-                    <li><strong>Public website:</strong> <code>portfolio/</code> contains the HTML/CSS/JS GitHub Pages publishes.</li>
+                    <li><strong>Public website:</strong> <code>portfolio/</code> contains the HTML/CSS/JS/assets GitHub Pages publishes.</li>
                     <li><strong>Maintenance documentation:</strong> <code>docs/</code> and <code>portfolio-data/version.json</code> describe the portfolio system and releases.</li>
                     <li><strong>Git/GitHub:</strong> branch → commit → push → pull request → review → merge → deployment.</li>
                 </ul>
@@ -48,7 +48,7 @@
                 <p>From the repo root in VS Code:</p>
                 <p><code>source .venv/bin/activate</code></p>
                 <p>On first secure setup, run <code>python portfolio-manager/setup.py</code>. This asks for your password locally, writes a password hash and random Flask secret to the Git-ignored <code>.env</code> file, and creates the private <code>.portfolio-manager/</code> workspace.</p>
-                <p>Start the app with <code>python portfolio-manager/app.py</code>, then open <code>http://127.0.0.1:5000</code>. The app explicitly binds only to localhost and normal debug mode is disabled.</p>
+                <p>Start the app with <code>python portfolio-manager/app.py</code>, then open <code>http://127.0.0.1:5055</code>. Port <code>5055</code> avoids the common macOS AirPlay Receiver conflict on port <code>5000</code>. The app explicitly binds only to localhost and normal debug mode is disabled.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
@@ -66,7 +66,7 @@
 
             <section class="guide-section" data-guide-section>
                 <h2>Run Full Validation</h2>
-                <p>This is a read-only health check. It runs the same portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured content, renderer compatibility, project-generator behavior, versioning, and generated-document freshness.</p>
+                <p>This is a read-only health check. It runs the same portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured content, renderer compatibility, project-generator behavior, versioning, generated-document freshness, and Portfolio Manager security rules.</p>
                 <p><strong>Changes:</strong> nothing.</p>
                 <p><strong>Use it:</strong> after meaningful edits and before committing/pushing a branch.</p>
             </section>
@@ -98,6 +98,20 @@
             </section>
 
             <section class="guide-section" data-guide-section>
+                <h2>Public Asset Library</h2>
+                <p>The Asset Library is deliberately different from private request uploads. It manages files that you have decided are safe to become part of the public portfolio.</p>
+                <p>Uploaded assets are copied under <code>portfolio/assets/project-assets/&lt;project-id&gt;/</code> and registered in that project's structured <code>assets</code> array. The file and JSON association are both local changes until you commit/push/merge them.</p>
+                <p><strong>Important:</strong> because the file lives under <code>portfolio/</code>, it may become publicly reachable after a future merge even when no page visibly links to it. Never put confidential, proprietary, customer-identifying, or unreleased material in the Asset Library.</p>
+                <ul>
+                    <li><strong>Add Public Asset:</strong> copies an allowed file into the managed public folder and records its type/path/alt/caption. Images require alt text.</li>
+                    <li><strong>Save Metadata:</strong> updates alt text or caption in project JSON and refreshes documentation.</li>
+                    <li><strong>Replace File:</strong> replaces the bytes at the same public path. The extension must stay the same so custom-page references are not broken. Site validation runs and restores the old file if validation fails.</li>
+                    <li><strong>Remove Asset:</strong> removes the JSON association and local public file, then validates. If another page still depends on the file, Portfolio Manager rolls the removal back.</li>
+                </ul>
+                <p>HTML, JavaScript, CSS, SVG, executables, and archive uploads are intentionally blocked from this interface. Custom code remains a deliberate developer workflow rather than a file-upload shortcut.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
                 <h2>Creating a standard project</h2>
                 <p><strong>New Standard Project</strong> is different from a request: it creates real portfolio files using the project generator.</p>
                 <p>The flow is: form → slug/taxonomy path → structured JSON → standard page when public-safe → validation → documentation refresh.</p>
@@ -108,7 +122,7 @@
             <section class="guide-section" data-guide-section>
                 <h2>Editing structured project data</h2>
                 <p><strong>Save Project Data</strong> edits the corresponding <code>portfolio-data/projects/*.json</code> record. It then validates the structured content and refreshes documentation. If validation fails, the JSON edit is rolled back.</p>
-                <p>Fields such as title, audience, role, objectives, outcomes, skills, tools, status, and confidentiality live in this structured source.</p>
+                <p>Fields such as title, audience, role, objectives, outcomes, skills, tools, status, confidentiality, and asset associations live in this structured source.</p>
                 <p><strong>Saving JSON does not necessarily update public HTML.</strong> What happens next depends on whether the page is standard or custom.</p>
             </section>
 
@@ -131,7 +145,7 @@
                 <h2>Git and publishing</h2>
                 <p>VS Code may show <code>M</code> for a modified tracked file or <code>U</code> for a new untracked file. Neither means the file is committed or public.</p>
                 <p>Your publishing path remains: review local changes → <code>git status</code> → commit on a branch → push → pull request → review → merge → GitHub Pages deployment.</p>
-                <p>The live site deploys from <code>portfolio/</code>. Changes only to JSON/docs/dashboard infrastructure do not visibly alter the public site unless the relevant public HTML/CSS/JS also changes.</p>
+                <p>The live site deploys from <code>portfolio/</code>. Changes only to JSON/docs/dashboard infrastructure do not visibly alter the public site unless the relevant public HTML/CSS/JS/assets also change.</p>
             </section>
 
             <section class="guide-section" data-guide-section>

@@ -52,10 +52,29 @@ python portfolio-manager/app.py
 Then open:
 
 ```text
-http://127.0.0.1:5000
+http://127.0.0.1:5055
 ```
 
+Port `5055` is used by default to avoid a common macOS conflict with AirPlay Receiver on port `5000`.
+
 The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
+
+### Public Asset Library
+
+Portfolio Manager includes a project-based Asset Library for files intentionally approved for the public portfolio. Managed files are stored under `portfolio/assets/project-assets/<project-id>/` and associated with the project's structured `assets` array.
+
+The Asset Library can:
+
+- add approved image, video, PDF, and Office-document assets
+- require alt text for images
+- store captions and asset metadata in project JSON
+- preview managed assets through authenticated local routes
+- replace an asset in place while preserving its public path
+- remove an asset with validation rollback if another public page still depends on it
+
+Every upload or replacement requires an explicit public-safe confirmation. General web-code/executable formats such as HTML, JavaScript, CSS, SVG, shell scripts, executables, and archives are intentionally blocked from this uploader.
+
+Private/reference source files belong in the Git-ignored `.portfolio-manager/` request workspace instead. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
 
 ## Publishing Workflow
 
@@ -70,7 +89,7 @@ When portfolio changes are merged into `main`:
 
 For substantial changes, work on a separate branch and open a pull request before merging into `main`.
 
-Portfolio Manager can change local project/data/documentation files, but the publishing path still remains:
+Portfolio Manager can change local project/data/documentation/public-asset files, but the publishing path still remains:
 
 ```text
 local change → commit → push branch → pull request → review → merge → GitHub Pages
@@ -146,9 +165,10 @@ python3 scripts/check-new-project.py
 python3 scripts/check-docs.py
 python3 scripts/update-docs.py --check
 python3 scripts/check-portfolio-manager.py
+python3 scripts/check-portfolio-manager-runtime.py
 ```
 
-These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, and Portfolio Manager safety requirements.
+These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Portfolio Manager safety requirements, and authenticated dashboard/Asset Library rendering.
 
 ## Agent Guidance
 

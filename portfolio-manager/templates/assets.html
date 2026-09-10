@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Library | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='asset-manager.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Portfolio Content</p>
+                <h1>Asset Library</h1>
+                <p class="hero-copy">Add, preview, replace, describe, and remove public portfolio assets without touching custom page code.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="dashboard-card asset-safety-card">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Public-file safety</p>
+                    <h2>Everything here is a public-candidate asset</h2>
+                </div>
+                <button class="inline-help" type="button" data-help-key="assets" data-help-label="Public Asset Library">?</button>
+            </div>
+            <p class="section-copy">Files added here are copied into <code>portfolio/</code>. They are still local until you commit, push, review, and merge, but after a merge they may be publicly reachable even if a page does not visibly link to them.</p>
+            <p class="section-copy"><strong>Keep confidential/reference source files in private Requests instead.</strong></p>
+        </section>
+
+        <main class="asset-layout">
+            <section class="dashboard-card asset-project-picker">
+                <p class="eyebrow">Project</p>
+                <h2>Choose what you are managing</h2>
+                <form method="get" action="{{ url_for('assets.asset_library') }}" class="asset-project-form">
+                    <label for="project">Project</label>
+                    <select id="project" name="project" onchange="this.form.submit()">
+                        {% for project in projects %}
+                        <option value="{{ project.id }}" {% if selected_project and selected_project.id == project.id %}selected{% endif %}>{{ project.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <noscript><button class="btn btn-secondary" type="submit">Open Project Assets</button></noscript>
+                </form>
+            </section>
+
+            {% if selected_project %}
+            <section class="dashboard-card asset-upload-card">
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Add asset</p>
+                        <h2>{{ selected_project.title }}</h2>
+                    </div>
+                    <button class="inline-help" type="button" data-help-key="asset-upload" data-help-label="Add Public Asset">?</button>
+                </div>
+                <p class="section-copy">Allowed file types: {{ allowed_extensions|join(', ') }}. Images require alt text. HTML, JavaScript, CSS, SVG, executables, and archives are intentionally blocked here.</p>
+                <form method="post" action="{{ url_for('assets.upload_asset', project_id=selected_project.id) }}" enctype="multipart/form-data" class="form-grid">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="full-span"><label for="asset_file">File</label><input id="asset_file" name="asset_file" type="file" required></div>
+                    <div><label for="alt">Alt text <span class="field-help-inline">(required for images)</span></label><input id="alt" name="alt" type="text" placeholder="Describe what the image communicates"></div>
+                    <div><label for="caption">Caption <span class="field-help-inline">(optional)</span></label><input id="caption" name="caption" type="text" placeholder="Short public-facing context"></div>
+                    <div class="full-span public-safe-confirm">
+                        <label class="checkbox-label"><input type="checkbox" name="public_safe" required> I confirm this file is safe for a public portfolio and contains no confidential, proprietary, customer-identifying, or unreleased information.</label>
+                    </div>
+                    <div class="full-span"><button class="btn btn-primary" type="submit">Add Public Asset</button></div>
+                </form>
+            </section>
+
+            <section class="dashboard-card full-width">
+                <div class="asset-list-heading">
+                    <div>
+                        <p class="eyebrow">Associated assets</p>
+                        <h2>{{ selected_project.assets|length }} asset{% if selected_project.assets|length != 1 %}s{% endif %}</h2>
+                    </div>
+                    <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=selected_project.id) }}">Edit Project Data</a>
+                </div>
+
+                {% if selected_project.assets %}
+                <div class="asset-card-grid">
+                    {% for asset in selected_project.assets %}
+                    <article class="asset-card">
+                        <div class="asset-preview-frame">
+                            {% if asset.type == 'image' %}
+                            <img src="{{ url_for('assets.preview_asset', project_id=selected_project.id, asset_index=loop.index0) }}" alt="{{ asset.get('alt', '') }}">
+                            {% elif asset.type == 'video' %}
+                            <video controls preload="metadata"><source src="{{ url_for('assets.preview_asset', project_id=selected_project.id, asset_index=loop.index0) }}"></video>
+                            {% elif asset.type == 'pdf' %}
+                            <div class="asset-file-icon">PDF</div>
+                            {% else %}
+                            <div class="asset-file-icon">{{ asset.type|upper }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="asset-card-body">
+                            <div class="asset-card-topline">
+                                <span class="page-type-pill generated">{{ asset.type }}</span>
+                                <a href="{{ url_for('assets.preview_asset', project_id=selected_project.id, asset_index=loop.index0) }}" target="_blank" rel="noopener">Open preview</a>
+                            </div>
+                            <p class="asset-path"><code>{{ asset.path }}</code></p>
+
+                            <form method="post" action="{{ url_for('assets.update_asset_metadata', project_id=selected_project.id, asset_index=loop.index0) }}" class="asset-form-stack">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <div><label for="alt-{{ loop.index0 }}">Alt text</label><input id="alt-{{ loop.index0 }}" name="alt" type="text" value="{{ asset.get('alt', '') }}"></div>
+                                <div><label for="caption-{{ loop.index0 }}">Caption</label><input id="caption-{{ loop.index0 }}" name="caption" type="text" value="{{ asset.get('caption', '') }}"></div>
+                                <button class="btn btn-secondary" type="submit">Save Metadata</button>
+                            </form>
+
+                            <div class="asset-divider"></div>
+
+                            <form method="post" action="{{ url_for('assets.replace_asset', project_id=selected_project.id, asset_index=loop.index0) }}" enctype="multipart/form-data" class="asset-form-stack">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <div class="action-title-row compact"><label for="replacement-{{ loop.index0 }}">Replace file</label><button class="inline-help" type="button" data-help-key="asset-replace" data-help-label="Replace Asset">?</button></div>
+                                <p class="field-help">Use the same <code>{{ asset.path|replace(asset.path.rsplit('.', 1)[0], '') }}</code> file extension. The existing path stays unchanged so page references keep working.</p>
+                                <input id="replacement-{{ loop.index0 }}" name="replacement_file" type="file" required>
+                                <label class="checkbox-label public-safe-confirm"><input type="checkbox" name="public_safe" required> I confirm the replacement is public-safe.</label>
+                                <button class="btn btn-secondary" type="submit">Replace File</button>
+                            </form>
+
+                            <div class="asset-divider"></div>
+
+                            <form method="post" action="{{ url_for('assets.remove_asset', project_id=selected_project.id, asset_index=loop.index0) }}" data-confirm-action="remove-asset">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-danger" type="submit">Remove Asset</button>
+                            </form>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-note">No assets are associated with this project yet.</p>
+                {% endif %}
+            </section>
+            {% else %}
+            <section class="dashboard-card full-width"><p class="empty-note">No structured projects are available yet.</p></section>
+            {% endif %}
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

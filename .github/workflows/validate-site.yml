@@ -50,7 +50,11 @@ jobs:
       - name: Validate generated documentation
         run: python scripts/update-docs.py --check
 
-      - name: Validate Portfolio Manager security
+      - name: Install Portfolio Manager dependencies
+        run: python -m pip install -r portfolio-manager/requirements.txt
+
+      - name: Validate Portfolio Manager security and runtime
         run: |
           python -m py_compile portfolio-manager/*.py
           python scripts/check-portfolio-manager.py
+          python scripts/check-portfolio-manager-runtime.py

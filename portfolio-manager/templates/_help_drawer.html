@@ -16,6 +16,7 @@
             <button type="button" data-help-key="publishing">What actually gets published?</button>
             <button type="button" data-help-key="git-safety">What gets committed automatically?</button>
             <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
+            <button type="button" data-help-key="assets">Public asset safety</button>
         </div>
     </div>
 </aside>
@@ -23,7 +24,7 @@
 
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
-    <p><strong>It reads:</strong> public HTML, structured project data, templates, generator rules, version documentation, and generated docs.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, templates, generator rules, version documentation, generated docs, and Portfolio Manager security rules.</p>
     <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
     <p><strong>Use it:</strong> before committing or whenever you want a full health check.</p>
 </template>
@@ -44,8 +45,8 @@
 
 <template data-help-template="requests">
     <p><strong>Requests</strong> are work orders, not automatic edits.</p>
-    <p>They are now stored under the private Git-ignored <code>.portfolio-manager/</code> workspace along with any uploaded reference files.</p>
-    <p><strong>Use them when:</strong> you want to capture an idea, source material, or future edit without changing the portfolio yet.</p>
+    <p>They are stored under the private Git-ignored <code>.portfolio-manager/</code> workspace along with uploaded reference files.</p>
+    <p><strong>Use them when:</strong> you want to capture an idea, private/reference source material, or future edit without changing the portfolio yet.</p>
 </template>
 
 <template data-help-template="create-project">
@@ -71,6 +72,25 @@
 <template data-help-template="standard-custom">
     <p><strong>Standard Page:</strong> generated from structured JSON + the shared project template. It can be safely regenerated.</p>
     <p><strong>Custom Page:</strong> hand-built HTML/CSS/JavaScript interaction. Structured metadata can be edited, but the template renderer is prevented from overwriting the custom experience.</p>
+</template>
+
+<template data-help-template="assets">
+    <p><strong>Asset Library</strong> manages files intentionally destined for the public portfolio and associates them with structured projects.</p>
+    <p>Managed files live under <code>portfolio/assets/project-assets/</code>. Because that directory is part of the public site, a merged file may be publicly reachable even when a page does not visibly link to it.</p>
+    <p><strong>Use private Requests instead</strong> for employer source material, customer information, drafts that still need sanitization, or anything you would not want exposed publicly.</p>
+    <p>Asset actions change local files only. They do not commit, push, merge, or publish automatically.</p>
+</template>
+
+<template data-help-template="asset-upload">
+    <p><strong>Add Public Asset</strong> copies an allowed file into the project's managed public-asset folder and adds its path/type/alt/caption metadata to the project JSON.</p>
+    <p>You must explicitly confirm the file is public-safe. Images also require alt text.</p>
+    <p>Executable/web-code formats such as HTML, JavaScript, CSS, and SVG are blocked from this uploader.</p>
+</template>
+
+<template data-help-template="asset-replace">
+    <p><strong>Replace File</strong> swaps the bytes at an existing managed asset path while keeping that path unchanged.</p>
+    <p>The replacement must use the same file extension. This protects custom pages that may already reference the asset path directly.</p>
+    <p>Site validation runs after replacement. If validation fails, the previous file is restored.</p>
 </template>
 
 <template data-help-template="publishing">
