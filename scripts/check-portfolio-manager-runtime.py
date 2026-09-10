@@ -26,17 +26,21 @@ def main() -> int:
     errors: list[str] = []
     client = manager_app.app.test_client()
 
-    unauthenticated = client.get("/assets", follow_redirects=False)
-    require(
-        unauthenticated.status_code in {301, 302, 303, 307, 308},
-        "Unauthenticated Asset Library request must redirect to login.",
-        errors,
-    )
-    require(
-        "/login" in unauthenticated.headers.get("Location", ""),
-        "Unauthenticated Asset Library redirect must target login.",
-        errors,
-    )
+    for protected_path, label in [
+        ("/assets", "Asset Library"),
+        ("/site-content", "General Page Content"),
+    ]:
+        unauthenticated = client.get(protected_path, follow_redirects=False)
+        require(
+            unauthenticated.status_code in {301, 302, 303, 307, 308},
+            f"Unauthenticated {label} request must redirect to login.",
+            errors,
+        )
+        require(
+            "/login" in unauthenticated.headers.get("Location", ""),
+            f"Unauthenticated {label} redirect must target login.",
+            errors,
+        )
 
     with client.session_transaction() as session:
         session["portfolio_manager_authenticated"] = True
@@ -44,6 +48,7 @@ def main() -> int:
     dashboard = client.get("/")
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
     require(b"Open Asset Library" in dashboard.data, "Dashboard must expose the Asset Library.", errors)
+    require(b"Open General Page Content" in dashboard.data, "Dashboard must expose general page content management.", errors)
 
     asset_library = client.get("/assets")
     require(asset_library.status_code == 200, "Authenticated Asset Library must render.", errors)
@@ -53,6 +58,16 @@ def main() -> int:
     content_manager = client.get("/content")
     require(content_manager.status_code == 200, "Content Manager must still render.", errors)
     require(b"Manage Assets" in content_manager.data, "Content Manager must link projects to asset management.", errors)
+    require(b"General Page Content" in content_manager.data, "Content Manager must link to general page editing.", errors)
+
+    general_library = client.get("/site-content")
+    require(general_library.status_code == 200, "General Page Content library must render.", errors)
+    require(b"Copy fields only" in general_library.data, "General Page Content must explain its safe editing boundary.", errors)
+
+    home_editor = client.get("/site-content/home")
+    require(home_editor.status_code == 200, "Home general-page editor must render.", errors)
+    require(b"public_safe" in home_editor.data, "General page editor must render public-safe confirmation.", errors)
+    require(b"field__hero_copy" in home_editor.data, "General page editor must render approved structured fields.", errors)
 
     if errors:
         print("Portfolio Manager runtime validation failed:")
