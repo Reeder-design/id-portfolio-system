@@ -11,7 +11,8 @@ from content_routes import load_project, list_projects, refresh_docs, run_comman
 
 APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
-PUBLIC_ASSET_ROOT = REPO_ROOT / "portfolio" / "assets" / "project-assets"
+PORTFOLIO_ROOT = REPO_ROOT / "portfolio"
+PUBLIC_ASSET_ROOT = PORTFOLIO_ROOT / "assets" / "project-assets"
 
 ALLOWED_EXTENSIONS = {
     ".png": "image",
@@ -26,6 +27,8 @@ ALLOWED_EXTENSIONS = {
     ".pptx": "document",
     ".xlsx": "document",
 }
+
+REFERENCE_SCAN_EXTENSIONS = {".html", ".css", ".js"}
 
 asset_bp = Blueprint("assets", __name__)
 
@@ -84,6 +87,41 @@ def resolve_asset_path(asset: dict) -> Path:
     if root not in path.parents:
         raise ValueError("Asset is outside the managed public asset library.")
     return path
+
+
+def find_asset_references(asset_path: Path) -> list[str]:
+    """Conservatively find public HTML/CSS/JS files that still mention an asset."""
+    try:
+        site_relative = asset_path.relative_to(PORTFOLIO_ROOT).as_posix()
+    except ValueError:
+        return []
+
+    trailing_reference = "/".join(site_relative.split("/")[-4:])
+    needles = {
+        asset_path.name,
+        site_relative,
+        f"/{site_relative}",
+        trailing_reference,
+    }
+
+    references: list[str] = []
+    for source in PORTFOLIO_ROOT.rglob("*"):
+        if (
+            not source.is_file()
+            or source.resolve() == asset_path.resolve()
+            or source.suffix.lower() not in REFERENCE_SCAN_EXTENSIONS
+        ):
+            continue
+
+        try:
+            text = source.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+
+        if any(needle and needle in text for needle in needles):
+            references.append(source.relative_to(REPO_ROOT).as_posix())
+
+    return sorted(set(references))
 
 
 def load_asset(project_id: str, asset_index: int) -> tuple[dict, Path, dict]:
@@ -288,6 +326,15 @@ def remove_asset(project_id: str, asset_index: int):
         original_text = project_path.read_text(encoding="utf-8")
         path = resolve_asset_path(asset)
         original_bytes = path.read_bytes() if path.exists() else None
+
+        references = find_asset_references(path)
+        if references:
+            shown = ", ".join(references[:5])
+            extra = f" (+{len(references) - 5} more)" if len(references) > 5 else ""
+            raise ValueError(
+                "This asset still appears in public HTML/CSS/JS, so removal was blocked. "
+                f"Update those references first: {shown}{extra}"
+            )
 
         project["assets"].pop(asset_index)
         write_json(project_path, project)
