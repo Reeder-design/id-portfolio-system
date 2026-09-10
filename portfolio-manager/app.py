@@ -158,6 +158,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
         ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
+        ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
     ]
     results = []
     for label, command in commands:
