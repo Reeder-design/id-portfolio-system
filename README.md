@@ -52,8 +52,10 @@ python portfolio-manager/app.py
 Then open:
 
 ```text
-http://127.0.0.1:5000
+http://127.0.0.1:5055
 ```
+
+Port `5055` is used by default to avoid a common macOS conflict with AirPlay Receiver on port `5000`.
 
 The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
 
