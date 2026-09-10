@@ -62,11 +62,17 @@
 
                     <form method="post" action="{{ url_for('git_workflow.create_branch') }}" class="git-branch-form" data-confirm-action="git-create-branch">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <label for="prefix">Branch type</label>
-                        <select id="prefix" name="prefix">{% for prefix in branch_prefixes %}<option value="{{ prefix }}" {% if prefix == 'feature' %}selected{% endif %}>{{ prefix }}/</option>{% endfor %}</select>
-                        <label for="branch_slug">Branch name</label>
-                        <input id="branch_slug" name="branch_slug" type="text" placeholder="about-page-refresh" required>
-                        <button class="btn btn-primary" type="submit" {% if not clean %}disabled{% endif %}>Create & Switch Branch</button>
+                        <div class="git-branch-field">
+                            <label for="prefix">Branch type</label>
+                            <select id="prefix" name="prefix">{% for prefix in branch_prefixes %}<option value="{{ prefix }}" {% if prefix == 'feature' %}selected{% endif %}>{{ prefix }}/</option>{% endfor %}</select>
+                        </div>
+                        <div class="git-branch-field">
+                            <label for="branch_slug">Branch name</label>
+                            <input id="branch_slug" name="branch_slug" type="text" placeholder="about-page-refresh" required>
+                        </div>
+                        <div class="git-branch-submit">
+                            <button class="btn btn-primary" type="submit" {% if not clean %}disabled{% endif %}>Create & Switch Branch</button>
+                        </div>
                     </form>
                 </div>
                 {% else %}
@@ -151,7 +157,7 @@
                     <button class="inline-help" type="button" data-help-key="git-commit" data-help-label="Validate and Commit">?</button>
                 </div>
                 <p class="section-copy">Portfolio Manager runs the full validation suite before Git is allowed to create the commit. A failed validation blocks the commit.</p>
-                <form method="post" action="{{ url_for('git_workflow.commit_changes') }}" data-confirm-action="git-commit">
+                <form method="post" action="{{ url_for('git_workflow.commit_changes') }}" class="git-commit-form" data-confirm-action="git-commit">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <label for="commit_message">Commit message</label>
                     <input id="commit_message" name="commit_message" type="text" maxlength="120" placeholder="Update About page portfolio copy" required>
@@ -165,7 +171,7 @@
                     <button class="inline-help" type="button" data-help-key="git-push" data-help-label="Push Feature Branch">?</button>
                 </div>
                 <p class="section-copy">Push uses a normal upstream push only. Force-push and pushes to <code>main</code> do not exist in this interface.</p>
-                <form method="post" action="{{ url_for('git_workflow.push_branch') }}" data-confirm-action="git-push">
+                <form method="post" action="{{ url_for('git_workflow.push_branch') }}" class="git-push-form" data-confirm-action="git-push">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button class="btn btn-primary" type="submit" {% if branch == base_branch or not clean or commit_count < 1 %}disabled{% endif %}>Push Branch to GitHub</button>
                 </form>
