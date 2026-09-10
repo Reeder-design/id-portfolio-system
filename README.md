@@ -11,7 +11,7 @@ https://reeder-design.github.io/id-portfolio-system/
 - `portfolio/` — public GitHub Pages website
 - `portfolio/css/styles.css` — shared site styles and design system
 - `portfolio/projects/` — portfolio project pages and demos
-- `portfolio-data/` — structured project content, taxonomy, schemas, and portfolio version source data
+- `portfolio-data/` — structured project content, general-page content, taxonomy, schemas, and portfolio version source data
 - `portfolio-manager/` — local-only Flask dashboard for portfolio maintenance
 - `templates/` — reusable HTML templates for generated portfolio pages
 - `design-system/` — reusable design-system resources
@@ -59,6 +59,29 @@ Port `5055` is used by default to avoid a common macOS conflict with AirPlay Rec
 
 The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
 
+### General Page Content
+
+Portfolio Manager includes a safe editor for routine copy on Home, About, Projects, the three main project-category pages, and Contact.
+
+The structured source of truth is:
+
+```text
+portfolio-data/site-content.json
+```
+
+Each editable field maps to one explicit approved locator in `scripts/site_content_model.py`. The manager exposes only predefined plain-text headings and paragraphs; navigation, links, buttons, tags, CSS, JavaScript, layout, and custom interactions remain developer-controlled.
+
+When general-page copy is saved:
+
+1. the structured value is updated in `portfolio-data/site-content.json`
+2. `scripts/render-site-content.py` updates only the approved public HTML text location
+3. managed copy is HTML-escaped before rendering
+4. `scripts/check-site-content.py` verifies structured/public copy synchronization
+5. `scripts/check-site.py` verifies the public site
+6. both the JSON and edited HTML are restored automatically if rendering or validation fails
+
+Every save requires an explicit public-safe confirmation. If a page redesign makes a locator missing or ambiguous, the renderer fails closed instead of guessing where content belongs.
+
 ### Public Asset Library
 
 Portfolio Manager includes a project-based Asset Library for files intentionally approved for the public portfolio. Managed files are stored under `portfolio/assets/project-assets/<project-id>/` and associated with the project's structured `assets` array.
@@ -83,13 +106,13 @@ The `main` branch is the approved source for the live portfolio.
 When portfolio changes are merged into `main`:
 
 1. GitHub Actions checks out the repository.
-2. Portfolio HTML, structured content, generated documentation, project creation rules, template rendering, and Portfolio Manager safety rules are validated.
+2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, and Portfolio Manager safety rules are validated.
 3. If validation passes, the contents of `portfolio/` are uploaded.
 4. GitHub Pages deploys the latest approved version.
 
 For substantial changes, work on a separate branch and open a pull request before merging into `main`.
 
-Portfolio Manager can change local project/data/documentation/public-asset files, but the publishing path still remains:
+Portfolio Manager can change local project/data/documentation/public-asset/general-page files, but the publishing path still remains:
 
 ```text
 local change → commit → push branch → pull request → review → merge → GitHub Pages
@@ -160,6 +183,7 @@ From the terminal, run:
 ```bash
 python3 scripts/check-site.py
 python3 scripts/check-content.py
+python3 scripts/check-site-content.py
 python3 scripts/check-renderer.py
 python3 scripts/check-new-project.py
 python3 scripts/check-docs.py
@@ -168,7 +192,7 @@ python3 scripts/check-portfolio-manager.py
 python3 scripts/check-portfolio-manager-runtime.py
 ```
 
-These checks cover public site links and assets, structured content rules, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Portfolio Manager safety requirements, and authenticated dashboard/Asset Library rendering.
+These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Portfolio Manager safety requirements, and authenticated dashboard/Asset Library/general-page rendering.
 
 ## Agent Guidance
 
