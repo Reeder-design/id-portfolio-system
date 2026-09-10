@@ -48,7 +48,7 @@
                 <p>From the repo root in VS Code:</p>
                 <p><code>source .venv/bin/activate</code></p>
                 <p>On first secure setup, run <code>python portfolio-manager/setup.py</code>. This asks for your password locally, writes a password hash and random Flask secret to the Git-ignored <code>.env</code> file, and creates the private <code>.portfolio-manager/</code> workspace.</p>
-                <p>Start the app with <code>python portfolio-manager/app.py</code>, then open <code>http://127.0.0.1:5000</code>. The app explicitly binds only to localhost and normal debug mode is disabled.</p>
+                <p>Start the app with <code>python portfolio-manager/app.py</code>, then open <code>http://127.0.0.1:5055</code>. Port <code>5055</code> avoids the common macOS AirPlay Receiver conflict on port <code>5000</code>. The app explicitly binds only to localhost and normal debug mode is disabled.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
