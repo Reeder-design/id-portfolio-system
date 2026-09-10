@@ -14,7 +14,7 @@
         <div class="help-quick-links">
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
-            <button type="button" data-help-key="git-safety">What gets committed automatically?</button>
+            <button type="button" data-help-key="git-workflow">Git workflow safety</button>
             <button type="button" data-help-key="general-content">General page editing</button>
             <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
             <button type="button" data-help-key="assets">Public asset safety</button>
@@ -107,16 +107,51 @@
     <p>Site validation runs after replacement. If validation fails, the previous file is restored.</p>
 </template>
 
+<template data-help-template="git-workflow">
+    <p><strong>Git Workflow</strong> can automate the safe mechanics between local edits and a pull request.</p>
+    <p><strong>It can:</strong> sync clean <code>main</code> with fast-forward-only pull, create a feature branch, stage exact approved files, run full validation, create a local commit, push the feature branch, and create a PR when GitHub CLI is authenticated.</p>
+    <p><strong>It cannot:</strong> commit on <code>main</code>, push <code>main</code>, force-push, stage private runtime paths, run arbitrary shell commands, or merge a PR.</p>
+    <p>If GitHub CLI is unavailable, the dashboard gives you GitHub's pre-filled PR page instead of asking you to store an API token.</p>
+</template>
+
+<template data-help-template="git-stage">
+    <p><strong>Stage Selected Files</strong> chooses exactly which changed files belong in the next commit.</p>
+    <p>Portfolio Manager accepts only paths that Git already reports as changed and blocks private/sensitive paths such as <code>.env</code>, <code>.portfolio-manager/</code>, <code>.venv/</code>, and key/certificate files.</p>
+    <p><strong>Unstage</strong> removes a file from the next commit without deleting its local edit.</p>
+</template>
+
+<template data-help-template="git-diff">
+    <p><strong>Diff Review</strong> shows the actual line-level changes Git sees.</p>
+    <p><strong>Staged</strong> means selected for the next commit. <strong>Not staged</strong> means the local edit still exists but will not be included yet.</p>
+    <p>The dashboard truncates extremely large diffs for readability; Git still retains the full changes.</p>
+</template>
+
+<template data-help-template="git-commit">
+    <p><strong>Run Validation & Commit</strong> first runs the full portfolio validation suite. If any check fails, Git is not allowed to create the commit.</p>
+    <p>Commits are blocked entirely on <code>main</code>. A successful commit exists only in your local feature branch until you push.</p>
+</template>
+
+<template data-help-template="git-push">
+    <p><strong>Push Branch to GitHub</strong> sends committed feature-branch changes to <code>origin</code> and sets the normal upstream tracking branch.</p>
+    <p>The dashboard refuses to push while uncommitted local changes remain, refuses branches with no commits beyond <code>main</code>, never pushes <code>main</code>, and never force-pushes.</p>
+</template>
+
+<template data-help-template="git-pr">
+    <p><strong>Open Pull Request</strong> creates a review request from your pushed feature branch into <code>main</code>.</p>
+    <p>If the authenticated GitHub CLI is available, Portfolio Manager can create the PR directly. Otherwise it opens GitHub's pre-filled compare/PR page.</p>
+    <p><strong>Merge remains intentionally separate.</strong> Portfolio Manager has no merge route or merge button.</p>
+</template>
+
 <template data-help-template="publishing">
     <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
-    <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally, but nothing reaches the live site until the Git review/merge path is completed.</p>
-    <p><strong>Live path:</strong> local change → commit → push branch → PR → review → merge → GitHub Pages deployment.</p>
+    <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally. Git Workflow can commit and push a feature branch, but nothing reaches the live site until the pull request is explicitly merged.</p>
+    <p><strong>Live path:</strong> local change → stage → validate + commit → push feature branch → PR → explicit review/merge → GitHub Pages deployment.</p>
 </template>
 
 <template data-help-template="git-safety">
-    <p><strong>Portfolio Manager currently commits nothing automatically.</strong></p>
-    <p>It can modify local files, which VS Code/Git may mark as <code>M</code> (modified) or <code>U</code> (untracked).</p>
-    <p>You still control Git add, commit, push, pull request, review, and merge.</p>
+    <p>Portfolio Manager can now perform selected Git actions, but only through the guarded Git Workflow page.</p>
+    <p>It blocks commits and pushes on <code>main</code>, blocks force-push, blocks unsafe/private paths, and runs full validation before commit.</p>
+    <p><strong>There is no automated merge.</strong> Pull-request approval and merge remain an explicit human decision.</p>
 </template>
 
 <template data-help-template="privacy">
