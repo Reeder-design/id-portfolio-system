@@ -29,6 +29,7 @@ def main() -> int:
     for protected_path, label in [
         ("/assets", "Asset Library"),
         ("/site-content", "General Page Content"),
+        ("/git/", "Git Workflow"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -49,6 +50,7 @@ def main() -> int:
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
     require(b"Open Asset Library" in dashboard.data, "Dashboard must expose the Asset Library.", errors)
     require(b"Open General Page Content" in dashboard.data, "Dashboard must expose general page content management.", errors)
+    require(b"Open Git Workflow" in dashboard.data, "Dashboard must expose the guarded Git workflow.", errors)
 
     asset_library = client.get("/assets")
     require(asset_library.status_code == 200, "Authenticated Asset Library must render.", errors)
@@ -68,6 +70,12 @@ def main() -> int:
     require(home_editor.status_code == 200, "Home general-page editor must render.", errors)
     require(b"public_safe" in home_editor.data, "General page editor must render public-safe confirmation.", errors)
     require(b"field__hero_copy" in home_editor.data, "General page editor must render approved structured fields.", errors)
+
+    git_workflow = client.get("/git/")
+    require(git_workflow.status_code == 200, "Authenticated Git Workflow must render.", errors)
+    require(b"Merge is intentionally outside Portfolio Manager" in git_workflow.data, "Git Workflow must show the no-merge safety boundary.", errors)
+    require(b"Review Changed Files" in git_workflow.data, "Git Workflow must expose explicit file review before staging.", errors)
+    require(b"Run Validation &amp; Commit" in git_workflow.data, "Git Workflow must expose validation-gated commit control.", errors)
 
     if errors:
         print("Portfolio Manager runtime validation failed:")
