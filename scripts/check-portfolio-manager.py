@@ -29,6 +29,7 @@ def main() -> int:
     require("require_security_settings()" in app_text, "Portfolio Manager must require local security settings", errors)
     require("validate_csrf()" in app_text, "Portfolio Manager must validate CSRF for POST actions", errors)
     require("scripts/check-portfolio-manager.py" in app_text, "Run Full Validation must include Portfolio Manager security checks", errors)
+    require("scripts/check-portfolio-manager-runtime.py" in app_text, "Run Full Validation must include Portfolio Manager runtime checks", errors)
     require(".env" in ignore_text, ".env must be ignored by Git", errors)
     require(".portfolio-manager/" in ignore_text, ".portfolio-manager/ must be ignored by Git", errors)
     require("portfolio-data/dashboard-uploads" not in app_text, "Uploads must not return to the Git-tracked portfolio-data workspace", errors)
@@ -36,10 +37,13 @@ def main() -> int:
     require(ASSET_ROUTES.exists(), "Asset manager routes are missing", errors)
     if asset_text:
         require("PUBLIC_ASSET_ROOT" in asset_text, "Public assets must use an explicit managed root", errors)
-        require('"portfolio" / "assets" / "project-assets"' in asset_text, "Managed project assets must live under portfolio/assets/project-assets", errors)
+        require('PORTFOLIO_ROOT = REPO_ROOT / "portfolio"' in asset_text, "Portfolio root must resolve to the public portfolio directory", errors)
+        require('PUBLIC_ASSET_ROOT = PORTFOLIO_ROOT / "assets" / "project-assets"' in asset_text, "Managed project assets must live under portfolio/assets/project-assets", errors)
         require("secure_filename" in asset_text, "Public asset filenames must be sanitized", errors)
         require("require_public_safe_confirmation" in asset_text, "Public asset uploads must require an explicit public-safe confirmation", errors)
         require("root not in path.parents" in asset_text, "Managed asset paths must be constrained to the public asset root", errors)
+        require("find_asset_references" in asset_text, "Asset removal must scan public HTML/CSS/JS references before deletion", errors)
+        require("REFERENCE_SCAN_EXTENSIONS" in asset_text, "Asset reference scanning must define explicit public source types", errors)
         require("scripts/check-site.py" in asset_text, "Destructive/replacement asset actions must validate the public site", errors)
         for blocked_extension in (".html", ".htm", ".js", ".css", ".svg", ".exe", ".sh", ".zip"):
             require(
