@@ -24,6 +24,7 @@ def main() -> int:
     ignore_text = GITIGNORE.read_text(encoding="utf-8")
 
     require('host="127.0.0.1"' in app_text, "Portfolio Manager must bind explicitly to 127.0.0.1", errors)
+    require("port=5055" in app_text, "Portfolio Manager must use the macOS-friendly default port 5055", errors)
     require("debug=False" in app_text, "Portfolio Manager normal startup must keep debug mode disabled", errors)
     require("portfolio-manager-local-dev-key" not in app_text, "Hard-coded Flask development secret must not return", errors)
     require("require_security_settings()" in app_text, "Portfolio Manager must require local security settings", errors)
