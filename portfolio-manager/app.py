@@ -11,6 +11,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 
+from asset_routes import asset_bp
 from content_routes import content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
 
@@ -46,6 +47,7 @@ app.config.update(
     TRUSTED_HOSTS=["127.0.0.1", "localhost"],
 )
 app.register_blueprint(content_bp)
+app.register_blueprint(asset_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
@@ -155,6 +157,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
         ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
+        ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
     ]
     results = []
     for label, command in commands:
