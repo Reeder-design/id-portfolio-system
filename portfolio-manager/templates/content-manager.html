@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -15,130 +16,66 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Portfolio Content</h1>
-                <p class="hero-copy">Create standard portfolio projects and edit the structured content behind existing work.</p>
+                <p class="hero-copy">Create standard portfolio projects and edit the structured source behind existing work.</p>
             </div>
-            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+            </div>
         </header>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <section class="flash-stack">
-            {% for category, message in messages %}
-            <div class="flash-message {{ category }}">{{ message }}</div>
-            {% endfor %}
-        </section>
-        {% endif %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
         <main class="content-manager-grid">
             <section class="dashboard-card">
                 <p class="eyebrow">Create</p>
-                <h2>New Standard Project</h2>
-                <p class="section-copy">This creates the structured record, correct folder, and standard case-study page. New projects default to Building.</p>
+                <div class="action-title-row">
+                    <h2>New Standard Project</h2>
+                    <button class="inline-help" type="button" data-help-key="create-project" data-help-label="Create Standard Project">?</button>
+                </div>
+                <p class="section-copy">Creates real structured project files. New projects default to Building so you can finish and review them before treating them as live.</p>
 
                 <form method="post" action="{{ url_for('content.create_project') }}" class="form-grid">
-                    <div class="full-span">
-                        <label for="title">Project title</label>
-                        <input id="title" name="title" type="text" required>
-                    </div>
-
-                    <div>
-                        <label for="slug">URL slug</label>
-                        <input id="slug" name="slug" type="text" placeholder="Auto-generated if blank">
-                    </div>
-
-                    <div>
-                        <label for="placement">Portfolio placement</label>
-                        <select id="placement" name="placement" required>
-                            {% for option in placements %}
-                            <option value="{{ option.value }}">{{ option.label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="status">Status</label>
-                        <select id="status" name="status">
-                            <option value="building" selected>Building</option>
-                            <option value="planned">Planned</option>
-                            <option value="live">Live</option>
-                            <option value="archived">Archived</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="confidentiality">Confidentiality</label>
-                        <select id="confidentiality" name="confidentiality">
-                            <option value="public" selected>Public</option>
-                            <option value="sanitized">Sanitized / Fictionalized</option>
-                            <option value="needs-sanitization">Needs Sanitization</option>
-                        </select>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="summary">Short summary</label>
-                        <textarea id="summary" name="summary" rows="3" required></textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="business_need">Business / learning need</label>
-                        <textarea id="business_need" name="business_need" rows="3" required></textarea>
-                    </div>
-
-                    <div>
-                        <label for="audience">Audience</label>
-                        <input id="audience" name="audience" type="text" required>
-                    </div>
-
-                    <div>
-                        <label for="role">My role</label>
-                        <input id="role" name="role" type="text" required>
-                    </div>
-
-                    <div class="full-span">
-                        <button class="btn btn-primary" type="submit">Create Project</button>
-                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" required></div>
+                    <div><label for="slug">URL slug</label><input id="slug" name="slug" type="text" placeholder="Auto-generated if blank"></div>
+                    <div><label for="placement">Portfolio placement</label><select id="placement" name="placement" required>{% for option in placements %}<option value="{{ option.value }}">{{ option.label }}</option>{% endfor %}</select></div>
+                    <div><label for="status">Status</label><select id="status" name="status"><option value="building" selected>Building</option><option value="planned">Planned</option><option value="live">Live</option><option value="archived">Archived</option></select></div>
+                    <div><label for="confidentiality">Confidentiality</label><select id="confidentiality" name="confidentiality"><option value="public" selected>Public</option><option value="sanitized">Sanitized / Fictionalized</option><option value="needs-sanitization">Needs Sanitization</option></select></div>
+                    <div class="full-span"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="3" required></textarea></div>
+                    <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="3" required></textarea></div>
+                    <div><label for="audience">Audience</label><input id="audience" name="audience" type="text" required></div>
+                    <div><label for="role">My role</label><input id="role" name="role" type="text" required></div>
+                    <div class="full-span"><button class="btn btn-primary" type="submit">Create Project</button></div>
                 </form>
             </section>
 
             <section class="dashboard-card">
                 <p class="eyebrow">Edit</p>
-                <h2>Structured Projects</h2>
-                <p class="section-copy">Edit project metadata and case-study content here. Custom interactive pages are protected from template regeneration.</p>
-
+                <div class="action-title-row">
+                    <h2>Structured Projects</h2>
+                    <button class="inline-help" type="button" data-help-key="standard-custom" data-help-label="Standard vs. Custom Pages">?</button>
+                </div>
+                <p class="section-copy">These are projects Portfolio Manager understands through JSON records. Custom interaction pages remain protected from template regeneration.</p>
                 <div class="project-manager-list">
                     {% for project in projects %}
                     <article class="project-manager-card">
                         <div class="project-manager-topline">
-                            <div>
-                                <h3>{{ project.title }}</h3>
-                                <p class="project-location">
-                                    {{ project._category_label }}
-                                    {% if project._subcategory_label %} · {{ project._subcategory_label }}{% endif %}
-                                </p>
-                            </div>
-                            <div class="project-pill-group">
-                                <span class="status-pill">{{ project.status }}</span>
-                                {% if project._generated_page %}
-                                <span class="page-type-pill generated">Standard page</span>
-                                {% else %}
-                                <span class="page-type-pill custom">Custom page</span>
-                                {% endif %}
-                            </div>
+                            <div><h3>{{ project.title }}</h3><p class="project-location">{{ project._category_label }}{% if project._subcategory_label %} · {{ project._subcategory_label }}{% endif %}</p></div>
+                            <div class="project-pill-group"><span class="status-pill">{{ project.status }}</span>{% if project._generated_page %}<span class="page-type-pill generated">Standard page</span>{% else %}<span class="page-type-pill custom">Custom page</span>{% endif %}</div>
                         </div>
-
                         <p>{{ project.summary }}</p>
-
-                        <div class="project-card-actions">
-                            <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a>
-                        </div>
+                        <div class="project-card-actions"><a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
                     </article>
-                    {% else %}
-                    <p class="empty-note">No structured projects found.</p>
-                    {% endfor %}
+                    {% else %}<p class="empty-note">No structured projects found.</p>{% endfor %}
                 </div>
             </section>
         </main>
     </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
 </body>
 </html>
