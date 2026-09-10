@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Portfolio Manager</p>
+                <h1>User Guide</h1>
+                <p class="hero-copy">What each action actually changes, what stays local, and what you still need to do before anything reaches the live portfolio.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+                <form method="post" action="{{ url_for('logout') }}" class="logout-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-secondary" type="submit">Sign Out</button>
+                </form>
+            </div>
+        </header>
+
+        <input class="help-search" data-help-search type="search" placeholder="Search the user guide..." aria-label="Search user guide">
+
+        <main class="guide-layout">
+            <section class="guide-section" data-guide-section>
+                <h2>The mental model</h2>
+                <p>Portfolio Manager operates on your <strong>local clone</strong> of <code>id-portfolio-system</code>. A local file change is not the same thing as a Git commit, and a Git commit is not the same thing as a public deployment.</p>
+                <p>The system has four layers:</p>
+                <ul>
+                    <li><strong>Structured source:</strong> <code>portfolio-data/projects/*.json</code> contains project information the dashboard can understand.</li>
+                    <li><strong>Public website:</strong> <code>portfolio/</code> contains the HTML/CSS/JS GitHub Pages publishes.</li>
+                    <li><strong>Maintenance documentation:</strong> <code>docs/</code> and <code>portfolio-data/version.json</code> describe the portfolio system and releases.</li>
+                    <li><strong>Git/GitHub:</strong> branch → commit → push → pull request → review → merge → deployment.</li>
+                </ul>
+                <p><strong>Key rule:</strong> Portfolio Manager currently does not commit, push, merge, or publish automatically.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Starting and signing in</h2>
+                <p>From the repo root in VS Code:</p>
+                <p><code>source .venv/bin/activate</code></p>
+                <p>On first secure setup, run <code>python portfolio-manager/setup.py</code>. This asks for your password locally, writes a password hash and random Flask secret to the Git-ignored <code>.env</code> file, and creates the private <code>.portfolio-manager/</code> workspace.</p>
+                <p>Start the app with <code>python portfolio-manager/app.py</code>, then open <code>http://127.0.0.1:5000</code>. The app explicitly binds only to localhost and normal debug mode is disabled.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Privacy and security</h2>
+                <p>The dashboard code can live in a public repository without giving strangers control of your portfolio. The operating credentials and private runtime data do not live in Git.</p>
+                <ul>
+                    <li><code>.env</code> contains the local secret and password hash and is ignored by Git.</li>
+                    <li><code>.portfolio-manager/</code> stores requests, uploads, temporary files, and backups and is ignored by Git.</li>
+                    <li>Every dashboard route except the login/static assets requires an authenticated session.</li>
+                    <li>Every POST action requires a CSRF token, preventing another webpage from silently submitting a modifying request to your local app.</li>
+                    <li>Sessions expire after eight hours.</li>
+                </ul>
+                <p>You should still review uploads before intentionally moving anything from the private workspace into the public repository.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Run Full Validation</h2>
+                <p>This is a read-only health check. It runs the same portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured content, renderer compatibility, project-generator behavior, versioning, and generated-document freshness.</p>
+                <p><strong>Changes:</strong> nothing.</p>
+                <p><strong>Use it:</strong> after meaningful edits and before committing/pushing a branch.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Refresh Docs</h2>
+                <p>This action runs <code>scripts/update-docs.py</code>. It reads your structured projects and version data, then rebuilds the maintenance documentation describing the portfolio.</p>
+                <p>Typical affected files are <code>docs/content-inventory.md</code>, <code>docs/portfolio-map.md</code>, and <code>docs/changelog.md</code>.</p>
+                <p><strong>It does not refresh the public website.</strong> It does not rewrite your homepage, regenerate project HTML, commit, push, merge, or deploy.</p>
+                <p>Memory shortcut: <strong>Refresh Docs = refresh the paperwork about the portfolio.</strong></p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Version releases</h2>
+                <p>A version bump records an intentional release in <code>portfolio-data/version.json</code>, refreshes release documentation, and creates a historical snapshot under <code>docs/versions/</code>.</p>
+                <ul>
+                    <li><strong>Patch:</strong> small corrections/refinements, e.g. 1.0.0 → 1.0.1.</li>
+                    <li><strong>Minor:</strong> meaningful new project/feature, e.g. 1.0.0 → 1.1.0.</li>
+                    <li><strong>Major:</strong> major architecture/redesign, e.g. 1.0.0 → 2.0.0.</li>
+                </ul>
+                <p>Do this once near the end of a meaningful release, not for every experimental edit. A version bump still does not commit or publish anything.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Requests and private uploads</h2>
+                <p><strong>Request a Change</strong> and <strong>New Content Request</strong> save work orders. They do not perform arbitrary site edits yet.</p>
+                <p>Requests and attached source/reference files are stored in <code>.portfolio-manager/</code>, not <code>portfolio-data/</code>, so a normal <code>git add .</code> will not pick them up.</p>
+                <p>Use requests when you have an idea, source material, or future edit you want the system to remember without changing the actual portfolio yet.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Creating a standard project</h2>
+                <p><strong>New Standard Project</strong> is different from a request: it creates real portfolio files using the project generator.</p>
+                <p>The flow is: form → slug/taxonomy path → structured JSON → standard page when public-safe → validation → documentation refresh.</p>
+                <p>Use <strong>Building</strong> while developing. Use <strong>Needs Sanitization</strong> when the structured record may exist locally but should not be rendered as public-ready content.</p>
+                <p>Creating a project does not commit, push, merge, or publish.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Editing structured project data</h2>
+                <p><strong>Save Project Data</strong> edits the corresponding <code>portfolio-data/projects/*.json</code> record. It then validates the structured content and refreshes documentation. If validation fails, the JSON edit is rolled back.</p>
+                <p>Fields such as title, audience, role, objectives, outcomes, skills, tools, status, and confidentiality live in this structured source.</p>
+                <p><strong>Saving JSON does not necessarily update public HTML.</strong> What happens next depends on whether the page is standard or custom.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Standard pages vs. custom pages</h2>
+                <h3>Standard Page</h3>
+                <p>A standard page was generated from structured project data and <code>templates/project-page/index.html</code>. It carries a marker telling Portfolio Manager it is safe to rebuild.</p>
+                <p>Workflow: edit structured data → Save Project Data → Regenerate Page → preview → Run Full Validation.</p>
+                <h3>Custom Page</h3>
+                <p>A custom page contains bespoke HTML/CSS/JavaScript such as scoring, simulation logic, dashboards, or other interaction behavior. Portfolio Manager may update its metadata JSON but deliberately prevents the generic renderer from overwriting the custom experience.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Regenerate Page</h2>
+                <p>For a Standard Page only, this reads the latest project JSON and shared project template, then replaces that project's generated public <code>index.html</code>. Site validation runs afterward.</p>
+                <p><strong>This changes public HTML locally.</strong> It still does not commit, push, merge, or publish.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Git and publishing</h2>
+                <p>VS Code may show <code>M</code> for a modified tracked file or <code>U</code> for a new untracked file. Neither means the file is committed or public.</p>
+                <p>Your publishing path remains: review local changes → <code>git status</code> → commit on a branch → push → pull request → review → merge → GitHub Pages deployment.</p>
+                <p>The live site deploys from <code>portfolio/</code>. Changes only to JSON/docs/dashboard infrastructure do not visibly alter the public site unless the relevant public HTML/CSS/JS also changes.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>When something goes wrong</h2>
+                <p>Keep the terminal running while using Portfolio Manager. If the browser errors, the terminal normally contains the useful Python message.</p>
+                <p>If files changed unexpectedly, run <code>git status</code> before deleting or resetting anything. Uncommitted local changes are usually recoverable.</p>
+                <p>To stop the app, use <strong>Control + C</strong>. Closing the terminal only stops Flask; it does not delete your files.</p>
+            </section>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
