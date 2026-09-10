@@ -62,6 +62,8 @@
             } else if (kind === 'version') {
                 const level = submitter ? submitter.value : 'selected';
                 message = `Create a ${level} version release?\n\nThis updates local version history, changelog, and a version snapshot. It will NOT commit, push, merge, or publish anything.`;
+            } else if (kind === 'remove-asset') {
+                message = 'Remove this public asset?\n\nPortfolio Manager will remove its structured project association and local file, then run validation. If another public page still depends on the file, the removal is rolled back. This does NOT commit, push, merge, or publish anything.';
             }
 
             if (message && !window.confirm(message)) {
