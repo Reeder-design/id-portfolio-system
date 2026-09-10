@@ -1,0 +1,91 @@
+<button class="help-launcher" type="button" data-help-open aria-label="Open Portfolio Manager help">?</button>
+
+<aside class="help-drawer" data-help-drawer aria-hidden="true" aria-label="Portfolio Manager help">
+    <div class="help-drawer-header">
+        <div>
+            <p class="eyebrow">Help</p>
+            <h2 data-help-title>Portfolio Manager Help</h2>
+        </div>
+        <button class="help-close" type="button" data-help-close aria-label="Close help">×</button>
+    </div>
+
+    <div class="help-drawer-body" data-help-body>
+        <p>Use the small <strong>?</strong> buttons beside actions for context-specific instructions.</p>
+        <div class="help-quick-links">
+            <a href="{{ url_for('help_page') }}">Open full user guide</a>
+            <button type="button" data-help-key="publishing">What actually gets published?</button>
+            <button type="button" data-help-key="git-safety">What gets committed automatically?</button>
+            <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
+        </div>
+    </div>
+</aside>
+<div class="help-backdrop" data-help-backdrop hidden></div>
+
+<template data-help-template="validation">
+    <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, templates, generator rules, version documentation, and generated docs.</p>
+    <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
+    <p><strong>Use it:</strong> before committing or whenever you want a full health check.</p>
+</template>
+
+<template data-help-template="refresh-docs">
+    <p><strong>Refresh Docs</strong> rebuilds the maintenance documentation that describes your portfolio.</p>
+    <p><strong>It can change:</strong> <code>docs/content-inventory.md</code>, <code>docs/portfolio-map.md</code>, and <code>docs/changelog.md</code>.</p>
+    <p><strong>It does not:</strong> regenerate public HTML, commit files, push to GitHub, merge, or publish.</p>
+    <p><strong>Remember:</strong> this refreshes the paperwork <em>about</em> the portfolio, not the public pages themselves.</p>
+</template>
+
+<template data-help-template="versioning">
+    <p><strong>Version Release</strong> records an intentional portfolio-system release.</p>
+    <p><strong>Patch:</strong> small fixes. <strong>Minor:</strong> meaningful new feature/project. <strong>Major:</strong> major architecture or redesign.</p>
+    <p><strong>It changes:</strong> version history, generated changelog, and a version snapshot.</p>
+    <p><strong>It does not:</strong> commit, push, merge, or publish anything.</p>
+</template>
+
+<template data-help-template="requests">
+    <p><strong>Requests</strong> are work orders, not automatic edits.</p>
+    <p>They are now stored under the private Git-ignored <code>.portfolio-manager/</code> workspace along with any uploaded reference files.</p>
+    <p><strong>Use them when:</strong> you want to capture an idea, source material, or future edit without changing the portfolio yet.</p>
+</template>
+
+<template data-help-template="create-project">
+    <p><strong>Create Project</strong> creates real portfolio files using the structured project generator.</p>
+    <p><strong>It can create:</strong> a JSON project record and, when safe, a standard public case-study page in the correct taxonomy path.</p>
+    <p><strong>It also:</strong> validates the project and refreshes generated documentation.</p>
+    <p><strong>It does not:</strong> commit, push, merge, or publish.</p>
+</template>
+
+<template data-help-template="save-project">
+    <p><strong>Save Project Data</strong> updates the project's structured JSON source and refreshes generated documentation.</p>
+    <p>If structured-content validation fails, the JSON edit is rolled back.</p>
+    <p><strong>Important:</strong> saving structured data does not automatically rewrite a custom interactive page.</p>
+</template>
+
+<template data-help-template="regenerate">
+    <p><strong>Regenerate Page</strong> rebuilds a standard generated project's public <code>index.html</code> from its latest JSON data and the shared template.</p>
+    <p><strong>It changes:</strong> that standard project's public HTML.</p>
+    <p><strong>It does not:</strong> commit, push, merge, or publish.</p>
+    <p>This action is intentionally unavailable for custom interactive pages.</p>
+</template>
+
+<template data-help-template="standard-custom">
+    <p><strong>Standard Page:</strong> generated from structured JSON + the shared project template. It can be safely regenerated.</p>
+    <p><strong>Custom Page:</strong> hand-built HTML/CSS/JavaScript interaction. Structured metadata can be edited, but the template renderer is prevented from overwriting the custom experience.</p>
+</template>
+
+<template data-help-template="publishing">
+    <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
+    <p>Changing JSON, docs, or local dashboard files does not automatically change the live site.</p>
+    <p><strong>Live path:</strong> local change → commit → push branch → PR → review → merge → GitHub Pages deployment.</p>
+</template>
+
+<template data-help-template="git-safety">
+    <p><strong>Portfolio Manager currently commits nothing automatically.</strong></p>
+    <p>It can modify local files, which VS Code/Git may mark as <code>M</code> (modified) or <code>U</code> (untracked).</p>
+    <p>You still control Git add, commit, push, pull request, review, and merge.</p>
+</template>
+
+<template data-help-template="privacy">
+    <p>Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and stores private runtime data under the Git-ignored <code>.portfolio-manager/</code> directory.</p>
+    <p>Your real password hash and Flask secret live only in the Git-ignored local <code>.env</code> file.</p>
+</template>
