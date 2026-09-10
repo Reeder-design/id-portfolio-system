@@ -55,7 +55,7 @@ def main() -> int:
     asset_library = client.get("/assets")
     require(asset_library.status_code == 200, "Authenticated Asset Library must render.", errors)
     require(b"Public-file safety" in asset_library.data, "Asset Library must show the public-file safety warning.", errors)
-    require(b"public_safe" in asset_library.data, "Asset Library must render the public-safe confirmation control.", errors)
+    require(b"public_safe" in asset_library.data, "Asset Library must render public-safe confirmation control.", errors)
 
     content_manager = client.get("/content")
     require(content_manager.status_code == 200, "Content Manager must still render.", errors)
@@ -75,7 +75,7 @@ def main() -> int:
     require(git_workflow.status_code == 200, "Authenticated Git Workflow must render.", errors)
     require(b"Merge is intentionally outside Portfolio Manager" in git_workflow.data, "Git Workflow must show the no-merge safety boundary.", errors)
     require(b"Review Changed Files" in git_workflow.data, "Git Workflow must expose explicit file review before staging.", errors)
-    require(b"Run Validation &amp; Commit" in git_workflow.data, "Git Workflow must expose validation-gated commit control.", errors)
+    require(b"Run Validation & Commit" in git_workflow.data, "Git Workflow must expose validation-gated commit control.", errors)
 
     if errors:
         print("Portfolio Manager runtime validation failed:")
