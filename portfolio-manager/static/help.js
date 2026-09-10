@@ -64,6 +64,8 @@
                 message = `Create a ${level} version release?\n\nThis updates local version history, changelog, and a version snapshot. It will NOT commit, push, merge, or publish anything.`;
             } else if (kind === 'remove-asset') {
                 message = 'Remove this public asset?\n\nPortfolio Manager will remove its structured project association and local file, then run validation. If another public page still depends on the file, the removal is rolled back. This does NOT commit, push, merge, or publish anything.';
+            } else if (kind === 'general-save') {
+                message = 'Save these general page copy edits?\n\nThis updates the structured general-page source and approved text locations in public HTML on your local branch. Validation runs immediately and rolls back both files if it fails. This does NOT commit, push, merge, or publish anything.';
             }
 
             if (message && !window.confirm(message)) {

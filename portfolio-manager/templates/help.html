@@ -35,7 +35,7 @@
                 <p>Portfolio Manager operates on your <strong>local clone</strong> of <code>id-portfolio-system</code>. A local file change is not the same thing as a Git commit, and a Git commit is not the same thing as a public deployment.</p>
                 <p>The system has four layers:</p>
                 <ul>
-                    <li><strong>Structured source:</strong> <code>portfolio-data/projects/*.json</code> contains project information the dashboard can understand.</li>
+                    <li><strong>Structured source:</strong> <code>portfolio-data/projects/*.json</code> contains project information, while <code>portfolio-data/site-content.json</code> contains approved general-page copy.</li>
                     <li><strong>Public website:</strong> <code>portfolio/</code> contains the HTML/CSS/JS/assets GitHub Pages publishes.</li>
                     <li><strong>Maintenance documentation:</strong> <code>docs/</code> and <code>portfolio-data/version.json</code> describe the portfolio system and releases.</li>
                     <li><strong>Git/GitHub:</strong> branch → commit → push → pull request → review → merge → deployment.</li>
@@ -61,12 +61,12 @@
                     <li>Every POST action requires a CSRF token, preventing another webpage from silently submitting a modifying request to your local app.</li>
                     <li>Sessions expire after eight hours.</li>
                 </ul>
-                <p>You should still review uploads before intentionally moving anything from the private workspace into the public repository.</p>
+                <p>You should still review uploads and public copy before intentionally moving anything into the public repository.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>Run Full Validation</h2>
-                <p>This is a read-only health check. It runs the same portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured content, renderer compatibility, project-generator behavior, versioning, generated-document freshness, and Portfolio Manager security rules.</p>
+                <p>This is a read-only health check. It runs the same portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured project content, structured general-page copy, renderer compatibility, project-generator behavior, versioning, generated-document freshness, and Portfolio Manager security/runtime rules.</p>
                 <p><strong>Changes:</strong> nothing.</p>
                 <p><strong>Use it:</strong> after meaningful edits and before committing/pushing a branch.</p>
             </section>
@@ -92,9 +92,30 @@
 
             <section class="guide-section" data-guide-section>
                 <h2>Requests and private uploads</h2>
-                <p><strong>Request a Change</strong> and <strong>New Content Request</strong> save work orders. They do not perform arbitrary site edits yet.</p>
+                <p><strong>Request a Change</strong> and <strong>New Content Request</strong> save work orders. They do not perform arbitrary site edits.</p>
                 <p>Requests and attached source/reference files are stored in <code>.portfolio-manager/</code>, not <code>portfolio-data/</code>, so a normal <code>git add .</code> will not pick them up.</p>
                 <p>Use requests when you have an idea, source material, or future edit you want the system to remember without changing the actual portfolio yet.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>General Page Content</h2>
+                <p><strong>General Page Content</strong> is the safe editor for routine copy on Home, About, Projects, Instructional Design, AI Training and Evaluation, Workflows, and Contact.</p>
+                <p>The source of truth is <code>portfolio-data/site-content.json</code>. The editor exposes only an approved list of headings and paragraphs; it does not expose raw HTML.</p>
+                <ul>
+                    <li><strong>Editable:</strong> approved headings, hero copy, introductions, and overview paragraphs.</li>
+                    <li><strong>Not editable here:</strong> navigation, links, buttons, tags, lists, CSS, JavaScript, layout, or custom project interactions.</li>
+                    <li><strong>Public-safety gate:</strong> saving requires an explicit confirmation that the copy contains no confidential, proprietary, customer-identifying, or unreleased information.</li>
+                    <li><strong>Plain-text boundary:</strong> managed copy is HTML-escaped before rendering, so this editor cannot inject HTML or JavaScript.</li>
+                </ul>
+                <p>Each editable field has one approved locator in <code>scripts/site_content_model.py</code>. If the page structure changes and a locator becomes missing or ambiguous, Portfolio Manager fails closed instead of guessing.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Saving general page copy</h2>
+                <p><strong>Save Page Copy</strong> changes two local layers together: the structured value in <code>portfolio-data/site-content.json</code> and the approved text location in that page's public HTML.</p>
+                <p>After rendering, <code>scripts/check-site-content.py</code> verifies that all managed pages still match the structured source, and <code>scripts/check-site.py</code> verifies the public site. If either check fails, both the JSON and HTML for the edited page are restored.</p>
+                <p><strong>This is different from Save Project Data:</strong> general-page saves intentionally update public HTML immediately because those pages are managed by safe field locators rather than by the standard project template.</p>
+                <p>It still does not commit, push, merge, or publish anything.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
@@ -145,7 +166,7 @@
                 <h2>Git and publishing</h2>
                 <p>VS Code may show <code>M</code> for a modified tracked file or <code>U</code> for a new untracked file. Neither means the file is committed or public.</p>
                 <p>Your publishing path remains: review local changes → <code>git status</code> → commit on a branch → push → pull request → review → merge → GitHub Pages deployment.</p>
-                <p>The live site deploys from <code>portfolio/</code>. Changes only to JSON/docs/dashboard infrastructure do not visibly alter the public site unless the relevant public HTML/CSS/JS/assets also change.</p>
+                <p>The live site deploys from <code>portfolio/</code>. General-page saves and public-asset actions can change files there locally, but those changes do not become live until the branch is reviewed and merged.</p>
             </section>
 
             <section class="guide-section" data-guide-section>

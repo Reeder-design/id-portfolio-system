@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{ page.label }} | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general-content.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">General Page Content</p>
+                <h1>{{ page.label }}</h1>
+                <p class="hero-copy">Edit only the approved plain-text fields for this public page.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">All General Pages</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <main class="editor-layout">
+            <section class="dashboard-card">
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Public copy</p>
+                        <h2>Editable Fields</h2>
+                    </div>
+                    <button class="inline-help" type="button" data-help-key="general-save" data-help-label="Save General Page Copy">?</button>
+                </div>
+                <p class="action-note">Saving updates <code>portfolio-data/site-content.json</code> and the approved text locations in <code>{{ page.page_path }}</code>. It does not change navigation, links, layout, CSS, JavaScript, Git, or the live site.</p>
+
+                <form method="post" action="{{ url_for('site_content.save_page', page_id=page_id) }}" class="general-content-form" data-confirm-action="general-save">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    {% for field_id, field in page.fields.items() %}
+                    <div class="general-field-card">
+                        <label for="field-{{ field_id }}">{{ field.label }}</label>
+                        {% if field.type == 'long' %}
+                        <textarea id="field-{{ field_id }}" name="field__{{ field_id }}" rows="5" required>{{ field.value }}</textarea>
+                        {% else %}
+                        <input id="field-{{ field_id }}" name="field__{{ field_id }}" type="text" value="{{ field.value }}" required>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="public-safe-confirm general-public-confirm">
+                        <label class="checkbox-label"><input type="checkbox" name="public_safe" required> I confirm these edits are safe for the public portfolio and contain no confidential, proprietary, customer-identifying, or unreleased information.</label>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="btn btn-primary" type="submit">Save Page Copy</button>
+                        <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">Cancel</a>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="editor-sidebar">
+                <section class="dashboard-card">
+                    <p class="eyebrow">Managed File</p>
+                    <h2>{{ page.label }}</h2>
+                    <p class="path-label"><code>{{ page.page_path }}</code></p>
+                    <p class="section-copy">This editor writes only to predefined copy locations. If the underlying page structure changes and a locator is no longer exact, the save fails and rolls back instead of guessing.</p>
+                </section>
+
+                <section class="dashboard-card">
+                    <p class="eyebrow">After Saving</p>
+                    <h2>What happens?</h2>
+                    <ol class="guide-mini-list">
+                        <li>Structured general-page data is updated.</li>
+                        <li>The safe renderer updates only approved page copy.</li>
+                        <li>General-content and public-site validation run.</li>
+                        <li>If either check fails, both files are restored.</li>
+                        <li>You still review Git changes before anything can be published.</li>
+                    </ol>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

@@ -35,8 +35,11 @@ jobs:
       - name: Validate portfolio
         run: python scripts/check-site.py
 
-      - name: Validate structured content
+      - name: Validate structured project content
         run: python scripts/check-content.py
+
+      - name: Validate structured general page content
+        run: python scripts/check-site-content.py
 
       - name: Validate project renderer
         run: python scripts/check-renderer.py

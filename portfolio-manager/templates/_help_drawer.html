@@ -15,6 +15,7 @@
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
             <button type="button" data-help-key="git-safety">What gets committed automatically?</button>
+            <button type="button" data-help-key="general-content">General page editing</button>
             <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
             <button type="button" data-help-key="assets">Public asset safety</button>
         </div>
@@ -24,7 +25,7 @@
 
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
-    <p><strong>It reads:</strong> public HTML, structured project data, templates, generator rules, version documentation, generated docs, and Portfolio Manager security rules.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, and Portfolio Manager security rules.</p>
     <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
     <p><strong>Use it:</strong> before committing or whenever you want a full health check.</p>
 </template>
@@ -62,6 +63,19 @@
     <p><strong>Important:</strong> saving structured data does not automatically rewrite a custom interactive page.</p>
 </template>
 
+<template data-help-template="general-content">
+    <p><strong>General Page Content</strong> manages predefined plain-text fields on Home, About, Projects, category pages, and Contact.</p>
+    <p>The editable field list is intentionally narrow. Navigation, links, buttons, tags, CSS, JavaScript, layout, and custom project interactions are not exposed to this editor.</p>
+    <p>The structured source lives in <code>portfolio-data/site-content.json</code>. Each field has an approved locator in the renderer. If a page redesign makes a locator ambiguous or missing, saving fails instead of guessing.</p>
+</template>
+
+<template data-help-template="general-save">
+    <p><strong>Save Page Copy</strong> updates both the structured general-page source and the approved text locations in that public HTML file on your local branch.</p>
+    <p>You must confirm the copy is public-safe. The renderer escapes it as plain text, so this editor cannot inject HTML or JavaScript.</p>
+    <p>General-content validation and the normal site validator run immediately. If either fails, both the JSON and HTML are restored automatically.</p>
+    <p><strong>It does not:</strong> commit, push, merge, or publish anything.</p>
+</template>
+
 <template data-help-template="regenerate">
     <p><strong>Regenerate Page</strong> rebuilds a standard generated project's public <code>index.html</code> from its latest JSON data and the shared template.</p>
     <p><strong>It changes:</strong> that standard project's public HTML.</p>
@@ -95,7 +109,7 @@
 
 <template data-help-template="publishing">
     <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
-    <p>Changing JSON, docs, or local dashboard files does not automatically change the live site.</p>
+    <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally, but nothing reaches the live site until the Git review/merge path is completed.</p>
     <p><strong>Live path:</strong> local change → commit → push branch → PR → review → merge → GitHub Pages deployment.</p>
 </template>
 

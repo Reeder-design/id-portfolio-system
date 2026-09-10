@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Page Content | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='general-content.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Portfolio Content</p>
+                <h1>General Page Content</h1>
+                <p class="hero-copy">Edit approved text fields on the homepage, About, Projects, category pages, and Contact without exposing raw HTML or custom interaction code.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Project Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="dashboard-card">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Safe editing boundary</p>
+                    <h2>Copy fields only</h2>
+                </div>
+                <button class="inline-help" type="button" data-help-key="general-content" data-help-label="General Page Content">?</button>
+            </div>
+            <p class="section-copy">These editors can change only the predefined headings and paragraphs listed below. Navigation, links, buttons, tags, layout, CSS, JavaScript, and project interactions stay outside this tool.</p>
+        </section>
+
+        <main class="general-page-grid">
+            {% for page in pages %}
+            <article class="dashboard-card general-page-card">
+                <p class="eyebrow">Managed Page</p>
+                <h2>{{ page.label }}</h2>
+                <p class="path-label"><code>{{ page.page_path }}</code></p>
+                <p>{{ page.field_count }} approved editable field{% if page.field_count != 1 %}s{% endif %}.</p>
+                <a class="btn btn-secondary" href="{{ url_for('site_content.page_editor', page_id=page.id) }}">Edit Page Copy</a>
+            </article>
+            {% endfor %}
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

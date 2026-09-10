@@ -16,10 +16,11 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Portfolio Content</h1>
-                <p class="hero-copy">Create standard portfolio projects, edit structured source, and manage public project assets.</p>
+                <p class="hero-copy">Create standard portfolio projects, edit project data, manage general page copy, and manage public project assets.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">General Page Content</a>
                 <a class="btn btn-secondary" href="{{ url_for('assets.asset_library') }}">Asset Library</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
             </div>
