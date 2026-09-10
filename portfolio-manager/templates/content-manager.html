@@ -16,10 +16,11 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Portfolio Content</h1>
-                <p class="hero-copy">Create standard portfolio projects and edit the structured source behind existing work.</p>
+                <p class="hero-copy">Create standard portfolio projects, edit structured source, and manage public project assets.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('assets.asset_library') }}">Asset Library</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
             </div>
         </header>
@@ -64,10 +65,13 @@
                     <article class="project-manager-card">
                         <div class="project-manager-topline">
                             <div><h3>{{ project.title }}</h3><p class="project-location">{{ project._category_label }}{% if project._subcategory_label %} · {{ project._subcategory_label }}{% endif %}</p></div>
-                            <div class="project-pill-group"><span class="status-pill">{{ project.status }}</span>{% if project._generated_page %}<span class="page-type-pill generated">Standard page</span>{% else %}<span class="page-type-pill custom">Custom page</span>{% endif %}</div>
+                            <div class="project-pill-group"><span class="status-pill">{{ project.status }}</span>{% if project._generated_page %}<span class="page-type-pill generated">Standard page</span>{% else %}<span class="page-type-pill custom">Custom page</span>{% endif %}<span class="count-pill">{{ project.assets|length }} assets</span></div>
                         </div>
                         <p>{{ project.summary }}</p>
-                        <div class="project-card-actions"><a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
+                        <div class="project-card-actions">
+                            <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a>
+                            <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
+                        </div>
                     </article>
                     {% else %}<p class="empty-note">No structured projects found.</p>{% endfor %}
                 </div>
