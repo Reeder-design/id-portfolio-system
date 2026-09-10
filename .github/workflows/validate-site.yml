@@ -59,5 +59,6 @@ jobs:
       - name: Validate Portfolio Manager security and runtime
         run: |
           python -m py_compile portfolio-manager/*.py
+          python scripts/check-git-workflow.py
           python scripts/check-portfolio-manager.py
           python scripts/check-portfolio-manager-runtime.py
