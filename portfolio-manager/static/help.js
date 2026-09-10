@@ -66,6 +66,18 @@
                 message = 'Remove this public asset?\n\nPortfolio Manager will remove its structured project association and local file, then run validation. If another public page still depends on the file, the removal is rolled back. This does NOT commit, push, merge, or publish anything.';
             } else if (kind === 'general-save') {
                 message = 'Save these general page copy edits?\n\nThis updates the structured general-page source and approved text locations in public HTML on your local branch. Validation runs immediately and rolls back both files if it fails. This does NOT commit, push, merge, or publish anything.';
+            } else if (kind === 'git-sync-main') {
+                message = 'Sync local main with origin/main?\n\nPortfolio Manager uses fast-forward-only pull. If Git would need a merge commit, the sync fails instead. No local edits are discarded.';
+            } else if (kind === 'git-create-branch') {
+                message = 'Create and switch to this feature branch?\n\nThis changes only your local Git branch. Nothing is pushed or published.';
+            } else if (kind === 'git-stage') {
+                message = 'Stage the selected files?\n\nStaging chooses what will be included in the next commit. It does not commit, push, merge, or publish anything.';
+            } else if (kind === 'git-commit') {
+                message = 'Run full validation and create this commit?\n\nThe commit is blocked if validation fails. A successful commit remains local until you explicitly push the feature branch.';
+            } else if (kind === 'git-push') {
+                message = 'Push this feature branch to GitHub?\n\nThis sends committed branch changes to origin. Portfolio Manager blocks pushes to main and never force-pushes.';
+            } else if (kind === 'git-create-pr') {
+                message = 'Create this pull request on GitHub?\n\nThis opens a review request from your feature branch into main. Portfolio Manager still cannot merge it.';
             }
 
             if (message && !window.confirm(message)) {
