@@ -57,6 +57,23 @@ http://127.0.0.1:5000
 
 The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
 
+### Public Asset Library
+
+Portfolio Manager includes a project-based Asset Library for files intentionally approved for the public portfolio. Managed files are stored under `portfolio/assets/project-assets/<project-id>/` and associated with the project's structured `assets` array.
+
+The Asset Library can:
+
+- add approved image, video, PDF, and Office-document assets
+- require alt text for images
+- store captions and asset metadata in project JSON
+- preview managed assets through authenticated local routes
+- replace an asset in place while preserving its public path
+- remove an asset with validation rollback if another public page still depends on it
+
+Every upload or replacement requires an explicit public-safe confirmation. General web-code/executable formats such as HTML, JavaScript, CSS, SVG, shell scripts, executables, and archives are intentionally blocked from this uploader.
+
+Private/reference source files belong in the Git-ignored `.portfolio-manager/` request workspace instead. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
+
 ## Publishing Workflow
 
 The `main` branch is the approved source for the live portfolio.
@@ -70,7 +87,7 @@ When portfolio changes are merged into `main`:
 
 For substantial changes, work on a separate branch and open a pull request before merging into `main`.
 
-Portfolio Manager can change local project/data/documentation files, but the publishing path still remains:
+Portfolio Manager can change local project/data/documentation/public-asset files, but the publishing path still remains:
 
 ```text
 local change → commit → push branch → pull request → review → merge → GitHub Pages
