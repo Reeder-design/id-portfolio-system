@@ -26,7 +26,9 @@ Local-only Portfolio Manager credentials and runtime data are intentionally excl
 
 ## Portfolio Manager
 
-Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, protects modifying forms with CSRF, and does not commit, push, merge, or publish automatically.
+Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, and protects modifying forms with CSRF.
+
+Content-editing and asset actions change local files only. The dedicated Git Workflow can intentionally stage approved files, validate and commit on a feature branch, push that feature branch, and help open a pull request. It cannot commit or push `main`, force-push, stage blocked private paths, or merge a pull request.
 
 From the repository root, activate the project virtual environment and install the dashboard dependency:
 
@@ -99,6 +101,41 @@ Every upload or replacement requires an explicit public-safe confirmation. Gener
 
 Private/reference source files belong in the Git-ignored `.portfolio-manager/` request workspace instead. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
 
+### Guarded Git Workflow
+
+The authenticated `/git/` interface provides a review-driven Git workflow without exposing arbitrary terminal commands.
+
+It can:
+
+- show the current branch, upstream, ahead/behind state, and changed files
+- display staged and unstaged line-level diffs
+- safely sync clean `main` using `git pull --ff-only`
+- create and switch to a new `feature/`, `fix/`, `content/`, or `chore/` branch
+- stage exact files selected from Git's current changed-file list
+- unstage files without deleting their local edits
+- run the full portfolio validation suite before every commit
+- create a local commit only on a non-`main` branch
+- push a clean feature branch using a normal upstream push
+- create a pull request through authenticated GitHub CLI when available
+- otherwise open GitHub's pre-filled compare/PR page without storing an API token
+
+Safety boundaries are enforced in code:
+
+- commits on `main` are blocked
+- pushes to `main` are blocked
+- force-push is not implemented
+- Git merge is not implemented
+- pull-request merge is not implemented
+- arbitrary shell execution is not used for user-controlled values
+- `.git`, `.env`, `.portfolio-manager/`, `.venv/`, and common key/certificate file types are blocked from staging through the dashboard
+- pushes are blocked while uncommitted local changes remain
+
+The intended flow is:
+
+```text
+local edit → review diff → stage exact files → full validation + commit → push feature branch → PR → explicit human review/merge → GitHub Pages
+```
+
 ## Publishing Workflow
 
 The `main` branch is the approved source for the live portfolio.
@@ -106,16 +143,16 @@ The `main` branch is the approved source for the live portfolio.
 When portfolio changes are merged into `main`:
 
 1. GitHub Actions checks out the repository.
-2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, and Portfolio Manager safety rules are validated.
+2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, Git workflow guardrails, and Portfolio Manager safety rules are validated.
 3. If validation passes, the contents of `portfolio/` are uploaded.
 4. GitHub Pages deploys the latest approved version.
 
 For substantial changes, work on a separate branch and open a pull request before merging into `main`.
 
-Portfolio Manager can change local project/data/documentation/public-asset/general-page files, but the publishing path still remains:
+Portfolio Manager may help perform the feature-branch Git steps, but the approval boundary remains:
 
 ```text
-local change → commit → push branch → pull request → review → merge → GitHub Pages
+local change → commit → push branch → pull request → explicit review → merge → GitHub Pages
 ```
 
 ## Create a New Project
@@ -188,11 +225,12 @@ python3 scripts/check-renderer.py
 python3 scripts/check-new-project.py
 python3 scripts/check-docs.py
 python3 scripts/update-docs.py --check
+python3 scripts/check-git-workflow.py
 python3 scripts/check-portfolio-manager.py
 python3 scripts/check-portfolio-manager-runtime.py
 ```
 
-These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Portfolio Manager safety requirements, and authenticated dashboard/Asset Library/general-page rendering.
+These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Git workflow safety boundaries, Portfolio Manager security requirements, and authenticated dashboard/Asset Library/general-page/Git-workflow rendering.
 
 ## Agent Guidance
 
