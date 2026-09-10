@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 
 from asset_routes import asset_bp
 from content_routes import content_bp
+from git_routes import git_bp
 from site_content_routes import site_content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
 
@@ -50,6 +51,7 @@ app.config.update(
 app.register_blueprint(content_bp)
 app.register_blueprint(asset_bp)
 app.register_blueprint(site_content_bp)
+app.register_blueprint(git_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
