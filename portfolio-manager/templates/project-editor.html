@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -18,124 +19,44 @@
                 <p class="hero-copy">Edit the structured source content for this project.</p>
             </div>
             <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                 <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Content</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
             </div>
         </header>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <section class="flash-stack">
-            {% for category, message in messages %}
-            <div class="flash-message {{ category }}">{{ message }}</div>
-            {% endfor %}
-        </section>
-        {% endif %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
         <main class="editor-layout">
             <section class="dashboard-card">
                 <p class="eyebrow">Project Source</p>
-                <h2>Project Details</h2>
+                <div class="action-title-row">
+                    <h2>Project Details</h2>
+                    <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Data">?</button>
+                </div>
+                <p class="action-note">Saving updates the structured JSON source and maintenance docs. It does not automatically rewrite a custom interaction page.</p>
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
-                    <div class="full-span">
-                        <label for="title">Project title</label>
-                        <input id="title" name="title" type="text" value="{{ project.title }}" required>
-                    </div>
-
-                    <div>
-                        <label for="status">Status</label>
-                        <select id="status" name="status">
-                            {% for value, label in [('live','Live'),('building','Building'),('planned','Planned'),('archived','Archived')] %}
-                            <option value="{{ value }}" {% if project.status == value %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="confidentiality">Confidentiality</label>
-                        <select id="confidentiality" name="confidentiality">
-                            {% for value, label in [('public','Public'),('sanitized','Sanitized / Fictionalized'),('needs-sanitization','Needs Sanitization')] %}
-                            <option value="{{ value }}" {% if project.confidentiality == value %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="full-span checkbox-row">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="featured" {% if project.featured %}checked{% endif %}>
-                            Feature this project
-                        </label>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="summary">Short summary</label>
-                        <textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="business_need">Business / learning need</label>
-                        <textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea>
-                    </div>
-
-                    <div>
-                        <label for="audience">Audience</label>
-                        <textarea id="audience" name="audience" rows="3">{{ project.content.audience }}</textarea>
-                    </div>
-
-                    <div>
-                        <label for="role">My role</label>
-                        <textarea id="role" name="role" rows="3">{{ project.content.role }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="learning_objectives">Learning objectives</label>
-                        <p class="field-help">One objective per line.</p>
-                        <textarea id="learning_objectives" name="learning_objectives" rows="6">{{ learning_objectives }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="design_approach">Design approach</label>
-                        <textarea id="design_approach" name="design_approach" rows="5">{{ project.content.design_approach }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="development_process">Development process</label>
-                        <textarea id="development_process" name="development_process" rows="5">{{ project.content.development_process }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="outcomes">Outcomes</label>
-                        <p class="field-help">One outcome per line.</p>
-                        <textarea id="outcomes" name="outcomes" rows="6">{{ outcomes }}</textarea>
-                    </div>
-
-                    <div>
-                        <label for="skills">Skills</label>
-                        <p class="field-help">Comma-separated.</p>
-                        <textarea id="skills" name="skills" rows="4">{{ skills }}</textarea>
-                    </div>
-
-                    <div>
-                        <label for="tools">Tools</label>
-                        <p class="field-help">Comma-separated.</p>
-                        <textarea id="tools" name="tools" rows="4">{{ tools }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <label for="live_project">Live project link</label>
-                        <input id="live_project" name="live_project" type="text" value="{{ project.get('links', {}).get('live_project', '') }}">
-                    </div>
-
-                    <div class="full-span">
-                        <label for="source_material_notes">Public-safe source / sanitization notes</label>
-                        <textarea id="source_material_notes" name="source_material_notes" rows="4">{{ project.get('source_material_notes', '') }}</textarea>
-                    </div>
-
-                    <div class="full-span">
-                        <button class="btn btn-primary" type="submit">Save Project Data</button>
-                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" value="{{ project.title }}" required></div>
+                    <div><label for="status">Status</label><select id="status" name="status">{% for value, label in [('live','Live'),('building','Building'),('planned','Planned'),('archived','Archived')] %}<option value="{{ value }}" {% if project.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+                    <div><label for="confidentiality">Confidentiality</label><select id="confidentiality" name="confidentiality">{% for value, label in [('public','Public'),('sanitized','Sanitized / Fictionalized'),('needs-sanitization','Needs Sanitization')] %}<option value="{{ value }}" {% if project.confidentiality == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+                    <div class="full-span checkbox-row"><label class="checkbox-label"><input type="checkbox" name="featured" {% if project.featured %}checked{% endif %}> Feature this project</label></div>
+                    <div class="full-span"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
+                    <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea></div>
+                    <div><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3">{{ project.content.audience }}</textarea></div>
+                    <div><label for="role">My role</label><textarea id="role" name="role" rows="3">{{ project.content.role }}</textarea></div>
+                    <div class="full-span"><label for="learning_objectives">Learning objectives</label><p class="field-help">One objective per line.</p><textarea id="learning_objectives" name="learning_objectives" rows="6">{{ learning_objectives }}</textarea></div>
+                    <div class="full-span"><label for="design_approach">Design approach</label><textarea id="design_approach" name="design_approach" rows="5">{{ project.content.design_approach }}</textarea></div>
+                    <div class="full-span"><label for="development_process">Development process</label><textarea id="development_process" name="development_process" rows="5">{{ project.content.development_process }}</textarea></div>
+                    <div class="full-span"><label for="outcomes">Outcomes</label><p class="field-help">One outcome per line.</p><textarea id="outcomes" name="outcomes" rows="6">{{ outcomes }}</textarea></div>
+                    <div><label for="skills">Skills</label><p class="field-help">Comma-separated.</p><textarea id="skills" name="skills" rows="4">{{ skills }}</textarea></div>
+                    <div><label for="tools">Tools</label><p class="field-help">Comma-separated.</p><textarea id="tools" name="tools" rows="4">{{ tools }}</textarea></div>
+                    <div class="full-span"><label for="live_project">Live project link</label><input id="live_project" name="live_project" type="text" value="{{ project.get('links', {}).get('live_project', '') }}"></div>
+                    <div class="full-span"><label for="source_material_notes">Public-safe source / sanitization notes</label><textarea id="source_material_notes" name="source_material_notes" rows="4">{{ project.get('source_material_notes', '') }}</textarea></div>
+                    <div class="full-span"><button class="btn btn-primary" type="submit">Save Project Data</button></div>
                 </form>
             </section>
 
@@ -154,18 +75,22 @@
                 <section class="dashboard-card">
                     <p class="eyebrow">Page Protection</p>
                     {% if project._generated_page %}
-                    <h2>Standard Page</h2>
-                    <p class="section-copy">This page carries the generated-page marker, so it can be safely rebuilt from structured data.</p>
-                    <form method="post" action="{{ url_for('content.regenerate_project', project_id=project.id) }}">
+                    <div class="action-title-row"><h2>Standard Page</h2><button class="inline-help" type="button" data-help-key="regenerate" data-help-label="Regenerate Standard Page">?</button></div>
+                    <p class="section-copy">This page carries the generated-page marker, so it can be rebuilt from structured data.</p>
+                    <form method="post" action="{{ url_for('content.regenerate_project', project_id=project.id) }}" data-confirm-action="regenerate">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-secondary" type="submit">Regenerate Page</button>
                     </form>
                     {% else %}
-                    <h2>Custom Page</h2>
+                    <div class="action-title-row"><h2>Custom Page</h2><button class="inline-help" type="button" data-help-key="standard-custom" data-help-label="Custom Page Protection">?</button></div>
                     <p class="section-copy">Saving here updates the structured record and documentation, but does not overwrite the custom HTML, CSS, or JavaScript experience.</p>
                     {% endif %}
                 </section>
             </aside>
         </main>
     </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
 </body>
 </html>
