@@ -1,5 +1,6 @@
 name: Validate Portfolio
 
+# Keep this workflow aligned with the Portfolio Manager Run Full Validation action.
 on:
   pull_request:
     paths:
