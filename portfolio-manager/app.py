@@ -38,10 +38,12 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 app.config.update(
     MAX_CONTENT_LENGTH=25 * 1024 * 1024,
+    PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
     SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_NAME="portfolio_manager_session",
     SESSION_COOKIE_SAMESITE="Strict",
     SESSION_COOKIE_SECURE=False,  # localhost uses HTTP
-    PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
+    TRUSTED_HOSTS=["127.0.0.1", "localhost"],
 )
 app.register_blueprint(content_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
