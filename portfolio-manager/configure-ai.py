@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from getpass import getpass
 from pathlib import Path
+from typing import Optional
 import argparse
 
 
@@ -35,7 +36,7 @@ def parse_env_lines(text: str) -> tuple[list[str], dict[str, str]]:
     return lines, values
 
 
-def replace_setting(lines: list[str], key: str, value: str | None) -> list[str]:
+def replace_setting(lines: list[str], key: str, value: Optional[str]) -> list[str]:
     prefix = f"{key}="
     output: list[str] = []
     replaced = False
