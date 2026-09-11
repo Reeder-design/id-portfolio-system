@@ -60,5 +60,6 @@ jobs:
         run: |
           python -m py_compile portfolio-manager/*.py
           python scripts/check-git-workflow.py
+          python scripts/check-ai-assistance.py
           python scripts/check-portfolio-manager.py
           python scripts/check-portfolio-manager-runtime.py

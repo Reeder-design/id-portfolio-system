@@ -11,6 +11,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 
+from ai_routes import ai_bp
 from asset_routes import asset_bp
 from content_routes import content_bp
 from git_routes import git_bp
@@ -52,6 +53,7 @@ app.register_blueprint(content_bp)
 app.register_blueprint(asset_bp)
 app.register_blueprint(site_content_bp)
 app.register_blueprint(git_bp)
+app.register_blueprint(ai_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
@@ -163,6 +165,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
         ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
         ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
+        ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
         ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
     ]
