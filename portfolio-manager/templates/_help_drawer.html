@@ -15,6 +15,7 @@
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
             <button type="button" data-help-key="git-workflow">Git workflow safety</button>
+            <button type="button" data-help-key="ai-assistance">AI assistance safety</button>
             <button type="button" data-help-key="general-content">General page editing</button>
             <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
             <button type="button" data-help-key="assets">Public asset safety</button>
@@ -25,7 +26,7 @@
 
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
-    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, and Portfolio Manager security rules.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, Git workflow rules, AI-assistance safety rules, and Portfolio Manager security rules.</p>
     <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
     <p><strong>Use it:</strong> before committing or whenever you want a full health check.</p>
 </template>
@@ -142,19 +143,32 @@
     <p><strong>Merge remains intentionally separate.</strong> Portfolio Manager has no merge route or merge button.</p>
 </template>
 
+<template data-help-template="ai-assistance">
+    <p><strong>AI Assistance</strong> creates private proposals for rewriting, sanitization, source analysis, placement/tags, and project-summary drafting.</p>
+    <p><strong>Explicit-send boundary:</strong> only text you deliberately paste into the AI workspace is sent to the configured provider. The AI tool does not silently read repository files or uploads.</p>
+    <p><strong>It cannot:</strong> edit public HTML, edit structured portfolio JSON, stage/commit/push Git changes, or publish. Proposals live under the Git-ignored <code>.portfolio-manager/ai-proposals/</code> directory.</p>
+    <p>Local preflight blocks several obvious credential formats before any provider request. You must also confirm that you are authorized to send the text and that secrets have been removed.</p>
+</template>
+
+<template data-help-template="ai-proposal">
+    <p><strong>AI Proposal Review</strong> separates generated copy, evidence, unsupported/missing claims, placement suggestions, and warnings so you can review the result before using it.</p>
+    <p>The source text is retained only in the private local proposal record for auditability.</p>
+    <p><strong>Approval means copying what you accept</strong> into General Page Content or Project Content and saving through that deterministic editor. There is intentionally no AI Apply-to-site action.</p>
+</template>
+
 <template data-help-template="publishing">
     <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
-    <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally. Git Workflow can commit and push a feature branch, but nothing reaches the live site until the pull request is explicitly merged.</p>
+    <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally. AI proposals cannot modify them. Git Workflow can commit and push a feature branch, but nothing reaches the live site until the pull request is explicitly merged.</p>
     <p><strong>Live path:</strong> local change → stage → validate + commit → push feature branch → PR → explicit review/merge → GitHub Pages deployment.</p>
 </template>
 
 <template data-help-template="git-safety">
-    <p>Portfolio Manager can now perform selected Git actions, but only through the guarded Git Workflow page.</p>
+    <p>Portfolio Manager can perform selected Git actions, but only through the guarded Git Workflow page.</p>
     <p>It blocks commits and pushes on <code>main</code>, blocks force-push, blocks unsafe/private paths, and runs full validation before commit.</p>
     <p><strong>There is no automated merge.</strong> Pull-request approval and merge remain an explicit human decision.</p>
 </template>
 
 <template data-help-template="privacy">
     <p>Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and stores private runtime data under the Git-ignored <code>.portfolio-manager/</code> directory.</p>
-    <p>Your real password hash and Flask secret live only in the Git-ignored local <code>.env</code> file.</p>
+    <p>Your real password hash, Flask secret, and optional AI API key live only in the Git-ignored local <code>.env</code> file.</p>
 </template>
