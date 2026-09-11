@@ -92,7 +92,8 @@
                     <div class="ai-warning-box">
                         <strong>Local preflight noticed potentially sensitive markers:</strong>
                         <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
-                        <p>This is a warning, not proof of confidentiality. Review the source before resubmitting.</p>
+                        <p>This is a warning, not proof of confidentiality. The request has <strong>not</strong> been sent yet. Review the source before deciding whether to continue.</p>
+                        <label class="ai-check ai-sensitive-check"><input type="checkbox" name="sensitive_ack" required><span>I reviewed these markers and confirm I am still authorized to send this text to the configured external AI provider.</span></label>
                     </div>
                     {% endif %}
 
