@@ -381,6 +381,146 @@
     color: var(--refresh-ink);
 }
 
+/* UAT polish: shared callouts, compact process cards, and forms */
+.cta {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(80,132,132,.22);
+    background:
+        radial-gradient(circle at 8% 20%, rgba(151,219,79,.18), transparent 26%),
+        radial-gradient(circle at 92% 80%, rgba(184,170,195,.24), transparent 30%),
+        linear-gradient(135deg, #e8f2ec 0%, #f4efe6 52%, #ece7f0 100%);
+    color: var(--refresh-ink);
+    box-shadow: var(--refresh-shadow);
+}
+
+.cta::after {
+    content: "✦ · ✧ · ✦";
+    position: absolute;
+    right: 28px;
+    top: 22px;
+    color: rgba(80,132,132,.28);
+    letter-spacing: 8px;
+    pointer-events: none;
+}
+
+.cta h2,
+.cta h3,
+.cta p {
+    position: relative;
+    z-index: 1;
+    color: inherit;
+}
+
+.cta .eyebrow {
+    color: var(--pine-blue) !important;
+}
+
+.cta .button-row {
+    position: relative;
+    z-index: 1;
+}
+
+.cta .btn-secondary {
+    border-color: var(--pine-blue) !important;
+    background: rgba(255,255,255,.46);
+    color: var(--pine-blue) !important;
+}
+
+.cta .btn-secondary:hover {
+    background: var(--pine-blue);
+    color: var(--white) !important;
+}
+
+.project-family-card .project-family-header {
+    color: var(--refresh-ink);
+}
+
+.project-family-card .project-family-header h2,
+.project-family-card .project-family-header h3,
+.project-family-card .project-family-header p {
+    color: var(--refresh-ink);
+}
+
+.project-family-card .project-family-header .eyebrow {
+    color: var(--pine-blue);
+}
+
+.refresh-visual-card .refresh-step-line {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.refresh-step {
+    min-width: 0;
+}
+
+.refresh-step strong {
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.25;
+}
+
+.refresh-card-grid.two-up {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.meddpicc-card .scenario-focus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.meddpicc-card .scenario-focus span {
+    flex: 1 1 125px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+}
+
+.contact-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.contact-form .form-grid > div {
+    min-width: 0;
+}
+
+.contact-form .full-span {
+    grid-column: 1 / -1;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--refresh-ink);
+    font-family: var(--font-heading);
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(80,132,132,.24);
+    border-radius: 12px;
+    background: rgba(243,240,232,.75);
+    color: var(--charcoal);
+}
+
+.contact-form input:disabled,
+.contact-form textarea:disabled {
+    opacity: 1;
+    color: #68716d;
+    -webkit-text-fill-color: #68716d;
+    cursor: not-allowed;
+}
+
 @media (max-width: 960px) {
     .refresh-hero-grid,
     .refresh-explorer,
@@ -400,10 +540,12 @@
 
 @media (max-width: 620px) {
     .refresh-card-grid,
+    .refresh-card-grid.two-up,
     .refresh-detail-grid,
     .refresh-metric-row,
     .refresh-step-line,
-    .refresh-mini-grid {
+    .refresh-mini-grid,
+    .contact-form .form-grid {
         grid-template-columns: 1fr;
     }
 
@@ -413,5 +555,11 @@
 
     .refresh-detail {
         min-height: 0;
+    }
+
+    .cta::after {
+        right: 18px;
+        top: 16px;
+        letter-spacing: 4px;
     }
 }
