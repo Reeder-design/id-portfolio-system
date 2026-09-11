@@ -24,12 +24,12 @@ def section_field(section: str, element_pattern: str) -> str:
 LOCATORS: dict[str, dict[str, str]] = {
     "home": {
         "hero_title_lead": (
-            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"hero\">.*?<h1>\s*)"
+            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"[^\"]*\bhero\b[^\"]*\">.*?<h1>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*<span class=\"hero-accent\">)"
         ),
         "hero_title_accent": (
-            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"hero\">.*?<span class=\"hero-accent\">\s*)"
+            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"[^\"]*\bhero\b[^\"]*\">.*?<span class=\"hero-accent\">\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</span>)"
         ),
@@ -49,7 +49,7 @@ LOCATORS: dict[str, dict[str, str]] = {
     "about": {
         "hero_title": section_field(
             "PROFESSIONAL INTRO",
-            r".*?<section class=\"page-hero\">.*?<h1>\s*",
+            r".*?<section class=\"[^\"]*\bpage-hero\b[^\"]*\">.*?<h1>\s*",
         ),
         "hero_intro_primary": section_field(
             "PROFESSIONAL INTRO",
@@ -190,12 +190,12 @@ LOCATORS: dict[str, dict[str, str]] = {
     },
     "contact": {
         "hero_title": (
-            r"(?P<prefix><section class=\"page-hero\">.*?<h1>\s*)"
+            r"(?P<prefix><section class=\"[^\"]*\bpage-hero\b[^\"]*\">.*?<h1>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</h1>)"
         ),
         "hero_intro": (
-            r"(?P<prefix><section class=\"page-hero\">.*?<p class=\"body-large reading-width\">\s*)"
+            r"(?P<prefix><section class=\"[^\"]*\bpage-hero\b[^\"]*\">.*?<p class=\"body-large reading-width\">\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</p>)"
         ),
