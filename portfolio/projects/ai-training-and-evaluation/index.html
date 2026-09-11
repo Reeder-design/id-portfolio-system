@@ -12,154 +12,35 @@
     <link rel="stylesheet" href="../../css/portfolio-refresh.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container nav-container">
-            <a class="site-brand" href="../../index.html">Haley <span>Reeder</span></a>
-            <nav class="site-nav" aria-label="Main navigation">
-                <a href="../../index.html">Home</a>
-                <a href="../../about/index.html">About Me</a>
-                <a class="active" href="../index.html">Projects</a>
-                <a href="../../contact/index.html">Contact</a>
-            </nav>
-        </div>
-    </header>
-
+    <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html">Home</a><a href="../../about/index.html">About Me</a><a class="active" href="../index.html">Projects</a><a href="../../contact/index.html">Contact</a></nav></div></header>
     <main>
+        <!-- HERO -->
         <section class="page-hero refresh-hero">
             <div class="container refresh-hero-grid">
-                <div class="parent-page-hero-content refresh-hero-copy">
-                    <p class="eyebrow">Projects / AI Training and Evaluation</p>
-                    <h1>AI Training and Evaluation</h1>
-                    <p class="body-large">I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone.</p>
-                    <p>My work includes structured evaluation, analytical review, error detection, feedback writing, quality assurance, and testing AI within professional learning workflows.</p>
-                    <div class="refresh-chip-row">
-                        <span class="refresh-chip">Task Analysis</span>
-                        <span class="refresh-chip">Grounding</span>
-                        <span class="refresh-chip">Rubrics</span>
-                        <span class="refresh-chip">QA</span>
-                        <span class="refresh-chip">Feedback</span>
-                    </div>
-                </div>
-                <aside class="refresh-visual-card" aria-label="AI evaluation sequence">
-                    <p class="eyebrow">Evaluation Sequence</p>
-                    <h2>Requirements before ratings</h2>
-                    <div class="refresh-step-line">
-                        <div class="refresh-step" data-step="1"><strong>Frame</strong></div>
-                        <div class="refresh-step" data-step="2"><strong>Inspect</strong></div>
-                        <div class="refresh-step" data-step="3"><strong>Score</strong></div>
-                        <div class="refresh-step" data-step="4"><strong>Explain</strong></div>
-                    </div>
-                </aside>
+                <div class="parent-page-hero-content refresh-hero-copy"><p class="eyebrow">Projects / AI Training and Evaluation</p><h1>AI Training and Evaluation</h1><p class="body-large">I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone.</p><p>My work includes structured evaluation, analytical review, error detection, feedback writing, quality assurance, and testing AI within professional learning workflows.</p><div class="refresh-chip-row"><span class="refresh-chip">Task Analysis</span><span class="refresh-chip">Grounding</span><span class="refresh-chip">Rubrics</span><span class="refresh-chip">QA</span><span class="refresh-chip">Feedback</span></div></div>
+                <aside class="refresh-visual-card" aria-label="AI evaluation sequence"><p class="eyebrow">Evaluation Sequence</p><h2>Requirements before ratings</h2><div class="refresh-step-line"><div class="refresh-step" data-step="1"><strong>Frame</strong></div><div class="refresh-step" data-step="2"><strong>Inspect</strong></div><div class="refresh-step" data-step="3"><strong>Score</strong></div><div class="refresh-step" data-step="4"><strong>Explain</strong></div></div></aside>
             </div>
         </section>
 
+        <!-- OVERVIEW -->
         <section class="section section-soft">
-            <div class="container">
-                <div class="parent-overview-copy refresh-section-intro">
-                    <p class="eyebrow">Overview</p>
-                    <h2>Evaluation starts with requirements and evidence</h2>
-                    <p>A polished response can still be inaccurate, incomplete, unsupported, or misaligned with the task.</p>
-                    <p>I define the task, audience, source material, and success criteria before evaluating accuracy, completeness, instruction adherence, consistency, and usability.</p>
-                    <p>I separate material quality issues from stylistic preference and focus feedback on problems that affect correctness, usefulness, or reliability.</p>
-                </div>
-
-                <div class="refresh-explorer">
-                    <div class="refresh-tabs" role="tablist" aria-label="AI evaluation dimensions">
-                        <button class="refresh-tab active" type="button" data-aiflow="context" role="tab" aria-selected="true">Evaluation Context</button>
-                        <button class="refresh-tab" type="button" data-aiflow="evidence" role="tab" aria-selected="false">Evidence &amp; Grounding</button>
-                        <button class="refresh-tab" type="button" data-aiflow="severity" role="tab" aria-selected="false">Error Severity</button>
-                        <button class="refresh-tab" type="button" data-aiflow="feedback" role="tab" aria-selected="false">Actionable Feedback</button>
-                    </div>
-                    <div class="refresh-detail" aria-live="polite">
-                        <p class="eyebrow" id="aiFlowLabel">Evaluation Context</p>
-                        <h3 id="aiFlowTitle">Define what success means before judging the output.</h3>
-                        <p id="aiFlowText">I identify the task, audience, required source material, constraints, and expected deliverable so the review is anchored to the actual assignment.</p>
-                        <div class="refresh-detail-grid">
-                            <article class="refresh-detail-card"><span>Review question</span><p id="aiFlowQuestion">What was the model actually asked to do?</p></article>
-                            <article class="refresh-detail-card"><span>Common failure</span><p id="aiFlowFailure">Scoring fluency or personal preference instead of requirement coverage.</p></article>
-                            <article class="refresh-detail-card"><span>Evidence</span><p id="aiFlowEvidence">Prompt, source materials, rubric, reference answer, user goal, and explicit constraints.</p></article>
-                        </div>
-                    </div>
-                </div>
+            <div class="container"><div class="parent-overview-copy refresh-section-intro"><p class="eyebrow">Overview</p><h2>Evaluation starts with requirements and evidence</h2><p>A polished response can still be inaccurate, incomplete, unsupported, or misaligned with the task.</p><p>I define the task, audience, source material, and success criteria before evaluating accuracy, completeness, instruction adherence, consistency, and usability.</p><p>I separate material quality issues from stylistic preference and focus feedback on problems that affect correctness, usefulness, or reliability.</p></div>
+                <div class="refresh-explorer"><div class="refresh-tabs" role="tablist" aria-label="AI evaluation dimensions"><button class="refresh-tab active" type="button" data-aiflow="context" role="tab" aria-selected="true">Evaluation Context</button><button class="refresh-tab" type="button" data-aiflow="evidence" role="tab" aria-selected="false">Evidence &amp; Grounding</button><button class="refresh-tab" type="button" data-aiflow="severity" role="tab" aria-selected="false">Error Severity</button><button class="refresh-tab" type="button" data-aiflow="feedback" role="tab" aria-selected="false">Actionable Feedback</button></div><div class="refresh-detail" aria-live="polite"><p class="eyebrow" id="aiFlowLabel">Evaluation Context</p><h3 id="aiFlowTitle">Define what success means before judging the output.</h3><p id="aiFlowText">I identify the task, audience, required source material, constraints, and expected deliverable so the review is anchored to the actual assignment.</p><div class="refresh-detail-grid"><article class="refresh-detail-card"><span>Review question</span><p id="aiFlowQuestion">What was the model actually asked to do?</p></article><article class="refresh-detail-card"><span>Common failure</span><p id="aiFlowFailure">Scoring fluency or personal preference instead of requirement coverage.</p></article><article class="refresh-detail-card"><span>Evidence</span><p id="aiFlowEvidence">Prompt, source materials, rubric, reference answer, user goal, and explicit constraints.</p></article></div></div></div>
             </div>
         </section>
 
-        <section class="section">
-            <div class="container">
-                <div class="section-heading refresh-section-intro">
-                    <p class="eyebrow">Interactive Examples</p>
-                    <h2>See the evaluation system from three angles</h2>
-                    <p class="body-large reading-width">The examples use the same underlying logic: define context, inspect evidence, identify material issues, apply criteria, and explain the result.</p>
-                </div>
-                <div class="refresh-card-grid">
-                    <article class="refresh-link-card">
-                        <div class="refresh-link-card-header"><p class="eyebrow">Scenario</p><h3>AI Evaluation Demo</h3><p>Review a model response in context and identify the issues that matter most.</p></div>
-                        <div class="refresh-link-card-body"><p><strong>Focus:</strong> task interpretation, source grounding, error detection, and reviewer judgment.</p><a class="project-family-link" href="./ai-training-and-evaluation-demo/index.html">Open Evaluation Demo →</a></div>
-                    </article>
-                    <article class="refresh-link-card">
-                        <div class="refresh-link-card-header"><p class="eyebrow">Scoring</p><h3>Rubric Demo</h3><p>See how evaluation standards become observable scoring criteria.</p></div>
-                        <div class="refresh-link-card-body"><p><strong>Focus:</strong> criteria design, evidence, severity, calibration, and defensible scoring.</p><a class="project-family-link" href="./rubric-demo/index.html">Open Rubric Demo →</a></div>
-                    </article>
-                    <article class="refresh-link-card">
-                        <div class="refresh-link-card-header"><p class="eyebrow">Process</p><h3>Workflow Demo</h3><p>Follow the review sequence from evaluation context through final feedback.</p></div>
-                        <div class="refresh-link-card-body"><p><strong>Focus:</strong> repeatable QA, review order, evidence capture, and handoff into scoring.</p><a class="project-family-link" href="./workflow-demo/index.html">Open Workflow Demo →</a></div>
-                    </article>
-                </div>
-            </div>
-        </section>
+        <section class="section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Interactive Examples</p><h2>See the evaluation system from three angles</h2><p class="body-large reading-width">The examples use the same underlying logic: define context, inspect evidence, identify material issues, apply criteria, and explain the result.</p></div><div class="refresh-card-grid">
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Scenario</p><h3>AI Evaluation Demo</h3><p>Review a model response in context and identify the issues that matter most.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> task interpretation, source grounding, error detection, and reviewer judgment.</p><a class="project-family-link" href="./ai-training-and-evaluation-demo/index.html">Open Evaluation Demo →</a></div></article>
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Scoring</p><h3>Rubric Demo</h3><p>See how evaluation standards become observable scoring criteria.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> criteria design, evidence, severity, calibration, and defensible scoring.</p><a class="project-family-link" href="./rubric-demo/index.html">Open Rubric Demo →</a></div></article>
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Process</p><h3>Workflow Demo</h3><p>Follow the review sequence from evaluation context through final feedback.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> repeatable QA, review order, evidence capture, and handoff into scoring.</p><a class="project-family-link" href="./workflow-demo/index.html">Open Workflow Demo →</a></div></article>
+        </div></div></section>
 
-        <section class="section section-soft">
-            <div class="container">
-                <div class="section-heading refresh-section-intro">
-                    <p class="eyebrow">View Other Types of Projects</p>
-                    <h2>Explore the rest of the portfolio</h2>
-                    <p>See the learning design and systems work that complements my AI evaluation practice.</p>
-                </div>
-                <div class="refresh-card-grid two-up">
-                    <article class="refresh-link-card">
-                        <div class="refresh-link-card-header"><p class="eyebrow">Learning Design &amp; Development</p><h3>Instructional Design</h3><p>Learning experiences built from performance need through practice, assessment, delivery, and measurement.</p></div>
-                        <div class="refresh-link-card-body"><a class="project-family-link" href="../instructional-design/index.html">Explore Instructional Design →</a></div>
-                    </article>
-                    <article class="refresh-link-card">
-                        <div class="refresh-link-card-header"><p class="eyebrow">Systems &amp; Operations</p><h3>Systems and Workflows</h3><p>Processes, integrations, automation, reporting, and documentation that support learning work.</p></div>
-                        <div class="refresh-link-card-body"><a class="project-family-link" href="../workflows/index.html">Explore Systems and Workflows →</a></div>
-                    </article>
-                </div>
-            </div>
-        </section>
+        <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">View Other Types of Projects</p><h2>Explore the rest of the portfolio</h2><p>See the learning design and systems work that complements my AI evaluation practice.</p></div><div class="refresh-card-grid two-up"><article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Learning Design &amp; Development</p><h3>Instructional Design</h3><p>Learning experiences built from performance need through practice, assessment, delivery, and measurement.</p></div><div class="refresh-link-card-body"><a class="project-family-link" href="../instructional-design/index.html">Explore Instructional Design →</a></div></article><article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Systems &amp; Operations</p><h3>Systems and Workflows</h3><p>Processes, integrations, automation, reporting, and documentation that support learning work.</p></div><div class="refresh-link-card-body"><a class="project-family-link" href="../workflows/index.html">Explore Systems and Workflows →</a></div></article></div></div></section>
     </main>
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <p>© Haley Reeder</p>
-            <div class="footer-links">
-                <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank">Résumé</a>
-            </div>
-        </div>
-    </footer>
-
+    <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank">Résumé</a></div></div></footer>
     <script>
-        const aiFlowData = {
-            context: { label:"Evaluation Context", title:"Define what success means before judging the output.", text:"I identify the task, audience, required source material, constraints, and expected deliverable so the review is anchored to the actual assignment.", question:"What was the model actually asked to do?", failure:"Scoring fluency or personal preference instead of requirement coverage.", evidence:"Prompt, source materials, rubric, reference answer, user goal, and explicit constraints." },
-            evidence: { label:"Evidence & Grounding", title:"Trace claims back to the information the model was allowed to use.", text:"I distinguish supported statements from unsupported additions, omissions, contradictions, and reasoning that does not follow from the available evidence.", question:"Can this claim be verified from the source or accepted ground truth?", failure:"Treating a plausible statement as correct because it sounds professional.", evidence:"Source passages, citations, reference data, calculations, and requirement-by-requirement comparison." },
-            severity: { label:"Error Severity", title:"Score the impact of the problem, not just its existence.", text:"I look at whether an issue changes the answer, misleads the user, breaks a requirement, creates risk, or is mainly cosmetic.", question:"How much does this issue reduce task success?", failure:"Giving the same weight to a typo and a materially incorrect conclusion.", evidence:"Task-critical requirements, downstream consequences, affected claims, and recoverability." },
-            feedback: { label:"Actionable Feedback", title:"Explain the issue so the next output can improve.", text:"Useful feedback identifies the problem, ties it to evidence or requirements, explains why it matters, and gives a clear direction for correction without rewriting the entire answer unnecessarily.", question:"Could another reviewer or model act on this feedback?", failure:"Vague comments such as 'be clearer' or feedback based only on personal writing preference.", evidence:"Specific requirement, source evidence, observed error, severity rationale, and concise correction guidance." }
-        };
-        document.querySelectorAll(".refresh-tab[data-aiflow]").forEach((tab)=>{
-            tab.addEventListener("click",()=>{
-                const d=aiFlowData[tab.dataset.aiflow];
-                document.querySelectorAll(".refresh-tab[data-aiflow]").forEach((item)=>{item.classList.remove("active");item.setAttribute("aria-selected","false");});
-                tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-                document.getElementById("aiFlowLabel").textContent=d.label;
-                document.getElementById("aiFlowTitle").textContent=d.title;
-                document.getElementById("aiFlowText").textContent=d.text;
-                document.getElementById("aiFlowQuestion").textContent=d.question;
-                document.getElementById("aiFlowFailure").textContent=d.failure;
-                document.getElementById("aiFlowEvidence").textContent=d.evidence;
-            });
-        });
+        const aiFlowData={context:{label:"Evaluation Context",title:"Define what success means before judging the output.",text:"I identify the task, audience, required source material, constraints, and expected deliverable so the review is anchored to the actual assignment.",question:"What was the model actually asked to do?",failure:"Scoring fluency or personal preference instead of requirement coverage.",evidence:"Prompt, source materials, rubric, reference answer, user goal, and explicit constraints."},evidence:{label:"Evidence & Grounding",title:"Trace claims back to the information the model was allowed to use.",text:"I distinguish supported statements from unsupported additions, omissions, contradictions, and reasoning that does not follow from the available evidence.",question:"Can this claim be verified from the source or accepted ground truth?",failure:"Treating a plausible statement as correct because it sounds professional.",evidence:"Source passages, citations, reference data, calculations, and requirement-by-requirement comparison."},severity:{label:"Error Severity",title:"Score the impact of the problem, not just its existence.",text:"I look at whether an issue changes the answer, misleads the user, breaks a requirement, creates risk, or is mainly cosmetic.",question:"How much does this issue reduce task success?",failure:"Giving the same weight to a typo and a materially incorrect conclusion.",evidence:"Task-critical requirements, downstream consequences, affected claims, and recoverability."},feedback:{label:"Actionable Feedback",title:"Explain the issue so the next output can improve.",text:"Useful feedback identifies the problem, ties it to evidence or requirements, explains why it matters, and gives a clear direction for correction without rewriting the entire answer unnecessarily.",question:"Could another reviewer or model act on this feedback?",failure:"Vague comments such as 'be clearer' or feedback based only on personal writing preference.",evidence:"Specific requirement, source evidence, observed error, severity rationale, and concise correction guidance."}};
+        document.querySelectorAll(".refresh-tab[data-aiflow]").forEach((tab)=>{tab.addEventListener("click",()=>{const d=aiFlowData[tab.dataset.aiflow];document.querySelectorAll(".refresh-tab[data-aiflow]").forEach((item)=>{item.classList.remove("active");item.setAttribute("aria-selected","false");});tab.classList.add("active");tab.setAttribute("aria-selected","true");document.getElementById("aiFlowLabel").textContent=d.label;document.getElementById("aiFlowTitle").textContent=d.title;document.getElementById("aiFlowText").textContent=d.text;document.getElementById("aiFlowQuestion").textContent=d.question;document.getElementById("aiFlowFailure").textContent=d.failure;document.getElementById("aiFlowEvidence").textContent=d.evidence;});});
     </script>
 </body>
 </html>
