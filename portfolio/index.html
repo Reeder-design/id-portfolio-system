@@ -1,1221 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Portfolio of instructional designer Haley Reeder, focused on instructional design, learning technology, AI training and evaluation, workflow development, and interactive learning.">
-
-    <title>
-        Haley Reeder | Instructional Designer
-    </title>
-
-
-    <!-- Google Fonts -->
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
-
-
-    <!-- Main Stylesheet -->
-
-    <link rel="stylesheet"
-          href="./css/styles.css">
-
-
-    <!-- Homepage-Specific Styling -->
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of instructional designer Haley Reeder, focused on learning design and development, AI training and evaluation, and learning systems and workflows.">
+    <title>Haley Reeder | Instructional Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/portfolio-refresh.css">
     <style>
-
-        /*
-            This callout intentionally uses a lighter treatment
-            so it feels visually different from the dark CTA
-            near the bottom of the page.
-        */
-
-        .development-callout {
-
-            padding: 40px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(80, 132, 132, 0.14),
-                    rgba(121, 201, 158, 0.18)
-                );
-
-            border:
-                1px solid rgba(80, 132, 132, 0.22);
-
-            border-left:
-                7px solid var(--pine-blue);
-
-            border-radius: 20px;
-
-        }
-
-
-        .development-callout h2 {
-            color: var(--charcoal);
-        }
-
-
-        .development-callout .eyebrow {
-            color: var(--pine-blue);
-        }
-
-
-        .development-callout p {
-
-            max-width: 850px;
-
-            color: var(--charcoal);
-
-        }
-
-
-        .development-principle {
-
-            margin-top: 24px;
-
-            padding: 18px 20px;
-
-            background:
-                rgba(255, 255, 255, 0.68);
-
-            border-radius: 12px;
-
-        }
-
-
-        .development-principle strong {
-            color: var(--pine-blue);
-        }
-
+        .home-orbit { position:relative; min-height:390px; display:grid; place-items:center; }
+        .home-orbit-core { position:relative; z-index:2; display:grid; place-items:center; width:180px; height:180px; padding:25px; border-radius:50%; background:linear-gradient(145deg,var(--pine-blue),#365e5e); color:white; text-align:center; box-shadow:0 18px 45px rgba(52,74,66,.25); }
+        .home-orbit-core strong { font-family:var(--font-heading); font-size:1.05rem; }
+        .home-orbit-ring { position:absolute; width:330px; height:330px; border:1px solid rgba(80,132,132,.25); border-radius:50%; }
+        .home-orbit-ring::before { content:""; position:absolute; inset:45px; border:1px dashed rgba(121,201,158,.38); border-radius:50%; }
+        .orbit-node { position:absolute; z-index:3; width:116px; min-height:70px; display:grid; place-items:center; padding:10px; border:1px solid rgba(80,132,132,.22); border-radius:16px; background:rgba(255,255,255,.95); color:var(--charcoal); font-size:.76rem; font-weight:800; text-align:center; box-shadow:0 10px 28px rgba(52,74,66,.12); }
+        .orbit-node.one { top:20px; right:16px; }
+        .orbit-node.two { bottom:28px; right:2px; }
+        .orbit-node.three { bottom:18px; left:8px; }
+        .orbit-node.four { top:42px; left:0; }
+        .home-domain-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
+        .home-domain-row span { padding:7px 11px; border-radius:999px; border:1px solid rgba(80,132,132,.2); background:rgba(255,255,255,.82); font-size:.78rem; font-weight:700; color:var(--charcoal); }
+        .home-feature-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+        .home-feature-card { display:flex; flex-direction:column; min-height:340px; padding:26px; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:radial-gradient(circle at 90% 10%,rgba(151,219,79,.12),transparent 28%),rgba(255,255,255,.88); box-shadow:0 15px 38px rgba(52,74,66,.1); }
+        .home-feature-card h3 { color:var(--pine-blue); }
+        .home-feature-card ul { padding-left:18px; }
+        .home-feature-card .project-family-link { margin-top:auto; }
+        @media(max-width:900px){ .home-feature-grid{grid-template-columns:1fr;} .home-orbit{min-height:330px;} }
+        @media(max-width:560px){ .home-orbit{transform:scale(.86); margin:-20px 0;} }
     </style>
-
 </head>
-
-
-
 <body>
-
-
-    <!-- ========================================
-         NAVIGATION
-         ======================================== -->
-
     <header class="site-header">
-
         <div class="container nav-container">
-
-            <a class="site-brand"
-               href="./index.html">
-                Haley <span>Reeder</span>
-            </a>
-
-
-            <nav class="site-nav"
-                 aria-label="Main navigation">
-
-                <a class="active"
-                   href="./index.html">
-                    Home
-                </a>
-
-                <a href="./about/index.html">
-                    About Me
-                </a>
-
-                <a href="./projects/index.html">
-                    Projects
-                </a>
-
-                <a href="./contact/index.html">
-                    Contact
-                </a>
-
+            <a class="site-brand active" href="./index.html">Haley <span>Reeder</span></a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a class="active" href="./index.html">Home</a>
+                <a href="./about/index.html">About Me</a>
+                <a href="./projects/index.html">Projects</a>
+                <a href="./contact/index.html">Contact</a>
             </nav>
-
         </div>
-
     </header>
 
-
-
     <main>
-
-
-        <!-- ========================================
-             HERO
-             ======================================== -->
-
-        <section class="hero">
-
-            <div class="container hero-grid">
-
-                <div>
-
-                    <p class="eyebrow">
-                        Instructional Design • Learning Technology • AI Training + Evaluation
-                    </p>
-
-
-                    <h1>
-                        I make complicated things
-                        <span class="hero-accent">
-                            easier to learn.
-                        </span>
-                    </h1>
-
-
-                    <p class="hero-copy">
-                        I'm Haley, an instructional designer who works
-                        across learning design, sales enablement,
-                        learning technology, AI training and evaluation,
-                        and digital development.
-                    </p>
-
-
+        <!-- HERO -->
+        <section class="hero refresh-hero">
+            <div class="container refresh-hero-grid">
+                <div class="refresh-hero-copy">
+                    <p class="eyebrow">Instructional Designer</p>
+                    <h1>Instructional design for complex <span class="hero-accent">products, systems, and workflows.</span></h1>
+                    <p class="hero-copy">I'm Haley Reeder, an instructional designer specializing in learning design and development. I build learning for sales, partner, product, technical, customer, and marketing contexts, with additional experience in enterprise networking, AI evaluation, LMS operations, custom development, system integration, workflow automation, reporting, and communications.</p>
                     <div class="button-row">
-
-                        <a class="btn btn-primary"
-                           href="./projects/index.html">
-                            View My Work
-                        </a>
-
-                        <a class="btn btn-secondary"
-                           href="./about/index.html">
-                            About Me
-                        </a>
-
+                        <a class="btn btn-primary" href="./projects/index.html">View Projects</a>
+                        <a class="btn btn-secondary" href="./about/index.html">About Me</a>
                     </div>
-
+                    <div class="home-domain-row" aria-label="Experience contexts">
+                        <span>Sales Enablement</span><span>Partner Enablement</span><span>Technical Training</span><span>Product Launch Support</span><span>Customer Learning</span><span>AI Evaluation</span>
+                    </div>
                 </div>
 
-
-                <div class="profile-placeholder">
-
-                    Headshot coming soon
-
+                <div class="home-orbit" aria-label="Learning design ecosystem graphic">
+                    <div class="home-orbit-ring"></div>
+                    <div class="home-orbit-core"><strong>Learning Design &amp; Development</strong></div>
+                    <div class="orbit-node one">AI Training &amp; Evaluation</div>
+                    <div class="orbit-node two">Systems &amp; Integrations</div>
+                    <div class="orbit-node three">Reporting &amp; Analytics</div>
+                    <div class="orbit-node four">Custom Content &amp; Code</div>
                 </div>
-
             </div>
-
         </section>
 
+        <!-- INTERACTIVE FEATURED WORK GALLERY -->
+        <section class="section">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">Portfolio</p>
+                    <h2>Explore my work</h2>
+                    <p class="body-large reading-width">My portfolio is organized around instructional design, AI training and evaluation, and the systems and workflows that support learning development and operations.</p>
+                </div>
 
-
-        <!-- ========================================
-             INTERACTIVE FEATURED WORK GALLERY
-             ======================================== -->
+                <div class="home-feature-grid">
+                    <article class="home-feature-card">
+                        <p class="eyebrow">Learning Design &amp; Development</p>
+                        <h3>Instructional Design</h3>
+                        <p>Learning experiences built from analysis through development, assessment, delivery, and improvement.</p>
+                        <ul><li>Interactive learning</li><li>Multimedia training</li><li>Complete learning pathways</li></ul>
+                        <a class="project-family-link" href="./projects/instructional-design/index.html">Explore Instructional Design →</a>
+                    </article>
+                    <article class="home-feature-card">
+                        <p class="eyebrow">Evaluation &amp; Quality</p>
+                        <h3>AI Training and Evaluation</h3>
+                        <p>Structured evaluation of model outputs using requirements, evidence, scoring criteria, and actionable feedback.</p>
+                        <ul><li>Evaluation scenarios</li><li>Rubric design</li><li>QA workflows</li></ul>
+                        <a class="project-family-link" href="./projects/ai-training-and-evaluation/index.html">Explore AI Work →</a>
+                    </article>
+                    <article class="home-feature-card">
+                        <p class="eyebrow">Learning Operations</p>
+                        <h3>Systems and Workflows</h3>
+                        <p>Processes that connect content, technology, automation, LMS operations, reporting, documentation, and ownership.</p>
+                        <ul><li>Design and development workflows</li><li>AI and work automation</li><li>LMS and content operations</li></ul>
+                        <a class="project-family-link" href="./projects/workflows/index.html">Explore Systems and Workflows →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
 
         <section class="section section-soft">
-
             <div class="container">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        Featured Work
-                    </p>
-
-                    <h2>
-                        Explore the different sides of my work.
-                    </h2>
-
-                    <p class="body-large reading-width">
-                        My portfolio is organized around three connected
-                        areas: instructional design, AI training and
-                        evaluation, and the workflows that help learning
-                        work move efficiently from idea to implementation
-                        and continuous improvement.
-                    </p>
-
+                <div class="experience-panel">
+                    <div>
+                        <p class="eyebrow">Experience</p>
+                        <h2>Learning work across content, technology, and operations</h2>
+                        <p>My background includes classroom teaching, corporate L&amp;D, sales and partner enablement, technical and product training, AI evaluation, LMS administration, multimedia development, and workflow automation.</p>
+                    </div>
+                    <a class="btn btn-primary" href="./assets/documents/Haley-Reeder-Resume.pdf" target="_blank">View Résumé</a>
                 </div>
-
-
-
-                <div class="work-gallery">
-
-
-                    <!-- CATEGORY TABS -->
-
-                    <div class="work-tabs"
-                         role="tablist"
-                         aria-label="Featured work categories">
-
-
-                        <button class="work-tab active"
-                                type="button"
-                                role="tab"
-                                aria-selected="true"
-                                data-category="instructional">
-
-                            Instructional Design
-
-                        </button>
-
-
-                        <button class="work-tab"
-                                type="button"
-                                role="tab"
-                                aria-selected="false"
-                                data-category="ai">
-
-                            AI Training and Evaluation
-
-                        </button>
-
-
-                        <button class="work-tab"
-                                type="button"
-                                role="tab"
-                                aria-selected="false"
-                                data-category="workflows">
-
-                            Workflows
-
-                        </button>
-
-
-                    </div>
-
-
-
-                    <!-- DYNAMIC CONTENT PANEL -->
-
-                    <div class="work-panel"
-                         id="workPanel">
-
-                        <div class="work-content">
-
-                            <p class="eyebrow"
-                               id="workEyebrow">
-
-                                Instructional Design
-
-                            </p>
-
-
-                            <h3 id="workTitle">
-
-                                Designing the whole learning experience.
-
-                            </h3>
-
-
-                            <p id="workDescription"
-                               class="work-description">
-
-                                My instructional design work spans the full
-                                learning lifecycle—from figuring out what
-                                people need to do through designing,
-                                developing, delivering, and evaluating
-                                the learning experience.
-
-                            </p>
-
-
-                            <div class="work-detail-grid"
-                                 id="workDetailGrid">
-
-
-                                <div>
-
-                                    <h4>
-                                        Learning Design
-                                    </h4>
-
-                                    <p>
-                                        Needs analysis, curriculum architecture,
-                                        learning objectives, scenarios, assessments,
-                                        certification, and performance-focused design.
-                                    </p>
-
-                                </div>
-
-
-                                <div>
-
-                                    <h4>
-                                        Learning Development
-                                    </h4>
-
-                                    <p>
-                                        Interactive learning, sales enablement,
-                                        Storyline, Rise, multimedia, video,
-                                        assessments, and custom digital
-                                        learning experiences.
-                                    </p>
-
-                                </div>
-
-
-                                <div>
-
-                                    <h4>
-                                        Learning Ecosystems
-                                    </h4>
-
-                                    <p>
-                                        LMS administration, complete learning
-                                        pathways, certification structures,
-                                        analytics, completion tracking,
-                                        reporting, and partner learning
-                                        environments.
-                                    </p>
-
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PROJECT CTA -->
-
-                    <div class="work-gallery-footer">
-
-                        <p>
-                            Explore case studies, interactive examples,
-                            and the systems behind the work.
-                        </p>
-
-                        <a class="btn btn-primary"
-                           href="./projects/index.html">
-                            Explore My Projects →
-                        </a>
-
-                    </div>
-
-
-                </div>
-
             </div>
-
         </section>
-
-
-
-        <!-- ========================================
-             INTERACTIVE TOOLKIT
-             ======================================== -->
-
-        <section class="section">
-
-            <div class="container">
-
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        My Toolkit
-                    </p>
-
-                    <h2>
-                        Tools I work with.
-                    </h2>
-
-                    <p class="body-large reading-width">
-                        My toolkit crosses learning development,
-                        learning systems, data, automation, AI,
-                        and custom development. Click a card to explore.
-                    </p>
-
-                </div>
-
-
-
-                <div class="tool-flip-grid">
-
-
-                    <!-- ========================================
-                         LEARNING DESIGN + DEVELOPMENT
-                         ======================================== -->
-
-                    <button class="tool-flip-card"
-                            type="button"
-                            aria-pressed="false">
-
-                        <span class="tool-card-inner">
-
-
-                            <!-- FRONT -->
-
-                            <span class="tool-card-face tool-card-front">
-
-                                <span class="tool-card-label">
-                                    Create
-                                </span>
-
-                                <span class="tool-card-title">
-                                    Learning Design + Development
-                                </span>
-
-                                <span class="tool-card-description">
-                                    The tools I use to design, develop,
-                                    prototype, and produce learning experiences.
-                                </span>
-
-                                <span class="tool-card-hint">
-                                    Click to flip →
-                                </span>
-
-                            </span>
-
-
-                            <!-- BACK -->
-
-                            <span class="tool-card-face tool-card-back">
-
-                                <span class="tool-card-label">
-                                    Learning Design + Development
-                                </span>
-
-
-                                <span class="tool-tag-list">
-
-                                    <span class="tool-tag">
-                                        Articulate Rise 360
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Storyline 360
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        PowerPoint
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Camtasia
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Adobe Creative Cloud
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Canva
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Generative AI
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        HTML
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        CSS
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        JavaScript
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        JSON
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Visual Studio Code
-                                    </span>
-
-                                </span>
-
-
-                                <span class="tool-card-hint">
-                                    Click to return ↩
-                                </span>
-
-                            </span>
-
-
-                        </span>
-
-                    </button>
-
-
-
-                    <!-- ========================================
-                         LEARNING MANAGEMENT SYSTEMS
-                         ======================================== -->
-
-                    <button class="tool-flip-card"
-                            type="button"
-                            aria-pressed="false">
-
-                        <span class="tool-card-inner">
-
-
-                            <!-- FRONT -->
-
-                            <span class="tool-card-face tool-card-front">
-
-                                <span class="tool-card-label">
-                                    Deliver
-                                </span>
-
-                                <span class="tool-card-title">
-                                    Learning Management Systems
-                                </span>
-
-                                <span class="tool-card-description">
-                                    Platforms, standards, and learning-system
-                                    tools I use to deliver, track, and manage learning.
-                                </span>
-
-                                <span class="tool-card-hint">
-                                    Click to flip →
-                                </span>
-
-                            </span>
-
-
-                            <!-- BACK -->
-
-                            <span class="tool-card-face tool-card-back">
-
-                                <span class="tool-card-label">
-                                    Learning Management Systems
-                                </span>
-
-
-                                <span class="tool-tag-list">
-
-                                    <span class="tool-tag">
-                                        Docebo
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Absorb
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Canvas
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Schoology
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Cornerstone
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Workday Learning
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        SCORM
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        xAPI
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Learning Analytics
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Certification Tracking
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Completion Tracking
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Credly
-                                    </span>
-
-                                </span>
-
-
-                                <span class="tool-card-hint">
-                                    Click to return ↩
-                                </span>
-
-                            </span>
-
-
-                        </span>
-
-                    </button>
-
-
-
-                    <!-- ========================================
-                         WORKFLOWS + DATA
-                         ======================================== -->
-
-                    <button class="tool-flip-card"
-                            type="button"
-                            aria-pressed="false">
-
-                        <span class="tool-card-inner">
-
-
-                            <!-- FRONT -->
-
-                            <span class="tool-card-face tool-card-front">
-
-                                <span class="tool-card-label">
-                                    Connect + Improve
-                                </span>
-
-                                <span class="tool-card-title">
-                                    Workflows + Data
-                                </span>
-
-                                <span class="tool-card-description">
-                                    Tools I use to build more efficient,
-                                    repeatable, connected ways of working
-                                    across development, systems, automation,
-                                    and reporting.
-                                </span>
-
-                                <span class="tool-card-hint">
-                                    Click to flip →
-                                </span>
-
-                            </span>
-
-
-                            <!-- BACK -->
-
-                            <span class="tool-card-face tool-card-back">
-
-                                <span class="tool-card-label">
-                                    Workflows + Data
-                                </span>
-
-
-                                <span class="tool-tag-list">
-
-                                    <span class="tool-tag">
-                                        GitHub
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Git
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Python
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        pandas
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        openpyxl
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Selenium
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Generative AI
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Microsoft 365
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Excel
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Asana
-                                    </span>
-
-                                    <span class="tool-tag">
-                                        Salesforce
-                                    </span>
-
-                                </span>
-
-
-                                <span class="tool-card-hint">
-                                    Click to return ↩
-                                </span>
-
-                            </span>
-
-
-                        </span>
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================
-             CTA
-             ======================================== -->
-
-        <section class="section">
-
-            <div class="container">
-
-                <div class="cta">
-
-                    <p class="eyebrow">
-                        Let's Build Better Learning
-                    </p>
-
-                    <h2>
-                        Interested in connecting or exploring my work?
-                    </h2>
-
-
-                    <div class="button-row">
-
-                        <a class="btn btn-highlight"
-                           href="./contact/index.html">
-                            Contact Me
-                        </a>
-
-                        <a class="btn btn-secondary"
-                           href="./projects/index.html"
-                           style="color: white; border-color: white;">
-                            Projects
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
     </main>
 
-
-
-    <!-- ========================================
-         FOOTER
-         ======================================== -->
-
     <footer class="site-footer">
-
         <div class="container footer-grid">
-
-            <p>
-                © Haley Reeder
-            </p>
-
-
+            <p>© Haley Reeder</p>
             <div class="footer-links">
-
-                <a href="https://github.com/reeder-design"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    GitHub
-                </a>
-
-                <a href="https://www.linkedin.com/in/haley-reeder"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    LinkedIn
-                </a>
-
-                <a href="./assets/documents/Haley-Reeder-Resume.pdf"
-                   target="_blank">
-                    Résumé
-                </a>
-
+                <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="./assets/documents/Haley-Reeder-Resume.pdf" target="_blank">Résumé</a>
             </div>
-
         </div>
-
     </footer>
-
-
-    <!-- ========================================
-         FEATURED WORK JAVASCRIPT
-         ======================================== -->
-
-    <script>
-
-        const workData = {
-
-
-            instructional: {
-
-                eyebrow:
-                    "Instructional Design",
-
-                title:
-                    "Designing the whole learning experience.",
-
-                description:
-                    "My instructional design work spans the full learning lifecycle—from figuring out what people need to do through designing, developing, delivering, and evaluating the learning experience.",
-
-                details: [
-
-                    {
-                        title:
-                            "Learning Design",
-
-                        text:
-                            "Needs analysis, curriculum architecture, learning objectives, scenarios, assessments, certification, and performance-focused design."
-                    },
-
-                    {
-                        title:
-                            "Learning Development",
-
-                        text:
-                            "Interactive learning, sales enablement, Storyline, Rise, multimedia, video, assessments, and custom digital learning experiences."
-                    },
-
-                    {
-                        title:
-                            "Learning Ecosystems",
-
-                        text:
-                            "LMS administration, complete learning pathways, certification structures, analytics, completion tracking, reporting, and partner learning environments."
-                    }
-
-                ]
-
-            },
-
-
-            ai: {
-
-                eyebrow:
-                    "AI Training and Evaluation",
-
-                title:
-                    "Using human judgment to make AI more reliable and useful.",
-
-                description:
-                    "My AI training and evaluation work focuses on determining whether generated outputs actually satisfy the task, align with available evidence, meet quality standards, and remain useful for the people who will rely on them.",
-
-                details: [
-
-                    {
-                        title:
-                            "Training + Evaluation",
-
-                        text:
-                            "Task interpretation, source and ground-truth review, model-output evaluation, error detection, issue classification, severity assessment, rubric-based scoring, actionable feedback, calibration, and evaluator QA."
-                    }
-
-                ]
-
-            },
-
-
-            workflows: {
-
-                eyebrow:
-                    "Workflows",
-
-                title:
-                    "Designing better ways for the work to move.",
-
-                description:
-                    "I look at workflow design as part of the learning solution itself. My goal is to reduce unnecessary friction, make recurring work more consistent, create reusable systems, and make it easier to move from analysis through delivery, measurement, and improvement.",
-
-                details: [
-
-                    {
-                        title:
-                            "Design + Development",
-
-                        text:
-                            "I build structured, repeatable workflows around analysis, instructional design, SME collaboration, development, review, QA, pilot testing, revision, and launch. Clear stages, decision points, documentation, and reusable templates make complex projects easier to manage and maintain."
-                    },
-
-                    {
-                        title:
-                            "AI + Automation",
-
-                        text:
-                            "I use generative AI to support ideation, content development, coding, prototyping, analysis, and other parts of the instructional design workflow. I also build reusable processes, Python and browser automations, and connected systems that reduce repetitive development and administrative work while keeping human judgment and QA in the loop."
-                    },
-
-                    {
-                        title:
-                            "Data + Reporting",
-
-                        text:
-                            "I build workflows for collecting, cleaning, validating, reconciling, and reporting learning data. The goal is to turn completion records, assessment results, LMS activity, and other system data into information people can actually use to monitor performance, identify issues, and make decisions."
-                    }
-
-                ]
-
-            }
-
-        };
-
-
-
-        const workTabs =
-            document.querySelectorAll(
-                ".work-tab"
-            );
-
-
-        const workPanel =
-            document.getElementById(
-                "workPanel"
-            );
-
-
-        const workEyebrow =
-            document.getElementById(
-                "workEyebrow"
-            );
-
-
-        const workTitle =
-            document.getElementById(
-                "workTitle"
-            );
-
-
-        const workDescription =
-            document.getElementById(
-                "workDescription"
-            );
-
-
-        const workDetailGrid =
-            document.getElementById(
-                "workDetailGrid"
-            );
-
-
-
-        function renderWorkCategory(
-            category
-        ) {
-
-            const data =
-                workData[
-                    category
-                ];
-
-
-            /*
-                Restart panel animation.
-            */
-
-            workPanel.classList.remove(
-                "work-panel-animate"
-            );
-
-
-            void workPanel.offsetWidth;
-
-
-            workPanel.classList.add(
-                "work-panel-animate"
-            );
-
-
-            /*
-                Update main content.
-            */
-
-            workEyebrow.textContent =
-                data.eyebrow;
-
-
-            workTitle.textContent =
-                data.title;
-
-
-            workDescription.textContent =
-                data.description;
-
-
-            /*
-                Remove previous detail cards.
-            */
-
-            workDetailGrid.innerHTML =
-                "";
-
-
-            /*
-                Build selected category cards.
-            */
-
-            data.details.forEach(
-                function (detail) {
-
-                    const detailBlock =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    const heading =
-                        document.createElement(
-                            "h4"
-                        );
-
-
-                    const text =
-                        document.createElement(
-                            "p"
-                        );
-
-
-                    heading.textContent =
-                        detail.title;
-
-
-                    text.textContent =
-                        detail.text;
-
-
-                    detailBlock.appendChild(
-                        heading
-                    );
-
-
-                    detailBlock.appendChild(
-                        text
-                    );
-
-
-                    workDetailGrid.appendChild(
-                        detailBlock
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        workTabs.forEach(
-            function (tab) {
-
-                tab.addEventListener(
-                    "click",
-                    function () {
-
-                        workTabs.forEach(
-                            function (item) {
-
-                                item.classList.remove(
-                                    "active"
-                                );
-
-
-                                item.setAttribute(
-                                    "aria-selected",
-                                    "false"
-                                );
-
-                            }
-                        );
-
-
-                        tab.classList.add(
-                            "active"
-                        );
-
-
-                        tab.setAttribute(
-                            "aria-selected",
-                            "true"
-                        );
-
-
-                        renderWorkCategory(
-                            tab.dataset.category
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    </script>
-
-
-
-    <!-- ========================================
-         TOOLKIT FLIP CARD JAVASCRIPT
-         ======================================== -->
-
-    <script>
-
-        const toolFlipCards =
-            document.querySelectorAll(
-                ".tool-flip-card"
-            );
-
-
-        toolFlipCards.forEach(
-            function (card) {
-
-                card.addEventListener(
-                    "click",
-                    function () {
-
-                        const isFlipped =
-                            card.classList.toggle(
-                                "flipped"
-                            );
-
-
-                        card.setAttribute(
-                            "aria-pressed",
-                            isFlipped
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    </script>
-
-
 </body>
-
 </html>
