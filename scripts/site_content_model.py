@@ -22,8 +22,8 @@ def section_field(section: str, element_pattern: str) -> str:
 
 
 def class_element(tag: str, class_name: str) -> str:
-    """Match an element that contains an approved class token plus optional presentation classes."""
-    return rf"<{tag} class=\"[^\"]*\b{re.escape(class_name)}\b[^\"]*\">"
+    """Match an element containing an approved class token plus optional classes or attributes."""
+    return rf"<{tag}\b[^>]*\bclass=\"[^\"]*\b{re.escape(class_name)}\b[^\"]*\"[^>]*>"
 
 
 LOCATORS: dict[str, dict[str, str]] = {
