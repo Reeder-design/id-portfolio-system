@@ -10,9 +10,10 @@
     </div>
 
     <div class="help-drawer-body" data-help-body>
-        <p>Use the small <strong>?</strong> buttons beside actions for context-specific instructions.</p>
+        <p>Use the small <strong>?</strong> buttons for context-specific instructions. Each topic explains what the control changes, what it does not change, and what to do next.</p>
         <div class="help-quick-links">
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
+            <button type="button" data-help-key="maintenance">Portfolio maintenance controls</button>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
             <button type="button" data-help-key="git-workflow">Git workflow safety</button>
             <button type="button" data-help-key="general-content">General page editing</button>
@@ -23,18 +24,30 @@
 </aside>
 <div class="help-backdrop" data-help-backdrop hidden></div>
 
+<template data-help-template="maintenance">
+    <p><strong>Portfolio Maintenance</strong> is the main control area for editing, checking, documenting, and preparing portfolio changes for review.</p>
+    <p><strong>Run Full Validation:</strong> read-only health check. It changes nothing. Use it after meaningful edits and before committing.</p>
+    <p><strong>Refresh Docs:</strong> rebuilds maintenance records such as the content inventory, portfolio map, and changelog. It does not rewrite public pages.</p>
+    <p><strong>Open Project Content:</strong> edits structured project records. Standard pages can then be regenerated from the shared template; custom interactive pages are protected from template overwrite.</p>
+    <p><strong>Open General Page Content:</strong> edits approved text fields on managed public pages. Saving updates the structured copy and exact approved HTML locations locally, then validates and rolls back if needed.</p>
+    <p><strong>Open Asset Library:</strong> manages files intentionally approved for the public portfolio. Files under <code>portfolio/</code> may become public after a future merge, so never place private source material there.</p>
+    <p><strong>Open Git Workflow:</strong> handles the guarded path from local changes to a pull request: review diff → stage → validate + commit → push feature branch → open PR. It cannot merge.</p>
+    <p><strong>Version Release:</strong> records an intentional patch, minor, or major portfolio-system release. Use it near the end of a meaningful release, not for every edit.</p>
+    <p><strong>Normal next step:</strong> make the change in the appropriate editor → preview it → run Full Validation → review Git changes → use Git Workflow → review the PR → merge only when you intentionally approve publication.</p>
+</template>
+
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
-    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, and Portfolio Manager security rules.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, Git guardrails, and Portfolio Manager security/runtime rules.</p>
     <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
-    <p><strong>Use it:</strong> before committing or whenever you want a full health check.</p>
+    <p><strong>Next step:</strong> fix any failures before committing. If it passes, review your changes and continue through Git Workflow.</p>
 </template>
 
 <template data-help-template="refresh-docs">
     <p><strong>Refresh Docs</strong> rebuilds the maintenance documentation that describes your portfolio.</p>
     <p><strong>It can change:</strong> <code>docs/content-inventory.md</code>, <code>docs/portfolio-map.md</code>, and <code>docs/changelog.md</code>.</p>
     <p><strong>It does not:</strong> regenerate public HTML, commit files, push to GitHub, merge, or publish.</p>
-    <p><strong>Remember:</strong> this refreshes the paperwork <em>about</em> the portfolio, not the public pages themselves.</p>
+    <p><strong>Next step:</strong> review any generated doc changes in Git before committing them with the rest of the feature.</p>
 </template>
 
 <template data-help-template="versioning">
@@ -42,31 +55,37 @@
     <p><strong>Patch:</strong> small fixes. <strong>Minor:</strong> meaningful new feature/project. <strong>Major:</strong> major architecture or redesign.</p>
     <p><strong>It changes:</strong> version history, generated changelog, and a version snapshot.</p>
     <p><strong>It does not:</strong> commit, push, merge, or publish anything.</p>
+    <p><strong>Next step:</strong> run Full Validation, review the generated version/doc files, then include them in the feature branch commit.</p>
 </template>
 
 <template data-help-template="requests">
-    <p><strong>Requests</strong> are work orders, not automatic edits.</p>
-    <p>They are stored under the private Git-ignored <code>.portfolio-manager/</code> workspace along with uploaded reference files.</p>
+    <p><strong>Requests</strong> are private work orders, not automatic edits.</p>
+    <p>They are stored under the Git-ignored <code>.portfolio-manager/</code> workspace along with uploaded reference files.</p>
     <p><strong>Use them when:</strong> you want to capture an idea, private/reference source material, or future edit without changing the portfolio yet.</p>
+    <p><strong>Next step:</strong> return later and use the appropriate content, asset, or development workflow when you are ready to make the actual change.</p>
 </template>
 
 <template data-help-template="create-project">
     <p><strong>Create Project</strong> creates real portfolio files using the structured project generator.</p>
-    <p><strong>It can create:</strong> a JSON project record and, when safe, a standard public case-study page in the correct taxonomy path.</p>
+    <p><strong>It can create:</strong> a JSON project record and, when public-safe, a standard public case-study page in the correct taxonomy path.</p>
     <p><strong>It also:</strong> validates the project and refreshes generated documentation.</p>
     <p><strong>It does not:</strong> commit, push, merge, or publish.</p>
+    <p><strong>Next step:</strong> preview the generated page, edit structured data if needed, run Full Validation, then use Git Workflow.</p>
 </template>
 
 <template data-help-template="save-project">
     <p><strong>Save Project Data</strong> updates the project's structured JSON source and refreshes generated documentation.</p>
     <p>If structured-content validation fails, the JSON edit is rolled back.</p>
-    <p><strong>Important:</strong> saving structured data does not automatically rewrite a custom interactive page.</p>
+    <p><strong>Standard page:</strong> use Regenerate Page after saving when you want the public HTML to reflect the new structured data.</p>
+    <p><strong>Custom page:</strong> saving metadata does not overwrite its bespoke HTML/CSS/JavaScript.</p>
+    <p><strong>Next step:</strong> preview the relevant page, run Full Validation, and review the Git diff.</p>
 </template>
 
 <template data-help-template="general-content">
     <p><strong>General Page Content</strong> manages predefined plain-text fields on Home, About, Projects, category pages, and Contact.</p>
-    <p>The editable field list is intentionally narrow. Navigation, links, buttons, tags, CSS, JavaScript, layout, and custom project interactions are not exposed to this editor.</p>
-    <p>The structured source lives in <code>portfolio-data/site-content.json</code>. Each field has an approved locator in the renderer. If a page redesign makes a locator ambiguous or missing, saving fails instead of guessing.</p>
+    <p>The editable field list is intentionally narrow. Navigation, links, buttons, tags, lists, CSS, JavaScript, layout, and custom project interactions are not exposed to this editor.</p>
+    <p>The structured source lives in <code>portfolio-data/site-content.json</code>. Each field has an approved locator. If a redesign makes a locator ambiguous or missing, saving fails instead of guessing.</p>
+    <p><strong>Next step:</strong> preview the public page after saving, then run Full Validation before Git review.</p>
 </template>
 
 <template data-help-template="general-save">
@@ -74,18 +93,22 @@
     <p>You must confirm the copy is public-safe. The renderer escapes it as plain text, so this editor cannot inject HTML or JavaScript.</p>
     <p>General-content validation and the normal site validator run immediately. If either fails, both the JSON and HTML are restored automatically.</p>
     <p><strong>It does not:</strong> commit, push, merge, or publish anything.</p>
+    <p><strong>Next step:</strong> preview the page and review the change in Git Workflow.</p>
 </template>
 
 <template data-help-template="regenerate">
-    <p><strong>Regenerate Page</strong> rebuilds a standard generated project's public <code>index.html</code> from its latest JSON data and the shared template.</p>
+    <p><strong>Regenerate Page</strong> rebuilds a standard generated project's public <code>index.html</code> from its latest JSON data and the shared project template.</p>
     <p><strong>It changes:</strong> that standard project's public HTML.</p>
     <p><strong>It does not:</strong> commit, push, merge, or publish.</p>
     <p>This action is intentionally unavailable for custom interactive pages.</p>
+    <p><strong>Next step:</strong> preview the regenerated page, run Full Validation, then review the Git diff.</p>
 </template>
 
 <template data-help-template="standard-custom">
     <p><strong>Standard Page:</strong> generated from structured JSON + the shared project template. It can be safely regenerated.</p>
     <p><strong>Custom Page:</strong> hand-built HTML/CSS/JavaScript interaction. Structured metadata can be edited, but the template renderer is prevented from overwriting the custom experience.</p>
+    <p><strong>Standard workflow:</strong> edit JSON → save → regenerate → preview → validate → Git Workflow.</p>
+    <p><strong>Custom workflow:</strong> edit metadata and custom code deliberately → preview interaction → validate → Git Workflow.</p>
 </template>
 
 <template data-help-template="assets">
@@ -93,63 +116,71 @@
     <p>Managed files live under <code>portfolio/assets/project-assets/</code>. Because that directory is part of the public site, a merged file may be publicly reachable even when a page does not visibly link to it.</p>
     <p><strong>Use private Requests instead</strong> for employer source material, customer information, drafts that still need sanitization, or anything you would not want exposed publicly.</p>
     <p>Asset actions change local files only. They do not commit, push, merge, or publish automatically.</p>
+    <p><strong>Next step:</strong> confirm references/alt text, preview the page using the asset, run Full Validation, then review the Git diff.</p>
 </template>
 
 <template data-help-template="asset-upload">
     <p><strong>Add Public Asset</strong> copies an allowed file into the project's managed public-asset folder and adds its path/type/alt/caption metadata to the project JSON.</p>
     <p>You must explicitly confirm the file is public-safe. Images also require alt text.</p>
     <p>Executable/web-code formats such as HTML, JavaScript, CSS, and SVG are blocked from this uploader.</p>
+    <p><strong>Next step:</strong> preview where the asset is used and run Full Validation.</p>
 </template>
 
 <template data-help-template="asset-replace">
     <p><strong>Replace File</strong> swaps the bytes at an existing managed asset path while keeping that path unchanged.</p>
     <p>The replacement must use the same file extension. This protects custom pages that may already reference the asset path directly.</p>
     <p>Site validation runs after replacement. If validation fails, the previous file is restored.</p>
+    <p><strong>Next step:</strong> visually confirm the replacement and review the Git diff.</p>
 </template>
 
 <template data-help-template="git-workflow">
-    <p><strong>Git Workflow</strong> can automate the safe mechanics between local edits and a pull request.</p>
-    <p><strong>It can:</strong> sync clean <code>main</code> with fast-forward-only pull, create a feature branch, stage exact approved files, run full validation, create a local commit, push the feature branch, and create a PR when GitHub CLI is authenticated.</p>
+    <p><strong>Git Workflow</strong> automates the safe mechanics between local edits and a pull request.</p>
+    <p><strong>Typical sequence:</strong> sync clean main → create/switch feature branch → review changed files and diffs → stage exact files → run validation + commit → push feature branch → open PR → review → merge only with explicit approval.</p>
+    <p><strong>It can:</strong> fast-forward sync clean <code>main</code>, create approved branch types, stage exact changed files, validate, commit, push the feature branch, and create a PR when GitHub CLI is authenticated.</p>
     <p><strong>It cannot:</strong> commit on <code>main</code>, push <code>main</code>, force-push, stage private runtime paths, run arbitrary shell commands, or merge a PR.</p>
-    <p>If GitHub CLI is unavailable, the dashboard gives you GitHub's pre-filled PR page instead of asking you to store an API token.</p>
 </template>
 
 <template data-help-template="git-stage">
     <p><strong>Stage Selected Files</strong> chooses exactly which changed files belong in the next commit.</p>
     <p>Portfolio Manager accepts only paths that Git already reports as changed and blocks private/sensitive paths such as <code>.env</code>, <code>.portfolio-manager/</code>, <code>.venv/</code>, and key/certificate files.</p>
     <p><strong>Unstage</strong> removes a file from the next commit without deleting its local edit.</p>
+    <p><strong>Next step:</strong> inspect the staged diff, then run Validation & Commit.</p>
 </template>
 
 <template data-help-template="git-diff">
     <p><strong>Diff Review</strong> shows the actual line-level changes Git sees.</p>
     <p><strong>Staged</strong> means selected for the next commit. <strong>Not staged</strong> means the local edit still exists but will not be included yet.</p>
     <p>The dashboard truncates extremely large diffs for readability; Git still retains the full changes.</p>
+    <p><strong>Next step:</strong> stage only the files that belong together, then validate and commit.</p>
 </template>
 
 <template data-help-template="git-commit">
     <p><strong>Run Validation & Commit</strong> first runs the full portfolio validation suite. If any check fails, Git is not allowed to create the commit.</p>
     <p>Commits are blocked entirely on <code>main</code>. A successful commit exists only in your local feature branch until you push.</p>
+    <p><strong>Next step:</strong> confirm the working tree is clean, then push the feature branch to GitHub.</p>
 </template>
 
 <template data-help-template="git-push">
     <p><strong>Push Branch to GitHub</strong> sends committed feature-branch changes to <code>origin</code> and sets the normal upstream tracking branch.</p>
     <p>The dashboard refuses to push while uncommitted local changes remain, refuses branches with no commits beyond <code>main</code>, never pushes <code>main</code>, and never force-pushes.</p>
+    <p><strong>Next step:</strong> open a pull request and review the exact proposed changes.</p>
 </template>
 
 <template data-help-template="git-pr">
     <p><strong>Open Pull Request</strong> creates a review request from your pushed feature branch into <code>main</code>.</p>
-    <p>If the authenticated GitHub CLI is available, Portfolio Manager can create the PR directly. Otherwise it opens GitHub's pre-filled compare/PR page.</p>
+    <p>If authenticated GitHub CLI is available, Portfolio Manager can create the PR directly. Otherwise it opens GitHub's pre-filled compare/PR page.</p>
     <p><strong>Merge remains intentionally separate.</strong> Portfolio Manager has no merge route or merge button.</p>
+    <p><strong>Next step:</strong> confirm CI passes, review the PR, and merge only after explicit approval.</p>
 </template>
 
 <template data-help-template="publishing">
     <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
     <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally. Git Workflow can commit and push a feature branch, but nothing reaches the live site until the pull request is explicitly merged.</p>
-    <p><strong>Live path:</strong> local change → stage → validate + commit → push feature branch → PR → explicit review/merge → GitHub Pages deployment.</p>
+    <p><strong>Live path:</strong> local change → preview → validation → stage → commit → push feature branch → PR → explicit review/merge → GitHub Pages deployment.</p>
 </template>
 
 <template data-help-template="git-safety">
-    <p>Portfolio Manager can now perform selected Git actions, but only through the guarded Git Workflow page.</p>
+    <p>Portfolio Manager performs selected Git actions only through the guarded Git Workflow page.</p>
     <p>It blocks commits and pushes on <code>main</code>, blocks force-push, blocks unsafe/private paths, and runs full validation before commit.</p>
     <p><strong>There is no automated merge.</strong> Pull-request approval and merge remain an explicit human decision.</p>
 </template>
@@ -157,4 +188,5 @@
 <template data-help-template="privacy">
     <p>Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and stores private runtime data under the Git-ignored <code>.portfolio-manager/</code> directory.</p>
     <p>Your real password hash and Flask secret live only in the Git-ignored local <code>.env</code> file.</p>
+    <p>Sessions expire after eight hours. A timeout does not delete work or require server setup again; sign in again if the local Flask app is still running.</p>
 </template>
