@@ -36,7 +36,6 @@
     </header>
 
     <main>
-        <!-- HERO -->
         <section class="page-hero refresh-hero">
             <div class="container refresh-hero-grid">
                 <div class="parent-page-hero-content refresh-hero-copy">
@@ -64,7 +63,6 @@
             </div>
         </section>
 
-        <!-- OVERVIEW -->
         <section class="section section-soft">
             <div class="container">
                 <div class="parent-overview-copy refresh-section-intro">
@@ -82,7 +80,6 @@
             </div>
         </section>
 
-        <!-- WORKFLOW AREAS -->
         <section class="section">
             <div class="container">
                 <div class="section-heading refresh-section-intro">
@@ -144,6 +141,26 @@
                 </div>
             </div>
         </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">View Other Types of Projects</p>
+                    <h2>Explore the rest of the portfolio</h2>
+                    <p>See the instructional design and AI evaluation work these systems are built to support.</p>
+                </div>
+                <div class="refresh-card-grid two-up">
+                    <article class="refresh-link-card">
+                        <div class="refresh-link-card-header"><p class="eyebrow">Learning Design &amp; Development</p><h3>Instructional Design</h3><p>Learning experiences built from performance need through practice, assessment, delivery, and measurement.</p></div>
+                        <div class="refresh-link-card-body"><a class="project-family-link" href="../instructional-design/index.html">Explore Instructional Design →</a></div>
+                    </article>
+                    <article class="refresh-link-card">
+                        <div class="refresh-link-card-header"><p class="eyebrow">AI Quality</p><h3>AI Training and Evaluation</h3><p>Structured review of AI-generated work using evidence, criteria, and actionable feedback.</p></div>
+                        <div class="refresh-link-card-body"><a class="project-family-link" href="../ai-training-and-evaluation/index.html">Explore AI Training and Evaluation →</a></div>
+                    </article>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -159,60 +176,12 @@
 
     <script>
         const flowData = {
-            design: {
-                label: "Learning Design",
-                title: "Turn a request into a clear learning plan.",
-                summary: "I use structured intake, analysis, objectives, scope decisions, SME review, and evidence planning to keep the solution tied to performance rather than content volume.",
-                steps: ["Intake", "Analysis", "Design", "Review"],
-                optimize: "Clear scope, useful objectives, realistic practice, and fewer late-stage changes.",
-                tools: "Design documents, source libraries, SME review cycles, project boards, templates, and structured decision records.",
-                evidence: "Requirement coverage, review history, learner needs, stakeholder decisions, and downstream performance data."
-            },
-            development: {
-                label: "Learning Development",
-                title: "Make development repeatable without flattening the experience.",
-                summary: "I use reusable templates, components, code patterns, asset libraries, QA steps, and versioned source content so development stays consistent and maintainable.",
-                steps: ["Prototype", "Build", "QA", "Release"],
-                optimize: "Consistency, accessibility, maintainability, faster iteration, and fewer one-off rebuilds.",
-                tools: "Articulate, Adobe tools, HTML, CSS, JavaScript, reusable components, asset libraries, and validation checklists.",
-                evidence: "QA findings, reuse, development time, maintenance effort, learner behavior, and defect trends."
-            },
-            automation: {
-                label: "Work Automation",
-                title: "Automate repeatable mechanics and keep judgment human.",
-                summary: "I use scripts and workflow tools to reduce repetitive reporting, data movement, file handling, and administrative work while keeping review points visible.",
-                steps: ["Map", "Automate", "Verify", "Monitor"],
-                optimize: "Fewer manual steps, lower error risk, clearer handoffs, and time returned to design work.",
-                tools: "Python, spreadsheets, browser automation, APIs when available, task systems, and validation logs.",
-                evidence: "Time saved, reduced duplicate entry, error rates, exception handling, and maintainability."
-            },
-            ai: {
-                label: "AI Integration",
-                title: "Use AI inside a controlled workflow, not as an unchecked shortcut.",
-                summary: "I use AI for drafting, analysis, evaluation, code assistance, and workflow support when the task has clear inputs, review criteria, and human ownership.",
-                steps: ["Frame", "Generate", "Review", "Apply"],
-                optimize: "Useful acceleration without losing accuracy, confidentiality controls, source grounding, or accountability.",
-                tools: "Prompt frameworks, evaluation rubrics, proposal-only AI flows, source checks, structured outputs, and human approval gates.",
-                evidence: "Requirement coverage, factual grounding, review findings, correction rates, and time saved after quality control."
-            },
-            lms: {
-                label: "LMS & Content Operations",
-                title: "Connect content ownership with delivery, tracking, and support.",
-                summary: "I design processes for publishing, enrollment, reporting, credentials, content updates, user support, and data movement across the learning technology stack.",
-                steps: ["Publish", "Deliver", "Track", "Support"],
-                optimize: "Reliable delivery, cleaner data, clearer ownership, easier support, and traceable content updates.",
-                tools: "LMS platforms, reporting exports, spreadsheets, Salesforce-linked processes, xAPI concepts, credentialing tools, and documentation.",
-                evidence: "Completion data, support trends, data quality, content status, audit history, and stakeholder reporting needs."
-            },
-            documentation: {
-                label: "Documentation & Improvement",
-                title: "Keep the system understandable after launch.",
-                summary: "I use versioning, source-of-truth documents, change logs, maintenance guides, analytics, and feedback loops so content and workflows can evolve without losing context.",
-                steps: ["Document", "Measure", "Review", "Improve"],
-                optimize: "Continuity, easier maintenance, cleaner handoffs, evidence-based updates, and less dependency on individual memory.",
-                tools: "Version control, maintenance docs, source libraries, dashboards, analytics, feedback records, and release notes.",
-                evidence: "Change history, content freshness, recurring issues, usage data, stakeholder feedback, and improvement decisions."
-            }
+            design: {label:"Learning Design",title:"Turn a request into a clear learning plan.",summary:"I use structured intake, analysis, objectives, scope decisions, SME review, and evidence planning to keep the solution tied to performance rather than content volume.",steps:["Intake","Analysis","Design","Review"],optimize:"Clear scope, useful objectives, realistic practice, and fewer late-stage changes.",tools:"Design documents, source libraries, SME review cycles, project boards, templates, and structured decision records.",evidence:"Requirement coverage, review history, learner needs, stakeholder decisions, and downstream performance data."},
+            development: {label:"Learning Development",title:"Make development repeatable without flattening the experience.",summary:"I use reusable templates, components, code patterns, asset libraries, QA steps, and versioned source content so development stays consistent and maintainable.",steps:["Prototype","Build","QA","Release"],optimize:"Consistency, accessibility, maintainability, faster iteration, and fewer one-off rebuilds.",tools:"Articulate, Adobe tools, HTML, CSS, JavaScript, reusable components, asset libraries, and validation checklists.",evidence:"QA findings, reuse, development time, maintenance effort, learner behavior, and defect trends."},
+            automation: {label:"Work Automation",title:"Automate repeatable mechanics and keep judgment human.",summary:"I use scripts and workflow tools to reduce repetitive reporting, data movement, file handling, and administrative work while keeping review points visible.",steps:["Map","Automate","Verify","Monitor"],optimize:"Fewer manual steps, lower error risk, clearer handoffs, and time returned to design work.",tools:"Python, spreadsheets, browser automation, APIs when available, task systems, and validation logs.",evidence:"Time saved, reduced duplicate entry, error rates, exception handling, and maintainability."},
+            ai: {label:"AI Integration",title:"Use AI inside a controlled workflow, not as an unchecked shortcut.",summary:"I use AI for drafting, analysis, evaluation, code assistance, and workflow support when the task has clear inputs, review criteria, and human ownership.",steps:["Frame","Generate","Review","Apply"],optimize:"Useful acceleration without losing accuracy, confidentiality controls, source grounding, or accountability.",tools:"Prompt frameworks, evaluation rubrics, proposal-only AI flows, source checks, structured outputs, and human approval gates.",evidence:"Requirement coverage, factual grounding, review findings, correction rates, and time saved after quality control."},
+            lms: {label:"LMS & Content Operations",title:"Connect content ownership with delivery, tracking, and support.",summary:"I design processes for publishing, enrollment, reporting, credentials, content updates, user support, and data movement across the learning technology stack.",steps:["Publish","Deliver","Track","Support"],optimize:"Reliable delivery, cleaner data, clearer ownership, easier support, and traceable content updates.",tools:"LMS platforms, reporting exports, spreadsheets, Salesforce-linked processes, xAPI concepts, credentialing tools, and documentation.",evidence:"Completion data, support trends, data quality, content status, audit history, and stakeholder reporting needs."},
+            documentation: {label:"Documentation & Improvement",title:"Keep the system understandable after launch.",summary:"I use versioning, source-of-truth documents, change logs, maintenance guides, analytics, and feedback loops so content and workflows can evolve without losing context.",steps:["Document","Measure","Review","Improve"],optimize:"Continuity, easier maintenance, cleaner handoffs, evidence-based updates, and less dependency on individual memory.",tools:"Version control, maintenance docs, source libraries, dashboards, analytics, feedback records, and release notes.",evidence:"Change history, content freshness, recurring issues, usage data, stakeholder feedback, and improvement decisions."}
         };
 
         const flowTabs = document.querySelectorAll(".refresh-tab[data-flow]");
