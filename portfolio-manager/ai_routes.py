@@ -43,6 +43,7 @@ def generate():
     user_goal = request.form.get("user_goal", "")
     provider_ack = request.form.get("provider_ack") == "on"
     authority_ack = request.form.get("authority_ack") == "on"
+    sensitive_ack = request.form.get("sensitive_ack") == "on"
 
     def render_with_error(message: str, preflight=None):
         flash(message, "error")
@@ -68,7 +69,7 @@ def generate():
     if len(user_goal) > MAX_GOAL_CHARS:
         return render_with_error(f"Goal/context is too long. Keep it under {MAX_GOAL_CHARS:,} characters.")
     if not provider_ack:
-        return render_with_error("Confirm that you understand the pasted text will be sent to the configured AI provider.")
+        return render_with_error("Confirm that you understand the entered text/context will be sent to the configured AI provider.")
     if not authority_ack:
         return render_with_error("Confirm that you are authorized to send this text and have removed secrets or credentials.")
 
@@ -77,6 +78,13 @@ def generate():
         labels = ", ".join(preflight["blocked"])
         return render_with_error(
             f"Local safety preflight blocked this request because it appears to contain {labels}. Remove that secret/credential first.",
+            preflight=preflight,
+        )
+
+    if preflight["warnings"] and not sensitive_ack:
+        labels = ", ".join(preflight["warnings"])
+        return render_with_error(
+            f"Local preflight noticed potentially sensitive markers ({labels}). Review the source below. If you are still authorized to send it, check the additional acknowledgement and submit again.",
             preflight=preflight,
         )
 
