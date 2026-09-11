@@ -223,6 +223,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "META_DESCRIPTION": esc(project["summary"]),
         "PAGE_TITLE": esc(f"{project['title']} | Haley Reeder"),
         "CSS_PATH": esc(relative_href(final_output, "portfolio/css/styles.css")),
+        "REFRESH_CSS_PATH": esc(relative_href(final_output, "portfolio/css/portfolio-refresh.css")),
         "HOME_PATH": esc(relative_href(final_output, "portfolio/index.html")),
         "ABOUT_PATH": esc(relative_href(final_output, "portfolio/about/index.html")),
         "PROJECTS_PATH": esc(relative_href(final_output, "portfolio/projects/index.html")),

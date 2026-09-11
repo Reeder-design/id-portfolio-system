@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <!-- PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE -->
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{META_DESCRIPTION}}">
     <title>{{PAGE_TITLE}}</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{CSS_PATH}}">
+    <link rel="stylesheet" href="{{REFRESH_CSS_PATH}}">
 </head>
-
 <body>
     <header class="site-header">
         <div class="container nav-container">
@@ -30,97 +26,95 @@
     </header>
 
     <main>
-        <section class="project-hero">
+        <section class="project-hero refresh-hero">
             <div class="container">
-                <nav class="breadcrumbs" aria-label="Breadcrumb">
-                    {{BREADCRUMBS}}
-                </nav>
-
-                <div class="project-hero-content">
-                    <p class="eyebrow">{{CATEGORY_LABEL}}</p>
-                    <h1>{{TITLE}}</h1>
-                    <p class="body-large">{{SUMMARY}}</p>
-                    <div class="tag-row">{{TAGS}}</div>
-                    <div class="button-row" style="margin-top: 32px;">
-                        {{PRIMARY_ACTION}}
-                        <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">{{BREADCRUMBS}}</nav>
+                <div class="refresh-hero-grid">
+                    <div class="project-hero-content refresh-hero-copy">
+                        <p class="eyebrow">{{CATEGORY_LABEL}}</p>
+                        <h1>{{TITLE}}</h1>
+                        <p class="body-large">{{SUMMARY}}</p>
+                        <div class="tag-row">{{TAGS}}</div>
+                        <div class="button-row" style="margin-top: 32px;">
+                            {{PRIMARY_ACTION}}
+                            <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="project-summary">
-                    <div class="project-summary-item">
-                        <h3>My Role</h3>
-                        <p>{{ROLE}}</p>
-                    </div>
-                    <div class="project-summary-item">
-                        <h3>Audience</h3>
-                        <p>{{AUDIENCE}}</p>
-                    </div>
-                    <div class="project-summary-item">
-                        <h3>Tools</h3>
-                        <p>{{TOOLS_SUMMARY}}</p>
-                    </div>
-                    <div class="project-summary-item">
-                        <h3>Project Type</h3>
-                        <p>{{PROJECT_TYPE}}</p>
-                    </div>
+                    <aside class="refresh-visual-card" aria-label="Project snapshot">
+                        <p class="eyebrow">Project Snapshot</p>
+                        <h2>{{PROJECT_TYPE}}</h2>
+                        <div class="refresh-mini-grid">
+                            <div class="refresh-mini-tile"><strong>Role</strong><span>{{ROLE}}</span></div>
+                            <div class="refresh-mini-tile"><strong>Audience</strong><span>{{AUDIENCE}}</span></div>
+                            <div class="refresh-mini-tile"><strong>Tools</strong><span>{{TOOLS_SUMMARY}}</span></div>
+                            <div class="refresh-mini-tile"><strong>Status</strong><span>{{STATUS_LABEL}}</span></div>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
 
+        <nav class="case-nav-shell" aria-label="Project sections">
+            <div class="container case-nav">
+                <a href="#challenge">Challenge</a>
+                <a href="#audience">Audience</a>
+                <a href="#goals">Goals</a>
+                <a href="#approach">Approach</a>
+                <a href="#development">Development</a>
+                <a href="#results">Results</a>
+            </div>
+        </nav>
+
         <section class="section">
             <div class="container case-study-layout">
                 <div class="case-study-content">
-                    <section>
+                    <section class="case-anchor" id="challenge">
                         <p class="eyebrow">The Challenge</p>
                         <h2>What problem was I trying to solve?</h2>
                         <p>{{BUSINESS_NEED}}</p>
                     </section>
 
-                    <section>
+                    <section class="case-anchor" id="audience">
                         <p class="eyebrow">Audience</p>
                         <h2>Who was this for?</h2>
                         <p>{{AUDIENCE}}</p>
                     </section>
 
-                    <section>
+                    <section class="case-anchor" id="goals">
                         <p class="eyebrow">Learning Goals</p>
                         <h2>What should learners be able to do?</h2>
                         <ul>{{LEARNING_OBJECTIVES}}</ul>
                     </section>
 
-                    <section>
+                    <section class="case-anchor" id="approach">
                         <p class="eyebrow">Design Approach</p>
-                        <h2>How I approached it.</h2>
+                        <h2>How I approached it</h2>
                         <p>{{DESIGN_APPROACH}}</p>
                     </section>
 
-                    <section>
+                    <section class="case-anchor" id="development">
                         <p class="eyebrow">Development</p>
-                        <h2>How I built it.</h2>
+                        <h2>How I built it</h2>
                         <p>{{DEVELOPMENT_PROCESS}}</p>
                     </section>
 
                     {{ASSETS_SECTION}}
 
-                    <section>
+                    <section class="case-anchor" id="results">
                         <p class="eyebrow">Results</p>
                         <h2>What came out of it?</h2>
-                        <div class="results-card">
-                            <ul>{{OUTCOMES}}</ul>
-                        </div>
+                        <div class="results-card"><ul>{{OUTCOMES}}</ul></div>
                     </section>
 
                     {{CONFIDENTIALITY_NOTE}}
 
                     <section>
                         <div class="cta">
-                            <p class="eyebrow" style="color: var(--mint-leaf);">Keep Exploring</p>
+                            <p class="eyebrow">Keep Exploring</p>
                             <h2>{{CTA_HEADING}}</h2>
                             <div class="button-row">
                                 {{PRIMARY_ACTION_CTA}}
-                                <a class="btn btn-secondary" href="{{BACK_PATH}}"
-                                    style="color: white; border-color: white;">{{BACK_LABEL}}</a>
+                                <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
                             </div>
                         </div>
                     </section>
@@ -144,12 +138,30 @@
             <p>© Haley Reeder</p>
             <div class="footer-links">
                 <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank"
-                    rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href="{{RESUME_PATH}}" target="_blank">Résumé</a>
             </div>
         </div>
     </footer>
-</body>
 
+    <script>
+        const caseLinks = Array.from(document.querySelectorAll('.case-nav a'));
+        const caseSections = caseLinks
+            .map((link) => document.querySelector(link.getAttribute('href')))
+            .filter(Boolean);
+
+        if ('IntersectionObserver' in window && caseSections.length) {
+            const observer = new IntersectionObserver((entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                if (!visible) return;
+                caseLinks.forEach((link) => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${visible.target.id}`);
+                });
+            }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.1, 0.35, 0.6] });
+            caseSections.forEach((section) => observer.observe(section));
+        }
+    </script>
+</body>
 </html>

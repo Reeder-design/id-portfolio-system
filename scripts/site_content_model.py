@@ -21,201 +21,206 @@ def section_field(section: str, element_pattern: str) -> str:
     )
 
 
+def class_element(tag: str, class_name: str) -> str:
+    """Match an element containing an approved class token plus optional classes or attributes."""
+    return rf"<{tag}\b[^>]*\bclass=\"[^\"]*\b{re.escape(class_name)}\b[^\"]*\"[^>]*>"
+
+
 LOCATORS: dict[str, dict[str, str]] = {
     "home": {
         "hero_title_lead": (
-            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"hero\">.*?<h1>\s*)"
+            rf"(?P<prefix><!--[^>]*HERO[^>]*-->.*?{class_element('section', 'hero')}.*?<h1>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*<span class=\"hero-accent\">)"
         ),
         "hero_title_accent": (
-            r"(?P<prefix><!--[^>]*HERO[^>]*-->.*?<section class=\"hero\">.*?<span class=\"hero-accent\">\s*)"
+            rf"(?P<prefix><!--[^>]*HERO[^>]*-->.*?{class_element('section', 'hero')}.*?<span class=\"hero-accent\">\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</span>)"
         ),
         "hero_copy": section_field(
             "HERO",
-            r".*?<p class=\"hero-copy\">\s*",
+            rf".*?{class_element('p', 'hero-copy')}\s*",
         ),
         "featured_heading": section_field(
             "INTERACTIVE FEATURED WORK GALLERY",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "featured_intro": section_field(
             "INTERACTIVE FEATURED WORK GALLERY",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
     },
     "about": {
         "hero_title": section_field(
             "PROFESSIONAL INTRO",
-            r".*?<section class=\"page-hero\">.*?<h1>\s*",
+            rf".*?{class_element('section', 'page-hero')}.*?<h1>\s*",
         ),
         "hero_intro_primary": section_field(
             "PROFESSIONAL INTRO",
-            r".*?<p class=\"body-large\">\s*",
+            rf".*?{class_element('p', 'body-large')}\s*",
         ),
         "hero_intro_secondary": section_field(
             "PROFESSIONAL INTRO",
-            r".*?<p class=\"body-large\">.*?</p>.*?<p>\s*",
+            rf".*?{class_element('p', 'body-large')}.*?</p>.*?<p>\s*",
         ),
         "approach_heading": section_field(
             "L&D APPROACH",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "approach_intro": section_field(
             "L&D APPROACH",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
         "thread_heading": section_field(
             "COMMON THREAD",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "thread_intro": section_field(
             "COMMON THREAD",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
     },
     "projects": {
         "hero_title": section_field(
             "PAGE HERO",
-            r".*?<div class=\"projects-intro\">.*?<h1>\s*",
+            rf".*?{class_element('div', 'projects-intro')}.*?<h1>\s*",
         ),
         "hero_intro": section_field(
             "PAGE HERO",
-            r".*?<div class=\"projects-intro\">.*?<p class=\"body-large\">\s*",
+            rf".*?{class_element('div', 'projects-intro')}.*?{class_element('p', 'body-large')}\s*",
         ),
         "family_heading": section_field(
             "PROJECT FAMILIES",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "family_intro": section_field(
             "PROJECT FAMILIES",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
     },
     "instructional-design": {
         "hero_title": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<h1>\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?<h1>\s*",
         ),
         "hero_intro": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<p class=\"body-large\">\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?{class_element('p', 'body-large')}\s*",
         ),
         "overview_heading": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>\s*",
         ),
         "overview_body_one": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>\s*",
         ),
         "overview_body_two": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
         ),
         "examples_heading": section_field(
             "INSTRUCTIONAL DESIGN AREAS",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "examples_intro": section_field(
             "INSTRUCTIONAL DESIGN AREAS",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
     },
     "ai-training-and-evaluation": {
         "hero_title": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<h1>\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?<h1>\s*",
         ),
         "hero_intro_primary": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<p class=\"body-large\">\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?{class_element('p', 'body-large')}\s*",
         ),
         "hero_intro_secondary": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<p class=\"body-large\">.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?{class_element('p', 'body-large')}.*?</p>.*?<p>\s*",
         ),
         "overview_heading": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>\s*",
         ),
         "overview_body_one": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>\s*",
         ),
         "overview_body_two": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
         ),
         "overview_body_three": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>.*?</p>.*?<p>\s*",
         ),
     },
     "workflows": {
         "hero_title": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<h1>\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?<h1>\s*",
         ),
         "hero_intro": section_field(
             "HERO",
-            r".*?<div class=\"parent-page-hero-content\">.*?<p class=\"body-large\">\s*",
+            rf".*?{class_element('div', 'parent-page-hero-content')}.*?{class_element('p', 'body-large')}\s*",
         ),
         "overview_heading": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>\s*",
         ),
         "overview_body_one": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>\s*",
         ),
         "overview_body_two": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>\s*",
         ),
         "overview_body_three": section_field(
             "OVERVIEW",
-            r".*?<div class=\"parent-overview-copy\">.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>.*?</p>.*?<p>\s*",
+            rf".*?{class_element('div', 'parent-overview-copy')}.*?<h2>.*?</h2>.*?<p>.*?</p>.*?<p>.*?</p>.*?<p>\s*",
         ),
         "areas_heading": section_field(
             "WORKFLOW AREAS",
-            r".*?<div class=\"section-heading\">.*?<h2>\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>\s*",
         ),
         "areas_intro": section_field(
             "WORKFLOW AREAS",
-            r".*?<div class=\"section-heading\">.*?<h2>.*?</h2>.*?<p class=\"body-large reading-width\">\s*",
+            rf".*?{class_element('div', 'section-heading')}.*?<h2>.*?</h2>.*?{class_element('p', 'body-large')}\s*",
         ),
     },
     "contact": {
         "hero_title": (
-            r"(?P<prefix><section class=\"page-hero\">.*?<h1>\s*)"
+            rf"(?P<prefix>{class_element('section', 'page-hero')}.*?<h1>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</h1>)"
         ),
         "hero_intro": (
-            r"(?P<prefix><section class=\"page-hero\">.*?<p class=\"body-large reading-width\">\s*)"
+            rf"(?P<prefix>{class_element('section', 'page-hero')}.*?{class_element('p', 'body-large')}\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</p>)"
         ),
         "connect_heading": (
-            r"(?P<prefix><div class=\"contact-card\">.*?<h2>\s*)"
+            rf"(?P<prefix>{class_element('div', 'contact-card')}.*?<h2>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</h2>)"
         ),
         "connect_intro": (
-            r"(?P<prefix><div class=\"contact-card\">.*?<h2>.*?</h2>.*?<p>\s*)"
+            rf"(?P<prefix>{class_element('div', 'contact-card')}.*?<h2>.*?</h2>.*?<p>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</p>)"
         ),
         "form_heading": (
-            r"(?P<prefix><div class=\"contact-form\">.*?<h2>\s*)"
+            rf"(?P<prefix>{class_element('div', 'contact-form')}.*?<h2>\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</h2>)"
         ),
         "form_intro": (
-            r"(?P<prefix><div class=\"contact-form\">.*?<p class=\"text-muted\">\s*)"
+            rf"(?P<prefix>{class_element('div', 'contact-form')}.*?{class_element('p', 'text-muted')}\s*)"
             r"(?P<content>.*?)"
             r"(?P<suffix>\s*</p>)"
         ),

@@ -50,7 +50,7 @@
                 <p class="eyebrow">Quick Actions</p>
                 <div class="action-title-row">
                     <h2>Portfolio Maintenance</h2>
-                    <button class="inline-help" type="button" data-help-key="validation" data-help-label="Portfolio Maintenance">?</button>
+                    <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Maintenance">?</button>
                 </div>
                 <p class="section-copy">Run maintenance actions locally. Content tools do not publish automatically; Git workflow remains review-driven and has no merge control.</p>
 
@@ -65,7 +65,6 @@
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="action" value="refresh_docs">
                         <button class="btn btn-secondary" type="submit">Refresh Docs</button>
-                        <button class="inline-help" type="button" data-help-key="refresh-docs" data-help-label="Refresh Docs">?</button>
                     </form>
                 </div>
 
