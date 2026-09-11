@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Proposal | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">AI Assistance · {{ record.task_label }}</p>
+                <h1>{{ record.result.headline }}</h1>
+                <p class="hero-copy">Private proposal created {{ record.created_at }} with {{ record.model }}. Review it before copying anything into a portfolio editor.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">Back to AI Workspace</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="ai-boundary-banner compact">
+            <div>
+                <p class="eyebrow">Proposal only</p>
+                <h2>No portfolio files were changed.</h2>
+                <p>Use this as reviewable drafting support. Copy only the parts you approve into the appropriate structured editor, then use the normal validation and Git workflow.</p>
+            </div>
+            <button class="inline-help" type="button" data-help-key="ai-proposal" data-help-label="Reviewing AI Proposals">?</button>
+        </section>
+
+        <main class="ai-result-grid">
+            {% if record.result.proposal %}
+            <section class="dashboard-card ai-result-card full-width">
+                <div class="ai-result-heading">
+                    <div><p class="eyebrow">Draft output</p><h2>Proposed Copy</h2></div>
+                    <button class="btn btn-secondary" type="button" data-copy-target="proposal-copy">Copy Proposal</button>
+                </div>
+                <div class="ai-copy-block" id="proposal-copy">{{ record.result.proposal }}</div>
+            </section>
+            {% endif %}
+
+            {% if record.result.analysis %}
+            <section class="dashboard-card ai-result-card">
+                <p class="eyebrow">Reasoning summary</p>
+                <h2>Analysis</h2>
+                <p class="ai-readable">{{ record.result.analysis }}</p>
+            </section>
+            {% endif %}
+
+            {% if record.result.suggested_category or record.result.suggested_subcategory or record.result.suggested_tags %}
+            <section class="dashboard-card ai-result-card">
+                <p class="eyebrow">Portfolio organization</p>
+                <h2>Suggested Placement</h2>
+                <dl class="ai-placement-list">
+                    <div><dt>Category</dt><dd>{{ record.result.suggested_category or 'No recommendation' }}</dd></div>
+                    <div><dt>Subcategory</dt><dd>{{ record.result.suggested_subcategory or 'No recommendation' }}</dd></div>
+                </dl>
+                {% if record.result.suggested_tags %}
+                <div class="ai-tag-row">{% for tag in record.result.suggested_tags %}<span>{{ tag }}</span>{% endfor %}</div>
+                {% endif %}
+            </section>
+            {% endif %}
+
+            {% if record.result.supported_claims %}
+            <section class="dashboard-card ai-result-card">
+                <p class="eyebrow">Evidence</p>
+                <h2>Source-Supported Claims</h2>
+                <ul class="ai-readable-list">{% for item in record.result.supported_claims %}<li>{{ item }}</li>{% endfor %}</ul>
+            </section>
+            {% endif %}
+
+            {% if record.result.unsupported_or_missing %}
+            <section class="dashboard-card ai-result-card">
+                <p class="eyebrow">Evidence gaps</p>
+                <h2>Missing / Unsupported</h2>
+                <ul class="ai-readable-list">{% for item in record.result.unsupported_or_missing %}<li>{{ item }}</li>{% endfor %}</ul>
+            </section>
+            {% endif %}
+
+            {% if record.result.warnings or record.result.local_preflight_warnings %}
+            <section class="dashboard-card ai-result-card ai-warning-card">
+                <p class="eyebrow">Human review required</p>
+                <h2>Warnings</h2>
+                <ul class="ai-readable-list">
+                    {% for item in record.result.local_preflight_warnings %}<li>Local preflight: {{ item }}</li>{% endfor %}
+                    {% for item in record.result.warnings %}<li>{{ item }}</li>{% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            <section class="dashboard-card ai-source-card full-width">
+                <details>
+                    <summary>Show the private source text used for this proposal</summary>
+                    <p class="field-help">This source is stored only in the Git-ignored local proposal record so you can audit what the AI saw.</p>
+                    <pre class="ai-source-text">{{ record.source_text }}</pre>
+                    {% if record.user_goal %}<h3>Goal / context</h3><pre class="ai-source-text">{{ record.user_goal }}</pre>{% endif %}
+                </details>
+            </section>
+
+            <section class="dashboard-card ai-result-card full-width ai-next-step-card">
+                <div>
+                    <p class="eyebrow">Next step</p>
+                    <h2>Approve by using it—not by clicking an AI Apply button.</h2>
+                    <p>Copy the approved wording into General Page Content or Project Content, save through that deterministic editor, run validation, then use Git Workflow. This keeps AI suggestions separate from actual portfolio writes.</p>
+                </div>
+                <div class="button-row">
+                    <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">Open General Page Content</a>
+                    <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Open Project Content</a>
+                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.workflow') }}">Open Git Workflow</a>
+                </div>
+            </section>
+
+            <section class="ai-delete-row full-width">
+                <form method="post" action="{{ url_for('ai_assistant.remove_proposal', proposal_id=record.id) }}" data-confirm-action="ai-delete-proposal">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-secondary" type="submit">Delete Private Proposal</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+    <script src="{{ url_for('static', filename='ai-assistant.js') }}"></script>
+</body>
+</html>
