@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistance | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Portfolio Manager</p>
+                <h1>AI Assistance</h1>
+                <p class="hero-copy">Generate reviewable drafting, sanitization, analysis, placement, and project-summary proposals without giving AI permission to edit portfolio or Git files.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <section class="flash-stack">
+            {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+        </section>
+        {% endif %}
+        {% endwith %}
+
+        <section class="ai-boundary-banner">
+            <div>
+                <p class="eyebrow">Approval boundary</p>
+                <h2>AI proposes. You decide what gets used.</h2>
+                <p>Only text you deliberately paste into this page is sent to the configured AI provider. AI proposals are stored under the private Git-ignored <code>.portfolio-manager/ai-proposals/</code> workspace. This page cannot edit public HTML, structured portfolio data, Git branches, commits, or pull requests.</p>
+            </div>
+            <button class="inline-help" type="button" data-help-key="ai-assistance" data-help-label="AI Assistance Safety">?</button>
+        </section>
+
+        <main class="ai-layout">
+            <section class="dashboard-card ai-main-card">
+                <div class="ai-status-row">
+                    <div>
+                        <p class="eyebrow">Connection</p>
+                        <h2>{{ 'AI Ready' if settings.configured else 'AI Not Configured' }}</h2>
+                        <p class="section-copy">Provider: {{ settings.provider }} · Model: {{ settings.model }}</p>
+                    </div>
+                    <span class="ai-status-pill {{ 'ready' if settings.configured else 'offline' }}">{{ 'Configured' if settings.configured else 'Optional setup needed' }}</span>
+                </div>
+
+                {% if not settings.configured %}
+                <div class="ai-setup-note">
+                    <strong>To enable AI generation:</strong>
+                    <code>python portfolio-manager/configure-ai.py</code>
+                    <p>This adds the API key only to your local Git-ignored <code>.env</code>. Restart Portfolio Manager afterward. API usage is billed separately from your ChatGPT subscription.</p>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{{ url_for('ai_assistant.generate') }}" class="ai-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <fieldset class="ai-task-fieldset">
+                        <legend>1. Choose what you want AI to do</legend>
+                        <div class="ai-task-grid">
+                            {% for key, task in tasks.items() %}
+                            <label class="ai-task-card">
+                                <input type="radio" name="task" value="{{ key }}" {% if selected_task == key %}checked{% endif %}>
+                                <span class="ai-task-copy"><strong>{{ task.label }}</strong><small>{{ task.description }}</small></span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <div class="ai-field-block">
+                        <label for="source_text">2. Paste the source text or draft</label>
+                        <textarea id="source_text" name="source_text" rows="13" maxlength="{{ max_source_chars }}" placeholder="Paste only the text you intentionally want sent for this proposal..." required>{{ source_text }}</textarea>
+                        <div class="field-help-row"><span>Maximum {{ "{:,}".format(max_source_chars) }} characters.</span><span data-source-count>0 / {{ "{:,}".format(max_source_chars) }}</span></div>
+                    </div>
+
+                    <div class="ai-field-block">
+                        <label for="user_goal">3. Optional goal / context</label>
+                        <textarea id="user_goal" name="user_goal" rows="4" maxlength="{{ max_goal_chars }}" placeholder="Example: Keep this concise and first-person for my About page. Do not add metrics.">{{ user_goal }}</textarea>
+                        <p class="field-help">Use this for tone, audience, destination page, or constraints. It is sent with the source text.</p>
+                    </div>
+
+                    {% if preflight and preflight.warnings %}
+                    <div class="ai-warning-box">
+                        <strong>Local preflight noticed potentially sensitive markers:</strong>
+                        <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
+                        <p>This is a warning, not proof of confidentiality. Review the source before resubmitting.</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="ai-safety-checks">
+                        <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand the pasted text will be sent to the configured external AI provider.</span></label>
+                        <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this text and I have removed passwords, API keys, private keys, access tokens, and other secrets.</span></label>
+                    </div>
+
+                    <div class="ai-submit-row">
+                        <button class="btn btn-primary" type="submit" {% if not settings.configured %}disabled{% endif %}>Generate Private AI Proposal</button>
+                        <span>Nothing is applied to the portfolio automatically.</span>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="dashboard-card ai-side-card">
+                <p class="eyebrow">Safety notes</p>
+                <h2>Before you paste source material</h2>
+                <div class="ai-guidance-stack">
+                    <div><strong>Good fit</strong><p>Public-safe drafts, generalized project notes, portfolio copy, sanitized excerpts, or information you are authorized to send.</p></div>
+                    <div><strong>Do not send</strong><p>Passwords, credentials, private keys, customer secrets, restricted internal material, or proprietary/unreleased details you are not authorized to share with an external AI service.</p></div>
+                    <div><strong>Sanitize mode</strong><p>Helps draft a generalized public version, but it does not make confidential input safe to transmit in the first place and it does not guarantee publication safety.</p></div>
+                    <div><strong>Evidence rule</strong><p>The assistant is instructed not to invent metrics, tools, accomplishments, clients, products, or outcomes that are not supported by your source.</p></div>
+                </div>
+
+                <div class="ai-recent-header">
+                    <p class="eyebrow">Private history</p>
+                    <h2>Recent Proposals</h2>
+                </div>
+                {% if recent_proposals %}
+                <div class="ai-proposal-list">
+                    {% for item in recent_proposals %}
+                    <a class="ai-proposal-link" href="{{ url_for('ai_assistant.proposal', proposal_id=item.id) }}">
+                        <strong>{{ item.result.headline if item.result else item.task_label }}</strong>
+                        <span>{{ item.task_label }} · {{ item.created_at }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-note">No private AI proposals yet.</p>
+                {% endif %}
+            </aside>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+    <script src="{{ url_for('static', filename='ai-assistant.js') }}"></script>
+</body>
+</html>
