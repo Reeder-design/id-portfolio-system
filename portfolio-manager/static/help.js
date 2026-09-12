@@ -78,6 +78,8 @@
                 message = 'Push this feature branch to GitHub?\n\nThis sends committed branch changes to origin. Portfolio Manager blocks pushes to main and never force-pushes.';
             } else if (kind === 'git-create-pr') {
                 message = 'Create this pull request on GitHub?\n\nThis opens a review request from your feature branch into main. Portfolio Manager still cannot merge it.';
+            } else if (kind === 'ai-delete-proposal') {
+                message = 'Delete this private AI proposal?\n\nThis removes only the Git-ignored local proposal record. It does not change portfolio files, Git history, or anything already copied elsewhere.';
             }
 
             if (message && !window.confirm(message)) {

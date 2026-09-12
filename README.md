@@ -12,23 +12,23 @@ https://reeder-design.github.io/id-portfolio-system/
 - `portfolio/css/styles.css` — shared site styles and design system
 - `portfolio/projects/` — portfolio project pages and demos
 - `portfolio-data/` — structured project content, general-page content, taxonomy, schemas, and portfolio version source data
-- `portfolio-manager/` — local-only Flask dashboard for portfolio maintenance
+- `portfolio-manager/` — local-only Flask dashboard for portfolio maintenance, AI proposals, and guarded Git workflow
 - `templates/` — reusable HTML templates for generated portfolio pages
 - `design-system/` — reusable design-system resources
 - `scripts/` — project creation, rendering, documentation, maintenance, and validation scripts
-- `docs/` — maintenance docs, generated inventory/map/changelog, and version snapshots
+- `docs/` — maintenance docs, generated inventory/map/changelog, version snapshots, and AI-assistance documentation
 - `.github/workflows/` — automated validation and deployment
 
 Local-only Portfolio Manager credentials and runtime data are intentionally excluded from Git:
 
-- `.env` — local Flask secret and password hash
-- `.portfolio-manager/` — private requests, uploads, temporary files, and backups
+- `.env` — local Flask secret, password hash, and optional AI API key/model setting
+- `.portfolio-manager/` — private requests, uploads, temporary files, backups, and AI proposal history
 
 ## Portfolio Manager
 
 Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, and protects modifying forms with CSRF.
 
-Content-editing and asset actions change local files only. The dedicated Git Workflow can intentionally stage approved files, validate and commit on a feature branch, push that feature branch, and help open a pull request. It cannot commit or push `main`, force-push, stage blocked private paths, or merge a pull request.
+Content-editing and asset actions change local files only. AI Assistance creates private reviewable proposals only. The dedicated Git Workflow can intentionally stage approved files, validate and commit on a feature branch, push that feature branch, and help open a pull request. It cannot commit or push `main`, force-push, stage blocked private paths, or merge a pull request.
 
 From the repository root, activate the project virtual environment and install the dashboard dependency:
 
@@ -101,6 +101,52 @@ Every upload or replacement requires an explicit public-safe confirmation. Gener
 
 Private/reference source files belong in the Git-ignored `.portfolio-manager/` request workspace instead. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
 
+### AI Assistance
+
+The authenticated `/ai/` workspace adds an optional proposal-only AI layer for:
+
+- rewrite and polish
+- portfolio sanitization drafts
+- source-content analysis
+- category/subcategory/tag suggestions
+- project-summary drafting
+
+AI remains separated from deterministic editing. It does not directly write `portfolio/`, `portfolio-data/`, generated docs, or Git state.
+
+Before sending a request:
+
+- only source/context deliberately entered in the AI workspace is used
+- the repo's public portfolio taxonomy is included as context for placement suggestions
+- private requests, uploads, project pages, and arbitrary repository files are not automatically sent
+- local preflight blocks several obvious secret/credential formats
+- the user must confirm external-provider awareness and authorization to send the text
+
+AI proposals are stored only under:
+
+```text
+.portfolio-manager/ai-proposals/
+```
+
+The review page separates generated copy, analysis, placement/tags, source-supported claims, missing/unsupported claims, and warnings. There is intentionally no Apply-to-site route. Approved wording is copied into General Page Content or Project Content and saved through those existing deterministic editors.
+
+AI is optional. Configure it locally with:
+
+```bash
+python portfolio-manager/configure-ai.py
+```
+
+The helper adds the API key/model only to the Git-ignored `.env` and preserves existing Portfolio Manager login settings. Restart Flask afterward.
+
+Disable AI locally with:
+
+```bash
+python portfolio-manager/configure-ai.py --disable
+```
+
+The default model is currently `gpt-5.6-terra`. The implementation uses the OpenAI Responses API over the fixed HTTPS endpoint with Python's standard-library HTTP client, avoiding a new SDK dependency and preserving compatibility with the existing local Python environment.
+
+See `docs/ai-assistance.md` for the full provider, privacy, source-fidelity, and validation design.
+
 ### Guarded Git Workflow
 
 The authenticated `/git/` interface provides a review-driven Git workflow without exposing arbitrary terminal commands.
@@ -143,7 +189,7 @@ The `main` branch is the approved source for the live portfolio.
 When portfolio changes are merged into `main`:
 
 1. GitHub Actions checks out the repository.
-2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, Git workflow guardrails, and Portfolio Manager safety rules are validated.
+2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, Git workflow guardrails, AI-assistance guardrails, and Portfolio Manager safety rules are validated.
 3. If validation passes, the contents of `portfolio/` are uploaded.
 4. GitHub Pages deploys the latest approved version.
 
@@ -226,11 +272,12 @@ python3 scripts/check-new-project.py
 python3 scripts/check-docs.py
 python3 scripts/update-docs.py --check
 python3 scripts/check-git-workflow.py
+python3 scripts/check-ai-assistance.py
 python3 scripts/check-portfolio-manager.py
 python3 scripts/check-portfolio-manager-runtime.py
 ```
 
-These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Git workflow safety boundaries, Portfolio Manager security requirements, and authenticated dashboard/Asset Library/general-page/Git-workflow rendering.
+These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Git workflow safety boundaries, AI-assistance safety boundaries, Portfolio Manager security requirements, and authenticated dashboard/Asset Library/general-page/Git-workflow/AI-workspace rendering.
 
 ## Agent Guidance
 

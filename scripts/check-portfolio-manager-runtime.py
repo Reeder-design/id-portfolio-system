@@ -13,6 +13,8 @@ sys.path.insert(0, str(MANAGER_ROOT))
 # session directly and never performs a password login.
 os.environ["PORTFOLIO_MANAGER_SECRET_KEY"] = "ci-smoke-test-key"
 os.environ["PORTFOLIO_MANAGER_PASSWORD_HASH"] = "ci-smoke-test-placeholder"
+os.environ.pop("OPENAI_API_KEY", None)
+os.environ.pop("PORTFOLIO_MANAGER_AI_MODEL", None)
 
 import app as manager_app  # noqa: E402
 
@@ -30,6 +32,7 @@ def main() -> int:
         ("/assets", "Asset Library"),
         ("/site-content", "General Page Content"),
         ("/git/", "Git Workflow"),
+        ("/ai/", "AI Assistance"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -51,6 +54,7 @@ def main() -> int:
     require(b"Open Asset Library" in dashboard.data, "Dashboard must expose the Asset Library.", errors)
     require(b"Open General Page Content" in dashboard.data, "Dashboard must expose general page content management.", errors)
     require(b"Open Git Workflow" in dashboard.data, "Dashboard must expose the guarded Git workflow.", errors)
+    require(b"Open AI Assistance" in dashboard.data, "Dashboard must expose proposal-only AI assistance.", errors)
 
     asset_library = client.get("/assets")
     require(asset_library.status_code == 200, "Authenticated Asset Library must render.", errors)
@@ -76,6 +80,12 @@ def main() -> int:
     require(b"Merge is intentionally outside Portfolio Manager" in git_workflow.data, "Git Workflow must show the no-merge safety boundary.", errors)
     require(b"Review Changed Files" in git_workflow.data, "Git Workflow must expose explicit file review before staging.", errors)
     require(b"Run Validation & Commit" in git_workflow.data, "Git Workflow must expose validation-gated commit control.", errors)
+
+    ai_workspace = client.get("/ai/")
+    require(ai_workspace.status_code == 200, "Authenticated AI Assistance workspace must render without an API key.", errors)
+    require(b"AI Not Configured" in ai_workspace.data, "AI workspace must fail open safely when optional AI is not configured.", errors)
+    require(b"AI proposes. You decide what gets used." in ai_workspace.data, "AI workspace must show the proposal-only approval boundary.", errors)
+    require(b"provider_ack" in ai_workspace.data and b"authority_ack" in ai_workspace.data, "AI workspace must render explicit provider and authorization acknowledgements.", errors)
 
     if errors:
         print("Portfolio Manager runtime validation failed:")

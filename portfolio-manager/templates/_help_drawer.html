@@ -15,6 +15,7 @@
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
             <button type="button" data-help-key="maintenance">Portfolio maintenance controls</button>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
+            <button type="button" data-help-key="ai-assistance">AI assistance safety</button>
             <button type="button" data-help-key="git-workflow">Git workflow safety</button>
             <button type="button" data-help-key="general-content">General page editing</button>
             <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
@@ -25,12 +26,13 @@
 <div class="help-backdrop" data-help-backdrop hidden></div>
 
 <template data-help-template="maintenance">
-    <p><strong>Portfolio Maintenance</strong> is the main control area for editing, checking, documenting, and preparing portfolio changes for review.</p>
+    <p><strong>Portfolio Maintenance</strong> is the main control area for editing, checking, documenting, AI drafting, and preparing portfolio changes for review.</p>
     <p><strong>Run Full Validation:</strong> read-only health check. It changes nothing. Use it after meaningful edits and before committing.</p>
     <p><strong>Refresh Docs:</strong> rebuilds maintenance records such as the content inventory, portfolio map, and changelog. It does not rewrite public pages.</p>
     <p><strong>Open Project Content:</strong> edits structured project records. Standard pages can then be regenerated from the shared template; custom interactive pages are protected from template overwrite.</p>
     <p><strong>Open General Page Content:</strong> edits approved text fields on managed public pages. Saving updates the structured copy and exact approved HTML locations locally, then validates and rolls back if needed.</p>
     <p><strong>Open Asset Library:</strong> manages files intentionally approved for the public portfolio. Files under <code>portfolio/</code> may become public after a future merge, so never place private source material there.</p>
+    <p><strong>Open AI Assistance:</strong> creates private proposals for rewriting, sanitization, source analysis, placement/tags, and project summaries. AI cannot apply changes to the site.</p>
     <p><strong>Open Git Workflow:</strong> handles the guarded path from local changes to a pull request: review diff → stage → validate + commit → push feature branch → open PR. It cannot merge.</p>
     <p><strong>Version Release:</strong> records an intentional patch, minor, or major portfolio-system release. Use it near the end of a meaningful release, not for every edit.</p>
     <p><strong>Normal next step:</strong> make the change in the appropriate editor → preview it → run Full Validation → review Git changes → use Git Workflow → review the PR → merge only when you intentionally approve publication.</p>
@@ -38,7 +40,7 @@
 
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> runs the same portfolio checks used by the GitHub pull-request workflow.</p>
-    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, Git guardrails, and Portfolio Manager security/runtime rules.</p>
+    <p><strong>It reads:</strong> public HTML, structured project data, structured general-page copy, templates, generator rules, version documentation, generated docs, Git guardrails, AI-assistance guardrails, and Portfolio Manager security/runtime rules.</p>
     <p><strong>It changes:</strong> nothing. Validation is read-only.</p>
     <p><strong>Next step:</strong> fix any failures before committing. If it passes, review your changes and continue through Git Workflow.</p>
 </template>
@@ -61,8 +63,9 @@
 <template data-help-template="requests">
     <p><strong>Requests</strong> are private work orders, not automatic edits.</p>
     <p>They are stored under the Git-ignored <code>.portfolio-manager/</code> workspace along with uploaded reference files.</p>
+    <p>Request files are not automatically sent to AI Assistance. AI receives only text you deliberately submit from its own workspace.</p>
     <p><strong>Use them when:</strong> you want to capture an idea, private/reference source material, or future edit without changing the portfolio yet.</p>
-    <p><strong>Next step:</strong> return later and use the appropriate content, asset, or development workflow when you are ready to make the actual change.</p>
+    <p><strong>Next step:</strong> return later and use the appropriate content, asset, AI, or development workflow when you are ready to make the actual change.</p>
 </template>
 
 <template data-help-template="create-project">
@@ -133,6 +136,21 @@
     <p><strong>Next step:</strong> visually confirm the replacement and review the Git diff.</p>
 </template>
 
+<template data-help-template="ai-assistance">
+    <p><strong>AI Assistance</strong> creates private proposals for Rewrite & Polish, Sanitize for Portfolio, Analyze Source Content, Suggest Placement & Tags, and Draft Project Summary.</p>
+    <p><strong>What is sent:</strong> source/context you deliberately enter in the AI workspace plus the repo's public portfolio taxonomy. Project pages, private requests, uploaded source files, and arbitrary repository files are not automatically sent.</p>
+    <p><strong>Before sending:</strong> local preflight blocks several obvious secret formats. You must confirm that you understand the external-provider boundary and that you are authorized to send the text. Sensitive markers such as confidential, proprietary, NDA, internal-only, or unreleased require a second explicit acknowledgement.</p>
+    <p><strong>What AI cannot do:</strong> edit portfolio files, edit structured JSON, stage/commit/push Git changes, merge, or publish. Proposals stay under <code>.portfolio-manager/ai-proposals/</code>.</p>
+    <p><strong>Next step:</strong> review the proposal, copy only what you approve into the appropriate deterministic editor, save there, preview, and run Full Validation.</p>
+</template>
+
+<template data-help-template="ai-proposal">
+    <p><strong>AI Proposal Review</strong> separates proposed copy, analysis, placement/tags, source-supported claims, evidence gaps, and warnings.</p>
+    <p>The exact source text is retained in the private local proposal record so you can audit what the AI saw.</p>
+    <p>Approval means copying what you accept into General Page Content or Project Content. There is intentionally no AI Apply-to-site action.</p>
+    <p><strong>Next step:</strong> edit as needed, copy approved wording into the correct editor, then use the normal preview → validation → Git Workflow path.</p>
+</template>
+
 <template data-help-template="git-workflow">
     <p><strong>Git Workflow</strong> automates the safe mechanics between local edits and a pull request.</p>
     <p><strong>Typical sequence:</strong> sync clean main → create/switch feature branch → review changed files and diffs → stage exact files → run validation + commit → push feature branch → open PR → review → merge only with explicit approval.</p>
@@ -155,7 +173,7 @@
 </template>
 
 <template data-help-template="git-commit">
-    <p><strong>Run Validation & Commit</strong> first runs the full portfolio validation suite. If any check fails, Git is not allowed to create the commit.</p>
+    <p><strong>Run Validation & Commit</strong> first runs the full portfolio validation suite, including the AI-assistance guardrail check. If any check fails, Git is not allowed to create the commit.</p>
     <p>Commits are blocked entirely on <code>main</code>. A successful commit exists only in your local feature branch until you push.</p>
     <p><strong>Next step:</strong> confirm the working tree is clean, then push the feature branch to GitHub.</p>
 </template>
@@ -176,6 +194,7 @@
 <template data-help-template="publishing">
     <p>GitHub Pages publishes the <code>portfolio/</code> directory after approved changes are merged into <code>main</code>.</p>
     <p>General-page saves and asset actions can modify files under <code>portfolio/</code> locally. Git Workflow can commit and push a feature branch, but nothing reaches the live site until the pull request is explicitly merged.</p>
+    <p>Private requests, private uploads, credentials, and AI proposal history are outside the public deployment path.</p>
     <p><strong>Live path:</strong> local change → preview → validation → stage → commit → push feature branch → PR → explicit review/merge → GitHub Pages deployment.</p>
 </template>
 
@@ -187,6 +206,6 @@
 
 <template data-help-template="privacy">
     <p>Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and stores private runtime data under the Git-ignored <code>.portfolio-manager/</code> directory.</p>
-    <p>Your real password hash and Flask secret live only in the Git-ignored local <code>.env</code> file.</p>
+    <p>Your real password hash, Flask secret, and optional AI API key live only in the Git-ignored local <code>.env</code> file.</p>
     <p>Sessions expire after eight hours. A timeout does not delete work or require server setup again; sign in again if the local Flask app is still running.</p>
 </template>
