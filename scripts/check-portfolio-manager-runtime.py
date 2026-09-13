@@ -31,7 +31,6 @@ def main() -> int:
     for protected_path, label in [
         ("/assets", "Asset Library"),
         ("/site-content", "General Page Content"),
-        ("/manage/pages/home", "V2 Page Editor"),
         ("/git/", "Save & Publish"),
         ("/ai/", "AI Assistance"),
     ]:
@@ -69,43 +68,48 @@ def main() -> int:
     content_manager = client.get("/content")
     require(content_manager.status_code == 200, "Manage Portfolio Content must render.", errors)
     require(b"Choose a page to edit" in content_manager.data, "Manage Portfolio Content must present human-facing page navigation.", errors)
-    require(b"Edit Interactive Learning" in content_manager.data, "Interactive Learning landing page must be connected to editing.", errors)
-    require(b"Edit Multimedia" in content_manager.data, "Multimedia landing page must be connected to editing.", errors)
-    require(b"Edit Learning Pathways" in content_manager.data, "Learning Pathways landing page must be connected to editing.", errors)
-    require(b"Edit Rubric Demo" in content_manager.data, "Rubric Demo must be connected to editing.", errors)
-    require(b"Edit Workflow Demo" in content_manager.data, "Workflow Demo must be connected to editing.", errors)
-
-    for path, label in [
-        ("/manage/pages/home", "Home"),
-        ("/manage/pages/about", "About"),
-        ("/manage/pages/interactive-learning", "Interactive Learning"),
-        ("/manage/pages/multimedia", "Multimedia"),
-        ("/manage/pages/complete-learning-paths", "Complete Learning Pathways"),
-        ("/manage/pages/ai-evaluation-demo", "AI Evaluation Demo"),
-        ("/manage/pages/rubric-demo", "Rubric Demo"),
-        ("/manage/pages/workflow-demo", "Workflow Demo"),
-    ]:
-        editor = client.get(path)
-        require(editor.status_code == 200, f"{label} v2 page editor must render.", errors)
-        require(b"Edit page copy" in editor.data, f"{label} editor must expose visible page copy.", errors)
-        require(b"private_note" in editor.data, f"{label} editor must expose private page notes.", errors)
-        require(b"Live local preview" in editor.data, f"{label} editor must expose the real local preview.", errors)
-        require(b"AI-assisted edit" in editor.data, f"{label} editor must reserve the page-aware AI helper surface.", errors)
-
-    about_editor = client.get("/manage/pages/about")
-    require(b"Interactive states" in about_editor.data, "About editor must expose alternate interactive explorer copy.", errors)
-
-    workflow_editor = client.get("/manage/pages/workflow-demo")
-    require(b"Interactive states" in workflow_editor.data, "Workflow demo editor must expose alternate workflow-state copy.", errors)
+    require(b"Interactive Learning" in content_manager.data, "Manage Portfolio Content must mirror the instructional-design hierarchy.", errors)
+    require(b"AI Training and Evaluation" in content_manager.data, "Manage Portfolio Content must mirror the AI portfolio hierarchy.", errors)
+    require(b"Systems and Workflows" in content_manager.data, "Manage Portfolio Content must mirror the workflows hierarchy.", errors)
+    require(b"Edit Demo Copy" not in content_manager.data, "Manage Portfolio Content must not expose duplicate edit entry points for AI Evaluation.", errors)
 
     meddpicc_editor = client.get("/content/projects/meddpicc-practice")
     require(meddpicc_editor.status_code == 200, "Project editor must render.", errors)
     require(b"Manage Current Assets" in meddpicc_editor.data, "Project editor must retain a safe path to asset management.", errors)
     require(b"Live local preview" in meddpicc_editor.data, "Project editor must provide the real local preview surface.", errors)
+    require(b"Edit Visible Page Copy" in meddpicc_editor.data, "MEDDPICC project editor must connect to full visible-page copy editing.", errors)
 
     custom_editor = client.get("/content/projects/pursuit-positioning")
     require(custom_editor.status_code == 200, "Custom project editor must render.", errors)
-    require(b"Currently connected directly" in custom_editor.data, "Custom project editor must clearly identify the currently safe direct-edit boundary.", errors)
+    require(b"Project identity" in custom_editor.data, "Custom project editor must explain the project-title/reference boundary.", errors)
+    require(b"Edit Visible Page Copy" in custom_editor.data, "Custom project editor must connect to full visible-page copy editing.", errors)
+
+    ai_project_editor = client.get("/content/projects/ai-training-and-evaluation-demo")
+    require(ai_project_editor.status_code == 200, "AI Evaluation project editor must render.", errors)
+    require(b"Edit Visible Page Copy" in ai_project_editor.data, "AI Evaluation project editor must expose one route into demo copy editing.", errors)
+
+    general_library = client.get("/site-content")
+    require(general_library.status_code == 200, "General Page Content library must remain available during transition.", errors)
+
+    home_editor = client.get("/manage/pages/home")
+    require(home_editor.status_code == 200, "Home v2 page editor must render.", errors)
+    require(b"Current visible content" in home_editor.data, "General page editor must use the v2 visible-content model.", errors)
+    require(b"Live local preview" in home_editor.data, "General page editor must provide the real local preview surface.", errors)
+    require(b"private_note" in home_editor.data, "General page editor must provide private page notes.", errors)
+    require(b"AI-assisted edit" in home_editor.data, "General page editor must reserve the page-aware AI helper surface.", errors)
+
+    for page_id, label in [
+        ("about", "About Me"),
+        ("interactive-learning", "Interactive Learning"),
+        ("multimedia", "Multimedia"),
+        ("complete-learning-paths", "Complete Learning Pathways"),
+        ("ai-evaluation-demo", "AI Evaluation Demo"),
+        ("rubric-demo", "Rubric Demo"),
+        ("workflow-demo", "Workflow Demo"),
+    ]:
+        editor = client.get(f"/manage/pages/{page_id}")
+        require(editor.status_code == 200, f"{label} v2 page editor must render.", errors)
+        require(b"Current visible content" in editor.data, f"{label} must expose visible page copy.", errors)
 
     git_workflow = client.get("/git/")
     require(git_workflow.status_code == 200, "Authenticated Save & Publish workflow must render.", errors)
