@@ -16,7 +16,7 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>User Guide</h1>
-                <p class="hero-copy">A zero-context guide to what each control changes, what stays local, and how work moves safely to the live portfolio.</p>
+                <p class="hero-copy">A zero-context guide to editing, saving, and publishing your portfolio without needing to remember the underlying Git mechanics.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
@@ -34,14 +34,15 @@
                 <h2>If you forgot everything, start here</h2>
                 <ol>
                     <li><strong>Start Portfolio Manager:</strong> from the repo root run <code>source .venv/bin/activate</code>, then <code>python portfolio-manager/app.py</code>. Open <code>http://127.0.0.1:5055</code>.</li>
-                    <li><strong>Choose the right tool:</strong> Project Content for structured projects, General Page Content for routine managed-page copy, Asset Library for approved public files, or AI Assistance for private drafting proposals.</li>
-                    <li><strong>Make and preview the change:</strong> edits remain local until Git is used. AI proposals remain private until you manually copy approved wording into a deterministic editor.</li>
-                    <li><strong>Run Full Validation:</strong> this is a read-only health check. Fix failures before committing.</li>
-                    <li><strong>Open Git Workflow:</strong> review the diff, stage exact files, validate + commit, push the feature branch, and open a pull request.</li>
-                    <li><strong>Review the PR and CI:</strong> nothing is live yet.</li>
-                    <li><strong>Merge only with explicit approval:</strong> GitHub Pages deploys approved changes from <code>main</code>. Portfolio Manager intentionally has no merge button.</li>
+                    <li><strong>Edit what you need:</strong> use Project Content, General Page Content, Asset Library, or optional AI Assistance.</li>
+                    <li><strong>Preview the result:</strong> public-site edits remain local on your Mac until you publish.</li>
+                    <li><strong>Run Full Validation:</strong> this is a read-only health check.</li>
+                    <li><strong>Open Save &amp; Publish:</strong> review changed files, select what belongs in the next commit, and inspect the diff.</li>
+                    <li><strong>Validate &amp; Commit Changes:</strong> Portfolio Manager validates again and saves a local Git checkpoint on <code>main</code>.</li>
+                    <li><strong>Publish to GitHub:</strong> only when you are satisfied. This pushes committed <code>main</code> changes to GitHub, where GitHub Pages can deploy them.</li>
                 </ol>
-                <p><strong>Session timed out?</strong> Sessions expire after eight hours. Your files are not deleted. If Flask is still running, simply open the manager and sign in again. If the server stopped, restart it with <code>python portfolio-manager/app.py</code>.</p>
+                <p><strong>Memory shortcut:</strong> edit → preview → validate → commit → publish.</p>
+                <p><strong>Session timed out?</strong> Sessions expire after eight hours. Your files are not deleted. Sign in again if Flask is still running, or restart it with <code>python portfolio-manager/app.py</code>.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
@@ -50,33 +51,32 @@
                     <li><strong>Project Content:</strong> create or edit structured project records. Standard pages can be regenerated; custom interactive pages are protected.</li>
                     <li><strong>General Page Content:</strong> edit approved plain-text fields on managed public pages with validation and rollback.</li>
                     <li><strong>Asset Library:</strong> manage files deliberately approved for the public portfolio.</li>
-                    <li><strong>AI Assistance:</strong> create private proposals for rewriting, sanitization, source analysis, placement/tags, and project-summary drafting. AI cannot apply changes to the site.</li>
-                    <li><strong>Run Full Validation:</strong> read the portfolio and run health/safety checks. It changes nothing.</li>
-                    <li><strong>Git Workflow:</strong> guarded branch → diff → stage → validation + commit → push → PR workflow. No merge control.</li>
-                    <li><strong>Advanced Maintenance:</strong> Refresh Docs and Version Release are low-frequency tools. You do not need them for normal content edits.</li>
+                    <li><strong>AI Assistance:</strong> create private proposals. AI cannot apply changes, commit, or publish.</li>
+                    <li><strong>Run Full Validation:</strong> read-only portfolio health and safety check.</li>
+                    <li><strong>Save &amp; Publish:</strong> review → select files → validate + commit locally → explicitly publish to GitHub.</li>
+                    <li><strong>Advanced Maintenance:</strong> Refresh Docs and Version Release are low-frequency tools, not required for routine edits.</li>
                 </ul>
-                <p>The <strong>?</strong> beside the core workflow contains the same quick-reference guidance while you work.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>The mental model</h2>
-                <p>Portfolio Manager operates on your <strong>local clone</strong> of <code>id-portfolio-system</code>. A local file change is not the same thing as a Git commit, and a Git commit is not the same thing as a public deployment.</p>
+                <p>Portfolio Manager operates on your local clone of <code>id-portfolio-system</code>.</p>
                 <ul>
-                    <li><strong>Private runtime:</strong> <code>.env</code> contains local credentials/settings, while <code>.portfolio-manager/</code> can hold private runtime data such as AI proposal history. Git ignores both.</li>
-                    <li><strong>Structured source:</strong> <code>portfolio-data/projects/*.json</code> contains project information; <code>portfolio-data/site-content.json</code> contains approved general-page copy.</li>
-                    <li><strong>Public website:</strong> <code>portfolio/</code> contains the HTML, CSS, JavaScript, and assets GitHub Pages publishes.</li>
-                    <li><strong>Maintenance documentation:</strong> <code>docs/</code> and <code>portfolio-data/version.json</code> describe the system and releases.</li>
-                    <li><strong>Git/GitHub:</strong> branch → review → stage → validate + commit → push → pull request → review → merge → deployment.</li>
+                    <li><strong>Local edit:</strong> a file changed on your Mac. Not live.</li>
+                    <li><strong>Local commit:</strong> a validated Git checkpoint saved on local <code>main</code>. Still not live.</li>
+                    <li><strong>Publish to GitHub:</strong> pushes committed <code>main</code> changes to <code>origin/main</code>. This can trigger GitHub Pages deployment.</li>
+                    <li><strong>Private runtime:</strong> <code>.env</code> and <code>.portfolio-manager/</code> are ignored by Git and are not part of the public site.</li>
+                    <li><strong>Public website:</strong> files under <code>portfolio/</code> are what GitHub Pages can publish.</li>
                 </ul>
-                <p><strong>Key rule:</strong> AI can propose, structured editors can write approved local changes, and Git Workflow can prepare a PR. Only an explicit merge can make approved public files deploy.</p>
+                <p><strong>Key rule:</strong> commit and publish are intentionally separate so you can save a clean checkpoint before anything goes live.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>Starting and signing in</h2>
-                <p>From the repo root in VS Code:</p>
+                <p>From the repo root:</p>
                 <p><code>source .venv/bin/activate</code></p>
                 <p><code>python portfolio-manager/app.py</code></p>
-                <p>Then open <code>http://127.0.0.1:5055</code>. Port <code>5055</code> avoids the common macOS AirPlay Receiver conflict on port <code>5000</code>. The app binds only to localhost and normal debug mode is disabled.</p>
+                <p>Open <code>http://127.0.0.1:5055</code>. The app binds only to localhost and normal debug mode is disabled.</p>
                 <p>Initial secure setup uses <code>python portfolio-manager/setup.py</code>. You do not rerun setup just because a session expired.</p>
             </section>
 
@@ -84,175 +84,112 @@
                 <h2>Privacy and security</h2>
                 <ul>
                     <li><code>.env</code> contains the local Flask secret, password hash, and optional AI API key and is ignored by Git.</li>
-                    <li><code>.portfolio-manager/</code> stores private runtime data such as AI proposals and is ignored by Git.</li>
+                    <li><code>.portfolio-manager/</code> stores private runtime data such as AI proposal history and is ignored by Git.</li>
                     <li>Authenticated sessions expire after eight hours.</li>
                     <li>Every modifying POST action requires a CSRF token.</li>
                     <li>The app runs only on <code>127.0.0.1</code>.</li>
+                    <li>Save &amp; Publish blocks private runtime paths and common key/certificate files from staging.</li>
                 </ul>
-                <p>Review public copy, public assets, AI source text, Git diffs, and pull requests before approving publication or external transmission.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>AI Assistance</h2>
-                <p><strong>AI Assistance is proposal-only.</strong> It supports Rewrite &amp; Polish, Sanitize for Portfolio, Analyze Source Content, Suggest Placement &amp; Tags, and Draft Project Summary.</p>
-                <p><strong>What is sent:</strong> only source/context you deliberately enter in the AI workspace, plus the repo's public portfolio taxonomy so placement suggestions use the real category structure. Project pages and other local source files are not automatically sent.</p>
-                <p><strong>Before sending:</strong> local preflight blocks several obvious credential formats. You must confirm that you understand the external-provider boundary and that you are authorized to send the text. Sensitive markers such as confidential, proprietary, internal-only, NDA, or unreleased require a second explicit acknowledgement.</p>
-                <p><strong>Default writing priorities:</strong> professional tone, effective length, clarity, and accuracy. The assistant is also instructed to avoid hype, slogan-like phrasing, unnecessary repetition, filler, and unsupported portfolio claims.</p>
-                <p><strong>What AI cannot do:</strong> edit public HTML, edit structured portfolio JSON, stage files, commit, push, merge, or publish.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Configuring AI</h2>
-                <p>AI is optional. Portfolio Manager starts and validates without an API key.</p>
-                <p>To enable it later, run:</p>
-                <p><code>python portfolio-manager/configure-ai.py</code></p>
-                <p>The helper writes only local AI settings to the Git-ignored <code>.env</code> and preserves your existing Portfolio Manager login configuration. Restart Flask afterward.</p>
-                <p>To disable AI without changing your Portfolio Manager password:</p>
-                <p><code>python portfolio-manager/configure-ai.py --disable</code></p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Reviewing an AI proposal</h2>
-                <p>AI proposals are stored under <code>.portfolio-manager/ai-proposals/</code> and remain outside Git.</p>
-                <p>The review page separates proposed copy, analysis/rationale, suggested placement and tags, source-supported claims, missing or unsupported claims, and confidentiality/publication warnings.</p>
-                <p>The exact source text is retained privately so you can audit what the AI saw.</p>
-                <p><strong>There is intentionally no Apply-to-site button.</strong> Approval means copying only what you accept into General Page Content or Project Content, saving through that deterministic editor, previewing, and validating normally.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Sanitize mode: what it does and does not do</h2>
-                <p>Sanitize mode can generalize identifying employer, customer, product, roadmap, launch, or internal-process details and flag remaining publication risks.</p>
-                <p><strong>It does not make confidential input safe to send.</strong> If you are not authorized to send source material to an external AI service, do not paste it into the AI workspace. Use already-generalized notes instead.</p>
-                <p>It also cannot guarantee that a result is legally, contractually, or professionally safe to publish. Human review remains required.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Run Full Validation</h2>
-                <p>This is a read-only health check. It runs the portfolio validation set used by the GitHub pull-request workflow: site links/assets, structured project content, structured general-page copy, renderer/template compatibility, project-generator behavior, versioning, generated-document freshness, Git workflow guardrails, AI-assistance guardrails, and Portfolio Manager security/runtime rules.</p>
-                <p><strong>Changes:</strong> nothing.</p>
-                <p><strong>Use it:</strong> after meaningful edits and before commit. The Git Workflow runs the same suite automatically before creating a commit.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Advanced Maintenance: Refresh Docs</h2>
-                <p>This runs <code>scripts/update-docs.py</code> and rebuilds maintenance documentation from structured project/version data.</p>
-                <p>Typical affected files are <code>docs/content-inventory.md</code>, <code>docs/portfolio-map.md</code>, and <code>docs/changelog.md</code>.</p>
-                <p><strong>It does not refresh the public website.</strong> It does not rewrite the homepage, regenerate project HTML, commit, push, merge, or deploy.</p>
-                <p>You normally do not need to run this manually for routine copy changes.</p>
-            </section>
-
-            <section class="guide-section" data-guide-section>
-                <h2>Advanced Maintenance: version releases</h2>
-                <p>A version bump records an intentional release in <code>portfolio-data/version.json</code>, refreshes release documentation, and creates a historical snapshot under <code>docs/versions/</code>.</p>
-                <ul>
-                    <li><strong>Patch:</strong> small corrections/refinements, such as 1.0.0 → 1.0.1.</li>
-                    <li><strong>Minor:</strong> meaningful new project/feature, such as 1.0.0 → 1.1.0.</li>
-                    <li><strong>Major:</strong> major architecture/redesign, such as 1.0.0 → 2.0.0.</li>
-                </ul>
-                <p>Use a version release near the end of meaningful system work, not for every portfolio edit. A version bump does not commit or publish anything.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>General Page Content</h2>
                 <p>This is the safe editor for routine copy on Home, About, Projects, Instructional Design, AI Training and Evaluation, Workflows, and Contact.</p>
                 <p>The source of truth is <code>portfolio-data/site-content.json</code>. Only approved headings and paragraphs are exposed; raw HTML is not.</p>
-                <ul>
-                    <li><strong>Editable:</strong> approved headings, hero copy, introductions, and overview paragraphs.</li>
-                    <li><strong>Not editable here:</strong> navigation, links, buttons, tags, lists, CSS, JavaScript, layout, or custom project interactions.</li>
-                    <li><strong>Public-safety gate:</strong> saving requires confirmation that the copy contains no confidential, proprietary, customer-identifying, or unreleased information.</li>
-                    <li><strong>Fail-closed rendering:</strong> if a redesign makes an approved locator missing or ambiguous, saving fails instead of guessing.</li>
-                </ul>
+                <p>Saving updates the structured value and its approved public HTML location locally, then validates. If validation fails, both changes are rolled back.</p>
+                <p>Saving does not commit or publish. Preview the page, then use Save &amp; Publish when ready.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Saving general page copy</h2>
-                <p><strong>Save Page Copy</strong> updates the structured value in <code>portfolio-data/site-content.json</code> and the approved text location in that page's public HTML.</p>
-                <p>General-content and public-site validation run immediately. If either fails, both the JSON and HTML change are restored.</p>
-                <p>Saving changes local files only. Preview the page, then use the separate Git Workflow when it is ready for review.</p>
+                <h2>Project Content</h2>
+                <p><strong>New Standard Project</strong> creates structured project data and a standard case-study page when appropriate.</p>
+                <p><strong>Save Project Data</strong> edits <code>portfolio-data/projects/*.json</code>. Validation failure rolls the JSON edit back.</p>
+                <p><strong>Standard page:</strong> edit JSON → save → regenerate page → preview → Save &amp; Publish.</p>
+                <p><strong>Custom page:</strong> metadata can be edited, but the generic renderer cannot overwrite bespoke HTML/CSS/JavaScript.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>Public Asset Library</h2>
                 <p>The Asset Library manages files you have intentionally approved for the public portfolio.</p>
-                <p>Files are stored under <code>portfolio/assets/project-assets/&lt;project-id&gt;/</code> and registered in the project's structured <code>assets</code> array. Because this is under <code>portfolio/</code>, a merged file may be publicly reachable even if no page visibly links to it.</p>
+                <p>Managed files live under <code>portfolio/assets/project-assets/&lt;project-id&gt;/</code>. Anything under <code>portfolio/</code> may become publicly reachable after publishing.</p>
                 <ul>
-                    <li><strong>Add Public Asset:</strong> copies an allowed file and records type/path/alt/caption. Images require alt text.</li>
-                    <li><strong>Save Metadata:</strong> updates alt text or caption and refreshes documentation.</li>
-                    <li><strong>Replace File:</strong> replaces bytes at the same path; extension must stay the same. Validation restores the old file on failure.</li>
-                    <li><strong>Remove Asset:</strong> removes its structured association and public file, then validates. Referenced files are protected by rollback.</li>
+                    <li><strong>Add Public Asset:</strong> copies an allowed file and records metadata. Images require alt text.</li>
+                    <li><strong>Save Metadata:</strong> updates alt text or caption.</li>
+                    <li><strong>Replace File:</strong> replaces bytes at the same path; validation restores the old file on failure.</li>
+                    <li><strong>Remove Asset:</strong> removes the association and public file, with reference checks and rollback protection.</li>
                 </ul>
-                <p>Never use the Asset Library for confidential or unsanitized source material. Keep private source files in appropriate private storage outside the public portfolio.</p>
+                <p>Keep confidential, proprietary, customer-identifying, or unsanitized source material outside the public portfolio.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Creating and editing structured projects</h2>
-                <p><strong>New Standard Project</strong> creates real portfolio files: form → taxonomy path → structured JSON → standard public page when safe → validation → docs refresh.</p>
-                <p><strong>Save Project Data</strong> edits the corresponding <code>portfolio-data/projects/*.json</code>. Validation failure rolls the JSON edit back.</p>
-                <p>Project fields include title, audience, role, objectives, outcomes, skills, tools, status, confidentiality, and asset associations.</p>
-                <p>Saving project JSON does not always change public HTML. Standard and custom pages behave differently.</p>
+                <h2>AI Assistance</h2>
+                <p><strong>AI Assistance is proposal-only.</strong> It supports Rewrite &amp; Polish, Sanitize for Portfolio, Analyze Source Content, Suggest Placement &amp; Tags, and Draft Project Summary.</p>
+                <p>Only source/context you deliberately enter is sent, plus the public portfolio taxonomy. Local project pages and arbitrary files are not automatically sent.</p>
+                <p>AI cannot edit public files, edit structured JSON, commit, or publish. Approved wording must be copied into the appropriate deterministic editor.</p>
+                <p>If you are not authorized to send source material to an external AI service, do not paste it into AI Assistance.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Standard pages vs. custom pages</h2>
-                <h3>Standard Page</h3>
-                <p>Generated from project JSON and <code>templates/project-page/index.html</code>. The current template uses the portfolio refresh styling and an interactive in-page case-study navigation.</p>
-                <p><strong>Workflow:</strong> edit structured data → Save Project Data → Regenerate Page → preview → Run Full Validation → Git Workflow.</p>
-                <h3>Custom Page</h3>
-                <p>Contains bespoke HTML/CSS/JavaScript such as scoring, simulation logic, dashboards, or other interaction behavior. Portfolio Manager can update metadata JSON but deliberately prevents the generic renderer from overwriting the custom experience.</p>
-                <p><strong>Workflow:</strong> update metadata and custom code deliberately → preview/test interaction → Run Full Validation → Git Workflow.</p>
+                <h2>Configuring AI</h2>
+                <p>AI is optional. Portfolio Manager works normally without an API key.</p>
+                <p>Enable later with <code>python portfolio-manager/configure-ai.py</code>. Disable with <code>python portfolio-manager/configure-ai.py --disable</code>.</p>
+                <p>The key/model stay only in the Git-ignored local <code>.env</code>. Restart Portfolio Manager after changing AI configuration.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Regenerate Page</h2>
-                <p>For a Standard Page only, this reads the latest project JSON and shared project template, then replaces that project's generated public <code>index.html</code>. Site validation runs afterward.</p>
-                <p><strong>This changes public HTML locally.</strong> It does not commit, push, merge, or publish.</p>
+                <h2>Run Full Validation</h2>
+                <p>This is a read-only health check covering site links/assets, structured content, renderers, project generation, documentation, Git guardrails, AI guardrails, and Portfolio Manager security/runtime rules.</p>
+                <p>It changes nothing. Use it after meaningful edits. Save &amp; Publish runs the same suite again immediately before commit.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Git Workflow: what each step means</h2>
-                <ol>
-                    <li><strong>Sync Main Safely:</strong> available only on clean <code>main</code>. Uses <code>git pull --ff-only</code> and refuses updates requiring a merge commit.</li>
-                    <li><strong>Create &amp; Switch Branch:</strong> creates a local <code>feature/</code>, <code>fix/</code>, <code>content/</code>, or <code>chore/</code> branch from clean <code>main</code>.</li>
-                    <li><strong>Review Changed Files:</strong> shows Git's current changed-file list.</li>
-                    <li><strong>Diff Review:</strong> shows staged and unstaged line-level changes.</li>
-                    <li><strong>Stage Selected Files:</strong> selects exact approved files for the commit.</li>
-                    <li><strong>Run Validation &amp; Commit:</strong> runs the full validation suite first and blocks the commit on failure.</li>
-                    <li><strong>Push Branch to GitHub:</strong> pushes only the current non-<code>main</code> feature branch and refuses uncommitted changes.</li>
-                    <li><strong>Open Pull Request:</strong> creates or opens the GitHub review path. Merge remains separate.</li>
-                </ol>
+                <h2>Save &amp; Publish: Step 1, review files</h2>
+                <p>The page shows every local Git change and whether it is already selected for the next commit.</p>
+                <p><strong>Select Files for Commit</strong> stages only the exact safe files you choose. Private runtime paths such as <code>.env</code>, <code>.portfolio-manager/</code>, and <code>.venv/</code> are blocked.</p>
+                <p><strong>Remove Selected</strong> removes a file from the next commit without deleting the local edit.</p>
+                <p>Use the diff review to confirm exactly what changed before committing.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Git Workflow safety boundaries</h2>
-                <ul>
-                    <li>Commits and pushes on <code>main</code> are blocked.</li>
-                    <li>Force-push is not implemented.</li>
-                    <li>Git merge and pull-request merge are not implemented.</li>
-                    <li><code>.git</code>, <code>.env</code>, <code>.portfolio-manager/</code>, <code>.venv/</code>, and common key/certificate files are blocked from staging.</li>
-                    <li>Only exact paths Git currently reports as changed can be staged.</li>
-                    <li>Full validation, including the AI-assistance guardrail check, runs before commit.</li>
-                </ul>
-                <p><strong>Most important:</strong> there is deliberately no Merge button. PR approval and merge remain explicit human decisions.</p>
+                <h2>Save &amp; Publish: Step 2, commit</h2>
+                <p><strong>Validate &amp; Commit Changes</strong> runs the full validation suite first. If anything fails, Git does not create the commit.</p>
+                <p>A successful commit is saved directly to your local <code>main</code>. This is your checkpoint/history entry.</p>
+                <p><strong>A local commit is not public.</strong> Nothing reaches GitHub until you use Publish to GitHub.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
-                <h2>Git and publishing</h2>
-                <p>Your publishing path is: local edit → preview → Full Validation → diff review → stage → validation + commit on a feature branch → push → PR → CI/review → explicit merge → GitHub Pages deployment.</p>
-                <p>GitHub Pages publishes from <code>portfolio/</code>. A local edit, local commit, pushed branch, open pull request, API credential, or AI proposal is not the live website.</p>
+                <h2>Save &amp; Publish: Step 3, publish</h2>
+                <p><strong>Publish to GitHub</strong> pushes committed local <code>main</code> changes to <code>origin/main</code>.</p>
+                <p>Before pushing, Portfolio Manager refreshes GitHub status. Publication is blocked if GitHub has newer commits or if uncommitted local changes remain.</p>
+                <p>Force-push, silent merge, and silent rebase are not implemented.</p>
+                <p>After a successful push, GitHub Pages can deploy the updated public portfolio.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Sync Main with GitHub</h2>
+                <p>When the working tree is clean, <strong>Sync Main with GitHub</strong> uses <code>git pull --ff-only origin main</code>.</p>
+                <p>Fast-forward-only means the manager refuses a sync that would require a merge commit. It never discards local edits.</p>
+                <p>You do not need to create a feature branch before ordinary Portfolio Manager edits.</p>
+            </section>
+
+            <section class="guide-section" data-guide-section>
+                <h2>Advanced Maintenance</h2>
+                <p><strong>Refresh Docs</strong> rebuilds generated maintenance documentation such as inventory, map, and changelog. It does not refresh the public website or publish anything.</p>
+                <p><strong>Version Release</strong> records an intentional patch, minor, or major portfolio-system release. Use it for meaningful system releases, not routine copy edits.</p>
             </section>
 
             <section class="guide-section" data-guide-section>
                 <h2>When something goes wrong</h2>
                 <ul>
                     <li><strong>Session expired:</strong> sign in again. Your work is still on disk.</li>
-                    <li><strong>Browser cannot reach the manager:</strong> check whether <code>python portfolio-manager/app.py</code> is still running.</li>
-                    <li><strong>Portfolio preview says port 8000 is in use:</strong> another preview server is already running. Use the existing <code>http://127.0.0.1:8000</code> or stop that server before starting another.</li>
-                    <li><strong>AI says not configured:</strong> Portfolio Manager is still working normally. Configure AI later with <code>python portfolio-manager/configure-ai.py</code> if you want to enable provider calls.</li>
-                    <li><strong>AI preflight blocks text:</strong> do not bypass an obvious secret warning. Remove credentials. If the text contains sensitive markers, confirm authorization before using the second acknowledgement.</li>
-                    <li><strong>Validation fails:</strong> do not commit. Read the failure, fix the issue, and rerun validation.</li>
-                    <li><strong>Unexpected Git changes:</strong> inspect Git Workflow or run <code>git status</code>. Do not delete/reset files just to make the warning disappear.</li>
+                    <li><strong>Port 5055 is already in use:</strong> an older Portfolio Manager process is probably still running. Stop that process before restarting after branch/code changes.</li>
+                    <li><strong>Portfolio preview port 8000 is already in use:</strong> use the existing preview server or stop it before starting another.</li>
+                    <li><strong>Validation fails:</strong> do not commit. Fix the issue and rerun validation.</li>
+                    <li><strong>Publish is disabled:</strong> check for uncommitted changes, no local commits waiting to publish, or GitHub being ahead of your local main.</li>
+                    <li><strong>You are on another Git branch:</strong> routine Portfolio Manager save/publish actions are intentionally available only on <code>main</code>. Return to main after finishing that development branch.</li>
+                    <li><strong>Unexpected Git changes:</strong> inspect the Save &amp; Publish diff or run <code>git status</code>. Do not delete/reset files just to remove a warning.</li>
                 </ul>
-                <p>To stop Portfolio Manager or a preview server, press <strong>Control + C</strong> in that server's terminal. Stopping a server does not delete files.</p>
+                <p>To stop Portfolio Manager or a preview server, press <strong>Control + C</strong> in that server's terminal.</p>
             </section>
         </main>
     </div>

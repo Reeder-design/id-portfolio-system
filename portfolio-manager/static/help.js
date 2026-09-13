@@ -58,26 +58,22 @@
             let message = '';
 
             if (kind === 'regenerate') {
-                message = 'Regenerate this standard page?\n\nThis replaces its generated public HTML using the latest structured project data. It will NOT commit, push, merge, or publish anything.';
+                message = 'Regenerate this standard page?\n\nThis replaces its generated public HTML using the latest structured project data. It will NOT commit or publish anything.';
             } else if (kind === 'version') {
                 const level = submitter ? submitter.value : 'selected';
-                message = `Create a ${level} version release?\n\nThis updates local version history, changelog, and a version snapshot. It will NOT commit, push, merge, or publish anything.`;
+                message = `Create a ${level} version release?\n\nThis updates local version history, changelog, and a version snapshot. It will NOT commit or publish anything.`;
             } else if (kind === 'remove-asset') {
-                message = 'Remove this public asset?\n\nPortfolio Manager will remove its structured project association and local file, then run validation. If another public page still depends on the file, the removal is rolled back. This does NOT commit, push, merge, or publish anything.';
+                message = 'Remove this public asset?\n\nPortfolio Manager will remove its structured project association and local file, then run validation. If another public page still depends on the file, the removal is rolled back. This does NOT commit or publish anything.';
             } else if (kind === 'general-save') {
-                message = 'Save these general page copy edits?\n\nThis updates the structured general-page source and approved text locations in public HTML on your local branch. Validation runs immediately and rolls back both files if it fails. This does NOT commit, push, merge, or publish anything.';
+                message = 'Save these general page copy edits?\n\nThis updates the structured general-page source and approved text locations in public HTML locally. Validation runs immediately and rolls back both files if it fails. This does NOT commit or publish anything.';
             } else if (kind === 'git-sync-main') {
-                message = 'Sync local main with origin/main?\n\nPortfolio Manager uses fast-forward-only pull. If Git would need a merge commit, the sync fails instead. No local edits are discarded.';
-            } else if (kind === 'git-create-branch') {
-                message = 'Create and switch to this feature branch?\n\nThis changes only your local Git branch. Nothing is pushed or published.';
+                message = 'Sync local main with GitHub?\n\nPortfolio Manager uses fast-forward-only pull. If Git would need a merge commit, the sync fails instead. No local edits are discarded.';
             } else if (kind === 'git-stage') {
-                message = 'Stage the selected files?\n\nStaging chooses what will be included in the next commit. It does not commit, push, merge, or publish anything.';
+                message = 'Select these files for the next commit?\n\nThis chooses what will be included in your local commit. It does not commit or publish anything yet.';
             } else if (kind === 'git-commit') {
-                message = 'Run full validation and create this commit?\n\nThe commit is blocked if validation fails. A successful commit remains local until you explicitly push the feature branch.';
+                message = 'Run full validation and commit these changes to local main?\n\nThe commit is blocked if validation fails. A successful commit stays on your Mac until you explicitly choose Publish to GitHub.';
             } else if (kind === 'git-push') {
-                message = 'Push this feature branch to GitHub?\n\nThis sends committed branch changes to origin. Portfolio Manager blocks pushes to main and never force-pushes.';
-            } else if (kind === 'git-create-pr') {
-                message = 'Create this pull request on GitHub?\n\nThis opens a review request from your feature branch into main. Portfolio Manager still cannot merge it.';
+                message = 'Publish committed main changes to GitHub?\n\nThis pushes local main to origin/main. GitHub Pages can deploy the committed public portfolio changes after this step. No force-push is used.';
             } else if (kind === 'ai-delete-proposal') {
                 message = 'Delete this private AI proposal?\n\nThis removes only the Git-ignored local proposal record. It does not change portfolio files, Git history, or anything already copied elsewhere.';
             }

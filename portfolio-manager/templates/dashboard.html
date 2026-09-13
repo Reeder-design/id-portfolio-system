@@ -17,7 +17,7 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">Edit, review, and publish portfolio updates from one local workspace. Routine content stays structured, AI stays proposal-only, and merge approval stays outside the manager.</p>
+                <p class="hero-copy">Edit, review, save, and publish portfolio updates from one local workspace. Routine content stays structured, AI stays proposal-only, and publishing remains an explicit final action.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                     <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy & Security</button>
@@ -53,7 +53,7 @@
                     </div>
                     <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Manager Workflow">?</button>
                 </div>
-                <p class="section-copy">Use these tools for normal portfolio work. Nothing here merges a pull request or publishes by bypassing review.</p>
+                <p class="section-copy">Use these tools for normal portfolio work. Edits stay local until you explicitly commit them, and committed changes stay local until you explicitly publish to GitHub.</p>
 
                 <div class="dashboard-tool-grid">
                     <article class="dashboard-tool-card">
@@ -85,16 +85,16 @@
                     </article>
 
                     <article class="dashboard-tool-card">
-                        <span class="tool-step">3 · Review & publish</span>
-                        <h3>Validate, review, and prepare a PR</h3>
-                        <p>Run the full health check, then use the guarded Git workflow when the change is ready for review.</p>
+                        <span class="tool-step">3 · Save & publish</span>
+                        <h3>Validate, commit, and publish</h3>
+                        <p>Run the full health check, then review your edits, commit them to local main, and publish to GitHub when you are ready.</p>
                         <div class="button-row tool-actions">
                             <form method="post" action="{{ url_for('run_action') }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="action" value="validate">
                                 <button class="btn btn-primary" type="submit">Run Full Validation</button>
                             </form>
-                            <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Git Workflow</a>
+                            <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Save &amp; Publish</a>
                         </div>
                     </article>
                 </div>
@@ -129,11 +129,11 @@
                                 </div>
                                 <button class="inline-help" type="button" data-help-key="versioning" data-help-label="Version Releases">?</button>
                             </div>
-                            <p>Record a patch, minor, or major portfolio-system release near the end of meaningful work. This still does not commit, merge, or publish anything.</p>
+                            <p>Record a patch, minor, or major portfolio-system release near the end of meaningful work. This still does not commit or publish anything.</p>
                             <form method="post" action="{{ url_for('run_action') }}" class="release-form" data-confirm-action="version">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <label for="release_message">Release message</label>
-                                <input type="text" id="release_message" name="release_message" placeholder="Example: Refine Portfolio Manager v1 workflow" required>
+                                <input type="text" id="release_message" name="release_message" placeholder="Example: Simplify Portfolio Manager publishing workflow" required>
                                 <div class="button-row">
                                     <button class="btn btn-secondary" type="submit" name="action" value="patch">Patch</button>
                                     <button class="btn btn-secondary" type="submit" name="action" value="minor">Minor</button>
