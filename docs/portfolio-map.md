@@ -16,7 +16,7 @@ Current portfolio version: **1.0.0**
 - **Instructional Design** — `portfolio/projects/instructional-design/index.html`
   - **Interactive Learning** — `portfolio/projects/instructional-design/interactive-learning/index.html`
     - MEDDPICC Qualification Lab — `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` (live)
-    - Pursuit Positioning Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
+    - Pursuit determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Complete Learning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
