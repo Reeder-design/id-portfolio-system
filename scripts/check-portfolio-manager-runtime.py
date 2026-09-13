@@ -33,6 +33,7 @@ def main() -> int:
         ("/site-content", "General Page Content"),
         ("/git/", "Save & Publish"),
         ("/ai/", "AI Assistance"),
+        ("/ai/settings", "AI Settings"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -96,7 +97,9 @@ def main() -> int:
     require(b"Current visible content" in home_editor.data, "General page editor must use the v2 visible-content model.", errors)
     require(b"Live local preview" in home_editor.data, "General page editor must provide the real local preview surface.", errors)
     require(b"private_note" in home_editor.data, "General page editor must provide private page notes.", errors)
-    require(b"AI-assisted edit" in home_editor.data, "General page editor must reserve the page-aware AI helper surface.", errors)
+    require(b"AI-assisted edit" in home_editor.data, "General page editor must expose the page-aware AI helper surface.", errors)
+    require(b"Set Up AI" in home_editor.data, "Without an API key, page-aware AI must show a setup path instead of an active generation control.", errors)
+    require(b"Generate AI Proposal" not in home_editor.data, "Without an API key, page-aware AI generation must remain disabled.", errors)
 
     for page_id, label in [
         ("about", "About Me"),
@@ -110,6 +113,35 @@ def main() -> int:
         editor = client.get(f"/manage/pages/{page_id}")
         require(editor.status_code == 200, f"{label} v2 page editor must render.", errors)
         require(b"Current visible content" in editor.data, f"{label} must expose visible page copy.", errors)
+
+    ai_settings = client.get("/ai/settings")
+    require(ai_settings.status_code == 200, "AI Settings must render without an API key.", errors)
+    require(b"AI not configured" in ai_settings.data, "AI Settings must clearly report the unconfigured state.", errors)
+    require(b"OPENAI_API_KEY" not in ai_settings.data, "AI Settings must not expose an environment-variable dump.", errors)
+    require(b"What gets sent" in ai_settings.data, "AI Settings must explain the page-aware privacy boundary.", errors)
+    require(b"private page notes" in ai_settings.data, "AI Settings must state that private page notes are excluded from page-aware requests.", errors)
+
+    with client.session_transaction() as session:
+        csrf = manager_app.csrf_token.__wrapped__() if hasattr(manager_app.csrf_token, "__wrapped__") else None
+        # Use the session token directly so this smoke test never bypasses the real POST guard.
+        csrf = session.get("_csrf_token") or "ci-page-ai-csrf"
+        session["_csrf_token"] = csrf
+
+    no_key_generate = client.post(
+        "/ai/page-edit/home/generate",
+        data={"csrf_token": csrf, "ai_request": "Make the hero spacing more consistent."},
+        follow_redirects=False,
+    )
+    require(
+        no_key_generate.status_code in {301, 302, 303, 307, 308},
+        "Page-aware AI without a configured key must redirect safely instead of attempting generation.",
+        errors,
+    )
+    require(
+        "/ai/settings" in no_key_generate.headers.get("Location", ""),
+        "Page-aware AI without a configured key must send the user to AI Settings.",
+        errors,
+    )
 
     git_workflow = client.get("/git/")
     require(git_workflow.status_code == 200, "Authenticated Save & Publish workflow must render.", errors)
