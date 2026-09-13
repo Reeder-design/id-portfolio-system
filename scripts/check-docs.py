@@ -45,22 +45,30 @@ def main() -> int:
     taxonomy = json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
     version_data = json.loads(VERSION_PATH.read_text(encoding="utf-8"))
     projects = updater.load_projects()
-    projects_by_id = {project.get("id"): project for project in projects}
     outputs = updater.build_outputs(projects, taxonomy, version_data)
 
     inventory = outputs[updater.INVENTORY_PATH]
     portfolio_map = outputs[updater.MAP_PATH]
     changelog = outputs[updater.CHANGELOG_PATH]
 
-    ai_project = projects_by_id.get("ai-training-and-evaluation-demo")
-    require(ai_project is not None, "AI evaluation structured project is missing", errors)
-    if ai_project is not None:
-        require(ai_project["title"] in inventory, "inventory is missing a structured project", errors)
+    for project in projects:
+        title = project.get("title", "")
+        page_path = project.get("page_path", "")
+        status = project.get("status", "")
+        project_id = project.get("id", "unknown")
 
-    pursuit_project = projects_by_id.get("pursuit-positioning")
-    require(pursuit_project is not None, "pursuit structured project is missing", errors)
-    if pursuit_project is not None:
-        require(pursuit_project["title"] in portfolio_map, "portfolio map is missing a structured project", errors)
+        require(
+            title in inventory,
+            f"content inventory is missing structured project: {project_id}",
+            errors,
+        )
+
+        expected_map_entry = f"{title} — `{page_path}` ({status})"
+        require(
+            expected_map_entry in portfolio_map,
+            f"portfolio map is missing or stale for structured project: {project_id}",
+            errors,
+        )
 
     require(version_data["current_version"] in changelog, "changelog is missing the current version", errors)
 
