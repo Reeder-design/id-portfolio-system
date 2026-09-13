@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-from pathlib import Path
 from typing import Any
 from urllib import error, request
 import hashlib
@@ -204,13 +203,12 @@ def generate_page_edit_proposal(page_id: str, user_request: str) -> dict[str, An
     except json.JSONDecodeError as exc:
         raise AIServiceError("AI returned a page-edit proposal that could not be read safely.") from exc
 
-    result = _normalize_result(parsed, page_html)
     return {
+        "page_id": page_id,
         "page": page,
-        "page_html": page_html,
         "source_sha256": hashlib.sha256(page_html.encode("utf-8")).hexdigest(),
         "user_request": user_request,
-        "result": result,
+        "result": _normalize_result(parsed, page_html),
         "model": settings["model"],
     }
 
@@ -225,7 +223,7 @@ def save_page_edit_proposal(generated: dict[str, Any]) -> dict[str, Any]:
         "status": "proposal-only",
         "provider": "OpenAI Responses API",
         "model": generated["model"],
-        "page_id": next(key for key, value in __import__('page_copy_service').PAGE_REGISTRY.items() if value is generated["page"]),
+        "page_id": generated["page_id"],
         "page_label": generated["page"]["label"],
         "page_path": generated["page"]["path"],
         "source_sha256": generated["source_sha256"],
