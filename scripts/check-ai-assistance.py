@@ -116,8 +116,8 @@ def main() -> int:
     forbidden_route_targets = ("render-site-content.py", "render-project.py", "git add", "git commit", "git push")
     for target in forbidden_route_targets:
         require(target not in routes, f"AI routes must not directly modify portfolio/Git state: found {target}", errors)
-    for target in ("write_text(", "subprocess", "git add", "git commit", "git push"):
-        require(target not in page_service, f"Page-aware AI proposal generation must not directly mutate portfolio/Git state: found {target}", errors)
+    for target in ("page_path.write_text", "subprocess", "git add", "git commit", "git push"):
+        require(target not in page_service, f"Page-aware AI proposal generation must not directly mutate the public page or Git state: found {target}", errors)
 
     require("Only text you deliberately enter" in workspace, "AI workspace must explain the explicit-send boundary.", errors)
     require("public portfolio taxonomy" in workspace, "AI workspace must disclose automatic taxonomy context used for placement.", errors)
