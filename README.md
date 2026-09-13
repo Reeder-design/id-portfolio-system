@@ -22,13 +22,21 @@ https://reeder-design.github.io/id-portfolio-system/
 Local-only Portfolio Manager credentials and runtime data are intentionally excluded from Git:
 
 - `.env` — local Flask secret, password hash, and optional AI API key/model setting
-- `.portfolio-manager/` — private requests, uploads, temporary files, backups, and AI proposal history
+- `.portfolio-manager/` — private runtime data and AI proposal history
 
 ## Portfolio Manager
 
 Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, and protects modifying forms with CSRF.
 
 Content-editing and asset actions change local files only. AI Assistance creates private reviewable proposals only. The dedicated Git Workflow can intentionally stage approved files, validate and commit on a feature branch, push that feature branch, and help open a pull request. It cannot commit or push `main`, force-push, stage blocked private paths, or merge a pull request.
+
+The v1 dashboard is intentionally narrow. Its normal workflow is:
+
+```text
+edit structured content or public assets → optional AI proposal → preview → Full Validation → Git Workflow → PR → explicit merge
+```
+
+Low-frequency documentation refresh and semantic-version controls are grouped under Advanced Maintenance rather than mixed into the normal editing flow.
 
 From the repository root, activate the project virtual environment and install the dashboard dependency:
 
@@ -99,7 +107,7 @@ The Asset Library can:
 
 Every upload or replacement requires an explicit public-safe confirmation. General web-code/executable formats such as HTML, JavaScript, CSS, SVG, shell scripts, executables, and archives are intentionally blocked from this uploader.
 
-Private/reference source files belong in the Git-ignored `.portfolio-manager/` request workspace instead. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
+Keep confidential or unsanitized source files in appropriate private storage outside the public portfolio. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
 
 ### AI Assistance
 
@@ -117,7 +125,7 @@ Before sending a request:
 
 - only source/context deliberately entered in the AI workspace is used
 - the repo's public portfolio taxonomy is included as context for placement suggestions
-- private requests, uploads, project pages, and arbitrary repository files are not automatically sent
+- project pages and other local private source files are not automatically sent
 - local preflight blocks several obvious secret/credential formats
 - the user must confirm external-provider awareness and authorization to send the text
 
