@@ -17,7 +17,7 @@
             <div>
                 <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ project.title }}</h1>
-                <p class="hero-copy">Edit content that is currently connected to this project page, preview the real local page, and keep the underlying implementation out of the normal workflow.</p>
+                <p class="hero-copy">Edit the project identity and connected content, then preview the real local project without needing to work with the underlying files.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
@@ -30,12 +30,18 @@
         {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
+        {% set custom_copy_page_id = {
+            'meddpicc-practice': 'meddpicc-demo',
+            'pursuit-positioning': 'pursuit-determination-demo',
+            'ai-training-and-evaluation-demo': 'ai-evaluation-demo'
+        }.get(project.id) %}
+
         <main class="v2-editor-grid">
             <section class="dashboard-card v2-edit-panel">
                 <div class="action-title-row">
                     <div>
-                        <p class="eyebrow">Current visible content</p>
-                        <h2>Edit project page</h2>
+                        <p class="eyebrow">Project content</p>
+                        <h2>Edit project</h2>
                     </div>
                     <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Edits">?</button>
                 </div>
@@ -43,7 +49,7 @@
                 {% if project._generated_page %}
                 <p class="action-note">This project uses the shared portfolio project layout, so the fields below map to visible sections of the page. Save your edits here, then regenerate the page when you want to rebuild the full project view from the updated content.</p>
                 {% else %}
-                <p class="action-note">This project contains a custom interaction. Only content that Portfolio Manager can safely connect without disturbing the interaction is editable directly. More complex visual or interaction changes will move through the upcoming plain-English AI editing workflow.</p>
+                <p class="action-note">This project contains a custom interaction. The project title stays connected here so portfolio references remain consistent. The rest of the visible copy is edited through the full page-copy workspace linked below.</p>
                 {% endif %}
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
@@ -73,7 +79,6 @@
                         </div>
                     </div>
                     {% else %}
-                    {# Preserve non-visible structured fields while the v2 custom-page editor exposes only safely connected content. #}
                     <input type="hidden" name="status" value="{{ project.status }}">
                     <input type="hidden" name="confidentiality" value="{{ project.confidentiality }}">
                     {% if project.featured %}<input type="hidden" name="featured" value="on">{% endif %}
@@ -90,8 +95,17 @@
                     <input type="hidden" name="live_project" value="{{ project.get('links', {}).get('live_project', '') }}">
 
                     <div class="full-span v2-connected-note">
-                        <strong>Currently connected directly:</strong> project title. Changing it safely updates the custom page browser title, primary heading, and recognized footer label. Other visible areas will be connected deliberately rather than treated as generic metadata.
+                        <strong>Project identity:</strong> the title is managed here because it can be referenced elsewhere in the portfolio. Visible page copy and interactive-state text are available in the page-copy workspace so those edits do not get confused with hidden project metadata.
                     </div>
+
+                    {% if custom_copy_page_id %}
+                    <section class="full-span v2-ai-edit-panel">
+                        <p class="eyebrow">Visible page content</p>
+                        <h3>Edit the full custom experience</h3>
+                        <p>Open the visible-copy workspace to edit headings, paragraphs, labels, buttons, and connected interactive-state text. The page-specific private notes and upcoming AI helper also live there.</p>
+                        <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=custom_copy_page_id) }}">Edit Visible Page Copy</a>
+                    </section>
+                    {% endif %}
                     {% endif %}
 
                     <section class="full-span v2-assets-inline">
@@ -103,11 +117,13 @@
                         <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Current Assets</a>
                     </section>
 
+                    {% if project._generated_page %}
                     <section class="full-span v2-notes-preview">
                         <p class="eyebrow">Private project notes</p>
-                        <h3>Notes are coming in the next editor slice</h3>
-                        <p>Private project-specific notes will live here without being published or stored in the public project record.</p>
+                        <h3>Project notes will move into this editor</h3>
+                        <p>Private notes are already available in the v2 page-copy workspace for custom experiences. Generated-project note storage will be connected in the same private system next.</p>
                     </section>
+                    {% endif %}
 
                     <div class="full-span button-row">
                         <button class="btn btn-primary" type="submit">Save Edits</button>
