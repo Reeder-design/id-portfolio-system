@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='general-content.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
 </head>
 <body>
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">General Page Content</p>
+                <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ page.label }}</h1>
-                <p class="hero-copy">Edit only the approved plain-text fields for this public page.</p>
+                <p class="hero-copy">Edit the text that currently appears on this portfolio page. The preview uses the real local page rather than a second copy of the design.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
-                <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">All General Pages</a>
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Portfolio</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
             </div>
         </header>
@@ -30,16 +31,16 @@
         {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
-        <main class="editor-layout">
-            <section class="dashboard-card">
+        <main class="v2-editor-grid">
+            <section class="dashboard-card v2-edit-panel">
                 <div class="action-title-row">
                     <div>
-                        <p class="eyebrow">Public copy</p>
-                        <h2>Editable Fields</h2>
+                        <p class="eyebrow">Current visible content</p>
+                        <h2>Edit page text</h2>
                     </div>
-                    <button class="inline-help" type="button" data-help-key="general-save" data-help-label="Save General Page Copy">?</button>
+                    <button class="inline-help" type="button" data-help-key="general-save" data-help-label="Save Page Edits">?</button>
                 </div>
-                <p class="action-note">Saving updates <code>portfolio-data/site-content.json</code> and the approved text locations in <code>{{ page.page_path }}</code>. It does not change navigation, links, layout, CSS, JavaScript, Git, or the live site.</p>
+                <p class="action-note">Only text areas that are already connected to this public page are shown here. Saving updates those exact areas locally and runs safety checks before keeping the edit.</p>
 
                 <form method="post" action="{{ url_for('site_content.save_page', page_id=page_id) }}" class="general-content-form" data-confirm-action="general-save">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -55,36 +56,32 @@
                     </div>
                     {% endfor %}
 
+                    <section class="v2-notes-preview">
+                        <p class="eyebrow">Private page notes</p>
+                        <h3>Notes are coming in the next editor slice</h3>
+                        <p>Page-specific private notes will live here without publishing to the portfolio. They are intentionally not stored in the public content data.</p>
+                    </section>
+
                     <div class="public-safe-confirm general-public-confirm">
                         <label class="checkbox-label"><input type="checkbox" name="public_safe" required> I confirm these edits are safe for the public portfolio and contain no confidential, proprietary, customer-identifying, or unreleased information.</label>
                     </div>
 
                     <div class="button-row">
-                        <button class="btn btn-primary" type="submit">Save Page Copy</button>
-                        <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">Cancel</a>
+                        <button class="btn btn-primary" type="submit">Save Edits</button>
+                        <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Cancel</a>
                     </div>
                 </form>
             </section>
 
-            <aside class="editor-sidebar">
-                <section class="dashboard-card">
-                    <p class="eyebrow">Managed File</p>
-                    <h2>{{ page.label }}</h2>
-                    <p class="path-label"><code>{{ page.page_path }}</code></p>
-                    <p class="section-copy">This editor writes only to predefined copy locations. If the underlying page structure changes and a locator is no longer exact, the save fails and rolls back instead of guessing.</p>
-                </section>
-
-                <section class="dashboard-card">
-                    <p class="eyebrow">After Saving</p>
-                    <h2>What happens?</h2>
-                    <ol class="guide-mini-list">
-                        <li>Structured general-page data is updated.</li>
-                        <li>The safe renderer updates only approved page copy.</li>
-                        <li>General-content and public-site validation run.</li>
-                        <li>If either check fails, both files are restored.</li>
-                        <li>You still review Git changes before anything can be published.</li>
-                    </ol>
-                </section>
+            <aside class="dashboard-card v2-preview-panel">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Live local preview</p><h2>Current page</h2></div>
+                    <a class="btn btn-secondary" href="http://127.0.0.1:8000/{{ page.page_path|replace('portfolio/', '')|replace('index.html', '') }}" target="_blank">Open Full Preview</a>
+                </div>
+                <p class="section-copy">If the preview server is running on port 8000, this shows the actual portfolio page. After saving, refresh the preview to see the local edit.</p>
+                <div class="v2-preview-frame-wrap">
+                    <iframe class="v2-preview-frame" src="http://127.0.0.1:8000/{{ page.page_path|replace('portfolio/', '')|replace('index.html', '') }}" title="Preview of {{ page.label }}"></iframe>
+                </div>
             </aside>
         </main>
     </div>
