@@ -15,9 +15,73 @@ from ai_service import (
     preflight_source,
     save_proposal,
 )
+from ai_settings_service import (
+    AISettingsError,
+    MODEL_OPTIONS,
+    disable_local_ai,
+    get_local_ai_settings,
+    save_local_ai_settings,
+    test_ai_connection,
+)
+from page_ai_service import (
+    MAX_REQUEST_CHARS,
+    generate_page_edit_proposal,
+    load_page_edit_proposal,
+    save_page_edit_proposal,
+)
 
 
 ai_bp = Blueprint("ai_assistant", __name__, url_prefix="/ai")
+
+
+@ai_bp.get("/settings")
+def settings():
+    return render_template(
+        "ai-settings.html",
+        settings=get_local_ai_settings(),
+        model_options=MODEL_OPTIONS,
+    )
+
+
+@ai_bp.post("/settings/save")
+def save_settings():
+    current = get_local_ai_settings()
+    try:
+        save_local_ai_settings(
+            request.form.get("api_key", ""),
+            request.form.get("model", ""),
+            keep_existing_key=current["configured"],
+        )
+    except AISettingsError as exc:
+        flash(str(exc), "error")
+    else:
+        flash(
+            "AI settings saved locally. The API key remains in the Git-ignored .env file and is not shown in Portfolio Manager.",
+            "success",
+        )
+    return redirect(url_for("ai_assistant.settings"))
+
+
+@ai_bp.post("/settings/test")
+def test_settings():
+    try:
+        message = test_ai_connection()
+    except AISettingsError as exc:
+        flash(str(exc), "error")
+    else:
+        flash(message, "success")
+    return redirect(url_for("ai_assistant.settings"))
+
+
+@ai_bp.post("/settings/disable")
+def disable_settings():
+    try:
+        disable_local_ai()
+    except AISettingsError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("AI assistance disabled locally. Portfolio Manager login settings were preserved.", "success")
+    return redirect(url_for("ai_assistant.settings"))
 
 
 @ai_bp.get("/")
@@ -89,7 +153,7 @@ def generate():
         )
 
     if not get_ai_settings()["configured"]:
-        return render_with_error("AI is not configured yet. Run: python portfolio-manager/configure-ai.py", preflight=preflight)
+        return render_with_error("AI is not configured yet. Open AI Settings first.", preflight=preflight)
 
     try:
         result = generate_proposal(task, source_text, user_goal)
@@ -99,6 +163,41 @@ def generate():
 
     flash("AI proposal created in the private local workspace. No portfolio or Git files were changed.", "success")
     return redirect(url_for("ai_assistant.proposal", proposal_id=record["id"]))
+
+
+@ai_bp.post("/page-edit/<page_id>/generate")
+def generate_page_edit(page_id: str):
+    user_request = request.form.get("ai_request", "").strip()
+    if len(user_request) > MAX_REQUEST_CHARS:
+        flash(f"Keep the AI edit request under {MAX_REQUEST_CHARS:,} characters.", "error")
+        return redirect(url_for("site_content.v2_page_editor", page_id=page_id))
+    if not get_local_ai_settings()["configured"]:
+        flash("Connect AI in Settings before requesting a page-aware edit.", "error")
+        return redirect(url_for("ai_assistant.settings"))
+
+    try:
+        generated = generate_page_edit_proposal(page_id, user_request)
+        generated["page_id"] = page_id
+        record = save_page_edit_proposal(generated)
+    except (AIServiceError, AISettingsError, FileNotFoundError, ValueError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("site_content.v2_page_editor", page_id=page_id))
+
+    flash(
+        "AI created a private page-edit proposal. No portfolio files were changed. Review the exact proposed operations before deciding what to do next.",
+        "success",
+    )
+    return redirect(url_for("ai_assistant.page_edit_proposal", proposal_id=record["id"]))
+
+
+@ai_bp.get("/page-edit/proposals/<proposal_id>")
+def page_edit_proposal(proposal_id: str):
+    try:
+        record = load_page_edit_proposal(proposal_id)
+    except AIServiceError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("content.content_manager"))
+    return render_template("page-ai-proposal.html", record=record)
 
 
 @ai_bp.get("/proposals/<proposal_id>")
