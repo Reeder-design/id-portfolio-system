@@ -8,7 +8,7 @@ FICTIONAL_FOOTER_SUFFIX = " • Fictional portfolio exercise"
 
 
 def _single_plain_element(html_text: str, tag: str) -> tuple[re.Match[str], str]:
-    pattern = re.compile(rf"(<{tag}\\b[^>]*>)(.*?)(</{tag}>)", flags=re.I | re.S)
+    pattern = re.compile(rf"(<{tag}\b[^>]*>)(.*?)(</{tag}>)", flags=re.I | re.S)
     matches = list(pattern.finditer(html_text))
     if len(matches) != 1:
         raise ValueError(f"Custom title sync expected exactly one <{tag}> element; found {len(matches)}.")
@@ -20,7 +20,7 @@ def _single_plain_element(html_text: str, tag: str) -> tuple[re.Match[str], str]
 
 
 def _replace_element_inner(html_text: str, tag: str, replacement: str) -> str:
-    pattern = re.compile(rf"(<{tag}\\b[^>]*>)(.*?)(</{tag}>)", flags=re.I | re.S)
+    pattern = re.compile(rf"(<{tag}\b[^>]*>)(.*?)(</{tag}>)", flags=re.I | re.S)
     matches = list(pattern.finditer(html_text))
     if len(matches) != 1:
         raise ValueError(f"Custom title sync expected exactly one <{tag}> element; found {len(matches)}.")
@@ -33,6 +33,11 @@ def _replace_element_inner(html_text: str, tag: str, replacement: str) -> str:
 
 
 def sync_custom_page_title(html_text: str, new_title: str) -> str:
+    """Synchronize only the plain browser title, primary h1, and recognized footer label.
+
+    The custom page must contain exactly one plain-text <title> and one plain-text <h1>,
+    and their current project-title text must agree. Otherwise this fails closed.
+    """
     _, browser_title = _single_plain_element(html_text, "title")
     _, visible_title = _single_plain_element(html_text, "h1")
     browser_base = browser_title
@@ -52,7 +57,7 @@ def sync_custom_page_title(html_text: str, new_title: str) -> str:
     escaped_old = html.escape(browser_base.strip(), quote=False)
     updated = _replace_element_inner(html_text, "title", escaped_new + html.escape(browser_suffix, quote=False))
     updated = _replace_element_inner(updated, "h1", escaped_new)
-    footer_pattern = re.compile(r"(<footer\\b[^>]*>.*?</footer>)", flags=re.I | re.S)
+    footer_pattern = re.compile(r"(<footer\b[^>]*>.*?</footer>)", flags=re.I | re.S)
     footer_matches = list(footer_pattern.finditer(updated))
     if len(footer_matches) == 1:
         footer_match = footer_matches[0]
