@@ -20,6 +20,7 @@
                 <p class="hero-copy">Edit the text that is actually visible on this page, keep private notes beside it, and preview the real local page while you work.</p>
             </div>
             <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                 <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Portfolio</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
@@ -85,14 +86,6 @@
                     </details>
                     {% endif %}
 
-                    <section class="v2-ai-edit-panel">
-                        <p class="eyebrow">AI-assisted edit</p>
-                        <h3>Ask for a larger change in plain English</h3>
-                        <p>Examples: “turn the intro into an interactive block,” “change this card layout,” or “make the spacing around this button consistent.” Page-aware AI editing will use this space after the API/Settings step is connected.</p>
-                        <textarea rows="4" disabled placeholder="AI page editing will be enabled after API setup."></textarea>
-                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">AI Editing · API setup next</button>
-                    </section>
-
                     <section class="v2-private-note">
                         <p class="eyebrow">Private page notes</p>
                         <h3>Notes for future edits or ideas</h3>
@@ -110,6 +103,32 @@
                         <a class="btn btn-secondary" href="{{ preview_url }}" target="_blank">Open Full Preview</a>
                     </div>
                 </form>
+
+                <section class="v2-ai-edit-panel v2-ai-live">
+                    <div class="action-title-row">
+                        <div>
+                            <p class="eyebrow">AI-assisted edit</p>
+                            <h3>Ask for a larger change in plain English</h3>
+                        </div>
+                        <span class="v2-ai-status {% if ai_settings.configured %}connected{% endif %}">{% if ai_settings.configured %}Connected{% else %}Setup needed{% endif %}</span>
+                    </div>
+                    <p>Use this for structural, visual, interaction, or code-heavy requests such as “turn the intro into an interactive block,” “change this card layout,” or “make the spacing around this button consistent.”</p>
+                    <p class="field-help">AI receives this public page, public design-system CSS context, and the request below. Private notes are not sent.</p>
+                    {% if ai_settings.configured %}
+                    <form method="post" action="{{ url_for('ai_assistant.generate_page_edit', page_id=page_id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label for="ai_request">Describe the change you want</label>
+                        <textarea id="ai_request" name="ai_request" rows="5" maxlength="3000" required placeholder="Example: Turn the intro paragraph into a simple interactive reveal block using the existing design system. Keep the wording and accessibility intact."></textarea>
+                        <div class="button-row">
+                            <button class="btn btn-primary" type="submit">Generate AI Proposal</button>
+                            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+                        </div>
+                    </form>
+                    {% else %}
+                    <textarea rows="4" disabled placeholder="Connect an OpenAI API key in AI Settings to enable page-aware proposals."></textarea>
+                    <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+                    {% endif %}
+                </section>
             </section>
 
             <aside class="dashboard-card v2-preview-panel">
