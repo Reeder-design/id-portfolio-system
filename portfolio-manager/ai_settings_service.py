@@ -18,9 +18,9 @@ MODEL_OPTIONS = [
         "help": "Good default for frequent portfolio editing with a balance of quality and cost.",
     },
     {
-        "value": "gpt-6-astra",
-        "label": "Higher quality · GPT-6 Astra",
-        "help": "Use when you want stronger reasoning for larger structural or code-heavy edits.",
+        "value": "gpt-5.6-sol",
+        "label": "Higher quality · GPT-5.6 Sol",
+        "help": "Use when you want the strongest reasoning for larger structural or code-heavy edits.",
     },
     {
         "value": "gpt-5.6-luna",
