@@ -45,14 +45,23 @@ def main() -> int:
     taxonomy = json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
     version_data = json.loads(VERSION_PATH.read_text(encoding="utf-8"))
     projects = updater.load_projects()
+    projects_by_id = {project.get("id"): project for project in projects}
     outputs = updater.build_outputs(projects, taxonomy, version_data)
 
     inventory = outputs[updater.INVENTORY_PATH]
     portfolio_map = outputs[updater.MAP_PATH]
     changelog = outputs[updater.CHANGELOG_PATH]
 
-    require("AI Training and Evaluation Demo" in inventory, "inventory is missing a structured project", errors)
-    require("Pursuit Positioning Lab" in portfolio_map, "portfolio map is missing a structured project", errors)
+    ai_project = projects_by_id.get("ai-training-and-evaluation-demo")
+    require(ai_project is not None, "AI evaluation structured project is missing", errors)
+    if ai_project is not None:
+        require(ai_project["title"] in inventory, "inventory is missing a structured project", errors)
+
+    pursuit_project = projects_by_id.get("pursuit-positioning")
+    require(pursuit_project is not None, "pursuit structured project is missing", errors)
+    if pursuit_project is not None:
+        require(pursuit_project["title"] in portfolio_map, "portfolio map is missing a structured project", errors)
+
     require(version_data["current_version"] in changelog, "changelog is missing the current version", errors)
 
     snapshot = ROOT / "docs" / "versions" / f"v{version_data['current_version']}.md"
