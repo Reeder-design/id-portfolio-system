@@ -51,8 +51,25 @@ def main() -> int:
     portfolio_map = outputs[updater.MAP_PATH]
     changelog = outputs[updater.CHANGELOG_PATH]
 
-    require("AI Training and Evaluation Demo" in inventory, "inventory is missing a structured project", errors)
-    require("Pursuit Positioning Lab" in portfolio_map, "portfolio map is missing a structured project", errors)
+    for project in projects:
+        title = project.get("title", "")
+        page_path = project.get("page_path", "")
+        status = project.get("status", "")
+        project_id = project.get("id", "unknown")
+
+        require(
+            title in inventory,
+            f"content inventory is missing structured project: {project_id}",
+            errors,
+        )
+
+        expected_map_entry = f"{title} — `{page_path}` ({status})"
+        require(
+            expected_map_entry in portfolio_map,
+            f"portfolio map is missing or stale for structured project: {project_id}",
+            errors,
+        )
+
     require(version_data["current_version"] in changelog, "changelog is missing the current version", errors)
 
     snapshot = ROOT / "docs" / "versions" / f"v{version_data['current_version']}.md"
