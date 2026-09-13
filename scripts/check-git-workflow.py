@@ -25,16 +25,16 @@ def main() -> int:
     help_js = HELP_JS.read_text(encoding="utf-8") if HELP_JS.exists() else ""
 
     if routes:
-        require('BASE_BRANCH = "main"' in routes, "Git workflow must explicitly protect main", errors)
-        require("require_feature_branch" in routes, "Git mutations must use a feature-branch guard", errors)
+        require('BASE_BRANCH = "main"' in routes, "Git workflow must explicitly use main as the routine publishing branch", errors)
+        require("require_main_branch" in routes, "Routine Git mutations must guard for main", errors)
         require('run_git(["pull", "--ff-only", "origin", BASE_BRANCH])' in routes, "Main sync must be fast-forward only", errors)
-        require('run_git(["switch", "-c", branch])' in routes, "Branch creation must use explicit git switch -c", errors)
         require('run_git(["add", "--", *selected])' in routes, "Staging must use explicit selected paths", errors)
         require('run_git(["restore", "--staged", "--", *selected])' in routes, "Unstage must preserve local edits", errors)
         require("validation_suite()" in routes, "Commit path must run the full validation suite", errors)
         require('run_git(["commit", "-m", commit_message])' in routes, "Commit must use argument-list invocation", errors)
-        require('run_git(["push", "-u", "origin", branch])' in routes, "Push must target the explicit feature branch", errors)
-        require("working_tree_clean()" in routes, "Push/PR workflow must inspect working-tree cleanliness", errors)
+        require('run_git(["fetch", "origin", BASE_BRANCH])' in routes, "Publish must refresh remote main status before pushing", errors)
+        require('run_git(["push", "origin", BASE_BRANCH])' in routes, "Publish must push explicit main without force", errors)
+        require("working_tree_clean()" in routes, "Publish must require a clean working tree", errors)
         require("status_by_path" in routes, "Staging must be limited to paths Git currently reports as changed", errors)
         require("is_safe_repo_path" in routes, "Git workflow must validate paths before staging", errors)
         for blocked in ('.git', '.env', '.portfolio-manager', '.venv'):
@@ -43,8 +43,7 @@ def main() -> int:
         require("shell=True" not in routes, "Git workflow must not invoke a shell for user-controlled values", errors)
         require('"--force"' not in routes and '"-f"' not in routes, "Git workflow must not expose force-push", errors)
         require('run_git(["merge"' not in routes, "Portfolio Manager must not implement git merge", errors)
-        require('"merge_pull_request"' not in routes, "Portfolio Manager must not implement GitHub PR merge", errors)
-        require("gh_status" in routes and "compare_url" in routes, "PR workflow must support authenticated CLI plus safe browser fallback", errors)
+        require('run_git(["rebase"' not in routes, "Portfolio Manager must not silently rebase local history", errors)
 
         validation_index = routes.find("passed, output = validation_suite()")
         commit_index = routes.find('run_git(["commit", "-m", commit_message])')
@@ -54,18 +53,27 @@ def main() -> int:
             errors,
         )
 
+        fetch_index = routes.find('run_git(["fetch", "origin", BASE_BRANCH])')
+        push_index = routes.find('run_git(["push", "origin", BASE_BRANCH])')
+        require(
+            fetch_index != -1 and push_index != -1 and fetch_index < push_index,
+            "Remote main status must be refreshed before publish",
+            errors,
+        )
+
     if template:
-        require("Merge is intentionally outside Portfolio Manager" in template, "Git UI must state the no-merge safety boundary", errors)
-        require("Open Pre-filled GitHub PR Page" in template, "Git UI must provide a token-free PR fallback", errors)
+        require("Commit and publish are separate actions" in template, "Git UI must explain the commit/publish boundary", errors)
+        require("Validate &amp; Commit Changes" in template, "Git UI must expose validation-gated commit control", errors)
+        require("Publish to GitHub" in template, "Git UI must expose explicit publishing control", errors)
+        require("Create & Switch Branch" not in template, "Routine Git UI must not require branch creation", errors)
+        require("Open Pull Request" not in template, "Routine Git UI must not require pull requests", errors)
         require("data-confirm-action=\"git-commit\"" in template, "Commit must require a confirmation dialog", errors)
-        require("data-confirm-action=\"git-push\"" in template, "Push must require a confirmation dialog", errors)
-        require("data-confirm-action=\"git-create-pr\"" in template, "PR creation must require a confirmation dialog", errors)
+        require("data-confirm-action=\"git-push\"" in template, "Publish must require a confirmation dialog", errors)
         require("name=\"csrf_token\"" in template, "Git workflow modifying forms must contain CSRF tokens", errors)
         require("url_for('git_workflow" in template, "Git workflow UI must use named guarded routes", errors)
-        require("merge_pull_request" not in template, "Git workflow UI must not expose a merge action", errors)
 
     if help_js:
-        for confirmation in ("git-sync-main", "git-create-branch", "git-stage", "git-commit", "git-push", "git-create-pr"):
+        for confirmation in ("git-sync-main", "git-stage", "git-commit", "git-push"):
             require(confirmation in help_js, f"Missing confirmation copy for {confirmation}", errors)
 
     if errors:
