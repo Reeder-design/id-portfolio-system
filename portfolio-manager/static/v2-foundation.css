@@ -248,6 +248,16 @@
     gap: 18px;
 }
 
+.v2-assets-inline .btn {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    white-space: nowrap;
+    text-align: center;
+}
+
 .v2-connected-note {
     color: var(--text-soft);
 }
@@ -290,6 +300,10 @@ button[disabled],
     .v2-assets-inline {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .v2-assets-inline .btn {
+        align-self: flex-start;
     }
 
     .v2-tree-group.nested,
