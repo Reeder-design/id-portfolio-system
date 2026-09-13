@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 from urllib import error, request
 import json
 import os
@@ -48,7 +49,7 @@ def _parse_env(text: str) -> tuple[list[str], dict[str, str]]:
     return lines, values
 
 
-def _replace_setting(lines: list[str], key: str, value: str | None) -> list[str]:
+def _replace_setting(lines: list[str], key: str, value: Optional[str]) -> list[str]:
     prefix = f"{key}="
     output: list[str] = []
     replaced = False
