@@ -222,7 +222,9 @@
 .v2-notes-preview,
 .v2-assets-inline,
 .v2-connected-note,
-.v2-secondary-settings {
+.v2-secondary-settings,
+.v2-private-note,
+.v2-ai-edit-panel {
     padding: 18px;
     border: 1px solid rgba(232, 221, 199, 0.14);
     border-radius: 14px;
@@ -230,14 +232,17 @@
 }
 
 .v2-notes-preview h3,
-.v2-assets-inline h3 {
+.v2-assets-inline h3,
+.v2-private-note h3,
+.v2-ai-edit-panel h3 {
     margin: 5px 0 8px;
     color: var(--cream);
 }
 
 .v2-notes-preview p:last-child,
-.v2-assets-inline p:last-child {
-    margin-bottom: 0;
+.v2-assets-inline p:last-child,
+.v2-private-note p,
+.v2-ai-edit-panel p {
     color: var(--text-soft);
 }
 
@@ -268,6 +273,81 @@
 
 .v2-secondary-settings .form-grid {
     margin-top: 12px;
+}
+
+.v2-copy-form,
+.v2-copy-list {
+    display: grid;
+    gap: 16px;
+}
+
+.v2-copy-list {
+    margin-top: 18px;
+}
+
+.v2-copy-field {
+    margin: 0;
+}
+
+.v2-copy-field label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.v2-copy-field .field-help {
+    margin: 0 0 10px;
+    color: var(--muted-text);
+    font-size: 0.82rem;
+}
+
+.v2-interactive-copy {
+    margin-top: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(169, 216, 193, 0.22);
+    border-radius: 16px;
+    background: rgba(169, 216, 193, 0.045);
+}
+
+.v2-interactive-copy > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.v2-interactive-copy > summary::-webkit-details-marker {
+    display: none;
+}
+
+.v2-interactive-copy > summary strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--cream);
+}
+
+.v2-interactive-copy-body {
+    padding: 0 18px 18px;
+    border-top: 1px solid rgba(169, 216, 193, 0.14);
+}
+
+.v2-interactive-copy-body > .section-copy {
+    padding-top: 16px;
+}
+
+.v2-ai-edit-panel textarea[disabled] {
+    min-height: 110px;
+    margin: 10px 0 12px;
+}
+
+.v2-private-note textarea {
+    min-height: 150px;
+}
+
+.v2-save-row {
+    padding-top: 4px;
 }
 
 button[disabled],
@@ -312,7 +392,8 @@ button[disabled],
         margin-left: 0;
     }
 
-    .v2-tree-hint {
+    .v2-tree-hint,
+    .v2-interactive-copy .summary-hint {
         display: none;
     }
 
