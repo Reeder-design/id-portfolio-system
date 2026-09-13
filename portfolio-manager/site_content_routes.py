@@ -6,6 +6,7 @@ import sys
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
+from ai_settings_service import get_local_ai_settings
 from content_routes import run_command
 from notes_service import load_note, save_note
 from page_copy_service import (
@@ -171,6 +172,7 @@ def v2_page_editor(page_id: str):
         script_fields=script_fields,
         page_note=load_note("page", page_id),
         preview_url=preview_url(page),
+        ai_settings=get_local_ai_settings(),
     )
 
 
