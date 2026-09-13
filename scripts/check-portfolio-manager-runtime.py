@@ -31,7 +31,7 @@ def main() -> int:
     for protected_path, label in [
         ("/assets", "Asset Library"),
         ("/site-content", "General Page Content"),
-        ("/git/", "Git Workflow"),
+        ("/git/", "Save & Publish"),
         ("/ai/", "AI Assistance"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
@@ -56,7 +56,7 @@ def main() -> int:
     require(b"Asset Library" in dashboard.data, "Dashboard must expose the Asset Library.", errors)
     require(b"AI Assistance" in dashboard.data, "Dashboard must expose proposal-only AI assistance.", errors)
     require(b"Run Full Validation" in dashboard.data, "Dashboard must expose the main validation action.", errors)
-    require(b"Git Workflow" in dashboard.data, "Dashboard must expose the guarded Git workflow.", errors)
+    require(b"Save &amp; Publish" in dashboard.data, "Dashboard must expose the direct save and publish workflow.", errors)
     require(b"Advanced Maintenance" in dashboard.data, "Dashboard must keep low-frequency maintenance clearly separated.", errors)
     require(b"Save New Content Request" not in dashboard.data, "Dashboard must not reintroduce the retired new-content request form.", errors)
     require(b"Save Edit Request" not in dashboard.data, "Dashboard must not reintroduce the retired edit-request form.", errors)
@@ -81,10 +81,12 @@ def main() -> int:
     require(b"field__hero_copy" in home_editor.data, "General page editor must render approved structured fields.", errors)
 
     git_workflow = client.get("/git/")
-    require(git_workflow.status_code == 200, "Authenticated Git Workflow must render.", errors)
-    require(b"Merge is intentionally outside Portfolio Manager" in git_workflow.data, "Git Workflow must show the no-merge safety boundary.", errors)
-    require(b"Review Changed Files" in git_workflow.data, "Git Workflow must expose explicit file review before staging.", errors)
-    require(b"Run Validation & Commit" in git_workflow.data, "Git Workflow must expose validation-gated commit control.", errors)
+    require(git_workflow.status_code == 200, "Authenticated Save & Publish workflow must render.", errors)
+    require(b"Commit and publish are separate actions" in git_workflow.data, "Save & Publish must explain its safety boundary.", errors)
+    require(b"Review Changed Files" in git_workflow.data, "Save & Publish must expose explicit file review before commit.", errors)
+    require(b"Validate &amp; Commit Changes" in git_workflow.data, "Save & Publish must expose validation-gated commit control.", errors)
+    require(b"Publish to GitHub" in git_workflow.data, "Save & Publish must expose explicit publishing control.", errors)
+    require(b"Open Pull Request" not in git_workflow.data, "Routine Save & Publish must not require pull requests.", errors)
 
     ai_workspace = client.get("/ai/")
     require(ai_workspace.status_code == 200, "Authenticated AI Assistance workspace must render without an API key.", errors)
