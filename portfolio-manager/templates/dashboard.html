@@ -21,6 +21,7 @@
                 <p class="hero-copy">Manage what is already in the portfolio, develop new work, and prepare private source material without needing to think about the repository underneath.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                    <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
                     <a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system/blob/main/docs/changelog.md" target="_blank" rel="noopener noreferrer">Version History</a>
                     <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy Statement</button>
                     <form method="post" action="{{ url_for('logout') }}" class="logout-form">
