@@ -54,7 +54,7 @@
                         <h2>Choose a page to edit</h2>
                     </div>
                 </div>
-                <p class="section-copy">Landing pages and demos now open the same visible-copy editor: edit what you see, review interactive states when they are connected, keep private notes, and preview the real local page beside the form.</p>
+                <p class="section-copy">Landing pages and demos open a visible-copy editor. Structured projects use one Edit Project entry point, with page-copy editing available from inside the project editor so the navigation does not expose competing edit paths.</p>
 
                 <div class="v2-site-tree">
                     <article class="v2-tree-page">
@@ -109,10 +109,7 @@
                                     {% for project in projects %}{% if project.category == 'ai-training-and-evaluation' %}
                                     <article class="v2-project-row">
                                         <div><span class="v2-level-label">Project</span><h4>{{ project.title }}</h4><p>{{ project.summary }}</p></div>
-                                        <div class="button-row">
-                                            <a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a>
-                                            {% if project.id == 'ai-training-and-evaluation-demo' %}<a class="btn btn-secondary" href="{{ url_for('site_content.v2_page_editor', page_id='ai-evaluation-demo') }}">Edit Demo Copy</a>{% endif %}
-                                        </div>
+                                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
                                     </article>
                                     {% endif %}{% endfor %}
                                     <article class="v2-project-row"><div><span class="v2-level-label">Interactive demo</span><h4>Rubric Demo</h4></div><div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='rubric-demo') }}">Edit Rubric Demo</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/rubric-demo/" target="_blank">Preview</a></div></article>
