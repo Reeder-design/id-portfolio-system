@@ -9,16 +9,18 @@ APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
 PORTFOLIO_ROOT = (REPO_ROOT / "portfolio").resolve()
 
-PAGE_REGISTRY: dict[str, dict[str, str]] = {
+PAGE_REGISTRY: dict[str, dict[str, object]] = {
     "home": {"label": "Home", "path": "portfolio/index.html"},
     "about": {"label": "About Me", "path": "portfolio/about/index.html"},
     "projects": {"label": "Projects", "path": "portfolio/projects/index.html"},
     "instructional-design": {"label": "Instructional Design", "path": "portfolio/projects/instructional-design/index.html"},
     "interactive-learning": {"label": "Interactive Learning", "path": "portfolio/projects/instructional-design/interactive-learning/index.html"},
+    "meddpicc-demo": {"label": "MEDDPICC Practice", "path": "portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html", "skip_h1": True},
+    "pursuit-determination-demo": {"label": "Pursuit Determination Lab", "path": "portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html", "skip_h1": True},
     "multimedia": {"label": "Multimedia Training Content", "path": "portfolio/projects/instructional-design/multimedia/index.html"},
     "complete-learning-paths": {"label": "Complete Learning Pathways", "path": "portfolio/projects/instructional-design/complete-learning-paths/index.html"},
     "ai-training-and-evaluation": {"label": "AI Training and Evaluation", "path": "portfolio/projects/ai-training-and-evaluation/index.html"},
-    "ai-evaluation-demo": {"label": "AI Evaluation Demo", "path": "portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html"},
+    "ai-evaluation-demo": {"label": "AI Evaluation Demo", "path": "portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html", "skip_h1": True},
     "rubric-demo": {"label": "Rubric Demo", "path": "portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html"},
     "workflow-demo": {"label": "Workflow Demo", "path": "portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html"},
     "workflows": {"label": "Systems and Workflows", "path": "portfolio/projects/workflows/index.html"},
@@ -72,11 +74,11 @@ SCRIPT_CONFIG = {
 }
 
 
-def page_info(page_id: str) -> tuple[dict[str, str], Path]:
+def page_info(page_id: str) -> tuple[dict[str, object], Path]:
     page = PAGE_REGISTRY.get(page_id)
     if page is None:
         raise FileNotFoundError(f"Managed portfolio page not found: {page_id}")
-    path = (REPO_ROOT / page["path"]).resolve()
+    path = (REPO_ROOT / str(page["path"])).resolve()
     try:
         path.relative_to(PORTFOLIO_ROOT)
     except ValueError as exc:
@@ -86,8 +88,8 @@ def page_info(page_id: str) -> tuple[dict[str, str], Path]:
     return page, path
 
 
-def preview_url(page: dict[str, str]) -> str:
-    relative = page["path"].removeprefix("portfolio/")
+def preview_url(page: dict[str, object]) -> str:
+    relative = str(page["path"]).removeprefix("portfolio/")
     if relative == "index.html":
         return "http://127.0.0.1:8000/"
     return "http://127.0.0.1:8000/" + relative.removesuffix("index.html")
@@ -174,8 +176,8 @@ def extract_script_fields(page_id: str, html_text: str) -> list[dict]:
     if block is None:
         return []
     block_start, _, body = block
-    quote = config["quote"]
-    prop_group = "|".join(re.escape(prop) for prop in config["properties"])
+    quote = str(config["quote"])
+    prop_group = "|".join(re.escape(str(prop)) for prop in config["properties"])
     if quote == '"':
         value_pattern = r'(?P<value>(?:\\.|[^"\\])*)'
     else:
@@ -186,14 +188,14 @@ def extract_script_fields(page_id: str, html_text: str) -> list[dict]:
         + rf"(?P<suffix>{re.escape(quote)})"
     )
 
-    property_counts = {prop: 0 for prop in config["properties"]}
+    property_counts = {str(prop): 0 for prop in config["properties"]}
     fields: list[dict] = []
     for match in pattern.finditer(body):
         prop = match.group("prop")
         state_index = property_counts[prop]
         property_counts[prop] += 1
         states = config["states"]
-        state_label = states[state_index] if state_index < len(states) else f"State {state_index + 1}"
+        state_label = str(states[state_index]) if state_index < len(states) else f"State {state_index + 1}"
         value = _decode_js(match.group("value"), quote)
         fields.append({
             "key": f"script-{prop}-{state_index + 1}",
