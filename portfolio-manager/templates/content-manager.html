@@ -54,33 +54,33 @@
                         <h2>Choose a page to edit</h2>
                     </div>
                 </div>
-                <p class="section-copy">Items with an Edit button are connected to the current safe editor. Preview-only landing pages are shown in their real location so the manager can grow into the full site hierarchy without hiding them.</p>
+                <p class="section-copy">Landing pages and demos now open the same visible-copy editor: edit what you see, review interactive states when they are connected, keep private notes, and preview the real local page beside the form.</p>
 
                 <div class="v2-site-tree">
                     <article class="v2-tree-page">
                         <div><span class="v2-level-label">Page</span><h3>Home</h3></div>
-                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='home') }}">Edit Home</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/" target="_blank">Preview</a></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='home') }}">Edit Home</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/" target="_blank">Preview</a></div>
                     </article>
 
                     <article class="v2-tree-page">
                         <div><span class="v2-level-label">Page</span><h3>About Me</h3></div>
-                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='about') }}">Edit About Me</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/about/" target="_blank">Preview</a></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='about') }}">Edit About Me</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/about/" target="_blank">Preview</a></div>
                     </article>
 
                     <details class="v2-tree-group" open>
                         <summary><span><span class="v2-level-label">Landing page</span><strong>Projects</strong></span><span class="v2-tree-hint">Open hierarchy</span></summary>
                         <div class="v2-tree-group-body">
-                            <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='projects') }}">Edit Projects Landing Page</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/" target="_blank">Preview</a></div>
+                            <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='projects') }}">Edit Projects Landing Page</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/" target="_blank">Preview</a></div>
 
                             <details class="v2-tree-group nested" open>
                                 <summary><span><span class="v2-level-label">Area</span><strong>Instructional Design</strong></span></summary>
                                 <div class="v2-tree-group-body">
-                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='instructional-design') }}">Edit Instructional Design</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/" target="_blank">Preview</a></div>
+                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='instructional-design') }}">Edit Instructional Design</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/" target="_blank">Preview</a></div>
 
                                     <details class="v2-tree-group nested-deep" open>
-                                        <summary><span><span class="v2-level-label">Section</span><strong>Interactive Learning</strong></span><span class="v2-tree-hint">Landing-page editor connection next</span></summary>
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Interactive Learning</strong></span></summary>
                                         <div class="v2-tree-group-body">
-                                            <div class="v2-tree-actions"><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/interactive-learning/" target="_blank">Preview Landing Page</a></div>
+                                            <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='interactive-learning') }}">Edit Interactive Learning</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/interactive-learning/" target="_blank">Preview</a></div>
                                             {% for project in projects %}{% if project.category == 'instructional-design' and project.subcategory == 'interactive-learning' %}
                                             <article class="v2-project-row">
                                                 <div><span class="v2-level-label">Project</span><h4>{{ project.title }}</h4><p>{{ project.summary }}</p></div>
@@ -91,13 +91,13 @@
                                     </details>
 
                                     <details class="v2-tree-group nested-deep">
-                                        <summary><span><span class="v2-level-label">Section</span><strong>Multimedia Training Content</strong></span><span class="v2-tree-hint">Landing-page editor connection next</span></summary>
-                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/multimedia/" target="_blank">Preview Landing Page</a></div></div>
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Multimedia Training Content</strong></span></summary>
+                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='multimedia') }}">Edit Multimedia</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/multimedia/" target="_blank">Preview</a></div></div>
                                     </details>
 
                                     <details class="v2-tree-group nested-deep">
-                                        <summary><span><span class="v2-level-label">Section</span><strong>Complete Learning Pathways</strong></span><span class="v2-tree-hint">Landing-page editor connection next</span></summary>
-                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/complete-learning-paths/" target="_blank">Preview Landing Page</a></div></div>
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Complete Learning Pathways</strong></span></summary>
+                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='complete-learning-paths') }}">Edit Learning Pathways</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/complete-learning-paths/" target="_blank">Preview</a></div></div>
                                     </details>
                                 </div>
                             </details>
@@ -105,28 +105,31 @@
                             <details class="v2-tree-group nested" open>
                                 <summary><span><span class="v2-level-label">Area</span><strong>AI Training and Evaluation</strong></span></summary>
                                 <div class="v2-tree-group-body">
-                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='ai-training-and-evaluation') }}">Edit AI Training and Evaluation</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/" target="_blank">Preview</a></div>
+                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='ai-training-and-evaluation') }}">Edit AI Training and Evaluation</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/" target="_blank">Preview</a></div>
                                     {% for project in projects %}{% if project.category == 'ai-training-and-evaluation' %}
                                     <article class="v2-project-row">
                                         <div><span class="v2-level-label">Project</span><h4>{{ project.title }}</h4><p>{{ project.summary }}</p></div>
-                                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
+                                        <div class="button-row">
+                                            <a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a>
+                                            {% if project.id == 'ai-training-and-evaluation-demo' %}<a class="btn btn-secondary" href="{{ url_for('site_content.v2_page_editor', page_id='ai-evaluation-demo') }}">Edit Demo Copy</a>{% endif %}
+                                        </div>
                                     </article>
                                     {% endif %}{% endfor %}
-                                    <article class="v2-project-row preview-only"><div><span class="v2-level-label">Interactive demo</span><h4>Rubric Demo</h4></div><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/rubric-demo/" target="_blank">Preview</a></article>
-                                    <article class="v2-project-row preview-only"><div><span class="v2-level-label">Interactive demo</span><h4>Workflow Demo</h4></div><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/workflow-demo/" target="_blank">Preview</a></article>
+                                    <article class="v2-project-row"><div><span class="v2-level-label">Interactive demo</span><h4>Rubric Demo</h4></div><div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='rubric-demo') }}">Edit Rubric Demo</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/rubric-demo/" target="_blank">Preview</a></div></article>
+                                    <article class="v2-project-row"><div><span class="v2-level-label">Interactive demo</span><h4>Workflow Demo</h4></div><div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='workflow-demo') }}">Edit Workflow Demo</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/workflow-demo/" target="_blank">Preview</a></div></article>
                                 </div>
                             </details>
 
                             <details class="v2-tree-group nested">
                                 <summary><span><span class="v2-level-label">Area</span><strong>Systems and Workflows</strong></span></summary>
-                                <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='workflows') }}">Edit Systems and Workflows</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/workflows/" target="_blank">Preview</a></div></div>
+                                <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='workflows') }}">Edit Systems and Workflows</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/workflows/" target="_blank">Preview</a></div></div>
                             </details>
                         </div>
                     </details>
 
                     <article class="v2-tree-page">
                         <div><span class="v2-level-label">Page</span><h3>Contact</h3></div>
-                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.page_editor', page_id='contact') }}">Edit Contact</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/contact/" target="_blank">Preview</a></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='contact') }}">Edit Contact</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/contact/" target="_blank">Preview</a></div>
                     </article>
                 </div>
             </section>
