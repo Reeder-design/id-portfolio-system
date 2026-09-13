@@ -1,0 +1,128 @@
+.compact-badges {
+    align-content: start;
+}
+
+.dashboard-tool-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.dashboard-tool-card {
+    display: flex;
+    min-height: 260px;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid rgba(232, 221, 199, 0.16);
+    border-radius: 16px;
+    background: rgba(243, 240, 232, 0.07);
+}
+
+.dashboard-tool-card h3 {
+    margin: 10px 0 8px;
+    color: var(--cream);
+}
+
+.dashboard-tool-card p {
+    color: var(--text-soft);
+}
+
+.tool-step {
+    color: var(--dusty-mint);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.tool-actions {
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.tool-actions form {
+    margin: 0;
+}
+
+.advanced-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.advanced-maintenance summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 22px 25px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.advanced-maintenance summary::-webkit-details-marker {
+    display: none;
+}
+
+.advanced-maintenance summary::after {
+    content: "+";
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(201, 217, 199, 0.5);
+    border-radius: 999px;
+    color: var(--cream);
+    font-weight: 700;
+}
+
+.advanced-maintenance[open] summary::after {
+    content: "−";
+}
+
+.advanced-maintenance summary strong {
+    display: block;
+    color: var(--cream);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+}
+
+.summary-hint {
+    margin-left: auto;
+    color: var(--muted-text);
+    font-size: 0.88rem;
+}
+
+.advanced-maintenance-body {
+    padding: 0 25px 25px;
+    border-top: 1px solid rgba(232, 221, 199, 0.12);
+}
+
+.advanced-maintenance-body > .section-copy {
+    padding-top: 20px;
+}
+
+@media (max-width: 1180px) {
+    .dashboard-tool-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .dashboard-tool-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-tool-card {
+        min-height: 0;
+    }
+
+    .advanced-maintenance summary {
+        align-items: flex-start;
+    }
+
+    .summary-hint {
+        display: none;
+    }
+}
