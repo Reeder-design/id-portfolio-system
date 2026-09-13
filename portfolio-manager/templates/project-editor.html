@@ -37,7 +37,7 @@
                     <h2>Project Details</h2>
                     <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Data">?</button>
                 </div>
-                <p class="action-note">Saving updates the structured JSON source and maintenance docs. It does not automatically rewrite a custom interaction page.</p>
+                <p class="action-note">Saving updates the structured JSON source and maintenance docs. On supported custom pages, a project-title change also synchronizes the browser title, primary heading, and recognized footer label without rewriting the custom interaction.</p>
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -91,7 +91,7 @@
                     </form>
                     {% else %}
                     <div class="action-title-row"><h2>Custom Page</h2><button class="inline-help" type="button" data-help-key="standard-custom" data-help-label="Custom Page Protection">?</button></div>
-                    <p class="section-copy">Saving here updates the structured record and documentation, but does not overwrite the custom HTML, CSS, or JavaScript experience.</p>
+                    <p class="section-copy">Custom HTML, CSS, JavaScript, and layout remain protected. Portfolio Manager can safely synchronize a plain project title when the page has one unambiguous browser title and primary heading; other project fields do not rewrite the custom experience.</p>
                     {% endif %}
                 </section>
             </aside>
