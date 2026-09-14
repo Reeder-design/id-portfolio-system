@@ -10,39 +10,37 @@
     </div>
 
     <div class="help-drawer-body" data-help-body>
-        <p>Use the small <strong>?</strong> buttons for context-specific instructions. Each topic explains what changes, what stays local, and what to do next.</p>
+        <p>Use the small <strong>?</strong> buttons for context-specific instructions. Each topic explains what changes, what stays private/local, and what requires your approval.</p>
         <div class="help-quick-links">
             <a href="{{ url_for('help_page') }}">Open full user guide</a>
-            <button type="button" data-help-key="maintenance">Normal portfolio workflow</button>
+            <button type="button" data-help-key="maintenance">Manage / Create workflow</button>
+            <button type="button" data-help-key="privacy">Privacy &amp; security</button>
+            <button type="button" data-help-key="reference-library">Private Reference Library</button>
+            <button type="button" data-help-key="ai-assistance">AI safety boundaries</button>
             <button type="button" data-help-key="publishing">What actually gets published?</button>
-            <button type="button" data-help-key="ai-assistance">AI assistance safety</button>
-            <button type="button" data-help-key="git-workflow">Save & publish safety</button>
-            <button type="button" data-help-key="general-content">General page editing</button>
-            <button type="button" data-help-key="standard-custom">Standard vs. custom pages</button>
-            <button type="button" data-help-key="assets">Public asset safety</button>
+            <button type="button" data-help-key="assets">Project asset safety</button>
+            <button type="button" data-help-key="git-workflow">Save &amp; Publish safety</button>
         </div>
     </div>
 </aside>
 <div class="help-backdrop" data-help-backdrop hidden></div>
 
 <template data-help-template="maintenance">
-    <p><strong>Normal workflow:</strong> edit content or assets → preview → run Full Validation → open Save &amp; Publish → review changed files → commit → publish to GitHub when ready.</p>
-    <p><strong>Project Content:</strong> edits structured project records. Standard pages can be regenerated; custom interactive pages are protected.</p>
-    <p><strong>General Page Content:</strong> edits approved text fields only and validates/rolls back automatically.</p>
-    <p><strong>Asset Library:</strong> manages files intentionally approved for the public portfolio.</p>
-    <p><strong>AI Assistance:</strong> creates private proposals only. AI cannot apply changes or publish.</p>
-    <p><strong>Save &amp; Publish:</strong> commits validated edits to local <code>main</code>, then publishes them only when you explicitly push to GitHub.</p>
-    <p><strong>Advanced Maintenance:</strong> Refresh Docs and Version Release are low-frequency tools, not required for routine edits.</p>
+    <p><strong>Start with the goal:</strong> use Manage Content for work that already exists; use Create Content for new work and private source preparation.</p>
+    <p><strong>Manage:</strong> edit visible content/project data, maintain project assets, use page-aware AI, review Related References, and run portfolio-wide AI review.</p>
+    <p><strong>Prepare:</strong> Reference Library stores originals privately, supports AI analysis/sanitization review, and lets you approve a separate sanitized derivative for later use.</p>
+    <p><strong>Create:</strong> Content Brief → approved source context → AI plan → approve plan → controlled local build → validation → preview → keep/revert → publishing.</p>
+    <p><strong>Publishing:</strong> local edits and local commits are not public. Publish to GitHub is the explicit action that can trigger the live site deployment.</p>
 </template>
 
 <template data-help-template="validation">
     <p><strong>Run Full Validation</strong> is a read-only health check across the public site, structured content, renderers, docs, Git guardrails, AI guardrails, and Portfolio Manager security/runtime rules.</p>
     <p><strong>It changes:</strong> nothing.</p>
-    <p><strong>Next step:</strong> if it passes, review your changes in Save &amp; Publish. The commit action runs the same validation again.</p>
+    <p><strong>Next step:</strong> if it passes, continue reviewing your local result. The commit action runs the same full validation again before creating a local checkpoint.</p>
 </template>
 
 <template data-help-template="refresh-docs">
-    <p><strong>Refresh Docs</strong> rebuilds maintenance records such as the content inventory, portfolio map, and changelog.</p>
+    <p><strong>Refresh Docs</strong> rebuilds generated maintenance records such as the content inventory, portfolio map, and changelog.</p>
     <p>It does not rewrite public pages, commit changes, or publish anything.</p>
 </template>
 
@@ -55,46 +53,47 @@
 <template data-help-template="create-project">
     <p><strong>Create Project</strong> creates a structured project record and, when appropriate, a standard public case-study page in the correct taxonomy path.</p>
     <p>It validates the project and refreshes generated documentation. It does not commit or publish.</p>
-    <p><strong>Next step:</strong> preview the page, refine the project data, then use Save &amp; Publish.</p>
+    <p>For new portfolio work, prefer the guided <strong>Create Content Lab</strong> so the purpose, evidence, safety constraints, AI plan, and controlled build are reviewed first.</p>
 </template>
 
 <template data-help-template="save-project">
-    <p><strong>Save Project Data</strong> updates the project's structured JSON source and refreshes generated documentation.</p>
-    <p>If structured-content validation fails, the JSON edit is rolled back.</p>
-    <p><strong>Standard page:</strong> regenerate after saving when public HTML should reflect the updated data. <strong>Custom page:</strong> bespoke code is not overwritten.</p>
+    <p><strong>Save Project Edits</strong> updates the project's structured record and refreshes generated documentation. Relevant custom-page title references stay synchronized.</p>
+    <p>If validation fails, the guarded edit is rolled back.</p>
+    <p>Saving is local only. Preview the result before publishing.</p>
 </template>
 
 <template data-help-template="general-content">
-    <p><strong>General Page Content</strong> manages predefined plain-text fields on Home, About, Projects, category pages, and Contact.</p>
-    <p>Navigation, links, buttons, tags, lists, CSS, JavaScript, layout, and custom interactions remain outside this editor.</p>
-    <p>Each field maps to one approved locator. If a locator is missing or ambiguous, saving fails instead of guessing.</p>
+    <p><strong>Visible page editing</strong> exposes text Portfolio Manager can safely identify on the real page, plus supported interactive-state text.</p>
+    <p>Private page notes stay under the Git-ignored Portfolio Manager workspace and are not sent with page-aware AI requests.</p>
+    <p>For structural/visual/code-heavy changes, use the page-aware AI proposal surface rather than trying to force the change through plain-text fields.</p>
 </template>
 
 <template data-help-template="general-save">
-    <p><strong>Save Page Copy</strong> updates both structured general-page data and the approved text locations in public HTML locally.</p>
-    <p>Public-safe confirmation is required. Validation runs immediately and both files roll back on failure.</p>
-    <p>It does not commit or publish. Preview the page, then use Save &amp; Publish.</p>
+    <p><strong>Save Page Copy</strong> updates approved public-page text locally. Public-safe confirmation is required when public copy changed.</p>
+    <p>Validation runs immediately and guarded files are restored if validation fails.</p>
+    <p>It does not commit or publish.</p>
 </template>
 
 <template data-help-template="regenerate">
-    <p><strong>Regenerate Page</strong> rebuilds a standard project's public HTML from its current JSON data and the shared template.</p>
+    <p><strong>Regenerate Page</strong> rebuilds a standard project's public HTML from its current structured data and the shared template.</p>
     <p>This action is unavailable for custom interactive pages and does not commit or publish.</p>
 </template>
 
 <template data-help-template="standard-custom">
-    <p><strong>Standard Page:</strong> generated from structured JSON + the shared project template and can be safely regenerated.</p>
-    <p><strong>Custom Page:</strong> contains bespoke HTML/CSS/JavaScript. Metadata can be edited, but the generic renderer cannot overwrite the custom experience.</p>
+    <p><strong>Standard Page:</strong> generated from structured project data + the shared case-study template and can be safely regenerated.</p>
+    <p><strong>Custom Page:</strong> contains bespoke HTML/CSS/JavaScript. Portfolio Manager exposes safe visible-copy/interaction editing without letting the generic renderer overwrite the custom experience.</p>
 </template>
 
 <template data-help-template="assets">
-    <p><strong>Asset Library</strong> manages files intentionally destined for the public portfolio.</p>
-    <p>Managed assets live under <code>portfolio/assets/project-assets/</code>. Anything under <code>portfolio/</code> may become publicly reachable after publishing.</p>
-    <p>Keep confidential, proprietary, customer-identifying, or unsanitized source material outside the public portfolio.</p>
+    <p><strong>Project Assets</strong> are files intentionally managed as public-candidate portfolio assets. Routine asset controls now live directly in relevant project/custom-page editors; the full Asset Library remains available as an advanced view.</p>
+    <p>Managed public assets live under <code>portfolio/assets/project-assets/</code>. Anything under <code>portfolio/</code> may become publicly reachable after publishing even if a page does not visibly link to it.</p>
+    <p>Keep confidential, proprietary, customer-identifying, unreleased, or unsanitized source material in the private Reference Library instead.</p>
 </template>
 
 <template data-help-template="asset-upload">
     <p><strong>Add Public Asset</strong> copies an allowed file into the project's managed public-asset folder and records its metadata.</p>
     <p>Public-safe confirmation is required. Images require alt text. Web-code/executable formats are intentionally blocked.</p>
+    <p>Uploading associates the file with the project; it does not automatically insert the file into a page layout.</p>
 </template>
 
 <template data-help-template="asset-replace">
@@ -103,18 +102,67 @@
 </template>
 
 <template data-help-template="ai-assistance">
-    <p><strong>AI Assistance</strong> creates private proposals for rewriting, sanitization, analysis, placement/tags, and project summaries.</p>
-    <p>Only source/context you deliberately enter is sent, plus the public portfolio taxonomy. AI cannot edit portfolio files, commit, or publish.</p>
-    <p>Do not send source material you are not authorized to share with the configured external AI provider.</p>
+    <p><strong>AI is always scoped to a specific workflow.</strong> Portfolio Manager does not send the entire repository or all private workspace data to the provider.</p>
+    <p><strong>Page-aware AI:</strong> selected public page + relevant public CSS + your request. <strong>Portfolio Review:</strong> public portfolio only.</p>
+    <p><strong>Private/user-supplied sources:</strong> the relevant workflow shows the text/images being sent and requires provider/authorization acknowledgements before the external request.</p>
+    <p>AI can propose, analyze, flag, or draft. Human approval remains required for local writes, sanitization decisions, source approval, and publishing.</p>
 </template>
 
 <template data-help-template="ai-proposal">
-    <p><strong>AI Proposal Review</strong> separates proposed copy, analysis, placement/tags, supported claims, evidence gaps, and warnings.</p>
-    <p>There is intentionally no Apply-to-site action. Copy only approved wording into the appropriate deterministic editor.</p>
+    <p><strong>Generic AI Proposal:</strong> review the draft/analysis first, then choose how to use it.</p>
+    <p><strong>Use in Existing Content</strong> opens a real deterministic editor and stages the proposal into a field only after you choose <strong>Insert Draft into Field</strong>. The form is not auto-saved and Undo restores the previous field value.</p>
+    <p><strong>Create Something New</strong> prefills an unsaved Content Brief for review. <strong>Save for Later</strong> records private proposal usage status only.</p>
+    <p>This generic helper has no direct Git or publishing authority.</p>
+</template>
+
+<template data-help-template="page-ai">
+    <p><strong>Page-aware AI workflow:</strong> request → private proposal → review exact anchored operations → Approve &amp; Apply Locally → automatic validation → real preview → Keep or Revert.</p>
+    <p>The source page is rechecked before applying the approved operations and a private backup is created first.</p>
+    <p>Applying locally is not publishing. AI cannot independently commit, push, or merge the change.</p>
+</template>
+
+<template data-help-template="portfolio-review">
+    <p><strong>AI Portfolio Review</strong> reads the public portfolio only and returns advisory QA/improvement findings.</p>
+    <p>It does not edit pages, read private Reference Library sources, perform Git actions, or publish. The current review is one unified lens and does not perform web research.</p>
+</template>
+
+<template data-help-template="related-references">
+    <p><strong>Related References</strong> is deterministic, not AI. It appears when an identity/title-style change may affect other public references.</p>
+    <p>For each match, choose Update Reference, Edit Suggested Text, or Leave Unchanged. Guarded writes are validated and rolled back on failure.</p>
+</template>
+
+<template data-help-template="reference-library">
+    <p><strong>Reference Library</strong> is the private source-preparation workspace under Create Content.</p>
+    <p>Original source files stay under Git-ignored <code>.portfolio-manager/</code> storage and are preserved unchanged. Sanitized work is stored as a separate derivative.</p>
+    <p>A source can become <strong>Approved for Portfolio Use</strong> only after a sanitized derivative exists and you explicitly approve it. Approval makes that derivative eligible for Content Brief source context; it does not publish the file.</p>
+</template>
+
+<template data-help-template="reference-ai">
+    <p><strong>Ask AI About This Resource</strong> can identify skills, evidence, gaps, reusable elements, portfolio opportunities, and likely placement.</p>
+    <p>Text-extractable sources show the exact local extraction before send. Supported images show the actual image and require a separate visual acknowledgement because image pixels are not locally OCR/preflighted.</p>
+    <p>Private notes, tags, approval notes, unrelated resources, and credentials are excluded. The result remains private and cannot sanitize, approve, or publish the source.</p>
+</template>
+
+<template data-help-template="sanitization">
+    <p><strong>Sanitization Review:</strong> AI flags possible public-safety risks; you decide how each finding is handled.</p>
+    <p>Human actions include Keep, Remove, Generalize, Rewrite, Replace text/asset, Crop/redact, or Mark intentionally public-safe.</p>
+    <p>The original stays untouched. The workflow creates a separate Sanitized Draft that still requires explicit approval before it can be used as an Approved Source.</p>
+</template>
+
+<template data-help-template="create-content">
+    <p><strong>Create Content Lab:</strong> Content Brief → optional Approved Sources → AI Content Plan → human plan approval → AI Build Proposal → human edit/review → Create Local Project &amp; Validate → Preview → Keep/Revert.</p>
+    <p>Approved Reference Library context uses sanitized derivatives only; private originals stay outside the brief/build AI context.</p>
+    <p>Controlled build writes local files only after explicit approval and validation. It never commits or publishes automatically.</p>
+</template>
+
+<template data-help-template="ai-file-review">
+    <p><strong>Advanced AI Drafting Helper attachments:</strong> files are prepared locally first. Review the exact extracted text and any image previews before sending.</p>
+    <p>Images require a visual acknowledgement because pixels are not locally OCR/preflighted. Credential-like extracted text can block generation.</p>
+    <p>Temporary binary uploads are Git-ignored and are removed after successful generation or when you discard the prepared request.</p>
 </template>
 
 <template data-help-template="git-workflow">
-    <p><strong>Save &amp; Publish</strong> is the normal Git workflow for this single-owner portfolio.</p>
+    <p><strong>Save &amp; Publish</strong> is the guarded Git workflow for the public portfolio.</p>
     <p><strong>Sequence:</strong> review changed files → select exact files → inspect diff → full validation + commit to local <code>main</code> → explicitly Publish to GitHub.</p>
     <p><strong>Commit Changes</strong> creates a local checkpoint only. <strong>Publish to GitHub</strong> pushes committed <code>main</code> changes to <code>origin/main</code>, where GitHub Pages can deploy them.</p>
     <p>The manager blocks private paths, force-push, silent merges/rebases, publishing with uncommitted changes, and publishing when GitHub has newer commits.</p>
@@ -133,8 +181,7 @@
 
 <template data-help-template="git-commit">
     <p><strong>Validate &amp; Commit Changes</strong> runs the full validation suite first. Any failure blocks the commit.</p>
-    <p>A successful commit is created on local <code>main</code> but remains only on your Mac until you explicitly publish.</p>
-    <p><strong>Next step:</strong> when you are satisfied with the committed checkpoint, use Publish to GitHub.</p>
+    <p>A successful commit is created on local <code>main</code> but remains local until you explicitly publish.</p>
 </template>
 
 <template data-help-template="git-push">
@@ -144,19 +191,23 @@
 </template>
 
 <template data-help-template="publishing">
-    <p>GitHub Pages publishes the <code>portfolio/</code> directory from approved commits on <code>main</code>.</p>
-    <p>Local edits are not live. Local commits are not live. <strong>Publish to GitHub</strong> is the explicit action that pushes committed <code>main</code> changes and can trigger deployment.</p>
-    <p><strong>Live path:</strong> local edit → preview → validation → select files → commit → Publish to GitHub → GitHub Pages deployment.</p>
+    <p><strong>Public boundary:</strong> local edits are not live; local validation is not live; local commits are not live.</p>
+    <p><strong>Publish to GitHub</strong> is the explicit action that pushes approved committed <code>main</code> changes and can trigger GitHub Pages deployment.</p>
+    <p><strong>Public-candidate files:</strong> anything under <code>portfolio/</code> may become publicly reachable after publication, even when it is not visibly linked from a page.</p>
 </template>
 
 <template data-help-template="git-safety">
     <p>Portfolio Manager performs only the Git actions needed for its simple single-owner workflow.</p>
-    <p>It blocks unsafe/private paths, force-push, silent merge/rebase, and runs full validation before every commit.</p>
+    <p>It blocks unsafe/private paths, force-push, silent merge/rebase behavior, and runs full validation before every commit.</p>
     <p>Publishing is always a separate explicit action after commit.</p>
 </template>
 
 <template data-help-template="privacy">
-    <p>Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and stores private runtime data under the Git-ignored <code>.portfolio-manager/</code> directory.</p>
-    <p>Your password hash, Flask secret, and optional AI API key live only in the Git-ignored local <code>.env</code> file.</p>
-    <p>Sessions expire after eight hours. A timeout does not delete work; sign in again if the local Flask app is still running.</p>
+    <p><strong>Local app:</strong> Portfolio Manager binds to <code>127.0.0.1</code>, requires your local password, protects modifying forms with CSRF, and expires sessions after eight hours.</p>
+    <p><strong>Secrets:</strong> password hash, Flask secret, and optional AI API key live in the Git-ignored local <code>.env</code> file.</p>
+    <p><strong>Private workspace:</strong> notes, AI proposals/reviews, backups, Content Briefs, Reference Library originals/derivatives, and temporary upload sessions live under Git-ignored <code>.portfolio-manager/</code> storage.</p>
+    <p><strong>Public boundary:</strong> <code>portfolio/</code> contains public-candidate site files. <code>portfolio-data/</code> is Git-tracked structured content. Do not store secrets or unsanitized confidential source material in either location.</p>
+    <p><strong>AI boundary:</strong> external AI receives only the context disclosed by the specific workflow after required review/acknowledgements. Reference Library private notes/tags and unrelated sources are not silently sent.</p>
+    <p><strong>Reference Library:</strong> originals remain unchanged. A separate sanitized derivative must exist before it can be Approved for Portfolio Use, and approval still does not publish it.</p>
+    <p><strong>Publishing:</strong> Git safeguards block known private paths and sensitive files. Nothing becomes live until approved committed changes are explicitly published to GitHub.</p>
 </template>
