@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resource Analysis | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-uploads.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Reference Library · AI Resource Analysis</p>
+            <h1>{{ record.title }}</h1>
+            <p class="hero-copy">Ask what this private resource can credibly demonstrate before deciding how—or whether—to use it in your portfolio.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Back to Reference Item</a>
+            <a class="btn btn-secondary" href="{{ url_for('reference_library.workspace') }}">Reference Library</a>
+            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="ai-boundary-banner compact">
+        <div>
+            <p class="eyebrow">Private analysis boundary</p>
+            <h2>AI analyzes. It does not approve, sanitize, or publish.</h2>
+            <p>This workspace can identify skills, evidence, gaps, possible portfolio uses, reusable elements, and likely placement. The result stays inside the private Reference Library and never changes the resource's sanitization or approval status.</p>
+        </div>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">What AI would receive</p>
+            <h2>{{ context.filename }}</h2>
+            <p class="section-copy">The public portfolio taxonomy is included automatically so AI can suggest where this resource might fit. Your private Reference Library notes, tags, approval note, and other resources are not sent.</p>
+
+            {% if context.supported and context.mode == 'text' %}
+            <p class="section-copy"><strong>Source mode:</strong> exact text extracted locally from the original private file. Nothing below has been sent yet.</p>
+            {% if context.truncated %}<div class="flash-message error">This source is longer than the current extraction limit. Only the text shown below will be sent, and the analysis will record that limitation.</div>{% endif %}
+            {% if context.blocked %}<div class="flash-message error"><strong>AI analysis blocked:</strong> local preflight detected credential or secret patterns. Create a safer private working copy before sending this resource to AI.</div>{% endif %}
+            {% if context.warnings %}<div class="ai-warning-box"><strong>Local sensitivity markers found:</strong><ul>{% for warning in context.warnings %}<li>{{ warning }}</li>{% endfor %}</ul></div>{% endif %}
+            <details open>
+                <summary>Exact extracted text that will be sent</summary>
+                <pre class="ai-source-text">{{ context.text }}</pre>
+            </details>
+            {% elif context.supported and context.mode == 'image' %}
+            <p class="section-copy"><strong>Source mode:</strong> full visual image. The image has <strong>not</strong> been OCR'd or content-preflighted locally, so review the entire image yourself before sending it.</p>
+            <div class="ai-upload-image-card">
+                <img src="{{ url_for('reference_library.analysis_image', item_id=record.id) }}" alt="Private source preview for {{ record.title }}">
+            </div>
+            {% else %}
+            <div class="flash-message error">{{ context.reason }}</div>
+            <p class="section-copy">The resource remains safely stored in the Reference Library. AI analysis currently supports text-extractable documents plus PNG, JPEG, and WEBP images.</p>
+            {% endif %}
+
+            <p class="field-help">Source SHA-256: {{ context.source_sha256 }}</p>
+        </section>
+
+        {% if context.supported %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Ask AI</p>
+            <h2>{{ 'Run a new analysis' if analysis else 'Analyze this resource' }}</h2>
+            {% if ai_settings.configured %}
+            <form method="post" action="{{ url_for('reference_library.run_analysis', item_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="reviewed_sha256" value="{{ context.source_sha256 }}">
+                <div class="full-span">
+                    <label for="focus">Anything specific you want AI to focus on? <span class="field-help">· optional</span></label>
+                    <textarea id="focus" name="focus" rows="4" maxlength="2400" placeholder="Example: Focus on what this demonstrates about learning analytics and workflow automation, and tell me what evidence is still missing.">{{ analysis.focus if analysis else '' }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand that the {{ 'full image' if context.mode == 'image' else 'exact extracted text shown above' }}, my optional focus, and the public portfolio taxonomy will be sent to the configured AI provider.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this private source material to the configured AI provider and have reviewed it for credentials or information I am not permitted to share externally.</span></label>
+                    {% if context.mode == 'image' %}<label class="ai-check"><input type="checkbox" name="visual_ack" required><span>I reviewed the full visual image and understand its contents are not locally OCR/preflighted before being sent.</span></label>{% endif %}
+                    {% if context.warnings %}<label class="ai-check"><input type="checkbox" name="sensitive_ack"><span>I reviewed the sensitivity markers above and still want to send this source for private AI analysis.</span></label>{% endif %}
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit" {% if context.blocked %}disabled{% endif %}>{{ 'Run New Resource Analysis' if analysis else 'Analyze Resource' }}</button></div>
+            </form>
+            {% else %}
+            <p class="section-copy">AI is optional and is not currently connected. The resource remains private and usable in the rest of the Reference Library.</p>
+            <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        {% if analysis %}
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div><p class="eyebrow">Latest private analysis</p><h2>{{ analysis.result.resource_summary or 'Resource analysis' }}</h2></div>
+                <span class="v2-ai-status connected">{{ analysis.analyzed_at }}</span>
+            </div>
+            <p class="field-help">Analyzed from {{ analysis.source_filename }} · {{ analysis.source_mode|replace('-', ' ')|title }} · {{ analysis.model }}</p>
+            {% if analysis.extraction_truncated %}<div class="ai-warning-box"><strong>Analysis limitation:</strong> the source extraction was truncated before AI review.</div>{% endif %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Capabilities</p>
+            <h2>Skills this resource can credibly demonstrate</h2>
+            <div class="v2-general-grid">
+                {% for item in analysis.result.skills_demonstrated %}
+                <article class="v2-small-card"><h3>{{ item.skill }}</h3><p>{{ item.evidence }}</p></article>
+                {% else %}<p class="empty-note">No specific source-supported skills were identified.</p>{% endfor %}
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Evidence</p>
+            <h2>What the source supports</h2>
+            <div class="v2-general-grid">
+                {% for item in analysis.result.evidence_present %}
+                <article class="v2-small-card"><h3>{{ item.evidence }}</h3><p>{{ item.portfolio_value }}</p></article>
+                {% else %}<p class="empty-note">No specific portfolio evidence was identified.</p>{% endfor %}
+            </div>
+            {% if analysis.result.evidence_gaps %}<h3>Evidence gaps / unsupported claims</h3><ul>{% for item in analysis.result.evidence_gaps %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Portfolio possibilities</p>
+            <h2>Ways this resource could support future content</h2>
+            {% for item in analysis.result.portfolio_opportunities %}
+            <article class="v2-project-row">
+                <div>
+                    <h3>{{ item.title }}</h3>
+                    {% if item.format %}<p><strong>Format:</strong> {{ item.format }}</p>{% endif %}
+                    {% if item.angle %}<p>{{ item.angle }}</p>{% endif %}
+                    {% if item.evidence_to_use %}<p><strong>Evidence to use:</strong> {{ item.evidence_to_use|join(' · ') }}</p>{% endif %}
+                    {% if item.evidence_needed %}<p><strong>Still needed:</strong> {{ item.evidence_needed|join(' · ') }}</p>{% endif %}
+                </div>
+            </article>
+            {% else %}<p class="empty-note">No clear portfolio opportunity was identified from the current evidence.</p>{% endfor %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <div class="v2-general-grid">
+                <article class="v2-small-card">
+                    <h3>Reusable Elements</h3>
+                    <ul>{% for item in analysis.result.reusable_elements %}<li>{{ item }}</li>{% else %}<li>No specific reusable elements identified.</li>{% endfor %}</ul>
+                </article>
+                <article class="v2-small-card">
+                    <h3>Suggested Placement</h3>
+                    <p><strong>{{ analysis.result.suggested_placement.category or 'No category recommendation' }}</strong>{% if analysis.result.suggested_placement.subcategory %} → {{ analysis.result.suggested_placement.subcategory }}{% endif %}</p>
+                    <p>{{ analysis.result.suggested_placement.rationale }}</p>
+                </article>
+                <article class="v2-small-card">
+                    <h3>Safety Notes</h3>
+                    <ul>{% for item in analysis.result.safety_notes %}<li>{{ item }}</li>{% else %}<li>No additional AI safety notes returned. Human review is still required.</li>{% endfor %}</ul>
+                </article>
+                <article class="v2-small-card">
+                    <h3>Recommended Next Steps</h3>
+                    <ul>{% for item in analysis.result.next_steps %}<li>{{ item }}</li>{% else %}<li>Review the evidence and decide whether this source is worth developing further.</li>{% endfor %}</ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Continue working</p>
+            <h2>Choose the human-controlled next step</h2>
+            <p class="section-copy">This AI analysis did not change the resource status or create public content.</p>
+            <div class="button-row">
+                {% if record.status == 'approved-for-portfolio-use' and record.sanitized_derivative %}
+                <a class="btn btn-primary" href="{{ url_for('create_content.new_brief', source=record.id) }}">Use Approved Source in Content Brief</a>
+                {% else %}
+                <a class="btn btn-primary" href="{{ url_for('reference_library.sanitization', item_id=record.id) }}">Review for Sanitization</a>
+                {% endif %}
+                <a class="btn btn-secondary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Back to Reference Item</a>
+            </div>
+        </section>
+        {% endif %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
