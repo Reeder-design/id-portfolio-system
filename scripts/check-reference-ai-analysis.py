@@ -16,6 +16,7 @@ SERVICE = MANAGER / "reference_ai_analysis_service.py"
 ROUTES = MANAGER / "reference_library_routes.py"
 TEMPLATE = MANAGER / "templates" / "reference-ai-analysis.html"
 ITEM_TEMPLATE = MANAGER / "templates" / "reference-item.html"
+UPLOAD_CSS = MANAGER / "static" / "ai-uploads.css"
 VALIDATION = MANAGER / "validation_service.py"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate-site.yml"
 
@@ -32,6 +33,7 @@ def main() -> int:
         (ROUTES, "Reference Library routes"),
         (TEMPLATE, "resource AI analysis template"),
         (ITEM_TEMPLATE, "Reference Item template"),
+        (UPLOAD_CSS, "AI upload/preview stylesheet"),
         (VALIDATION, "validation service"),
         (WORKFLOW, "GitHub validation workflow"),
     ]:
@@ -45,6 +47,7 @@ def main() -> int:
     routes = ROUTES.read_text(encoding="utf-8")
     template = TEMPLATE.read_text(encoding="utf-8")
     item_template = ITEM_TEMPLATE.read_text(encoding="utf-8")
+    upload_css = UPLOAD_CSS.read_text(encoding="utf-8")
     validation = VALIDATION.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
 
@@ -64,6 +67,10 @@ def main() -> int:
     require('name="sensitive_ack"' in template, "Text sensitivity warnings must require an additional acknowledgement.", errors)
     require('name="reviewed_sha256"' in template, "AI analysis must bind send approval to the source hash reviewed by the user.", errors)
     require("private Reference Library notes, tags, approval note, and other resources are not sent" in template, "AI analysis must clearly exclude unrelated private metadata.", errors)
+    require("ai-upload-image-card" in template, "Image analysis must use the bounded preview viewport.", errors)
+    require(".ai-upload-image-card" in upload_css and "height: 420px" in upload_css, "Image preview must use a predictable desktop viewport size.", errors)
+    require("object-fit: contain" in upload_css, "Image preview must preserve aspect ratio without cropping.", errors)
+    require("height: 280px" in upload_css, "Image preview must use a smaller responsive viewport on narrow screens.", errors)
 
     require("extract_reference_text" in service, "AI resource analysis must reuse local Reference Library text extraction.", errors)
     require("preflight_source" in service, "Extracted source text must pass the existing local secret/sensitivity preflight.", errors)
