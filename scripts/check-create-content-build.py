@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from types import SimpleNamespace
 import ast
 import json
 import sys
@@ -26,6 +25,7 @@ def main() -> int:
     for path in (SERVICE, ROUTES, BUILD_TEMPLATE, BRIEF_TEMPLATE):
         require(path.exists(), f"Missing controlled-build file: {path.relative_to(ROOT)}", errors)
     if errors:
+        print("Create Content controlled-build validation failed:")
         for item in errors:
             print(f"  - {item}")
         return 1
@@ -81,135 +81,139 @@ def main() -> int:
         old_load_new_project = build._load_new_project_module
         old_validation = build.run_full_validation
 
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_root = Path(temp_dir)
-            temp_briefs = temp_root / ".portfolio-manager" / "create-content" / "briefs"
-            content.BRIEFS_ROOT = temp_briefs
-            build.ROOT = temp_root
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # macOS exposes /var as a symlink to /private/var. Resolve the
+                # temporary root once so every later Path.relative_to check uses
+                # one canonical spelling of the same directory.
+                temp_root = Path(temp_dir).resolve()
+                temp_briefs = temp_root / ".portfolio-manager" / "create-content" / "briefs"
+                content.BRIEFS_ROOT = temp_briefs
+                build.ROOT = temp_root
 
-            form = {
-                "working_title": "Controlled Build Test",
-                "project_type": "Standard case study",
-                "purpose": "Demonstrate a safe controlled build.",
-                "skills_to_demonstrate": "Instructional design",
-                "audience": "Hiring managers",
-                "story_problem": "A workflow needed a portfolio-safe case study.",
-                "story_approach": "Use a structured renderer.",
-                "story_process": "Plan, review, validate.",
-                "story_result": "A reviewable local project.",
-                "evidence": "Test-only evidence.",
-                "interaction": "Read the case study.",
-                "visual_direction": "Use the portfolio design system.",
-                "public_safety": "No confidential data.",
-                "personal_direction": "Concise and first-person.",
-            }
-            record = content.create_brief(form)
-            record["plan"] = {
-                "concept_summary": "Structured case study",
-                "recommended_format": "case study",
-                "placement": {"category": "workflows", "subcategory": None, "rationale": "Workflow project"},
-                "sections": [],
-                "interactions": [],
-                "asset_needs": [],
-                "evidence_gaps": [],
-                "safety_notes": [],
-                "build_tasks": [],
-                "writing_direction": [],
-            }
-            record["plan_generated_at"] = "2026-09-14T12:00:00"
-            record["plan_stale"] = False
-            brief_path = temp_briefs / f"{record['id']}.json"
-            brief_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+                form = {
+                    "working_title": "Controlled Build Test",
+                    "project_type": "Standard case study",
+                    "purpose": "Demonstrate a safe controlled build.",
+                    "skills_to_demonstrate": "Instructional design",
+                    "audience": "Hiring managers",
+                    "story_problem": "A workflow needed a portfolio-safe case study.",
+                    "story_approach": "Use a structured renderer.",
+                    "story_process": "Plan, review, validate.",
+                    "story_result": "A reviewable local project.",
+                    "evidence": "Test-only evidence.",
+                    "interaction": "Read the case study.",
+                    "visual_direction": "Use the portfolio design system.",
+                    "public_safety": "No confidential data.",
+                    "personal_direction": "Concise and first-person.",
+                }
+                record = content.create_brief(form)
+                record["plan"] = {
+                    "concept_summary": "Structured case study",
+                    "recommended_format": "case study",
+                    "placement": {"category": "workflows", "subcategory": None, "rationale": "Workflow project"},
+                    "sections": [],
+                    "interactions": [],
+                    "asset_needs": [],
+                    "evidence_gaps": [],
+                    "safety_notes": [],
+                    "build_tasks": [],
+                    "writing_direction": [],
+                }
+                record["plan_generated_at"] = "2026-09-14T12:00:00"
+                record["plan_stale"] = False
+                brief_path = temp_briefs / f"{record['id']}.json"
+                brief_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
-            approved = build.approve_plan(record["id"])
-            require(build.plan_is_approved(approved), "Plan approval must bind to the current build fingerprint.", errors)
+                approved = build.approve_plan(record["id"])
+                require(build.plan_is_approved(approved), "Plan approval must bind to the current build fingerprint.", errors)
 
-            proposal_form = {
-                "title": "Controlled Build Test",
-                "slug": "controlled-build-test",
-                "category": "workflows",
-                "subcategory": "",
-                "confidentiality": "public",
-                "summary": "A safe local case-study build.",
-                "business_need": "Demonstrate controlled portfolio generation.",
-                "audience": "Hiring managers",
-                "learning_objectives": "Show a validated local build\nPreserve human approval boundaries",
-                "role": "I designed and validated the workflow.",
-                "design_approach": "I used the existing structured project system.",
-                "development_process": "I reviewed the proposal before local generation.",
-                "outcomes": "Created a reviewable local project",
-                "skills": "Instructional design, workflow design",
-                "tools": "Python, HTML",
-                "source_material_notes": "Test content only.",
-            }
-            build.save_build_proposal(record["id"], proposal_form)
+                proposal_form = {
+                    "title": "Controlled Build Test",
+                    "slug": "controlled-build-test",
+                    "category": "workflows",
+                    "subcategory": "",
+                    "confidentiality": "public",
+                    "summary": "A safe local case-study build.",
+                    "business_need": "Demonstrate controlled portfolio generation.",
+                    "audience": "Hiring managers",
+                    "learning_objectives": "Show a validated local build\nPreserve human approval boundaries",
+                    "role": "I designed and validated the workflow.",
+                    "design_approach": "I used the existing structured project system.",
+                    "development_process": "I reviewed the proposal before local generation.",
+                    "outcomes": "Created a reviewable local project",
+                    "skills": "Instructional design, workflow design",
+                    "tools": "Python, HTML",
+                    "source_material_notes": "Test content only.",
+                }
+                build.save_build_proposal(record["id"], proposal_form)
 
-            class FakeNewProject:
-                @staticmethod
-                def build_project_record(**kwargs):
-                    return {
-                        "id": kwargs["slug"],
-                        "title": kwargs["title"],
-                        "category": kwargs["category"]["id"],
-                        "subcategory": kwargs["subcategory"]["id"] if kwargs.get("subcategory") else None,
-                        "status": kwargs["status"],
-                        "confidentiality": kwargs["confidentiality"],
-                        "page_path": f"portfolio/projects/workflows/{kwargs['slug']}/index.html",
-                        "content": {"business_need": kwargs["business_need"]},
-                    }
+                class FakeNewProject:
+                    @staticmethod
+                    def build_project_record(**kwargs):
+                        return {
+                            "id": kwargs["slug"],
+                            "title": kwargs["title"],
+                            "category": kwargs["category"]["id"],
+                            "subcategory": kwargs["subcategory"]["id"] if kwargs.get("subcategory") else None,
+                            "status": kwargs["status"],
+                            "confidentiality": kwargs["confidentiality"],
+                            "page_path": f"portfolio/projects/workflows/{kwargs['slug']}/index.html",
+                            "content": {"business_need": kwargs["business_need"]},
+                        }
 
-                @staticmethod
-                def create_project(project_record, render=True):
-                    record_path = temp_root / "portfolio-data" / "projects" / f"{project_record['id']}.json"
-                    page_path = temp_root / project_record["page_path"]
-                    record_path.parent.mkdir(parents=True, exist_ok=True)
-                    page_path.parent.mkdir(parents=True, exist_ok=True)
-                    record_path.write_text(json.dumps(project_record, indent=2), encoding="utf-8")
-                    page_path.write_text("<html><body>Controlled Build Test</body></html>", encoding="utf-8")
-                    return record_path, page_path
+                    @staticmethod
+                    def create_project(project_record, render=True):
+                        record_path = temp_root / "portfolio-data" / "projects" / f"{project_record['id']}.json"
+                        page_path = temp_root / project_record["page_path"]
+                        record_path.parent.mkdir(parents=True, exist_ok=True)
+                        page_path.parent.mkdir(parents=True, exist_ok=True)
+                        record_path.write_text(json.dumps(project_record, indent=2), encoding="utf-8")
+                        page_path.write_text("<html><body>Controlled Build Test</body></html>", encoding="utf-8")
+                        return record_path, page_path
 
-                @staticmethod
-                def refresh_documentation():
-                    return "docs refreshed"
+                    @staticmethod
+                    def refresh_documentation():
+                        return "docs refreshed"
 
-                @staticmethod
-                def cleanup_empty_parents(path, stop):
-                    current = path.parent
-                    while current != stop and current.is_relative_to(stop):
-                        try:
-                            current.rmdir()
-                        except OSError:
-                            break
-                        current = current.parent
+                    @staticmethod
+                    def cleanup_empty_parents(path, stop):
+                        current = path.parent
+                        while current != stop and current.is_relative_to(stop):
+                            try:
+                                current.rmdir()
+                            except OSError:
+                                break
+                            current = current.parent
 
-            build._load_new_project_module = lambda: FakeNewProject
-            build.run_full_validation = lambda: (True, "validation passed")
+                build._load_new_project_module = lambda: FakeNewProject
+                build.run_full_validation = lambda: (True, "validation passed")
 
-            built = build.apply_local_build(record["id"])
-            local = built["local_build"]
-            record_file = temp_root / local["record_path"]
-            page_file = temp_root / local["page_path"]
-            require(record_file.exists() and page_file.exists(), "Controlled build must create both structured record and rendered page locally.", errors)
-            require(local["decision"] == "pending", "Created local build must wait for human Keep/Revert decision.", errors)
+                built = build.apply_local_build(record["id"])
+                local = built["local_build"]
+                record_file = temp_root / local["record_path"]
+                page_file = temp_root / local["page_path"]
+                require(record_file.exists() and page_file.exists(), "Controlled build must create both structured record and rendered page locally.", errors)
+                require(local["decision"] == "pending", "Created local build must wait for human Keep/Revert decision.", errors)
 
-            build.revert_local_build(record["id"])
-            require(not record_file.exists() and not page_file.exists(), "Revert must remove unchanged files created by the controlled build.", errors)
-
-            build.apply_local_build(record["id"])
-            rebuilt = content.load_brief(record["id"])["local_build"]
-            changed_page = temp_root / rebuilt["page_path"]
-            changed_page.write_text("<html><body>User edited this after generation.</body></html>", encoding="utf-8")
-            try:
                 build.revert_local_build(record["id"])
-                errors.append("Revert must refuse to delete a generated file that changed after creation.")
-            except build.CreateBuildError as exc:
-                require("changed after the local build" in str(exc), "Edited-file revert failure should explain the hash protection.", errors)
-            require(changed_page.exists(), "Hash-protected revert must preserve an edited generated page.", errors)
+                require(not record_file.exists() and not page_file.exists(), "Revert must remove unchanged files created by the controlled build.", errors)
 
-        content.BRIEFS_ROOT = old_briefs_root
-        build.ROOT = old_build_root
-        build._load_new_project_module = old_load_new_project
-        build.run_full_validation = old_validation
+                build.apply_local_build(record["id"])
+                rebuilt = content.load_brief(record["id"])["local_build"]
+                changed_page = temp_root / rebuilt["page_path"]
+                changed_page.write_text("<html><body>User edited this after generation.</body></html>", encoding="utf-8")
+                try:
+                    build.revert_local_build(record["id"])
+                    errors.append("Revert must refuse to delete a generated file that changed after creation.")
+                except build.CreateBuildError as exc:
+                    require("changed after the local build" in str(exc), "Edited-file revert failure should explain the hash protection.", errors)
+                require(changed_page.exists(), "Hash-protected revert must preserve an edited generated page.", errors)
+        finally:
+            content.BRIEFS_ROOT = old_briefs_root
+            build.ROOT = old_build_root
+            build._load_new_project_module = old_load_new_project
+            build.run_full_validation = old_validation
     except Exception as exc:
         errors.append(f"Controlled build runtime test failed: {exc}")
 
