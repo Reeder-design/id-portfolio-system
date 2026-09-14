@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference Library | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Private Workspace</p>
+            <h1>Content Workspace &amp; Reference Library</h1>
+            <p class="hero-copy">Store professional source material privately, add working notes, track review status, and keep sanitized derivatives separate from untouched originals. Reference Library files never become public just because they are stored here.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Back to Create Content</a>
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Private-source boundary</p>
+        <h2>Store first. Review before reuse.</h2>
+        <p class="section-copy">Uploads are kept in the Git-ignored Portfolio Manager workspace. The original file is preserved unchanged. A separate Sanitized Draft may be added later and only that derivative can become Approved for Portfolio Use.</p>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Add private source</p>
+            <h2>Add to Reference Library</h2>
+            <form method="post" action="{{ url_for('reference_library.add_item') }}" enctype="multipart/form-data" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label for="title">Reference title</label>
+                    <input id="title" name="title" type="text" maxlength="240" placeholder="Example: Learning reporting automation source package" required>
+                </div>
+                <div class="full-span">
+                    <label for="source_file">Original private source</label>
+                    <input id="source_file" name="source_file" type="file" required>
+                    <p class="field-help">Common documents, spreadsheets, presentations, PDFs, images, HTML, ZIP packages, and small video files are supported. Maximum 25 MB in this version.</p>
+                </div>
+                <div class="full-span">
+                    <label for="notes">Private notes</label>
+                    <textarea id="notes" name="notes" rows="5" maxlength="12000" placeholder="What is this? What might it demonstrate? What needs review before portfolio use?"></textarea>
+                </div>
+                <div class="full-span">
+                    <label for="tags">Tags</label>
+                    <input id="tags" name="tags" type="text" placeholder="automation, learning analytics, reporting">
+                    <p class="field-help">Comma-separated. Tags are private workspace metadata.</p>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Add Private Source</button></div>
+            </form>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Reference status</p>
+            <h2>Library</h2>
+            <div class="button-row">
+                <a class="btn {{ 'btn-primary' if selected_status == 'all' else 'btn-secondary' }}" href="{{ url_for('reference_library.workspace') }}">All</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'private-source' else 'btn-secondary' }}" href="{{ url_for('reference_library.workspace', status='private-source') }}">Private Source</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'needs-review' else 'btn-secondary' }}" href="{{ url_for('reference_library.workspace', status='needs-review') }}">Needs Review</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'sanitized-draft' else 'btn-secondary' }}" href="{{ url_for('reference_library.workspace', status='sanitized-draft') }}">Sanitized Draft</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'approved-for-portfolio-use' else 'btn-secondary' }}" href="{{ url_for('reference_library.workspace', status='approved-for-portfolio-use') }}">Approved for Portfolio Use</a>
+            </div>
+
+            {% if items %}
+            <div class="ai-proposal-list">
+                {% for item in items %}
+                <a class="ai-proposal-link" href="{{ url_for('reference_library.item', item_id=item.id) }}">
+                    <strong>{{ item.title }}</strong>
+                    <span>{{ item.status|replace('-', ' ')|title }} · {{ item.original_file.filename }} · updated {{ item.updated_at }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-note">No reference items match this filter.</p>
+            {% endif %}
+        </section>
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
