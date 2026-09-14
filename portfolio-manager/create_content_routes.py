@@ -31,6 +31,11 @@ from create_content_build_service import (
     revoke_plan_approval,
     save_build_proposal,
 )
+from create_publish_bridge_service import (
+    CreatePublishBridgeError,
+    publish_bridge_context,
+    start_or_resume_publish_bridge,
+)
 
 
 create_content_bp = Blueprint("create_content", __name__, url_prefix="/create")
@@ -181,12 +186,14 @@ def build(brief_id: str):
     try:
         record = load_brief(brief_id)
         context = build_workspace_context(record)
-    except (CreateContentError, CreateBuildError) as exc:
+        bridge = publish_bridge_context(brief_id)
+    except (CreateContentError, CreateBuildError, CreatePublishBridgeError) as exc:
         flash(str(exc), "error")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
     return render_template(
         "create-content-build.html",
         ai_settings=get_local_ai_settings(),
+        publish_bridge=bridge,
         **context,
     )
 
@@ -275,15 +282,32 @@ def apply_build(brief_id: str):
     return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
 
 
+def _continue_to_related_references(brief_id: str):
+    try:
+        bridge = start_or_resume_publish_bridge(brief_id)
+    except CreatePublishBridgeError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    flash("Local build kept. Review Related References next; nothing has been committed or published.", "success")
+    return redirect(
+        url_for("related_references.review", review_id=bridge["related_references_review_id"]),
+        code=303,
+    )
+
+
 @create_content_bp.post("/briefs/<brief_id>/build/keep")
 def keep_build(brief_id: str):
     try:
         keep_local_build(brief_id)
     except CreateBuildError as exc:
         flash(str(exc), "error")
-    else:
-        flash("Local build kept. It is still not committed or published; continue reviewing it before the publishing workflow.", "success")
-    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    return _continue_to_related_references(brief_id)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/related-references")
+def continue_related_references(brief_id: str):
+    return _continue_to_related_references(brief_id)
 
 
 @create_content_bp.post("/briefs/<brief_id>/build/revert")
