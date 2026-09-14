@@ -9,6 +9,7 @@ import hashlib
 import json
 import re
 import shutil
+import sys
 import uuid
 
 from validation_service import run_command, run_full_validation
@@ -166,9 +167,12 @@ def scan_related_references(
 
     def add_candidate(path: Path, html_text: str, match: re.Match, current: str, suggested: str, kind: str, reason: str) -> None:
         nonlocal counter
+        fragment = match.group(0)
         if not suggested or _normalized(current) == _normalized(suggested):
             return
-        key = (str(path), match.group(0))
+        if html_text.count(fragment) != 1:
+            return
+        key = (str(path), fragment)
         if key in seen:
             return
         seen.add(key)
@@ -351,6 +355,7 @@ def apply_related_reference_decisions(review_id: str, form) -> dict[str, Any]:
             grouped.setdefault(str(candidate["path"]), []).append((candidate, replacement_text))
 
     originals: dict[str, str] = {}
+    prepared_updates: dict[str, str] = {}
     applied_hashes: dict[str, str] = {}
 
     for raw_path, edits in grouped.items():
@@ -361,7 +366,6 @@ def apply_related_reference_decisions(review_id: str, form) -> dict[str, Any]:
             raise RelatedReferenceError(
                 f"{raw_path} changed after this review was created. Reload the source edit and run Related References again."
             )
-        originals[raw_path] = current
 
         updated = current
         for candidate, replacement_text in edits:
@@ -373,7 +377,8 @@ def apply_related_reference_decisions(review_id: str, form) -> dict[str, Any]:
             replace = _custom_replacement(candidate, replacement_text)
             updated = updated.replace(find, replace, 1)
 
-        path.write_text(updated, encoding="utf-8")
+        originals[raw_path] = current
+        prepared_updates[raw_path] = updated
         applied_hashes[raw_path] = _sha256(updated)
 
     backup_dir = (BACKUPS_ROOT / review_id).resolve()
@@ -388,8 +393,12 @@ def apply_related_reference_decisions(review_id: str, form) -> dict[str, Any]:
         encoding="utf-8",
     )
 
+    validation_output = ""
     try:
-        docs_result = run_command(["python", "scripts/update-docs.py"])
+        for raw_path, updated in prepared_updates.items():
+            _safe_repo_path(raw_path).write_text(updated, encoding="utf-8")
+
+        docs_result = run_command([sys.executable, "scripts/update-docs.py"])
         if not docs_result["success"]:
             raise RuntimeError(docs_result["stderr"] or docs_result["stdout"] or "Documentation refresh failed.")
         validation_ok, validation_output = run_full_validation()
@@ -398,7 +407,7 @@ def apply_related_reference_decisions(review_id: str, form) -> dict[str, Any]:
     except Exception as exc:
         for raw_path, original in originals.items():
             _safe_repo_path(raw_path).write_text(original, encoding="utf-8")
-        run_command(["python", "scripts/update-docs.py"])
+        run_command([sys.executable, "scripts/update-docs.py"])
         shutil.rmtree(backup_dir, ignore_errors=True)
         raise RelatedReferenceError(
             "The selected reference updates did not pass validation, so Portfolio Manager restored those related pages. "
@@ -423,6 +432,8 @@ def delete_related_reference_review(review_id: str) -> None:
         raise RelatedReferenceError(
             "This review changed related pages. Keep the review record until those local changes are published or reverted through Git."
         )
-    _review_path(review_id).unlink(missing_ok=True)
+    path = _review_path(review_id)
+    if path.exists():
+        path.unlink()
     backup_dir = BACKUPS_ROOT / review_id
     shutil.rmtree(backup_dir, ignore_errors=True)
