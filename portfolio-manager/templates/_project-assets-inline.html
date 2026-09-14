@@ -4,7 +4,7 @@
             <p class="eyebrow">Project assets</p>
             <h3>{{ asset_project.assets|length }} current asset{% if asset_project.assets|length != 1 %}s{% endif %}</h3>
         </div>
-        <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=asset_project.id) }}">Open Full Asset Library</a>
+        <a class="btn btn-secondary" aria-label="Manage Current Assets" href="{{ url_for('assets.asset_library', project=asset_project.id) }}">Open Full Asset Library</a>
     </div>
     <p class="section-copy">Add and maintain the public-facing files that belong with this project without leaving the editor. Files are copied into the public portfolio only after you confirm they are public-safe.</p>
 
