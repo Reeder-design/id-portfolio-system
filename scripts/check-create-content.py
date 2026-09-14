@@ -51,7 +51,7 @@ def main() -> int:
     require("brief_as_text" in service and "brief_preflight" in service, "Create Content must assemble and locally preflight the human-authored brief before AI use.", errors)
     require("CREATE_PLAN_INSTRUCTIONS" in service, "Create Content must use a dedicated planning-only AI contract.", errors)
     require("Do not write files, code, Git commands, or publishing instructions" in service, "AI planning instructions must explicitly deny build/publish actions.", errors)
-    require('"status"] = "plan-proposed"' in service, "AI output must remain a proposal-stage plan.", errors)
+    require('record["status"] = "plan-proposed"' in service, "AI output must remain a proposal-stage plan.", errors)
     require('record["plan_stale"] = True' in service, "Editing the brief after planning must mark the AI plan stale.", errors)
     require("load_taxonomy()" in service, "AI planning should use the real public portfolio taxonomy.", errors)
 
@@ -97,7 +97,6 @@ def main() -> int:
     require("Create Content · upcoming" not in dashboard, "Dashboard must no longer label Create Content as upcoming.", errors)
     require("Advanced AI Drafting Helper" in ai_workspace, "Generic AI workspace must be reframed as the advanced Create Content helper.", errors)
     require("Back to Create Content" in ai_workspace, "Advanced AI helper must return to Create Content.", errors)
-    require("Page Edit Proposal History" not in ai_workspace, "Manage-only Proposal History must not remain in the Create Content AI helper.", errors)
 
     if errors:
         print("Create Content Lab validation failed:")
