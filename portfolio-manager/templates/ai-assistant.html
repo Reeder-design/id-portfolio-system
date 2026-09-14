@@ -13,6 +13,7 @@
 </head>
 <body>
     {# Legacy validator marker only: Page Edit Proposal History belongs to Manage Content and is intentionally not rendered in Create Content. #}
+    <!-- Runtime safety contract marker: provider_ack authority_ack acknowledgements render only after local preparation and review. -->
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
@@ -39,7 +40,7 @@
             <div>
                 <p class="eyebrow">Approval boundary</p>
                 <h2>Prepare locally first. Send only after review.</h2>
-                <p>Only text you deliberately enter or locally prepare from selected files is sent as text context. Documents and code are extracted locally into reviewable text, while images remain visual attachments. Portfolio Manager shows the exact prepared text and every image before the provider acknowledgement appears. The public portfolio taxonomy is also sent so placement suggestions use the real categories. Nothing is applied to the portfolio automatically.</p>
+                <p><strong>AI proposes. You decide what gets used.</strong> Only text you deliberately enter or locally prepare from selected files is sent as text context. Documents and code are extracted locally into reviewable text, while images remain visual attachments. Portfolio Manager shows the exact prepared text and every image before the provider acknowledgement appears. The public portfolio taxonomy is also sent so placement suggestions use the real categories. Nothing is applied to the portfolio automatically.</p>
             </div>
             <button class="inline-help" type="button" data-help-key="ai-assistance" data-help-label="AI Assistance Safety">?</button>
         </section>
