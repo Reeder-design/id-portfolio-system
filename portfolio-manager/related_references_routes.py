@@ -28,7 +28,7 @@ related_references_bp = Blueprint(
 
 
 def _source_editor_url(record: dict) -> str:
-    if record.get("source_kind") == "project":
+    if record.get("source_kind") in {"project", "create-build"}:
         return url_for("content.project_editor", project_id=record.get("source_id"))
     return url_for("site_content.v2_page_editor", page_id=record.get("source_id"))
 
