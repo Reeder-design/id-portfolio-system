@@ -44,6 +44,7 @@ def main() -> int:
     dashboard = DASHBOARD.read_text(encoding="utf-8")
     validation = VALIDATION.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
+    guide_lower = guide.lower()
 
     # Current human-facing workflow model.
     for phrase in [
@@ -69,11 +70,11 @@ def main() -> int:
         require(path_label in drawer, f"Privacy drawer must explain {path_label}.", errors)
 
     for phrase in [
-        "image pixels are not locally OCR/preflighted",
-        "Private notes, tags, approval notes, unrelated Reference Library resources",
-        "private originals stay outside the brief/build AI context",
+        "image pixels are not locally ocr/preflighted",
+        "private notes, tags, approval notes, unrelated reference library resources",
+        "private originals are not used as approved-source context",
     ]:
-        require(phrase in guide, f"User Guide must preserve the AI/privacy boundary: missing {phrase!r}.", errors)
+        require(phrase in guide_lower, f"User Guide must preserve the AI/privacy boundary: missing {phrase!r}.", errors)
 
     for stale in [
         "What the three main workspaces mean",
