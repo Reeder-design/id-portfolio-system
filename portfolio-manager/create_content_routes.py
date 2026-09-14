@@ -20,6 +20,17 @@ from create_content_sources import (
     save_brief_sources,
     source_ids_from_form,
 )
+from create_content_build_service import (
+    CreateBuildError,
+    apply_local_build,
+    approve_plan,
+    build_workspace_context,
+    generate_build_proposal,
+    keep_local_build,
+    revert_local_build,
+    revoke_plan_approval,
+    save_build_proposal,
+)
 
 
 create_content_bp = Blueprint("create_content", __name__, url_prefix="/create")
@@ -163,6 +174,127 @@ def save_brief(brief_id: str):
 
     flash("AI Content Plan created privately from the approved brief and current approved source context. No public portfolio files were created or changed.", "success")
     return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
+
+
+@create_content_bp.get("/briefs/<brief_id>/build")
+def build(brief_id: str):
+    try:
+        record = load_brief(brief_id)
+        context = build_workspace_context(record)
+    except (CreateContentError, CreateBuildError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
+    return render_template(
+        "create-content-build.html",
+        ai_settings=get_local_ai_settings(),
+        **context,
+    )
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/approve-plan")
+def approve_build_plan(brief_id: str):
+    if request.form.get("plan_ack") != "on":
+        flash("Confirm that you reviewed and approve the current Content Plan before moving into build generation.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    try:
+        approve_plan(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Content Plan approved for build. No public portfolio files were created.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/revoke-plan")
+def revoke_build_plan(brief_id: str):
+    try:
+        revoke_plan_approval(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Build approval removed. The Content Plan itself was not deleted.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/generate")
+def generate_build(brief_id: str):
+    if not get_local_ai_settings()["configured"]:
+        flash("Connect AI in Settings before generating a build proposal.", "error")
+        return redirect(url_for("ai_assistant.settings"), code=303)
+    if request.form.get("provider_ack") != "on":
+        flash("Confirm that the approved brief, plan, and approved sanitized source context may be sent to the configured AI provider.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    if request.form.get("authority_ack") != "on":
+        flash("Confirm that you are authorized to send the approved build context to the configured AI provider.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+    try:
+        record = load_brief(brief_id)
+        preflight = brief_preflight(record)
+    except CreateContentError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
+    if preflight.get("warnings") and request.form.get("sensitive_ack") != "on":
+        flash("Review the local sensitivity warnings and confirm the additional acknowledgement before generating a build proposal.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+    try:
+        generate_build_proposal(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("AI build proposal created privately. Review and edit it before any portfolio files are created.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/save-proposal")
+def save_build(brief_id: str):
+    try:
+        save_build_proposal(brief_id, request.form)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Build proposal saved privately. No portfolio files were created.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/apply")
+def apply_build(brief_id: str):
+    if request.form.get("local_write_ack") != "on":
+        flash("Confirm that you want Portfolio Manager to create the proposed project files locally.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    if request.form.get("public_safe_ack") != "on":
+        flash("Confirm that you reviewed the build proposal for public-safety before creating local portfolio files.", "error")
+        return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+    try:
+        apply_local_build(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Local project created and full validation passed. Review the real local page before choosing Keep or Revert.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/keep")
+def keep_build(brief_id: str):
+    try:
+        keep_local_build(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Local build kept. It is still not committed or published; continue reviewing it before the publishing workflow.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
+
+
+@create_content_bp.post("/briefs/<brief_id>/build/revert")
+def revert_build(brief_id: str):
+    try:
+        revert_local_build(brief_id)
+    except CreateBuildError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Local build reverted. The private Content Brief and build proposal were preserved.", "success")
+    return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
 
 
 @create_content_bp.post("/briefs/<brief_id>/delete")
