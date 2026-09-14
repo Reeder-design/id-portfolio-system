@@ -136,11 +136,11 @@
                 <div class="full-span"><label for="summary">Short project summary</label><textarea id="summary" name="summary" rows="3" maxlength="6000" required>{{ proposal.summary }}</textarea></div>
                 <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="5" maxlength="6000" required>{{ proposal.business_need }}</textarea></div>
                 <div class="full-span"><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3" maxlength="6000" required>{{ proposal.audience }}</textarea></div>
-                <div class="full-span"><label for="learning_objectives">Learning / enablement objectives</label><textarea id="learning_objectives" name="learning_objectives" rows="5" maxlength="12000" required>{% for item in proposal.learning_objectives %}{{ item }}{% if not loop.last %}\n{% endif %}{% endfor %}</textarea><p class="field-help">One objective per line.</p></div>
+                <div class="full-span"><label for="learning_objectives">Learning / enablement objectives</label><textarea id="learning_objectives" name="learning_objectives" rows="5" maxlength="12000" required>{{ proposal.learning_objectives|join('&#10;')|safe }}</textarea><p class="field-help">One objective per line.</p></div>
                 <div class="full-span"><label for="role">My role</label><textarea id="role" name="role" rows="4" maxlength="6000" required>{{ proposal.role }}</textarea></div>
                 <div class="full-span"><label for="design_approach">Design approach</label><textarea id="design_approach" name="design_approach" rows="6" maxlength="6000" required>{{ proposal.design_approach }}</textarea></div>
                 <div class="full-span"><label for="development_process">Development process</label><textarea id="development_process" name="development_process" rows="6" maxlength="6000" required>{{ proposal.development_process }}</textarea></div>
-                <div class="full-span"><label for="outcomes">Results / outcomes / deliverables</label><textarea id="outcomes" name="outcomes" rows="5" maxlength="12000" required>{% for item in proposal.outcomes %}{{ item }}{% if not loop.last %}\n{% endif %}{% endfor %}</textarea><p class="field-help">One supported item per line. Do not add unsupported metrics.</p></div>
+                <div class="full-span"><label for="outcomes">Results / outcomes / deliverables</label><textarea id="outcomes" name="outcomes" rows="5" maxlength="12000" required>{{ proposal.outcomes|join('&#10;')|safe }}</textarea><p class="field-help">One supported item per line. Do not add unsupported metrics.</p></div>
                 <div class="full-span"><label for="skills">Skills demonstrated</label><input id="skills" name="skills" value="{{ proposal.skills|join(', ') }}"><p class="field-help">Comma-separated.</p></div>
                 <div class="full-span"><label for="tools">Tools used</label><input id="tools" name="tools" value="{{ proposal.tools|join(', ') }}"><p class="field-help">Comma-separated. Keep only tools actually supported by the brief/source material.</p></div>
                 <div class="full-span"><label for="source_material_notes">Public-safe source / sanitization note</label><textarea id="source_material_notes" name="source_material_notes" rows="3" maxlength="6000">{{ proposal.source_material_notes }}</textarea></div>
@@ -151,7 +151,7 @@
         <section class="dashboard-card full-width">
             <p class="eyebrow">Step 4 · Create locally</p>
             <h2>Write the reviewed proposal into the portfolio</h2>
-            <p class="section-copy">Portfolio Manager will use the existing structured project generator and renderer, create the JSON project record and standard case-study page locally, then run Full Validation. If validation fails, the newly created files are rolled back automatically.</p>
+            <p class="section-copy">Portfolio Manager will use the existing structured project generator and renderer, create the JSON project record and standard case-study page locally, refresh generated maintenance documentation, then run Full Validation. If validation fails, the newly created project files are rolled back and the generated documentation is refreshed again.</p>
             <form method="post" action="{{ url_for('create_content.apply_build', brief_id=record.id) }}" class="form-grid">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="full-span">
