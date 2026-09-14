@@ -17,6 +17,7 @@ from content_routes import content_bp
 from create_content_routes import create_content_bp
 from git_routes import git_bp
 from portfolio_review_routes import portfolio_review_bp
+from reference_library_routes import reference_library_bp
 from related_references_routes import related_references_bp
 from site_content_routes import site_content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
@@ -62,6 +63,7 @@ app.register_blueprint(ai_apply_bp)
 app.register_blueprint(portfolio_review_bp)
 app.register_blueprint(related_references_bp)
 app.register_blueprint(create_content_bp)
+app.register_blueprint(reference_library_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
