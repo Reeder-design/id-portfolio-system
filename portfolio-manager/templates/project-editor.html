@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='asset-manager.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -17,7 +18,7 @@
             <div>
                 <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ project.title }}</h1>
-                <p class="hero-copy">Edit the project identity and connected content, then preview the real local project without needing to work with the underlying files.</p>
+                <p class="hero-copy">Edit the project identity, visible content, and connected assets in one place, then preview the real local project before publishing.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
@@ -102,20 +103,11 @@
                     <section class="full-span v2-ai-edit-panel">
                         <p class="eyebrow">Visible page content</p>
                         <h3>Edit the full custom experience</h3>
-                        <p>Open the visible-copy workspace to edit headings, paragraphs, labels, buttons, and connected interactive-state text. The page-specific private notes and upcoming AI helper also live there.</p>
+                        <p>Open the visible-copy workspace to edit headings, paragraphs, labels, buttons, interactive-state text, and this project's assets from the same working view.</p>
                         <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=custom_copy_page_id) }}">Edit Visible Page Copy</a>
                     </section>
                     {% endif %}
                     {% endif %}
-
-                    <section class="full-span v2-assets-inline">
-                        <div>
-                            <p class="eyebrow">Page assets</p>
-                            <h3>{{ project.assets|length }} current asset{% if project.assets|length != 1 %}s{% endif %}</h3>
-                            <p>Asset editing still opens the existing safe asset tool during this transition. It will move directly into this page editor in a later v2 slice.</p>
-                        </div>
-                        <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Current Assets</a>
-                    </section>
 
                     {% if project._generated_page %}
                     <section class="full-span v2-notes-preview">
@@ -132,6 +124,10 @@
                         {% endif %}
                     </div>
                 </form>
+
+                {% set asset_project = project %}
+                {% set asset_return_to = 'project' %}
+                {% include '_project-assets-inline.html' %}
             </section>
 
             <aside class="dashboard-card v2-preview-panel">
