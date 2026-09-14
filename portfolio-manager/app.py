@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import json
 import re
-import subprocess
 import sys
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -17,6 +16,7 @@ from content_routes import content_bp
 from git_routes import git_bp
 from site_content_routes import site_content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
+from validation_service import run_command, run_full_validation
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -135,50 +135,6 @@ def scan_project_categories() -> list[dict]:
 
 def count_portfolio_pages() -> int:
     return len(list(PORTFOLIO_ROOT.rglob("index.html"))) if PORTFOLIO_ROOT.exists() else 0
-
-
-def run_command(command_list: list[str]) -> dict:
-    try:
-        result = subprocess.run(
-            command_list,
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-        )
-        return {
-            "success": result.returncode == 0,
-            "stdout": result.stdout.strip(),
-            "stderr": result.stderr.strip(),
-            "code": result.returncode,
-        }
-    except Exception as exc:
-        return {"success": False, "stdout": "", "stderr": str(exc), "code": 1}
-
-
-def run_full_validation() -> tuple[bool, str]:
-    commands = [
-        ("Public site", [sys.executable, "scripts/check-site.py"]),
-        ("Structured content", [sys.executable, "scripts/check-content.py"]),
-        ("General site content", [sys.executable, "scripts/check-site-content.py"]),
-        ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
-        ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
-        ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
-        ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
-        ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
-        ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
-        ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
-        ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
-    ]
-    results = []
-    for label, command in commands:
-        result = run_command(command)
-        results.append(f"{label}: {'PASS' if result['success'] else 'FAIL'}")
-        if not result["success"]:
-            details = result["stderr"] or result["stdout"]
-            if details:
-                results.append(details[-1800:])
-            return False, "\n".join(results)
-    return True, "\n".join(results)
 
 
 def save_uploaded_files(files, request_id: str) -> list[str]:
