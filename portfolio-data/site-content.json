@@ -5,252 +5,84 @@
       "label": "Home",
       "page_path": "portfolio/index.html",
       "fields": {
-        "hero_title_lead": {
-          "label": "Hero title lead",
-          "type": "short",
-          "value": "Instructional design for complex"
-        },
-        "hero_title_accent": {
-          "label": "Hero title accent",
-          "type": "short",
-          "value": "products, systems, and workflows."
-        },
-        "hero_copy": {
-          "label": "Hero introduction",
-          "type": "long",
-          "value": "I'm Haley Reeder, an instructional designer focused on sales and partner enablement for complex products. I design the learning experience and can also work with LMS operations, reporting, automation, AI evaluation, or custom development when the project needs it."
-        },
-        "featured_heading": {
-          "label": "Featured work heading",
-          "type": "short",
-          "value": "Explore my work"
-        },
-        "featured_intro": {
-          "label": "Featured work introduction",
-          "type": "long",
-          "value": "The portfolio is organized around instructional design, AI evaluation, and the systems I use to build and maintain learning."
-        }
+        "hero_title_lead": {"label": "Hero title lead", "type": "short", "value": "Instructional design for complex"},
+        "hero_title_accent": {"label": "Hero title accent", "type": "short", "value": "products, systems, and workflows."},
+        "hero_copy": {"label": "Hero introduction", "type": "long", "value": "I'm Haley Reeder, an instructional designer focused on sales and partner enablement for complex products. I design the learning experience and can also work with LMS operations, reporting, automation, AI evaluation, or custom development when the project needs it."},
+        "featured_heading": {"label": "Featured work heading", "type": "short", "value": "Explore my work"},
+        "featured_intro": {"label": "Featured work introduction", "type": "long", "value": "The portfolio is organized around instructional design, AI evaluation, and the systems I use to build and maintain learning."}
       }
     },
     "about": {
       "label": "About Me",
       "page_path": "portfolio/about/index.html",
       "fields": {
-        "hero_title": {
-          "label": "About hero title",
-          "type": "short",
-          "value": "Learning design, development, and the systems around it"
-        },
-        "hero_intro_primary": {
-          "label": "Primary introduction",
-          "type": "long",
-          "value": "I design enterprise learning for sales and partner audiences, especially when the subject is technical or product-heavy. My work also reaches into LMS operations, reporting, automation, AI evaluation, and custom digital content when those pieces are part of the learning problem."
-        },
-        "hero_intro_secondary": {
-          "label": "Background paragraph",
-          "type": "long",
-          "value": "Before corporate L&D, I taught high school history and English. That classroom experience and my Master of Education still shape how I think about practice, feedback, assessment, and whether learning actually changes performance."
-        },
-        "thread_heading": {
-          "label": "Common thread heading",
-          "type": "short",
-          "value": "How I adapt the work to the learning need"
-        },
-        "thread_intro": {
-          "label": "Common thread introduction",
-          "type": "long",
-          "value": "Different formats solve different problems. Select a project type to see what I pay attention to when I design it and what evidence I use to judge whether it works."
-        }
+        "hero_title": {"label": "About hero title", "type": "short", "value": "Learning design, development, and the systems around it"},
+        "hero_intro_primary": {"label": "Primary introduction", "type": "long", "value": "I design enterprise learning for sales and partner audiences, especially when the subject is technical or product-heavy. My work also reaches into LMS operations, reporting, automation, AI evaluation, and custom digital content when those pieces are part of the learning problem."},
+        "hero_intro_secondary": {"label": "Background paragraph", "type": "long", "value": "Before corporate L&D, I taught high school history and English. That classroom experience and my Master of Education still shape how I think about practice, feedback, assessment, and whether learning actually changes performance."},
+        "thread_heading": {"label": "Common thread heading", "type": "short", "value": "How I adapt the work to the learning need"},
+        "thread_intro": {"label": "Common thread introduction", "type": "long", "value": "Different formats solve different problems. Select a project type to see what I pay attention to when I design it and what evidence I use to judge whether it works."}
       }
     },
     "projects": {
       "label": "Projects Landing Page",
       "page_path": "portfolio/projects/index.html",
       "fields": {
-        "hero_title": {
-          "label": "Projects hero title",
-          "type": "short",
-          "value": "Projects"
-        },
-        "hero_intro": {
-          "label": "Projects hero introduction",
-          "type": "long",
-          "value": "Browse instructional design, AI evaluation, and learning-systems work. The examples show both the finished experience and the thinking behind it."
-        },
-        "family_heading": {
-          "label": "Project types heading",
-          "type": "short",
-          "value": "Browse by area"
-        },
-        "family_intro": {
-          "label": "Project types introduction",
-          "type": "long",
-          "value": "Open a category to see the project examples and interactive demos inside it."
-        }
+        "hero_title": {"label": "Projects hero title", "type": "short", "value": "Projects"},
+        "hero_intro": {"label": "Projects hero introduction", "type": "long", "value": "Explore examples of instructional design, AI training and evaluation, and the workflows and systems that support learning development, delivery, measurement, and maintenance."},
+        "family_heading": {"label": "Project types heading", "type": "short", "value": "Browse by area"},
+        "family_intro": {"label": "Project types introduction", "type": "long", "value": "Each area includes practical examples, interactive demonstrations, and reusable approaches to learning and performance work."}
       }
     },
     "instructional-design": {
       "label": "Instructional Design Category",
       "page_path": "portfolio/projects/instructional-design/index.html",
       "fields": {
-        "hero_title": {
-          "label": "Hero title",
-          "type": "short",
-          "value": "Instructional Design"
-        },
-        "hero_intro": {
-          "label": "Hero introduction",
-          "type": "long",
-          "value": "I design around the performance people need on the job, then choose the content, practice, support, and measurement that fit the task."
-        },
-        "overview_heading": {
-          "label": "Overview heading",
-          "type": "short",
-          "value": "How I approach instructional design"
-        },
-        "overview_body_one": {
-          "label": "Overview paragraph 1",
-          "type": "long",
-          "value": "I begin with the learner, the performance need, and the business context before choosing a format. The goal is to build the smallest effective solution that supports the required performance."
-        },
-        "overview_body_two": {
-          "label": "Overview paragraph 2",
-          "type": "long",
-          "value": "The format depends on the task. Sometimes a focused interaction or reference tool is enough; other needs call for multimedia, assessment, or a full learning pathway."
-        },
-        "examples_heading": {
-          "label": "Examples heading",
-          "type": "short",
-          "value": "Instructional design examples"
-        },
-        "examples_intro": {
-          "label": "Examples introduction",
-          "type": "long",
-          "value": "Browse examples ranging from focused interactions to multimedia and complete learning pathways."
-        }
+        "hero_title": {"label": "Hero title", "type": "short", "value": "Instructional Design"},
+        "hero_intro": {"label": "Hero introduction", "type": "long", "value": "I design and develop learning from analysis through measurement, including interactions, multimedia, assessments, pathways, reference tools, and performance support."},
+        "overview_heading": {"label": "Overview heading", "type": "short", "value": "How I approach instructional design"},
+        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "I begin with the learner, the performance need, and the business context before choosing a format. The goal is to build the smallest effective solution that supports the required performance."},
+        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "Depending on the need, that may be a focused interaction, microlearning, multimedia asset, reference resource, assessment, certification pathway, or a connected learning ecosystem."},
+        "examples_heading": {"label": "Examples heading", "type": "short", "value": "Instructional design examples"},
+        "examples_intro": {"label": "Examples introduction", "type": "long", "value": "Explore standalone learning experiences, multimedia development, and complete learning pathways."}
       }
     },
     "ai-training-and-evaluation": {
       "label": "AI Training and Evaluation Category",
       "page_path": "portfolio/projects/ai-training-and-evaluation/index.html",
       "fields": {
-        "hero_title": {
-          "label": "Hero title",
-          "type": "short",
-          "value": "AI Training and Evaluation"
-        },
-        "hero_intro_primary": {
-          "label": "Hero introduction",
-          "type": "long",
-          "value": "I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone."
-        },
-        "hero_intro_secondary": {
-          "label": "Hero supporting paragraph",
-          "type": "long",
-          "value": "I review model outputs for accuracy, grounding, instruction adherence, and usefulness, then write feedback tied to the evidence."
-        },
-        "overview_heading": {
-          "label": "Overview heading",
-          "type": "short",
-          "value": "Evaluation starts with requirements and evidence"
-        },
-        "overview_body_one": {
-          "label": "Overview paragraph 1",
-          "type": "long",
-          "value": "A polished response can still be inaccurate, incomplete, unsupported, or misaligned with the task."
-        },
-        "overview_body_two": {
-          "label": "Overview paragraph 2",
-          "type": "long",
-          "value": "Before scoring an output, I identify the task, audience, approved source material, and constraints. I then check whether the response actually meets them."
-        },
-        "overview_body_three": {
-          "label": "Overview paragraph 3",
-          "type": "long",
-          "value": "I separate material quality issues from stylistic preference and focus feedback on problems that affect correctness, usefulness, or reliability."
-        }
+        "hero_title": {"label": "Hero title", "type": "short", "value": "AI Training and Evaluation"},
+        "hero_intro_primary": {"label": "Hero introduction", "type": "long", "value": "I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone."},
+        "hero_intro_secondary": {"label": "Hero supporting paragraph", "type": "long", "value": "My work includes structured evaluation, analytical review, error detection, feedback writing, quality assurance, and testing AI within professional learning workflows."},
+        "overview_heading": {"label": "Overview heading", "type": "short", "value": "Evaluation starts with requirements and evidence"},
+        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "A polished response can still be inaccurate, incomplete, unsupported, or misaligned with the task."},
+        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "I define the task, audience, source material, and success criteria before evaluating accuracy, completeness, instruction adherence, consistency, and usability."},
+        "overview_body_three": {"label": "Overview paragraph 3", "type": "long", "value": "I separate material quality issues from stylistic preference and focus feedback on problems that affect correctness, usefulness, or reliability."}
       }
     },
     "workflows": {
       "label": "Workflows Category",
       "page_path": "portfolio/projects/workflows/index.html",
       "fields": {
-        "hero_title": {
-          "label": "Hero title",
-          "type": "short",
-          "value": "Systems and Workflows"
-        },
-        "hero_intro": {
-          "label": "Hero introduction",
-          "type": "long",
-          "value": "I design and automate the processes that support learning work so development, LMS administration, reporting, and maintenance are easier to repeat and own."
-        },
-        "overview_heading": {
-          "label": "Overview heading",
-          "type": "short",
-          "value": "Workflow design for learning operations"
-        },
-        "overview_body_one": {
-          "label": "Overview paragraph 1",
-          "type": "long",
-          "value": "I use documented workflows to make design decisions, handoffs, reviews, and development easier to follow and repeat."
-        },
-        "overview_body_two": {
-          "label": "Overview paragraph 2",
-          "type": "long",
-          "value": "I automate repetitive work and connect content to LMS or reporting systems when that reduces manual effort. I use AI only where it improves the workflow without removing human review."
-        },
-        "overview_body_three": {
-          "label": "Overview paragraph 3",
-          "type": "long",
-          "value": "I document how the system works, who owns it, and what data shows where it needs improvement."
-        },
-        "areas_heading": {
-          "label": "Workflow areas heading",
-          "type": "short",
-          "value": "Workflow areas"
-        },
-        "areas_intro": {
-          "label": "Workflow areas introduction",
-          "type": "long",
-          "value": "Browse examples of the operating work behind learning design and delivery."
-        }
+        "hero_title": {"label": "Hero title", "type": "short", "value": "Systems and Workflows"},
+        "hero_intro": {"label": "Hero introduction", "type": "long", "value": "I design the processes around learning work as carefully as the learning itself, from design and development workflows to LMS operations, AI integration, automation, reporting, and long-term content ownership."},
+        "overview_heading": {"label": "Overview heading", "type": "short", "value": "Workflow design for learning operations"},
+        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "I use documented workflows to make design decisions, handoffs, reviews, and development easier to follow and repeat."},
+        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "I also automate repetitive work, connect content with LMS and reporting systems, and use AI where it improves speed or quality without removing review and ownership."},
+        "overview_body_three": {"label": "Overview paragraph 3", "type": "long", "value": "Documentation, versioning, analytics, and clear ownership keep learning products maintainable after launch and create evidence for continuous improvement."},
+        "areas_heading": {"label": "Workflow areas heading", "type": "short", "value": "Workflow areas"},
+        "areas_intro": {"label": "Workflow areas introduction", "type": "long", "value": "Explore learning design, learning development, work automation, AI integration, LMS and content operations, and documentation and continuous improvement."}
       }
     },
     "contact": {
       "label": "Contact",
       "page_path": "portfolio/contact/index.html",
       "fields": {
-        "hero_title": {
-          "label": "Contact hero title",
-          "type": "short",
-          "value": "Contact"
-        },
-        "hero_intro": {
-          "label": "Contact hero introduction",
-          "type": "long",
-          "value": "LinkedIn is the easiest way to reach me. A protected portfolio contact form is also in development."
-        },
-        "connect_heading": {
-          "label": "Connect card heading",
-          "type": "short",
-          "value": "Connect online"
-        },
-        "connect_intro": {
-          "label": "Connect card introduction",
-          "type": "long",
-          "value": "I'm interested in instructional design roles and projects where learning, technology, AI, or enablement overlap."
-        },
-        "form_heading": {
-          "label": "Contact form heading",
-          "type": "short",
-          "value": "Send a message"
-        },
-        "form_intro": {
-          "label": "Contact form introduction",
-          "type": "long",
-          "value": "This form will connect to a secure form service so my email address does not need to be published."
-        }
+        "hero_title": {"label": "Contact hero title", "type": "short", "value": "Contact"},
+        "hero_intro": {"label": "Contact hero introduction", "type": "long", "value": "LinkedIn is the easiest way to reach me. A protected portfolio contact form is also in development."},
+        "connect_heading": {"label": "Connect card heading", "type": "short", "value": "Connect online"},
+        "connect_intro": {"label": "Connect card introduction", "type": "long", "value": "I'm interested in instructional design, learning technology, AI, enablement, and learning systems work."},
+        "form_heading": {"label": "Contact form heading", "type": "short", "value": "Send a message"},
+        "form_intro": {"label": "Contact form introduction", "type": "long", "value": "This form will connect to a secure form service so my email address does not need to be published."}
       }
     }
   }
