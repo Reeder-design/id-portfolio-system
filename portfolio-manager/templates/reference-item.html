@@ -103,7 +103,12 @@
             <p class="eyebrow">Resource actions</p>
             <h2>Analyze, sanitize, and prepare this source</h2>
             <div class="v2-general-grid">
-                <article class="v2-small-card upcoming"><h3>Ask AI About This Resource</h3><p>Analyze what professional skills, evidence, gaps, and possible portfolio uses this source contains after you explicitly choose what may be sent.</p><button class="btn btn-secondary" type="button" disabled>AI Resource Helper · upcoming</button></article>
+                <article class="v2-small-card">
+                    <h3>Ask AI About This Resource</h3>
+                    <p>Analyze what professional skills, evidence, gaps, reusable elements, and possible portfolio uses this source contains after you review exactly what may be sent.</p>
+                    <a class="btn btn-primary" href="{{ url_for('reference_library.analysis', item_id=record.id) }}">Open AI Resource Analysis</a>
+                    {% if record.get('ai_analysis') %}<p class="field-help">Latest private analysis: {{ record.ai_analysis.analyzed_at }}.</p>{% endif %}
+                </article>
                 <article class="v2-small-card"><h3>Review for Sanitization</h3><p>Run a conservative AI-assisted text review, inspect each finding, and choose exactly how it should be handled before creating a sanitized working draft.</p><a class="btn btn-primary" href="{{ url_for('reference_library.sanitization', item_id=record.id) }}">Open Sanitization Review</a>{% if record.sanitization_review %}<p class="field-help">{{ 'All findings decided' if record.sanitization_review.decisions_complete else 'Human decisions still in progress' }}.</p>{% endif %}</article>
                 {% if record.status == 'approved-for-portfolio-use' and record.sanitized_derivative %}
                 <article class="v2-small-card"><h3>Create Content Using This Resource</h3><p>Start a new Content Brief with this approved sanitized derivative already selected as trusted source context. The private original stays outside the brief.</p><a class="btn btn-primary" href="{{ url_for('create_content.new_brief', source=record.id) }}">Use in Content Brief</a></article>
