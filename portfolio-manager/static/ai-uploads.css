@@ -77,6 +77,26 @@
     background: rgba(0, 0, 0, 0.18);
 }
 
+.ai-upload-image-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, 720px);
+    height: 420px;
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(201, 217, 199, 0.25);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.ai-upload-image-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .ai-discard-form {
     margin-top: 2px;
 }
@@ -104,5 +124,10 @@
 @media (max-width: 680px) {
     .ai-prepared-meta {
         grid-template-columns: 1fr;
+    }
+
+    .ai-upload-image-card {
+        width: 100%;
+        height: 280px;
     }
 }
