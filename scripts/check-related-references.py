@@ -70,7 +70,7 @@ def main() -> int:
     require("Update Reference" in template, "Reference review must expose Update Reference.", errors)
     require("Edit Suggested Text" in template, "Reference review must expose Edit Suggested Text.", errors)
     require("Leave Unchanged" in template, "Reference review must expose Leave Unchanged.", errors)
-    require("Preview Edited Page" in template, "Reference review must expose real-page preview.", errors)
+    require("record.source_preview_url" in template and "Preview" in template, "Reference review must expose real-page preview for both edit and new-project modes.", errors)
     require("Continue to Save &amp; Publish" in template, "Completed reference review must hand off to the existing publishing workflow.", errors)
     require("AI is not used" in template, "The UI must explain that reference detection is deterministic.", errors)
 
