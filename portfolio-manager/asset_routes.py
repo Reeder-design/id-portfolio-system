@@ -29,6 +29,11 @@ ALLOWED_EXTENSIONS = {
 }
 
 REFERENCE_SCAN_EXTENSIONS = {".html", ".css", ".js"}
+CUSTOM_PROJECT_PAGES = {
+    "meddpicc-practice": "meddpicc-demo",
+    "pursuit-positioning": "pursuit-determination-demo",
+    "ai-training-and-evaluation-demo": "ai-evaluation-demo",
+}
 
 asset_bp = Blueprint("assets", __name__)
 
@@ -160,6 +165,20 @@ def require_public_safe_confirmation() -> None:
         )
 
 
+def asset_return_url(project_id: str) -> str:
+    """Return asset actions to a trusted editor destination, never an arbitrary URL."""
+    return_to = request.form.get("return_to", "").strip()
+    if return_to == "project":
+        return f"{url_for('content.project_editor', project_id=project_id)}#project-assets"
+
+    if return_to.startswith("page:"):
+        page_id = return_to.split(":", 1)[1].strip()
+        if CUSTOM_PROJECT_PAGES.get(project_id) == page_id:
+            return f"{url_for('site_content.v2_page_editor', page_id=page_id)}#project-assets"
+
+    return url_for("assets.asset_library", project=project_id)
+
+
 @asset_bp.route("/assets")
 def asset_library():
     projects = list_projects()
@@ -240,7 +259,7 @@ def upload_asset(project_id: str):
                 pass
         flash(f"Could not add asset: {exc}", "error")
 
-    return redirect(url_for("assets.asset_library", project=project_id))
+    return redirect(asset_return_url(project_id), code=303)
 
 
 @asset_bp.route("/assets/projects/<project_id>/<int:asset_index>/metadata", methods=["POST"])
@@ -269,11 +288,11 @@ def update_asset_metadata(project_id: str, asset_index: int):
         if not ok:
             raise RuntimeError(message)
 
-        flash("Asset metadata saved and documentation refreshed.", "success")
+        flash("Asset details saved and documentation refreshed.", "success")
     except Exception as exc:
-        flash(f"Could not update asset metadata: {exc}", "error")
+        flash(f"Could not update asset details: {exc}", "error")
 
-    return redirect(url_for("assets.asset_library", project=project_id))
+    return redirect(asset_return_url(project_id), code=303)
 
 
 @asset_bp.route("/assets/projects/<project_id>/<int:asset_index>/replace", methods=["POST"])
@@ -316,7 +335,7 @@ def replace_asset(project_id: str, asset_index: int):
     except Exception as exc:
         flash(f"Could not replace asset: {exc}", "error")
 
-    return redirect(url_for("assets.asset_library", project=project_id))
+    return redirect(asset_return_url(project_id), code=303)
 
 
 @asset_bp.route("/assets/projects/<project_id>/<int:asset_index>/remove", methods=["POST"])
@@ -376,7 +395,7 @@ def remove_asset(project_id: str, asset_index: int):
     except Exception as exc:
         flash(f"Could not remove asset: {exc}", "error")
 
-    return redirect(url_for("assets.asset_library", project=project_id))
+    return redirect(asset_return_url(project_id), code=303)
 
 
 @asset_bp.route("/assets/projects/<project_id>/<int:asset_index>/preview")
