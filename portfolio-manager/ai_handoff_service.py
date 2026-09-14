@@ -93,6 +93,12 @@ def record_usage(
     return record
 
 
+def delete_usage(proposal_id: str) -> None:
+    path = _usage_path(proposal_id)
+    if path.exists():
+        path.unlink()
+
+
 def proposal_draft_text(record: dict[str, Any]) -> str:
     result = record.get("result", {}) if isinstance(record.get("result"), dict) else {}
     proposal = str(result.get("proposal", "")).strip()
