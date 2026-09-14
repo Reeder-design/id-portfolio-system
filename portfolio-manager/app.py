@@ -10,6 +10,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 
+from ai_apply_routes import ai_apply_bp
 from ai_routes import ai_bp
 from asset_routes import asset_bp
 from content_routes import content_bp
@@ -54,6 +55,7 @@ app.register_blueprint(asset_bp)
 app.register_blueprint(site_content_bp)
 app.register_blueprint(git_bp)
 app.register_blueprint(ai_bp)
+app.register_blueprint(ai_apply_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}

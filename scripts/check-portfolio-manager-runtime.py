@@ -16,6 +16,15 @@ os.environ["PORTFOLIO_MANAGER_PASSWORD_HASH"] = "ci-smoke-test-placeholder"
 os.environ.pop("OPENAI_API_KEY", None)
 os.environ.pop("PORTFOLIO_MANAGER_AI_MODEL", None)
 
+# Keep this smoke test independent from the developer's real local .env.
+# The test intentionally exercises Portfolio Manager with AI unconfigured,
+# so it must not reload a real API key from disk.
+import security as manager_security  # noqa: E402
+import ai_settings_service as manager_ai_settings  # noqa: E402
+
+manager_security.load_local_env = lambda *args, **kwargs: None
+manager_ai_settings.ENV_PATH = ROOT / ".portfolio-manager" / "__runtime-test-no-ai.env"
+
 import app as manager_app  # noqa: E402
 
 
@@ -52,6 +61,7 @@ def main() -> int:
 
     dashboard = client.get("/")
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
+    require(b"Open AI Assistance" in dashboard.data, "Dashboard must provide a direct AI Assistance entry point.", errors)
     require(b"Manage Portfolio Content" in dashboard.data, "Dashboard must expose the v2 manage-content workflow.", errors)
     require(b"Create Portfolio Content" in dashboard.data, "Dashboard must reserve the Create Content Lab workflow.", errors)
     require(b"Content Workspace &amp; Reference Library" in dashboard.data, "Dashboard must reserve the private reference workspace.", errors)
@@ -156,6 +166,11 @@ def main() -> int:
     require(b"AI Not Configured" in ai_workspace.data, "AI workspace must fail open safely when optional AI is not configured.", errors)
     require(b"AI proposes. You decide what gets used." in ai_workspace.data, "AI workspace must show the proposal-only approval boundary.", errors)
     require(b"provider_ack" in ai_workspace.data and b"authority_ack" in ai_workspace.data, "AI workspace must render explicit provider and authorization acknowledgements.", errors)
+
+    page_history = client.get("/ai/page-edit/proposals/")
+    require(page_history.status_code == 200, "Authenticated page-edit proposal history must render.", errors)
+    require(b"Page Edit Proposal History" in page_history.data, "Page-edit proposal history must expose its private-history purpose.", errors)
+    require(b"Proposal Only" in page_history.data and b"Applied Locally" in page_history.data and b"Reverted" in page_history.data, "Page-edit proposal history must expose lifecycle filters.", errors)
 
     if errors:
         print("Portfolio Manager runtime validation failed:")

@@ -15,11 +15,18 @@
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">AI-assisted edit · proposal only</p>
+                <p class="eyebrow">AI-assisted edit · human approval required</p>
                 <h1>{{ record.result.headline }}</h1>
+                {% if record.status == 'proposal-only' %}
                 <p class="hero-copy">Review what AI proposes for {{ record.page_label }}. No portfolio, Git, or public files have been changed.</p>
+                {% elif record.status == 'applied-local' %}
+                <p class="hero-copy">This reviewed proposal is applied only to your local working copy. Nothing has been committed, pushed, merged, or published.</p>
+                {% elif record.status == 'reverted' %}
+                <p class="hero-copy">This proposal was reverted and the pre-apply local page state was restored.</p>
+                {% endif %}
             </div>
             <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('ai_apply.history') }}">Proposal History</a>
                 <a class="btn btn-secondary" href="{{ url_for('site_content.v2_page_editor', page_id=record.page_id) }}">Back to {{ record.page_label }}</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
             </div>
@@ -43,7 +50,15 @@
                 <div class="v2-settings-summary">
                     <div><span>Page</span><strong>{{ record.page_label }}</strong></div>
                     <div><span>Model</span><strong>{{ record.model }}</strong></div>
-                    <div><span>Status</span><strong>Proposal only</strong></div>
+                    <div>
+                        <span>Status</span>
+                        <strong>
+                            {% if record.status == 'proposal-only' %}Proposal only
+                            {% elif record.status == 'applied-local' %}Applied locally
+                            {% elif record.status == 'reverted' %}Reverted
+                            {% else %}{{ record.status }}{% endif %}
+                        </strong>
+                    </div>
                 </div>
             </section>
 
@@ -62,7 +77,7 @@
                         <h2>{{ record.result.operations|length }} change{% if record.result.operations|length != 1 %}s{% endif %} to review</h2>
                     </div>
                 </div>
-                <p class="section-copy">Each operation is anchored to exact code that existed when the proposal was created. This review screen does not apply it.</p>
+                <p class="section-copy">Each operation is anchored to exact code that existed when the proposal was created. Portfolio Manager re-checks those anchors before any approved local write.</p>
 
                 <div class="v2-operation-list">
                     {% for operation in record.result.operations %}
@@ -79,15 +94,56 @@
 
             <section class="dashboard-card full-width v2-approval-boundary">
                 <p class="eyebrow">Approval boundary</p>
+
+                {% if record.status == 'proposal-only' %}
                 <h2>Nothing has been applied yet</h2>
-                <p class="section-copy">This first AI integration intentionally stops at a reviewable proposal. The next safety step will apply an approved proposal locally, validate the resulting site, then return you to preview before publishing.</p>
+                <p class="section-copy">Approving this proposal authorizes Portfolio Manager, not the AI model, to apply only the exact operations shown above to your local working copy. The page hash and source anchors are re-checked first, a private backup is created, structured page data is synchronized when needed, and full validation must pass or the edit is automatically rolled back.</p>
+
+                <form method="post" action="{{ url_for('ai_apply.apply_page_edit', proposal_id=record.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="public-safe-confirm general-public-confirm">
+                        <label class="checkbox-label"><input type="checkbox" name="public_safe" required> I reviewed the exact proposed operations and confirm this change is safe for the public portfolio.</label>
+                    </div>
+                    <div class="button-row">
+                        <button class="btn btn-primary" type="submit">Approve &amp; Apply Locally</button>
+                        <a class="btn btn-secondary" href="{{ url_for('site_content.v2_page_editor', page_id=record.page_id) }}">Return to Page Editor</a>
+                    </div>
+                </form>
+
+                <form method="post" action="{{ url_for('ai_apply.remove_page_edit_proposal', proposal_id=record.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="return_to" value="proposal-history">
+                    <button class="btn btn-secondary" type="submit">Delete Proposal</button>
+                </form>
+
+                {% elif record.status == 'applied-local' %}
+                <h2>Applied locally · validation passed</h2>
+                <p class="section-copy">The approved operations are now in your local working copy only. Review the real page preview before keeping the change. Publishing still requires the normal Save &amp; Publish workflow.</p>
+
+                {% if record.structured_sync and record.structured_sync.retired_fields %}
+                <p class="action-note">Because the approved structural edit removed managed page elements, Portfolio Manager also retired {{ record.structured_sync.retired_fields|length }} legacy structured field{% if record.structured_sync.retired_fields|length != 1 %}s{% endif %} so validation and future editing stay consistent.</p>
+                {% endif %}
+
                 <div class="button-row">
-                    <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=record.page_id) }}">Return to Page Editor</a>
-                    <form method="post" action="{{ url_for('ai_assistant.remove_proposal', proposal_id=record.id) }}">
+                    <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=record.page_id) }}" target="_blank" rel="noopener">Open Page Editor &amp; Preview</a>
+                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Continue to Save &amp; Publish</a>
+                    <form method="post" action="{{ url_for('ai_apply.revert_page_edit', proposal_id=record.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Revert AI Change</button>
+                    </form>
+                </div>
+
+                {% elif record.status == 'reverted' %}
+                <h2>Change reverted</h2>
+                <p class="section-copy">Portfolio Manager restored the local page and structured-content state from immediately before this proposal was applied. Nothing was published.</p>
+                <div class="button-row">
+                    <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=record.page_id) }}">Return to Page Editor &amp; Preview</a>
+                    <form method="post" action="{{ url_for('ai_apply.remove_page_edit_proposal', proposal_id=record.id) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-secondary" type="submit">Delete Proposal</button>
                     </form>
                 </div>
+                {% endif %}
             </section>
         </main>
     </div>

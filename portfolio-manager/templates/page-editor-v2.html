@@ -31,6 +31,22 @@
         {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
+        {% if active_ai_proposal %}
+        <section class="dashboard-card v2-warning-card">
+            <p class="eyebrow">AI change active locally</p>
+            <h2>{{ active_ai_proposal.result.headline }}</h2>
+            <p class="section-copy">This page currently includes an approved AI change that has passed validation but has not been committed or published. Review the preview below, then return to the AI proposal to keep working with that change or revert it here.</p>
+            <div class="button-row">
+                <a class="btn btn-primary" href="{{ url_for('ai_assistant.page_edit_proposal', proposal_id=active_ai_proposal.id) }}">Return to AI Proposal</a>
+                <form method="post" action="{{ url_for('ai_apply.revert_page_edit', proposal_id=active_ai_proposal.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="return_to" value="proposal">
+                    <button class="btn btn-secondary" type="submit">Revert AI Change</button>
+                </form>
+            </div>
+        </section>
+        {% endif %}
+
         <main class="v2-editor-grid">
             <section class="dashboard-card v2-edit-panel">
                 <form method="post" action="{{ url_for('site_content.v2_save_page', page_id=page_id) }}" class="v2-copy-form">

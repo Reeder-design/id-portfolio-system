@@ -272,6 +272,66 @@ def _resolved_page(record: dict[str, Any]):
     return page, page_path
 
 
+def find_active_page_edit_proposal(page_id: str) -> dict[str, Any] | None:
+    if not PROPOSALS_ROOT.exists():
+        return None
+
+    candidates: list[dict[str, Any]] = []
+    for path in PROPOSALS_ROOT.glob("ai-*.json"):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if (
+            isinstance(record, dict)
+            and record.get("type") == "page-edit"
+            and record.get("page_id") == page_id
+            and record.get("status") == "applied-local"
+        ):
+            candidates.append(record)
+
+    if not candidates:
+        return None
+
+    candidates.sort(
+        key=lambda item: str(item.get("applied_at") or item.get("created_at") or ""),
+        reverse=True,
+    )
+    return candidates[0]
+
+
+def list_page_edit_proposals(status: str | None = None) -> list[dict[str, Any]]:
+    if not PROPOSALS_ROOT.exists():
+        return []
+
+    allowed_statuses = {"proposal-only", "applied-local", "reverted"}
+    if status is not None and status not in allowed_statuses:
+        raise AIServiceError("Unknown page-edit proposal status filter.")
+
+    records: list[dict[str, Any]] = []
+    for path in PROPOSALS_ROOT.glob("ai-*.json"):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(record, dict) or record.get("type") != "page-edit":
+            continue
+        if status is not None and record.get("status") != status:
+            continue
+        records.append(record)
+
+    records.sort(
+        key=lambda item: str(
+            item.get("reverted_at")
+            or item.get("applied_at")
+            or item.get("created_at")
+            or ""
+        ),
+        reverse=True,
+    )
+    return records
+
+
 def _apply_exact_operations(current_html: str, operations: list[dict[str, str]]) -> str:
     spans: list[tuple[int, int, str]] = []
     for index, operation in enumerate(operations, start=1):
@@ -309,6 +369,12 @@ def apply_page_edit_proposal(proposal_id: str) -> dict[str, Any]:
     record = load_page_edit_proposal(proposal_id)
     if record.get("status") != "proposal-only":
         raise AIServiceError("Only a proposal that has not already been applied can be approved.")
+
+    active = find_active_page_edit_proposal(str(record.get("page_id", "")))
+    if active and active.get("id") != proposal_id:
+        raise AIServiceError(
+            "Another AI edit is already applied locally to this page. Review, revert, or publish that change before applying a second AI proposal."
+        )
 
     _, page_path = _resolved_page(record)
     current_html = page_path.read_text(encoding="utf-8")
