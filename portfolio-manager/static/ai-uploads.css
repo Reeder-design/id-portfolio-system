@@ -1,0 +1,108 @@
+.ai-upload-box {
+    padding: 16px;
+    border: 1px dashed rgba(169, 216, 193, 0.45);
+    border-radius: 14px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.ai-upload-box input[type="file"] {
+    display: block;
+    width: 100%;
+    margin: 10px 0 8px;
+    color: var(--text-soft);
+}
+
+.ai-prepared-request {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+}
+
+.ai-prepared-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.ai-prepared-meta > div {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border: 1px solid rgba(201, 217, 199, 0.20);
+    border-radius: 12px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.ai-prepared-meta span {
+    color: var(--muted-text);
+    font-size: 0.78rem;
+}
+
+.ai-prepared-meta strong {
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+.ai-prepared-source {
+    max-height: 520px;
+}
+
+.ai-attachment-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.ai-attachment-card {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid rgba(201, 217, 199, 0.22);
+    border-radius: 14px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.ai-attachment-card h4 {
+    margin: 3px 0 0;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+.ai-upload-preview {
+    display: block;
+    max-width: min(100%, 720px);
+    max-height: 520px;
+    object-fit: contain;
+    border: 1px solid rgba(201, 217, 199, 0.25);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.ai-discard-form {
+    margin-top: 2px;
+}
+
+.ai-attachment-audit {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.ai-attachment-audit > div {
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: var(--text-soft);
+    background: rgba(243, 240, 232, 0.06);
+    border: 1px solid rgba(201, 217, 199, 0.20);
+}
+
+.ai-attachment-audit strong {
+    display: block;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 680px) {
+    .ai-prepared-meta {
+        grid-template-columns: 1fr;
+    }
+}
