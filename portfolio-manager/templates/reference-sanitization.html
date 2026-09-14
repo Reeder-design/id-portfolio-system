@@ -89,9 +89,7 @@
                 <p class="eyebrow">{{ finding.severity|upper }} · {{ finding.category }}</p>
                 <h2>{{ finding.detected_content or 'Potentially sensitive content' }}</h2>
                 {% if finding.location %}<p><strong>Location:</strong> {{ finding.location }}</p>{% endif %}
-                <p><strong>Why review it:</strong> {{ finding.reason }}</p>
                 {% if finding.suggested_actions %}<p><strong>AI suggestions:</strong> {{ finding.suggested_actions|join(' · ') }}</p>{% endif %}
-                {% if finding.suggested_replacement %}<p><strong>Suggested replacement:</strong> {{ finding.suggested_replacement }}</p>{% endif %}
 
                 <div class="form-grid">
                     <div>
@@ -102,12 +100,12 @@
                         </select>
                     </div>
                     <div>
-                        <label for="replacement_{{ finding.id }}">Replacement / rewrite text</label>
-                        <textarea id="replacement_{{ finding.id }}" name="replacement_{{ finding.id }}" rows="3" maxlength="2400" placeholder="Required for Replace text or Rewrite; optional for other decisions.">{{ finding.replacement_text }}</textarea>
+                        <label for="replacement_{{ finding.id }}">Replacement / rewrite text <span class="field-help">· AI-prefilled, editable</span></label>
+                        <textarea id="replacement_{{ finding.id }}" name="replacement_{{ finding.id }}" rows="3" maxlength="2400" placeholder="Required for Replace text or Rewrite; optional for other decisions.">{{ finding.replacement_text if finding.decision != 'pending' else finding.suggested_replacement }}</textarea>
                     </div>
                     <div class="full-span">
-                        <label for="note_{{ finding.id }}">Private decision note</label>
-                        <textarea id="note_{{ finding.id }}" name="note_{{ finding.id }}" rows="2" maxlength="2400" placeholder="Why you made this decision, context to remember, or manual follow-up needed.">{{ finding.user_note }}</textarea>
+                        <label for="note_{{ finding.id }}">Reason / private decision note <span class="field-help">· AI-prefilled, editable</span></label>
+                        <textarea id="note_{{ finding.id }}" name="note_{{ finding.id }}" rows="3" maxlength="2400" placeholder="Why this needs review, why you made this decision, or manual follow-up needed.">{{ finding.user_note if finding.decision != 'pending' else finding.reason }}</textarea>
                     </div>
                 </div>
             </section>
@@ -145,7 +143,7 @@
                 <a class="btn btn-secondary" href="{{ url_for('reference_library.download_file', item_id=record.id, kind='sanitized') }}">Download Sanitized Draft</a>
                 <a class="btn btn-primary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Review &amp; Approve on Reference Item</a>
             </div>
-            {% if record.sanitization_review.sanitized_draft_notes %}<h3>Draft notes</h3><ul>{% for note in record.sanitization_review.sanitized_draft_notes %}<li>{{ note }}</li>{% endfor %}</ul>{% endif %}
+            {% if record.sanitization_review.sanitized_draft_notes %}<h3>Draft notes</h3><ul>{% for note in record.sanitization_review.sanitized_draft_notes %}<li>{{ note }}</li>{% endfor %}</ul></div>{% endif %}
             {% if record.sanitization_review.unresolved_items %}<div class="ai-warning-box"><strong>Still requires manual review</strong><ul>{% for item in record.sanitization_review.unresolved_items %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
         </section>
         {% endif %}
