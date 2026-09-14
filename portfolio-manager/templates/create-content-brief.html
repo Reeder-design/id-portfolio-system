@@ -32,8 +32,8 @@
 
     <section class="dashboard-card full-width">
         <p class="eyebrow">Workflow</p>
-        <h2>Idea → Brief + Approved Sources → AI Plan → refine → build later</h2>
-        <p class="section-copy">Approved sources are public-safe sanitized derivatives you explicitly approved in the Reference Library. Attaching one never sends the private original to AI. This phase still stops at a reviewable project plan and does not create public portfolio files.</p>
+        <h2>Idea → Brief + Approved Sources → AI Plan → Approve → Build</h2>
+        <p class="section-copy">Approved sources are public-safe sanitized derivatives you explicitly approved in the Reference Library. Attaching one never sends the private original to AI. A current plan can now move into a separate controlled Build workspace before any local portfolio files are created.</p>
     </section>
 
     <main class="v2-manage-layout">
@@ -218,7 +218,12 @@
             <h2>Build tasks</h2>
             <ol>{% for item in record.plan.build_tasks %}<li>{{ item }}</li>{% else %}<li>No build tasks returned.</li>{% endfor %}</ol>
             {% if record.plan.writing_direction %}<h3>Writing direction</h3><ul>{% for item in record.plan.writing_direction %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
-            <p class="section-copy"><strong>Current boundary:</strong> this plan is private and advisory. Approved-source handoff is now connected; the next Create Content phase adds refinement/approval and controlled generation from an approved plan.</p>
+            {% if record.plan_stale %}
+            <p class="section-copy"><strong>Build unavailable:</strong> regenerate the Content Plan after saving your latest brief/source changes.</p>
+            {% else %}
+            <p class="section-copy"><strong>Next:</strong> review the current plan in the controlled Build workspace, explicitly approve it, then generate and edit the structured project proposal before any local portfolio files are created.</p>
+            <a class="btn btn-primary" href="{{ url_for('create_content.build', brief_id=record.id) }}">Review &amp; Build Project</a>
+            {% endif %}
         </section>
         {% endif %}
 
