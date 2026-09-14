@@ -2,13 +2,9 @@ from __future__ import annotations
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
-from content_routes import is_generated_page, load_project, save_project as save_project_view
-from page_copy_service import extract_visible_fields, page_info
-from site_content_routes import v2_save_page as save_page_view
 from related_references_service import (
     RelatedReferenceError,
     apply_related_reference_decisions,
-    create_related_reference_review,
     delete_related_reference_review,
     load_related_reference_review,
 )
@@ -25,124 +21,6 @@ def _source_editor_url(record: dict) -> str:
     if record.get("source_kind") == "project":
         return url_for("content.project_editor", project_id=record.get("source_id"))
     return url_for("site_content.v2_page_editor", page_id=record.get("source_id"))
-
-
-def _posted_h1_change(page_id: str):
-    page, page_path = page_info(page_id)
-    html_text = page_path.read_text(encoding="utf-8")
-    for field in extract_visible_fields(html_text):
-        if field.get("tag") != "h1":
-            continue
-        key = str(field["key"])
-        posted_name = f"visible__{key}"
-        if posted_name not in request.form:
-            continue
-        new_value = request.form.get(posted_name, "").strip()
-        current_value = str(field.get("value", "")).strip()
-        if new_value and new_value != current_value:
-            return page, page_path, current_value, new_value
-    return None
-
-
-@related_references_bp.post("/projects/<project_id>/save")
-def save_project(project_id: str):
-    try:
-        before, _ = load_project(project_id)
-    except FileNotFoundError:
-        return save_project_view(project_id)
-
-    old_title = str(before.get("title", "")).strip()
-    target_path = str(before.get("page_path", "")).strip()
-    generated = is_generated_page(before)
-
-    response = save_project_view(project_id)
-
-    try:
-        after, _ = load_project(project_id)
-    except FileNotFoundError:
-        return response
-
-    new_title = str(after.get("title", "")).strip()
-    if not old_title or not new_title or old_title == new_title:
-        return response
-    if new_title != request.form.get("title", "").strip():
-        return response
-
-    automatic_updates = ["Project record", "Generated documentation"]
-    if not generated:
-        automatic_updates.append("Current custom project page title")
-
-    try:
-        review_record = create_related_reference_review(
-            source_kind="project",
-            source_id=project_id,
-            source_label=new_title,
-            target_path=target_path,
-            old_title=old_title,
-            new_title=new_title,
-            automatic_updates=automatic_updates,
-        )
-    except RelatedReferenceError as exc:
-        flash(f"Project saved, but Related References could not start: {exc}", "error")
-        return response
-
-    flash(
-        f"Project saved. Portfolio Manager found {len(review_record.get('references', []))} related reference(s) to review before publishing.",
-        "success",
-    )
-    return redirect(
-        url_for("related_references.review", review_id=review_record["id"]),
-        code=303,
-    )
-
-
-@related_references_bp.post("/pages/<page_id>/save")
-def save_page(page_id: str):
-    try:
-        title_change = _posted_h1_change(page_id)
-    except Exception:
-        title_change = None
-
-    response = save_page_view(page_id)
-    if title_change is None:
-        return response
-
-    page, page_path, old_title, new_title = title_change
-    try:
-        current_html = page_path.read_text(encoding="utf-8")
-        current_h1_values = [
-            str(field.get("value", "")).strip()
-            for field in extract_visible_fields(current_html)
-            if field.get("tag") == "h1"
-        ]
-    except Exception:
-        return response
-
-    if new_title not in current_h1_values:
-        return response
-
-    try:
-        review_record = create_related_reference_review(
-            source_kind="page",
-            source_id=page_id,
-            source_label=str(page.get("label", page_id)),
-            target_path=str(page.get("path", "")),
-            old_title=old_title,
-            new_title=new_title,
-            automatic_updates=["Edited page heading"],
-        )
-    except RelatedReferenceError as exc:
-        flash(f"Page saved, but Related References could not start: {exc}", "error")
-        return response
-
-    flash(
-        f"Page saved. Portfolio Manager found {len(review_record.get('references', []))} related reference(s) to review before publishing.",
-        "success",
-    )
-    return redirect(
-        url_for("related_references.review", review_id=review_record["id"]),
-        code=303,
-    )
 
 
 @related_references_bp.get("/<review_id>")
