@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Settings | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Settings</p>
+                <h1>AI connection</h1>
+                <p class="hero-copy">Connect Portfolio Manager to OpenAI once, choose a default model, and keep the API key in the local Git-ignored settings file.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <main class="v2-settings-grid">
+            <section class="dashboard-card">
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Connection status</p>
+                        <h2>{% if settings.configured %}AI connected locally{% else %}AI not configured{% endif %}</h2>
+                    </div>
+                    <span class="v2-ai-status {% if settings.configured %}connected{% endif %}">{% if settings.configured %}Connected{% else %}Not connected{% endif %}</span>
+                </div>
+                <div class="v2-settings-summary">
+                    <div><span>Provider</span><strong>{{ settings.provider }}</strong></div>
+                    <div><span>Model</span><strong>{{ settings.model }}</strong></div>
+                    <div><span>API key</span><strong>{{ settings.key_hint }}</strong></div>
+                </div>
+                <p class="section-copy">Your full API key is never displayed here. It is stored only in the local <code>.env</code> file, which is excluded from Git.</p>
+            </section>
+
+            <section class="dashboard-card">
+                <p class="eyebrow">Configure</p>
+                <h2>OpenAI API settings</h2>
+                <form method="post" action="{{ url_for('ai_assistant.save_settings') }}" class="form-grid">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="full-span">
+                        <label for="api_key">OpenAI API key</label>
+                        <p class="field-help">{% if settings.configured %}Leave this blank to keep the current key. Paste a new key only when you want to replace it.{% else %}Paste the API key you create in the OpenAI API dashboard.{% endif %}</p>
+                        <input id="api_key" name="api_key" type="password" autocomplete="off" placeholder="{% if settings.configured %}Current key is stored locally{% else %}Paste API key{% endif %}">
+                    </div>
+                    <div class="full-span">
+                        <label for="model">Default AI model</label>
+                        <select id="model" name="model">
+                            {% for option in model_options %}
+                            <option value="{{ option.value }}" {% if settings.model == option.value %}selected{% endif %}>{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% for option in model_options %}
+                        <p class="field-help v2-model-help" data-model-help="{{ option.value }}" {% if settings.model != option.value %}hidden{% endif %}>{{ option.help }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="full-span button-row">
+                        <button class="btn btn-primary" type="submit">Save AI Settings</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="dashboard-card">
+                <p class="eyebrow">Connection test</p>
+                <h2>Verify the API connection</h2>
+                <p class="section-copy">This sends a very small test request to OpenAI using the selected model. API usage and billing are separate from your ChatGPT subscription.</p>
+                <div class="button-row">
+                    <form method="post" action="{{ url_for('ai_assistant.test_settings') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-primary" type="submit" {% if not settings.configured %}disabled aria-disabled="true"{% endif %}>Test Connection</button>
+                    </form>
+                    {% if settings.configured %}
+                    <form method="post" action="{{ url_for('ai_assistant.disable_settings') }}" data-confirm-action="disable-ai">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Disable AI</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">What gets sent</p>
+                <h2>Page-aware AI privacy boundary</h2>
+                <div class="v2-privacy-grid">
+                    <div><strong>Included</strong><p>The selected public portfolio page, the public design-system CSS needed for context, and the plain-English request you type.</p></div>
+                    <div><strong>Not included</strong><p>Your private page notes, private reference library, source files, local credentials, Git history, or unrelated repository files.</p></div>
+                    <div><strong>Approval boundary</strong><p>The first AI step creates a private proposal only. It does not publish, commit, push, or silently change your portfolio.</p></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+    <script>
+        const modelSelect = document.getElementById('model');
+        const helps = document.querySelectorAll('[data-model-help]');
+        if (modelSelect) {
+            modelSelect.addEventListener('change', () => {
+                helps.forEach((item) => { item.hidden = item.dataset.modelHelp !== modelSelect.value; });
+            });
+        }
+    </script>
+</body>
+</html>

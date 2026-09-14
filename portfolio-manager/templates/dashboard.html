@@ -10,17 +10,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-v1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
 </head>
 <body>
     <div class="manager-shell">
-        <header class="manager-header">
+        <header class="manager-header v2-manager-header">
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">Edit, review, save, and publish portfolio updates from one local workspace. Routine content stays structured, AI stays proposal-only, and publishing remains an explicit final action.</p>
+                <p class="hero-copy">Manage what is already in the portfolio, develop new work, and prepare private source material without needing to think about the repository underneath.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
-                    <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy & Security</button>
+                    <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+                    <a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system/blob/main/docs/changelog.md" target="_blank" rel="noopener noreferrer">Version History</a>
+                    <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy Statement</button>
                     <form method="post" action="{{ url_for('logout') }}" class="logout-form">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-secondary" type="submit">Sign Out</button>
@@ -48,55 +51,52 @@
             <section class="dashboard-card full-width">
                 <div class="action-title-row">
                     <div>
-                        <p class="eyebrow">Core workflow</p>
+                        <p class="eyebrow">Main workspace</p>
                         <h2>What do you want to do?</h2>
                     </div>
                     <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Manager Workflow">?</button>
                 </div>
-                <p class="section-copy">Use these tools for normal portfolio work. Edits stay local until you explicitly commit them, and committed changes stay local until you explicitly publish to GitHub.</p>
+                <p class="section-copy">Choose the workspace that matches your goal. Technical maintenance stays out of the normal editing path.</p>
 
-                <div class="dashboard-tool-grid">
-                    <article class="dashboard-tool-card">
-                        <span class="tool-step">1 · Edit</span>
-                        <h3>Update portfolio content</h3>
-                        <p>Edit structured project records or approved copy on general portfolio pages.</p>
-                        <div class="button-row tool-actions">
-                            <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Project Content</a>
-                            <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">General Page Content</a>
-                        </div>
+                <div class="v2-workspace-grid">
+                    <article class="v2-workspace-card ready">
+                        <span class="v2-status">Available now</span>
+                        <h3>Manage Portfolio Content</h3>
+                        <p>Edit the pages and projects that already exist in the portfolio using the same hierarchy visitors see on the site.</p>
+                        <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Manage Portfolio Content</a>
                     </article>
 
-                    <article class="dashboard-tool-card">
-                        <span class="tool-step">2 · Assets</span>
-                        <h3>Manage public files</h3>
-                        <p>Add, replace, describe, or remove project assets that are approved for the public portfolio.</p>
-                        <div class="button-row tool-actions">
-                            <a class="btn btn-primary" href="{{ url_for('assets.asset_library') }}">Asset Library</a>
-                        </div>
+                    <article class="v2-workspace-card upcoming">
+                        <span class="v2-status">Next phase</span>
+                        <h3>Create Portfolio Content</h3>
+                        <p>Brainstorm, plan, brief AI, and build new portfolio content in the guided Create Content Lab.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Create Content Lab</button>
                     </article>
 
-                    <article class="dashboard-tool-card">
-                        <span class="tool-step">Optional · Draft</span>
-                        <h3>Use AI assistance</h3>
-                        <p>Create private proposals for rewriting, sanitization, analysis, placement, or project summaries. AI cannot apply changes.</p>
-                        <div class="button-row tool-actions">
-                            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">AI Assistance</a>
-                        </div>
+                    <article class="v2-workspace-card upcoming">
+                        <span class="v2-status">Planned</span>
+                        <h3>Content Workspace &amp; Reference Library</h3>
+                        <p>Keep private source material, notes, sanitization work, and approved portfolio-ready derivatives in one private workspace.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Open Content Workspace</button>
                     </article>
+                </div>
+            </section>
 
-                    <article class="dashboard-tool-card">
-                        <span class="tool-step">3 · Save & publish</span>
-                        <h3>Validate, commit, and publish</h3>
-                        <p>Run the full health check, then review your edits, commit them to local main, and publish to GitHub when you are ready.</p>
-                        <div class="button-row tool-actions">
-                            <form method="post" action="{{ url_for('run_action') }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="action" value="validate">
-                                <button class="btn btn-primary" type="submit">Run Full Validation</button>
-                            </form>
-                            <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Save &amp; Publish</a>
-                        </div>
-                    </article>
+            <section class="dashboard-card full-width v2-transition-card">
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Publishing during the v2 transition</p>
+                        <h2>Review and publish existing edits</h2>
+                    </div>
+                </div>
+                <p class="section-copy">The current validation and publishing engine stays available while the new guided Related References → Preview → Approve → Publish flow is built.</p>
+                <div class="button-row">
+                    <form method="post" action="{{ url_for('run_action') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="validate">
+                        <button class="btn btn-primary" type="submit">Run Full Validation</button>
+                    </form>
+                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Save &amp; Publish</a>
                 </div>
             </section>
 
@@ -111,14 +111,15 @@
                     </summary>
 
                     <div class="advanced-maintenance-body">
-                        <p class="section-copy">These tools support maintenance records and intentional releases. You do not need them for most content edits.</p>
+                        <p class="section-copy">These tools maintain system records. They are not required for normal content editing.</p>
 
-                        <div class="action-stack">
+                        <div class="button-row v2-maintenance-links">
                             <form method="post" action="{{ url_for('run_action') }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="action" value="refresh_docs">
-                                <button class="btn btn-secondary" type="submit">Refresh Docs</button>
+                                <button class="btn btn-secondary" type="submit">Refresh Documentation</button>
                             </form>
+                            <a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system/tree/main/docs" target="_blank" rel="noopener noreferrer">View Documentation</a>
                         </div>
 
                         <div class="release-box">
@@ -129,11 +130,11 @@
                                 </div>
                                 <button class="inline-help" type="button" data-help-key="versioning" data-help-label="Version Releases">?</button>
                             </div>
-                            <p>Record a patch, minor, or major portfolio-system release near the end of meaningful work. This still does not commit or publish anything.</p>
+                            <p>Record a patch, minor, or major portfolio-system release near the end of meaningful work. This does not publish by itself.</p>
                             <form method="post" action="{{ url_for('run_action') }}" class="release-form" data-confirm-action="version">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <label for="release_message">Release message</label>
-                                <input type="text" id="release_message" name="release_message" placeholder="Example: Simplify Portfolio Manager publishing workflow" required>
+                                <input type="text" id="release_message" name="release_message" placeholder="Example: Introduce Portfolio Manager v2 content workflow" required>
                                 <div class="button-row">
                                     <button class="btn btn-secondary" type="submit" name="action" value="patch">Patch</button>
                                     <button class="btn btn-secondary" type="submit" name="action" value="minor">Minor</button>

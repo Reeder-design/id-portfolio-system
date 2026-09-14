@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Content Manager | Haley Reeder</title>
+    <title>Manage Portfolio Content | Haley Reeder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
 </head>
 <body>
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">Portfolio Manager</p>
-                <h1>Portfolio Content</h1>
-                <p class="hero-copy">Create standard portfolio projects, edit project data, manage general page copy, and manage public project assets.</p>
+                <p class="eyebrow">Manage Portfolio Content</p>
+                <h1>Edit what is already in the portfolio</h1>
+                <p class="hero-copy">Navigate through the portfolio the same way a visitor would. Choose the page or project you want to work on, then edit the content connected to that page.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
-                <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">General Page Content</a>
-                <a class="btn btn-secondary" href="{{ url_for('assets.asset_library') }}">Asset Library</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
             </div>
         </header>
@@ -30,51 +29,105 @@
         {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
-        <main class="content-manager-grid">
-            <section class="dashboard-card">
-                <p class="eyebrow">Create</p>
-                <div class="action-title-row">
-                    <h2>New Standard Project</h2>
-                    <button class="inline-help" type="button" data-help-key="create-project" data-help-label="Create Standard Project">?</button>
+        <main class="v2-manage-layout">
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">General Edits</p>
+                <h2>Changes that affect the portfolio as a whole</h2>
+                <div class="v2-general-grid">
+                    <article class="v2-small-card upcoming">
+                        <h3>Change Theme</h3>
+                        <p>Update approved site-wide colors and theme choices without exposing CSS controls.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Theme Controls · upcoming</button>
+                    </article>
+                    <article class="v2-small-card upcoming">
+                        <h3>AI Portfolio Review</h3>
+                        <p>Review the public portfolio for professional QA, SME/compliance concerns, and specific improvement opportunities.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">AI Review · API phase</button>
+                    </article>
                 </div>
-                <p class="section-copy">Creates real structured project files. New projects default to Building so you can finish and review them before treating them as live.</p>
-
-                <form method="post" action="{{ url_for('content.create_project') }}" class="form-grid">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" required></div>
-                    <div><label for="slug">URL slug</label><input id="slug" name="slug" type="text" placeholder="Auto-generated if blank"></div>
-                    <div><label for="placement">Portfolio placement</label><select id="placement" name="placement" required>{% for option in placements %}<option value="{{ option.value }}">{{ option.label }}</option>{% endfor %}</select></div>
-                    <div><label for="status">Status</label><select id="status" name="status"><option value="building" selected>Building</option><option value="planned">Planned</option><option value="live">Live</option><option value="archived">Archived</option></select></div>
-                    <div><label for="confidentiality">Confidentiality</label><select id="confidentiality" name="confidentiality"><option value="public" selected>Public</option><option value="sanitized">Sanitized / Fictionalized</option><option value="needs-sanitization">Needs Sanitization</option></select></div>
-                    <div class="full-span"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="3" required></textarea></div>
-                    <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="3" required></textarea></div>
-                    <div><label for="audience">Audience</label><input id="audience" name="audience" type="text" required></div>
-                    <div><label for="role">My role</label><input id="role" name="role" type="text" required></div>
-                    <div class="full-span"><button class="btn btn-primary" type="submit">Create Project</button></div>
-                </form>
             </section>
 
-            <section class="dashboard-card">
-                <p class="eyebrow">Edit</p>
+            <section class="dashboard-card full-width">
                 <div class="action-title-row">
-                    <h2>Structured Projects</h2>
-                    <button class="inline-help" type="button" data-help-key="standard-custom" data-help-label="Standard vs. Custom Pages">?</button>
+                    <div>
+                        <p class="eyebrow">Portfolio</p>
+                        <h2>Choose a page to edit</h2>
+                    </div>
                 </div>
-                <p class="section-copy">These are projects Portfolio Manager understands through JSON records. Custom interaction pages remain protected from template regeneration.</p>
-                <div class="project-manager-list">
-                    {% for project in projects %}
-                    <article class="project-manager-card">
-                        <div class="project-manager-topline">
-                            <div><h3>{{ project.title }}</h3><p class="project-location">{{ project._category_label }}{% if project._subcategory_label %} · {{ project._subcategory_label }}{% endif %}</p></div>
-                            <div class="project-pill-group"><span class="status-pill">{{ project.status }}</span>{% if project._generated_page %}<span class="page-type-pill generated">Standard page</span>{% else %}<span class="page-type-pill custom">Custom page</span>{% endif %}<span class="count-pill">{{ project.assets|length }} assets</span></div>
-                        </div>
-                        <p>{{ project.summary }}</p>
-                        <div class="project-card-actions">
-                            <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a>
-                            <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
-                        </div>
+                <p class="section-copy">Landing pages and demos open a visible-copy editor. Structured projects use one Edit Project entry point, with page-copy editing available from inside the project editor so the navigation does not expose competing edit paths.</p>
+
+                <div class="v2-site-tree">
+                    <article class="v2-tree-page">
+                        <div><span class="v2-level-label">Page</span><h3>Home</h3></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='home') }}">Edit Home</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/" target="_blank">Preview</a></div>
                     </article>
-                    {% else %}<p class="empty-note">No structured projects found.</p>{% endfor %}
+
+                    <article class="v2-tree-page">
+                        <div><span class="v2-level-label">Page</span><h3>About Me</h3></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='about') }}">Edit About Me</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/about/" target="_blank">Preview</a></div>
+                    </article>
+
+                    <details class="v2-tree-group" open>
+                        <summary><span><span class="v2-level-label">Landing page</span><strong>Projects</strong></span><span class="v2-tree-hint">Open hierarchy</span></summary>
+                        <div class="v2-tree-group-body">
+                            <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='projects') }}">Edit Projects Landing Page</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/" target="_blank">Preview</a></div>
+
+                            <details class="v2-tree-group nested" open>
+                                <summary><span><span class="v2-level-label">Area</span><strong>Instructional Design</strong></span></summary>
+                                <div class="v2-tree-group-body">
+                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='instructional-design') }}">Edit Instructional Design</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/" target="_blank">Preview</a></div>
+
+                                    <details class="v2-tree-group nested-deep" open>
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Interactive Learning</strong></span></summary>
+                                        <div class="v2-tree-group-body">
+                                            <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='interactive-learning') }}">Edit Interactive Learning</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/interactive-learning/" target="_blank">Preview</a></div>
+                                            {% for project in projects %}{% if project.category == 'instructional-design' and project.subcategory == 'interactive-learning' %}
+                                            <article class="v2-project-row">
+                                                <div><span class="v2-level-label">Project</span><h4>{{ project.title }}</h4><p>{{ project.summary }}</p></div>
+                                                <div class="button-row"><a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
+                                            </article>
+                                            {% endif %}{% endfor %}
+                                        </div>
+                                    </details>
+
+                                    <details class="v2-tree-group nested-deep">
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Multimedia Training Content</strong></span></summary>
+                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='multimedia') }}">Edit Multimedia</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/multimedia/" target="_blank">Preview</a></div></div>
+                                    </details>
+
+                                    <details class="v2-tree-group nested-deep">
+                                        <summary><span><span class="v2-level-label">Section</span><strong>Complete Learning Pathways</strong></span></summary>
+                                        <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='complete-learning-paths') }}">Edit Learning Pathways</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/instructional-design/complete-learning-paths/" target="_blank">Preview</a></div></div>
+                                    </details>
+                                </div>
+                            </details>
+
+                            <details class="v2-tree-group nested" open>
+                                <summary><span><span class="v2-level-label">Area</span><strong>AI Training and Evaluation</strong></span></summary>
+                                <div class="v2-tree-group-body">
+                                    <div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='ai-training-and-evaluation') }}">Edit AI Training and Evaluation</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/" target="_blank">Preview</a></div>
+                                    {% for project in projects %}{% if project.category == 'ai-training-and-evaluation' %}
+                                    <article class="v2-project-row">
+                                        <div><span class="v2-level-label">Project</span><h4>{{ project.title }}</h4><p>{{ project.summary }}</p></div>
+                                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('content.project_editor', project_id=project.id) }}">Edit Project</a></div>
+                                    </article>
+                                    {% endif %}{% endfor %}
+                                    <article class="v2-project-row"><div><span class="v2-level-label">Interactive demo</span><h4>Rubric Demo</h4></div><div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='rubric-demo') }}">Edit Rubric Demo</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/rubric-demo/" target="_blank">Preview</a></div></article>
+                                    <article class="v2-project-row"><div><span class="v2-level-label">Interactive demo</span><h4>Workflow Demo</h4></div><div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='workflow-demo') }}">Edit Workflow Demo</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/ai-training-and-evaluation/workflow-demo/" target="_blank">Preview</a></div></article>
+                                </div>
+                            </details>
+
+                            <details class="v2-tree-group nested">
+                                <summary><span><span class="v2-level-label">Area</span><strong>Systems and Workflows</strong></span></summary>
+                                <div class="v2-tree-group-body"><div class="v2-tree-actions"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='workflows') }}">Edit Systems and Workflows</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/projects/workflows/" target="_blank">Preview</a></div></div>
+                            </details>
+                        </div>
+                    </details>
+
+                    <article class="v2-tree-page">
+                        <div><span class="v2-level-label">Page</span><h3>Contact</h3></div>
+                        <div class="button-row"><a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id='contact') }}">Edit Contact</a><a class="btn btn-secondary" href="http://127.0.0.1:8000/contact/" target="_blank">Preview</a></div>
+                    </article>
                 </div>
             </section>
         </main>

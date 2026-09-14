@@ -9,19 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
 </head>
 <body>
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">Portfolio Content</p>
+                <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ project.title }}</h1>
-                <p class="hero-copy">Edit the structured source content for this project.</p>
+                <p class="hero-copy">Edit the project identity and connected content, then preview the real local project without needing to work with the underlying files.</p>
             </div>
             <div class="header-actions">
-                <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
-                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Portfolio</a>
                 <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
             </div>
         </header>
@@ -30,70 +30,119 @@
         {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
         {% endwith %}
 
-        <main class="editor-layout">
-            <section class="dashboard-card">
-                <p class="eyebrow">Project Source</p>
+        {% set custom_copy_page_id = {
+            'meddpicc-practice': 'meddpicc-demo',
+            'pursuit-positioning': 'pursuit-determination-demo',
+            'ai-training-and-evaluation-demo': 'ai-evaluation-demo'
+        }.get(project.id) %}
+
+        <main class="v2-editor-grid">
+            <section class="dashboard-card v2-edit-panel">
                 <div class="action-title-row">
-                    <h2>Project Details</h2>
-                    <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Data">?</button>
+                    <div>
+                        <p class="eyebrow">Project content</p>
+                        <h2>Edit project</h2>
+                    </div>
+                    <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Edits">?</button>
                 </div>
-                <p class="action-note">Saving updates the structured JSON source and maintenance docs. On supported custom pages, a project-title change also synchronizes the browser title, primary heading, and recognized footer label without rewriting the custom interaction.</p>
+
+                {% if project._generated_page %}
+                <p class="action-note">This project uses the shared portfolio project layout, so the fields below map to visible sections of the page. Save your edits here, then regenerate the page when you want to rebuild the full project view from the updated content.</p>
+                {% else %}
+                <p class="action-note">This project contains a custom interaction. The project title stays connected here so portfolio references remain consistent. The rest of the visible copy is edited through the full page-copy workspace linked below.</p>
+                {% endif %}
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" value="{{ project.title }}" required></div>
-                    <div><label for="status">Status</label><select id="status" name="status">{% for value, label in [('live','Live'),('building','Building'),('planned','Planned'),('archived','Archived')] %}<option value="{{ value }}" {% if project.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
-                    <div><label for="confidentiality">Confidentiality</label><select id="confidentiality" name="confidentiality">{% for value, label in [('public','Public'),('sanitized','Sanitized / Fictionalized'),('needs-sanitization','Needs Sanitization')] %}<option value="{{ value }}" {% if project.confidentiality == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
-                    <div class="full-span checkbox-row"><label class="checkbox-label"><input type="checkbox" name="featured" {% if project.featured %}checked{% endif %}> Feature this project</label></div>
-                    <div class="full-span"><label for="summary">Short summary</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
-                    <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea></div>
+
+                    {% if project._generated_page %}
+                    <div class="full-span"><label for="summary">Page introduction</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
+                    <div class="full-span"><label for="business_need">Challenge / business or learning need</label><textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea></div>
                     <div><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3">{{ project.content.audience }}</textarea></div>
                     <div><label for="role">My role</label><textarea id="role" name="role" rows="3">{{ project.content.role }}</textarea></div>
-                    <div class="full-span"><label for="learning_objectives">Learning objectives</label><p class="field-help">One objective per line.</p><textarea id="learning_objectives" name="learning_objectives" rows="6">{{ learning_objectives }}</textarea></div>
+                    <div class="full-span"><label for="learning_objectives">Learning goals</label><p class="field-help">One item per line.</p><textarea id="learning_objectives" name="learning_objectives" rows="6">{{ learning_objectives }}</textarea></div>
                     <div class="full-span"><label for="design_approach">Design approach</label><textarea id="design_approach" name="design_approach" rows="5">{{ project.content.design_approach }}</textarea></div>
-                    <div class="full-span"><label for="development_process">Development process</label><textarea id="development_process" name="development_process" rows="5">{{ project.content.development_process }}</textarea></div>
-                    <div class="full-span"><label for="outcomes">Outcomes</label><p class="field-help">One outcome per line.</p><textarea id="outcomes" name="outcomes" rows="6">{{ outcomes }}</textarea></div>
-                    <div><label for="skills">Skills</label><p class="field-help">Comma-separated.</p><textarea id="skills" name="skills" rows="4">{{ skills }}</textarea></div>
-                    <div><label for="tools">Tools</label><p class="field-help">Comma-separated.</p><textarea id="tools" name="tools" rows="4">{{ tools }}</textarea></div>
-                    <div class="full-span"><label for="live_project">Live project link</label><input id="live_project" name="live_project" type="text" value="{{ project.get('links', {}).get('live_project', '') }}"></div>
-                    <div class="full-span"><label for="source_material_notes">Public-safe source / sanitization notes</label><textarea id="source_material_notes" name="source_material_notes" rows="4">{{ project.get('source_material_notes', '') }}</textarea></div>
-                    <div class="full-span"><button class="btn btn-primary" type="submit">Save Project Data</button></div>
+                    <div class="full-span"><label for="development_process">Development</label><textarea id="development_process" name="development_process" rows="5">{{ project.content.development_process }}</textarea></div>
+                    <div class="full-span"><label for="outcomes">Results / outcomes</label><p class="field-help">One item per line.</p><textarea id="outcomes" name="outcomes" rows="6">{{ outcomes }}</textarea></div>
+                    <div><label for="skills">Skills shown on the page</label><p class="field-help">Comma-separated.</p><textarea id="skills" name="skills" rows="4">{{ skills }}</textarea></div>
+                    <div><label for="tools">Tools shown on the page</label><p class="field-help">Comma-separated.</p><textarea id="tools" name="tools" rows="4">{{ tools }}</textarea></div>
+                    <div class="full-span"><label for="live_project">Live project button link</label><input id="live_project" name="live_project" type="text" value="{{ project.get('links', {}).get('live_project', '') }}"></div>
+
+                    <div class="full-span v2-secondary-settings">
+                        <p class="eyebrow">Portfolio settings</p>
+                        <div class="form-grid">
+                            <div><label for="status">Project status</label><select id="status" name="status">{% for value, label in [('live','Live'),('building','Building'),('planned','Planned'),('archived','Archived')] %}<option value="{{ value }}" {% if project.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+                            <div><label for="confidentiality">Public-use status</label><select id="confidentiality" name="confidentiality">{% for value, label in [('public','Public'),('sanitized','Sanitized / Fictionalized'),('needs-sanitization','Needs Sanitization')] %}<option value="{{ value }}" {% if project.confidentiality == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+                            <div class="full-span checkbox-row"><label class="checkbox-label"><input type="checkbox" name="featured" {% if project.featured %}checked{% endif %}> Feature this project elsewhere in the portfolio</label></div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <input type="hidden" name="status" value="{{ project.status }}">
+                    <input type="hidden" name="confidentiality" value="{{ project.confidentiality }}">
+                    {% if project.featured %}<input type="hidden" name="featured" value="on">{% endif %}
+                    <textarea name="summary" hidden>{{ project.summary }}</textarea>
+                    <textarea name="business_need" hidden>{{ project.content.business_need }}</textarea>
+                    <textarea name="audience" hidden>{{ project.content.audience }}</textarea>
+                    <textarea name="role" hidden>{{ project.content.role }}</textarea>
+                    <textarea name="learning_objectives" hidden>{{ learning_objectives }}</textarea>
+                    <textarea name="design_approach" hidden>{{ project.content.design_approach }}</textarea>
+                    <textarea name="development_process" hidden>{{ project.content.development_process }}</textarea>
+                    <textarea name="outcomes" hidden>{{ outcomes }}</textarea>
+                    <textarea name="skills" hidden>{{ skills }}</textarea>
+                    <textarea name="tools" hidden>{{ tools }}</textarea>
+                    <input type="hidden" name="live_project" value="{{ project.get('links', {}).get('live_project', '') }}">
+
+                    <div class="full-span v2-connected-note">
+                        <strong>Project identity:</strong> the title is managed here because it can be referenced elsewhere in the portfolio. Visible page copy and interactive-state text are available in the page-copy workspace so those edits do not get confused with hidden project metadata.
+                    </div>
+
+                    {% if custom_copy_page_id %}
+                    <section class="full-span v2-ai-edit-panel">
+                        <p class="eyebrow">Visible page content</p>
+                        <h3>Edit the full custom experience</h3>
+                        <p>Open the visible-copy workspace to edit headings, paragraphs, labels, buttons, and connected interactive-state text. The page-specific private notes and upcoming AI helper also live there.</p>
+                        <a class="btn btn-primary" href="{{ url_for('site_content.v2_page_editor', page_id=custom_copy_page_id) }}">Edit Visible Page Copy</a>
+                    </section>
+                    {% endif %}
+                    {% endif %}
+
+                    <section class="full-span v2-assets-inline">
+                        <div>
+                            <p class="eyebrow">Page assets</p>
+                            <h3>{{ project.assets|length }} current asset{% if project.assets|length != 1 %}s{% endif %}</h3>
+                            <p>Asset editing still opens the existing safe asset tool during this transition. It will move directly into this page editor in a later v2 slice.</p>
+                        </div>
+                        <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Current Assets</a>
+                    </section>
+
+                    {% if project._generated_page %}
+                    <section class="full-span v2-notes-preview">
+                        <p class="eyebrow">Private project notes</p>
+                        <h3>Project notes will move into this editor</h3>
+                        <p>Private notes are already available in the v2 page-copy workspace for custom experiences. Generated-project note storage will be connected in the same private system next.</p>
+                    </section>
+                    {% endif %}
+
+                    <div class="full-span button-row">
+                        <button class="btn btn-primary" type="submit">Save Edits</button>
+                        {% if project._generated_page %}
+                        <button class="btn btn-secondary" type="submit" formaction="{{ url_for('content.regenerate_project', project_id=project.id) }}" formmethod="post">Regenerate Page</button>
+                        {% endif %}
+                    </div>
                 </form>
             </section>
 
-            <aside class="editor-sidebar">
-                <section class="dashboard-card">
-                    <p class="eyebrow">System Info</p>
-                    <h2>Project Status</h2>
-                    <dl class="project-meta-list">
-                        <div><dt>ID</dt><dd>{{ project.id }}</dd></div>
-                        <div><dt>Category</dt><dd>{{ project.category }}</dd></div>
-                        <div><dt>Subcategory</dt><dd>{{ project.subcategory or 'None' }}</dd></div>
-                        <div><dt>Page path</dt><dd>{{ project.page_path }}</dd></div>
-                    </dl>
-                </section>
-
-                <section class="dashboard-card">
-                    <p class="eyebrow">Project Assets</p>
-                    <div class="action-title-row"><h2>{{ project.assets|length }} Asset{% if project.assets|length != 1 %}s{% endif %}</h2><button class="inline-help" type="button" data-help-key="assets" data-help-label="Public Asset Library">?</button></div>
-                    <p class="section-copy">Assets are stored as structured project metadata and managed separately from custom page code.</p>
-                    <a class="btn btn-secondary" href="{{ url_for('assets.asset_library', project=project.id) }}">Manage Assets</a>
-                </section>
-
-                <section class="dashboard-card">
-                    <p class="eyebrow">Page Protection</p>
-                    {% if project._generated_page %}
-                    <div class="action-title-row"><h2>Standard Page</h2><button class="inline-help" type="button" data-help-key="regenerate" data-help-label="Regenerate Standard Page">?</button></div>
-                    <p class="section-copy">This page carries the generated-page marker, so it can be rebuilt from structured data.</p>
-                    <form method="post" action="{{ url_for('content.regenerate_project', project_id=project.id) }}" data-confirm-action="regenerate">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-secondary" type="submit">Regenerate Page</button>
-                    </form>
-                    {% else %}
-                    <div class="action-title-row"><h2>Custom Page</h2><button class="inline-help" type="button" data-help-key="standard-custom" data-help-label="Custom Page Protection">?</button></div>
-                    <p class="section-copy">Custom HTML, CSS, JavaScript, and layout remain protected. Portfolio Manager can safely synchronize a plain project title when the page has one unambiguous browser title and primary heading; other project fields do not rewrite the custom experience.</p>
-                    {% endif %}
-                </section>
+            <aside class="dashboard-card v2-preview-panel">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Live local preview</p><h2>Current project</h2></div>
+                    <a class="btn btn-secondary" href="http://127.0.0.1:8000/{{ project.page_path|replace('portfolio/', '')|replace('index.html', '') }}" target="_blank">Open Full Preview</a>
+                </div>
+                <p class="section-copy">If the preview server is running on port 8000, this frame shows the real project page. Refresh it after saving to inspect the local result.</p>
+                <div class="v2-preview-frame-wrap">
+                    <iframe class="v2-preview-frame" src="http://127.0.0.1:8000/{{ project.page_path|replace('portfolio/', '')|replace('index.html', '') }}" title="Preview of {{ project.title }}"></iframe>
+                </div>
             </aside>
         </main>
     </div>

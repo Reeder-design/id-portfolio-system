@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{ page.label }} | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Manage Portfolio Content</p>
+                <h1>{{ page.label }}</h1>
+                <p class="hero-copy">Edit the text that is actually visible on this page, keep private notes beside it, and preview the real local page while you work.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+                <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Portfolio</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <main class="v2-editor-grid">
+            <section class="dashboard-card v2-edit-panel">
+                <form method="post" action="{{ url_for('site_content.v2_save_page', page_id=page_id) }}" class="v2-copy-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="action-title-row">
+                        <div>
+                            <p class="eyebrow">Current visible content</p>
+                            <h2>Edit page copy</h2>
+                        </div>
+                    </div>
+                    <p class="action-note">These fields come from the page you are previewing. Portfolio Manager edits the existing text in place and does not rebuild the layout around it.</p>
+
+                    <div class="v2-copy-list">
+                        {% for field in visible_fields %}
+                        <div class="general-field-card v2-copy-field">
+                            <label for="visible-{{ field.key }}">{{ field.label }}</label>
+                            <p class="field-help">Currently: “{{ field.value[:90] }}{% if field.value|length > 90 %}…{% endif %}”</p>
+                            <input type="hidden" name="original__{{ field.key }}" value="{{ field.value }}">
+                            {% if field.long %}
+                            <textarea id="visible-{{ field.key }}" name="visible__{{ field.key }}" rows="4" required>{{ field.value }}</textarea>
+                            {% else %}
+                            <input id="visible-{{ field.key }}" name="visible__{{ field.key }}" type="text" value="{{ field.value }}" required>
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <p class="empty-note">No safely editable visible text was found on this page.</p>
+                        {% endfor %}
+                    </div>
+
+                    {% if script_fields %}
+                    <details class="v2-interactive-copy" open>
+                        <summary>
+                            <span><span class="eyebrow">Interactive states</span><strong>Text shown after clicks or tab changes</strong></span>
+                            <span class="summary-hint">{{ script_fields|length }} connected fields</span>
+                        </summary>
+                        <div class="v2-interactive-copy-body">
+                            <p class="section-copy">These values power alternate states inside the page interaction, so you can edit content that is not visible in the initial preview state.</p>
+                            <div class="v2-copy-list">
+                                {% for field in script_fields %}
+                                <div class="general-field-card v2-copy-field">
+                                    <label for="script-{{ field.key }}">{{ field.label }}</label>
+                                    <input type="hidden" name="original__{{ field.key }}" value="{{ field.value }}">
+                                    {% if field.long %}
+                                    <textarea id="script-{{ field.key }}" name="script__{{ field.key }}" rows="4" required>{{ field.value }}</textarea>
+                                    {% else %}
+                                    <input id="script-{{ field.key }}" name="script__{{ field.key }}" type="text" value="{{ field.value }}" required>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </details>
+                    {% endif %}
+
+                    <section class="v2-private-note">
+                        <p class="eyebrow">Private page notes</p>
+                        <h3>Notes for future edits or ideas</h3>
+                        <p>These notes stay inside the private Portfolio Manager workspace and are never published with the website.</p>
+                        <textarea id="private_note" name="private_note" rows="6" placeholder="Example: Replace this example after I have a stronger analytics case study.">{{ page_note }}</textarea>
+                    </section>
+
+                    <div class="public-safe-confirm general-public-confirm">
+                        <label class="checkbox-label"><input type="checkbox" name="public_safe"> I confirm any public-page edits in this save are safe for the public portfolio and contain no confidential, proprietary, customer-identifying, or unreleased information.</label>
+                        <p class="field-help">You can save a private note by itself without checking this box.</p>
+                    </div>
+
+                    <div class="button-row v2-save-row">
+                        <button class="btn btn-primary" type="submit">Save Edits</button>
+                        <a class="btn btn-secondary" href="{{ preview_url }}" target="_blank">Open Full Preview</a>
+                    </div>
+                </form>
+
+                <section class="v2-ai-edit-panel v2-ai-live">
+                    <div class="action-title-row">
+                        <div>
+                            <p class="eyebrow">AI-assisted edit</p>
+                            <h3>Ask for a larger change in plain English</h3>
+                        </div>
+                        <span class="v2-ai-status {% if ai_settings.configured %}connected{% endif %}">{% if ai_settings.configured %}Connected{% else %}Setup needed{% endif %}</span>
+                    </div>
+                    <p>Use this for structural, visual, interaction, or code-heavy requests such as “turn the intro into an interactive block,” “change this card layout,” or “make the spacing around this button consistent.”</p>
+                    <p class="field-help">AI receives this public page, public design-system CSS context, and the request below. Private notes are not sent.</p>
+                    {% if ai_settings.configured %}
+                    <form method="post" action="{{ url_for('ai_assistant.generate_page_edit', page_id=page_id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label for="ai_request">Describe the change you want</label>
+                        <textarea id="ai_request" name="ai_request" rows="5" maxlength="3000" required placeholder="Example: Turn the intro paragraph into a simple interactive reveal block using the existing design system. Keep the wording and accessibility intact."></textarea>
+                        <div class="button-row">
+                            <button class="btn btn-primary" type="submit">Generate AI Proposal</button>
+                            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+                        </div>
+                    </form>
+                    {% else %}
+                    <textarea rows="4" disabled placeholder="Connect an OpenAI API key in AI Settings to enable page-aware proposals."></textarea>
+                    <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+                    {% endif %}
+                </section>
+            </section>
+
+            <aside class="dashboard-card v2-preview-panel">
+                <div class="action-title-row">
+                    <div><p class="eyebrow">Live local preview</p><h2>Current page</h2></div>
+                    <a class="btn btn-secondary" href="{{ preview_url }}" target="_blank">Open Full Preview</a>
+                </div>
+                <p class="section-copy">This is the real page from your local preview server. After saving, refresh the frame to inspect the result before publishing.</p>
+                <div class="v2-preview-frame-wrap">
+                    <iframe class="v2-preview-frame" src="{{ preview_url }}" title="Preview of {{ page.label }}"></iframe>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

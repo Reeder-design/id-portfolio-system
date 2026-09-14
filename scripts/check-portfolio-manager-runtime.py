@@ -33,6 +33,7 @@ def main() -> int:
         ("/site-content", "General Page Content"),
         ("/git/", "Save & Publish"),
         ("/ai/", "AI Assistance"),
+        ("/ai/settings", "AI Settings"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -51,12 +52,11 @@ def main() -> int:
 
     dashboard = client.get("/")
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
-    require(b"Project Content" in dashboard.data, "Dashboard must expose structured project management.", errors)
-    require(b"General Page Content" in dashboard.data, "Dashboard must expose general page content management.", errors)
-    require(b"Asset Library" in dashboard.data, "Dashboard must expose the Asset Library.", errors)
-    require(b"AI Assistance" in dashboard.data, "Dashboard must expose proposal-only AI assistance.", errors)
-    require(b"Run Full Validation" in dashboard.data, "Dashboard must expose the main validation action.", errors)
-    require(b"Save &amp; Publish" in dashboard.data, "Dashboard must expose the direct save and publish workflow.", errors)
+    require(b"Manage Portfolio Content" in dashboard.data, "Dashboard must expose the v2 manage-content workflow.", errors)
+    require(b"Create Portfolio Content" in dashboard.data, "Dashboard must reserve the Create Content Lab workflow.", errors)
+    require(b"Content Workspace &amp; Reference Library" in dashboard.data, "Dashboard must reserve the private reference workspace.", errors)
+    require(b"Run Full Validation" in dashboard.data, "Dashboard must expose validation during the v2 transition.", errors)
+    require(b"Save &amp; Publish" in dashboard.data, "Dashboard must keep the safe publishing workflow available during the v2 transition.", errors)
     require(b"Advanced Maintenance" in dashboard.data, "Dashboard must keep low-frequency maintenance clearly separated.", errors)
     require(b"Save New Content Request" not in dashboard.data, "Dashboard must not reintroduce the retired new-content request form.", errors)
     require(b"Save Edit Request" not in dashboard.data, "Dashboard must not reintroduce the retired edit-request form.", errors)
@@ -67,18 +67,81 @@ def main() -> int:
     require(b"public_safe" in asset_library.data, "Asset Library must render public-safe confirmation control.", errors)
 
     content_manager = client.get("/content")
-    require(content_manager.status_code == 200, "Content Manager must still render.", errors)
-    require(b"Manage Assets" in content_manager.data, "Content Manager must link projects to asset management.", errors)
-    require(b"General Page Content" in content_manager.data, "Content Manager must link to general page editing.", errors)
+    require(content_manager.status_code == 200, "Manage Portfolio Content must render.", errors)
+    require(b"Choose a page to edit" in content_manager.data, "Manage Portfolio Content must present human-facing page navigation.", errors)
+    require(b"Interactive Learning" in content_manager.data, "Manage Portfolio Content must mirror the instructional-design hierarchy.", errors)
+    require(b"AI Training and Evaluation" in content_manager.data, "Manage Portfolio Content must mirror the AI portfolio hierarchy.", errors)
+    require(b"Systems and Workflows" in content_manager.data, "Manage Portfolio Content must mirror the workflows hierarchy.", errors)
+    require(b"Edit Demo Copy" not in content_manager.data, "Manage Portfolio Content must not expose duplicate edit entry points for AI Evaluation.", errors)
+
+    meddpicc_editor = client.get("/content/projects/meddpicc-practice")
+    require(meddpicc_editor.status_code == 200, "Project editor must render.", errors)
+    require(b"Manage Current Assets" in meddpicc_editor.data, "Project editor must retain a safe path to asset management.", errors)
+    require(b"Live local preview" in meddpicc_editor.data, "Project editor must provide the real local preview surface.", errors)
+    require(b"Edit Visible Page Copy" in meddpicc_editor.data, "MEDDPICC project editor must connect to full visible-page copy editing.", errors)
+
+    custom_editor = client.get("/content/projects/pursuit-positioning")
+    require(custom_editor.status_code == 200, "Custom project editor must render.", errors)
+    require(b"Project identity" in custom_editor.data, "Custom project editor must explain the project-title/reference boundary.", errors)
+    require(b"Edit Visible Page Copy" in custom_editor.data, "Custom project editor must connect to full visible-page copy editing.", errors)
+
+    ai_project_editor = client.get("/content/projects/ai-training-and-evaluation-demo")
+    require(ai_project_editor.status_code == 200, "AI Evaluation project editor must render.", errors)
+    require(b"Edit Visible Page Copy" in ai_project_editor.data, "AI Evaluation project editor must expose one route into demo copy editing.", errors)
 
     general_library = client.get("/site-content")
-    require(general_library.status_code == 200, "General Page Content library must render.", errors)
-    require(b"Copy fields only" in general_library.data, "General Page Content must explain its safe editing boundary.", errors)
+    require(general_library.status_code == 200, "General Page Content library must remain available during transition.", errors)
 
-    home_editor = client.get("/site-content/home")
-    require(home_editor.status_code == 200, "Home general-page editor must render.", errors)
-    require(b"public_safe" in home_editor.data, "General page editor must render public-safe confirmation.", errors)
-    require(b"field__hero_copy" in home_editor.data, "General page editor must render approved structured fields.", errors)
+    home_editor = client.get("/manage/pages/home")
+    require(home_editor.status_code == 200, "Home v2 page editor must render.", errors)
+    require(b"Current visible content" in home_editor.data, "General page editor must use the v2 visible-content model.", errors)
+    require(b"Live local preview" in home_editor.data, "General page editor must provide the real local preview surface.", errors)
+    require(b"private_note" in home_editor.data, "General page editor must provide private page notes.", errors)
+    require(b"AI-assisted edit" in home_editor.data, "General page editor must expose the page-aware AI helper surface.", errors)
+    require(b"Set Up AI" in home_editor.data, "Without an API key, page-aware AI must show a setup path instead of an active generation control.", errors)
+    require(b"Generate AI Proposal" not in home_editor.data, "Without an API key, page-aware AI generation must remain disabled.", errors)
+
+    for page_id, label in [
+        ("about", "About Me"),
+        ("interactive-learning", "Interactive Learning"),
+        ("multimedia", "Multimedia"),
+        ("complete-learning-paths", "Complete Learning Pathways"),
+        ("ai-evaluation-demo", "AI Evaluation Demo"),
+        ("rubric-demo", "Rubric Demo"),
+        ("workflow-demo", "Workflow Demo"),
+    ]:
+        editor = client.get(f"/manage/pages/{page_id}")
+        require(editor.status_code == 200, f"{label} v2 page editor must render.", errors)
+        require(b"Current visible content" in editor.data, f"{label} must expose visible page copy.", errors)
+
+    ai_settings = client.get("/ai/settings")
+    require(ai_settings.status_code == 200, "AI Settings must render without an API key.", errors)
+    require(b"AI not configured" in ai_settings.data, "AI Settings must clearly report the unconfigured state.", errors)
+    require(b"OPENAI_API_KEY" not in ai_settings.data, "AI Settings must not expose an environment-variable dump.", errors)
+    require(b"What gets sent" in ai_settings.data, "AI Settings must explain the page-aware privacy boundary.", errors)
+    require(b"private page notes" in ai_settings.data, "AI Settings must state that private page notes are excluded from page-aware requests.", errors)
+
+    with client.session_transaction() as session:
+        csrf = manager_app.csrf_token.__wrapped__() if hasattr(manager_app.csrf_token, "__wrapped__") else None
+        # Use the session token directly so this smoke test never bypasses the real POST guard.
+        csrf = session.get("_csrf_token") or "ci-page-ai-csrf"
+        session["_csrf_token"] = csrf
+
+    no_key_generate = client.post(
+        "/ai/page-edit/home/generate",
+        data={"csrf_token": csrf, "ai_request": "Make the hero spacing more consistent."},
+        follow_redirects=False,
+    )
+    require(
+        no_key_generate.status_code in {301, 302, 303, 307, 308},
+        "Page-aware AI without a configured key must redirect safely instead of attempting generation.",
+        errors,
+    )
+    require(
+        "/ai/settings" in no_key_generate.headers.get("Location", ""),
+        "Page-aware AI without a configured key must send the user to AI Settings.",
+        errors,
+    )
 
     git_workflow = client.get("/git/")
     require(git_workflow.status_code == 200, "Authenticated Save & Publish workflow must render.", errors)
