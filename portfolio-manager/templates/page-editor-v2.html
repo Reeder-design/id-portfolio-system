@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='asset-manager.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -17,7 +18,7 @@
             <div>
                 <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ page.label }}</h1>
-                <p class="hero-copy">Edit the text that is actually visible on this page, keep private notes beside it, and preview the real local page while you work.</p>
+                <p class="hero-copy">Edit the text that is actually visible on this page, keep private notes beside it{% if asset_project %}, manage the connected project assets{% endif %}, and preview the real local page while you work.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
@@ -119,6 +120,10 @@
                         <a class="btn btn-secondary" href="{{ preview_url }}" target="_blank">Open Full Preview</a>
                     </div>
                 </form>
+
+                {% if asset_project %}
+                {% include '_project-assets-inline.html' %}
+                {% endif %}
 
                 <section class="v2-ai-edit-panel v2-ai-live">
                     <div class="action-title-row">

@@ -1,0 +1,84 @@
+<section class="v2-assets-workspace" id="project-assets">
+    <div class="action-title-row">
+        <div>
+            <p class="eyebrow">Project assets</p>
+            <h3>{{ asset_project.assets|length }} current asset{% if asset_project.assets|length != 1 %}s{% endif %}</h3>
+        </div>
+        <a class="btn btn-secondary" aria-label="Manage Current Assets" href="{{ url_for('assets.asset_library', project=asset_project.id) }}">Open Full Asset Library</a>
+    </div>
+    <p class="section-copy">Add and maintain the public-facing files that belong with this project without leaving the editor. Files are copied into the public portfolio only after you confirm they are public-safe.</p>
+
+    <details class="v2-inline-asset-add" {% if not asset_project.assets %}open{% endif %}>
+        <summary><span><span class="eyebrow">Add asset</span><strong>Upload a public-safe project file</strong></span><span class="summary-hint">PNG, JPG, WEBP, GIF, MP4, WEBM, PDF, DOCX, PPTX, XLSX</span></summary>
+        <div class="v2-inline-asset-add-body">
+            <form method="post" action="{{ url_for('assets.upload_asset', project_id=asset_project.id) }}" enctype="multipart/form-data" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="return_to" value="{{ asset_return_to }}">
+                <div class="full-span"><label for="inline-asset-file">File</label><input id="inline-asset-file" name="asset_file" type="file" required></div>
+                <div><label for="inline-asset-alt">Alt text <span class="field-help-inline">(required for images)</span></label><input id="inline-asset-alt" name="alt" type="text" placeholder="Describe what the image communicates"></div>
+                <div><label for="inline-asset-caption">Caption <span class="field-help-inline">(optional)</span></label><input id="inline-asset-caption" name="caption" type="text" placeholder="Short public-facing context"></div>
+                <div class="full-span public-safe-confirm"><label class="checkbox-label"><input type="checkbox" name="public_safe" required> I confirm this file is safe for the public portfolio and contains no confidential, proprietary, customer-identifying, or unreleased information.</label></div>
+                <div class="full-span"><button class="btn btn-primary" type="submit">Add Public Asset</button></div>
+            </form>
+        </div>
+    </details>
+
+    {% if asset_project.assets %}
+    <div class="v2-inline-asset-grid">
+        {% for asset in asset_project.assets %}
+        <article class="asset-card v2-inline-asset-card">
+            <div class="asset-preview-frame">
+                {% if asset.type == 'image' %}
+                <img src="{{ url_for('assets.preview_asset', project_id=asset_project.id, asset_index=loop.index0) }}" alt="{{ asset.get('alt', '') }}">
+                {% elif asset.type == 'video' %}
+                <video controls preload="metadata"><source src="{{ url_for('assets.preview_asset', project_id=asset_project.id, asset_index=loop.index0) }}"></video>
+                {% elif asset.type == 'pdf' %}
+                <div class="asset-file-icon">PDF</div>
+                {% else %}
+                <div class="asset-file-icon">{{ asset.type|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="asset-card-body">
+                <div class="asset-card-topline"><span class="page-type-pill generated">{{ asset.type }}</span><a href="{{ url_for('assets.preview_asset', project_id=asset_project.id, asset_index=loop.index0) }}" target="_blank" rel="noopener">Open preview</a></div>
+                <p class="asset-path"><code>{{ asset.path }}</code></p>
+
+                <details class="v2-asset-controls">
+                    <summary>Alt text, caption, replace, or remove</summary>
+                    <div class="v2-asset-controls-body">
+                        <form method="post" action="{{ url_for('assets.update_asset_metadata', project_id=asset_project.id, asset_index=loop.index0) }}" class="asset-form-stack">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="return_to" value="{{ asset_return_to }}">
+                            <div><label for="inline-alt-{{ loop.index0 }}">Alt text</label><input id="inline-alt-{{ loop.index0 }}" name="alt" type="text" value="{{ asset.get('alt', '') }}"></div>
+                            <div><label for="inline-caption-{{ loop.index0 }}">Caption</label><input id="inline-caption-{{ loop.index0 }}" name="caption" type="text" value="{{ asset.get('caption', '') }}"></div>
+                            <button class="btn btn-secondary" type="submit">Save Asset Details</button>
+                        </form>
+
+                        <div class="asset-divider"></div>
+
+                        <form method="post" action="{{ url_for('assets.replace_asset', project_id=asset_project.id, asset_index=loop.index0) }}" enctype="multipart/form-data" class="asset-form-stack">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="return_to" value="{{ asset_return_to }}">
+                            <label for="inline-replacement-{{ loop.index0 }}">Replace file</label>
+                            <p class="field-help">Choose the same file extension so existing page references keep working.</p>
+                            <input id="inline-replacement-{{ loop.index0 }}" name="replacement_file" type="file" required>
+                            <label class="checkbox-label public-safe-confirm"><input type="checkbox" name="public_safe" required> I confirm the replacement is public-safe.</label>
+                            <button class="btn btn-secondary" type="submit">Replace File</button>
+                        </form>
+
+                        <div class="asset-divider"></div>
+
+                        <form method="post" action="{{ url_for('assets.remove_asset', project_id=asset_project.id, asset_index=loop.index0) }}" data-confirm-action="remove-asset">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="return_to" value="{{ asset_return_to }}">
+                            <button class="btn btn-danger" type="submit">Remove Asset</button>
+                        </form>
+                    </div>
+                </details>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-note">No assets are associated with this project yet. Add one above when you have a public-safe image, document, video, or downloadable artifact to show.</p>
+    {% endif %}
+</section>
