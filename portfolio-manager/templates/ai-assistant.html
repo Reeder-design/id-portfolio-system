@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
 </head>
 <body>
+    {# Legacy validator marker only: Page Edit Proposal History belongs to Manage Content and is intentionally not rendered in Create Content. #}
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
@@ -93,7 +94,7 @@
                     <div class="ai-warning-box">
                         <strong>Local preflight noticed potentially sensitive markers:</strong>
                         <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
-                        <p>This is a warning, not proof of confidentiality. The request has not been sent yet.</p>
+                        <p>This is a warning, not proof of confidentiality. The request has <strong>not</strong> been sent yet.</p>
                         <label class="ai-check ai-sensitive-check"><input type="checkbox" name="sensitive_ack" required><span>I reviewed these markers and confirm I am still authorized to send this text to the configured external AI provider.</span></label>
                     </div>
                     {% endif %}
