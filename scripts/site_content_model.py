@@ -263,8 +263,14 @@ def validate_structure(data: dict) -> list[str]:
             errors.append(f"{page_id}: page_path must point to an existing index.html")
 
         fields = page.get("fields")
-        if not isinstance(fields, dict) or set(fields) != set(LOCATORS[page_id]):
-            errors.append(f"{page_id}: fields must match the approved editable field set")
+        if not isinstance(fields, dict):
+            errors.append(f"{page_id}: fields must be an object")
+            continue
+        unknown_fields = set(fields) - set(LOCATORS[page_id])
+        if unknown_fields:
+            errors.append(
+                f"{page_id}: fields contain unapproved ids: {', '.join(sorted(unknown_fields))}"
+            )
             continue
 
         for field_id, field in fields.items():
@@ -285,7 +291,8 @@ def extract_page_fields(page_id: str, data: dict | None = None) -> dict[str, str
     html_text = page_path.read_text(encoding="utf-8")
     extracted: dict[str, str] = {}
 
-    for field_id, pattern in LOCATORS[page_id].items():
+    for field_id in page.get("fields", {}):
+        pattern = LOCATORS[page_id][field_id]
         matches = list(re.finditer(pattern, html_text, flags=re.I | re.S))
         if len(matches) != 1:
             raise ValueError(
@@ -302,7 +309,8 @@ def render_page_text(page_id: str, data: dict | None = None) -> tuple[Path, str]
     page_path = ROOT / page["page_path"]
     html_text = page_path.read_text(encoding="utf-8")
 
-    for field_id, pattern in LOCATORS[page_id].items():
+    for field_id in page.get("fields", {}):
+        pattern = LOCATORS[page_id][field_id]
         matches = list(re.finditer(pattern, html_text, flags=re.I | re.S))
         if len(matches) != 1:
             raise ValueError(
