@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-uploads.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -98,10 +99,27 @@
             </section>
             {% endif %}
 
+            {% if record.attachments %}
+            <section class="dashboard-card ai-source-card full-width">
+                <p class="eyebrow">Request audit</p>
+                <h2>Attachments included in this AI request</h2>
+                <p class="field-help">Original uploaded binaries were temporary and were deleted locally after successful generation. This private proposal keeps only audit metadata plus the extracted text shown in the source record below.</p>
+                <div class="ai-attachment-audit">
+                    {% for item in record.attachments %}
+                    <div>
+                        <strong>{{ item.filename }}</strong>
+                        <span>{{ 'Image sent as visual input' if item.kind == 'image' else 'Text extracted locally before send' }} · {{ item.extension|upper }} · {{ "{:.1f}".format(item.size_bytes / 1024) }} KB{% if item.truncated %} · extraction truncated{% endif %}</span>
+                        <small>SHA-256: {{ item.sha256 }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
             <section class="dashboard-card ai-source-card full-width">
                 <details>
                     <summary>Show the private source text used for this proposal</summary>
-                    <p class="field-help">This source is stored only in the Git-ignored local proposal record so you can audit what the AI saw.</p>
+                    <p class="field-help">This source is stored only in the Git-ignored local proposal record so you can audit what the AI saw. For image inputs, the source text records the image filename while the proposal audit above records the image hash and metadata.</p>
                     <pre class="ai-source-text">{{ record.source_text }}</pre>
                     {% if record.user_goal %}<h3>Goal / context</h3><pre class="ai-source-text">{{ record.user_goal }}</pre>{% endif %}
                 </details>
