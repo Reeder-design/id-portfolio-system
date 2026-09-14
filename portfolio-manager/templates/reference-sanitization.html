@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanitization Review | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Reference Library · Sanitization</p>
+            <h1>{{ record.title }}</h1>
+            <p class="hero-copy">Use AI to surface possible publication risks, then make a human decision for every finding. The original private source is never modified by this workflow.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Back to Reference Item</a>
+            <a class="btn btn-secondary" href="{{ url_for('reference_library.workspace') }}">Reference Library</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Safety boundary</p>
+        <h2>AI flags. You decide.</h2>
+        <p class="section-copy">AI findings are advisory and never certify that a resource is safe. This text-based review can inspect extracted text from supported documents, but embedded images, logos, screenshots, visual redactions, and non-text metadata still require human review. Approval for portfolio use remains a separate action on the Reference Item page.</p>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Source review scope</p>
+            <h2>{{ record.original_file.filename }}</h2>
+            {% if preflight.extracted.supported %}
+            <p class="section-copy">This source can be reviewed as extracted text. Extracted content stays local until you explicitly run an AI action below.</p>
+            {% if preflight.extracted.truncated %}<div class="flash-message error">The extracted source is larger than the current AI review limit. Only the first portion will be reviewed, and the final result will carry that limitation.</div>{% endif %}
+            {% if preflight.blocked %}<div class="flash-message error"><strong>AI review blocked:</strong> local preflight detected credential or secret patterns. Create a safer working copy before sending this source to AI.</div>{% endif %}
+            {% if preflight.warnings %}<div class="ai-warning-box"><strong>Local sensitivity markers found:</strong><ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul></div>{% endif %}
+            {% else %}
+            <div class="flash-message error">{{ preflight.extracted.reason }}</div>
+            <p class="section-copy">You can still use the manual Sanitized Draft upload on the Reference Item page. Automated visual/image/media review is intentionally not treated as complete in this version.</p>
+            {% endif %}
+        </section>
+
+        {% if preflight.extracted.supported %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Step 1</p>
+            <h2>{{ 'Run a new sanitization review' if record.sanitization_review else 'Review for sanitization' }}</h2>
+            {% if ai_settings.configured %}
+            <form method="post" action="{{ url_for('reference_library.run_sanitization', item_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand that extracted text from this private source will be sent to the configured AI provider for sanitization review.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this source material to the configured AI provider.</span></label>
+                    {% if preflight.warnings %}<label class="ai-check"><input type="checkbox" name="sensitive_ack"><span>I reviewed the local sensitivity markers above and still want to send this source for AI review.</span></label>{% endif %}
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit" {% if preflight.blocked %}disabled{% endif %}>{{ 'Run New Sanitization Review' if record.sanitization_review else 'Run Sanitization Review' }}</button></div>
+            </form>
+            {% else %}
+            <p class="section-copy">AI is optional and not currently connected. You can continue using the manual Sanitized Draft workflow without it.</p>
+            <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        {% if record.sanitization_review %}
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div><p class="eyebrow">AI findings · human review required</p><h2>{{ record.sanitization_review.summary or 'Sanitization findings' }}</h2></div>
+                <span class="v2-ai-status connected">{{ record.sanitization_review.findings|length }} finding{{ '' if record.sanitization_review.findings|length == 1 else 's' }}</span>
+            </div>
+            {% if record.sanitization_review.limitations %}
+            <div class="ai-warning-box"><strong>Review limitations</strong><ul>{% for item in record.sanitization_review.limitations %}<li>{{ item }}</li>{% endfor %}</ul></div>
+            {% endif %}
+        </section>
+
+        <form method="post" action="{{ url_for('reference_library.save_sanitization_decisions', item_id=record.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            {% for finding in record.sanitization_review.findings %}
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">{{ finding.severity|upper }} · {{ finding.category }}</p>
+                <h2>{{ finding.detected_content or 'Potentially sensitive content' }}</h2>
+                {% if finding.location %}<p><strong>Location:</strong> {{ finding.location }}</p>{% endif %}
+                <p><strong>Why review it:</strong> {{ finding.reason }}</p>
+                {% if finding.suggested_actions %}<p><strong>AI suggestions:</strong> {{ finding.suggested_actions|join(' · ') }}</p>{% endif %}
+                {% if finding.suggested_replacement %}<p><strong>Suggested replacement:</strong> {{ finding.suggested_replacement }}</p>{% endif %}
+
+                <div class="form-grid">
+                    <div>
+                        <label for="decision_{{ finding.id }}">Your decision</label>
+                        <select id="decision_{{ finding.id }}" name="decision_{{ finding.id }}">
+                            <option value="pending" {% if finding.decision == 'pending' %}selected{% endif %}>Choose a decision</option>
+                            {% for decision in decisions %}<option value="{{ decision }}" {% if finding.decision == decision %}selected{% endif %}>{{ decision_labels[decision] }}</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="replacement_{{ finding.id }}">Replacement / rewrite text</label>
+                        <textarea id="replacement_{{ finding.id }}" name="replacement_{{ finding.id }}" rows="3" maxlength="2400" placeholder="Required for Replace text or Rewrite; optional for other decisions.">{{ finding.replacement_text }}</textarea>
+                    </div>
+                    <div class="full-span">
+                        <label for="note_{{ finding.id }}">Private decision note</label>
+                        <textarea id="note_{{ finding.id }}" name="note_{{ finding.id }}" rows="2" maxlength="2400" placeholder="Why you made this decision, context to remember, or manual follow-up needed.">{{ finding.user_note }}</textarea>
+                    </div>
+                </div>
+            </section>
+            {% else %}
+            <section class="dashboard-card full-width"><p class="eyebrow">No text findings returned</p><h2>AI did not identify a specific text finding.</h2><p class="section-copy">That does not mean the source is safe. Review the limitations and inspect visual assets, metadata, branding, and context manually.</p></section>
+            {% endfor %}
+            <section class="dashboard-card full-width"><div class="button-row"><button class="btn btn-primary" type="submit">Save Finding Decisions</button></div></section>
+        </form>
+
+        {% if record.sanitization_review.decisions_complete %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Step 3</p>
+            <h2>Create a separate sanitized text working draft</h2>
+            <p class="section-copy">This optional AI step uses the original extracted text plus your decisions to create a separate TXT derivative. It never overwrites the original. You still review the derivative yourself before marking it Approved for Portfolio Use.</p>
+            {% if ai_settings.configured %}
+            <form method="post" action="{{ url_for('reference_library.generate_sanitized_draft', item_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand the extracted source text and my sanitization decisions will be sent to the configured AI provider to generate a private text derivative.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to use this source material for AI-assisted sanitization.</span></label>
+                    {% if preflight.warnings %}<label class="ai-check"><input type="checkbox" name="sensitive_ack"><span>I reviewed the sensitivity markers and still want to generate the private sanitized draft.</span></label>{% endif %}
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit" {% if preflight.blocked %}disabled{% endif %}>Generate Sanitized Text Draft</button></div>
+            </form>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        {% if record.sanitized_derivative %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Sanitized derivative</p>
+            <h2>Draft ready for your review</h2>
+            <p><strong>{{ record.sanitized_derivative.filename }}</strong></p>
+            <div class="button-row">
+                <a class="btn btn-secondary" href="{{ url_for('reference_library.download_file', item_id=record.id, kind='sanitized') }}">Download Sanitized Draft</a>
+                <a class="btn btn-primary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Review &amp; Approve on Reference Item</a>
+            </div>
+            {% if record.sanitization_review.sanitized_draft_notes %}<h3>Draft notes</h3><ul>{% for note in record.sanitization_review.sanitized_draft_notes %}<li>{{ note }}</li>{% endfor %}</ul>{% endif %}
+            {% if record.sanitization_review.unresolved_items %}<div class="ai-warning-box"><strong>Still requires manual review</strong><ul>{% for item in record.sanitization_review.unresolved_items %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
+        </section>
+        {% endif %}
+        {% endif %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
