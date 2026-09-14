@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 import json
 import re
 
@@ -32,7 +32,7 @@ def _bridge_path(brief_id: str) -> Path:
     return path
 
 
-def load_publish_bridge(brief_id: str) -> dict[str, Any] | None:
+def load_publish_bridge(brief_id: str) -> Optional[dict[str, Any]]:
     path = _bridge_path(brief_id)
     if not path.exists():
         return None
@@ -115,7 +115,7 @@ def start_or_resume_publish_bridge(brief_id: str) -> dict[str, Any]:
     return _save_bridge(bridge)
 
 
-def publish_bridge_context(brief_id: str) -> dict[str, Any] | None:
+def publish_bridge_context(brief_id: str) -> Optional[dict[str, Any]]:
     bridge = load_publish_bridge(brief_id)
     if not bridge:
         return None
