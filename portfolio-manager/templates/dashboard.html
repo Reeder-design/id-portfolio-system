@@ -23,7 +23,7 @@
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                     <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
                     <a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system/blob/main/docs/changelog.md" target="_blank" rel="noopener noreferrer">Version History</a>
-                    <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy Statement</button>
+                    <button class="btn btn-secondary" type="button" data-help-key="privacy" data-help-label="Privacy & Security">Privacy &amp; Security</button>
                     <form method="post" action="{{ url_for('logout') }}" class="logout-form">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-secondary" type="submit">Sign Out</button>
