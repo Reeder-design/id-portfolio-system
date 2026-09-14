@@ -20,7 +20,7 @@ Current portfolio version: **1.0.0**
 | --- | --- | --- | --- | --- | --- | --- |
 | AI Training and Evaluation Demo | AI Training and Evaluation | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
-| Pursuit determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
+| Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
 
 ## Source Records
 
