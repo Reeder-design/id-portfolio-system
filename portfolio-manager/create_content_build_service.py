@@ -487,6 +487,7 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
         created_record, created_page = new_project.create_project(project_record, render=True)
         record_path = created_record
         page_path = created_page
+        new_project.refresh_documentation()
         valid, validation_output = run_full_validation()
         if not valid:
             raise CreateBuildError("Full validation failed after local build:\n" + validation_output)
@@ -496,6 +497,10 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
             new_project.cleanup_empty_parents(page_path, ROOT / "portfolio" / "projects")
         if record_path and record_path.exists():
             record_path.unlink()
+        try:
+            new_project.refresh_documentation()
+        except Exception:
+            pass
         if isinstance(exc, CreateBuildError):
             raise
         raise CreateBuildError(str(exc)) from exc
@@ -560,9 +565,13 @@ def revert_local_build(brief_id: str) -> dict[str, Any]:
     if page_path:
         _remove_if_unchanged(page_path, build.get("page_sha256"))
     _remove_if_unchanged(record_path, build.get("record_sha256"))
+    new_project = _load_new_project_module()
     if page_path:
-        new_project = _load_new_project_module()
         new_project.cleanup_empty_parents(page_path, ROOT / "portfolio" / "projects")
+    try:
+        new_project.refresh_documentation()
+    except Exception as exc:
+        raise CreateBuildError("Project files were reverted, but generated documentation could not be refreshed. Run Refresh Documentation before continuing.") from exc
 
     history = record.setdefault("build_history", [])
     history.append({
