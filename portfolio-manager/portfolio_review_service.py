@@ -199,7 +199,7 @@ def _normalize_review(value: Any, allowed_paths: set[str]) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise AIServiceError("AI returned an unexpected portfolio-review result shape.")
 
-    findings: list[dict[str, str | None]] = []
+    findings: list[dict[str, Any]] = []
     raw_findings = value.get("findings", [])
     if isinstance(raw_findings, list):
         for item in raw_findings[:MAX_FINDINGS]:
