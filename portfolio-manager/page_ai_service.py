@@ -7,16 +7,20 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import uuid
 
-from ai_service import AIServiceError, PROPOSALS_ROOT, get_ai_settings, preflight_source
+from ai_service import AIServiceError, PRIVATE_ROOT, PROPOSALS_ROOT, get_ai_settings, preflight_source
 from page_copy_service import REPO_ROOT, page_info
+from site_content_sync_service import SITE_CONTENT_PATH, sync_structured_page_after_html_change
+from validation_service import run_full_validation
 
 
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 MAX_REQUEST_CHARS = 3000
 MAX_PAGE_CONTEXT_CHARS = 180000
 MAX_OPERATIONS = 12
+PAGE_BACKUPS_ROOT = PRIVATE_ROOT / "ai-page-backups"
 
 READ_ONLY_STYLE_FILES = [
     REPO_ROOT / "portfolio" / "css" / "styles.css",
@@ -213,6 +217,20 @@ def generate_page_edit_proposal(page_id: str, user_request: str) -> dict[str, An
     }
 
 
+def _proposal_path(proposal_id: str):
+    if not re.fullmatch(r"ai-[0-9]{8}-[0-9]{6}-[a-f0-9]{8}", proposal_id):
+        raise AIServiceError("Invalid AI proposal id.")
+    path = (PROPOSALS_ROOT / f"{proposal_id}.json").resolve()
+    if PROPOSALS_ROOT.resolve() not in path.parents:
+        raise AIServiceError("Invalid AI proposal path.")
+    return path
+
+
+def _write_page_edit_proposal(record: dict[str, Any]) -> None:
+    path = _proposal_path(str(record.get("id", "")))
+    path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 def save_page_edit_proposal(generated: dict[str, Any]) -> dict[str, Any]:
     PROPOSALS_ROOT.mkdir(parents=True, exist_ok=True)
     proposal_id = f"ai-{datetime.now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}"
@@ -230,16 +248,13 @@ def save_page_edit_proposal(generated: dict[str, Any]) -> dict[str, Any]:
         "user_request": generated["user_request"],
         "result": generated["result"],
     }
-    path = PROPOSALS_ROOT / f"{proposal_id}.json"
-    path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+    _write_page_edit_proposal(record)
     return record
 
 
 def load_page_edit_proposal(proposal_id: str) -> dict[str, Any]:
-    if not re.fullmatch(r"ai-[0-9]{8}-[0-9]{6}-[a-f0-9]{8}", proposal_id):
-        raise AIServiceError("Invalid AI proposal id.")
-    path = (PROPOSALS_ROOT / f"{proposal_id}.json").resolve()
-    if PROPOSALS_ROOT.resolve() not in path.parents or not path.exists():
+    path = _proposal_path(proposal_id)
+    if not path.exists():
         raise AIServiceError("AI page-edit proposal not found.")
     try:
         record = json.loads(path.read_text(encoding="utf-8"))
@@ -248,3 +263,168 @@ def load_page_edit_proposal(proposal_id: str) -> dict[str, Any]:
     if not isinstance(record, dict) or record.get("type") != "page-edit":
         raise AIServiceError("This AI proposal is not a page-edit proposal.")
     return record
+
+
+def _resolved_page(record: dict[str, Any]):
+    page, page_path = page_info(str(record.get("page_id", "")))
+    if str(page.get("path", "")) != str(record.get("page_path", "")):
+        raise AIServiceError("The managed page mapping changed after this proposal was created. Generate a new proposal.")
+    return page, page_path
+
+
+def _apply_exact_operations(current_html: str, operations: list[dict[str, str]]) -> str:
+    spans: list[tuple[int, int, str]] = []
+    for index, operation in enumerate(operations, start=1):
+        find = str(operation.get("find", ""))
+        replace = str(operation.get("replace", ""))
+        if not find or current_html.count(find) != 1:
+            raise AIServiceError(
+                f"Change {index} no longer has exactly one matching source anchor. Generate a fresh proposal before applying."
+            )
+        start = current_html.index(find)
+        spans.append((start, start + len(find), replace))
+
+    ordered = sorted(spans, key=lambda item: item[0])
+    previous_end = -1
+    for start, end, _ in ordered:
+        if start < previous_end:
+            raise AIServiceError("The proposal contains overlapping operations and cannot be applied safely.")
+        previous_end = end
+
+    updated_html = current_html
+    for start, end, replacement in sorted(spans, key=lambda item: item[0], reverse=True):
+        updated_html = updated_html[:start] + replacement + updated_html[end:]
+    return updated_html
+
+
+def _backup_dir(proposal_id: str):
+    PAGE_BACKUPS_ROOT.mkdir(parents=True, exist_ok=True)
+    path = (PAGE_BACKUPS_ROOT / proposal_id).resolve()
+    if PAGE_BACKUPS_ROOT.resolve() not in path.parents:
+        raise AIServiceError("Invalid AI backup path.")
+    return path
+
+
+def apply_page_edit_proposal(proposal_id: str) -> dict[str, Any]:
+    record = load_page_edit_proposal(proposal_id)
+    if record.get("status") != "proposal-only":
+        raise AIServiceError("Only a proposal that has not already been applied can be approved.")
+
+    _, page_path = _resolved_page(record)
+    current_html = page_path.read_text(encoding="utf-8")
+    current_sha = hashlib.sha256(current_html.encode("utf-8")).hexdigest()
+    if current_sha != record.get("source_sha256"):
+        raise AIServiceError(
+            "This page changed after the AI proposal was created. Nothing was applied. Generate a fresh proposal from the current page."
+        )
+
+    operations = record.get("result", {}).get("operations", [])
+    if not isinstance(operations, list) or not operations:
+        raise AIServiceError("This proposal has no safe operations to apply.")
+    updated_html = _apply_exact_operations(current_html, operations)
+    if updated_html == current_html:
+        raise AIServiceError("The approved proposal would not change the page, so nothing was applied.")
+
+    original_site_content = SITE_CONTENT_PATH.read_text(encoding="utf-8") if SITE_CONTENT_PATH.exists() else None
+    backup_dir = _backup_dir(proposal_id)
+    if backup_dir.exists():
+        shutil.rmtree(backup_dir)
+    backup_dir.mkdir(parents=True, exist_ok=False)
+    (backup_dir / "page.html").write_text(current_html, encoding="utf-8")
+    if original_site_content is not None:
+        (backup_dir / "site-content.json").write_text(original_site_content, encoding="utf-8")
+
+    try:
+        page_path.write_text(updated_html, encoding="utf-8")
+        structured_sync = sync_structured_page_after_html_change(str(record["page_id"]))
+        validation_ok, validation_output = run_full_validation()
+        if not validation_ok:
+            raise RuntimeError(validation_output)
+    except Exception as exc:
+        page_path.write_text(current_html, encoding="utf-8")
+        if original_site_content is not None:
+            SITE_CONTENT_PATH.write_text(original_site_content, encoding="utf-8")
+        shutil.rmtree(backup_dir, ignore_errors=True)
+        record["last_apply_error"] = str(exc)[:4000]
+        _write_page_edit_proposal(record)
+        raise AIServiceError(
+            "The approved AI edit did not pass validation, so Portfolio Manager restored the original page and structured content. "
+            f"Details: {str(exc)[:1200]}"
+        ) from exc
+
+    applied_html = page_path.read_text(encoding="utf-8")
+    record.update({
+        "status": "applied-local",
+        "applied_at": datetime.now().isoformat(timespec="seconds"),
+        "applied_sha256": hashlib.sha256(applied_html.encode("utf-8")).hexdigest(),
+        "backup_id": proposal_id,
+        "structured_sync": structured_sync,
+        "validation_output": validation_output,
+    })
+    record.pop("last_apply_error", None)
+    _write_page_edit_proposal(record)
+    return record
+
+
+def revert_page_edit_proposal(proposal_id: str) -> dict[str, Any]:
+    record = load_page_edit_proposal(proposal_id)
+    if record.get("status") != "applied-local":
+        raise AIServiceError("Only a currently applied AI page edit can be reverted from this proposal.")
+
+    _, page_path = _resolved_page(record)
+    current_html = page_path.read_text(encoding="utf-8")
+    current_sha = hashlib.sha256(current_html.encode("utf-8")).hexdigest()
+    if current_sha != record.get("applied_sha256"):
+        raise AIServiceError(
+            "This page changed after the AI edit was applied. Automatic revert is blocked so newer work is not overwritten. Review the Git diff instead."
+        )
+
+    backup_dir = _backup_dir(proposal_id)
+    page_backup = backup_dir / "page.html"
+    if not page_backup.exists():
+        raise AIServiceError("The private backup for this AI edit is missing, so automatic revert is unavailable.")
+
+    original_html = page_backup.read_text(encoding="utf-8")
+    original_site_content = None
+    site_backup = backup_dir / "site-content.json"
+    if site_backup.exists():
+        original_site_content = site_backup.read_text(encoding="utf-8")
+
+    current_site_content = SITE_CONTENT_PATH.read_text(encoding="utf-8") if SITE_CONTENT_PATH.exists() else None
+
+    try:
+        page_path.write_text(original_html, encoding="utf-8")
+        if original_site_content is not None:
+            SITE_CONTENT_PATH.write_text(original_site_content, encoding="utf-8")
+        validation_ok, validation_output = run_full_validation()
+        if not validation_ok:
+            raise RuntimeError(validation_output)
+    except Exception as exc:
+        page_path.write_text(current_html, encoding="utf-8")
+        if current_site_content is not None:
+            SITE_CONTENT_PATH.write_text(current_site_content, encoding="utf-8")
+        raise AIServiceError(
+            "The revert did not pass validation, so Portfolio Manager restored the applied version instead. "
+            f"Details: {str(exc)[:1200]}"
+        ) from exc
+
+    record.update({
+        "status": "reverted",
+        "reverted_at": datetime.now().isoformat(timespec="seconds"),
+        "reverted_sha256": hashlib.sha256(original_html.encode("utf-8")).hexdigest(),
+        "validation_output": validation_output,
+    })
+    _write_page_edit_proposal(record)
+    return record
+
+
+def delete_page_edit_proposal(proposal_id: str) -> None:
+    record = load_page_edit_proposal(proposal_id)
+    if record.get("status") == "applied-local":
+        raise AIServiceError("Revert the applied AI change before deleting its proposal and private backup.")
+    path = _proposal_path(proposal_id)
+    try:
+        path.unlink()
+    except OSError as exc:
+        raise AIServiceError("AI page-edit proposal could not be deleted.") from exc
+    shutil.rmtree(_backup_dir(proposal_id), ignore_errors=True)
