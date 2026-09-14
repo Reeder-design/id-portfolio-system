@@ -90,8 +90,9 @@ def main() -> int:
     require("No public portfolio files" in brief or "does not create portfolio pages" in brief, "Content Brief must explain that planning does not create public content.", errors)
     require("Start New Content Brief" in workspace, "Create Content workspace must start with a guided Content Brief.", errors)
     require("Advanced AI Drafting Helper" in workspace, "Existing generic AI assistance must be available as a secondary Create Content tool.", errors)
-    require("Content Workspace &amp; Reference Library" in workspace, "Create Content must reserve the Reference Library integration point.", errors)
-    require("Reference Library · upcoming" in workspace, "Reference Library must remain visibly deferred in this foundation slice.", errors)
+    require("Content Workspace &amp; Reference Library" in workspace, "Create Content must expose the private Reference Library workflow.", errors)
+    require("Open Reference Library" in workspace, "Reference Library must be active from Create Content.", errors)
+    require("View Approved Sources" in workspace, "Create Content must expose an approved-source view for future brief integration.", errors)
 
     require("href=\"{{ url_for('create_content.workspace') }}\"" in dashboard, "Dashboard Create Content card must open the Create Content workspace.", errors)
     require("Create Content · upcoming" not in dashboard, "Dashboard must no longer label Create Content as upcoming.", errors)

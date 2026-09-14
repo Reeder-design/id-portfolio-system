@@ -45,6 +45,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Manage AI review safety", [sys.executable, "scripts/check-manage-ai-review.py"]),
         ("Related References safety", [sys.executable, "scripts/check-related-references.py"]),
         ("Create Content Lab safety", [sys.executable, "scripts/check-create-content.py"]),
+        ("Reference Library safety", [sys.executable, "scripts/check-reference-library.py"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
         ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
     ]

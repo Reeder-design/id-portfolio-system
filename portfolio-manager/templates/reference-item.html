@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ record.title }} | Reference Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Reference Item</p>
+            <h1>{{ record.title }}</h1>
+            <p class="hero-copy">Status: {{ record.status|replace('-', ' ')|title }}. The original source remains private and unchanged; sanitized work is stored separately.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('reference_library.workspace') }}">Back to Reference Library</a>
+            <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Create Content</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Original private source</p>
+            <h2>Preserved unchanged</h2>
+            <p><strong>{{ record.original_file.filename }}</strong></p>
+            <p class="section-copy">{{ record.original_file.mime_type }} · {{ record.original_file.size_bytes }} bytes</p>
+            <div class="button-row"><a class="btn btn-secondary" href="{{ url_for('reference_library.download_file', item_id=record.id, kind='original') }}">Download Original</a></div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Private workspace metadata</p>
+            <h2>Notes and status</h2>
+            <form method="post" action="{{ url_for('reference_library.save_item', item_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label for="title">Reference title</label>
+                    <input id="title" name="title" type="text" maxlength="240" value="{{ record.title }}" required>
+                </div>
+                <div class="full-span">
+                    <label for="notes">Private notes</label>
+                    <textarea id="notes" name="notes" rows="7" maxlength="12000">{{ record.notes }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label for="tags">Tags</label>
+                    <input id="tags" name="tags" type="text" value="{{ record.tags|join(', ') }}">
+                </div>
+                <div class="full-span">
+                    <label for="status">Review status</label>
+                    <select id="status" name="status">
+                        <option value="private-source" {% if record.status == 'private-source' %}selected{% endif %}>Private Source</option>
+                        <option value="needs-review" {% if record.status == 'needs-review' %}selected{% endif %}>Needs Review</option>
+                        <option value="sanitization-in-progress" {% if record.status == 'sanitization-in-progress' %}selected{% endif %}>Sanitization In Progress</option>
+                        <option value="sanitized-draft" {% if record.status == 'sanitized-draft' %}selected{% endif %} {% if not record.sanitized_derivative %}disabled{% endif %}>Sanitized Draft</option>
+                        <option value="approved-for-portfolio-use" {% if record.status == 'approved-for-portfolio-use' %}selected{% endif %} {% if not record.sanitized_derivative %}disabled{% endif %}>Approved for Portfolio Use</option>
+                    </select>
+                    <p class="field-help">A source cannot become Approved for Portfolio Use until a separate sanitized derivative exists.</p>
+                </div>
+                <div class="full-span">
+                    <label for="approval_note">Approval note</label>
+                    <textarea id="approval_note" name="approval_note" rows="3" maxlength="12000" placeholder="Required only when approving the sanitized derivative for portfolio use.">{{ record.approval.approval_note }}</textarea>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Save Reference Notes</button></div>
+            </form>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Sanitized derivative</p>
+            <h2>{{ 'Sanitized Draft on file' if record.sanitized_derivative else 'Add a separate public-safe working copy' }}</h2>
+            {% if record.sanitized_derivative %}
+            <p><strong>{{ record.sanitized_derivative.filename }}</strong></p>
+            <p class="section-copy">{{ record.sanitized_derivative.mime_type }} · {{ record.sanitized_derivative.size_bytes }} bytes</p>
+            <div class="button-row">
+                <a class="btn btn-secondary" href="{{ url_for('reference_library.download_file', item_id=record.id, kind='sanitized') }}">Download Sanitized Draft</a>
+                <form method="post" action="{{ url_for('reference_library.remove_sanitized', item_id=record.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-secondary" type="submit">Remove Sanitized Draft</button>
+                </form>
+            </div>
+            {% endif %}
+            <form method="post" action="{{ url_for('reference_library.upload_sanitized', item_id=record.id) }}" enctype="multipart/form-data" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label for="sanitized_file">{{ 'Replace' if record.sanitized_derivative else 'Upload' }} Sanitized Draft</label>
+                    <input id="sanitized_file" name="sanitized_file" type="file" required>
+                    <p class="field-help">Upload Sanitized Draft as a separate working copy. This creates or replaces the derivative only; the original source is never overwritten.</p>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Store Sanitized Draft</button></div>
+            </form>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Upcoming guided actions</p>
+            <h2>Sanitization and AI resource help</h2>
+            <div class="v2-general-grid">
+                <article class="v2-small-card upcoming"><h3>Ask AI About This Resource</h3><p>Analyze what professional skills, evidence, gaps, and possible portfolio uses this source contains after you explicitly choose what may be sent.</p><button class="btn btn-secondary" type="button" disabled>AI Resource Helper · upcoming</button></article>
+                <article class="v2-small-card upcoming"><h3>Review for Sanitization</h3><p>Detect names, branding, metrics, screenshots, internal URLs, metadata, and other details that may require a human decision.</p><button class="btn btn-secondary" type="button" disabled>Sanitization Review · next phase</button></article>
+                <article class="v2-small-card upcoming"><h3>Create Content Using This Resource</h3><p>This will become available as an automatic Content Lab source only after the sanitized derivative is approved for portfolio use.</p><button class="btn btn-secondary" type="button" disabled>Use in Content Brief · upcoming</button></article>
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <form method="post" action="{{ url_for('reference_library.remove_item', item_id=record.id) }}" data-confirm-action="delete-reference-item">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-secondary" type="submit">Delete Private Reference Item</button>
+            </form>
+        </section>
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
