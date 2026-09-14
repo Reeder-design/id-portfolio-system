@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Related References | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Manage Content · Related References</p>
+                <h1>Check what else is connected</h1>
+                <p class="hero-copy">Portfolio Manager found other visible places connected to your title change. Review each one before moving on to preview and publishing.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ source_editor_url }}">Back to {{ record.source_label }}</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Your edit</p>
+            <h2>{{ record.change.old_title }} → {{ record.change.new_title }}</h2>
+            <p class="section-copy">Reference detection is deterministic: Portfolio Manager looks for exact old-title text and visible cards or labels that link directly to the edited page. AI is not used to decide what counts as a reference.</p>
+            {% if record.automatic_updates %}
+            <div class="v2-settings-summary">
+                {% for item in record.automatic_updates %}<div><span>Already handled</span><strong>{{ item }}</strong></div>{% endfor %}
+            </div>
+            {% endif %}
+        </section>
+
+        {% if record.status == 'pending' %}
+        <form method="post" action="{{ url_for('related_references.apply', review_id=record.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <main class="v2-proposal-layout">
+                {% for item in record.references %}
+                <article class="dashboard-card">
+                    <p class="eyebrow">{{ item.kind|replace('-', ' ')|title }}</p>
+                    <h2>{{ item.path }}</h2>
+                    <p class="section-copy">{{ item.reason }}</p>
+                    <div class="v2-settings-summary">
+                        <div><span>Current text</span><strong>{{ item.current_text }}</strong></div>
+                        <div><span>Suggested text</span><strong>{{ item.suggested_text }}</strong></div>
+                    </div>
+                    <div class="general-field-card">
+                        <label><input type="radio" name="decision__{{ item.id }}" value="update" required> Update Reference</label>
+                        <label><input type="radio" name="decision__{{ item.id }}" value="edit" required> Edit Suggested Text</label>
+                        <label><input type="radio" name="decision__{{ item.id }}" value="leave" required> Leave Unchanged</label>
+                        <label for="custom__{{ item.id }}">Custom text if you choose Edit Suggested Text</label>
+                        <input id="custom__{{ item.id }}" name="custom__{{ item.id }}" type="text" value="{{ item.suggested_text }}">
+                    </div>
+                    <a class="btn btn-secondary" href="{{ item.preview_url }}" target="_blank" rel="noopener">Open Related Page Preview</a>
+                </article>
+                {% else %}
+                <section class="dashboard-card full-width">
+                    <p class="eyebrow">No manual updates needed</p>
+                    <h2>No additional related references require a decision.</h2>
+                    <p class="section-copy">The scan completed successfully. Continue to complete the review so Portfolio Manager can refresh generated documentation and run the full validation suite.</p>
+                </section>
+                {% endfor %}
+            </main>
+
+            <section class="dashboard-card full-width">
+                <div class="button-row">
+                    <button class="btn btn-primary" type="submit">Complete Related References Review</button>
+                    <a class="btn btn-secondary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview Edited Page</a>
+                </div>
+            </section>
+        </form>
+        {% else %}
+        <main class="v2-proposal-layout">
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">Reference review complete</p>
+                <h2>Related references reviewed · validation passed</h2>
+                <p class="section-copy">Your source edit and any approved reference updates are still local. Nothing has been published.</p>
+                {% if record.decisions %}
+                <div class="v2-copy-list">
+                    {% for decision in record.decisions %}
+                    <div class="general-field-card">
+                        <strong>{{ decision.id }}</strong>
+                        <span>{{ decision.decision|replace('-', ' ')|title }}{% if decision.replacement_text %}: {{ decision.replacement_text }}{% endif %}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">Next step</p>
+                <h2>Preview the result, then publish when ready</h2>
+                <div class="button-row">
+                    <a class="btn btn-primary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview Edited Page</a>
+                    {% for item in preview_urls %}<a class="btn btn-secondary" href="{{ item.url }}" target="_blank" rel="noopener">Preview {{ item.path }}</a>{% endfor %}
+                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Continue to Save &amp; Publish</a>
+                </div>
+            </section>
+        </main>
+        {% endif %}
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
