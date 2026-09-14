@@ -97,6 +97,20 @@ def _normalize_tags(raw: str) -> list[str]:
     return values
 
 
+def _write_record(record: dict[str, Any]) -> dict[str, Any]:
+    item_id = str(record.get("id", ""))
+    if record.get("type") != "reference-item":
+        raise ReferenceLibraryError("Invalid reference item record.")
+    record["updated_at"] = datetime.now().isoformat(timespec="seconds")
+    ITEMS_ROOT.mkdir(parents=True, exist_ok=True)
+    _item_path(item_id).write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+    return record
+
+
+def save_reference_record(record: dict[str, Any]) -> dict[str, Any]:
+    return _write_record(record)
+
+
 def _save_uploaded_file(item_id: str, kind: str, uploaded_file) -> dict[str, Any]:
     if not uploaded_file or not uploaded_file.filename:
         raise ReferenceLibraryError("Choose a file first.")
@@ -156,15 +170,14 @@ def create_reference_item(title: str, notes: str, tags: str, uploaded_file) -> d
         "notes": notes,
         "tags": _normalize_tags(tags),
         "original_file": original_file,
+        "sanitization_review": None,
         "sanitized_derivative": None,
         "approval": {
             "approved_at": None,
             "approval_note": "",
         },
     }
-    ITEMS_ROOT.mkdir(parents=True, exist_ok=True)
-    _item_path(item_id).write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    return record
+    return _write_record(record)
 
 
 def load_reference_item(item_id: str) -> dict[str, Any]:
@@ -177,6 +190,7 @@ def load_reference_item(item_id: str) -> dict[str, Any]:
         raise ReferenceLibraryError("Reference item could not be read.") from exc
     if not isinstance(value, dict) or value.get("type") != "reference-item":
         raise ReferenceLibraryError("Invalid reference item record.")
+    value.setdefault("sanitization_review", None)
     return value
 
 
@@ -224,7 +238,6 @@ def update_reference_item(item_id: str, title: str, notes: str, tags: str, statu
     record["notes"] = notes
     record["tags"] = _normalize_tags(tags)
     record["status"] = status
-    record["updated_at"] = datetime.now().isoformat(timespec="seconds")
     if status == "approved-for-portfolio-use":
         record["approval"] = {
             "approved_at": datetime.now().isoformat(timespec="seconds"),
@@ -233,8 +246,7 @@ def update_reference_item(item_id: str, title: str, notes: str, tags: str, statu
     else:
         record["approval"] = {"approved_at": None, "approval_note": approval_note}
 
-    _item_path(item_id).write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    return record
+    return _write_record(record)
 
 
 def save_sanitized_derivative(item_id: str, uploaded_file) -> dict[str, Any]:
@@ -243,9 +255,39 @@ def save_sanitized_derivative(item_id: str, uploaded_file) -> dict[str, Any]:
     record["sanitized_derivative"] = derivative
     record["status"] = "sanitized-draft"
     record["approval"] = {"approved_at": None, "approval_note": ""}
-    record["updated_at"] = datetime.now().isoformat(timespec="seconds")
-    _item_path(item_id).write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    return record
+    return _write_record(record)
+
+
+def save_generated_sanitized_text(item_id: str, text: str, filename: str) -> dict[str, Any]:
+    record = load_reference_item(item_id)
+    cleaned = text.strip()
+    if not cleaned:
+        raise ReferenceLibraryError("Generated sanitized draft is empty.")
+    safe_name = _safe_filename(filename)
+    if not safe_name.lower().endswith(".txt"):
+        safe_name = f"{Path(safe_name).stem or 'sanitized-source'}-sanitized.txt"
+
+    directory = _kind_dir(item_id, "sanitized")
+    shutil.rmtree(directory, ignore_errors=True)
+    directory.mkdir(parents=True, exist_ok=True)
+    destination = directory / safe_name
+    destination.write_text(cleaned + "\n", encoding="utf-8")
+    size = destination.stat().st_size
+    if size > MAX_UPLOAD_BYTES:
+        shutil.rmtree(directory, ignore_errors=True)
+        raise ReferenceLibraryError("Generated sanitized draft exceeds the Reference Library size limit.")
+
+    record["sanitized_derivative"] = {
+        "filename": safe_name,
+        "size_bytes": size,
+        "mime_type": "text/plain",
+        "sha256": _sha256(destination),
+        "stored_at": datetime.now().isoformat(timespec="seconds"),
+        "generated_from_review": True,
+    }
+    record["status"] = "sanitized-draft"
+    record["approval"] = {"approved_at": None, "approval_note": ""}
+    return _write_record(record)
 
 
 def delete_sanitized_derivative(item_id: str) -> dict[str, Any]:
@@ -254,9 +296,7 @@ def delete_sanitized_derivative(item_id: str) -> dict[str, Any]:
     record["sanitized_derivative"] = None
     record["status"] = "needs-review"
     record["approval"] = {"approved_at": None, "approval_note": ""}
-    record["updated_at"] = datetime.now().isoformat(timespec="seconds")
-    _item_path(item_id).write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    return record
+    return _write_record(record)
 
 
 def delete_reference_item(item_id: str) -> None:
