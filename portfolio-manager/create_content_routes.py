@@ -13,9 +13,33 @@ from create_content_service import (
     load_brief,
     save_brief_fields,
 )
+from create_content_sources import (
+    ContentSourceError,
+    approved_source_context,
+    list_approved_sources,
+    save_brief_sources,
+    source_ids_from_form,
+)
 
 
 create_content_bp = Blueprint("create_content", __name__, url_prefix="/create")
+
+
+def _approved_options() -> list[dict]:
+    try:
+        return list_approved_sources()
+    except ContentSourceError:
+        return []
+
+
+def _attached_ids(record: dict | None) -> list[str]:
+    if not record:
+        return []
+    return [
+        str(item.get("reference_id"))
+        for item in record.get("approved_sources", [])
+        if isinstance(item, dict) and item.get("reference_id")
+    ]
 
 
 @create_content_bp.get("/")
@@ -29,30 +53,46 @@ def workspace():
 
 @create_content_bp.get("/new")
 def new_brief():
+    options = _approved_options()
+    requested_source = request.args.get("source", "").strip()
+    approved_ids = {str(item.get("id")) for item in options}
+    selected = [requested_source] if requested_source and requested_source in approved_ids else []
+    if requested_source and not selected:
+        flash("That Reference Library source is not currently approved for portfolio use.", "error")
     return render_template(
         "create-content-brief.html",
         record=None,
         fields={},
-        preflight={"blocked": [], "warnings": []},
+        preflight={"blocked": [], "warnings": [], "source_issues": []},
         ai_settings=get_local_ai_settings(),
+        approved_sources=options,
+        attached_source_ids=selected,
+        source_context={"resolved": [], "issues": []},
     )
 
 
 @create_content_bp.post("/new")
 def create_new_brief():
+    record = None
     try:
         record = create_brief(request.form)
-    except CreateContentError as exc:
+        record = save_brief_sources(record["id"], source_ids_from_form(request.form))
+    except (CreateContentError, ContentSourceError) as exc:
+        if record:
+            delete_brief(record["id"])
         flash(str(exc), "error")
         return render_template(
             "create-content-brief.html",
             record=None,
             fields=request.form,
-            preflight={"blocked": [], "warnings": []},
+            preflight={"blocked": [], "warnings": [], "source_issues": []},
             ai_settings=get_local_ai_settings(),
+            approved_sources=_approved_options(),
+            attached_source_ids=source_ids_from_form(request.form),
+            source_context={"resolved": [], "issues": []},
         )
 
-    flash("Content Brief saved privately. Nothing was sent to AI or written to the public portfolio.", "success")
+    flash("Content Brief saved privately with its approved source selections. Nothing was sent to AI or written to the public portfolio.", "success")
     return redirect(url_for("create_content.brief", brief_id=record["id"]), code=303)
 
 
@@ -61,7 +101,8 @@ def brief(brief_id: str):
     try:
         record = load_brief(brief_id)
         preflight = brief_preflight(record)
-    except CreateContentError as exc:
+        source_context = approved_source_context(record, strict=False)
+    except (CreateContentError, ContentSourceError) as exc:
         flash(str(exc), "error")
         return redirect(url_for("create_content.workspace"))
 
@@ -71,6 +112,9 @@ def brief(brief_id: str):
         fields=record.get("fields", {}),
         preflight=preflight,
         ai_settings=get_local_ai_settings(),
+        approved_sources=_approved_options(),
+        attached_source_ids=_attached_ids(record),
+        source_context=source_context,
     )
 
 
@@ -78,13 +122,14 @@ def brief(brief_id: str):
 def save_brief(brief_id: str):
     action = request.form.get("action", "save").strip()
     try:
-        record = save_brief_fields(brief_id, request.form)
-    except CreateContentError as exc:
+        save_brief_fields(brief_id, request.form)
+        record = save_brief_sources(brief_id, source_ids_from_form(request.form))
+    except (CreateContentError, ContentSourceError) as exc:
         flash(str(exc), "error")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
 
     if action != "generate-plan":
-        flash("Content Brief saved privately. Nothing was sent to AI or written to the public portfolio.", "success")
+        flash("Content Brief and approved source selections saved privately. Nothing was sent to AI or written to the public portfolio.", "success")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
 
     if not get_local_ai_settings()["configured"]:
@@ -92,17 +137,20 @@ def save_brief(brief_id: str):
         return redirect(url_for("ai_assistant.settings"), code=303)
 
     if request.form.get("provider_ack") != "on":
-        flash("Content Brief saved. Confirm that the brief may be sent to the configured AI provider before generating a plan.", "error")
+        flash("Content Brief saved. Confirm that the brief and attached approved sanitized source text may be sent to the configured AI provider before generating a plan.", "error")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
     if request.form.get("authority_ack") != "on":
-        flash("Content Brief saved. Confirm that you are authorized to send the brief and that secrets have been removed.", "error")
+        flash("Content Brief saved. Confirm that you are authorized to send the brief and attached approved source context and that secrets have been removed.", "error")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
 
     preflight = brief_preflight(record)
+    if preflight.get("source_issues"):
+        flash("Content Brief saved, but attached source context needs attention before AI planning: " + " ".join(preflight["source_issues"]), "error")
+        return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
     if preflight["warnings"] and request.form.get("sensitive_ack") != "on":
         labels = ", ".join(preflight["warnings"])
         flash(
-            f"Content Brief saved. Local preflight noticed potentially sensitive markers ({labels}). Review the brief and confirm the additional acknowledgement before generating a plan.",
+            f"Content Brief saved. Local preflight noticed potentially sensitive markers ({labels}). Review the brief and approved source context, then confirm the additional acknowledgement before generating a plan.",
             "error",
         )
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
@@ -113,7 +161,7 @@ def save_brief(brief_id: str):
         flash(str(exc), "error")
         return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
 
-    flash("AI Content Plan created privately from the approved brief. No public portfolio files were created or changed.", "success")
+    flash("AI Content Plan created privately from the approved brief and current approved source context. No public portfolio files were created or changed.", "success")
     return redirect(url_for("create_content.brief", brief_id=brief_id), code=303)
 
 
