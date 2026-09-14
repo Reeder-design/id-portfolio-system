@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Edit Proposal History | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Private AI workspace</p>
+                <h1>Page Edit Proposal History</h1>
+                <p class="hero-copy">Review page-specific AI proposals kept in the local Git-ignored Portfolio Manager workspace. Keeping a proposal does not publish it or add it to Git.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">AI Assistance</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <section class="flash-stack">
+            {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+        </section>
+        {% endif %}
+        {% endwith %}
+
+        <section class="dashboard-card">
+            <p class="eyebrow">Filter history</p>
+            <div class="button-row">
+                <a class="btn {{ 'btn-primary' if selected_status == 'all' else 'btn-secondary' }}" href="{{ url_for('ai_apply.history') }}">All</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'proposal-only' else 'btn-secondary' }}" href="{{ url_for('ai_apply.history', status='proposal-only') }}">Proposal Only</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'applied-local' else 'btn-secondary' }}" href="{{ url_for('ai_apply.history', status='applied-local') }}">Applied Locally</a>
+                <a class="btn {{ 'btn-primary' if selected_status == 'reverted' else 'btn-secondary' }}" href="{{ url_for('ai_apply.history', status='reverted') }}">Reverted</a>
+            </div>
+        </section>
+
+        <main class="v2-proposal-layout">
+            {% if proposals %}
+                {% for item in proposals %}
+                <article class="dashboard-card">
+                    <p class="eyebrow">{{ item.page_label }} · {{ item.status }}</p>
+                    <h2>{{ item.result.headline if item.result else 'Page edit proposal' }}</h2>
+                    <p class="section-copy">{{ item.user_request }}</p>
+                    <div class="v2-settings-summary">
+                        <div><span>Created</span><strong>{{ item.created_at }}</strong></div>
+                        <div><span>Model</span><strong>{{ item.model }}</strong></div>
+                        <div><span>Changes</span><strong>{{ item.result.operations|length if item.result and item.result.operations else 0 }}</strong></div>
+                    </div>
+                    <div class="button-row">
+                        <a class="btn btn-primary" href="{{ url_for('ai_assistant.page_edit_proposal', proposal_id=item.id) }}">Open Proposal</a>
+                        {% if item.status != 'applied-local' %}
+                        <form method="post" action="{{ url_for('ai_apply.remove_page_edit_proposal', proposal_id=item.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="return_to" value="proposal-history">
+                            <button class="btn btn-secondary" type="submit">Delete Proposal</button>
+                        </form>
+                        {% else %}
+                        <span class="action-note">Revert the active local change before deleting this proposal.</span>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">No matching proposals</p>
+                <h2>Your kept page-edit proposals will appear here.</h2>
+                <p class="section-copy">Generate a page-aware AI proposal from a managed portfolio page, then keep it after review if you want it available for reference later.</p>
+            </section>
+            {% endif %}
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

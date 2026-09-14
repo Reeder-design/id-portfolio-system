@@ -7,6 +7,7 @@ import sys
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ai_settings_service import get_local_ai_settings
+from page_ai_service import find_active_page_edit_proposal
 from content_routes import run_command
 from notes_service import load_note, save_note
 from page_copy_service import (
@@ -164,6 +165,10 @@ def v2_page_editor(page_id: str):
         flash(f"Could not open page editor: {exc}", "error")
         return redirect(url_for("content.content_manager"))
 
+    preview = preview_url(page)
+    separator = "&" if "?" in preview else "?"
+    versioned_preview = f"{preview}{separator}v={page_path.stat().st_mtime_ns}"
+
     return render_template(
         "page-editor-v2.html",
         page_id=page_id,
@@ -171,8 +176,9 @@ def v2_page_editor(page_id: str):
         visible_fields=visible_fields,
         script_fields=script_fields,
         page_note=load_note("page", page_id),
-        preview_url=preview_url(page),
+        preview_url=versioned_preview,
         ai_settings=get_local_ai_settings(),
+        active_ai_proposal=find_active_page_edit_proposal(page_id),
     )
 
 

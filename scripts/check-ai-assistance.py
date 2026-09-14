@@ -10,12 +10,17 @@ ROOT = Path(__file__).resolve().parents[1]
 MANAGER = ROOT / "portfolio-manager"
 AI_SERVICE = MANAGER / "ai_service.py"
 AI_ROUTES = MANAGER / "ai_routes.py"
+AI_APPLY_ROUTES = MANAGER / "ai_apply_routes.py"
+SITE_CONTENT_SYNC_SERVICE = MANAGER / "site_content_sync_service.py"
+VALIDATION_SERVICE = MANAGER / "validation_service.py"
 AI_SETTINGS_SERVICE = MANAGER / "ai_settings_service.py"
 PAGE_AI_SERVICE = MANAGER / "page_ai_service.py"
 AI_TEMPLATE = MANAGER / "templates" / "ai-assistant.html"
 PROPOSAL_TEMPLATE = MANAGER / "templates" / "ai-proposal.html"
 AI_SETTINGS_TEMPLATE = MANAGER / "templates" / "ai-settings.html"
 PAGE_PROPOSAL_TEMPLATE = MANAGER / "templates" / "page-ai-proposal.html"
+PAGE_EDITOR_TEMPLATE = MANAGER / "templates" / "page-editor-v2.html"
+PAGE_HISTORY_TEMPLATE = MANAGER / "templates" / "page-ai-history.html"
 CONFIGURE_AI = MANAGER / "configure-ai.py"
 APP = MANAGER / "app.py"
 ENV_EXAMPLE = ROOT / ".env.example"
@@ -32,12 +37,17 @@ def main() -> int:
     for path, label in [
         (AI_SERVICE, "AI service"),
         (AI_ROUTES, "AI routes"),
+        (AI_APPLY_ROUTES, "AI approved-apply routes"),
+        (SITE_CONTENT_SYNC_SERVICE, "structured-content sync service"),
+        (VALIDATION_SERVICE, "validation service"),
         (AI_SETTINGS_SERVICE, "AI settings service"),
         (PAGE_AI_SERVICE, "page-aware AI service"),
         (AI_TEMPLATE, "AI workspace template"),
         (PROPOSAL_TEMPLATE, "AI proposal template"),
         (AI_SETTINGS_TEMPLATE, "AI settings template"),
         (PAGE_PROPOSAL_TEMPLATE, "page AI proposal template"),
+        (PAGE_EDITOR_TEMPLATE, "v2 page editor template"),
+        (PAGE_HISTORY_TEMPLATE, "page AI history template"),
         (CONFIGURE_AI, "AI configuration helper"),
     ]:
         require(path.exists(), f"{label} is missing: {path.relative_to(ROOT)}", errors)
@@ -49,12 +59,17 @@ def main() -> int:
 
     service = AI_SERVICE.read_text(encoding="utf-8")
     routes = AI_ROUTES.read_text(encoding="utf-8")
+    apply_routes = AI_APPLY_ROUTES.read_text(encoding="utf-8")
+    site_sync = SITE_CONTENT_SYNC_SERVICE.read_text(encoding="utf-8")
+    validation_service = VALIDATION_SERVICE.read_text(encoding="utf-8")
     settings_service = AI_SETTINGS_SERVICE.read_text(encoding="utf-8")
     page_service = PAGE_AI_SERVICE.read_text(encoding="utf-8")
     workspace = AI_TEMPLATE.read_text(encoding="utf-8")
     proposal = PROPOSAL_TEMPLATE.read_text(encoding="utf-8")
     settings_template = AI_SETTINGS_TEMPLATE.read_text(encoding="utf-8")
     page_proposal = PAGE_PROPOSAL_TEMPLATE.read_text(encoding="utf-8")
+    page_editor = PAGE_EDITOR_TEMPLATE.read_text(encoding="utf-8")
+    page_history = PAGE_HISTORY_TEMPLATE.read_text(encoding="utf-8")
     configure = CONFIGURE_AI.read_text(encoding="utf-8")
     app_text = APP.read_text(encoding="utf-8")
     env_example = ENV_EXAMPLE.read_text(encoding="utf-8")
@@ -62,6 +77,9 @@ def main() -> int:
     for path, text in [
         (AI_SERVICE, service),
         (AI_ROUTES, routes),
+        (AI_APPLY_ROUTES, apply_routes),
+        (SITE_CONTENT_SYNC_SERVICE, site_sync),
+        (VALIDATION_SERVICE, validation_service),
         (AI_SETTINGS_SERVICE, settings_service),
         (PAGE_AI_SERVICE, page_service),
         (CONFIGURE_AI, configure),
@@ -82,7 +100,7 @@ def main() -> int:
         errors,
     )
     require("urllib" in service or "from urllib" in service, "AI service must use the dependency-light HTTPS client path.", errors)
-    require("shell=True" not in service + routes + configure + settings_service + page_service, "AI assistance must not introduce shell execution.", errors)
+    require("shell=True" not in service + routes + apply_routes + configure + settings_service + page_service + site_sync + validation_service, "AI assistance must not introduce shell execution.", errors)
     require("OPENAI_API_KEY" in service and "OPENAI_API_KEY" in configure, "AI key must come from local environment configuration.", errors)
     require("ENV_PATH = REPO_ROOT / \".env\"" in settings_service, "In-app AI Settings must store credentials only in the existing local .env path.", errors)
     require("chmod(0o600)" in settings_service, "AI Settings must preserve restrictive local .env permissions where supported.", errors)
@@ -116,8 +134,22 @@ def main() -> int:
     forbidden_route_targets = ("render-site-content.py", "render-project.py", "git add", "git commit", "git push")
     for target in forbidden_route_targets:
         require(target not in routes, f"AI routes must not directly modify portfolio/Git state: found {target}", errors)
-    for target in ("page_path.write_text", "subprocess", "git add", "git commit", "git push"):
-        require(target not in page_service, f"Page-aware AI proposal generation must not directly mutate the public page or Git state: found {target}", errors)
+    for target in ("git add", "git commit", "git push"):
+        require(target not in page_service + apply_routes, f"AI page editing must not directly perform Git publishing actions: found {target}", errors)
+
+    require("apply_page_edit_proposal" in page_service, "Page-aware AI must expose a deterministic approved-apply service.", errors)
+    require("revert_page_edit_proposal" in page_service, "Page-aware AI must expose a deterministic revert service.", errors)
+    require("PAGE_BACKUPS_ROOT" in page_service, "Approved AI page edits must create private local recovery backups.", errors)
+    require('current_sha != record.get("source_sha256")' in page_service, "Approved AI page edits must reject stale proposals using the source hash.", errors)
+    require("current_html.count(find) != 1" in page_service, "Approved AI page edits must re-check exact unique source anchors before writing.", errors)
+    require("sync_structured_page_after_html_change" in page_service, "Approved structural edits must synchronize managed structured page data.", errors)
+    require("run_full_validation()" in page_service, "Approved AI page edits and reverts must run full validation.", errors)
+    require('"status": "applied-local"' in page_service, "Applied AI page edits must record their local-only state.", errors)
+    require('current_sha != record.get("applied_sha256")' in page_service, "Automatic revert must refuse to overwrite newer page edits.", errors)
+    require('"status": "reverted"' in page_service, "Reverted AI page edits must record the restored state.", errors)
+    require('request.form.get("public_safe") != "on"' in apply_routes, "Applying an AI page proposal must require explicit public-safe approval.", errors)
+    require("apply_page_edit_proposal" in apply_routes and "revert_page_edit_proposal" in apply_routes, "Approved-apply routes must call only the deterministic apply/revert service.", errors)
+    require("retired_fields" in site_sync, "Structured-content sync must track fields retired by an approved structural edit.", errors)
 
     require("Only text you deliberately enter" in workspace, "AI workspace must explain the explicit-send boundary.", errors)
     require("public portfolio taxonomy" in workspace, "AI workspace must disclose automatic taxonomy context used for placement.", errors)
@@ -134,10 +166,26 @@ def main() -> int:
     require("private page notes" in settings_template, "AI Settings must disclose that private page notes are excluded from page-aware requests.", errors)
     require("No portfolio, Git, or public files have been changed" in page_proposal, "Page-aware proposal review must state that generation changed no public files.", errors)
     require("Nothing has been applied yet" in page_proposal, "Page-aware proposal review must preserve explicit human approval before application.", errors)
-    require("apply_page_edit" not in page_proposal and "Apply Proposal" not in page_proposal, "Page-aware proposal review must remain proposal-only in this phase.", errors)
+    require("Approve &amp; Apply Locally" in page_proposal, "Page-aware proposal review must expose an explicit local-apply approval action.", errors)
+    require('name="public_safe"' in page_proposal, "Page-aware proposal application must render an explicit public-safe confirmation.", errors)
+    require("Revert AI Change" in page_proposal, "Applied AI page edits must expose a human-controlled revert action.", errors)
+    require("Continue to Save &amp; Publish" in page_proposal, "Applied AI edits must hand off to the existing guarded publishing workflow.", errors)
+    require("Open Page Editor &amp; Preview" in page_proposal and 'target="_blank"' in page_proposal, "Applied AI review should preserve the proposal tab while opening the page preview.", errors)
+    require("AI change active locally" in page_editor, "Page editor must surface an active locally-applied AI change.", errors)
+    require("Return to AI Proposal" in page_editor, "Page editor must provide a direct path back to the active AI proposal.", errors)
+    require("Revert AI Change" in page_editor, "Page editor must expose the active AI revert control.", errors)
+    require("find_active_page_edit_proposal" in page_service, "Page-aware AI must be able to identify the active local proposal for an edited page.", errors)
+    require("Another AI edit is already applied locally to this page" in page_service, "Page-aware AI must prevent stacking multiple active local proposals on one page.", errors)
+    require("list_page_edit_proposals" in page_service, "Page-aware AI must expose private proposal history without reading arbitrary workspace files.", errors)
+    require("Page Edit Proposal History" in page_history, "Page-edit proposal history must have a human-facing private history page.", errors)
+    require("Proposal Only" in page_history and "Applied Locally" in page_history and "Reverted" in page_history, "Page-edit proposal history must expose lifecycle status filters.", errors)
+    require("Revert the active local change before deleting this proposal." in page_history, "Proposal history must block deletion guidance while a page edit is still active.", errors)
+    require("Page Edit Proposal History" in workspace, "AI Assistance must provide a direct entry point to page-edit proposal history.", errors)
+    require('code=303' in apply_routes, "AI page-edit lifecycle POST routes must use explicit POST/redirect/GET navigation.", errors)
 
-    require("app.register_blueprint(ai_bp)" in app_text, "AI blueprint must be registered by Portfolio Manager.", errors)
-    require("scripts/check-ai-assistance.py" in app_text, "Full Validation must include the AI safety contract.", errors)
+    require("app.register_blueprint(ai_bp)" in app_text, "AI generation blueprint must be registered by Portfolio Manager.", errors)
+    require("app.register_blueprint(ai_apply_bp)" in app_text, "Human-approved AI apply blueprint must be registered by Portfolio Manager.", errors)
+    require("scripts/check-ai-assistance.py" in validation_service, "Full Validation must include the AI safety contract.", errors)
 
     real_key_pattern = re.compile(r"OPENAI_API_KEY\s*=\s*sk-[A-Za-z0-9_-]{20,}")
     require(not real_key_pattern.search(env_example), ".env.example must never contain a real-looking OpenAI API key.", errors)

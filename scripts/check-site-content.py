@@ -3,7 +3,6 @@ from __future__ import annotations
 import sys
 
 from site_content_model import (
-    LOCATORS,
     extract_page_fields,
     load_site_content,
     normalize_text,
@@ -23,7 +22,7 @@ def main() -> int:
                 errors.append(str(exc))
                 continue
 
-            for field_id in LOCATORS[page_id]:
+            for field_id in page.get("fields", {}):
                 expected = normalize_text(page["fields"][field_id]["value"])
                 actual = extracted[field_id]
                 if actual != expected:
@@ -37,9 +36,12 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    field_count = sum(len(fields) for fields in LOCATORS.values())
+    field_count = sum(
+        len(page.get("fields", {}))
+        for page in data.get("pages", {}).values()
+    )
     print(
-        f"General site content validation passed for {len(LOCATORS)} page(s) "
+        f"General site content validation passed for {len(data.get('pages', {}))} page(s) "
         f"and {field_count} editable field(s)."
     )
     return 0

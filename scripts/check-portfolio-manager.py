@@ -6,6 +6,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "portfolio-manager" / "app.py"
+VALIDATION_SERVICE = ROOT / "portfolio-manager" / "validation_service.py"
 ASSET_ROUTES = ROOT / "portfolio-manager" / "asset_routes.py"
 SITE_ROUTES = ROOT / "portfolio-manager" / "site_content_routes.py"
 SITE_MODEL = ROOT / "scripts" / "site_content_model.py"
@@ -23,6 +24,7 @@ def main() -> int:
     errors: list[str] = []
 
     app_text = APP.read_text(encoding="utf-8")
+    validation_text = VALIDATION_SERVICE.read_text(encoding="utf-8") if VALIDATION_SERVICE.exists() else ""
     asset_text = ASSET_ROUTES.read_text(encoding="utf-8") if ASSET_ROUTES.exists() else ""
     site_routes_text = SITE_ROUTES.read_text(encoding="utf-8") if SITE_ROUTES.exists() else ""
     site_model_text = SITE_MODEL.read_text(encoding="utf-8") if SITE_MODEL.exists() else ""
@@ -34,9 +36,29 @@ def main() -> int:
     require("portfolio-manager-local-dev-key" not in app_text, "Hard-coded Flask development secret must not return", errors)
     require("require_security_settings()" in app_text, "Portfolio Manager must require local security settings", errors)
     require("validate_csrf()" in app_text, "Portfolio Manager must validate CSRF for POST actions", errors)
-    require("scripts/check-site-content.py" in app_text, "Run Full Validation must include general site content checks", errors)
-    require("scripts/check-portfolio-manager.py" in app_text, "Run Full Validation must include Portfolio Manager security checks", errors)
-    require("scripts/check-portfolio-manager-runtime.py" in app_text, "Run Full Validation must include Portfolio Manager runtime checks", errors)
+
+    require(VALIDATION_SERVICE.exists(), "Reusable validation service is missing", errors)
+    require(
+        "from validation_service import run_command, run_full_validation" in app_text,
+        "Portfolio Manager must use the reusable validation service",
+        errors,
+    )
+    require(
+        "scripts/check-site-content.py" in validation_text,
+        "Run Full Validation must include general site content checks",
+        errors,
+    )
+    require(
+        "scripts/check-portfolio-manager.py" in validation_text,
+        "Run Full Validation must include Portfolio Manager security checks",
+        errors,
+    )
+    require(
+        "scripts/check-portfolio-manager-runtime.py" in validation_text,
+        "Run Full Validation must include Portfolio Manager runtime checks",
+        errors,
+    )
+
     require(".env" in ignore_text, ".env must be ignored by Git", errors)
     require(".portfolio-manager/" in ignore_text, ".portfolio-manager/ must be ignored by Git", errors)
     require("portfolio-data/dashboard-uploads" not in app_text, "Uploads must not return to the Git-tracked portfolio-data workspace", errors)
