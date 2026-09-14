@@ -143,7 +143,7 @@
                 <a class="btn btn-secondary" href="{{ url_for('reference_library.download_file', item_id=record.id, kind='sanitized') }}">Download Sanitized Draft</a>
                 <a class="btn btn-primary" href="{{ url_for('reference_library.item', item_id=record.id) }}">Review &amp; Approve on Reference Item</a>
             </div>
-            {% if record.sanitization_review.sanitized_draft_notes %}<h3>Draft notes</h3><ul>{% for note in record.sanitization_review.sanitized_draft_notes %}<li>{{ note }}</li>{% endfor %}</ul></div>{% endif %}
+            {% if record.sanitization_review.sanitized_draft_notes %}<h3>Draft notes</h3><ul>{% for note in record.sanitization_review.sanitized_draft_notes %}<li>{{ note }}</li>{% endfor %}</ul>{% endif %}
             {% if record.sanitization_review.unresolved_items %}<div class="ai-warning-box"><strong>Still requires manual review</strong><ul>{% for item in record.sanitization_review.unresolved_items %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
         </section>
         {% endif %}
