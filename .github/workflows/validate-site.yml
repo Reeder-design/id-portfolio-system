@@ -65,5 +65,6 @@ jobs:
           python scripts/check-related-references.py
           python scripts/check-create-content.py
           python scripts/check-reference-library.py
+          python scripts/check-reference-sanitization.py
           python scripts/check-portfolio-manager.py
           python scripts/check-portfolio-manager-runtime.py
