@@ -8,7 +8,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ai_settings_service import get_local_ai_settings
 from page_ai_service import find_active_page_edit_proposal
-from content_routes import run_command
+from content_routes import load_project, run_command
 from notes_service import load_note, save_note
 from page_copy_service import (
     apply_page_edits,
@@ -23,6 +23,11 @@ APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
 SITE_CONTENT_PATH = REPO_ROOT / "portfolio-data" / "site-content.json"
 SCRIPTS_ROOT = REPO_ROOT / "scripts"
+CUSTOM_PAGE_PROJECTS = {
+    "meddpicc-demo": "meddpicc-practice",
+    "pursuit-determination-demo": "pursuit-positioning",
+    "ai-evaluation-demo": "ai-training-and-evaluation-demo",
+}
 if str(SCRIPTS_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_ROOT))
 
@@ -169,6 +174,14 @@ def v2_page_editor(page_id: str):
     separator = "&" if "?" in preview else "?"
     versioned_preview = f"{preview}{separator}v={page_path.stat().st_mtime_ns}"
 
+    asset_project = None
+    asset_project_id = CUSTOM_PAGE_PROJECTS.get(page_id)
+    if asset_project_id:
+        try:
+            asset_project, _ = load_project(asset_project_id)
+        except FileNotFoundError:
+            asset_project = None
+
     return render_template(
         "page-editor-v2.html",
         page_id=page_id,
@@ -179,6 +192,8 @@ def v2_page_editor(page_id: str):
         preview_url=versioned_preview,
         ai_settings=get_local_ai_settings(),
         active_ai_proposal=find_active_page_edit_proposal(page_id),
+        asset_project=asset_project,
+        asset_return_to=f"page:{page_id}" if asset_project else "",
     )
 
 
