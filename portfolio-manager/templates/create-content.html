@@ -44,19 +44,19 @@
             <h2>Use the right helper at the right stage</h2>
             <div class="v2-general-grid">
                 <article class="v2-small-card">
-                    <h3>Advanced AI Drafting Helper</h3>
-                    <p>Use the existing proposal-only helper for isolated rewriting, source analysis, placement suggestions, or drafting support. The guided Content Lab remains the main creation workflow.</p>
-                    <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">Open AI Drafting Helper</a>
-                </article>
-                <article class="v2-small-card upcoming">
                     <h3>Content Workspace &amp; Reference Library</h3>
-                    <p>Private source uploads, notes, analysis, sanitization status, and approved public-safe derivatives will connect here in the next Create Content phase.</p>
-                    <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Reference Library · upcoming</button>
+                    <p>Store original professional source material privately, add notes and tags, track review status, and keep sanitized working copies separate from untouched originals.</p>
+                    <a class="btn btn-primary" href="{{ url_for('reference_library.workspace') }}">Open Reference Library</a>
                 </article>
-                <article class="v2-small-card upcoming">
-                    <h3>Build from Approved Sources</h3>
-                    <p>Once the sanitization pipeline exists, approved source derivatives will be selectable as trusted context for a Content Brief.</p>
-                    <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Approved Sources · upcoming</button>
+                <article class="v2-small-card">
+                    <h3>Approved Sources</h3>
+                    <p>Review sanitized derivatives that have been explicitly approved for portfolio use. Connecting them directly into Content Briefs comes in the next integration slice.</p>
+                    <a class="btn btn-secondary" href="{{ url_for('reference_library.workspace', status='approved-for-portfolio-use') }}">View Approved Sources</a>
+                </article>
+                <article class="v2-small-card">
+                    <h3>Advanced AI Drafting Helper</h3>
+                    <p>Use the proposal-only helper for isolated rewriting, source analysis, placement suggestions, or drafting support. The guided Content Lab remains the main creation workflow.</p>
+                    <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">Open AI Drafting Helper</a>
                 </article>
             </div>
         </section>
