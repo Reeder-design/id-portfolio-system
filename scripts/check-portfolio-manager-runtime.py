@@ -43,6 +43,7 @@ def main() -> int:
         ("/git/", "Save & Publish"),
         ("/ai/", "AI Assistance"),
         ("/ai/settings", "AI Settings"),
+        ("/manage/ai-review/", "AI Portfolio Review"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -61,12 +62,13 @@ def main() -> int:
 
     dashboard = client.get("/")
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
-    require(b"Open AI Assistance" in dashboard.data, "Dashboard must provide a direct AI Assistance entry point.", errors)
-    require(b"Manage Portfolio Content" in dashboard.data, "Dashboard must expose the v2 manage-content workflow.", errors)
-    require(b"Create Portfolio Content" in dashboard.data, "Dashboard must reserve the Create Content Lab workflow.", errors)
-    require(b"Content Workspace &amp; Reference Library" in dashboard.data, "Dashboard must reserve the private reference workspace.", errors)
-    require(b"Run Full Validation" in dashboard.data, "Dashboard must expose validation during the v2 transition.", errors)
-    require(b"Save &amp; Publish" in dashboard.data, "Dashboard must keep the safe publishing workflow available during the v2 transition.", errors)
+    require(b"AI Settings" in dashboard.data, "Dashboard must keep global AI Settings available.", errors)
+    require(b"Manage Content" in dashboard.data, "Dashboard must expose the Manage Content workflow.", errors)
+    require(b"Create Content" in dashboard.data, "Dashboard must reserve the Create Content workflow.", errors)
+    require(b"Open AI Assistance" not in dashboard.data, "Dashboard must not expose generic AI Assistance as a third primary workflow.", errors)
+    require(b"Content Workspace &amp; Reference Library" not in dashboard.data, "Dashboard must keep future Create Content sub-tools out of the primary workflow choices.", errors)
+    require(b"Run Full Validation" in dashboard.data, "Dashboard must keep full validation available.", errors)
+    require(b"Save &amp; Publish" in dashboard.data, "Dashboard must keep the safe publishing workflow available.", errors)
     require(b"Advanced Maintenance" in dashboard.data, "Dashboard must keep low-frequency maintenance clearly separated.", errors)
     require(b"Save New Content Request" not in dashboard.data, "Dashboard must not reintroduce the retired new-content request form.", errors)
     require(b"Save Edit Request" not in dashboard.data, "Dashboard must not reintroduce the retired edit-request form.", errors)
@@ -77,12 +79,21 @@ def main() -> int:
     require(b"public_safe" in asset_library.data, "Asset Library must render public-safe confirmation control.", errors)
 
     content_manager = client.get("/content")
-    require(content_manager.status_code == 200, "Manage Portfolio Content must render.", errors)
-    require(b"Choose a page to edit" in content_manager.data, "Manage Portfolio Content must present human-facing page navigation.", errors)
-    require(b"Interactive Learning" in content_manager.data, "Manage Portfolio Content must mirror the instructional-design hierarchy.", errors)
-    require(b"AI Training and Evaluation" in content_manager.data, "Manage Portfolio Content must mirror the AI portfolio hierarchy.", errors)
-    require(b"Systems and Workflows" in content_manager.data, "Manage Portfolio Content must mirror the workflows hierarchy.", errors)
-    require(b"Edit Demo Copy" not in content_manager.data, "Manage Portfolio Content must not expose duplicate edit entry points for AI Evaluation.", errors)
+    require(content_manager.status_code == 200, "Manage Content must render.", errors)
+    require(b"Choose a page to edit" in content_manager.data, "Manage Content must present human-facing page navigation.", errors)
+    require(b"Open AI Portfolio Review" in content_manager.data, "Manage Content must expose portfolio-wide AI Review.", errors)
+    require(b"Open Proposal History" in content_manager.data, "Manage Content must expose page-edit AI proposal history.", errors)
+    require(b"Theme Editor" in content_manager.data, "Manage Content must retain the deferred Theme Editor placeholder.", errors)
+    require(b"Interactive Learning" in content_manager.data, "Manage Content must mirror the instructional-design hierarchy.", errors)
+    require(b"AI Training and Evaluation" in content_manager.data, "Manage Content must mirror the AI portfolio hierarchy.", errors)
+    require(b"Systems and Workflows" in content_manager.data, "Manage Content must mirror the workflows hierarchy.", errors)
+    require(b"Edit Demo Copy" not in content_manager.data, "Manage Content must not expose duplicate edit entry points for AI Evaluation.", errors)
+
+    review_workspace = client.get("/manage/ai-review/")
+    require(review_workspace.status_code == 200, "AI Portfolio Review workspace must render.", errors)
+    require(b"Portfolio Review" in review_workspace.data, "AI Portfolio Review workspace must identify its review purpose.", errors)
+    require(b"Set Up AI" in review_workspace.data, "AI Portfolio Review without a configured key must provide the global AI Settings path.", errors)
+    require(b"Run Portfolio Review" not in review_workspace.data, "AI Portfolio Review must remain disabled when AI is not configured.", errors)
 
     meddpicc_editor = client.get("/content/projects/meddpicc-practice")
     require(meddpicc_editor.status_code == 200, "Project editor must render.", errors)
@@ -133,7 +144,6 @@ def main() -> int:
 
     with client.session_transaction() as session:
         csrf = manager_app.csrf_token.__wrapped__() if hasattr(manager_app.csrf_token, "__wrapped__") else None
-        # Use the session token directly so this smoke test never bypasses the real POST guard.
         csrf = session.get("_csrf_token") or "ci-page-ai-csrf"
         session["_csrf_token"] = csrf
 
@@ -153,6 +163,22 @@ def main() -> int:
         errors,
     )
 
+    no_key_review = client.post(
+        "/manage/ai-review/run",
+        data={"csrf_token": csrf, "provider_ack": "on", "focus": "Review clarity."},
+        follow_redirects=False,
+    )
+    require(
+        no_key_review.status_code in {301, 302, 303, 307, 308},
+        "Portfolio review without configured AI must redirect safely.",
+        errors,
+    )
+    require(
+        "/ai/settings" in no_key_review.headers.get("Location", ""),
+        "Portfolio review without configured AI must use the global AI Settings path.",
+        errors,
+    )
+
     git_workflow = client.get("/git/")
     require(git_workflow.status_code == 200, "Authenticated Save & Publish workflow must render.", errors)
     require(b"Commit and publish are separate actions" in git_workflow.data, "Save & Publish must explain its safety boundary.", errors)
@@ -162,7 +188,7 @@ def main() -> int:
     require(b"Open Pull Request" not in git_workflow.data, "Routine Save & Publish must not require pull requests.", errors)
 
     ai_workspace = client.get("/ai/")
-    require(ai_workspace.status_code == 200, "Authenticated AI Assistance workspace must render without an API key.", errors)
+    require(ai_workspace.status_code == 200, "Generic AI Assistance workspace must remain available for the future Create Content workflow.", errors)
     require(b"AI Not Configured" in ai_workspace.data, "AI workspace must fail open safely when optional AI is not configured.", errors)
     require(b"AI proposes. You decide what gets used." in ai_workspace.data, "AI workspace must show the proposal-only approval boundary.", errors)
     require(b"provider_ack" in ai_workspace.data and b"authority_ack" in ai_workspace.data, "AI workspace must render explicit provider and authorization acknowledgements.", errors)
@@ -170,6 +196,7 @@ def main() -> int:
     page_history = client.get("/ai/page-edit/proposals/")
     require(page_history.status_code == 200, "Authenticated page-edit proposal history must render.", errors)
     require(b"Page Edit Proposal History" in page_history.data, "Page-edit proposal history must expose its private-history purpose.", errors)
+    require(b"Back to Manage Content" in page_history.data, "Page-edit proposal history must return to Manage Content rather than generic AI Assistance.", errors)
     require(b"Proposal Only" in page_history.data and b"Applied Locally" in page_history.data and b"Reverted" in page_history.data, "Page-edit proposal history must expose lifecycle filters.", errors)
 
     if errors:

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Review | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Manage Content · AI Review</p>
+                <h1>Review the current public portfolio</h1>
+                <p class="hero-copy">Use a portfolio-wide review to identify professional QA issues, consistency gaps, evidence concerns, usability opportunities, and wording that deserves human review before you make changes.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Manage Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+        {% endwith %}
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Review boundary</p>
+            <h2>Public portfolio only</h2>
+            <p class="section-copy">This review uses the visible text and basic page-quality signals from the public portfolio pages. Private Portfolio Manager notes, uploads, and future reference-library material are not included. The review produces recommendations only and cannot change or publish portfolio files.</p>
+        </section>
+
+        <main class="v2-manage-layout">
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">New review</p>
+                <h2>Run a portfolio-wide review</h2>
+                {% if settings.configured %}
+                <p class="section-copy">Provider: {{ settings.provider }} · Model: {{ settings.model }}</p>
+                <form method="post" action="{{ url_for('portfolio_review.run_review') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label for="focus"><strong>Optional review focus</strong></label>
+                    <textarea id="focus" name="focus" rows="4" maxlength="1200" placeholder="Example: Focus on whether each case study clearly communicates the problem, my role, design decisions, and credible outcomes."></textarea>
+                    <label class="ai-check">
+                        <input type="checkbox" name="provider_ack" required>
+                        <span>I understand that the current public portfolio content described above will be sent to the configured AI provider for this review.</span>
+                    </label>
+                    <div class="button-row"><button class="btn btn-primary" type="submit">Run Portfolio Review</button></div>
+                </form>
+                {% else %}
+                <p class="section-copy">AI Review is not configured yet. All non-AI Manage Content tools remain available.</p>
+                <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+                {% endif %}
+            </section>
+
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">Private history</p>
+                <h2>Previous portfolio reviews</h2>
+                {% if reviews %}
+                <div class="ai-proposal-list">
+                    {% for item in reviews %}
+                    <a class="ai-proposal-link" href="{{ url_for('portfolio_review.review', review_id=item.id) }}">
+                        <strong>{{ item.result.summary[:110] if item.result and item.result.summary else 'Portfolio review' }}</strong>
+                        <span>{{ item.created_at }} · {{ item.page_count }} public pages · {{ item.model }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-note">No private portfolio reviews yet.</p>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

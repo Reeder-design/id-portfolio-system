@@ -15,9 +15,9 @@
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">Manage Portfolio Content</p>
-                <h1>Edit what is already in the portfolio</h1>
-                <p class="hero-copy">Navigate through the portfolio the same way a visitor would. Choose the page or project you want to work on, then edit the content connected to that page.</p>
+                <p class="eyebrow">Manage Content</p>
+                <h1>Edit and review what is already in the portfolio</h1>
+                <p class="hero-copy">Use portfolio-wide AI Review for QA, open Proposal History for page-edit AI records, or choose a page/project below to make a specific change. Page-specific AI Request stays inside each page editor.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
@@ -31,18 +31,23 @@
 
         <main class="v2-manage-layout">
             <section class="dashboard-card full-width">
-                <p class="eyebrow">General Edits</p>
-                <h2>Changes that affect the portfolio as a whole</h2>
+                <p class="eyebrow">Manage tools</p>
+                <h2>Review and maintain existing content</h2>
                 <div class="v2-general-grid">
-                    <article class="v2-small-card upcoming">
-                        <h3>Change Theme</h3>
-                        <p>Update approved site-wide colors and theme choices without exposing CSS controls.</p>
-                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Theme Controls · upcoming</button>
+                    <article class="v2-small-card">
+                        <h3>AI Portfolio Review</h3>
+                        <p>Review the current public portfolio for professional QA, consistency, evidence, usability, content-quality signals, and publication-risk wording. Review only; nothing is edited automatically.</p>
+                        <a class="btn btn-primary" href="{{ url_for('portfolio_review.workspace') }}">Open AI Portfolio Review</a>
+                    </article>
+                    <article class="v2-small-card">
+                        <h3>AI Proposal History</h3>
+                        <p>Review page-specific AI proposals created from AI Request inside a page editor, including proposal-only, applied-local, and reverted states.</p>
+                        <a class="btn btn-secondary" href="{{ url_for('ai_apply.history') }}">Open Proposal History</a>
                     </article>
                     <article class="v2-small-card upcoming">
-                        <h3>AI Portfolio Review</h3>
-                        <p>Review the public portfolio for professional QA, SME/compliance concerns, and specific improvement opportunities.</p>
-                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">AI Review · API phase</button>
+                        <h3>Change Theme</h3>
+                        <p>Update approved site-wide colors and theme choices without exposing raw CSS controls.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Theme Editor · later</button>
                     </article>
                 </div>
             </section>

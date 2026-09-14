@@ -15,6 +15,7 @@ from ai_routes import ai_bp
 from asset_routes import asset_bp
 from content_routes import content_bp
 from git_routes import git_bp
+from portfolio_review_routes import portfolio_review_bp
 from site_content_routes import site_content_bp
 from security import csrf_token, is_safe_next_url, load_local_env, require_security_settings, validate_csrf
 from validation_service import run_command, run_full_validation
@@ -56,6 +57,7 @@ app.register_blueprint(site_content_bp)
 app.register_blueprint(git_bp)
 app.register_blueprint(ai_bp)
 app.register_blueprint(ai_apply_bp)
+app.register_blueprint(portfolio_review_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
@@ -297,7 +299,7 @@ def run_action():
     else:
         flash("Unknown action.", "error")
 
-    return redirect(url_for("dashboard"))
+    return redirect(request.referrer or url_for("dashboard"))
 
 
 if __name__ == "__main__":

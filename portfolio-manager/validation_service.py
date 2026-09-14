@@ -42,6 +42,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
         ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
         ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
+        ("Manage AI review safety", [sys.executable, "scripts/check-manage-ai-review.py"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
         ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
     ]
