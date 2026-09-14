@@ -17,7 +17,7 @@
         <div>
             <p class="eyebrow">Create Content</p>
             <h1>Develop a new portfolio project from the idea first</h1>
-            <p class="hero-copy">Build a detailed Content Brief before asking AI to plan or generate anything. The Lab keeps purpose, evidence, interaction, design direction, and public-safety constraints visible so the final work stays specific to what you actually want to demonstrate.</p>
+            <p class="hero-copy">Build a detailed Content Brief, attach approved sanitized source material when useful, then ask AI to propose a project plan. Nothing becomes public until the later build, preview, approval, and publishing stages.</p>
         </div>
         <div class="header-actions">
             <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
@@ -33,7 +33,7 @@
         <section class="dashboard-card full-width">
             <p class="eyebrow">Create Content Lab</p>
             <h2>Start with a guided Content Brief</h2>
-            <p class="section-copy">The first step is planning, not page generation. Define what you are making, why it matters, who it is for, the story and evidence, desired interaction, visual direction, safety constraints, and personal preferences. Then review the complete brief before AI sees it.</p>
+            <p class="section-copy">Define what you are making, why it matters, who it is for, the story and evidence, interaction, visual direction, safety constraints, and personal preferences. You can also attach sanitized Reference Library resources already approved for portfolio use.</p>
             <div class="button-row">
                 <a class="btn btn-primary" href="{{ url_for('create_content.new_brief') }}">Start New Content Brief</a>
             </div>
@@ -45,12 +45,12 @@
             <div class="v2-general-grid">
                 <article class="v2-small-card">
                     <h3>Content Workspace &amp; Reference Library</h3>
-                    <p>Store original professional source material privately, add notes and tags, track review status, and keep sanitized working copies separate from untouched originals.</p>
+                    <p>Store original professional source material privately, add notes and tags, sanitize it, and approve separate public-safe derivatives for later reuse.</p>
                     <a class="btn btn-primary" href="{{ url_for('reference_library.workspace') }}">Open Reference Library</a>
                 </article>
                 <article class="v2-small-card">
                     <h3>Approved Sources</h3>
-                    <p>Review sanitized derivatives that have been explicitly approved for portfolio use. Connecting them directly into Content Briefs comes in the next integration slice.</p>
+                    <p>Review public-safe sanitized derivatives that can now be attached directly to Content Briefs as trusted source context.</p>
                     <a class="btn btn-secondary" href="{{ url_for('reference_library.workspace', status='approved-for-portfolio-use') }}">View Approved Sources</a>
                 </article>
                 <article class="v2-small-card">
@@ -71,18 +71,17 @@
                 {% for item in briefs %}
                 <a class="ai-proposal-link" href="{{ url_for('create_content.brief', brief_id=item.id) }}">
                     <strong>{{ item.fields.working_title }}</strong>
-                    <span>{{ 'AI plan ready' if item.status == 'plan-proposed' and not item.plan_stale else 'Brief draft' }} · updated {{ item.updated_at }}</span>
+                    <span>{{ 'AI plan ready' if item.status == 'plan-proposed' and not item.plan_stale else 'Brief draft' }} · {{ item.approved_sources|length }} approved source{{ '' if item.approved_sources|length == 1 else 's' }} · updated {{ item.updated_at }}</span>
                 </a>
                 {% endfor %}
             </div>
             {% else %}
-            <p class="empty-note">No Content Briefs yet. Start with an idea you want to turn into a portfolio artifact.</p>
+            <p class="empty-note">No Content Briefs yet. Start with an idea or open an approved Reference Library item and choose Use in Content Brief.</p>
             {% endif %}
         </section>
     </main>
 </div>
 
-<!-- Legacy smoke-test marker; the Reference Library is active in this release: Reference Library · upcoming -->
 {% include '_help_drawer.html' %}
 <script src="{{ url_for('static', filename='help.js') }}"></script>
 </body>
