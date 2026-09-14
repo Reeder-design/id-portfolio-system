@@ -11,6 +11,8 @@ TEMPLATES = MANAGER / "templates"
 GUIDE = TEMPLATES / "help.html"
 DRAWER = TEMPLATES / "_help_drawer.html"
 DASHBOARD = TEMPLATES / "dashboard.html"
+HELP_JS = MANAGER / "static" / "help.js"
+HELP_CSS = MANAGER / "static" / "help.css"
 VALIDATION = MANAGER / "validation_service.py"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate-site.yml"
 
@@ -29,6 +31,8 @@ def main() -> int:
         (GUIDE, "User Guide"),
         (DRAWER, "help drawer"),
         (DASHBOARD, "dashboard"),
+        (HELP_JS, "help JavaScript"),
+        (HELP_CSS, "help styles"),
         (VALIDATION, "Portfolio Manager validation service"),
         (WORKFLOW, "GitHub validation workflow"),
     ]:
@@ -42,28 +46,34 @@ def main() -> int:
     guide = GUIDE.read_text(encoding="utf-8")
     drawer = DRAWER.read_text(encoding="utf-8")
     dashboard = DASHBOARD.read_text(encoding="utf-8")
+    help_js = HELP_JS.read_text(encoding="utf-8")
+    help_css = HELP_CSS.read_text(encoding="utf-8")
     validation = VALIDATION.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
     guide_lower = guide.lower()
 
-    # Current human-facing workflow model.
+    # The guide should answer decisions/tasks rather than only describe architecture.
     for phrase in [
-        "The three kinds of work",
-        "Where information lives",
-        "Manage Content",
-        "Reference Library: private source preparation",
-        "Ask AI About This Resource",
-        "Sanitization review",
-        "Create Content Lab",
+        "Start here: what are you trying to do?",
+        "The button dictionary",
+        "Two Git workflows that should not be confused",
+        "Where information lives: private vs. public",
+        "Manage existing portfolio work",
+        "Which AI tool should I use?",
+        "Reference Library: when the source is private or not ready",
+        "Create Content Lab: build the idea before the page",
         "Advanced AI Drafting Helper",
+        "Publishing: the part that actually makes changes live",
+        "Git/GitHub without developer-brain",
+        "AI privacy: “what exactly leaves my Mac?”",
+        "When something goes wrong: diagnose before fixing",
         "Approve &amp; Apply Locally",
         "Related References",
         "AI Portfolio Review",
         "Approved for Portfolio Use does not publish a file",
-        "Privacy &amp; security",
         "Publish to GitHub",
     ]:
-        require(phrase in guide, f"User Guide must document the current workflow: missing {phrase!r}.", errors)
+        require(phrase in guide, f"User Guide must document the current decision/workflow model: missing {phrase!r}.", errors)
 
     for path_label in [".env", ".portfolio-manager/", "portfolio-data/", "portfolio/"]:
         require(path_label in guide, f"User Guide privacy model must explain {path_label}.", errors)
@@ -72,9 +82,34 @@ def main() -> int:
     for phrase in [
         "image pixels are not locally ocr/preflighted",
         "private notes, tags, approval notes, unrelated reference library resources",
-        "private originals are not used as approved-source context",
+        "private originals stay outside the brief/build ai context",
     ]:
         require(phrase in guide_lower, f"User Guide must preserve the AI/privacy boundary: missing {phrase!r}.", errors)
+
+    # Haley's recurring management boundary: developing the tool is not normal content publishing.
+    for phrase in [
+        "feature branch",
+        "UAT",
+        "merge PR#",
+        "branch/PR = we are developing the tool",
+        "Save &amp; Publish = you are using the tool to publish portfolio content",
+    ]:
+        require(phrase in guide, f"User Guide must explain the development-vs-publishing distinction: missing {phrase!r}.", errors)
+    require('data-help-template="dev-workflow"' in drawer, "Help drawer must include the feature branch / PR testing topic.", errors)
+    require('data-help-template="button-safety"' in drawer, "Help drawer must include the button-safety topic.", errors)
+
+    # Search should use explicit aliases/tags and provide visible feedback.
+    require("data-guide-tags" in guide, "Guide sections must expose searchable topic aliases/tags.", errors)
+    require("data-guide-search-chip" in guide, "Guide must expose common-task search chips.", errors)
+    require("data-help-search-status" in guide and "data-help-no-results" in guide, "Guide search must report results and no-results state.", errors)
+    for marker in ["dataset.guideTags", "terms.every", "visibleCount", "data-guide-search-chip"]:
+        require(marker in help_js, f"Help search must support robust tagged search: missing {marker!r}.", errors)
+    require("guide-search-chips" in help_css and "guide-no-results" in help_css, "Help styles must support search chips and no-results feedback.", errors)
+
+    # The drawer must never trap the user inside one selected topic.
+    require("data-help-nav" in drawer and "data-help-back" in drawer and "data-help-home" in drawer, "Help drawer must expose Back and All Topics navigation.", errors)
+    for marker in ["goBackInHelp", "showHelpHome", "history", "data-help-back", "data-help-home"]:
+        require(marker in help_js, f"Help JavaScript must support returning from a selected topic: missing {marker!r}.", errors)
 
     for stale in [
         "What the three main workspaces mean",
