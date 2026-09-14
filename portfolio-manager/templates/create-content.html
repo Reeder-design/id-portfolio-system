@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Content | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content</p>
+            <h1>Develop a new portfolio project from the idea first</h1>
+            <p class="hero-copy">Build a detailed Content Brief before asking AI to plan or generate anything. The Lab keeps purpose, evidence, interaction, design direction, and public-safety constraints visible so the final work stays specific to what you actually want to demonstrate.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Create Content Lab</p>
+            <h2>Start with a guided Content Brief</h2>
+            <p class="section-copy">The first step is planning, not page generation. Define what you are making, why it matters, who it is for, the story and evidence, desired interaction, visual direction, safety constraints, and personal preferences. Then review the complete brief before AI sees it.</p>
+            <div class="button-row">
+                <a class="btn btn-primary" href="{{ url_for('create_content.new_brief') }}">Start New Content Brief</a>
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Supporting tools</p>
+            <h2>Use the right helper at the right stage</h2>
+            <div class="v2-general-grid">
+                <article class="v2-small-card">
+                    <h3>Advanced AI Drafting Helper</h3>
+                    <p>Use the existing proposal-only helper for isolated rewriting, source analysis, placement suggestions, or drafting support. The guided Content Lab remains the main creation workflow.</p>
+                    <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">Open AI Drafting Helper</a>
+                </article>
+                <article class="v2-small-card upcoming">
+                    <h3>Content Workspace &amp; Reference Library</h3>
+                    <p>Private source uploads, notes, analysis, sanitization status, and approved public-safe derivatives will connect here in the next Create Content phase.</p>
+                    <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Reference Library · upcoming</button>
+                </article>
+                <article class="v2-small-card upcoming">
+                    <h3>Build from Approved Sources</h3>
+                    <p>Once the sanitization pipeline exists, approved source derivatives will be selectable as trusted context for a Content Brief.</p>
+                    <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Approved Sources · upcoming</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div><p class="eyebrow">Private workspace</p><h2>Content Briefs</h2></div>
+                <span class="v2-ai-status {% if ai_settings.configured %}connected{% endif %}">{{ 'AI connected' if ai_settings.configured else 'AI optional / not configured' }}</span>
+            </div>
+            {% if briefs %}
+            <div class="ai-proposal-list">
+                {% for item in briefs %}
+                <a class="ai-proposal-link" href="{{ url_for('create_content.brief', brief_id=item.id) }}">
+                    <strong>{{ item.fields.working_title }}</strong>
+                    <span>{{ 'AI plan ready' if item.status == 'plan-proposed' and not item.plan_stale else 'Brief draft' }} · updated {{ item.updated_at }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-note">No Content Briefs yet. Start with an idea you want to turn into a portfolio artifact.</p>
+            {% endif %}
+        </section>
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

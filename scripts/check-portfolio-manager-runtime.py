@@ -17,8 +17,6 @@ os.environ.pop("OPENAI_API_KEY", None)
 os.environ.pop("PORTFOLIO_MANAGER_AI_MODEL", None)
 
 # Keep this smoke test independent from the developer's real local .env.
-# The test intentionally exercises Portfolio Manager with AI unconfigured,
-# so it must not reload a real API key from disk.
 import security as manager_security  # noqa: E402
 import ai_settings_service as manager_ai_settings  # noqa: E402
 
@@ -44,6 +42,7 @@ def main() -> int:
         ("/ai/", "AI Assistance"),
         ("/ai/settings", "AI Settings"),
         ("/manage/ai-review/", "AI Portfolio Review"),
+        ("/create/", "Create Content"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -64,14 +63,32 @@ def main() -> int:
     require(dashboard.status_code == 200, "Authenticated dashboard must render.", errors)
     require(b"AI Settings" in dashboard.data, "Dashboard must keep global AI Settings available.", errors)
     require(b"Manage Content" in dashboard.data, "Dashboard must expose the Manage Content workflow.", errors)
-    require(b"Create Content" in dashboard.data, "Dashboard must reserve the Create Content workflow.", errors)
+    require(b"Create Content" in dashboard.data, "Dashboard must expose the Create Content workflow.", errors)
+    require(b'href="/create/"' in dashboard.data, "Dashboard Create Content card must open the Create Content workspace.", errors)
+    require(b"Create Content \xc2\xb7 upcoming" not in dashboard.data, "Create Content must no longer be marked upcoming.", errors)
     require(b"Open AI Assistance" not in dashboard.data, "Dashboard must not expose generic AI Assistance as a third primary workflow.", errors)
-    require(b"Content Workspace &amp; Reference Library" not in dashboard.data, "Dashboard must keep future Create Content sub-tools out of the primary workflow choices.", errors)
+    require(b"Content Workspace &amp; Reference Library" not in dashboard.data, "Dashboard must keep Create Content sub-tools inside the Create workspace.", errors)
     require(b"Run Full Validation" in dashboard.data, "Dashboard must keep full validation available.", errors)
     require(b"Save &amp; Publish" in dashboard.data, "Dashboard must keep the safe publishing workflow available.", errors)
     require(b"Advanced Maintenance" in dashboard.data, "Dashboard must keep low-frequency maintenance clearly separated.", errors)
     require(b"Save New Content Request" not in dashboard.data, "Dashboard must not reintroduce the retired new-content request form.", errors)
     require(b"Save Edit Request" not in dashboard.data, "Dashboard must not reintroduce the retired edit-request form.", errors)
+
+    create_workspace = client.get("/create/")
+    require(create_workspace.status_code == 200, "Create Content workspace must render.", errors)
+    require(b"Start New Content Brief" in create_workspace.data, "Create Content must start with a guided Content Brief.", errors)
+    require(b"Advanced AI Drafting Helper" in create_workspace.data, "Create Content must contain the generic AI helper as a secondary tool.", errors)
+    require(b"Content Workspace &amp; Reference Library" in create_workspace.data, "Create Content must reserve the private Reference Library workflow.", errors)
+    require(b"Reference Library \xc2\xb7 upcoming" in create_workspace.data, "Reference Library must remain visibly deferred in this phase.", errors)
+
+    new_brief = client.get("/create/new")
+    require(new_brief.status_code == 200, "New Content Brief editor must render.", errors)
+    require(b"What am I making?" in new_brief.data, "Content Brief must ask what the user is making.", errors)
+    require(b"Why am I making it?" in new_brief.data, "Content Brief must ask why the artifact is being created.", errors)
+    require(b"Public-safety constraints" in new_brief.data, "Content Brief must expose public-safety constraints.", errors)
+    require(b"Personal direction" in new_brief.data, "Content Brief must expose personal direction and tone constraints.", errors)
+    require(b"Create Content Brief" in new_brief.data, "New brief must save privately before AI planning.", errors)
+    require(b"Generate AI Plan" not in new_brief.data, "AI planning must not be available until a Content Brief has first been saved.", errors)
 
     asset_library = client.get("/assets")
     require(asset_library.status_code == 200, "Authenticated Asset Library must render.", errors)
@@ -188,10 +205,13 @@ def main() -> int:
     require(b"Open Pull Request" not in git_workflow.data, "Routine Save & Publish must not require pull requests.", errors)
 
     ai_workspace = client.get("/ai/")
-    require(ai_workspace.status_code == 200, "Generic AI Assistance workspace must remain available for the future Create Content workflow.", errors)
-    require(b"AI Not Configured" in ai_workspace.data, "AI workspace must fail open safely when optional AI is not configured.", errors)
-    require(b"AI proposes. You decide what gets used." in ai_workspace.data, "AI workspace must show the proposal-only approval boundary.", errors)
-    require(b"provider_ack" in ai_workspace.data and b"authority_ack" in ai_workspace.data, "AI workspace must render explicit provider and authorization acknowledgements.", errors)
+    require(ai_workspace.status_code == 200, "Advanced AI Drafting Helper must render.", errors)
+    require(b"Advanced AI Drafting Helper" in ai_workspace.data, "Generic AI Assistance must be reframed as a Create Content supporting tool.", errors)
+    require(b"Back to Create Content" in ai_workspace.data, "Advanced AI helper must return to Create Content.", errors)
+    require(b"Page Edit Proposal History" not in ai_workspace.data, "Manage-only proposal history must not appear in the Create Content AI helper.", errors)
+    require(b"AI Not Configured" in ai_workspace.data, "AI helper must fail open safely when optional AI is not configured.", errors)
+    require(b"AI proposes. You decide what gets used." in ai_workspace.data, "AI helper must show the proposal-only approval boundary.", errors)
+    require(b"provider_ack" in ai_workspace.data and b"authority_ack" in ai_workspace.data, "AI helper must render explicit provider and authorization acknowledgements.", errors)
 
     page_history = client.get("/ai/page-edit/proposals/")
     require(page_history.status_code == 200, "Authenticated page-edit proposal history must render.", errors)

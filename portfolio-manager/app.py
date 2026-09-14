@@ -14,6 +14,7 @@ from ai_apply_routes import ai_apply_bp
 from ai_routes import ai_bp
 from asset_routes import asset_bp
 from content_routes import content_bp
+from create_content_routes import create_content_bp
 from git_routes import git_bp
 from portfolio_review_routes import portfolio_review_bp
 from related_references_routes import related_references_bp
@@ -60,6 +61,7 @@ app.register_blueprint(ai_bp)
 app.register_blueprint(ai_apply_bp)
 app.register_blueprint(portfolio_review_bp)
 app.register_blueprint(related_references_bp)
+app.register_blueprint(create_content_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
