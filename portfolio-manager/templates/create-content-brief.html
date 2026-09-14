@@ -17,7 +17,7 @@
         <div>
             <p class="eyebrow">Create Content · Content Brief</p>
             <h1>{{ fields.get('working_title', '') or 'Plan the project before AI builds anything' }}</h1>
-            <p class="hero-copy">This brief is the source of truth for the project direction. Saving is private and local. AI only receives the brief when you explicitly choose Generate AI Plan and confirm the external-provider boundary.</p>
+            <p class="hero-copy">This brief is the source of truth for the project direction. Saving is private and local. AI planning becomes available only after you save the brief and review the external-provider boundary.</p>
         </div>
         <div class="header-actions">
             <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Back to Create Content</a>
