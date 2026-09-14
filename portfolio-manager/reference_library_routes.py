@@ -3,6 +3,12 @@ from __future__ import annotations
 from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
 
 from ai_settings_service import get_local_ai_settings
+from reference_ai_analysis_service import (
+    ReferenceAIAnalysisError,
+    analysis_image_path,
+    resource_analysis_context,
+    run_resource_analysis,
+)
 from reference_library_service import (
     ALLOWED_STATUSES,
     ReferenceLibraryError,
@@ -97,6 +103,84 @@ def save_item(item_id: str):
     else:
         flash("Reference item updated privately. No public portfolio files were changed.", "success")
     return redirect(url_for("reference_library.item", item_id=item_id), code=303)
+
+
+@reference_library_bp.get("/<item_id>/analysis")
+def analysis(item_id: str):
+    try:
+        record = load_reference_item(item_id)
+        context = resource_analysis_context(item_id)
+    except (ReferenceLibraryError, ReferenceAIAnalysisError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("reference_library.item", item_id=item_id))
+    return render_template(
+        "reference-ai-analysis.html",
+        record=record,
+        context=context,
+        analysis=record.get("ai_analysis"),
+        ai_settings=get_local_ai_settings(),
+    )
+
+
+@reference_library_bp.get("/<item_id>/analysis/image")
+def analysis_image(item_id: str):
+    try:
+        path = analysis_image_path(item_id)
+        record = load_reference_item(item_id)
+    except (ReferenceLibraryError, ReferenceAIAnalysisError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id))
+    return send_file(
+        path,
+        mimetype=str(record.get("original_file", {}).get("mime_type") or "application/octet-stream"),
+        as_attachment=False,
+        download_name=path.name,
+        max_age=0,
+        conditional=True,
+    )
+
+
+@reference_library_bp.post("/<item_id>/analysis/run")
+def run_analysis(item_id: str):
+    if not get_local_ai_settings()["configured"]:
+        flash("Connect AI in Settings before analyzing a Reference Library resource.", "error")
+        return redirect(url_for("ai_assistant.settings"), code=303)
+    try:
+        context = resource_analysis_context(item_id)
+    except (ReferenceLibraryError, ReferenceAIAnalysisError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("reference_library.item", item_id=item_id), code=303)
+
+    if not context.get("supported"):
+        flash(str(context.get("reason") or "This resource is not currently supported for AI analysis."), "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+    if request.form.get("provider_ack") != "on":
+        flash("Confirm exactly what source material and public taxonomy will be sent to the configured AI provider.", "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+    if request.form.get("authority_ack") != "on":
+        flash("Confirm that you are authorized to send this private source material to the configured AI provider.", "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+    if context.get("mode") == "image" and request.form.get("visual_ack") != "on":
+        flash("Review the full image and confirm that its visual contents may be sent to the AI provider.", "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+    if context.get("blocked"):
+        flash("Local preflight found credential or secret material. Create a safer private working copy before using AI resource analysis.", "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+    if context.get("warnings") and request.form.get("sensitive_ack") != "on":
+        flash("Review the local sensitivity warnings and confirm the additional acknowledgement before sending this source to AI.", "error")
+        return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
+
+    try:
+        run_resource_analysis(
+            item_id,
+            request.form.get("focus", ""),
+            request.form.get("reviewed_sha256", ""),
+        )
+    except (ReferenceLibraryError, ReferenceAIAnalysisError) as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Private AI resource analysis created. The original source, sanitization status, approval status, portfolio files, and Git state were not changed.", "success")
+    return redirect(url_for("reference_library.analysis", item_id=item_id), code=303)
 
 
 @reference_library_bp.post("/<item_id>/sanitized")
