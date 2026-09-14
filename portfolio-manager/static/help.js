@@ -75,7 +75,7 @@
             } else if (kind === 'git-push') {
                 message = 'Publish committed main changes to GitHub?\n\nThis pushes local main to origin/main. GitHub Pages can deploy the committed public portfolio changes after this step. No force-push is used.';
             } else if (kind === 'ai-delete-proposal') {
-                message = 'Delete this private AI proposal?\n\nThis removes only the Git-ignored local proposal record. It does not change portfolio files, Git history, or anything already copied elsewhere.';
+                message = 'Delete this private AI proposal?\n\nThis removes only the Git-ignored local proposal record and its private usage history. It does not change portfolio files, Git history, or content already saved elsewhere.';
             }
 
             if (message && !window.confirm(message)) {
@@ -93,5 +93,12 @@
                 section.hidden = Boolean(query) && !section.textContent.toLowerCase().includes(query);
             });
         });
+    }
+
+    if (new URLSearchParams(window.location.search).has('ai_proposal')) {
+        const script = document.createElement('script');
+        script.src = '/static/ai-handoff.js';
+        script.defer = true;
+        document.body.appendChild(script);
     }
 })();

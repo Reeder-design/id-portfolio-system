@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use AI Proposal | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">AI Assistance · Use Proposal</p>
+            <h1>Where should this draft go?</h1>
+            <p class="hero-copy">Choose an existing project or page. Portfolio Manager will open the real editor with the AI draft staged beside it. Nothing is inserted or saved until you choose a field and approve the normal editor save.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.proposal', proposal_id=record.id) }}">Back to Proposal</a>
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="dashboard-card full-width">
+        <div class="action-title-row">
+            <div>
+                <p class="eyebrow">Staged draft</p>
+                <h2>{{ record.result.headline }}</h2>
+            </div>
+            <button class="inline-help" type="button" data-help-key="ai-proposal" data-help-label="Using an AI Proposal">?</button>
+        </div>
+        <p class="section-copy">This step chooses only the destination editor. The draft stays private until you insert it into a field and save through that editor.</p>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Projects</p>
+            <h2>Use in an existing project</h2>
+            <div class="v2-general-grid">
+                {% for item in destinations.projects %}
+                <article class="v2-small-card">
+                    <h3>{{ item.label }}</h3>
+                    <p>{{ 'Opens the visible-page copy editor for this custom project.' if item.editor_kind == 'visible-page' else 'Opens the structured project editor.' }}</p>
+                    <form method="post" action="{{ url_for('ai_assistant.stage_proposal', proposal_id=record.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="destination_kind" value="project">
+                        <input type="hidden" name="destination_id" value="{{ item.id }}">
+                        <button class="btn btn-primary" type="submit">Stage in This Project</button>
+                    </form>
+                </article>
+                {% else %}
+                <p class="empty-note">No project destinations are available.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Portfolio pages</p>
+            <h2>Use on an existing page</h2>
+            <div class="v2-general-grid">
+                {% for item in destinations.pages %}
+                <article class="v2-small-card">
+                    <h3>{{ item.label }}</h3>
+                    <p>Opens the visible-copy editor with the proposal staged beside the page fields.</p>
+                    <form method="post" action="{{ url_for('ai_assistant.stage_proposal', proposal_id=record.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="destination_kind" value="page">
+                        <input type="hidden" name="destination_id" value="{{ item.id }}">
+                        <button class="btn btn-primary" type="submit">Stage on This Page</button>
+                    </form>
+                </article>
+                {% else %}
+                <p class="empty-note">No page destinations are available.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

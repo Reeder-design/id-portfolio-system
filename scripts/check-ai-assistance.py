@@ -158,8 +158,8 @@ def main() -> int:
     require("has <strong>not</strong> been sent yet" in workspace, "Sensitive-marker UI must clearly say the request has not been sent yet.", errors)
     require("No portfolio files were changed" in proposal, "AI proposal review must state that no portfolio files were changed.", errors)
     require('action="/ai/apply' not in proposal and "apply_proposal" not in proposal, "Generic AI proposal review must not contain an apply-to-site route.", errors)
-    require("Open General Page Content" in proposal and "Open Project Content" in proposal, "Generic AI review must hand approved copy back to deterministic editors.", errors)
-    require("git_workflow.git_workflow" in proposal, "Generic AI review must link to the real guarded Git Workflow endpoint.", errors)
+    require("Choose Existing Content" in proposal and "Start Content Brief" in proposal and "Save for Later" in proposal, "Generic AI review must expose the guided use/save decision instead of a manual copy-paste handoff.", errors)
+    require("Copy the approved wording into General Page Content or Project Content" not in proposal, "Generic AI review must not reintroduce the manual copy-paste handoff.", errors)
 
     require('type="password"' in settings_template, "AI Settings must never render the API key as plain text.", errors)
     require("Your full API key is never displayed here" in settings_template, "AI Settings must explain the local key boundary.", errors)

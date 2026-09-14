@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='ai-assistant.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ai-uploads.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -17,7 +19,7 @@
             <div>
                 <p class="eyebrow">AI Assistance · {{ record.task_label }}</p>
                 <h1>{{ record.result.headline }}</h1>
-                <p class="hero-copy">Private proposal created {{ record.created_at }} with {{ record.model }}. Review it before copying anything into a portfolio editor.</p>
+                <p class="hero-copy">Private proposal created {{ record.created_at }} with {{ record.model }}. Review the result, then choose how you want to use it.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('ai_assistant.workspace') }}">Back to AI Workspace</a>
@@ -33,7 +35,7 @@
             <div>
                 <p class="eyebrow">Proposal only</p>
                 <h2>No portfolio files were changed.</h2>
-                <p>Use this as reviewable drafting support. Copy only the parts you approve into the appropriate structured editor, then use the normal validation and Git workflow.</p>
+                <p>AI proposes. You decide what gets used. The guided handoff below can stage this draft inside a real editor or a new Content Brief, but nothing is saved to the public portfolio until you approve the normal editor workflow.</p>
             </div>
             <button class="inline-help" type="button" data-help-key="ai-proposal" data-help-label="Reviewing AI Proposals">?</button>
         </section>
@@ -98,26 +100,65 @@
             </section>
             {% endif %}
 
+            {% if record.attachments %}
+            <section class="dashboard-card ai-source-card full-width">
+                <p class="eyebrow">Request audit</p>
+                <h2>Attachments included in this AI request</h2>
+                <p class="field-help">Original uploaded binaries were temporary and were deleted locally after successful generation. This private proposal keeps only audit metadata plus the extracted text shown in the source record below.</p>
+                <div class="ai-attachment-audit">
+                    {% for item in record.attachments %}
+                    <div>
+                        <strong>{{ item.filename }}</strong>
+                        <span>{{ 'Image sent as visual input' if item.kind == 'image' else 'Text extracted locally before send' }} · {{ item.extension|upper }} · {{ "{:.1f}".format(item.size_bytes / 1024) }} KB{% if item.truncated %} · extraction truncated{% endif %}</span>
+                        <small>SHA-256: {{ item.sha256 }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
             <section class="dashboard-card ai-source-card full-width">
                 <details>
                     <summary>Show the private source text used for this proposal</summary>
-                    <p class="field-help">This source is stored only in the Git-ignored local proposal record so you can audit what the AI saw.</p>
+                    <p class="field-help">This source is stored only in the Git-ignored local proposal record so you can audit what the AI saw. For image inputs, the source text records the image filename while the proposal audit above records the image hash and metadata.</p>
                     <pre class="ai-source-text">{{ record.source_text }}</pre>
                     {% if record.user_goal %}<h3>Goal / context</h3><pre class="ai-source-text">{{ record.user_goal }}</pre>{% endif %}
                 </details>
             </section>
 
             <section class="dashboard-card ai-result-card full-width ai-next-step-card">
-                <div>
-                    <p class="eyebrow">Next step</p>
-                    <h2>Approve by using it—not by clicking an AI Apply button.</h2>
-                    <p>Copy the approved wording into General Page Content or Project Content, save through that deterministic editor, run validation, then use Git Workflow. This keeps AI suggestions separate from actual portfolio writes.</p>
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Ready to use it?</p>
+                        <h2>Choose what you want to do with this proposal.</h2>
+                    </div>
+                    <button class="inline-help" type="button" data-help-key="ai-proposal" data-help-label="Using AI Proposals">?</button>
                 </div>
-                <div class="button-row">
-                    <a class="btn btn-secondary" href="{{ url_for('site_content.page_library') }}">Open General Page Content</a>
-                    <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Open Project Content</a>
-                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Open Git Workflow</a>
+                <p class="section-copy">The next step stays guided. You can stage the draft in an existing editor, use it to prefill a new Content Brief, or simply keep it in private history for later.</p>
+                <div class="v2-general-grid">
+                    <article class="v2-small-card">
+                        <h3>Use in Existing Content</h3>
+                        <p>Choose a project or page. The real editor opens with this proposal staged beside the editable fields. You decide exactly where to insert it before saving.</p>
+                        <a class="btn btn-primary" href="{{ url_for('ai_assistant.use_proposal', proposal_id=record.id) }}">Choose Existing Content</a>
+                    </article>
+                    <article class="v2-small-card">
+                        <h3>Create Something New</h3>
+                        <p>Open a new Content Brief with proposal-supported details prefilled as private draft context. Review and change anything before you save the brief.</p>
+                        <form method="post" action="{{ url_for('ai_assistant.create_content_from_proposal', proposal_id=record.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-primary" type="submit">Start Content Brief</button>
+                        </form>
+                    </article>
+                    <article class="v2-small-card">
+                        <h3>Save for Later</h3>
+                        <p>Keep the proposal in private history without changing any portfolio content.</p>
+                        <form method="post" action="{{ url_for('ai_assistant.save_proposal_for_later', proposal_id=record.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-secondary" type="submit">Save for Later</button>
+                        </form>
+                    </article>
                 </div>
+                <p class="field-help">Current private use status: <strong>{{ usage.status|replace('-', ' ')|title }}</strong>{% if usage.updated_at %} · updated {{ usage.updated_at }}{% endif %}.</p>
             </section>
 
             <section class="ai-delete-row full-width">

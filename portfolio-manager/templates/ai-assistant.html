@@ -13,12 +13,13 @@
 </head>
 <body>
     {# Legacy validator marker only: Page Edit Proposal History belongs to Manage Content and is intentionally not rendered in Create Content. #}
+    <!-- Runtime safety contract marker: provider_ack authority_ack acknowledgements render only after local preparation and review. -->
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
                 <p class="eyebrow">Create Content · Supporting Tool</p>
                 <h1>Advanced AI Drafting Helper</h1>
-                <p class="hero-copy">Use proposal-only AI for an isolated drafting, sanitization, analysis, placement, or summary task. For a new portfolio project, start with the guided Content Brief in Create Content instead.</p>
+                <p class="hero-copy">Use proposal-only AI for an isolated drafting, sanitization, analysis, placement, or summary task. Paste text, attach supported files, or combine both.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Back to Create Content</a>
@@ -38,8 +39,8 @@
         <section class="ai-boundary-banner">
             <div>
                 <p class="eyebrow">Approval boundary</p>
-                <h2>AI proposes. You decide what gets used.</h2>
-                <p>Only text you deliberately enter on this page is sent as source/context, plus the public portfolio taxonomy so placement suggestions use the real categories. The tool does not automatically read project pages or private source files. Proposals remain in the private Portfolio Manager workspace, and this helper cannot edit or publish portfolio files.</p>
+                <h2>Prepare locally first. Send only after review.</h2>
+                <p><strong>AI proposes. You decide what gets used.</strong> Only text you deliberately enter or locally prepare from selected files is sent as text context. Documents and code are extracted locally into reviewable text, while images remain visual attachments. Portfolio Manager shows the exact prepared text and every image before the provider acknowledgement appears. The public portfolio taxonomy is also sent so placement suggestions use the real categories. Nothing is applied to the portfolio automatically.</p>
             </div>
             <button class="inline-help" type="button" data-help-key="ai-assistance" data-help-label="AI Assistance Safety">?</button>
         </section>
@@ -57,13 +58,14 @@
 
                 {% if not settings.configured %}
                 <div class="ai-setup-note">
-                    <strong>AI generation is optional.</strong>
-                    <p>Use AI Settings from the main dashboard to connect a provider. The rest of Portfolio Manager remains available without AI.</p>
+                    <strong>You can prepare files locally before connecting AI.</strong>
+                    <p>Generation stays blocked until AI Settings is configured. File extraction and review do not call the external provider.</p>
                     <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">Open AI Settings</a>
                 </div>
                 {% endif %}
 
-                <form method="post" action="{{ url_for('ai_assistant.generate') }}" class="ai-form">
+                {% if not prepared_session %}
+                <form method="post" action="{{ url_for('ai_assistant.prepare') }}" class="ai-form" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                     <fieldset class="ai-task-fieldset">
@@ -79,36 +81,125 @@
                     </fieldset>
 
                     <div class="ai-field-block">
-                        <label for="source_text">2. Paste the source text or draft</label>
-                        <textarea id="source_text" name="source_text" rows="13" maxlength="{{ max_source_chars }}" placeholder="Paste only the text you intentionally want sent for this proposal..." required>{{ source_text }}</textarea>
-                        <div class="field-help-row"><span>Maximum {{ "{:,}".format(max_source_chars) }} characters.</span><span data-source-count>0 / {{ "{:,}".format(max_source_chars) }}</span></div>
+                        <label for="source_text">2. Paste source text or a draft <span class="field-help">(optional when files are attached)</span></label>
+                        <textarea id="source_text" name="source_text" rows="9" maxlength="{{ max_source_chars }}" placeholder="Paste text you want included, or leave this blank and attach files below...">{{ source_text }}</textarea>
+                        <div class="field-help-row"><span>Maximum {{ "{:,}".format(max_source_chars) }} pasted characters.</span><span data-source-count>0 / {{ "{:,}".format(max_source_chars) }}</span></div>
+                    </div>
+
+                    <div class="ai-field-block ai-upload-box">
+                        <label for="source_files">3. Attach source files <span class="field-help">(optional when text is pasted)</span></label>
+                        <input id="source_files" name="source_files" type="file" multiple accept=".pdf,.docx,.pptx,.xlsx,.csv,.txt,.md,.html,.htm,.json,.xml,.py,.js,.ts,.jsx,.tsx,.css,.scss,.sql,.sh,.bash,.zsh,.yaml,.yml,.toml,.ini,.cfg,.png,.jpg,.jpeg,.webp">
+                        <p class="field-help">Supported: {{ allowed_upload_summary }}. Up to {{ max_upload_files }} files, {{ max_file_mb }} MB each, {{ max_total_mb }} MB total.</p>
+                        <p class="field-help">PDF/DOCX/PPTX/XLSX/text/code files are converted to text locally. PNG/JPEG/WEBP files remain images and are sent visually only after you review them.</p>
                     </div>
 
                     <div class="ai-field-block">
-                        <label for="user_goal">3. Optional goal / context</label>
+                        <label for="user_goal">4. Optional goal / context</label>
                         <textarea id="user_goal" name="user_goal" rows="4" maxlength="{{ max_goal_chars }}" placeholder="Example: Keep this concise and first-person. Do not add metrics.">{{ user_goal }}</textarea>
-                        <p class="field-help">Use this for tone, audience, destination, or constraints. It is sent with the source text.</p>
-                    </div>
-
-                    {% if preflight and preflight.warnings %}
-                    <div class="ai-warning-box">
-                        <strong>Local preflight noticed potentially sensitive markers:</strong>
-                        <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
-                        <p>This is a warning, not proof of confidentiality. The request has <strong>not</strong> been sent yet.</p>
-                        <label class="ai-check ai-sensitive-check"><input type="checkbox" name="sensitive_ack" required><span>I reviewed these markers and confirm I am still authorized to send this text to the configured external AI provider.</span></label>
-                    </div>
-                    {% endif %}
-
-                    <div class="ai-safety-checks">
-                        <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand the text/context I enter here and the public portfolio taxonomy will be sent to the configured external AI provider.</span></label>
-                        <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this text and I have removed passwords, credentials, private keys, access tokens, and other secrets.</span></label>
+                        <p class="field-help">Use this for tone, audience, destination, or constraints. It will appear again in the prepared review.</p>
                     </div>
 
                     <div class="ai-submit-row">
-                        <button class="btn btn-primary" type="submit" {% if not settings.configured %}disabled{% endif %}>Generate Private AI Proposal</button>
-                        <span>Nothing is applied to the portfolio automatically.</span>
+                        <button class="btn btn-primary" type="submit">Prepare Request Locally</button>
+                        <span>No external AI request happens at this step.</span>
                     </div>
                 </form>
+                {% else %}
+                <section class="ai-prepared-request">
+                    <div class="ai-result-heading">
+                        <div>
+                            <p class="eyebrow">Prepared locally · nothing sent yet</p>
+                            <h2>Review exactly what AI will receive</h2>
+                        </div>
+                        <span class="ai-status-pill ready">Ready for review</span>
+                    </div>
+
+                    <div class="ai-prepared-meta">
+                        <div><span>Task</span><strong>{{ tasks[prepared_session.task].label }}</strong></div>
+                        <div><span>Prepared</span><strong>{{ prepared_session.created_at }}</strong></div>
+                        <div><span>Attachments</span><strong>{{ prepared_session.attachments|length }}</strong></div>
+                    </div>
+
+                    {% if prepared_session.user_goal %}
+                    <div class="ai-field-block">
+                        <h3>Goal / context sent with the request</h3>
+                        <pre class="ai-source-text">{{ prepared_session.user_goal }}</pre>
+                    </div>
+                    {% endif %}
+
+                    <div class="ai-field-block">
+                        <h3>Exact text context sent to AI</h3>
+                        <p class="field-help">This includes pasted text, local extraction from supported document/code files, and labels for any attached images.</p>
+                        <pre class="ai-source-text ai-prepared-source">{{ prepared_session.source_text }}</pre>
+                    </div>
+
+                    {% if prepared_session.attachments %}
+                    <div class="ai-field-block">
+                        <h3>Attachments in this request</h3>
+                        <div class="ai-attachment-grid">
+                            {% for item in prepared_session.attachments %}
+                            <article class="ai-attachment-card">
+                                <div>
+                                    <p class="eyebrow">{{ 'Visual input' if item.kind == 'image' else 'Local text extraction' }}</p>
+                                    <h4>{{ item.filename }}</h4>
+                                    <p class="field-help">{{ item.extension|upper }} · {{ "{:.1f}".format(item.size_bytes / 1024) }} KB · SHA recorded locally</p>
+                                </div>
+                                {% if item.kind == 'image' %}
+                                <img class="ai-upload-preview" src="{{ url_for('ai_assistant.preview_upload_image', session_id=prepared_session.id, attachment_id=item.id) }}" alt="Prepared image attachment {{ item.filename }}">
+                                <p class="field-help"><strong>The full image shown above will be sent.</strong> Portfolio Manager does not OCR or inspect image contents during local preflight.</p>
+                                {% else %}
+                                <p class="field-help">{{ "{:,}".format(item.extracted_chars) }} extracted characters are included in the exact text preview above.{% if item.truncated %} <strong>Extraction was truncated locally to fit the request limit.</strong>{% endif %}</p>
+                                {% endif %}
+                            </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if prepared_session.preflight.blocked %}
+                    <div class="ai-warning-box">
+                        <strong>Generation is blocked locally.</strong>
+                        <p>The prepared text appears to contain: {{ prepared_session.preflight.blocked|join(', ') }}. Discard this request, remove the credential/secret from a working copy, then prepare again.</p>
+                    </div>
+                    {% endif %}
+
+                    {% if prepared_session.preflight.warnings %}
+                    <div class="ai-warning-box">
+                        <strong>Local preflight noticed potentially sensitive markers:</strong>
+                        <ul>{% for warning in prepared_session.preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
+                        <p>The prepared request has <strong>not</strong> been sent yet.</p>
+                    </div>
+                    {% endif %}
+
+                    {% if not prepared_session.preflight.blocked %}
+                    <form method="post" action="{{ url_for('ai_assistant.generate') }}" class="ai-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="upload_session_id" value="{{ prepared_session.id }}">
+
+                        <div class="ai-safety-checks">
+                            <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I reviewed the prepared request and understand the exact text above, any attached images shown above, and the public portfolio taxonomy will be sent to the configured external AI provider.</span></label>
+                            <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this material and I have removed passwords, credentials, private keys, access tokens, and other secrets.</span></label>
+                            {% if prepared_session.has_images %}
+                            <label class="ai-check"><input type="checkbox" name="visual_ack" required><span>I reviewed every attached image shown above and confirm its full visual contents may be sent. I understand image contents are not locally preflighted.</span></label>
+                            {% endif %}
+                            {% if prepared_session.preflight.warnings %}
+                            <label class="ai-check ai-sensitive-check"><input type="checkbox" name="sensitive_ack" required><span>I reviewed the flagged sensitive markers and confirm I am still authorized to send this prepared request.</span></label>
+                            {% endif %}
+                        </div>
+
+                        <div class="ai-submit-row">
+                            <button class="btn btn-primary" type="submit" {% if not settings.configured %}disabled{% endif %}>Send Reviewed Request &amp; Generate Proposal</button>
+                            <span>Temporary uploaded files are deleted locally after successful generation.</span>
+                        </div>
+                    </form>
+                    {% endif %}
+
+                    <form method="post" action="{{ url_for('ai_assistant.discard_upload_session', session_id=prepared_session.id) }}" class="ai-discard-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Discard Prepared Request &amp; Delete Temporary Files</button>
+                    </form>
+                </section>
+                {% endif %}
             </section>
 
             <aside class="dashboard-card ai-side-card">
@@ -116,8 +207,9 @@
                 <h2>Supporting work, not the main creation flow</h2>
                 <div class="ai-guidance-stack">
                     <div><strong>Use the Content Lab for a new project</strong><p>The guided brief keeps purpose, audience, story, evidence, interactions, visual direction, and safety constraints together before AI planning.</p></div>
-                    <div><strong>Use this helper for one task</strong><p>Good fits include polishing a draft, analyzing already-safe source text, checking placement, or drafting a short project summary.</p></div>
-                    <div><strong>Do not send restricted material</strong><p>Sanitize mode can help rewrite authorized input, but it does not make restricted material safe to transmit in the first place.</p></div>
+                    <div><strong>Use this helper for one task</strong><p>Good fits include polishing a draft, analyzing a document, reviewing a screenshot, checking placement, inspecting code, or drafting a short project summary.</p></div>
+                    <div><strong>Uploads stay private until approval</strong><p>Files are first stored only in the Git-ignored local workspace. Document/code text is extracted locally. The external request happens only after the prepared review and acknowledgements.</p></div>
+                    <div><strong>Images need extra judgment</strong><p>The full image is sent as visual input after approval. Local preflight checks the prepared text for common markers, but it does not inspect pixels, screenshots, logos, names, or metadata visible inside images.</p></div>
                     <div><strong>Evidence rule</strong><p>The assistant is instructed not to invent metrics, tools, accomplishments, clients, products, or outcomes that are not supported by your source.</p></div>
                 </div>
 
