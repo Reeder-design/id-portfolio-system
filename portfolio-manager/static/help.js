@@ -3,14 +3,42 @@
     const backdrop = document.querySelector('[data-help-backdrop]');
     const body = document.querySelector('[data-help-body]');
     const title = document.querySelector('[data-help-title]');
+    const nav = document.querySelector('[data-help-nav]');
+    const homeBody = body ? body.innerHTML : '';
+    const history = [];
+
+    function showHelpHome() {
+        if (!drawer || !body) return;
+        body.innerHTML = homeBody;
+        if (title) title.textContent = 'Portfolio Manager Help';
+        if (nav) nav.hidden = true;
+        history.length = 0;
+    }
+
+    function showTopic(key, label = null, { pushHistory = true } = {}) {
+        if (!drawer || !body || !key) return false;
+        const template = document.querySelector(`[data-help-template="${key}"]`);
+        if (!template) return false;
+
+        const currentKey = drawer.dataset.helpCurrent || '';
+        if (pushHistory && currentKey && currentKey !== key) history.push(currentKey);
+        body.innerHTML = template.innerHTML;
+        drawer.dataset.helpCurrent = key;
+        if (title) title.textContent = label || template.dataset.helpLabel || 'Portfolio Manager Help';
+        if (nav) nav.hidden = false;
+        return true;
+    }
 
     function openDrawer(key = null, label = null) {
         if (!drawer || !body) return;
         if (key) {
-            const template = document.querySelector(`[data-help-template="${key}"]`);
-            if (template) body.innerHTML = template.innerHTML;
+            drawer.dataset.helpCurrent = '';
+            history.length = 0;
+            showTopic(key, label, { pushHistory: false });
+        } else {
+            drawer.dataset.helpCurrent = '';
+            showHelpHome();
         }
-        if (title) title.textContent = label || 'Portfolio Manager Help';
         drawer.setAttribute('aria-hidden', 'false');
         drawer.classList.add('is-open');
         if (backdrop) {
@@ -29,6 +57,17 @@
         }
     }
 
+    function goBackInHelp() {
+        if (!drawer || !body) return;
+        const previous = history.pop();
+        if (previous) {
+            showTopic(previous, null, { pushHistory: false });
+            return;
+        }
+        drawer.dataset.helpCurrent = '';
+        showHelpHome();
+    }
+
     document.addEventListener('click', (event) => {
         const opener = event.target.closest('[data-help-open]');
         if (opener) {
@@ -36,9 +75,24 @@
             return;
         }
 
+        if (event.target.closest('[data-help-back]')) {
+            goBackInHelp();
+            return;
+        }
+
+        if (event.target.closest('[data-help-home]')) {
+            if (drawer) drawer.dataset.helpCurrent = '';
+            showHelpHome();
+            return;
+        }
+
         const topic = event.target.closest('[data-help-key]');
         if (topic) {
-            openDrawer(topic.dataset.helpKey, topic.dataset.helpLabel || null);
+            if (drawer && drawer.classList.contains('is-open')) {
+                showTopic(topic.dataset.helpKey, topic.dataset.helpLabel || null);
+            } else {
+                openDrawer(topic.dataset.helpKey, topic.dataset.helpLabel || null);
+            }
             return;
         }
 
@@ -87,12 +141,53 @@
     const helpSearch = document.querySelector('[data-help-search]');
     if (helpSearch) {
         const sections = Array.from(document.querySelectorAll('[data-guide-section]'));
-        helpSearch.addEventListener('input', () => {
-            const query = helpSearch.value.trim().toLowerCase();
+        const searchStatus = document.querySelector('[data-help-search-status]');
+        const noResults = document.querySelector('[data-help-no-results]');
+        const clearButton = document.querySelector('[data-help-search-clear]');
+        const chips = Array.from(document.querySelectorAll('[data-guide-search-chip]'));
+
+        const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9+#./-]+/g, ' ').trim();
+
+        function runSearch(rawQuery) {
+            const query = normalize(rawQuery);
+            const terms = query.split(/\s+/).filter(Boolean);
+            let visibleCount = 0;
+
             sections.forEach((section) => {
-                section.hidden = Boolean(query) && !section.textContent.toLowerCase().includes(query);
+                const haystack = normalize(`${section.textContent} ${section.dataset.guideTags || ''}`);
+                const match = terms.length === 0 || terms.every((term) => haystack.includes(term));
+                section.hidden = !match;
+                if (match) visibleCount += 1;
+            });
+
+            if (searchStatus) {
+                searchStatus.textContent = terms.length
+                    ? `${visibleCount} guide section${visibleCount === 1 ? '' : 's'} found for “${rawQuery.trim()}”.`
+                    : `Showing all ${sections.length} guide sections.`;
+            }
+            if (noResults) noResults.hidden = visibleCount !== 0;
+            if (clearButton) clearButton.hidden = terms.length === 0;
+        }
+
+        helpSearch.addEventListener('input', () => runSearch(helpSearch.value));
+
+        if (clearButton) {
+            clearButton.addEventListener('click', () => {
+                helpSearch.value = '';
+                runSearch('');
+                helpSearch.focus();
+            });
+        }
+
+        chips.forEach((chip) => {
+            chip.addEventListener('click', () => {
+                helpSearch.value = chip.dataset.guideSearchChip || chip.textContent.trim();
+                runSearch(helpSearch.value);
+                helpSearch.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
+
+        runSearch('');
     }
 
     if (new URLSearchParams(window.location.search).has('ai_proposal')) {
