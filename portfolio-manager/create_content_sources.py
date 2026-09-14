@@ -5,10 +5,26 @@ from pathlib import Path
 from typing import Any
 import json
 import re
+import zipfile
 
 from ai_service import PRIVATE_ROOT
-from reference_library_service import ReferenceLibraryError, list_reference_items, load_reference_item
-from reference_sanitization_service import SanitizationError, extract_reference_text
+from reference_library_service import (
+    ReferenceLibraryError,
+    list_reference_items,
+    load_reference_item,
+    reference_file_path,
+)
+from reference_sanitization_service import (
+    AI_REVIEW_EXTENSIONS,
+    TEXT_EXTENSIONS,
+    SanitizationError,
+    _extract_docx,
+    _extract_pdf,
+    _extract_pptx,
+    _extract_text_file,
+    _extract_xlsx,
+    _truncate,
+)
 
 
 BRIEFS_ROOT = PRIVATE_ROOT / "create-content" / "briefs"
@@ -151,6 +167,40 @@ def resolve_brief_sources(record: dict[str, Any]) -> list[dict[str, Any]]:
     return resolved
 
 
+def _extract_sanitized_text(item_id: str) -> dict[str, Any]:
+    path = reference_file_path(item_id, "sanitized")
+    suffix = path.suffix.lower()
+    if suffix not in AI_REVIEW_EXTENSIONS:
+        return {
+            "supported": False,
+            "text": "",
+            "truncated": False,
+            "extension": suffix,
+            "reason": "This approved derivative is attached to the brief, but its file type is not text-extractable for AI planning yet.",
+        }
+    try:
+        if suffix in TEXT_EXTENSIONS:
+            text = _extract_text_file(path)
+        elif suffix == ".docx":
+            text = _extract_docx(path)
+        elif suffix == ".pptx":
+            text = _extract_pptx(path)
+        elif suffix == ".xlsx":
+            text = _extract_xlsx(path)
+        else:
+            text = _extract_pdf(path)
+    except (OSError, zipfile.BadZipFile, ReferenceLibraryError, SanitizationError) as exc:
+        raise ContentSourceError("Approved sanitized source text could not be extracted safely for Content Brief planning.") from exc
+    text, truncated = _truncate(text)
+    return {
+        "supported": bool(text.strip()),
+        "text": text,
+        "truncated": truncated,
+        "extension": suffix,
+        "reason": "" if text.strip() else "No reviewable text could be extracted from this approved derivative.",
+    }
+
+
 def approved_source_context(record: dict[str, Any], strict: bool = False) -> dict[str, Any]:
     blocks: list[str] = []
     issues: list[str] = []
@@ -162,18 +212,11 @@ def approved_source_context(record: dict[str, Any], strict: bool = False) -> dic
             issues.append(f"{source.get('title') or source.get('reference_id')}: {source.get('issue')}")
             continue
         source_id = str(source.get("reference_id", ""))
-        try:
-            extracted = extract_reference_text(source_id, kind="sanitized")
-        except (SanitizationError, ReferenceLibraryError) as exc:
-            issues.append(f"{source.get('title')}: {exc}")
-            continue
+        extracted = _extract_sanitized_text(source_id)
         if not extracted.get("supported"):
-            included.append({**source, "ai_text_included": False, "ai_note": extracted.get("reason", "This source is attached but not text-extractable.")})
+            included.append({**source, "ai_text_included": False, "ai_note": extracted.get("reason")})
             continue
         text = str(extracted.get("text", "")).strip()
-        if not text:
-            included.append({**source, "ai_text_included": False, "ai_note": "No reviewable text was extracted from the sanitized derivative."})
-            continue
         if remaining <= 0:
             issues.append("Approved source context exceeded the current AI context limit. Detach a source or shorten the sanitized derivatives before generating the plan.")
             break
@@ -185,13 +228,9 @@ def approved_source_context(record: dict[str, Any], strict: bool = False) -> dic
             f"{chunk}"
         )
         included.append({**source, "ai_text_included": True, "ai_note": "Approved sanitized text will be included when you generate the AI plan."})
-        if len(chunk) < len(text):
+        if extracted.get("truncated") or len(chunk) < len(text):
             issues.append(f"{source.get('title')}: approved source text was truncated by the Create Content context limit.")
 
     if strict and issues:
         raise ContentSourceError("Approved source context needs attention before AI planning: " + " ".join(issues))
-    return {
-        "text": "\n\n".join(blocks),
-        "issues": issues,
-        "resolved": included,
-    }
+    return {"text": "\n\n".join(blocks), "issues": issues, "resolved": included}
