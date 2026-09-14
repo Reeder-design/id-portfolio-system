@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Content Brief' if record else 'New Content Brief' }} | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Content Brief</p>
+            <h1>{{ fields.get('working_title', '') or 'Plan the project before AI builds anything' }}</h1>
+            <p class="hero-copy">This brief is the source of truth for the project direction. Saving is private and local. AI only receives the brief when you explicitly choose Generate AI Plan and confirm the external-provider boundary.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Back to Create Content</a>
+            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Workflow</p>
+        <h2>Idea → Brief → AI Plan → refine → build later</h2>
+        <p class="section-copy">This foundation phase intentionally stops at a reviewable project plan. It does not create portfolio pages, copy files into the public site, commit changes, or publish anything.</p>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <form method="post" action="{{ url_for('create_content.save_brief', brief_id=record.id) if record else url_for('create_content.create_new_brief') }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="full-span">
+                    <p class="eyebrow">1 · What am I making?</p>
+                    <label for="working_title">Working title</label>
+                    <input id="working_title" name="working_title" type="text" maxlength="6000" value="{{ fields.get('working_title', '') }}" placeholder="Example: Automated Learning Reporting Workflow" required>
+                </div>
+                <div class="full-span">
+                    <label for="project_type">Project type / portfolio artifact</label>
+                    <textarea id="project_type" name="project_type" rows="3" maxlength="6000" placeholder="Example: A case study with an interactive workflow demo showing how I automated recurring training reports." required>{{ fields.get('project_type', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">2 · Why am I making it?</p>
+                    <label for="purpose">Purpose</label>
+                    <textarea id="purpose" name="purpose" rows="4" maxlength="6000" placeholder="What should this project prove about your work or capabilities?" required>{{ fields.get('purpose', '') }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label for="skills_to_demonstrate">Skills / capabilities to demonstrate</label>
+                    <textarea id="skills_to_demonstrate" name="skills_to_demonstrate" rows="3" maxlength="6000" placeholder="Example: workflow automation, learning analytics, stakeholder reporting, Python, process design">{{ fields.get('skills_to_demonstrate', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">3 · Audience</p>
+                    <label for="audience">Who should understand this project?</label>
+                    <textarea id="audience" name="audience" rows="3" maxlength="6000" placeholder="Example: L&D hiring managers, instructional design leaders, and enablement teams." required>{{ fields.get('audience', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">4 · Story</p>
+                    <label for="story_problem">Problem / challenge</label>
+                    <textarea id="story_problem" name="story_problem" rows="4" maxlength="6000" placeholder="What problem, need, or constraint started the work?" required>{{ fields.get('story_problem', '') }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label for="story_approach">Approach / key decisions</label>
+                    <textarea id="story_approach" name="story_approach" rows="4" maxlength="6000" placeholder="What approach did you choose and why?">{{ fields.get('story_approach', '') }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label for="story_process">Process / development</label>
+                    <textarea id="story_process" name="story_process" rows="4" maxlength="6000" placeholder="What did you actually do or build?">{{ fields.get('story_process', '') }}</textarea>
+                </div>
+                <div class="full-span">
+                    <label for="story_result">Result / outcome</label>
+                    <textarea id="story_result" name="story_result" rows="4" maxlength="6000" placeholder="What changed, what was delivered, or what can you credibly demonstrate? Leave unsupported metrics out.">{{ fields.get('story_result', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">5 · Evidence</p>
+                    <label for="evidence">Evidence / source-supported facts</label>
+                    <textarea id="evidence" name="evidence" rows="5" maxlength="6000" placeholder="List facts, artifacts, screenshots, outputs, examples, or other evidence that support the story. The future Reference Library will connect approved resources here.">{{ fields.get('evidence', '') }}</textarea>
+                    <p class="field-help">This field is stored privately. If you generate an AI Plan, the text in the whole brief is sent to the configured provider after your confirmation.</p>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">6 · Interaction</p>
+                    <label for="interaction">What should the visitor be able to view or do?</label>
+                    <textarea id="interaction" name="interaction" rows="4" maxlength="6000" placeholder="Example: step through a workflow, inspect a before/after report, make a choice, open an interactive demo, or simply read a concise case study.">{{ fields.get('interaction', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">7 · Visual direction</p>
+                    <label for="visual_direction">Desired design and presentation</label>
+                    <textarea id="visual_direction" name="visual_direction" rows="4" maxlength="6000" placeholder="Layout ideas, design-system direction, image needs, diagrams, tone of visuals, or examples you want to emulate.">{{ fields.get('visual_direction', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">8 · Public-safety constraints</p>
+                    <label for="public_safety">What must be generalized, removed, fictionalized, or protected?</label>
+                    <textarea id="public_safety" name="public_safety" rows="5" maxlength="6000" placeholder="Example: no customer names, internal URLs, unreleased product details, real learner data, or confidential metrics.">{{ fields.get('public_safety', '') }}</textarea>
+                </div>
+
+                <div class="full-span">
+                    <p class="eyebrow">9 · Personal direction</p>
+                    <label for="personal_direction">Tone, wording preferences, constraints, and things AI should avoid</label>
+                    <textarea id="personal_direction" name="personal_direction" rows="5" maxlength="6000" placeholder="Example: concise and first-person; no hype; avoid generic AI phrasing; emphasize my design decisions over the tool itself.">{{ fields.get('personal_direction', '') }}</textarea>
+                </div>
+
+                {% if record %}
+                <section class="full-span dashboard-card">
+                    <p class="eyebrow">AI planning boundary</p>
+                    <h3>Review the complete brief before generating</h3>
+                    <p>Save Draft keeps everything local. Generate AI Plan saves the form first, then sends the Content Brief text plus the public portfolio taxonomy to the configured provider. AI receives no private files automatically.</p>
+                    {% if preflight.blocked %}
+                    <div class="flash-message error"><strong>Generation blocked:</strong> remove these credential-like markers before using AI: {{ preflight.blocked|join(', ') }}.</div>
+                    {% endif %}
+                    {% if preflight.warnings %}
+                    <div class="ai-warning-box">
+                        <strong>Local preflight noticed potentially sensitive markers:</strong>
+                        <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
+                        <label class="ai-check"><input type="checkbox" name="sensitive_ack"><span>I reviewed these markers and confirm I am authorized to send this brief to the configured AI provider.</span></label>
+                    </div>
+                    {% endif %}
+                    <label class="ai-check"><input type="checkbox" name="provider_ack"><span>I understand the Content Brief and public portfolio taxonomy will be sent to the configured AI provider when I generate a plan.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="authority_ack"><span>I am authorized to send this brief and have removed passwords, credentials, restricted secrets, and material I am not permitted to share externally.</span></label>
+                </section>
+                {% endif %}
+
+                <div class="full-span button-row">
+                    <button class="btn btn-secondary" type="submit" name="action" value="save">{{ 'Save Brief' if record else 'Create Content Brief' }}</button>
+                    {% if record %}
+                    <button class="btn btn-primary" type="submit" name="action" value="generate-plan" {% if not ai_settings.configured or preflight.blocked %}disabled{% endif %}>{{ 'Regenerate AI Plan' if record.plan else 'Generate AI Plan' }}</button>
+                    {% endif %}
+                </div>
+            </form>
+        </section>
+
+        {% if record and record.plan %}
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div><p class="eyebrow">AI plan proposal</p><h2>{{ record.plan.concept_summary or 'Content Plan' }}</h2></div>
+                <span class="v2-ai-status connected">{{ 'Needs regeneration' if record.plan_stale else 'Current plan' }}</span>
+            </div>
+            {% if record.plan_stale %}<p class="section-copy"><strong>The brief changed after this plan was generated.</strong> Keep it as reference or regenerate before using it as the current build plan.</p>{% endif %}
+            <p><strong>Recommended format:</strong> {{ record.plan.recommended_format or 'No format recommendation' }}</p>
+            <p><strong>Suggested placement:</strong> {{ record.plan.placement.category or 'No category' }}{% if record.plan.placement.subcategory %} → {{ record.plan.placement.subcategory }}{% endif %}</p>
+            {% if record.plan.placement.rationale %}<p>{{ record.plan.placement.rationale }}</p>{% endif %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Proposed structure</p>
+            <h2>Page / artifact sections</h2>
+            {% for item in record.plan.sections %}
+            <article class="v2-project-row">
+                <div><h3>{{ item.title }}</h3><p>{{ item.purpose }}</p>{% if item.key_points %}<p><strong>Key points:</strong> {{ item.key_points|join(' · ') }}</p>{% endif %}{% if item.evidence_needed %}<p><strong>Evidence needed:</strong> {{ item.evidence_needed|join(' · ') }}</p>{% endif %}</div>
+            </article>
+            {% else %}<p class="empty-note">No section plan returned.</p>{% endfor %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Experience design</p>
+            <h2>Interactions / presentation patterns</h2>
+            {% for item in record.plan.interactions %}<article class="v2-project-row"><div><h3>{{ item.name }}</h3><p>{{ item.purpose }}</p>{% if item.visitor_action %}<p><strong>Visitor action:</strong> {{ item.visitor_action }}</p>{% endif %}</div></article>{% else %}<p class="empty-note">No interaction recommendation returned.</p>{% endfor %}
+        </section>
+
+        <section class="dashboard-card full-width">
+            <div class="v2-general-grid">
+                <article class="v2-small-card"><h3>Asset Needs</h3><ul>{% for item in record.plan.asset_needs %}<li>{{ item }}</li>{% else %}<li>No additional assets identified.</li>{% endfor %}</ul></article>
+                <article class="v2-small-card"><h3>Evidence Gaps</h3><ul>{% for item in record.plan.evidence_gaps %}<li>{{ item }}</li>{% else %}<li>No specific evidence gaps identified.</li>{% endfor %}</ul></article>
+                <article class="v2-small-card"><h3>Safety Notes</h3><ul>{% for item in record.plan.safety_notes %}<li>{{ item }}</li>{% else %}<li>No additional safety notes identified.</li>{% endfor %}</ul></article>
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Development plan</p>
+            <h2>Build tasks</h2>
+            <ol>{% for item in record.plan.build_tasks %}<li>{{ item }}</li>{% else %}<li>No build tasks returned.</li>{% endfor %}</ol>
+            {% if record.plan.writing_direction %}<h3>Writing direction</h3><ul>{% for item in record.plan.writing_direction %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+            <p class="section-copy"><strong>Foundation boundary:</strong> this plan is private and advisory. The next Create Content phase will add refinement/approval and controlled generation from an approved plan.</p>
+        </section>
+        {% endif %}
+
+        {% if record %}
+        <section class="dashboard-card full-width">
+            <form method="post" action="{{ url_for('create_content.remove_brief', brief_id=record.id) }}" data-confirm-action="delete-content-brief">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-secondary" type="submit">Delete Private Content Brief</button>
+            </form>
+        </section>
+        {% endif %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
