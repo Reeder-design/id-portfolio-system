@@ -3,6 +3,7 @@ from __future__ import annotations
 from io import BytesIO
 from pathlib import Path
 import ast
+import os
 import sys
 import tempfile
 
@@ -73,6 +74,10 @@ def main() -> int:
     try:
         import reference_library_service as library  # noqa: E402
 
+        original_reference_root = library.REFERENCE_ROOT
+        original_items_root = library.ITEMS_ROOT
+        original_files_root = library.FILES_ROOT
+
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir) / "reference-library"
             library.REFERENCE_ROOT = temp_root
@@ -126,6 +131,39 @@ def main() -> int:
             library.delete_reference_item(item_id)
             require(not library.ITEMS_ROOT.joinpath(f"{item_id}.json").exists(), "Deleting a reference item must remove its private metadata record.", errors)
             require(not library.FILES_ROOT.joinpath(item_id).exists(), "Deleting a reference item must remove its private stored files.", errors)
+
+        library.REFERENCE_ROOT = original_reference_root
+        library.ITEMS_ROOT = original_items_root
+        library.FILES_ROOT = original_files_root
+
+        os.environ["PORTFOLIO_MANAGER_SECRET_KEY"] = "ci-reference-library-key"
+        os.environ["PORTFOLIO_MANAGER_PASSWORD_HASH"] = "ci-reference-library-placeholder"
+        os.environ.pop("OPENAI_API_KEY", None)
+        os.environ.pop("PORTFOLIO_MANAGER_AI_MODEL", None)
+
+        import security as manager_security  # noqa: E402
+        import ai_settings_service as manager_ai_settings  # noqa: E402
+
+        manager_security.load_local_env = lambda *args, **kwargs: None
+        manager_ai_settings.ENV_PATH = ROOT / ".portfolio-manager" / "__reference-library-test-no-ai.env"
+
+        import app as manager_app  # noqa: E402
+
+        client = manager_app.app.test_client()
+        unauthenticated = client.get("/create/references/", follow_redirects=False)
+        require(unauthenticated.status_code in {301, 302, 303, 307, 308}, "Unauthenticated Reference Library must redirect to login.", errors)
+
+        with client.session_transaction() as session:
+            session["portfolio_manager_authenticated"] = True
+
+        library_page = client.get("/create/references/")
+        require(library_page.status_code == 200, "Authenticated Reference Library workspace must render.", errors)
+        require(b"Add Private Source" in library_page.data, "Reference Library runtime page must expose private source upload.", errors)
+        require(b"Approved for Portfolio Use" in library_page.data, "Reference Library runtime page must expose the approval-status filter.", errors)
+
+        create_page = client.get("/create/")
+        require(create_page.status_code == 200, "Create Content workspace must continue to render with Reference Library enabled.", errors)
+        require(b"Open Reference Library" in create_page.data, "Create Content runtime page must link into the Reference Library.", errors)
     except Exception as exc:
         errors.append(f"Reference Library runtime safety test failed: {exc}")
 
