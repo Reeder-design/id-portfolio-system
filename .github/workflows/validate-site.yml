@@ -64,6 +64,7 @@ jobs:
           python scripts/check-manage-ai-review.py
           python scripts/check-related-references.py
           python scripts/check-create-content.py
+          python scripts/check-create-content-sources.py
           python scripts/check-reference-library.py
           python scripts/check-reference-sanitization.py
           python scripts/check-portfolio-manager.py
