@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
-from content_routes import is_generated_page, load_project, save_project as save_project_view
+from content_routes import (
+    REPO_ROOT,
+    is_generated_page,
+    load_project,
+    regenerate_project as regenerate_project_view,
+    save_project as save_project_view,
+)
 from page_copy_service import extract_visible_fields, page_info
 from site_content_routes import v2_save_page as save_page_view
 from related_references_service import (
@@ -68,7 +74,15 @@ def save_project_with_references(project_id: str):
         return response
 
     automatic_updates = ["Project record", "Generated documentation"]
-    if not generated:
+    if generated:
+        regenerate_project_view(project_id)
+        try:
+            generated_html = (REPO_ROOT / target_path).read_text(encoding="utf-8")
+        except OSError:
+            generated_html = ""
+        if new_title in generated_html:
+            automatic_updates.append("Current generated project page")
+    else:
         automatic_updates.append("Current custom project page title")
 
     try:
