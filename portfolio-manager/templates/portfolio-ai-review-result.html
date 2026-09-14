@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Review Result | Portfolio Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Manage Portfolio Content · Review Result</p>
+            <h1>Portfolio Review</h1>
+            <p class="hero-copy">Created {{ record.created_at }} · {{ record.page_count }} public pages · {{ record.model }}</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('portfolio_review.workspace') }}">Review History</a>
+            <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Manage Content</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    {% if record.stale %}
+    <section class="dashboard-card full-width"><p class="eyebrow">Portfolio changed since this review</p><p class="section-copy">Use this review as historical guidance. Run a new review for the current portfolio.</p></section>
+    {% endif %}
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Summary</p>
+            <h2>{{ record.result.summary or 'Review complete' }}</h2>
+            {% if record.focus %}<p class="section-copy"><strong>Requested focus:</strong> {{ record.focus }}</p>{% endif %}
+        </section>
+
+        {% if record.result.strengths %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Strengths</p>
+            <h2>What is working</h2>
+            <ul>{% for item in record.result.strengths %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+        {% endif %}
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Prioritized findings</p>
+            <h2>What to review next</h2>
+            {% if record.result.findings %}
+                {% for item in record.result.findings %}
+                <article class="v2-project-row">
+                    <div>
+                        <span class="v2-level-label">{{ item.severity|upper }} · {{ item.category }}</span>
+                        <h3>{{ item.issue }}</h3>
+                        {% if item.page_path %}<p><code>{{ item.page_path }}</code></p>{% endif %}
+                        {% if item.why_it_matters %}<p><strong>Why it matters:</strong> {{ item.why_it_matters }}</p>{% endif %}
+                        {% if item.recommendation %}<p><strong>Recommendation:</strong> {{ item.recommendation }}</p>{% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <p class="empty-note">No specific findings were returned.</p>
+            {% endif %}
+        </section>
+
+        {% if record.result.quick_wins %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Quick wins</p>
+            <h2>Small high-value improvements</h2>
+            <ul>{% for item in record.result.quick_wins %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+        {% endif %}
+
+        {% if record.result.review_notes %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Human judgment</p>
+            <h2>Review notes</h2>
+            <ul>{% for item in record.result.review_notes %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+        {% endif %}
+
+        <section class="dashboard-card full-width">
+            <div class="button-row">
+                <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Go to Manage Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('portfolio_review.workspace') }}">Run Another Review</a>
+                <form method="post" action="{{ url_for('portfolio_review.delete_review', review_id=record.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-secondary" type="submit">Delete Review</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
