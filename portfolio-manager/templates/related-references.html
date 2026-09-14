@@ -15,9 +15,13 @@
     <div class="manager-shell">
         <header class="subpage-header">
             <div>
-                <p class="eyebrow">Manage Content · Related References</p>
+                <p class="eyebrow">{{ 'Create Content' if record.source_kind == 'create-build' else 'Manage Content' }} · Related References</p>
                 <h1>Check what else is connected</h1>
+                {% if record.source_kind == 'create-build' %}
+                <p class="hero-copy">Your new project is kept locally and validated. Check whether any visible portfolio labels already point to it, then preview the project before moving into Save &amp; Publish.</p>
+                {% else %}
                 <p class="hero-copy">Portfolio Manager found other visible places connected to your title change. Review each one before moving on to preview and publishing.</p>
+                {% endif %}
             </div>
             <div class="header-actions">
                 <a class="btn btn-secondary" href="{{ source_editor_url }}">Back to {{ record.source_label }}</a>
@@ -30,9 +34,15 @@
         {% endwith %}
 
         <section class="dashboard-card full-width">
+            {% if record.source_kind == 'create-build' %}
+            <p class="eyebrow">Your kept local project</p>
+            <h2>{{ record.change.new_title }}</h2>
+            <p class="section-copy">Reference detection is deterministic. Portfolio Manager checks the public portfolio for visible labels or cards that already link directly to this new page. If none exist yet, you can complete the review with no additional changes and continue to preview and publishing.</p>
+            {% else %}
             <p class="eyebrow">Your edit</p>
             <h2>{{ record.change.old_title }} → {{ record.change.new_title }}</h2>
             <p class="section-copy">Reference detection is deterministic: Portfolio Manager looks for exact old-title text and visible cards or labels that link directly to the edited page. AI is not used to decide what counts as a reference.</p>
+            {% endif %}
             {% if record.automatic_updates %}
             <div class="v2-settings-summary">
                 {% for item in record.automatic_updates %}<div><span>Already handled</span><strong>{{ item }}</strong></div>{% endfor %}
@@ -74,7 +84,7 @@
             <section class="dashboard-card full-width">
                 <div class="button-row">
                     <button class="btn btn-primary" type="submit">Complete Related References Review</button>
-                    <a class="btn btn-secondary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview Edited Page</a>
+                    <a class="btn btn-secondary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview {{ 'New Project' if record.source_kind == 'create-build' else 'Edited Page' }}</a>
                 </div>
             </section>
         </form>
@@ -83,7 +93,7 @@
             <section class="dashboard-card full-width">
                 <p class="eyebrow">Reference review complete</p>
                 <h2>Related references reviewed · validation passed</h2>
-                <p class="section-copy">Your source edit and any approved reference updates are still local. Nothing has been published.</p>
+                <p class="section-copy">Your {{ 'new project' if record.source_kind == 'create-build' else 'source edit' }} and any approved reference updates are still local. Nothing has been published.</p>
                 {% if record.decisions %}
                 <div class="v2-copy-list">
                     {% for decision in record.decisions %}
@@ -100,7 +110,7 @@
                 <p class="eyebrow">Next step</p>
                 <h2>Preview the result, then publish when ready</h2>
                 <div class="button-row">
-                    <a class="btn btn-primary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview Edited Page</a>
+                    <a class="btn btn-primary" href="{{ record.source_preview_url }}" target="_blank" rel="noopener">Preview {{ 'New Project' if record.source_kind == 'create-build' else 'Edited Page' }}</a>
                     {% for item in preview_urls %}<a class="btn btn-secondary" href="{{ item.url }}" target="_blank" rel="noopener">Preview {{ item.path }}</a>{% endfor %}
                     <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Continue to Save &amp; Publish</a>
                 </div>
