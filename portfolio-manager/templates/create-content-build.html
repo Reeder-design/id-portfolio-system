@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Project | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Create Content · Controlled Build</p>
+            <h1>{{ record.fields.working_title }}</h1>
+            <p class="hero-copy">Turn the current Content Plan into a standard structured portfolio case study. AI may propose the public copy, but only your approved proposal can be written locally, and local files are validated before you review them.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('create_content.brief', brief_id=record.id) }}">Back to Content Brief</a>
+            <a class="btn btn-secondary" href="{{ url_for('create_content.workspace') }}">Create Content</a>
+            <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Build boundary</p>
+        <h2>Plan → approve → proposal → create locally → validate → preview → keep or revert</h2>
+        <p class="section-copy">This workflow creates local portfolio files only. It does not commit, push, publish, or merge anything. The first controlled build uses the repository's existing standard case-study renderer so project structure stays consistent.</p>
+    </section>
+
+    <main class="v2-manage-layout">
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Step 1 · Current Content Plan</p>
+                    <h2>{{ record.plan.concept_summary or 'Content Plan' }}</h2>
+                </div>
+                <span class="v2-ai-status {% if plan_approved %}connected{% endif %}">{{ 'Approved for build' if plan_approved else 'Human approval required' }}</span>
+            </div>
+            {% if record.plan_stale %}
+            <div class="flash-message error"><strong>This plan is stale.</strong> Return to the Content Brief and regenerate it before building.</div>
+            {% else %}
+            <p><strong>Recommended format:</strong> {{ record.plan.recommended_format or 'Standard case study' }}</p>
+            <p><strong>Placement:</strong> {{ record.plan.placement.category or 'Not selected' }}{% if record.plan.placement.subcategory %} → {{ record.plan.placement.subcategory }}{% endif %}</p>
+            {% if record.plan.placement.rationale %}<p>{{ record.plan.placement.rationale }}</p>{% endif %}
+            <div class="v2-general-grid">
+                <article class="v2-small-card"><h3>Sections</h3><ul>{% for item in record.plan.sections %}<li>{{ item.title }}</li>{% else %}<li>No sections proposed.</li>{% endfor %}</ul></article>
+                <article class="v2-small-card"><h3>Interactions</h3><ul>{% for item in record.plan.interactions %}<li>{{ item.name }}</li>{% else %}<li>No interactions proposed.</li>{% endfor %}</ul></article>
+                <article class="v2-small-card"><h3>Safety Notes</h3><ul>{% for item in record.plan.safety_notes %}<li>{{ item }}</li>{% else %}<li>No additional safety notes.</li>{% endfor %}</ul></article>
+            </div>
+            {% if not plan_approved %}
+            <form method="post" action="{{ url_for('create_content.approve_build_plan', brief_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="plan_ack" required><span>I reviewed the current Content Plan and approve using it as the build direction.</span></label>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Approve Plan for Build</button></div>
+            </form>
+            {% elif not record.local_build or not record.local_build.active %}
+            <form method="post" action="{{ url_for('create_content.revoke_build_plan', brief_id=record.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-secondary" type="submit">Remove Build Approval</button>
+            </form>
+            {% endif %}
+            {% endif %}
+        </section>
+
+        {% if plan_approved and (not record.local_build or not record.local_build.active) %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Step 2 · Build Proposal</p>
+            <h2>{{ 'Regenerate structured project proposal' if proposal else 'Generate structured project proposal' }}</h2>
+            <p class="section-copy">AI converts the approved brief, current plan, and attached approved sanitized source text into the fields used by the repository's standard case-study renderer. It does not write portfolio files in this step.</p>
+            {% if ai_settings.configured %}
+            <form method="post" action="{{ url_for('create_content.generate_build', brief_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% if preflight.blocked %}<div class="full-span flash-message error"><strong>AI generation blocked:</strong> credential-like content must be removed first.</div>{% endif %}
+                {% if preflight.warnings %}
+                <div class="full-span ai-warning-box">
+                    <strong>Local sensitivity markers still exist in the approved build context:</strong>
+                    <ul>{% for warning in preflight.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>
+                    <label class="ai-check"><input type="checkbox" name="sensitive_ack"><span>I reviewed these markers and confirm I am authorized to send this approved build context to the configured provider.</span></label>
+                </div>
+                {% endif %}
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="provider_ack" required><span>I understand the approved Content Brief, Content Plan, public taxonomy, and text-extractable approved sanitized sources will be sent to the configured AI provider.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="authority_ack" required><span>I am authorized to send this approved build context to the configured provider.</span></label>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit" {% if preflight.blocked %}disabled{% endif %}>{{ 'Regenerate Build Proposal' if proposal else 'Generate Build Proposal' }}</button></div>
+            </form>
+            {% else %}
+            <p class="section-copy">AI is not configured. Connect it before generating the structured build proposal.</p>
+            <a class="btn btn-primary" href="{{ url_for('ai_assistant.settings') }}">Set Up AI</a>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        {% if proposal and (not record.local_build or not record.local_build.active) %}
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Step 3 · Human review</p>
+            <h2>Edit exactly what will become the local project</h2>
+            <p class="section-copy">These fields are the proposed public case-study content. Edit anything that is inaccurate, too specific, unclear, or not how you want to present your work. Saving this form is still private.</p>
+
+            <form method="post" action="{{ url_for('create_content.save_build', brief_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div><label for="title">Project title</label><input id="title" name="title" value="{{ proposal.title }}" required></div>
+                <div><label for="slug">URL slug</label><input id="slug" name="slug" value="{{ proposal.slug }}" required></div>
+                <div>
+                    <label for="category">Portfolio category</label>
+                    <select id="category" name="category" required>
+                        {% for category in taxonomy.categories %}<option value="{{ category.id }}" {% if proposal.category == category.id %}selected{% endif %}>{{ category.label }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="subcategory">Subcategory</label>
+                    <select id="subcategory" name="subcategory">
+                        <option value="">No subcategory</option>
+                        {% for category in taxonomy.categories %}{% for subcategory in category.subcategories %}<option value="{{ subcategory.id }}" {% if proposal.subcategory == subcategory.id %}selected{% endif %}>{{ category.label }} → {{ subcategory.label }}</option>{% endfor %}{% endfor %}
+                    </select>
+                    <p class="field-help">The selected subcategory must belong to the selected category.</p>
+                </div>
+                <div class="full-span">
+                    <label for="confidentiality">Public presentation type</label>
+                    <select id="confidentiality" name="confidentiality">
+                        <option value="public" {% if proposal.confidentiality == 'public' %}selected{% endif %}>Public</option>
+                        <option value="sanitized" {% if proposal.confidentiality == 'sanitized' %}selected{% endif %}>Sanitized / Fictionalized</option>
+                    </select>
+                </div>
+                <div class="full-span"><label for="summary">Short project summary</label><textarea id="summary" name="summary" rows="3" maxlength="6000" required>{{ proposal.summary }}</textarea></div>
+                <div class="full-span"><label for="business_need">Business / learning need</label><textarea id="business_need" name="business_need" rows="5" maxlength="6000" required>{{ proposal.business_need }}</textarea></div>
+                <div class="full-span"><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3" maxlength="6000" required>{{ proposal.audience }}</textarea></div>
+                <div class="full-span"><label for="learning_objectives">Learning / enablement objectives</label><textarea id="learning_objectives" name="learning_objectives" rows="5" maxlength="12000" required>{{ proposal.learning_objectives|join('&#10;')|safe }}</textarea><p class="field-help">One objective per line.</p></div>
+                <div class="full-span"><label for="role">My role</label><textarea id="role" name="role" rows="4" maxlength="6000" required>{{ proposal.role }}</textarea></div>
+                <div class="full-span"><label for="design_approach">Design approach</label><textarea id="design_approach" name="design_approach" rows="6" maxlength="6000" required>{{ proposal.design_approach }}</textarea></div>
+                <div class="full-span"><label for="development_process">Development process</label><textarea id="development_process" name="development_process" rows="6" maxlength="6000" required>{{ proposal.development_process }}</textarea></div>
+                <div class="full-span"><label for="outcomes">Results / outcomes / deliverables</label><textarea id="outcomes" name="outcomes" rows="5" maxlength="12000" required>{{ proposal.outcomes|join('&#10;')|safe }}</textarea><p class="field-help">One supported item per line. Do not add unsupported metrics.</p></div>
+                <div class="full-span"><label for="skills">Skills demonstrated</label><input id="skills" name="skills" value="{{ proposal.skills|join(', ') }}"><p class="field-help">Comma-separated.</p></div>
+                <div class="full-span"><label for="tools">Tools used</label><input id="tools" name="tools" value="{{ proposal.tools|join(', ') }}"><p class="field-help">Comma-separated. Keep only tools actually supported by the brief/source material.</p></div>
+                <div class="full-span"><label for="source_material_notes">Public-safe source / sanitization note</label><textarea id="source_material_notes" name="source_material_notes" rows="3" maxlength="6000">{{ proposal.source_material_notes }}</textarea></div>
+                <div class="full-span button-row"><button class="btn btn-secondary" type="submit">Save Build Proposal</button></div>
+            </form>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <p class="eyebrow">Step 4 · Create locally</p>
+            <h2>Write the reviewed proposal into the portfolio</h2>
+            <p class="section-copy">Portfolio Manager will use the existing structured project generator and renderer, create the JSON project record and standard case-study page locally, refresh generated maintenance documentation, then run Full Validation. If validation fails, the newly created project files are rolled back and the generated documentation is refreshed again.</p>
+            <form method="post" action="{{ url_for('create_content.apply_build', brief_id=record.id) }}" class="form-grid">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="full-span">
+                    <label class="ai-check"><input type="checkbox" name="public_safe_ack" required><span>I reviewed the proposed public content and confirm it is appropriate for my portfolio.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="local_write_ack" required><span>I want Portfolio Manager to create these project files locally and run validation. This does not publish them.</span></label>
+                </div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Create Local Project &amp; Validate</button></div>
+            </form>
+        </section>
+        {% endif %}
+
+        {% if record.local_build and record.local_build.active %}
+        <section class="dashboard-card full-width">
+            <div class="action-title-row">
+                <div><p class="eyebrow">Step 5 · Local build review</p><h2>{{ record.local_build.project_id }}</h2></div>
+                <span class="v2-ai-status connected">Validation passed</span>
+            </div>
+            <p><strong>Structured record:</strong> {{ record.local_build.record_path }}</p>
+            {% if record.local_build.page_path %}<p><strong>Rendered page:</strong> {{ record.local_build.page_path }}</p>{% endif %}
+            <p class="section-copy">This build exists only in your local working copy. It has not been committed or published.</p>
+            <div class="button-row">
+                {% if preview_url %}<a class="btn btn-primary" href="{{ preview_url }}" target="_blank" rel="noopener noreferrer">Open Real Local Preview</a>{% endif %}
+                <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=record.local_build.project_id) }}">Open in Manage Content</a>
+            </div>
+
+            {% if record.local_build.decision == 'kept' %}
+            <div class="flash-message success"><strong>Local build kept.</strong> You can continue editing it in Manage Content. It is still not committed or published.</div>
+            {% else %}
+            <div class="v2-general-grid">
+                <article class="v2-small-card">
+                    <h3>Keep this local build</h3>
+                    <p>Accept the validated local project as the version you want to continue refining.</p>
+                    <form method="post" action="{{ url_for('create_content.keep_build', brief_id=record.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-primary" type="submit">Keep Local Build</button>
+                    </form>
+                </article>
+                <article class="v2-small-card">
+                    <h3>Revert this build</h3>
+                    <p>Delete only the files created by this build. Revert stops automatically if either generated file changed after creation.</p>
+                    <form method="post" action="{{ url_for('create_content.revert_build', brief_id=record.id) }}" data-confirm-action="revert-created-project">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Revert Local Build</button>
+                    </form>
+                </article>
+            </div>
+            {% endif %}
+        </section>
+        {% endif %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
