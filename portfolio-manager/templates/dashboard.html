@@ -18,7 +18,7 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">Manage what is already in the portfolio, develop new work, and prepare private source material without needing to think about the repository underneath.</p>
+                <p class="hero-copy">Choose whether you are improving content that already exists or creating something new. Supporting tools stay inside the workflow where they are actually used.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                     <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
@@ -40,9 +40,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <section class="flash-stack">
-            {% for category, message in messages %}
-            <div class="flash-message {{ category }}">{{ message }}</div>
-            {% endfor %}
+            {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
         </section>
         {% endif %}
         {% endwith %}
@@ -56,69 +54,34 @@
                     </div>
                     <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Manager Workflow">?</button>
                 </div>
-                <p class="section-copy">Choose the workspace that matches your goal. Technical maintenance stays out of the normal editing path.</p>
+                <p class="section-copy">Start with the goal. Editing, review, validation, and publishing tools for existing work live under Manage Content. Creation tools will live under Create Content.</p>
 
                 <div class="v2-workspace-grid">
                     <article class="v2-workspace-card ready">
                         <span class="v2-status">Available now</span>
-                        <h3>Manage Portfolio Content</h3>
-                        <p>Edit the pages and projects that already exist in the portfolio using the same hierarchy visitors see on the site.</p>
-                        <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Manage Portfolio Content</a>
-                    </article>
-
-                    <article class="v2-workspace-card ready">
-                        <span class="v2-status">Available now</span>
-                        <h3>AI Assistance</h3>
-                        <p>Draft, analyze, sanitize, and review broader portfolio ideas before deciding where they belong. Page-specific edits still start from the page editor’s AI Request workflow.</p>
-                        <a class="btn btn-primary" href="{{ url_for('ai_assistant.workspace') }}">Open AI Assistance</a>
+                        <h3>Manage Content</h3>
+                        <p>Edit existing pages and projects, request page-specific AI changes, review the portfolio, validate changes, and publish approved updates.</p>
+                        <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Manage Content</a>
                     </article>
 
                     <article class="v2-workspace-card upcoming">
                         <span class="v2-status">Next phase</span>
-                        <h3>Create Portfolio Content</h3>
-                        <p>Brainstorm, plan, brief AI, and build new portfolio content in the guided Create Content Lab.</p>
-                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Create Content Lab</button>
+                        <h3>Create Content</h3>
+                        <p>Brainstorm, plan, use broader AI assistance, work with private source material, and build new portfolio content.</p>
+                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Create Content · upcoming</button>
                     </article>
-
-                    <article class="v2-workspace-card upcoming">
-                        <span class="v2-status">Planned</span>
-                        <h3>Content Workspace &amp; Reference Library</h3>
-                        <p>Keep private source material, notes, sanitization work, and approved portfolio-ready derivatives in one private workspace.</p>
-                        <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Open Content Workspace</button>
-                    </article>
-                </div>
-            </section>
-
-            <section class="dashboard-card full-width v2-transition-card">
-                <div class="action-title-row">
-                    <div>
-                        <p class="eyebrow">Publishing during the v2 transition</p>
-                        <h2>Review and publish existing edits</h2>
-                    </div>
-                </div>
-                <p class="section-copy">The current validation and publishing engine stays available while the new guided Related References → Preview → Approve → Publish flow is built.</p>
-                <div class="button-row">
-                    <form method="post" action="{{ url_for('run_action') }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="action" value="validate">
-                        <button class="btn btn-primary" type="submit">Run Full Validation</button>
-                    </form>
-                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Save &amp; Publish</a>
                 </div>
             </section>
 
             <section class="dashboard-card full-width advanced-card">
                 <details class="advanced-maintenance">
                     <summary>
-                        <span>
-                            <span class="eyebrow">Advanced Maintenance</span>
-                            <strong>Documentation and versioning</strong>
-                        </span>
+                        <span><span class="eyebrow">Advanced Maintenance</span><strong>Documentation and versioning</strong></span>
                         <span class="summary-hint">Low-frequency tools</span>
                     </summary>
 
                     <div class="advanced-maintenance-body">
-                        <p class="section-copy">These tools maintain system records. They are not required for normal content editing.</p>
+                        <p class="section-copy">These tools maintain system records. They are separate from the normal Manage/Create content workflows.</p>
 
                         <div class="button-row v2-maintenance-links">
                             <form method="post" action="{{ url_for('run_action') }}">
@@ -131,10 +94,7 @@
 
                         <div class="release-box">
                             <div class="action-title-row">
-                                <div>
-                                    <p class="eyebrow">Intentional release only</p>
-                                    <h3>Version Release</h3>
-                                </div>
+                                <div><p class="eyebrow">Intentional release only</p><h3>Version Release</h3></div>
                                 <button class="inline-help" type="button" data-help-key="versioning" data-help-label="Version Releases">?</button>
                             </div>
                             <p>Record a patch, minor, or major portfolio-system release near the end of meaningful work. This does not publish by itself.</p>
