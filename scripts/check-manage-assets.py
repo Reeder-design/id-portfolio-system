@@ -70,6 +70,7 @@ def main() -> int:
     require("CUSTOM_PAGE_PROJECTS" in site_routes and '"meddpicc-demo": "meddpicc-practice"' in site_routes, "Custom page editor must use an explicit page-to-project asset mapping.", errors)
     require('asset_return_to=f"page:{page_id}" if asset_project else ""' in site_routes, "Custom page asset actions must return to the same page editor.", errors)
 
+    require('id="project-assets"' in inline_template, "Inline asset workspace must expose a stable editor marker for runtime checks and anchor returns.", errors)
     require("Add Public Asset" in inline_template, "Inline editor must expose a human-facing asset upload action.", errors)
     require('name="public_safe"' in inline_template, "Inline upload/replacement controls must expose public-safe confirmation.", errors)
     require('name="return_to"' in inline_template, "Inline asset forms must preserve their trusted editor return context.", errors)
@@ -104,15 +105,15 @@ def main() -> int:
 
             project_page = client.get("/content/projects/meddpicc-practice")
             require(project_page.status_code == 200, "Structured project editor must render with inline asset integration.", errors)
-            require(b"Project assets" in project_page.data and b"Add Public Asset" in project_page.data, "Structured project editor must expose inline project assets at runtime.", errors)
+            require(b'id="project-assets"' in project_page.data and b"Add Public Asset" in project_page.data, "Structured project editor must expose inline project assets at runtime.", errors)
 
             custom_page = client.get("/manage/pages/meddpicc-demo")
             require(custom_page.status_code == 200, "Custom project page editor must render with connected assets.", errors)
-            require(b"Project assets" in custom_page.data and b"Add Public Asset" in custom_page.data, "Custom project page editor must expose the same inline asset workspace.", errors)
+            require(b'id="project-assets"' in custom_page.data and b"Add Public Asset" in custom_page.data, "Custom project page editor must expose the same inline asset workspace.", errors)
 
             general_page = client.get("/manage/pages/home")
             require(general_page.status_code == 200, "General page editor must continue to render.", errors)
-            require(b"Add Public Asset" not in general_page.data, "General pages without project asset records must not receive irrelevant asset controls.", errors)
+            require(b'id="project-assets"' not in general_page.data, "General pages without project asset records must not render the functional project asset workspace.", errors)
         except Exception as exc:
             errors.append(f"Manage asset integration runtime safety test failed: {exc}")
 
