@@ -1,7 +1,16 @@
 from __future__ import annotations
 
-from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, send_file, url_for
 
+from ai_handoff_service import (
+    AIHandoffError,
+    delete_usage,
+    list_destinations,
+    load_usage,
+    proposal_payload,
+    record_usage,
+    resolve_destination,
+)
 from ai_service import (
     AIServiceError,
     MAX_GOAL_CHARS,
@@ -372,17 +381,98 @@ def page_edit_proposal(proposal_id: str):
 def proposal(proposal_id: str):
     try:
         record = load_proposal(proposal_id)
-    except AIServiceError as exc:
+        usage = load_usage(proposal_id)
+    except (AIServiceError, AIHandoffError) as exc:
         flash(str(exc), "error")
         return redirect(url_for("ai_assistant.workspace"))
-    return render_template("ai-proposal.html", record=record)
+    return render_template("ai-proposal.html", record=record, usage=usage)
+
+
+@ai_bp.get("/proposals/<proposal_id>/use")
+def use_proposal(proposal_id: str):
+    try:
+        record = load_proposal(proposal_id)
+        destinations = list_destinations()
+        usage = load_usage(proposal_id)
+    except (AIServiceError, AIHandoffError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("ai_assistant.workspace"))
+    return render_template(
+        "ai-proposal-use.html",
+        record=record,
+        destinations=destinations,
+        usage=usage,
+    )
+
+
+@ai_bp.post("/proposals/<proposal_id>/stage")
+def stage_proposal(proposal_id: str):
+    kind = request.form.get("destination_kind", "").strip()
+    destination_id = request.form.get("destination_id", "").strip()
+    try:
+        resolved_kind, resolved_id = resolve_destination(kind, destination_id)
+        record_usage(
+            proposal_id,
+            "staged-existing-content",
+            destination_kind=resolved_kind,
+            destination_id=resolved_id,
+        )
+    except (AIServiceError, AIHandoffError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("ai_assistant.use_proposal", proposal_id=proposal_id), code=303)
+
+    flash("AI draft staged in the selected editor. Choose the exact field, insert the draft, review it, then use the editor's normal Save flow.", "success")
+    if resolved_kind == "project":
+        return redirect(
+            url_for("content.project_editor", project_id=resolved_id, ai_proposal=proposal_id),
+            code=303,
+        )
+    return redirect(
+        url_for("site_content.v2_page_editor", page_id=resolved_id, ai_proposal=proposal_id),
+        code=303,
+    )
+
+
+@ai_bp.post("/proposals/<proposal_id>/create-content")
+def create_content_from_proposal(proposal_id: str):
+    try:
+        record_usage(proposal_id, "started-content-brief")
+    except (AIServiceError, AIHandoffError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("ai_assistant.proposal", proposal_id=proposal_id), code=303)
+    flash("Content Brief opened with this proposal staged as private draft context. Review and edit the fields before saving.", "success")
+    return redirect(
+        url_for("create_content.new_brief", ai_proposal=proposal_id),
+        code=303,
+    )
+
+
+@ai_bp.post("/proposals/<proposal_id>/save-later")
+def save_proposal_for_later(proposal_id: str):
+    try:
+        record_usage(proposal_id, "saved-for-later")
+    except (AIServiceError, AIHandoffError) as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Proposal saved for later in your private AI proposal history. No portfolio content changed.", "success")
+    return redirect(url_for("ai_assistant.proposal", proposal_id=proposal_id), code=303)
+
+
+@ai_bp.get("/proposals/<proposal_id>/draft.json")
+def proposal_draft(proposal_id: str):
+    try:
+        payload = proposal_payload(proposal_id)
+    except (AIServiceError, AIHandoffError) as exc:
+        return jsonify({"error": str(exc)}), 404
+    return jsonify(payload)
 
 
 @ai_bp.post("/proposals/<proposal_id>/delete")
 def remove_proposal(proposal_id: str):
     try:
         delete_proposal(proposal_id)
-    except AIServiceError as exc:
+        delete_usage(proposal_id)
+    except (AIServiceError, AIHandoffError) as exc:
         flash(str(exc), "error")
         return redirect(url_for("ai_assistant.workspace"))
     flash("Private AI proposal deleted. Portfolio files were not changed.", "success")
