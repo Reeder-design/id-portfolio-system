@@ -18,7 +18,7 @@
             <div>
                 <p class="eyebrow">Portfolio Manager</p>
                 <h1>Haley’s Portfolio Manager</h1>
-                <p class="hero-copy">Choose whether you are improving content that already exists or creating something new. Supporting tools stay inside the workflow where they are actually used.</p>
+                <p class="hero-copy">Choose whether you are improving content that already exists or creating something new. Supporting AI tools stay inside the workflow where they are used.</p>
                 <div class="manager-top-actions">
                     <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                     <a class="btn btn-secondary" href="{{ url_for('ai_assistant.settings') }}">AI Settings</a>
@@ -54,13 +54,13 @@
                     </div>
                     <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Manager Workflow">?</button>
                 </div>
-                <p class="section-copy">Start with the goal. Editing, review, validation, and publishing tools for existing work live under Manage Content. Creation tools will live under Create Content.</p>
+                <p class="section-copy">Start with the goal. AI tools for existing work live under Manage Content; broader AI assistance will live under Create Content.</p>
 
                 <div class="v2-workspace-grid">
                     <article class="v2-workspace-card ready">
                         <span class="v2-status">Available now</span>
                         <h3>Manage Content</h3>
-                        <p>Edit existing pages and projects, request page-specific AI changes, review the portfolio, validate changes, and publish approved updates.</p>
+                        <p>Edit existing pages and projects, request page-specific AI changes, and review the current portfolio.</p>
                         <a class="btn btn-primary" href="{{ url_for('content.content_manager') }}">Manage Content</a>
                     </article>
 
@@ -70,6 +70,24 @@
                         <p>Brainstorm, plan, use broader AI assistance, work with private source material, and build new portfolio content.</p>
                         <button class="btn btn-secondary" type="button" disabled aria-disabled="true">Create Content · upcoming</button>
                     </article>
+                </div>
+            </section>
+
+            <section class="dashboard-card full-width v2-transition-card">
+                <div class="action-title-row">
+                    <div>
+                        <p class="eyebrow">Publishing during the v2 transition</p>
+                        <h2>Review and publish existing edits</h2>
+                    </div>
+                </div>
+                <p class="section-copy">The current validation and publishing engine stays available from the homepage while the content workflows evolve.</p>
+                <div class="button-row">
+                    <form method="post" action="{{ url_for('run_action') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="validate">
+                        <button class="btn btn-primary" type="submit">Run Full Validation</button>
+                    </form>
+                    <a class="btn btn-secondary" href="{{ url_for('git_workflow.git_workflow') }}">Save &amp; Publish</a>
                 </div>
             </section>
 
