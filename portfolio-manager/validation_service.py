@@ -34,6 +34,7 @@ def run_command(command_list: list[str]) -> dict:
 def run_full_validation() -> tuple[bool, str]:
     commands = [
         ("Public site", [sys.executable, "scripts/check-site.py"]),
+        ("Release end-to-end regression", [sys.executable, "scripts/check-release-e2e.py"]),
         ("Structured content", [sys.executable, "scripts/check-content.py"]),
         ("General site content", [sys.executable, "scripts/check-site-content.py"]),
         ("Final public polish/mobile", [sys.executable, "scripts/check-final-polish.py"]),

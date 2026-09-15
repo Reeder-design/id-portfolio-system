@@ -313,9 +313,12 @@ def run_action():
     if action == "validate":
         success, output = run_full_validation()
         if success:
+            release_e2e_passed = "Release end-to-end regression: PASS" in output
             security_passed = "Adversarial security/misuse: PASS" in output
             state_safety_passed = "Workflow state-safety/chaos: PASS" in output
             message = "Full validation passed."
+            if release_e2e_passed:
+                message += " Release end-to-end regression: PASS."
             if security_passed:
                 message += " Adversarial security/misuse: PASS."
             if state_safety_passed:

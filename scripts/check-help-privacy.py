@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 import re
-import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,7 +51,6 @@ def main() -> int:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     guide_lower = guide.lower()
 
-    # The guide should answer decisions/tasks rather than only describe architecture.
     for phrase in [
         "Start here: what are you trying to do?",
         "The button dictionary",
@@ -86,7 +84,6 @@ def main() -> int:
     ]:
         require(phrase in guide_lower, f"User Guide must preserve the AI/privacy boundary: missing {phrase!r}.", errors)
 
-    # Haley's recurring management boundary: developing the tool is not normal content publishing.
     for phrase in [
         "feature branch",
         "UAT",
@@ -98,7 +95,6 @@ def main() -> int:
     require('data-help-template="dev-workflow"' in drawer, "Help drawer must include the feature branch / PR testing topic.", errors)
     require('data-help-template="button-safety"' in drawer, "Help drawer must include the button-safety topic.", errors)
 
-    # Search should use explicit aliases/tags and provide visible feedback.
     require("data-guide-tags" in guide, "Guide sections must expose searchable topic aliases/tags.", errors)
     require("data-guide-search-chip" in guide, "Guide must expose common-task search chips.", errors)
     require("data-help-search-status" in guide and "data-help-no-results" in guide, "Guide search must report results and no-results state.", errors)
@@ -106,10 +102,113 @@ def main() -> int:
         require(marker in help_js, f"Help search must support robust tagged search: missing {marker!r}.", errors)
     require("guide-search-chips" in help_css and "guide-no-results" in help_css, "Help styles must support search chips and no-results feedback.", errors)
 
-    # The drawer must never trap the user inside one selected topic.
     require("data-help-nav" in drawer and "data-help-back" in drawer and "data-help-home" in drawer, "Help drawer must expose Back and All Topics navigation.", errors)
     for marker in ["goBackInHelp", "showHelpHome", "history", "data-help-back", "data-help-home"]:
         require(marker in help_js, f"Help JavaScript must support returning from a selected topic: missing {marker!r}.", errors)
+
+    # Contextual ? bubbles must explain their actual local region. They must not map a
+    # section heading to a broad prewritten topic, because that caused irrelevant help.
+    for marker in [
+        "makeLocalHelpButton",
+        "closestMajorHelpSection",
+        "closestHelpRegion",
+        "belongsToRegion",
+        "regionName",
+        "regionIntro",
+        "collectRegionOptions",
+        "describeAction",
+        "describeField",
+        "renderLocalHelp",
+        "openLocalHelp",
+        "addContextualPageHelp",
+        "sectionOwnHelpButton",
+        "addContextualSectionHelp",
+        "dataset.localHelp = 'true'",
+        "[data-local-help=\"true\"]",
+        "Options in this section",
+    ]:
+        require(marker in help_js, f"Section-specific contextual help is missing {marker!r}.", errors)
+
+    require(
+        "sectionHelpRules" not in help_js and "sectionHelpRule(" not in help_js,
+        "Section bubbles must not regress to keyword-mapping broad help topics.",
+        errors,
+    )
+
+    # The helper must stay within the nearest major card/header and ignore nested major
+    # sections so a bubble describes only the UI beside it.
+    for marker in [
+        ".release-box, .git-safety-banner, .dashboard-card",
+        ".subpage-header, .manager-header",
+        "closestHelpRegion(node) === region",
+        "closestMajorHelpSection(node) === section",
+    ]:
+        require(marker in help_js, f"Local help boundary is missing {marker!r}.", errors)
+
+    # Representative multi-option sections must have distinct explanations for every
+    # visible choice rather than one generic description for the whole card.
+    for phrase in [
+        "Runs the complete local safety and quality check suite",
+        "Opens the controlled Git workflow where you review changes",
+        "Regenerates the repository documentation",
+        "Records a patch release",
+        "Records a minor release",
+        "Records a major release",
+        "Creates a new private Content Brief",
+        "Stores the selected source and its private metadata",
+        "Shows every Reference Library item regardless of review status",
+        "Filters the Reference Library to items with the",
+    ]:
+        require(phrase in help_js, f"Local section help needs explicit option copy: missing {phrase!r}.", errors)
+
+    # Local help must describe forms and repeating lists without echoing private field
+    # values or producing one duplicate explanation per item.
+    for marker in [
+        "label[for]",
+        "field.type === 'hidden'",
+        "field-help",
+        "field.getAttribute('placeholder')",
+        ".ai-proposal-list .ai-proposal-link",
+        "Open a Content Brief",
+        "Open a Reference Library item",
+        "const seen = new Set()",
+    ]:
+        require(marker in help_js, f"Local help option coverage is missing {marker!r}.", errors)
+    require("field.value" not in help_js, "Contextual help must not echo current form values/private entered content.", errors)
+
+    # Page-header bubbles use the same local model: page purpose plus only the controls in
+    # the header beside that bubble. Generic help articles remain available through the
+    # explicit User Guide / topic buttons instead.
+    require(
+        "Page-header help is intentionally local" in help_js,
+        "Header contextual help must use the local-region model.",
+        errors,
+    )
+    require(
+        "contextualHelpRules" not in help_js,
+        "Header ? bubbles must not regress to route-mapped broad help topics.",
+        errors,
+    )
+
+    for phrase in [
+        "Release end-to-end",
+        "Keep Local Build",
+        "checks every generated-file hash",
+        "destructive deletion is blocked",
+        "checks every outgoing path",
+        "127.0.0.1:5055",
+        "GitHub Pages deploys only",
+    ]:
+        require(phrase in drawer, f"Help drawer must explain current safety behavior: missing {phrase!r}.", errors)
+
+    for marker in [
+        "revert-created-project",
+        "delete-reference-item",
+        "delete-sanitized-derivative",
+        "checks every generated file hash",
+        "reruns Full Validation immediately before push",
+    ]:
+        require(marker in help_js, f"Help confirmations must cover current state-safety behavior: missing {marker!r}.", errors)
 
     for stale in [
         "What the three main workspaces mean",
@@ -121,13 +220,13 @@ def main() -> int:
         "What is still coming",
         "AI cannot apply changes or publish",
         "There is intentionally no Apply-to-site action",
+        "real preview → Keep or Revert",
     ]:
         require(stale not in guide + drawer, f"Stale help copy must be removed: found {stale!r}.", errors)
 
     require("Privacy &amp; Security" in dashboard, "Dashboard privacy action must use the current Privacy & Security label.", errors)
     require('data-help-key="privacy"' in dashboard, "Dashboard privacy action must keep the contextual privacy drawer.", errors)
 
-    # Every contextual help button in Portfolio Manager should have a matching topic.
     drawer_topics = set(HELP_TEMPLATE_RE.findall(drawer))
     referenced_keys: set[str] = set()
     for template_path in TEMPLATES.glob("*.html"):
@@ -137,7 +236,7 @@ def main() -> int:
     missing_topics = sorted(referenced_keys - drawer_topics)
     require(
         not missing_topics,
-        "Every data-help-key must have a matching drawer template. Missing: " + ", ".join(missing_topics),
+        "Every hand-placed data-help-key must have a matching drawer template. Missing: " + ", ".join(missing_topics),
         errors,
     )
 
@@ -150,7 +249,10 @@ def main() -> int:
             print(f"  - {item}")
         return 1
 
-    print(f"User Guide/privacy validation passed with {len(referenced_keys)} contextual help key(s) covered.")
+    print(
+        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed topic key(s); "
+        "every contextual ? now explains only its local page-header or major-section controls."
+    )
     return 0
 
 
