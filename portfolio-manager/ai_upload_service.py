@@ -14,6 +14,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 from ai_service import MAX_GOAL_CHARS, MAX_SOURCE_CHARS, PRIVATE_ROOT, TASKS, preflight_source
+from office_archive_safety import OfficeArchiveSafetyError, validate_office_archive
 
 
 UPLOAD_ROOT = PRIVATE_ROOT / "ai-helper-uploads"
@@ -186,6 +187,11 @@ def _extract_pdf(path: Path) -> str:
 
 def _extract_text(path: Path) -> str:
     suffix = path.suffix.lower()
+    if suffix in {".docx", ".pptx", ".xlsx"}:
+        try:
+            validate_office_archive(path)
+        except OfficeArchiveSafetyError as exc:
+            raise AIUploadError(str(exc)) from exc
     if suffix in TEXT_EXTENSIONS:
         return path.read_text(encoding="utf-8", errors="replace")
     if suffix == ".docx":
