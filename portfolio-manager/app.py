@@ -314,9 +314,12 @@ def run_action():
         success, output = run_full_validation()
         if success:
             security_passed = "Adversarial security/misuse: PASS" in output
+            state_safety_passed = "Workflow state-safety/chaos: PASS" in output
             message = "Full validation passed."
             if security_passed:
                 message += " Adversarial security/misuse: PASS."
+            if state_safety_passed:
+                message += " Workflow state-safety/chaos: PASS."
             flash(message, "success")
         else:
             flash(f"Validation failed:\n{output}", "error")
