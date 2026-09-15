@@ -73,6 +73,7 @@ jobs:
           python scripts/check-create-content-sources.py
           python scripts/check-create-content-build.py
           python scripts/check-create-publish-bridge.py
+          python scripts/check-state-safety.py
           python scripts/check-reference-library.py
           python scripts/check-reference-ai-analysis.py
           python scripts/check-reference-sanitization.py
