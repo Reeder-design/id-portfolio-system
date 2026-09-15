@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI training and evaluation portfolio examples by Haley Reeder, including evaluation scenarios, scoring rubrics, and workflow design.">
     <title>AI Training and Evaluation | Haley Reeder</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/portfolio-refresh.css">
+    <link rel="stylesheet" href="../../css/phase1-theme.css">
+    <link rel="stylesheet" href="../../css/phase1-frame.css">
+    <script defer src="../../js/portfolio-motion.js"></script>
 </head>
 <body>
     <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../index.html">Home</a><a href="../../about/index.html">About Me</a><a class="active" href="../index.html">Projects</a><a href="../../contact/index.html">Contact</a></nav></div></header>
@@ -18,7 +22,13 @@
         <section class="page-hero refresh-hero">
             <div class="container refresh-hero-grid">
                 <div class="parent-page-hero-content refresh-hero-copy"><p class="eyebrow">Projects / AI Training and Evaluation</p><h1>AI Training and Evaluation</h1><p class="body-large">I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone.</p><p>My work includes structured evaluation, analytical review, error detection, feedback writing, quality assurance, and testing AI within professional learning workflows.</p><div class="refresh-chip-row"><span class="refresh-chip">Task Analysis</span><span class="refresh-chip">Grounding</span><span class="refresh-chip">Rubrics</span><span class="refresh-chip">QA</span><span class="refresh-chip">Feedback</span></div></div>
-                <aside class="refresh-visual-card" aria-label="AI evaluation sequence"><p class="eyebrow">Evaluation Sequence</p><h2>Requirements before ratings</h2><div class="refresh-step-line"><div class="refresh-step" data-step="1"><strong>Frame</strong></div><div class="refresh-step" data-step="2"><strong>Inspect</strong></div><div class="refresh-step" data-step="3"><strong>Score</strong></div><div class="refresh-step" data-step="4"><strong>Explain</strong></div></div></aside>
+                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of AI evaluation capabilities">
+                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div>
+                </div>
             </div>
         </section>
 
@@ -30,9 +40,9 @@
         </section>
 
         <section class="section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Interactive Examples</p><h2>AI evaluation examples</h2><p class="body-large reading-width">Each demo uses the same core method: establish context and evidence, identify material issues, apply criteria, then explain the judgment.</p></div><div class="refresh-card-grid">
-            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Scenario</p><h3>AI Evaluation Demo</h3><p>Review a model response in context and identify the issues that matter most.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> task interpretation, source grounding, error detection, and reviewer judgment.</p><a class="project-family-link" href="./ai-training-and-evaluation-demo/index.html">Open Evaluation Demo →</a></div></article>
-            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Scoring</p><h3>Rubric Demo</h3><p>See how evaluation standards become observable scoring criteria.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> criteria design, evidence, severity, calibration, and defensible scoring.</p><a class="project-family-link" href="./rubric-demo/index.html">Open Rubric Demo →</a></div></article>
-            <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Process</p><h3>Workflow Demo</h3><p>Follow the review sequence from evaluation context through final feedback.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> repeatable QA, review order, evidence capture, and handoff into scoring.</p><a class="project-family-link" href="./workflow-demo/index.html">Open Workflow Demo →</a></div></article>
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span><p class="eyebrow">Scenario</p><h3>AI Evaluation Demo</h3><p>Review a model response in context and identify the issues that matter most.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> task interpretation, source grounding, error detection, and reviewer judgment.</p><a class="project-family-link" href="./ai-training-and-evaluation-demo/index.html">Open Evaluation Demo →</a></div></article>
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><p class="eyebrow">Scoring</p><h3>Rubric Demo</h3><p>See how evaluation standards become observable scoring criteria.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> criteria design, evidence, severity, calibration, and defensible scoring.</p><a class="project-family-link" href="./rubric-demo/index.html">Open Rubric Demo →</a></div></article>
+            <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Process</p><h3>Workflow Demo</h3><p>Follow the review sequence from evaluation context through final feedback.</p></div><div class="refresh-link-card-body"><p><strong>Focus:</strong> repeatable QA, review order, evidence capture, and handoff into scoring.</p><a class="project-family-link" href="./workflow-demo/index.html">Open Workflow Demo →</a></div></article>
         </div></div></section>
 
         <section class="section section-soft"><div class="container"><div class="cta"><p class="eyebrow">Keep Exploring</p><h2>Try another AI evaluation example.</h2><div class="button-row"><a class="btn btn-highlight" href="./ai-training-and-evaluation-demo/index.html">Evaluation Practice</a><a class="btn btn-secondary" href="./rubric-demo/index.html">Scoring Rubric</a><a class="btn btn-secondary" href="./workflow-demo/index.html">Evaluation Workflow</a></div></div></div></section>
