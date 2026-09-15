@@ -31,8 +31,10 @@
 
     <main class="v2-manage-layout">
         <section class="dashboard-card full-width">
-            <p class="eyebrow">Create Content Lab</p>
-            <h2>Start with a guided Content Brief</h2>
+            <div class="action-title-row">
+                <div><p class="eyebrow">Create Content Lab</p><h2>Start with a guided Content Brief</h2></div>
+                <button class="inline-help" type="button" data-help-key="create-content" data-help-label="Create Content Lab">?</button>
+            </div>
             <p class="section-copy">Define what you are making, why it matters, who it is for, the story and evidence, interaction, visual direction, safety constraints, and personal preferences. You can also attach sanitized Reference Library resources already approved for portfolio use.</p>
             <div class="button-row">
                 <a class="btn btn-primary" href="{{ url_for('create_content.new_brief') }}">Start New Content Brief</a>
@@ -40,8 +42,10 @@
         </section>
 
         <section class="dashboard-card full-width">
-            <p class="eyebrow">Supporting tools</p>
-            <h2>Use the right helper at the right stage</h2>
+            <div class="action-title-row">
+                <div><p class="eyebrow">Supporting tools</p><h2>Use the right helper at the right stage</h2></div>
+                <button class="inline-help" type="button" data-help-key="ai-assistance" data-help-label="Which AI workflow should I use?">?</button>
+            </div>
             <div class="v2-general-grid">
                 <article class="v2-small-card">
                     <h3>Content Workspace &amp; Reference Library</h3>
