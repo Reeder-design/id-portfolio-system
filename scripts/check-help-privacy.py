@@ -250,8 +250,8 @@ def main() -> int:
         return 1
 
     print(
-        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed topic key(s) "
-        "plus section-specific local ? help for page headers and every major workflow section."
+        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed topic key(s); "
+        "every contextual ? now explains only its local page-header or major-section controls."
     )
     return 0
 
