@@ -36,6 +36,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Public site", [sys.executable, "scripts/check-site.py"]),
         ("Structured content", [sys.executable, "scripts/check-content.py"]),
         ("General site content", [sys.executable, "scripts/check-site-content.py"]),
+        ("Final public polish/mobile", [sys.executable, "scripts/check-final-polish.py"]),
         ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
