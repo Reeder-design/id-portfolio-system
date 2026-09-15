@@ -269,6 +269,12 @@ def run_resource_analysis(item_id: str, focus: str, reviewed_sha256: str) -> dic
     focus = focus.strip()
     if len(focus) > MAX_FOCUS_CHARS:
         raise ReferenceAIAnalysisError(f"Keep the optional AI focus under {MAX_FOCUS_CHARS:,} characters.")
+    focus_checks = preflight_source(focus)
+    if focus_checks["blocked"]:
+        raise ReferenceAIAnalysisError(
+            "The optional AI focus appears to contain a secret or credential. Remove it before sending this resource to AI."
+        )
+
     settings = get_ai_settings()
     if not settings["configured"]:
         raise ReferenceAIAnalysisError("AI is not configured. Open AI Settings first.")
