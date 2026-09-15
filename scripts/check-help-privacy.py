@@ -111,6 +111,48 @@ def main() -> int:
     for marker in ["goBackInHelp", "showHelpHome", "history", "data-help-back", "data-help-home"]:
         require(marker in help_js, f"Help JavaScript must support returning from a selected topic: missing {marker!r}.", errors)
 
+    # Newer feature pages should receive contextual help automatically so adding a route
+    # does not depend on remembering to hand-place a question-mark button in every template.
+    for marker in [
+        "contextualHelpRules",
+        "addContextualPageHelp",
+        "reference-ai",
+        "sanitization",
+        "reference-library",
+        "create-content",
+        "general-content",
+        "save-project",
+        "page-ai",
+        "portfolio-review",
+        "related-references",
+        "assets",
+        "git-workflow",
+        "ai-assistance",
+    ]:
+        require(marker in help_js, f"Contextual help auto-routing is missing {marker!r}.", errors)
+
+    # Current safety behavior must be reflected in helper copy, not an older workflow model.
+    for phrase in [
+        "Release end-to-end",
+        "Keep Local Build",
+        "checks every generated-file hash",
+        "destructive deletion is blocked",
+        "checks every outgoing path",
+        "127.0.0.1:5055",
+        "GitHub Pages deploys only",
+    ]:
+        require(phrase in drawer, f"Help drawer must explain current safety behavior: missing {phrase!r}.", errors)
+
+    # Shared confirmation copy should cover newer destructive/stateful actions too.
+    for marker in [
+        "revert-created-project",
+        "delete-reference-item",
+        "delete-sanitized-derivative",
+        "checks every generated file hash",
+        "reruns Full Validation immediately before push",
+    ]:
+        require(marker in help_js, f"Help confirmations must cover current state-safety behavior: missing {marker!r}.", errors)
+
     for stale in [
         "What the three main workspaces mean",
         "planned Create Content Lab",
@@ -121,13 +163,14 @@ def main() -> int:
         "What is still coming",
         "AI cannot apply changes or publish",
         "There is intentionally no Apply-to-site action",
+        "real preview → Keep or Revert",
     ]:
         require(stale not in guide + drawer, f"Stale help copy must be removed: found {stale!r}.", errors)
 
     require("Privacy &amp; Security" in dashboard, "Dashboard privacy action must use the current Privacy & Security label.", errors)
     require('data-help-key="privacy"' in dashboard, "Dashboard privacy action must keep the contextual privacy drawer.", errors)
 
-    # Every contextual help button in Portfolio Manager should have a matching topic.
+    # Every hand-placed contextual help button in Portfolio Manager should have a matching topic.
     drawer_topics = set(HELP_TEMPLATE_RE.findall(drawer))
     referenced_keys: set[str] = set()
     for template_path in TEMPLATES.glob("*.html"):
@@ -150,7 +193,7 @@ def main() -> int:
             print(f"  - {item}")
         return 1
 
-    print(f"User Guide/privacy validation passed with {len(referenced_keys)} contextual help key(s) covered.")
+    print(f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed help key(s) plus contextual route coverage.")
     return 0
 
 
