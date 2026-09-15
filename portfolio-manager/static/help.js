@@ -68,6 +68,59 @@
         showHelpHome();
     }
 
+    // New Portfolio Manager surfaces automatically receive one page-level contextual
+    // helper in the header. Section-level helpers can still be hand-placed where a
+    // workflow needs more specific guidance. Specific routes must come before broad ones.
+    const contextualHelpRules = [
+        { match: /^\/create\/references\/[^/]+\/analysis\/?$/, key: 'reference-ai', label: 'AI Resource Analysis' },
+        { match: /^\/create\/references\/[^/]+\/sanitization\/?$/, key: 'sanitization', label: 'Sanitization Review' },
+        { match: /^\/create\/references(?:\/.*)?$/, key: 'reference-library', label: 'Reference Library' },
+        { match: /^\/create\/[^/]+\/build\/?$/, key: 'create-content', label: 'Controlled Build' },
+        { match: /^\/create(?:\/.*)?$/, key: 'create-content', label: 'Create Content' },
+        { match: /^\/manage\/pages\//, key: 'general-content', label: 'Visible Page Editing' },
+        { match: /^\/content\/projects\//, key: 'save-project', label: 'Project Editing' },
+        { match: /^\/content\/?$/, key: 'maintenance', label: 'Manage Content' },
+        { match: /^\/site-content(?:\/.*)?$/, key: 'general-content', label: 'Page Content' },
+        { match: /^\/ai\/page-edit\//, key: 'page-ai', label: 'Page-aware AI' },
+        { match: /^\/manage\/ai-review(?:\/.*)?$/, key: 'portfolio-review', label: 'AI Portfolio Review' },
+        { match: /related-references/, key: 'related-references', label: 'Related References' },
+        { match: /^\/assets(?:\/.*)?$/, key: 'assets', label: 'Project Asset Safety' },
+        { match: /^\/git(?:\/.*)?$/, key: 'git-workflow', label: 'Save & Publish Safety' },
+        { match: /^\/ai(?:\/.*)?$/, key: 'ai-assistance', label: 'AI Assistance' },
+        { match: /^\/$/, key: 'maintenance', label: 'Portfolio Manager Workflow' },
+    ];
+
+    function addContextualPageHelp() {
+        if (!drawer) return;
+        const rule = contextualHelpRules.find((item) => item.match.test(window.location.pathname));
+        if (!rule) return;
+
+        const host = document.querySelector('.subpage-header .header-actions, .manager-header .manager-top-actions');
+        if (!host || host.querySelector(`[data-help-key="${rule.key}"]`)) return;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'inline-help contextual-page-help';
+        button.dataset.helpKey = rule.key;
+        button.dataset.helpLabel = rule.label;
+        button.setAttribute('aria-label', `Open ${rule.label} help`);
+        button.title = `${rule.label} help`;
+        button.textContent = '?';
+        host.prepend(button);
+    }
+
+    addContextualPageHelp();
+
+    // Some destructive actions predate the shared confirmation helper. Normalize them
+    // here so the safety explanation stays consistent even when a template has not yet
+    // been given an explicit data-confirm-action attribute.
+    document.querySelectorAll('form').forEach((form) => {
+        const action = form.getAttribute('action') || '';
+        if (!form.dataset.confirmAction && action.includes('/sanitized/delete')) {
+            form.dataset.confirmAction = 'delete-sanitized-derivative';
+        }
+    });
+
     document.addEventListener('click', (event) => {
         const opener = event.target.closest('[data-help-open]');
         if (opener) {
@@ -127,9 +180,15 @@
             } else if (kind === 'git-commit') {
                 message = 'Run full validation and commit these changes to local main?\n\nThe commit is blocked if validation fails. A successful commit stays on your Mac until you explicitly choose Publish to GitHub.';
             } else if (kind === 'git-push') {
-                message = 'Publish committed main changes to GitHub?\n\nThis pushes local main to origin/main. GitHub Pages can deploy the committed public portfolio changes after this step. No force-push is used.';
+                message = 'Publish committed main changes to GitHub?\n\nPortfolio Manager rechecks outgoing paths and reruns Full Validation immediately before push. If those checks pass, local main is pushed to origin/main and GitHub Pages can deploy public portfolio changes. No force-push is used.';
             } else if (kind === 'ai-delete-proposal') {
                 message = 'Delete this private AI proposal?\n\nThis removes only the Git-ignored local proposal record and its private usage history. It does not change portfolio files, Git history, or content already saved elsewhere.';
+            } else if (kind === 'revert-created-project') {
+                message = 'Revert this local build?\n\nPortfolio Manager checks every generated file hash before deleting anything. If either generated file changed after creation, the revert stops and nothing is deleted. This does not change published Git history.';
+            } else if (kind === 'delete-reference-item') {
+                message = 'Delete this private Reference Library item?\n\nDeletion is blocked while any Content Brief still depends on this resource. If it is unattached, this removes the private local item and its stored files; it does not change Git or the public portfolio.';
+            } else if (kind === 'delete-sanitized-derivative') {
+                message = 'Remove this Sanitized Draft?\n\nDeletion is blocked while a Content Brief still depends on the approved derivative. The original private source stays preserved. This does not change Git or publish anything.';
             }
 
             if (message && !window.confirm(message)) {
