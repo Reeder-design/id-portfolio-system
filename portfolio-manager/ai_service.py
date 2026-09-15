@@ -108,6 +108,14 @@ def preflight_source(source_text: str) -> dict[str, list[str]]:
     return {"blocked": blocked, "warnings": warnings}
 
 
+def preflight_request(source_text: str, user_goal: str = "") -> dict[str, list[str]]:
+    """Scan every user-controlled text field that will be sent in one AI request."""
+    combined = source_text
+    if user_goal:
+        combined += "\n\nUSER GOAL / CONTEXT\n" + user_goal
+    return preflight_source(combined)
+
+
 def _task_instruction(task: str) -> str:
     instructions = {
         "polish": (
@@ -223,7 +231,7 @@ def generate_proposal(task: str, source_text: str, user_goal: str = "") -> dict[
     if not settings["configured"]:
         raise AIServiceError("AI is not configured. Run: python portfolio-manager/configure-ai.py")
 
-    preflight = preflight_source(source_text)
+    preflight = preflight_request(source_text, user_goal)
     if preflight["blocked"]:
         labels = ", ".join(preflight["blocked"])
         raise AIServiceError(f"Local preflight blocked this request because it appears to contain {labels}. Remove the secret/credential before using AI.")
