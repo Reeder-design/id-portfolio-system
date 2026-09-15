@@ -4,9 +4,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 import hashlib
+import json
 
 import create_content_build_service as build_service
 import create_content_service as content_service
+import reference_library_service as reference_service
 from create_publish_bridge_service import CreatePublishBridgeError, load_publish_bridge
 from validation_service import run_full_validation
 
@@ -52,6 +54,46 @@ def _expected_files(build: dict[str, Any]) -> list[tuple[Path, str | None, str]]
     return files
 
 
+def _reference_brief_dependencies(item_id: str) -> list[dict[str, str]]:
+    dependencies: list[dict[str, str]] = []
+    root = content_service.BRIEFS_ROOT
+    if not root.exists():
+        return dependencies
+    for path in root.glob("brief-*.json"):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(record, dict) or record.get("type") != "create-content-brief":
+            continue
+        attached = [
+            source
+            for source in record.get("approved_sources", [])
+            if isinstance(source, dict) and str(source.get("reference_id", "")) == item_id
+        ]
+        if not attached:
+            continue
+        dependencies.append({
+            "id": str(record.get("id", "")),
+            "title": str(record.get("fields", {}).get("working_title") or record.get("id") or "Content Brief"),
+        })
+    return dependencies
+
+
+def _require_reference_detached(item_id: str) -> None:
+    dependencies = _reference_brief_dependencies(item_id)
+    if not dependencies:
+        return
+    labels = ", ".join(item["title"] for item in dependencies[:4])
+    if len(dependencies) > 4:
+        labels += f", and {len(dependencies) - 4} more"
+    raise reference_service.ReferenceLibraryError(
+        "This reference is still attached to Content Briefs ("
+        + labels
+        + "). Detach it from those briefs before deleting the reference or its sanitized derivative."
+    )
+
+
 def ensure_brief_editable(brief_id: str) -> dict[str, Any]:
     record = content_service.load_brief(brief_id)
     build = _active_build(record)
@@ -90,6 +132,18 @@ def safe_delete_brief(brief_id: str) -> None:
         )
 
     content_service.delete_brief(brief_id)
+
+
+def safe_delete_reference_item(item_id: str) -> None:
+    reference_service.load_reference_item(item_id)
+    _require_reference_detached(item_id)
+    reference_service.delete_reference_item(item_id)
+
+
+def safe_delete_sanitized_derivative(item_id: str) -> dict[str, Any]:
+    reference_service.load_reference_item(item_id)
+    _require_reference_detached(item_id)
+    return reference_service.delete_sanitized_derivative(item_id)
 
 
 def safe_keep_local_build(brief_id: str) -> dict[str, Any]:
