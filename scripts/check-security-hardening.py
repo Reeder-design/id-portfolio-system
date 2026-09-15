@@ -35,6 +35,8 @@ def main() -> int:
 
     require('host="127.0.0.1"' in app and 'host="0.0.0.0"' not in app, "Portfolio Manager must stay loopback-only.", errors)
     require('TRUSTED_HOSTS=["127.0.0.1", "localhost"]' in app, "Portfolio Manager must restrict Host headers.", errors)
+    require('TRUSTED_LOCAL_HOSTS = {"127.0.0.1", "localhost"}' in app, "Portfolio Manager must explicitly reject hostile Host headers before URL generation.", errors)
+    require('abort(400, description="Untrusted host.")' in app, "Unexpected Host headers must fail closed with HTTP 400.", errors)
     require("SESSION_COOKIE_HTTPONLY=True" in app, "Session cookie must remain HttpOnly.", errors)
     require('SESSION_COOKIE_SAMESITE="Strict"' in app, "Session cookie must remain SameSite=Strict.", errors)
     require("validate_csrf()" in app, "Global POST CSRF validation must remain enabled.", errors)
