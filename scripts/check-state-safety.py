@@ -10,6 +10,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 MANAGER = ROOT / "portfolio-manager"
 ROUTES = MANAGER / "create_content_routes.py"
+REFERENCE_ROUTES = MANAGER / "reference_library_routes.py"
 STATE_SERVICE = MANAGER / "state_safety_service.py"
 
 sys.path.insert(0, str(MANAGER))
@@ -17,6 +18,7 @@ sys.path.insert(0, str(MANAGER))
 import create_content_build_service as build  # noqa: E402
 import create_content_service as content  # noqa: E402
 import create_publish_bridge_service as bridge  # noqa: E402
+import reference_library_service as reference  # noqa: E402
 import state_safety_service as safety  # noqa: E402
 
 
@@ -85,10 +87,54 @@ def attach_build(record: dict, temp_root: Path, project_id: str = "state-safety-
     return record_path, page_path
 
 
+def create_reference_fixture(temp_root: Path) -> tuple[str, Path, Path]:
+    item_id = "ref-20260914-180000-abcdef12"
+    original_dir = reference.FILES_ROOT / item_id / "original"
+    sanitized_dir = reference.FILES_ROOT / item_id / "sanitized"
+    original_dir.mkdir(parents=True, exist_ok=True)
+    sanitized_dir.mkdir(parents=True, exist_ok=True)
+    original_path = original_dir / "private-source.txt"
+    sanitized_path = sanitized_dir / "public-safe-source.txt"
+    original_path.write_text("Private synthetic source.\n", encoding="utf-8")
+    sanitized_path.write_text("Sanitized synthetic source.\n", encoding="utf-8")
+    record = {
+        "id": item_id,
+        "type": "reference-item",
+        "title": "Attached Synthetic Reference",
+        "created_at": "2026-09-14T18:00:00",
+        "updated_at": "2026-09-14T18:00:00",
+        "status": "approved-for-portfolio-use",
+        "notes": "",
+        "tags": [],
+        "original_file": {
+            "filename": original_path.name,
+            "size_bytes": original_path.stat().st_size,
+            "mime_type": "text/plain",
+            "sha256": sha(original_path),
+            "stored_at": "2026-09-14T18:00:00",
+        },
+        "sanitization_review": None,
+        "sanitized_derivative": {
+            "filename": sanitized_path.name,
+            "size_bytes": sanitized_path.stat().st_size,
+            "mime_type": "text/plain",
+            "sha256": sha(sanitized_path),
+            "stored_at": "2026-09-14T18:00:00",
+        },
+        "approval": {
+            "approved_at": "2026-09-14T18:00:00",
+            "approval_note": "Synthetic state-safety fixture.",
+        },
+    }
+    reference.ITEMS_ROOT.mkdir(parents=True, exist_ok=True)
+    (reference.ITEMS_ROOT / f"{item_id}.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
+    return item_id, original_path, sanitized_path
+
+
 def main() -> int:
     errors: list[str] = []
 
-    for path in (STATE_SERVICE, ROUTES):
+    for path in (STATE_SERVICE, ROUTES, REFERENCE_ROUTES):
         require(path.exists(), f"Missing state-safety file: {path.relative_to(ROOT)}", errors)
     if errors:
         for item in errors:
@@ -97,16 +143,22 @@ def main() -> int:
 
     service_text = STATE_SERVICE.read_text(encoding="utf-8")
     routes_text = ROUTES.read_text(encoding="utf-8")
+    reference_routes_text = REFERENCE_ROUTES.read_text(encoding="utf-8")
     require("safe_keep_local_build" in routes_text, "Create routes must use validated Keep guard.", errors)
     require("safe_revert_local_build" in routes_text, "Create routes must use atomic Revert guard.", errors)
     require("safe_delete_brief" in routes_text, "Create routes must use guarded brief deletion.", errors)
     require("ensure_brief_editable" in routes_text, "Create routes must block brief edits during an active build.", errors)
+    require("safe_delete_reference_item" in reference_routes_text, "Reference routes must guard deletion of attached sources.", errors)
+    require("safe_delete_sanitized_derivative" in reference_routes_text, "Reference routes must guard deletion of attached sanitized derivatives.", errors)
     require("run_full_validation()" in service_text, "Keep must rerun Full Validation at the human approval boundary.", errors)
     require("before deleting anything" in service_text, "Revert must preflight all generated files before deletion.", errors)
+    require("_reference_brief_dependencies" in service_text, "Reference deletion guards must inspect Content Brief dependencies.", errors)
 
     old_briefs_root = content.BRIEFS_ROOT
     old_build_root = build.ROOT
     old_bridge_root = bridge.BRIDGES_ROOT
+    old_items_root = reference.ITEMS_ROOT
+    old_files_root = reference.FILES_ROOT
     old_validation = safety.run_full_validation
     old_loader = build._load_new_project_module
 
@@ -131,6 +183,8 @@ def main() -> int:
             content.BRIEFS_ROOT = temp_root / ".portfolio-manager" / "create-content" / "briefs"
             build.ROOT = temp_root
             bridge.BRIDGES_ROOT = temp_root / ".portfolio-manager" / "create-content" / "publish-bridges"
+            reference.ITEMS_ROOT = temp_root / ".portfolio-manager" / "reference-library" / "items"
+            reference.FILES_ROOT = temp_root / ".portfolio-manager" / "reference-library" / "files"
             build._load_new_project_module = lambda: FakeNewProject
             content.BRIEFS_ROOT.mkdir(parents=True, exist_ok=True)
 
@@ -241,7 +295,49 @@ def main() -> int:
                 errors,
             )
 
-            # 5) Plain drafts with no active state still delete normally.
+            # 5) Reference Library files that feed a Content Brief cannot be destructively removed underneath it.
+            item_id, original_path, sanitized_path = create_reference_fixture(temp_root)
+            source_brief = content.create_brief(base_form("Reference Dependency"))
+            source_brief["approved_sources"] = [{
+                "reference_id": item_id,
+                "title": "Attached Synthetic Reference",
+                "filename": sanitized_path.name,
+                "sanitized_sha256": sha(sanitized_path),
+                "approved_at": "2026-09-14T18:00:00",
+                "attached_at": "2026-09-14T18:05:00",
+            }]
+            source_brief_path = content.BRIEFS_ROOT / f"{source_brief['id']}.json"
+            source_brief_path.write_text(json.dumps(source_brief, indent=2), encoding="utf-8")
+
+            expect_error(
+                lambda: safety.safe_delete_sanitized_derivative(item_id),
+                reference.ReferenceLibraryError,
+                "attached to content briefs",
+                "Deleting an attached sanitized derivative should be blocked.",
+                errors,
+            )
+            require(sanitized_path.exists(), "Blocked derivative deletion removed the attached sanitized file.", errors)
+
+            expect_error(
+                lambda: safety.safe_delete_reference_item(item_id),
+                reference.ReferenceLibraryError,
+                "attached to content briefs",
+                "Deleting an attached Reference Library item should be blocked.",
+                errors,
+            )
+            require(original_path.exists() and sanitized_path.exists(), "Blocked reference deletion removed stored source files.", errors)
+            require((reference.ITEMS_ROOT / f"{item_id}.json").exists(), "Blocked reference deletion removed the item record.", errors)
+
+            # Detach first; then normal destructive actions are available again.
+            source_brief["approved_sources"] = []
+            source_brief_path.write_text(json.dumps(source_brief, indent=2), encoding="utf-8")
+            safety.safe_delete_sanitized_derivative(item_id)
+            require(not sanitized_path.exists(), "Detached sanitized derivative should delete normally.", errors)
+            safety.safe_delete_reference_item(item_id)
+            require(not original_path.exists(), "Detached reference item should delete its original source normally.", errors)
+            require(not (reference.ITEMS_ROOT / f"{item_id}.json").exists(), "Detached reference item record should delete normally.", errors)
+
+            # 6) Plain drafts with no active state still delete normally.
             plain = content.create_brief(base_form("Plain Draft"))
             plain_path = content.BRIEFS_ROOT / f"{plain['id']}.json"
             safety.safe_delete_brief(plain["id"])
@@ -253,6 +349,8 @@ def main() -> int:
         content.BRIEFS_ROOT = old_briefs_root
         build.ROOT = old_build_root
         bridge.BRIDGES_ROOT = old_bridge_root
+        reference.ITEMS_ROOT = old_items_root
+        reference.FILES_ROOT = old_files_root
         safety.run_full_validation = old_validation
         build._load_new_project_module = old_loader
 
@@ -263,7 +361,7 @@ def main() -> int:
         return 1
 
     print("Workflow state-safety/chaos validation passed.")
-    print("Covered atomic Revert, fresh-validation Keep, repeat Keep, kept-state rollback blocking, active-build edit/delete protection, publishing-handoff deletion protection, and normal inactive deletion.")
+    print("Covered atomic Revert, fresh-validation Keep, repeat Keep, kept-state rollback blocking, active-build edit/delete protection, publishing-handoff deletion protection, Reference Library dependency deletion guards, and normal inactive deletion.")
     return 0
 
 
