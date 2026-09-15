@@ -30,6 +30,8 @@ def main() -> int:
         require('run_git(["pull", "--ff-only", "origin", BASE_BRANCH])' in routes, "Main sync must be fast-forward only", errors)
         require('run_git(["add", "--", *selected])' in routes, "Staging must use explicit selected paths", errors)
         require('run_git(["restore", "--staged", "--", *selected])' in routes, "Unstage must preserve local edits", errors)
+        require("from validation_service import run_full_validation" in routes, "Commit validation must use the same authoritative Full Validation service as the dashboard", errors)
+        require("return run_full_validation()" in routes, "Commit validation wrapper must delegate directly to the authoritative Full Validation service", errors)
         require("validation_suite()" in routes, "Commit path must run the full validation suite", errors)
         require('run_git(["commit", "-m", commit_message])' in routes, "Commit must use argument-list invocation", errors)
         require('run_git(["fetch", "origin", BASE_BRANCH])' in routes, "Publish must refresh remote main status before pushing", errors)
@@ -44,6 +46,10 @@ def main() -> int:
         require('"--force"' not in routes and '"-f"' not in routes, "Git workflow must not expose force-push", errors)
         require('run_git(["merge"' not in routes, "Portfolio Manager must not implement git merge", errors)
         require('run_git(["rebase"' not in routes, "Portfolio Manager must not silently rebase local history", errors)
+        # Prevent the commit route from drifting into a second hand-maintained list
+        # of checks that can fall behind the dashboard Full Validation service.
+        require("scripts/check-site.py" not in routes, "Git commit validation must not maintain a duplicate script list", errors)
+        require("scripts/check-portfolio-manager.py" not in routes, "Git commit validation must not maintain a duplicate security script list", errors)
 
         validation_index = routes.find("passed, output = validation_suite()")
         commit_index = routes.find('run_git(["commit", "-m", commit_message])')
