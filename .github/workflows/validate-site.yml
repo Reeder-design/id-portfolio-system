@@ -41,6 +41,9 @@ jobs:
       - name: Validate structured general page content
         run: python scripts/check-site-content.py
 
+      - name: Validate final public polish and mobile readiness
+        run: python scripts/check-final-polish.py
+
       - name: Validate project renderer
         run: python scripts/check-renderer.py
 
@@ -74,5 +77,6 @@ jobs:
           python scripts/check-reference-ai-analysis.py
           python scripts/check-reference-sanitization.py
           python scripts/check-help-privacy.py
+          python scripts/check-final-polish.py
           python scripts/check-portfolio-manager.py
           python scripts/check-portfolio-manager-runtime.py

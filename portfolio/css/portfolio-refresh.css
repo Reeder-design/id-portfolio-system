@@ -67,8 +67,7 @@
     overflow: hidden;
     border: 1px solid var(--refresh-line);
     border-radius: 28px;
-    background:
-        linear-gradient(145deg, rgba(255,255,255,.98), rgba(216,232,223,.75));
+    background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(216,232,223,.75));
     box-shadow: var(--refresh-shadow);
 }
 
@@ -381,7 +380,7 @@
     color: var(--refresh-ink);
 }
 
-/* UAT polish: shared callouts, compact process cards, and forms */
+/* Shared callouts, compact process cards, and forms */
 .cta {
     position: relative;
     overflow: hidden;
@@ -521,6 +520,39 @@
     cursor: not-allowed;
 }
 
+/* Final editorial and device polish */
+body {
+    overflow-x: hidden;
+}
+
+img,
+video,
+iframe,
+svg {
+    max-width: 100%;
+}
+
+.eyebrow {
+    font-size: .68rem;
+    letter-spacing: .09em;
+}
+
+.btn-highlight {
+    background: var(--pine-blue) !important;
+    color: var(--white) !important;
+}
+
+.btn-highlight:hover {
+    background: var(--taupe) !important;
+    color: var(--white) !important;
+}
+
+.refresh-visual-card::after,
+.experience-panel::after,
+.cta::after {
+    content: none;
+}
+
 @media (max-width: 960px) {
     .refresh-hero-grid,
     .refresh-explorer,
@@ -535,6 +567,22 @@
 
     .refresh-step-line {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .site-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .site-nav a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 }
 
@@ -553,13 +601,34 @@
         padding: 14px;
     }
 
-    .refresh-detail {
+    .refresh-detail,
+    .refresh-visual-card {
         min-height: 0;
     }
 
-    .cta::after {
-        right: 18px;
-        top: 16px;
-        letter-spacing: 4px;
+    .refresh-visual-card,
+    .experience-panel,
+    .cta {
+        padding: 22px;
+    }
+
+    .experience-panel {
+        margin-top: 28px;
+    }
+
+    .refresh-chip-row {
+        gap: 7px;
+    }
+}
+
+@media (max-width: 390px) {
+    .site-nav {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .refresh-tab,
+    .btn,
+    .project-family-link {
+        overflow-wrap: anywhere;
     }
 }

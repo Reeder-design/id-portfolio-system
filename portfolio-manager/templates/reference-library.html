@@ -30,15 +30,19 @@
     {% endwith %}
 
     <section class="dashboard-card full-width">
-        <p class="eyebrow">Private-source boundary</p>
-        <h2>Store first. Review before reuse.</h2>
+        <div class="action-title-row">
+            <div><p class="eyebrow">Private-source boundary</p><h2>Store first. Review before reuse.</h2></div>
+            <button class="inline-help" type="button" data-help-key="reference-library" data-help-label="Private Reference Library">?</button>
+        </div>
         <p class="section-copy">Uploads are kept in the Git-ignored Portfolio Manager workspace. The original file is preserved unchanged. A separate Sanitized Draft may be added later and only that derivative can become Approved for Portfolio Use.</p>
     </section>
 
     <main class="v2-manage-layout">
         <section class="dashboard-card full-width">
-            <p class="eyebrow">Add private source</p>
-            <h2>Add to Reference Library</h2>
+            <div class="action-title-row">
+                <div><p class="eyebrow">Add private source</p><h2>Add to Reference Library</h2></div>
+                <button class="inline-help" type="button" data-help-key="privacy" data-help-label="Where is this stored?">?</button>
+            </div>
             <form method="post" action="{{ url_for('reference_library.add_item') }}" enctype="multipart/form-data" class="form-grid">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="full-span">

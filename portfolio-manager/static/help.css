@@ -2,8 +2,18 @@
 .header-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
+}
+
+.button-row {
+    gap: 12px;
+    row-gap: 12px;
+    align-items: center;
+}
+
+.button-row form {
+    margin: 0;
 }
 
 .inline-help {
@@ -302,7 +312,7 @@
 .action-title-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .logout-form {
@@ -318,5 +328,10 @@
     .guide-search-status-row {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .manager-top-actions,
+    .header-actions {
+        row-gap: 10px;
     }
 }
