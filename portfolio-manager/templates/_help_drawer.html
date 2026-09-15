@@ -41,11 +41,12 @@
 
 <template data-help-template="button-safety" data-help-label="What does this button actually do?">
     <p><strong>Save Edits / Save Project:</strong> writes reviewed changes to your local working copy. Not live.</p>
-    <p><strong>Approve &amp; Apply Locally:</strong> applies one reviewed page-AI proposal to local files, validates it, and gives you Keep/Revert. Not live.</p>
-    <p><strong>Keep:</strong> accepts a validated local result so you can continue working with it. Still not live.</p>
+    <p><strong>Approve &amp; Apply Locally:</strong> applies one reviewed page-AI proposal to local files and validates it. Review the real page afterward; you can revert the AI change before publishing. Not live.</p>
+    <p><strong>Keep Local Build:</strong> reruns Full Validation against the exact generated files, then accepts that local Create Content build for continued editing. Still not live.</p>
+    <p><strong>Revert Local Build:</strong> verifies every generated file first. If any generated file changed after creation, the revert stops before deleting anything.</p>
     <p><strong>Approved for Portfolio Use:</strong> allows a sanitized Reference Library derivative to be used as source context. It does not publish the file.</p>
     <p><strong>Commit:</strong> creates a Git history checkpoint on your Mac. Still not live.</p>
-    <p><strong>Publish to GitHub:</strong> pushes approved committed changes to GitHub. This is the action that can make portfolio files live through GitHub Pages.</p>
+    <p><strong>Publish to GitHub:</strong> rechecks outgoing paths, reruns Full Validation, then pushes approved committed changes to GitHub. This is the action that can make portfolio files live through GitHub Pages.</p>
 </template>
 
 <template data-help-template="dev-workflow" data-help-label="Feature branch / PR testing">
@@ -57,6 +58,7 @@
 
 <template data-help-template="validation" data-help-label="Full Validation">
     <p><strong>Run Full Validation</strong> is a read-only health check across the public site, structured content, renderers, docs, Git guardrails, AI guardrails, and Portfolio Manager security/runtime rules.</p>
+    <p>It also runs three higher-level regressions: <strong>Release end-to-end</strong>, <strong>Adversarial security/misuse</strong>, and <strong>Workflow state-safety/chaos</strong>. A successful dashboard run reports all three explicitly.</p>
     <p><strong>It changes:</strong> nothing.</p>
     <p>If it fails, stop before publishing and read the first specific failure. Guarded edit workflows often roll back the change that caused the failure.</p>
 </template>
@@ -140,8 +142,8 @@
 </template>
 
 <template data-help-template="page-ai" data-help-label="Page-aware AI">
-    <p><strong>Workflow:</strong> request → private proposal → review exact anchored operations → Approve &amp; Apply Locally → automatic validation → real preview → Keep or Revert.</p>
-    <p>The source page is rechecked before applying and a private backup is created first.</p>
+    <p><strong>Workflow:</strong> request → private proposal → review exact anchored operations → Approve &amp; Apply Locally → automatic validation → real preview → revert or continue into the normal Save &amp; Publish workflow.</p>
+    <p>The source page is rechecked before applying and a private backup is created first. Only the exact reviewed operations may be applied.</p>
     <p>Applying locally is not publishing.</p>
 </template>
 
@@ -159,6 +161,7 @@
     <p><strong>Reference Library</strong> is where private professional source material belongs before it is ready for public use.</p>
     <p>Original files stay under Git-ignored <code>.portfolio-manager/</code> storage and are preserved unchanged. Sanitized work is a separate derivative.</p>
     <p><strong>Approved for Portfolio Use</strong> means the sanitized derivative may be used as Content Brief source context. It does not publish the file.</p>
+    <p>If a Content Brief still depends on a reference or its sanitized derivative, destructive deletion is blocked until you detach that source from the brief.</p>
 </template>
 
 <template data-help-template="reference-ai" data-help-label="Ask AI About This Resource">
@@ -170,12 +173,14 @@
 <template data-help-template="sanitization" data-help-label="Sanitization Review">
     <p><strong>AI flags; you decide.</strong> Review each possible public-safety risk and choose Keep, Remove, Generalize, Rewrite, Replace, Crop/redact, or Mark intentionally public-safe.</p>
     <p>The original stays untouched. The workflow creates a separate Sanitized Draft that still requires explicit approval.</p>
+    <p>If an approved sanitized derivative is attached to a Content Brief, Portfolio Manager blocks deleting it until that dependency is removed.</p>
 </template>
 
 <template data-help-template="create-content" data-help-label="Create Content Lab">
     <p><strong>Workflow:</strong> Content Brief → optional Approved Sources → AI Content Plan → human plan approval → AI Build Proposal → human edit/review → Create Local Project &amp; Validate → Preview → Keep/Revert.</p>
     <p>Approved Reference Library context uses sanitized derivatives only; private originals stay outside the brief/build AI context.</p>
     <p>Controlled build writes local files only after explicit approval and validation. It never publishes automatically.</p>
+    <p><strong>State safety:</strong> an active/kept build protects its Content Brief from destructive edits or deletion. Keep reruns Full Validation against the exact files being approved. Revert checks every generated-file hash before deleting anything, so a changed file causes the entire revert to stop without partial deletion.</p>
 </template>
 
 <template data-help-template="ai-file-review" data-help-label="AI File Review Safety">
@@ -189,6 +194,7 @@
     <p><strong>Commit:</strong> local Git checkpoint. Not live.</p>
     <p><strong>Push / Publish to GitHub:</strong> sends committed <code>main</code> changes to GitHub and can trigger the live site deployment.</p>
     <p><strong>Normal sequence:</strong> preview → Full Validation → review changed files → inspect diff → commit → Publish to GitHub.</p>
+    <p>Immediately before push, Portfolio Manager checks every outgoing path for forbidden/private files and reruns the current Full Validation suite. A failed check blocks publishing.</p>
     <p>If you are on a feature branch testing a Portfolio Manager PR, use the separate development/UAT workflow instead.</p>
 </template>
 
@@ -210,22 +216,24 @@
 
 <template data-help-template="git-push" data-help-label="Publish to GitHub">
     <p><strong>Publish to GitHub</strong> pushes committed local <code>main</code> changes to <code>origin/main</code>.</p>
-    <p>Portfolio Manager blocks publishing if GitHub has newer commits or uncommitted local changes remain. Force-push is never used.</p>
+    <p>Before push, Portfolio Manager scans every outgoing commit path for forbidden/private material and reruns Full Validation. It also blocks publishing if GitHub has newer commits or uncommitted local changes remain. Force-push is never used.</p>
     <p>After a successful push, GitHub Pages can deploy the updated public portfolio.</p>
 </template>
 
 <template data-help-template="publishing" data-help-label="What actually gets published?">
     <p><strong>Not live:</strong> editing a form, Save Edits, validation, AI proposals, Keep, approved Reference Library sources, and local Git commits.</p>
     <p><strong>Potentially live:</strong> public-candidate files under <code>portfolio/</code> and tracked content that has been committed and then explicitly pushed with <strong>Publish to GitHub</strong>.</p>
+    <p><strong>GitHub Pages deploys only <code>portfolio/</code></strong>, but this repository is public, so any other tracked file pushed to GitHub is still publicly visible in the repository even if it is not part of the website.</p>
     <p>If you are asking “did I just make this public?” the answer is no unless the workflow actually pushed the approved commit to GitHub.</p>
 </template>
 
 <template data-help-template="git-safety" data-help-label="Git Safety">
-    <p>Portfolio Manager blocks unsafe/private paths, force-push, silent merge/rebase behavior, and runs full validation before every commit.</p>
+    <p>Portfolio Manager blocks unsafe/private paths, force-push, silent merge/rebase behavior, and runs full validation before every commit and immediately before publish.</p>
     <p>Publishing is always a separate explicit action after commit.</p>
 </template>
 
 <template data-help-template="privacy" data-help-label="Privacy & Security">
+    <p><strong>Portfolio Manager itself:</strong> stays local-only on <code>127.0.0.1:5055</code>; it is not intentionally exposed to your local network or the internet.</p>
     <p><strong><code>.env</code>:</strong> local secrets. Git-ignored.</p>
     <p><strong><code>.portfolio-manager/</code>:</strong> private working data, AI records, backups, Content Briefs, Reference Library originals/derivatives, and temporary uploads. Git-ignored.</p>
     <p><strong><code>portfolio-data/</code>:</strong> Git-tracked structured content. Treat it as publishable repository content.</p>
