@@ -42,7 +42,8 @@ def main() -> int:
         require("unsafe = [path for path in outgoing if not is_safe_repo_path(path)]" in routes, "Publish must block outgoing private/unsafe paths", errors)
         for blocked in ('.git', '.env', '.portfolio-manager', '.venv'):
             require(blocked in routes, f"Git workflow must explicitly block private path: {blocked}", errors)
-        require('first.startswith(".env.")' in routes and 'first != ".env.example"' in routes, "Git workflow must block environment-file variants while allowing .env.example", errors)
+        require('for part in posix.parts:' in routes, "Git workflow must inspect nested path components, not only the repository root.", errors)
+        require('part.startswith(".env.")' in routes and 'part != ".env.example"' in routes, "Git workflow must block environment-file variants while allowing .env.example", errors)
         require(".pem" in routes and ".key" in routes, "Git workflow must block common credential/key files", errors)
         require("shell=True" not in routes, "Git workflow must not invoke a shell for user-controlled values", errors)
         require('"--force"' not in routes and '"-f"' not in routes, "Git workflow must not expose force-push", errors)
