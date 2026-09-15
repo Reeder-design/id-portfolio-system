@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 import re
-import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,7 +51,6 @@ def main() -> int:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     guide_lower = guide.lower()
 
-    # The guide should answer decisions/tasks rather than only describe architecture.
     for phrase in [
         "Start here: what are you trying to do?",
         "The button dictionary",
@@ -86,7 +84,6 @@ def main() -> int:
     ]:
         require(phrase in guide_lower, f"User Guide must preserve the AI/privacy boundary: missing {phrase!r}.", errors)
 
-    # Haley's recurring management boundary: developing the tool is not normal content publishing.
     for phrase in [
         "feature branch",
         "UAT",
@@ -98,7 +95,6 @@ def main() -> int:
     require('data-help-template="dev-workflow"' in drawer, "Help drawer must include the feature branch / PR testing topic.", errors)
     require('data-help-template="button-safety"' in drawer, "Help drawer must include the button-safety topic.", errors)
 
-    # Search should use explicit aliases/tags and provide visible feedback.
     require("data-guide-tags" in guide, "Guide sections must expose searchable topic aliases/tags.", errors)
     require("data-guide-search-chip" in guide, "Guide must expose common-task search chips.", errors)
     require("data-help-search-status" in guide and "data-help-no-results" in guide, "Guide search must report results and no-results state.", errors)
@@ -106,15 +102,15 @@ def main() -> int:
         require(marker in help_js, f"Help search must support robust tagged search: missing {marker!r}.", errors)
     require("guide-search-chips" in help_css and "guide-no-results" in help_css, "Help styles must support search chips and no-results feedback.", errors)
 
-    # The drawer must never trap the user inside one selected topic.
     require("data-help-nav" in drawer and "data-help-back" in drawer and "data-help-home" in drawer, "Help drawer must expose Back and All Topics navigation.", errors)
     for marker in ["goBackInHelp", "showHelpHome", "history", "data-help-back", "data-help-home"]:
         require(marker in help_js, f"Help JavaScript must support returning from a selected topic: missing {marker!r}.", errors)
 
-    # Newer feature pages should receive contextual help automatically so adding a route
-    # does not depend on remembering to hand-place a question-mark button in every template.
+    # Page-level contextual help must cover every major route family. Specific rules are
+    # checked here so route additions cannot silently lose the in-page help entry point.
     for marker in [
         "contextualHelpRules",
+        "currentPageHelpRule",
         "addContextualPageHelp",
         "reference-ai",
         "sanitization",
@@ -123,15 +119,53 @@ def main() -> int:
         "general-content",
         "save-project",
         "page-ai",
+        "ai-proposal",
         "portfolio-review",
         "related-references",
         "assets",
         "git-workflow",
         "ai-assistance",
     ]:
-        require(marker in help_js, f"Contextual help auto-routing is missing {marker!r}.", errors)
+        require(marker in help_js, f"Contextual page help is missing {marker!r}.", errors)
 
-    # Current safety behavior must be reflected in helper copy, not an older workflow model.
+    # The homepage page-level helper must not duplicate the first Manage/Create card's
+    # maintenance helper. This is the exact UX regression found during final UAT.
+    require(
+        "{ match: /^\\/$/, key: 'button-safety'" in help_js,
+        "Dashboard page-level help must use button-safety instead of duplicating maintenance help.",
+        errors,
+    )
+
+    # Every major workflow card/action boundary receives one section-level helper unless
+    # it already owns an explicit helper. Repeated small cards remain intentionally clean.
+    for marker in [
+        "sectionHelpRules",
+        "majorSectionOwnsHelp",
+        "sectionHelpRule",
+        "addContextualSectionHelp",
+        "main .dashboard-card, .git-safety-banner, .release-box",
+        "contextual-section-help",
+        "v2-small-card",
+    ]:
+        require(marker in help_js, f"Major-section contextual help is missing {marker!r}.", errors)
+
+    # Representative major workflows must map to specific topics rather than all falling
+    # back to one generic drawer article.
+    for marker in [
+        "Publishing Boundary",
+        "Documentation Maintenance",
+        "Review and Select Files",
+        "Diff Review",
+        "Validate and Commit",
+        "Project Asset Safety",
+        "Page-aware AI Proposal",
+        "Private vs. Public Storage",
+        "AI Resource Analysis",
+        "Create Content Lab",
+        "AI File Review Safety",
+    ]:
+        require(marker in help_js, f"Section help needs a specific mapping for {marker!r}.", errors)
+
     for phrase in [
         "Release end-to-end",
         "Keep Local Build",
@@ -143,7 +177,6 @@ def main() -> int:
     ]:
         require(phrase in drawer, f"Help drawer must explain current safety behavior: missing {phrase!r}.", errors)
 
-    # Shared confirmation copy should cover newer destructive/stateful actions too.
     for marker in [
         "revert-created-project",
         "delete-reference-item",
@@ -170,7 +203,6 @@ def main() -> int:
     require("Privacy &amp; Security" in dashboard, "Dashboard privacy action must use the current Privacy & Security label.", errors)
     require('data-help-key="privacy"' in dashboard, "Dashboard privacy action must keep the contextual privacy drawer.", errors)
 
-    # Every hand-placed contextual help button in Portfolio Manager should have a matching topic.
     drawer_topics = set(HELP_TEMPLATE_RE.findall(drawer))
     referenced_keys: set[str] = set()
     for template_path in TEMPLATES.glob("*.html"):
@@ -180,7 +212,7 @@ def main() -> int:
     missing_topics = sorted(referenced_keys - drawer_topics)
     require(
         not missing_topics,
-        "Every data-help-key must have a matching drawer template. Missing: " + ", ".join(missing_topics),
+        "Every hand-placed data-help-key must have a matching drawer template. Missing: " + ", ".join(missing_topics),
         errors,
     )
 
@@ -193,7 +225,10 @@ def main() -> int:
             print(f"  - {item}")
         return 1
 
-    print(f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed help key(s) plus contextual route coverage.")
+    print(
+        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed help key(s), "
+        "page-level route coverage, and automatic major-section coverage."
+    )
     return 0
 
 
