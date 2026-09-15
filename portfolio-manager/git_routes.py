@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path, PurePosixPath
 import subprocess
-import sys
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+
+from validation_service import run_full_validation
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -114,29 +115,8 @@ def diff_preview(cached: bool = False) -> str:
 
 
 def validation_suite() -> tuple[bool, str]:
-    commands = [
-        ("Public site", [sys.executable, "scripts/check-site.py"]),
-        ("Structured content", [sys.executable, "scripts/check-content.py"]),
-        ("General site content", [sys.executable, "scripts/check-site-content.py"]),
-        ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
-        ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
-        ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
-        ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
-        ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
-        ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
-        ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
-        ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
-    ]
-    output: list[str] = []
-    for label, command in commands:
-        result = run_command(command)
-        output.append(f"{label}: {'PASS' if result.returncode == 0 else 'FAIL'}")
-        if result.returncode != 0:
-            details = (result.stderr or result.stdout).strip()
-            if details:
-                output.append(details[-1800:])
-            return False, "\n".join(output)
-    return True, "\n".join(output)
+    """Use the same authoritative suite as Dashboard > Run Full Validation."""
+    return run_full_validation()
 
 
 def require_main_branch() -> tuple[bool, str]:
