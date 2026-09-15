@@ -8,7 +8,7 @@
   document.documentElement.classList.add('motion-ready');
 
   const revealTargets = document.querySelectorAll(
-    '.section-heading, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish'
+    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout'
   );
 
   revealTargets.forEach((element) => element.classList.add('reveal-on-scroll'));
