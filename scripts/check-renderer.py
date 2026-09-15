@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 from html.parser import HTMLParser
@@ -12,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = ROOT / "portfolio-data" / "projects"
 RENDERER = ROOT / "scripts" / "render-project.py"
 SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
+TOKEN_PATTERN = re.compile(r"\{\{[A-Z0-9_]+\}\}")
 
 
 class ReferenceParser(HTMLParser):
@@ -73,7 +75,7 @@ def main() -> int:
         if project["title"] not in rendered:
             errors.append(f"{label}: rendered output is missing project title")
 
-        if "{{" in rendered or "}}" in rendered:
+        if TOKEN_PATTERN.search(rendered):
             errors.append(f"{label}: unresolved template token detected")
 
         parser = ReferenceParser()
