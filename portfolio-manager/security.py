@@ -66,7 +66,12 @@ def validate_csrf() -> None:
 
 
 def is_safe_next_url(target: str | None) -> bool:
-    if not target:
+    if not target or "\\" in target or any(ord(char) < 32 for char in target):
         return False
     parsed = urlsplit(target)
-    return not parsed.scheme and not parsed.netloc and target.startswith("/") and not target.startswith("//")
+    return (
+        not parsed.scheme
+        and not parsed.netloc
+        and target.startswith("/")
+        and not target.startswith("//")
+    )
