@@ -33,7 +33,7 @@ from ai_upload_generation_service import UPLOAD_INSTRUCTIONS  # noqa: E402
 from asset_routes import project_asset_directory, resolve_asset_path  # noqa: E402
 from git_routes import is_safe_repo_path  # noqa: E402
 from reference_ai_analysis_service import ANALYSIS_INSTRUCTIONS  # noqa: E402
-from reference_library_service import ReferenceLibraryError, _item_path  # noqa: E402
+from reference_library_service import _item_path  # noqa: E402
 from security import is_safe_next_url  # noqa: E402
 import app as manager_app  # noqa: E402
 
@@ -146,33 +146,43 @@ def test_private_path_guards(errors: list[str]) -> None:
 
 def test_http_boundaries(errors: list[str]) -> None:
     app = manager_app.app
-    app.config.update(TESTING=True)
-    client = app.test_client()
+    original_testing = app.config.get("TESTING")
+    original_propagate = app.config.get("PROPAGATE_EXCEPTIONS")
+    app.config.update(TESTING=False, PROPAGATE_EXCEPTIONS=False)
+    try:
+        client = app.test_client()
 
-    hostile_host = client.get("/login", headers={"Host": "evil.example"})
-    require(hostile_host.status_code == 400, "Host-header attack was not rejected with HTTP 400.", errors)
+        hostile_host = client.get("/login", base_url="http://evil.example")
+        require(hostile_host.status_code == 400, "Host-header attack was not rejected with HTTP 400.", errors)
 
-    protected = client.get("/content")
-    require(protected.status_code in {302, 303}, "Unauthenticated protected route was not redirected.", errors)
-    require("/login" in protected.headers.get("Location", ""), "Unauthenticated route did not redirect to login.", errors)
+        protected = client.get("/content", base_url="http://localhost")
+        require(protected.status_code in {302, 303}, "Unauthenticated protected route was not redirected.", errors)
+        require("/login" in protected.headers.get("Location", ""), "Unauthenticated route did not redirect to login.", errors)
 
-    csrf_client = app.test_client()
-    with csrf_client.session_transaction() as session:
-        session["portfolio_manager_authenticated"] = True
-        session["_csrf_token"] = "known-synthetic-csrf"
+        csrf_client = app.test_client()
+        with csrf_client.session_transaction() as session:
+            session["portfolio_manager_authenticated"] = True
+            session["_csrf_token"] = "known-synthetic-csrf"
 
-    forged = csrf_client.post("/logout", data={"csrf_token": "forged-token"})
-    require(forged.status_code == 400, "Forged CSRF token was accepted.", errors)
+        forged = csrf_client.post(
+            "/logout",
+            data={"csrf_token": "forged-token"},
+            base_url="http://localhost",
+        )
+        require(forged.status_code == 400, "Forged CSRF token was accepted.", errors)
 
-    missing = csrf_client.post("/logout", data={})
-    require(missing.status_code == 400, "Missing CSRF token was accepted.", errors)
+        missing = csrf_client.post("/logout", data={}, base_url="http://localhost")
+        require(missing.status_code == 400, "Missing CSRF token was accepted.", errors)
 
-    env_probe = csrf_client.get("/.env")
-    require(env_probe.status_code == 404, "Direct .env HTTP probe did not return 404.", errors)
-    private_probe = csrf_client.get("/.portfolio-manager/private.json")
-    require(private_probe.status_code == 404, "Direct private-workspace HTTP probe did not return 404.", errors)
-    static_traversal = csrf_client.get("/static/../security.py")
-    require(static_traversal.status_code == 404, "Static-file traversal probe did not return 404.", errors)
+        env_probe = csrf_client.get("/.env", base_url="http://localhost")
+        require(env_probe.status_code == 404, "Direct .env HTTP probe did not return 404.", errors)
+        private_probe = csrf_client.get("/.portfolio-manager/private.json", base_url="http://localhost")
+        require(private_probe.status_code == 404, "Direct private-workspace HTTP probe did not return 404.", errors)
+        static_traversal = csrf_client.get("/static/../security.py", base_url="http://localhost")
+        require(static_traversal.status_code == 404, "Static-file traversal probe did not return 404.", errors)
+    finally:
+        app.config["TESTING"] = original_testing
+        app.config["PROPAGATE_EXCEPTIONS"] = original_propagate
 
 
 def load_renderer_module():
