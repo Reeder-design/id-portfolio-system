@@ -106,6 +106,19 @@ def protect_manager():
     return None
 
 
+@app.after_request
+def add_manager_security_headers(response):
+    # The manager handles private local working data. Avoid browser caching/referrer leakage
+    # and prevent the local UI from being embedded in another page.
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "frame-ancestors 'none'"
+    return response
+
+
 def slugify(value: str) -> str:
     value = value.strip().lower()
     value = re.sub(r"[^a-z0-9]+", "-", value)
