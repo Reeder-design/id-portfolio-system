@@ -42,6 +42,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
         ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
+        ("System docs/architecture freshness", [sys.executable, "scripts/check-system-docs.py"]),
         ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
         ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
         ("AI helper file-upload safety", [sys.executable, "scripts/check-ai-file-uploads.py"]),

@@ -10,6 +10,8 @@ on:
       - "templates/**"
       - "scripts/**"
       - "docs/**"
+      - "README.md"
+      - "AGENTS.md"
       - ".env.example"
       - ".gitignore"
       - ".github/workflows/validate-site.yml"
@@ -55,6 +57,9 @@ jobs:
 
       - name: Validate generated documentation
         run: python scripts/update-docs.py --check
+
+      - name: Validate system documentation and architecture freshness
+        run: python scripts/check-system-docs.py
 
       - name: Install Portfolio Manager dependencies
         run: python -m pip install -r portfolio-manager/requirements.txt

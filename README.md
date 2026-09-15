@@ -1,59 +1,51 @@
 # id-portfolio-system
 
-Public instructional design portfolio and reusable development system for Haley Reeder.
+Public instructional design portfolio plus a local-only management system for maintaining, creating, reviewing, validating, and publishing portfolio work.
 
 ## Live Portfolio
 
 https://reeder-design.github.io/id-portfolio-system/
 
-## Repository Structure
+## System at a Glance
 
-- `portfolio/` — public GitHub Pages website
-- `portfolio/css/styles.css` — shared site styles and design system
-- `portfolio/projects/` — portfolio project pages and demos
-- `portfolio-data/` — structured project content, general-page content, taxonomy, schemas, and portfolio version source data
-- `portfolio-manager/` — local-only Flask dashboard for portfolio maintenance, AI proposals, and guarded Git workflow
-- `templates/` — reusable HTML templates for generated portfolio pages
-- `design-system/` — reusable design-system resources
-- `scripts/` — project creation, rendering, documentation, maintenance, and validation scripts
-- `docs/` — maintenance docs, generated inventory/map/changelog, version snapshots, and AI-assistance documentation
-- `.github/workflows/` — automated validation and deployment
+```text
+PRIVATE / LOCAL
+.env
+.portfolio-manager/
+        │
+        ▼
+Portfolio Manager
+Manage / Reference Library / Create / AI
+        │
+        ▼
+PUBLIC-CANDIDATE WORK
+portfolio-data/ + portfolio/
+        │
+        ▼
+Preview → Full Validation → Commit
+        │
+        ▼
+Explicit Publish to GitHub
+        │
+        ▼
+main → GitHub Pages → LIVE PORTFOLIO
+```
 
-Local-only Portfolio Manager credentials and runtime data are intentionally excluded from Git:
+The public website and the local Manager are intentionally separate:
 
-- `.env` — local Flask secret, password hash, and optional AI API key/model setting
-- `.portfolio-manager/` — private runtime data and AI proposal history
+- `portfolio/` is the static website GitHub Pages deploys.
+- `portfolio-data/` is structured, Git-tracked source data for public portfolio content.
+- `portfolio-manager/` is the local Flask application used to work with the portfolio safely.
+- `.portfolio-manager/` is private, Git-ignored local state for proposals, references, backups, temporary uploads, and other working data.
+- `.env` stores local secrets such as the Manager password hash, Flask secret, and optional AI API key. It is Git-ignored.
+
+The repository itself is public. Anything committed to it should be treated as publicly visible even if GitHub Pages does not render it.
 
 ## Portfolio Manager
 
-Portfolio Manager runs against the same local repository used by VS Code. It is intentionally bound to `127.0.0.1`, requires a local password, and protects modifying forms with CSRF.
+Portfolio Manager is a private local workbench. It binds only to `127.0.0.1:5055`, requires local authentication, validates CSRF on modifying requests, rejects non-local Host headers, and sends no-cache/no-referrer/framing-protection headers.
 
-Content-editing and asset actions change local files only. AI Assistance creates private reviewable proposals only. The dedicated Git Workflow can intentionally stage approved files, validate and commit on a feature branch, push that feature branch, and help open a pull request. It cannot commit or push `main`, force-push, stage blocked private paths, or merge a pull request.
-
-The v1 dashboard is intentionally narrow. Its normal workflow is:
-
-```text
-edit structured content or public assets → optional AI proposal → preview → Full Validation → Git Workflow → PR → explicit merge
-```
-
-Low-frequency documentation refresh and semantic-version controls are grouped under Advanced Maintenance rather than mixed into the normal editing flow.
-
-From the repository root, activate the project virtual environment and install the dashboard dependency:
-
-```bash
-source .venv/bin/activate
-python -m pip install -r portfolio-manager/requirements.txt
-```
-
-Configure local-only credentials once:
-
-```bash
-python portfolio-manager/setup.py
-```
-
-The setup script asks for a password locally, stores only its hash plus a generated Flask secret in the Git-ignored `.env` file, and creates the Git-ignored `.portfolio-manager/` private workspace.
-
-Start the dashboard:
+Start it from the repository root:
 
 ```bash
 python portfolio-manager/app.py
@@ -65,233 +57,228 @@ Then open:
 http://127.0.0.1:5055
 ```
 
-Port `5055` is used by default to avoid a common macOS conflict with AirPlay Receiver on port `5000`.
+The Manager has two primary content workflows:
 
-The in-app User Guide is available at `/help`, and contextual `?` controls explain individual actions.
+### Manage Content
 
-### General Page Content
+Use this for work that already exists in the portfolio. It supports:
 
-Portfolio Manager includes a safe editor for routine copy on Home, About, Projects, the three main project-category pages, and Contact.
+- visible page editing
+- structured project editing
+- project asset management
+- private page/project notes
+- page-aware AI edit proposals
+- deterministic **Approve & Apply Locally** with validation and recovery backup
+- proposal history
+- Related References
+- AI Portfolio Review
 
-The structured source of truth is:
+Saving or applying locally does **not** publish anything.
 
-```text
-portfolio-data/site-content.json
-```
+### Create Content
 
-Each editable field maps to one explicit approved locator in `scripts/site_content_model.py`. The manager exposes only predefined plain-text headings and paragraphs; navigation, links, buttons, tags, CSS, JavaScript, layout, and custom interactions remain developer-controlled.
-
-When general-page copy is saved:
-
-1. the structured value is updated in `portfolio-data/site-content.json`
-2. `scripts/render-site-content.py` updates only the approved public HTML text location
-3. managed copy is HTML-escaped before rendering
-4. `scripts/check-site-content.py` verifies structured/public copy synchronization
-5. `scripts/check-site.py` verifies the public site
-6. both the JSON and edited HTML are restored automatically if rendering or validation fails
-
-Every save requires an explicit public-safe confirmation. If a page redesign makes a locator missing or ambiguous, the renderer fails closed instead of guessing where content belongs.
-
-### Public Asset Library
-
-Portfolio Manager includes a project-based Asset Library for files intentionally approved for the public portfolio. Managed files are stored under `portfolio/assets/project-assets/<project-id>/` and associated with the project's structured `assets` array.
-
-The Asset Library can:
-
-- add approved image, video, PDF, and Office-document assets
-- require alt text for images
-- store captions and asset metadata in project JSON
-- preview managed assets through authenticated local routes
-- replace an asset in place while preserving its public path
-- remove an asset with validation rollback if another public page still depends on it
-
-Every upload or replacement requires an explicit public-safe confirmation. General web-code/executable formats such as HTML, JavaScript, CSS, SVG, shell scripts, executables, and archives are intentionally blocked from this uploader.
-
-Keep confidential or unsanitized source files in appropriate private storage outside the public portfolio. A file under `portfolio/` may become publicly reachable after a future merge even when no page visibly links to it.
-
-### AI Assistance
-
-The authenticated `/ai/` workspace adds an optional proposal-only AI layer for:
-
-- rewrite and polish
-- portfolio sanitization drafts
-- source-content analysis
-- category/subcategory/tag suggestions
-- project-summary drafting
-
-AI remains separated from deterministic editing. It does not directly write `portfolio/`, `portfolio-data/`, generated docs, or Git state.
-
-Before sending a request:
-
-- only source/context deliberately entered in the AI workspace is used
-- the repo's public portfolio taxonomy is included as context for placement suggestions
-- project pages and other local private source files are not automatically sent
-- local preflight blocks several obvious secret/credential formats
-- the user must confirm external-provider awareness and authorization to send the text
-
-AI proposals are stored only under:
+Use this for new portfolio work. The guided flow is:
 
 ```text
-.portfolio-manager/ai-proposals/
+Idea / Approved Sources
+        ↓
+Content Brief
+        ↓
+Optional AI Plan Proposal
+        ↓
+Human Review / Refinement
+        ↓
+Controlled Local Build
+        ↓
+Validation + Preview
+        ↓
+Keep or Revert
+        ↓
+Save & Publish
 ```
 
-The review page separates generated copy, analysis, placement/tags, source-supported claims, missing/unsupported claims, and warnings. There is intentionally no Apply-to-site route. Approved wording is copied into General Page Content or Project Content and saved through those existing deterministic editors.
+The **Reference Library** sits inside this workflow for private professional source material. Originals remain unchanged and private. A separate sanitized derivative can move through review and become **Approved for Portfolio Use** before it is attached to a Content Brief.
 
-AI is optional. Configure it locally with:
+## AI Assistance
+
+AI is optional and never receives blanket repository access.
+
+There are several distinct AI workflows:
+
+- **Advanced AI Drafting Helper** — proposal-only rewriting, analysis, placement suggestions, and drafting support.
+- **Page-aware AI** — creates a private edit proposal for one managed page. The user can explicitly approve a deterministic local application; the AI itself does not write or publish files.
+- **AI Portfolio Review** — advisory review of the public portfolio.
+- **Reference AI Analysis** — analyzes a selected private reference only after the user approves exactly what may be sent.
+- **Create Content AI planning** — proposes a project plan from the Content Brief plus approved source context.
+
+External-AI requests use explicit provider/authorization acknowledgements and local secret preflight. Private originals, unrelated Reference Library resources, private notes, and arbitrary repository files are not silently sent.
+
+See `docs/ai-assistance.md` for the current AI/privacy contract.
+
+## Save & Publish
+
+Routine portfolio-content publishing is intentionally different from developing Portfolio Manager itself.
+
+### Routine portfolio content
+
+The local **Save & Publish** workflow operates on `main`:
+
+```text
+local edit
+  → review diff
+  → select exact files
+  → Full Validation
+  → commit locally to main
+  → explicit Publish to GitHub
+  → origin/main
+  → GitHub Pages deploy
+```
+
+Important boundaries:
+
+- Save is local.
+- Apply Locally is local.
+- Keep is local.
+- Approved for Portfolio Use does not publish a file.
+- Commit is a local checkpoint.
+- **Publish to GitHub** is the step that can make approved public portfolio changes live.
+- Publish rechecks outgoing paths and reruns Full Validation immediately before push.
+- `.git`, `.portfolio-manager/`, `.venv/`, private `.env*` files, and common key/certificate formats are blocked.
+- Force-push is not implemented.
+
+### Developing Portfolio Manager or repository infrastructure
+
+Code/system changes use the developer workflow:
+
+```text
+feature branch → PR → UAT → explicit “merge PR#” approval → main
+```
+
+Do not confuse this with routine Save & Publish. The Manager does not merge its own development pull requests.
+
+## Full Validation
+
+Portfolio Manager **Run Full Validation** and pull-request CI exercise the same release-critical system checks, including:
+
+- public-site integrity and GitHub Pages readiness
+- structured project/general-page content
+- responsive/final public polish
+- renderer and new-project generator
+- generated documentation/versioning
+- Git publishing safety
+- AI privacy and proposal/apply boundaries
+- assets and Related References
+- Create Content and Reference Library workflows
+- adversarial security/misuse regression
+- workflow state-safety/chaos regression
+- end-to-end release smoke tests
+- Portfolio Manager security/runtime checks
+- system documentation/architecture freshness
+
+Successful Manager validation explicitly confirms the release E2E, security, chaos/state-safety, and documentation/architecture checks.
+
+## GitHub Pages
+
+`.github/workflows/deploy-pages.yml` deploys only `portfolio/`.
+
+A deployment runs after relevant public-site changes reach `main`. The site is validated before upload; a failed validation stops deployment.
+
+The public portfolio remains online when your Mac, VS Code, Portfolio Manager, and local preview server are all closed.
+
+## Local Public Preview
+
+When you want to preview the static site locally:
 
 ```bash
-python portfolio-manager/configure-ai.py
+cd portfolio
+python3 -m http.server 8000
 ```
 
-The helper adds the API key/model only to the Git-ignored `.env` and preserves existing Portfolio Manager login settings. Restart Flask afterward.
+If that terminal is already running after a Git pull, you can normally just refresh the browser. Portfolio Manager itself should be restarted after Python/template/static changes.
 
-Disable AI locally with:
+## Repository Structure
 
-```bash
-python portfolio-manager/configure-ai.py --disable
-```
+- `portfolio/` — deployed public website
+- `portfolio-data/` — structured public-content source data
+- `portfolio-manager/` — local-only Flask management application
+- `templates/` — reusable standard project templates
+- `design-system/` — design-system/development resources
+- `scripts/` — creation, rendering, maintenance, validation, and regression scripts
+- `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
+- `.github/workflows/` — CI and GitHub Pages deployment
+- `.portfolio-manager/` — private local runtime state; never commit
+- `.env` — private local secrets; never commit
 
-The default model is currently `gpt-5.6-terra`. The implementation uses the OpenAI Responses API over the fixed HTTPS endpoint with Python's standard-library HTTP client, avoiding a new SDK dependency and preserving compatibility with the existing local Python environment.
+## Project Creation and Rendering
 
-See `docs/ai-assistance.md` for the full provider, privacy, source-fidelity, and validation design.
+The guided Create Content workflow is the normal user path for new work. Lower-level deterministic scripts remain available for development/maintenance.
 
-### Guarded Git Workflow
-
-The authenticated `/git/` interface provides a review-driven Git workflow without exposing arbitrary terminal commands.
-
-It can:
-
-- show the current branch, upstream, ahead/behind state, and changed files
-- display staged and unstaged line-level diffs
-- safely sync clean `main` using `git pull --ff-only`
-- create and switch to a new `feature/`, `fix/`, `content/`, or `chore/` branch
-- stage exact files selected from Git's current changed-file list
-- unstage files without deleting their local edits
-- run the full portfolio validation suite before every commit
-- create a local commit only on a non-`main` branch
-- push a clean feature branch using a normal upstream push
-- create a pull request through authenticated GitHub CLI when available
-- otherwise open GitHub's pre-filled compare/PR page without storing an API token
-
-Safety boundaries are enforced in code:
-
-- commits on `main` are blocked
-- pushes to `main` are blocked
-- force-push is not implemented
-- Git merge is not implemented
-- pull-request merge is not implemented
-- arbitrary shell execution is not used for user-controlled values
-- `.git`, `.env`, `.portfolio-manager/`, `.venv/`, and common key/certificate file types are blocked from staging through the dashboard
-- pushes are blocked while uncommitted local changes remain
-
-The intended flow is:
-
-```text
-local edit → review diff → stage exact files → full validation + commit → push feature branch → PR → explicit human review/merge → GitHub Pages
-```
-
-## Publishing Workflow
-
-The `main` branch is the approved source for the live portfolio.
-
-When portfolio changes are merged into `main`:
-
-1. GitHub Actions checks out the repository.
-2. Portfolio HTML, structured project/general-page content, generated documentation, project creation rules, template rendering, Git workflow guardrails, AI-assistance guardrails, and Portfolio Manager safety rules are validated.
-3. If validation passes, the contents of `portfolio/` are uploaded.
-4. GitHub Pages deploys the latest approved version.
-
-For substantial changes, work on a separate branch and open a pull request before merging into `main`.
-
-Portfolio Manager may help perform the feature-branch Git steps, but the approval boundary remains:
-
-```text
-local change → commit → push branch → pull request → explicit review → merge → GitHub Pages
-```
-
-## Create a New Project
-
-Run the guided generator from the repository root:
+Create a standard project:
 
 ```bash
 python3 scripts/new-project.py
 ```
 
-It collects the project information, creates the structured JSON record, calculates the canonical project path, renders the standard case-study page, validates the result, and refreshes generated portfolio documentation.
-
-Preview without writing files:
+Preview generation without writing:
 
 ```bash
 python3 scripts/new-project.py --dry-run
 ```
 
-See `docs/new-project-guide.md` for the full workflow and confidentiality safeguards.
-
-## Structured Project Pages
-
-Standard case-study pages are generated from project records in `portfolio-data/projects/` using the shared template in `templates/project-page/`.
-
-Preview generated HTML for an existing project:
+Render an existing structured project:
 
 ```bash
 python3 scripts/render-project.py portfolio-data/projects/pursuit-positioning.json --stdout
 ```
 
-The renderer does not overwrite an existing page unless `--force` is explicitly supplied.
-
-See `docs/template-system.md` for the rendering workflow.
+The renderer refuses to overwrite an existing page unless `--force` is explicitly supplied.
 
 ## Documentation and Versioning
 
-Refresh the generated content inventory, portfolio map, and changelog:
+Generated documentation is refreshed with:
 
 ```bash
 python3 scripts/update-docs.py
 ```
 
-Check that generated documentation is current without changing files:
+Check freshness without writing:
 
 ```bash
 python3 scripts/update-docs.py --check
 ```
 
-Create an intentional semantic version release:
+Intentional semantic releases use:
 
 ```bash
-python3 scripts/update-docs.py --bump minor --message "Add a new interactive learning project"
+python3 scripts/update-docs.py --bump patch --message "Describe the release"
 ```
 
-Version source data lives in `portfolio-data/version.json`. Release snapshots are stored under `docs/versions/`.
+Use `minor` or `major` only when the scope warrants it. Version data lives in `portfolio-data/version.json`; immutable snapshots live under `docs/versions/`.
 
-See `docs/versioning-guide.md` for patch/minor/major rules and the release workflow.
+## Commit Identity Privacy
 
-## Local Validation
+This repository is public, so Git commit metadata is public too. Configure this repository to use your GitHub-provided noreply address for future local commits if you do not want your personal email attached to new commit history.
 
-The Portfolio Manager **Run Full Validation** button runs the same core suite used by the pull-request workflow.
-
-From the terminal, run:
+From the repository root:
 
 ```bash
-python3 scripts/check-site.py
-python3 scripts/check-content.py
-python3 scripts/check-site-content.py
-python3 scripts/check-renderer.py
-python3 scripts/check-new-project.py
-python3 scripts/check-docs.py
-python3 scripts/update-docs.py --check
-python3 scripts/check-git-workflow.py
-python3 scripts/check-ai-assistance.py
-python3 scripts/check-portfolio-manager.py
-python3 scripts/check-portfolio-manager-runtime.py
+git config user.name "Reeder-design"
+git config user.email "YOUR_GITHUB_NOREPLY_ADDRESS"
 ```
 
-These checks cover public site links/assets, structured project rules, structured general-page copy synchronization, generated project-page navigation/template completeness, project-generator behavior, versioning/documentation freshness, Git workflow safety boundaries, AI-assistance safety boundaries, Portfolio Manager security requirements, and authenticated dashboard/Asset Library/general-page/Git-workflow/AI-workspace rendering.
+Verify before committing:
+
+```bash
+git config user.name
+git config user.email
+```
+
+This changes future commit metadata only. It does not rewrite existing history.
 
 ## Agent Guidance
 
-- `AGENTS.md` contains repository-wide rules for autonomous or assisted development.
-- `.github/copilot-instructions.md` contains persistent repository guidance for compatible GitHub AI tooling.
+`AGENTS.md` contains repository-wide rules for assisted development. The in-app User Guide is the canonical human workflow reference for Portfolio Manager buttons, privacy boundaries, state handling, and publishing decisions.
 
-The guiding principle for this system is:
+The guiding principle is:
 
 > Build it once, understand how it works, and make it reusable.
