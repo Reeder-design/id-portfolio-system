@@ -31,6 +31,11 @@ STALE_SLOGANS = [
     "Workflow first, score second",
 ]
 
+VIEWPORT_RE = re.compile(
+    r'<meta\s+name=["\']viewport["\']\s+content=["\']width=device-width,\s*initial-scale=1\.0["\']\s*/?>',
+    re.IGNORECASE | re.DOTALL,
+)
+
 
 class VisibleBodyText(HTMLParser):
     def __init__(self) -> None:
@@ -82,7 +87,7 @@ def main() -> int:
         html = path.read_text(encoding="utf-8")
         relative = path.relative_to(ROOT)
         require(
-            '<meta name="viewport" content="width=device-width, initial-scale=1.0">' in html,
+            VIEWPORT_RE.search(html) is not None,
             f"{relative}: missing mobile viewport metadata.",
             errors,
         )
