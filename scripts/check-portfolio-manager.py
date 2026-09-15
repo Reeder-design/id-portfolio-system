@@ -36,6 +36,16 @@ def main() -> int:
     require("portfolio-manager-local-dev-key" not in app_text, "Hard-coded Flask development secret must not return", errors)
     require("require_security_settings()" in app_text, "Portfolio Manager must require local security settings", errors)
     require("validate_csrf()" in app_text, "Portfolio Manager must validate CSRF for POST actions", errors)
+    require('ALLOWED_LOCAL_HOSTS = {"127.0.0.1", "localhost"}' in app_text, "Portfolio Manager must keep an explicit localhost Host-header allowlist", errors)
+    require("_valid_local_host_header" in app_text, "Portfolio Manager must reject malformed/non-local Host headers before auth redirects", errors)
+    for header in (
+        'response.headers["Cache-Control"] = "no-store"',
+        'response.headers["Referrer-Policy"] = "no-referrer"',
+        'response.headers["X-Content-Type-Options"] = "nosniff"',
+        'response.headers["X-Frame-Options"] = "DENY"',
+        'response.headers["Content-Security-Policy"] = "frame-ancestors \'none\'"',
+    ):
+        require(header in app_text, f"Portfolio Manager private-response protection is missing: {header}", errors)
 
     require(VALIDATION_SERVICE.exists(), "Reusable validation service is missing", errors)
     require(
@@ -46,6 +56,11 @@ def main() -> int:
     require(
         "scripts/check-site-content.py" in validation_text,
         "Run Full Validation must include general site content checks",
+        errors,
+    )
+    require(
+        "scripts/check-adversarial-security.py" in validation_text,
+        "Run Full Validation must include adversarial security/misuse checks",
         errors,
     )
     require(
@@ -60,6 +75,7 @@ def main() -> int:
     )
 
     require(".env" in ignore_text, ".env must be ignored by Git", errors)
+    require(".env.*" in ignore_text and "!.env.example" in ignore_text, "Local .env variants must be ignored while preserving .env.example", errors)
     require(".portfolio-manager/" in ignore_text, ".portfolio-manager/ must be ignored by Git", errors)
     require("portfolio-data/dashboard-uploads" not in app_text, "Uploads must not return to the Git-tracked portfolio-data workspace", errors)
 
