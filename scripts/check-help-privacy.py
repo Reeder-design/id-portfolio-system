@@ -106,65 +106,89 @@ def main() -> int:
     for marker in ["goBackInHelp", "showHelpHome", "history", "data-help-back", "data-help-home"]:
         require(marker in help_js, f"Help JavaScript must support returning from a selected topic: missing {marker!r}.", errors)
 
-    # Page-level contextual help must cover every major route family. Specific rules are
-    # checked here so route additions cannot silently lose the in-page help entry point.
+    # Contextual ? bubbles must explain their actual local region. They must not map a
+    # section heading to a broad prewritten topic, because that caused irrelevant help.
     for marker in [
-        "contextualHelpRules",
-        "currentPageHelpRule",
+        "makeLocalHelpButton",
+        "closestMajorHelpSection",
+        "closestHelpRegion",
+        "belongsToRegion",
+        "regionName",
+        "regionIntro",
+        "collectRegionOptions",
+        "describeAction",
+        "describeField",
+        "renderLocalHelp",
+        "openLocalHelp",
         "addContextualPageHelp",
-        "reference-ai",
-        "sanitization",
-        "reference-library",
-        "create-content",
-        "general-content",
-        "save-project",
-        "page-ai",
-        "ai-proposal",
-        "portfolio-review",
-        "related-references",
-        "assets",
-        "git-workflow",
-        "ai-assistance",
+        "sectionOwnHelpButton",
+        "addContextualSectionHelp",
+        "dataset.localHelp = 'true'",
+        "[data-local-help=\"true\"]",
+        "Options in this section",
     ]:
-        require(marker in help_js, f"Contextual page help is missing {marker!r}.", errors)
+        require(marker in help_js, f"Section-specific contextual help is missing {marker!r}.", errors)
 
-    # The homepage page-level helper must not duplicate the first Manage/Create card's
-    # maintenance helper. This is the exact UX regression found during final UAT.
     require(
-        "{ match: /^\\/$/, key: 'button-safety'" in help_js,
-        "Dashboard page-level help must use button-safety instead of duplicating maintenance help.",
+        "sectionHelpRules" not in help_js and "sectionHelpRule(" not in help_js,
+        "Section bubbles must not regress to keyword-mapping broad help topics.",
         errors,
     )
 
-    # Every major workflow card/action boundary receives one section-level helper unless
-    # it already owns an explicit helper. Repeated small cards remain intentionally clean.
+    # The helper must stay within the nearest major card/header and ignore nested major
+    # sections so a bubble describes only the UI beside it.
     for marker in [
-        "sectionHelpRules",
-        "majorSectionOwnsHelp",
-        "sectionHelpRule",
-        "addContextualSectionHelp",
-        "main .dashboard-card, .git-safety-banner, .release-box",
-        "contextual-section-help",
-        "v2-small-card",
+        ".release-box, .git-safety-banner, .dashboard-card",
+        ".subpage-header, .manager-header",
+        "closestHelpRegion(node) === region",
+        "closestMajorHelpSection(node) === section",
     ]:
-        require(marker in help_js, f"Major-section contextual help is missing {marker!r}.", errors)
+        require(marker in help_js, f"Local help boundary is missing {marker!r}.", errors)
 
-    # Representative major workflows must map to specific topics rather than all falling
-    # back to one generic drawer article.
-    for marker in [
-        "Publishing Boundary",
-        "Documentation Maintenance",
-        "Review and Select Files",
-        "Diff Review",
-        "Validate and Commit",
-        "Project Asset Safety",
-        "Page-aware AI Proposal",
-        "Private vs. Public Storage",
-        "AI Resource Analysis",
-        "Create Content Lab",
-        "AI File Review Safety",
+    # Representative multi-option sections must have distinct explanations for every
+    # visible choice rather than one generic description for the whole card.
+    for phrase in [
+        "Runs the complete local safety and quality check suite",
+        "Opens the controlled Git workflow where you review changes",
+        "Regenerates the repository documentation",
+        "Records a patch release",
+        "Records a minor release",
+        "Records a major release",
+        "Creates a new private Content Brief",
+        "Stores the selected source and its private metadata",
+        "Shows every Reference Library item regardless of review status",
+        "Filters the Reference Library to items with the",
     ]:
-        require(marker in help_js, f"Section help needs a specific mapping for {marker!r}.", errors)
+        require(phrase in help_js, f"Local section help needs explicit option copy: missing {phrase!r}.", errors)
+
+    # Local help must describe forms and repeating lists without echoing private field
+    # values or producing one duplicate explanation per item.
+    for marker in [
+        "label[for]",
+        "field.type === 'hidden'",
+        "field-help",
+        "field.getAttribute('placeholder')",
+        ".ai-proposal-list .ai-proposal-link",
+        "Open a Content Brief",
+        "Open a Reference Library item",
+        "const seen = new Set()",
+    ]:
+        require(marker in help_js, f"Local help option coverage is missing {marker!r}.", errors)
+    require("field.value" not in help_js, "Contextual help must not echo current form values/private entered content.", errors)
+
+    # Page-header bubbles use the same local model: page purpose plus only the controls in
+    # the header beside that bubble. Generic help articles remain available through the
+    # explicit User Guide / topic buttons instead.
+    require(
+        "Page-header help is intentionally local" in help_js,
+        "Header contextual help must use the local-region model.",
+        errors,
+    )
+    require(
+        "contextualHelpRules" not in help_js,
+        "Header ? bubbles must not regress to route-mapped broad help topics.",
+        errors,
+    )
 
     for phrase in [
         "Release end-to-end",
@@ -226,8 +250,8 @@ def main() -> int:
         return 1
 
     print(
-        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed help key(s), "
-        "page-level route coverage, and automatic major-section coverage."
+        f"User Guide/privacy validation passed with {len(referenced_keys)} hand-placed topic key(s) "
+        "plus section-specific local ? help for page headers and every major workflow section."
     )
     return 0
 
