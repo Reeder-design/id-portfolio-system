@@ -68,9 +68,27 @@
         showHelpHome();
     }
 
-    // New Portfolio Manager surfaces automatically receive one page-level contextual
-    // helper in the header. Section-level helpers can still be hand-placed where a
-    // workflow needs more specific guidance. Specific routes must come before broad ones.
+    function topicExists(key) {
+        return Boolean(document.querySelector(`[data-help-template="${key}"]`));
+    }
+
+    function makeHelpButton(key, label, extraClass = '') {
+        if (!topicExists(key)) return null;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `inline-help ${extraClass}`.trim();
+        button.dataset.helpKey = key;
+        button.dataset.helpLabel = label;
+        button.setAttribute('aria-label', `Open ${label} help`);
+        button.title = `${label} help`;
+        button.textContent = '?';
+        return button;
+    }
+
+    // Page-level help: every authenticated Portfolio Manager surface gets a contextual
+    // entry point. Specific routes come before broad route families. The dashboard uses
+    // button-safety at page level so it does not duplicate the Manage/Create workflow
+    // helper already shown in the first homepage card.
     const contextualHelpRules = [
         { match: /^\/create\/references\/[^/]+\/analysis\/?$/, key: 'reference-ai', label: 'AI Resource Analysis' },
         { match: /^\/create\/references\/[^/]+\/sanitization\/?$/, key: 'sanitization', label: 'Sanitization Review' },
@@ -82,34 +100,111 @@
         { match: /^\/content\/?$/, key: 'maintenance', label: 'Manage Content' },
         { match: /^\/site-content(?:\/.*)?$/, key: 'general-content', label: 'Page Content' },
         { match: /^\/ai\/page-edit\//, key: 'page-ai', label: 'Page-aware AI' },
+        { match: /^\/ai\/proposals\//, key: 'ai-proposal', label: 'AI Proposal' },
         { match: /^\/manage\/ai-review(?:\/.*)?$/, key: 'portfolio-review', label: 'AI Portfolio Review' },
         { match: /related-references/, key: 'related-references', label: 'Related References' },
         { match: /^\/assets(?:\/.*)?$/, key: 'assets', label: 'Project Asset Safety' },
         { match: /^\/git(?:\/.*)?$/, key: 'git-workflow', label: 'Save & Publish Safety' },
         { match: /^\/ai(?:\/.*)?$/, key: 'ai-assistance', label: 'AI Assistance' },
-        { match: /^\/$/, key: 'maintenance', label: 'Portfolio Manager Workflow' },
+        { match: /^\/$/, key: 'button-safety', label: 'Portfolio Manager Controls' },
     ];
+
+    function currentPageHelpRule() {
+        return contextualHelpRules.find((item) => item.match.test(window.location.pathname)) || null;
+    }
 
     function addContextualPageHelp() {
         if (!drawer) return;
-        const rule = contextualHelpRules.find((item) => item.match.test(window.location.pathname));
-        if (!rule) return;
-
         const host = document.querySelector('.subpage-header .header-actions, .manager-header .manager-top-actions');
-        if (!host || host.querySelector(`[data-help-key="${rule.key}"]`)) return;
+        if (!host) return;
 
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'inline-help contextual-page-help';
-        button.dataset.helpKey = rule.key;
-        button.dataset.helpLabel = rule.label;
-        button.setAttribute('aria-label', `Open ${rule.label} help`);
-        button.title = `${rule.label} help`;
-        button.textContent = '?';
-        host.prepend(button);
+        const rule = currentPageHelpRule() || { key: 'maintenance', label: 'Portfolio Manager Help' };
+        if (host.querySelector(`[data-help-key="${rule.key}"]`)) return;
+
+        const button = makeHelpButton(rule.key, rule.label, 'contextual-page-help');
+        if (button) host.prepend(button);
+    }
+
+    // Major section help: add one relevant bubble to each major workflow card/action
+    // boundary. Repeated child rows and individual fields stay uncluttered.
+    const sectionHelpRules = [
+        { match: /(full validation|validation|health check|release end-to-end|security\/misuse|state-safety)/i, key: 'validation', label: 'Full Validation' },
+        { match: /(review and publish approved changes|ready to publish|publishing boundary|what actually gets published)/i, key: 'publishing', label: 'Publishing Boundary' },
+        { match: /(refresh documentation|documentation and versioning|generated documentation)/i, key: 'refresh-docs', label: 'Documentation Maintenance' },
+        { match: /(version release|intentional release)/i, key: 'versioning', label: 'Version Releases' },
+        { match: /(review changed files|select files|changed file)/i, key: 'git-stage', label: 'Review and Select Files' },
+        { match: /(what actually changed|diff review|selected for the next commit)/i, key: 'git-diff', label: 'Diff Review' },
+        { match: /(validate & commit|commit changes|local checkpoint)/i, key: 'git-commit', label: 'Validate and Commit' },
+        { match: /(publish to github|push.*github)/i, key: 'git-push', label: 'Publish to GitHub' },
+        { match: /(repository state|working on main|save & publish)/i, key: 'git-workflow', label: 'Save & Publish Safety' },
+        { match: /(public-file safety|associated assets|project assets|asset library)/i, key: 'assets', label: 'Project Asset Safety' },
+        { match: /(add asset|add public asset)/i, key: 'asset-upload', label: 'Add Public Asset' },
+        { match: /(replace file|replace asset)/i, key: 'asset-replace', label: 'Replace Asset' },
+        { match: /(ai portfolio review)/i, key: 'portfolio-review', label: 'AI Portfolio Review' },
+        { match: /(proposal history|exact proposed operations|approval boundary|proposal summary)/i, key: 'page-ai', label: 'Page-aware AI Proposal' },
+        { match: /(related references)/i, key: 'related-references', label: 'Related References' },
+        { match: /(ai-assisted edit|ask for a larger change|page-aware ai)/i, key: 'page-ai', label: 'Page-aware AI' },
+        { match: /(visible page content|edit page copy|current visible content|live local preview|current page)/i, key: 'general-content', label: 'Visible Page Editing' },
+        { match: /(project content|edit project|current project)/i, key: 'save-project', label: 'Project Editing' },
+        { match: /(private page notes|private project notes|private workspace)/i, key: 'privacy', label: 'Private vs. Public Storage' },
+        { match: /(original private source|notes and status|resource actions|reference item)/i, key: 'reference-library', label: 'Reference Library' },
+        { match: /(sanitized derivative|sanitized draft|sanitization review)/i, key: 'sanitization', label: 'Sanitization Review' },
+        { match: /(ask ai about this resource|ai resource analysis|resource analysis)/i, key: 'reference-ai', label: 'AI Resource Analysis' },
+        { match: /(approved source context|content brief|ai planning boundary|ai plan proposal|proposed structure|experience design|controlled build|current content plan|build proposal|human review|create locally|local build review)/i, key: 'create-content', label: 'Create Content Lab' },
+        { match: /(advanced ai drafting|prepared request|file review|attachments)/i, key: 'ai-file-review', label: 'AI File Review Safety' },
+        { match: /(ai settings|model|provider|ai assistance)/i, key: 'ai-assistance', label: 'AI Assistance' },
+        { match: /(manage tools|review and maintain existing content|choose a page to edit|what do you want to do)/i, key: 'maintenance', label: 'Portfolio Manager Workflow' },
+    ];
+
+    function majorSectionOwnsHelp(section) {
+        return Array.from(section.querySelectorAll('[data-help-key]')).some((node) => {
+            const owner = node.closest('.dashboard-card, .git-safety-banner, .release-box');
+            return owner === section;
+        });
+    }
+
+    function sectionHelpRule(section, pageRule) {
+        const headingParts = Array.from(section.querySelectorAll('h2, h3, .eyebrow, summary strong'))
+            .slice(0, 8)
+            .map((node) => node.textContent.trim())
+            .filter(Boolean);
+        const text = headingParts.join(' · ');
+        const matched = sectionHelpRules.find((item) => item.match.test(text));
+        if (matched) return matched;
+        if (pageRule) return pageRule;
+        return { key: 'maintenance', label: 'Portfolio Manager Workflow' };
+    }
+
+    function addContextualSectionHelp() {
+        if (!drawer) return;
+        const pageRule = currentPageHelpRule();
+        const sections = document.querySelectorAll('main .dashboard-card, .git-safety-banner, .release-box');
+
+        sections.forEach((section) => {
+            if (section.classList.contains('v2-small-card') || majorSectionOwnsHelp(section)) return;
+
+            const rule = sectionHelpRule(section, pageRule);
+            const button = makeHelpButton(rule.key, rule.label, 'contextual-section-help');
+            if (!button) return;
+
+            const directActionRow = Array.from(section.children).find((child) => child.classList && child.classList.contains('action-title-row'));
+            if (directActionRow) {
+                directActionRow.append(button);
+                return;
+            }
+
+            const anchor = document.createElement('div');
+            anchor.className = 'contextual-section-help-anchor';
+            anchor.style.display = 'flex';
+            anchor.style.justifyContent = 'flex-end';
+            anchor.style.marginBottom = '4px';
+            anchor.append(button);
+            section.prepend(anchor);
+        });
     }
 
     addContextualPageHelp();
+    addContextualSectionHelp();
 
     // Some destructive actions predate the shared confirmation helper. Normalize them
     // here so the safety explanation stays consistent even when a template has not yet
