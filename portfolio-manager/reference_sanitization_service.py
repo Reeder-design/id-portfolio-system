@@ -12,6 +12,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 from ai_service import AIServiceError, OPENAI_RESPONSES_URL, get_ai_settings, preflight_source
+from office_archive_safety import OfficeArchiveSafetyError, validate_office_archive
 from reference_library_service import (
     ReferenceLibraryError,
     load_reference_item,
@@ -213,6 +214,12 @@ def extract_reference_text(item_id: str) -> dict[str, Any]:
             "extension": suffix,
             "reason": "This file type is stored privately, but automated sanitization review currently supports text, PDF, DOCX, PPTX, and XLSX sources. Use the manual Sanitized Draft workflow for this source.",
         }
+
+    if suffix in OFFICE_EXTENSIONS:
+        try:
+            validate_office_archive(path)
+        except OfficeArchiveSafetyError as exc:
+            raise SanitizationError(str(exc)) from exc
 
     try:
         if suffix in TEXT_EXTENSIONS:

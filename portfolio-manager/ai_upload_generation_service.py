@@ -13,6 +13,7 @@ from ai_service import (
     generate_proposal,
     get_ai_settings,
     normalize_result,
+    preflight_request,
     proposal_path,
     save_proposal,
 )
@@ -45,8 +46,14 @@ def generate_prepared_upload_proposal(session: dict[str, Any]) -> dict[str, Any]
     task = str(session.get("task", ""))
     source_text = str(session.get("source_text", ""))
     user_goal = str(session.get("user_goal", ""))
-    image_inputs = image_inputs_for_session(session)
+    preflight = preflight_request(source_text, user_goal)
+    if preflight["blocked"]:
+        labels = ", ".join(preflight["blocked"])
+        raise AIServiceError(
+            f"Local preflight blocked this prepared request because it appears to contain {labels}. Remove the secret/credential before using AI."
+        )
 
+    image_inputs = image_inputs_for_session(session)
     if not image_inputs:
         return generate_proposal(task, source_text, user_goal)
 
@@ -110,7 +117,8 @@ def generate_prepared_upload_proposal(session: dict[str, Any]) -> dict[str, Any]
         raise AIServiceError("AI returned text that could not be read as a structured proposal.") from exc
 
     result = normalize_result(parsed)
-    result["local_preflight_warnings"] = list(session.get("preflight", {}).get("warnings", []))
+    existing_warnings = list(session.get("preflight", {}).get("warnings", []))
+    result["local_preflight_warnings"] = list(dict.fromkeys(existing_warnings + preflight["warnings"]))
     return result
 
 

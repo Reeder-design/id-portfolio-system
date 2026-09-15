@@ -6,7 +6,7 @@ import json
 import re
 import sys
 
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 
@@ -67,10 +67,32 @@ app.register_blueprint(reference_library_bp)
 app.jinja_env.globals["csrf_token"] = csrf_token
 
 PUBLIC_ENDPOINTS = {"login", "static"}
+ALLOWED_LOCAL_HOSTS = {"127.0.0.1", "localhost"}
+
+
+def _valid_local_host_header(raw_host: str) -> bool:
+    host = raw_host.strip().lower()
+    if not host or "\\" in host or any(ord(char) < 32 for char in host):
+        return False
+    if host.startswith("["):
+        # Portfolio Manager currently binds IPv4 loopback only, so bracketed IPv6 is not accepted.
+        return False
+    hostname, separator, port = host.partition(":")
+    if hostname not in ALLOWED_LOCAL_HOSTS:
+        return False
+    if separator and (not port.isdigit() or not 1 <= int(port) <= 65535):
+        return False
+    return True
 
 
 @app.before_request
 def protect_manager():
+    # Reject hostile/malformed Host headers before Flask attempts to build any auth redirect.
+    # This keeps the localhost-only boundary fail-closed instead of allowing a rejected host
+    # to fall into URL building and produce a 500 response.
+    if not _valid_local_host_header(request.headers.get("Host", "")):
+        abort(400, description="Portfolio Manager only accepts localhost requests.")
+
     if request.method == "POST":
         validate_csrf()
 
@@ -82,6 +104,19 @@ def protect_manager():
         return redirect(url_for("login", next=request.full_path if request.query_string else request.path))
 
     return None
+
+
+@app.after_request
+def add_manager_security_headers(response):
+    # The manager handles private local working data. Avoid browser caching/referrer leakage
+    # and prevent the local UI from being embedded in another page.
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Content-Security-Policy"] = "frame-ancestors 'none'"
+    return response
 
 
 def slugify(value: str) -> str:
@@ -277,7 +312,14 @@ def run_action():
 
     if action == "validate":
         success, output = run_full_validation()
-        flash("Full validation passed." if success else f"Validation failed:\n{output}", "success" if success else "error")
+        if success:
+            security_passed = "Adversarial security/misuse: PASS" in output
+            message = "Full validation passed."
+            if security_passed:
+                message += " Adversarial security/misuse: PASS."
+            flash(message, "success")
+        else:
+            flash(f"Validation failed:\n{output}", "error")
 
     elif action == "refresh_docs":
         result = run_command([sys.executable, "scripts/update-docs.py"])

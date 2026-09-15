@@ -2,16 +2,16 @@ from __future__ import annotations
 
 from pathlib import Path, PurePosixPath
 import subprocess
-import sys
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+
+from validation_service import run_full_validation
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASE_BRANCH = "main"
 BLOCKED_PATH_PREFIXES = (
     ".git",
-    ".env",
     ".portfolio-manager",
     ".venv",
 )
@@ -72,14 +72,16 @@ def parse_status() -> list[dict]:
 
 
 def is_safe_repo_path(path_value: str) -> bool:
-    if not path_value or "\x00" in path_value:
+    if not path_value or "\x00" in path_value or "\\" in path_value:
         return False
     posix = PurePosixPath(path_value)
     if posix.is_absolute() or ".." in posix.parts:
         return False
-    first = posix.parts[0] if posix.parts else ""
-    if first in BLOCKED_PATH_PREFIXES or path_value == ".env":
-        return False
+    for part in posix.parts:
+        if part in BLOCKED_PATH_PREFIXES:
+            return False
+        if part == ".env" or (part.startswith(".env.") and part != ".env.example"):
+            return False
     if path_value.lower().endswith(BLOCKED_FILE_SUFFIXES):
         return False
     return True
@@ -113,32 +115,6 @@ def diff_preview(cached: bool = False) -> str:
     return text
 
 
-def validation_suite() -> tuple[bool, str]:
-    commands = [
-        ("Public site", [sys.executable, "scripts/check-site.py"]),
-        ("Structured content", [sys.executable, "scripts/check-content.py"]),
-        ("General site content", [sys.executable, "scripts/check-site-content.py"]),
-        ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
-        ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
-        ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
-        ("Generated documentation", [sys.executable, "scripts/update-docs.py", "--check"]),
-        ("Git workflow safety", [sys.executable, "scripts/check-git-workflow.py"]),
-        ("AI assistance safety", [sys.executable, "scripts/check-ai-assistance.py"]),
-        ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
-        ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
-    ]
-    output: list[str] = []
-    for label, command in commands:
-        result = run_command(command)
-        output.append(f"{label}: {'PASS' if result.returncode == 0 else 'FAIL'}")
-        if result.returncode != 0:
-            details = (result.stderr or result.stdout).strip()
-            if details:
-                output.append(details[-1800:])
-            return False, "\n".join(output)
-    return True, "\n".join(output)
-
-
 def require_main_branch() -> tuple[bool, str]:
     branch = current_branch()
     if not branch:
@@ -160,6 +136,18 @@ def refresh_remote_tracking() -> tuple[bool, str]:
     if result.returncode != 0:
         return False, (result.stderr or result.stdout).strip()
     return True, ""
+
+
+def outgoing_paths() -> list[str]:
+    result = run_git([
+        "diff",
+        "--name-only",
+        "--diff-filter=ACDMRTUXB",
+        f"origin/{BASE_BRANCH}..HEAD",
+    ])
+    if result.returncode != 0:
+        return []
+    return [path for path in result.stdout.splitlines() if path.strip()]
 
 
 @git_bp.route("/")
@@ -266,7 +254,7 @@ def commit_changes():
         flash("Commit message must be one line and 1–120 characters.", "error")
         return redirect(url_for("git_workflow.git_workflow"))
 
-    passed, output = validation_suite()
+    passed, output = run_full_validation()
     if not passed:
         flash(f"Commit blocked because validation failed:\n{output}", "error")
         return redirect(url_for("git_workflow.git_workflow"))
@@ -300,6 +288,23 @@ def publish_main():
         return redirect(url_for("git_workflow.git_workflow"))
     if not tracking["ahead"]:
         flash("There are no local commits waiting to publish.", "error")
+        return redirect(url_for("git_workflow.git_workflow"))
+
+    outgoing = outgoing_paths()
+    unsafe = [path for path in outgoing if not is_safe_repo_path(path)]
+    if unsafe:
+        preview = ", ".join(unsafe[:5])
+        flash(
+            "Publish blocked because an outgoing commit contains a private or unsafe path: "
+            + preview
+            + (" …" if len(unsafe) > 5 else ""),
+            "error",
+        )
+        return redirect(url_for("git_workflow.git_workflow"))
+
+    passed, output = run_full_validation()
+    if not passed:
+        flash(f"Publish blocked because current full validation failed:\n{output}", "error")
         return redirect(url_for("git_workflow.git_workflow"))
 
     result = run_git(["push", "origin", BASE_BRANCH])

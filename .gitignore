@@ -11,6 +11,8 @@ venv/
 
 # Portfolio Manager local-only data and credentials
 .env
+.env.*
+!.env.example
 .portfolio-manager/
 
 # Local/editor files
