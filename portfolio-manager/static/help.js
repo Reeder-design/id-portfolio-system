@@ -10,6 +10,7 @@
     function showHelpHome() {
         if (!drawer || !body) return;
         body.innerHTML = homeBody;
+        drawer.dataset.helpCurrent = '';
         if (title) title.textContent = 'Portfolio Manager Help';
         if (nav) nav.hidden = true;
         history.length = 0;
@@ -29,6 +30,16 @@
         return true;
     }
 
+    function revealDrawer() {
+        if (!drawer) return;
+        drawer.setAttribute('aria-hidden', 'false');
+        drawer.classList.add('is-open');
+        if (backdrop) {
+            backdrop.hidden = false;
+            backdrop.classList.add('is-open');
+        }
+    }
+
     function openDrawer(key = null, label = null) {
         if (!drawer || !body) return;
         if (key) {
@@ -36,15 +47,9 @@
             history.length = 0;
             showTopic(key, label, { pushHistory: false });
         } else {
-            drawer.dataset.helpCurrent = '';
             showHelpHome();
         }
-        drawer.setAttribute('aria-hidden', 'false');
-        drawer.classList.add('is-open');
-        if (backdrop) {
-            backdrop.hidden = false;
-            backdrop.classList.add('is-open');
-        }
+        revealDrawer();
     }
 
     function closeDrawer() {
@@ -64,8 +69,11 @@
             showTopic(previous, null, { pushHistory: false });
             return;
         }
-        drawer.dataset.helpCurrent = '';
         showHelpHome();
+    }
+
+    function cleanText(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim();
     }
 
     function topicExists(key) {
@@ -85,109 +93,328 @@
         return button;
     }
 
-    // Page-level help: every authenticated Portfolio Manager surface gets a contextual
-    // entry point. Specific routes come before broad route families. The dashboard uses
-    // button-safety at page level so it does not duplicate the Manage/Create workflow
-    // helper already shown in the first homepage card.
-    const contextualHelpRules = [
-        { match: /^\/create\/references\/[^/]+\/analysis\/?$/, key: 'reference-ai', label: 'AI Resource Analysis' },
-        { match: /^\/create\/references\/[^/]+\/sanitization\/?$/, key: 'sanitization', label: 'Sanitization Review' },
-        { match: /^\/create\/references(?:\/.*)?$/, key: 'reference-library', label: 'Reference Library' },
-        { match: /^\/create\/[^/]+\/build\/?$/, key: 'create-content', label: 'Controlled Build' },
-        { match: /^\/create(?:\/.*)?$/, key: 'create-content', label: 'Create Content' },
-        { match: /^\/manage\/pages\//, key: 'general-content', label: 'Visible Page Editing' },
-        { match: /^\/content\/projects\//, key: 'save-project', label: 'Project Editing' },
-        { match: /^\/content\/?$/, key: 'maintenance', label: 'Manage Content' },
-        { match: /^\/site-content(?:\/.*)?$/, key: 'general-content', label: 'Page Content' },
-        { match: /^\/ai\/page-edit\//, key: 'page-ai', label: 'Page-aware AI' },
-        { match: /^\/ai\/proposals\//, key: 'ai-proposal', label: 'AI Proposal' },
-        { match: /^\/manage\/ai-review(?:\/.*)?$/, key: 'portfolio-review', label: 'AI Portfolio Review' },
-        { match: /related-references/, key: 'related-references', label: 'Related References' },
-        { match: /^\/assets(?:\/.*)?$/, key: 'assets', label: 'Project Asset Safety' },
-        { match: /^\/git(?:\/.*)?$/, key: 'git-workflow', label: 'Save & Publish Safety' },
-        { match: /^\/ai(?:\/.*)?$/, key: 'ai-assistance', label: 'AI Assistance' },
-        { match: /^\/$/, key: 'button-safety', label: 'Portfolio Manager Controls' },
-    ];
-
-    function currentPageHelpRule() {
-        return contextualHelpRules.find((item) => item.match.test(window.location.pathname)) || null;
+    function makeLocalHelpButton(label, extraClass = '') {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `inline-help ${extraClass}`.trim();
+        button.dataset.localHelp = 'true';
+        button.dataset.helpLabel = label;
+        button.setAttribute('aria-label', `Explain ${label}`);
+        button.title = `Explain ${label}`;
+        button.textContent = '?';
+        return button;
     }
 
+    function closestMajorHelpSection(node) {
+        return node ? node.closest('.release-box, .git-safety-banner, .dashboard-card') : null;
+    }
+
+    function closestHelpRegion(node) {
+        const major = closestMajorHelpSection(node);
+        if (major) return major;
+        return node ? node.closest('.subpage-header, .manager-header') : null;
+    }
+
+    function belongsToRegion(node, region) {
+        return Boolean(node && region && closestHelpRegion(node) === region);
+    }
+
+    function regionName(region) {
+        const headings = Array.from(region.querySelectorAll('h1, h2, h3, summary strong'));
+        const heading = headings.find((node) => belongsToRegion(node, region));
+        if (heading && cleanText(heading.textContent)) return cleanText(heading.textContent);
+
+        const eyebrow = Array.from(region.querySelectorAll('.eyebrow'))
+            .find((node) => belongsToRegion(node, region));
+        return eyebrow ? cleanText(eyebrow.textContent) : 'This section';
+    }
+
+    function regionIntro(region) {
+        const candidates = Array.from(region.querySelectorAll('.hero-copy, .section-copy, p'));
+        const paragraph = candidates.find((node) => {
+            if (!belongsToRegion(node, region)) return false;
+            if (node.classList.contains('eyebrow') || node.classList.contains('field-help')) return false;
+            if (node.closest('.v2-small-card, .v2-workspace-card, .v2-tree-page, .v2-project-row')) return false;
+            return Boolean(cleanText(node.textContent));
+        });
+        return paragraph ? cleanText(paragraph.textContent) : '';
+    }
+
+    function actionContext(control, region) {
+        const card = control.closest('.v2-small-card, .v2-workspace-card');
+        if (card && belongsToRegion(card, region)) {
+            const heading = card.querySelector('h3, h4, strong');
+            const paragraph = card.querySelector('p');
+            return {
+                heading: heading ? cleanText(heading.textContent) : '',
+                description: paragraph ? cleanText(paragraph.textContent) : '',
+            };
+        }
+
+        const row = control.closest('.v2-tree-page, .v2-project-row');
+        if (row && belongsToRegion(row, region)) {
+            const heading = row.querySelector('h3, h4, strong');
+            return {
+                heading: heading ? cleanText(heading.textContent) : '',
+                description: '',
+            };
+        }
+
+        return { heading: '', description: '' };
+    }
+
+    function describeAction(control, label, context = '') {
+        const text = cleanText(label);
+        const lower = text.toLowerCase();
+        const href = control.tagName === 'A' ? String(control.getAttribute('href') || '') : '';
+        const disabled = control.disabled || control.getAttribute('aria-disabled') === 'true';
+        const prefix = context ? `${context} ` : '';
+
+        if (disabled) return `${prefix}This option is shown here but is not currently available.`;
+        if (lower === 'run full validation') return `${prefix}Runs the complete local safety and quality check suite. It checks the portfolio and Portfolio Manager but does not commit or publish anything.`;
+        if (lower === 'save & publish') return `${prefix}Opens the controlled Git workflow where you review changes, select files, validate, commit locally, and explicitly publish to GitHub.`;
+        if (lower === 'refresh documentation') return `${prefix}Regenerates the repository documentation from the current project data. It does not publish by itself.`;
+        if (lower === 'view documentation') return `${prefix}Opens the generated repository documentation in GitHub for reference.`;
+        if (lower === 'patch') return `${prefix}Records a patch release for small fixes or refinements. It updates local release records but does not publish by itself.`;
+        if (lower === 'minor') return `${prefix}Records a minor release for meaningful new functionality that remains backward compatible. It does not publish by itself.`;
+        if (lower === 'major') return `${prefix}Records a major release for a substantial system change. It does not publish by itself.`;
+        if (lower === 'manage content') return `${prefix}Opens the workspace for editing, reviewing, and maintaining portfolio content that already exists.`;
+        if (lower === 'create content') return `${prefix}Opens the guided workflow for planning and building a new portfolio project.`;
+        if (lower === 'start new content brief') return `${prefix}Creates a new private Content Brief so you can define the project before building public files.`;
+        if (lower === 'open reference library') return `${prefix}Opens the private Reference Library where original sources can be stored, reviewed, sanitized, and prepared for later portfolio use.`;
+        if (lower === 'view approved sources') return `${prefix}Filters the Reference Library to sources whose sanitized derivatives have already been approved for portfolio use.`;
+        if (lower === 'open ai drafting helper') return `${prefix}Opens the proposal-only AI helper for isolated drafting, rewriting, analysis, or placement support outside the guided Content Brief workflow.`;
+        if (lower === 'add private source') return `${prefix}Stores the selected source and its private metadata in the Git-ignored Reference Library. It does not make the source public.`;
+        if (['all', 'private source', 'needs review', 'sanitized draft', 'approved for portfolio use'].includes(lower) && href.includes('status=')) {
+            return lower === 'all'
+                ? `${prefix}Shows every Reference Library item regardless of review status.`
+                : `${prefix}Filters the Reference Library to items with the “${text}” status.`;
+        }
+        if (lower === 'preview') return `${prefix}Opens the local portfolio preview so you can inspect the current local version before publishing.`;
+        if (lower === 'dashboard') return `${prefix}Returns to the Portfolio Manager dashboard.`;
+        if (lower === 'ai settings') return `${prefix}Opens the local AI provider/model settings. API secrets remain in the Git-ignored local environment file.`;
+        if (lower === 'user guide') return `${prefix}Opens the complete Portfolio Manager guide and workflow reference.`;
+        if (lower === 'version history') return `${prefix}Opens the repository changelog/version history in GitHub.`;
+        if (lower === 'privacy & security') return `${prefix}Opens the privacy and security explanation for private files, public files, AI boundaries, and publishing.`;
+        if (lower === 'sign out') return `${prefix}Ends the current Portfolio Manager session on this Mac.`;
+        if (lower.startsWith('back to ')) return `${prefix}Returns to ${text.slice(8)}.`;
+        if (lower.startsWith('edit ')) return `${prefix}Opens ${text.slice(5)} for editing in Portfolio Manager.`;
+        if (lower.startsWith('open ')) return `${prefix}Opens ${text.slice(5)}.`;
+        if (lower.startsWith('view ')) return `${prefix}Opens ${text.slice(5)} for review.`;
+        if (lower.startsWith('save')) return `${prefix}Saves the current changes locally. Saving does not make the changes live unless the control explicitly says Publish.`;
+        if (lower.startsWith('approve')) return `${prefix}Marks the reviewed item as approved for the next stated workflow stage; approval alone does not publish it.`;
+        if (lower.startsWith('generate') || lower.startsWith('create proposal')) return `${prefix}Creates the requested local draft/proposal for review. It does not publish automatically.`;
+        if (lower.startsWith('delete') || lower.startsWith('remove')) return `${prefix}Removes the named local item after the workflow's safety checks and confirmation. It does not rewrite published Git history.`;
+        if (lower.startsWith('revert')) return `${prefix}Attempts to undo the named local change using the Manager's safety checks.`;
+        if (lower.startsWith('keep')) return `${prefix}Keeps the reviewed local result so you can continue the workflow. Keeping it does not publish it.`;
+        if (lower.startsWith('publish')) return `${prefix}Performs the explicit publishing action described by this control after its required safety checks.`;
+        if (lower.startsWith('use ')) return `${prefix}Uses the selected item in the next named workflow step without making it public by itself.`;
+        if (lower.startsWith('add ')) return `${prefix}Adds the named item to this local workflow section.`;
+        if (lower.startsWith('start ')) return `${prefix}Starts the named workflow.`;
+        if (lower.startsWith('test ')) return `${prefix}Runs a local connection or configuration test without publishing portfolio content.`;
+        if (lower.startsWith('disable')) return `${prefix}Turns off the named local feature or connection until you enable/configure it again.`;
+        if (control.tagName === 'A') return `${prefix}Opens the destination named by this link.`;
+        return `${prefix}Runs the action named by this button within this section.`;
+    }
+
+    function describeField(field, labelText) {
+        const type = String(field.getAttribute('type') || field.tagName).toLowerCase();
+        const wrapper = field.closest('.full-span, .form-field, .field-group, label') || field.parentElement;
+        const helper = wrapper ? wrapper.querySelector('.field-help, .form-help, small') : null;
+        const helperText = helper ? cleanText(helper.textContent) : '';
+        const placeholder = cleanText(field.getAttribute('placeholder') || '');
+
+        if (helperText) return helperText;
+        if (field.tagName === 'SELECT') {
+            const choices = Array.from(field.options || [])
+                .map((option) => cleanText(option.textContent))
+                .filter(Boolean);
+            if (choices.length && choices.length <= 12) return `Choose one value from this dropdown: ${choices.join(', ')}.`;
+            return 'Choose one of the available values in this dropdown.';
+        }
+        if (type === 'file') return 'Choose the local file to provide for this field. The section’s surrounding workflow determines whether it stays private or is prepared for public use.';
+        if (type === 'checkbox') return `Use this checkbox to confirm or enable “${labelText}”.`;
+        if (type === 'radio') return `Choose this option when “${labelText}” is the value you want.`;
+        if (field.tagName === 'TEXTAREA') return placeholder ? `Enter the longer-form information requested here. The field suggests: “${placeholder}”.` : 'Enter the longer-form information requested by this field.';
+        if (placeholder) return `Enter the requested value. Example/guidance shown in the field: “${placeholder}”.`;
+        return 'Enter the value requested by this field.';
+    }
+
+    function addOption(options, seen, name, description) {
+        const cleanName = cleanText(name);
+        const cleanDescription = cleanText(description);
+        if (!cleanName || !cleanDescription) return;
+        const key = `${cleanName.toLowerCase()}|${cleanDescription.toLowerCase()}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        options.push({ name: cleanName, description: cleanDescription });
+    }
+
+    function collectRegionOptions(region) {
+        const options = [];
+        const seen = new Set();
+        const consumedControls = new Set();
+
+        Array.from(region.querySelectorAll('.v2-small-card, .v2-workspace-card')).forEach((card) => {
+            if (!belongsToRegion(card, region)) return;
+            const heading = card.querySelector('h3, h4, strong');
+            const paragraph = card.querySelector('p');
+            const contextHeading = heading ? cleanText(heading.textContent) : '';
+            const contextDescription = paragraph ? cleanText(paragraph.textContent) : '';
+            const controls = Array.from(card.querySelectorAll('a.btn, button.btn'))
+                .filter((control) => !control.classList.contains('inline-help'));
+
+            if (!controls.length) {
+                addOption(options, seen, contextHeading || 'Information', contextDescription || 'This card is informational and has no action available here.');
+                return;
+            }
+
+            controls.forEach((control) => {
+                consumedControls.add(control);
+                const label = cleanText(control.textContent) || cleanText(control.getAttribute('aria-label'));
+                const description = describeAction(control, label, contextDescription);
+                addOption(options, seen, contextHeading ? `${contextHeading}: ${label}` : label, description);
+            });
+        });
+
+        Array.from(region.querySelectorAll('label[for]')).forEach((label) => {
+            if (!belongsToRegion(label, region)) return;
+            const fieldId = label.getAttribute('for');
+            if (!fieldId) return;
+            const field = document.getElementById(fieldId);
+            if (!field || !belongsToRegion(field, region) || field.type === 'hidden') return;
+            addOption(options, seen, cleanText(label.textContent), describeField(field, cleanText(label.textContent)));
+        });
+
+        Array.from(region.querySelectorAll('details > summary')).forEach((summary) => {
+            if (!belongsToRegion(summary, region)) return;
+            const label = cleanText(summary.textContent);
+            if (label) addOption(options, seen, label, 'Expands or collapses the additional controls and information in this section.');
+        });
+
+        Array.from(region.querySelectorAll('a.btn, button.btn')).forEach((control) => {
+            if (!belongsToRegion(control, region) || consumedControls.has(control) || control.classList.contains('inline-help')) return;
+            const label = cleanText(control.textContent) || cleanText(control.getAttribute('aria-label'));
+            if (!label) return;
+            const context = actionContext(control, region);
+            const displayName = context.heading ? `${context.heading}: ${label}` : label;
+            addOption(options, seen, displayName, describeAction(control, label, context.description));
+        });
+
+        const repeatedLinks = Array.from(region.querySelectorAll('.ai-proposal-list .ai-proposal-link'))
+            .filter((link) => belongsToRegion(link, region));
+        if (repeatedLinks.length) {
+            const name = regionName(region).toLowerCase();
+            let label = 'Open a listed item';
+            let description = 'Select any listed item to open its details and continue its local workflow.';
+            if (name.includes('content brief')) {
+                label = 'Open a Content Brief';
+                description = 'Select any listed Content Brief to review or continue its private planning/build workflow.';
+            } else if (name.includes('library') || name.includes('reference')) {
+                label = 'Open a Reference Library item';
+                description = 'Select any listed reference item to review its private source, notes, status, sanitization work, and approved derivative when available.';
+            } else if (name.includes('proposal')) {
+                label = 'Open a proposal';
+                description = 'Select any listed proposal to review its details and current local status.';
+            }
+            addOption(options, seen, label, description);
+        }
+
+        return options;
+    }
+
+    function renderLocalHelp(region, label = null) {
+        if (!drawer || !body || !region) return false;
+        const name = regionName(region);
+        const intro = regionIntro(region);
+        const options = collectRegionOptions(region);
+
+        body.innerHTML = '';
+        drawer.dataset.helpCurrent = '';
+        history.length = 0;
+        if (title) title.textContent = label || `${name} help`;
+        if (nav) nav.hidden = false;
+
+        if (intro) {
+            const introNode = document.createElement('p');
+            introNode.className = 'section-help-intro';
+            introNode.textContent = intro;
+            body.appendChild(introNode);
+        }
+
+        const heading = document.createElement('h3');
+        heading.className = 'section-help-heading';
+        heading.textContent = options.length ? 'Options in this section' : 'About this section';
+        body.appendChild(heading);
+
+        if (!options.length) {
+            const empty = document.createElement('p');
+            empty.className = 'section-help-empty';
+            empty.textContent = 'This area is informational. There are no separate actions or form controls in this section.';
+            body.appendChild(empty);
+            return true;
+        }
+
+        const list = document.createElement('div');
+        list.className = 'section-help-options';
+        options.forEach((option) => {
+            const item = document.createElement('div');
+            item.className = 'section-help-option';
+            const strong = document.createElement('strong');
+            strong.textContent = option.name;
+            const description = document.createElement('p');
+            description.textContent = option.description;
+            item.append(strong, description);
+            list.appendChild(item);
+        });
+        body.appendChild(list);
+        return true;
+    }
+
+    function openLocalHelp(button) {
+        const region = closestHelpRegion(button);
+        if (!region || !renderLocalHelp(region, button.dataset.helpLabel || null)) return;
+        revealDrawer();
+    }
+
+    // Page-header help is intentionally local: it explains only the page heading/purpose
+    // and the controls beside the bubble, rather than opening a broad workflow article.
     function addContextualPageHelp() {
         if (!drawer) return;
         const host = document.querySelector('.subpage-header .header-actions, .manager-header .manager-top-actions');
-        if (!host) return;
-
-        const rule = currentPageHelpRule() || { key: 'maintenance', label: 'Portfolio Manager Help' };
-        if (host.querySelector(`[data-help-key="${rule.key}"]`)) return;
-
-        const button = makeHelpButton(rule.key, rule.label, 'contextual-page-help');
-        if (button) host.prepend(button);
+        if (!host || host.querySelector('.contextual-page-help')) return;
+        const header = host.closest('.subpage-header, .manager-header');
+        if (!header) return;
+        const button = makeLocalHelpButton(regionName(header), 'contextual-page-help');
+        host.prepend(button);
     }
 
-    // Major section help: add one relevant bubble to each major workflow card/action
-    // boundary. Repeated child rows and individual fields stay uncluttered.
-    const sectionHelpRules = [
-        { match: /(full validation|validation|health check|release end-to-end|security\/misuse|state-safety)/i, key: 'validation', label: 'Full Validation' },
-        { match: /(review and publish approved changes|ready to publish|publishing boundary|what actually gets published)/i, key: 'publishing', label: 'Publishing Boundary' },
-        { match: /(refresh documentation|documentation and versioning|generated documentation)/i, key: 'refresh-docs', label: 'Documentation Maintenance' },
-        { match: /(version release|intentional release)/i, key: 'versioning', label: 'Version Releases' },
-        { match: /(review changed files|select files|changed file)/i, key: 'git-stage', label: 'Review and Select Files' },
-        { match: /(what actually changed|diff review|selected for the next commit)/i, key: 'git-diff', label: 'Diff Review' },
-        { match: /(validate & commit|commit changes|local checkpoint)/i, key: 'git-commit', label: 'Validate and Commit' },
-        { match: /(publish to github|push.*github)/i, key: 'git-push', label: 'Publish to GitHub' },
-        { match: /(repository state|working on main|save & publish)/i, key: 'git-workflow', label: 'Save & Publish Safety' },
-        { match: /(public-file safety|associated assets|project assets|asset library)/i, key: 'assets', label: 'Project Asset Safety' },
-        { match: /(add asset|add public asset)/i, key: 'asset-upload', label: 'Add Public Asset' },
-        { match: /(replace file|replace asset)/i, key: 'asset-replace', label: 'Replace Asset' },
-        { match: /(ai portfolio review)/i, key: 'portfolio-review', label: 'AI Portfolio Review' },
-        { match: /(proposal history|exact proposed operations|approval boundary|proposal summary)/i, key: 'page-ai', label: 'Page-aware AI Proposal' },
-        { match: /(related references)/i, key: 'related-references', label: 'Related References' },
-        { match: /(ai-assisted edit|ask for a larger change|page-aware ai)/i, key: 'page-ai', label: 'Page-aware AI' },
-        { match: /(visible page content|edit page copy|current visible content|live local preview|current page)/i, key: 'general-content', label: 'Visible Page Editing' },
-        { match: /(project content|edit project|current project)/i, key: 'save-project', label: 'Project Editing' },
-        { match: /(private page notes|private project notes|private workspace)/i, key: 'privacy', label: 'Private vs. Public Storage' },
-        { match: /(original private source|notes and status|resource actions|reference item)/i, key: 'reference-library', label: 'Reference Library' },
-        { match: /(sanitized derivative|sanitized draft|sanitization review)/i, key: 'sanitization', label: 'Sanitization Review' },
-        { match: /(ask ai about this resource|ai resource analysis|resource analysis)/i, key: 'reference-ai', label: 'AI Resource Analysis' },
-        { match: /(approved source context|content brief|ai planning boundary|ai plan proposal|proposed structure|experience design|controlled build|current content plan|build proposal|human review|create locally|local build review)/i, key: 'create-content', label: 'Create Content Lab' },
-        { match: /(advanced ai drafting|prepared request|file review|attachments)/i, key: 'ai-file-review', label: 'AI File Review Safety' },
-        { match: /(ai settings|model|provider|ai assistance)/i, key: 'ai-assistance', label: 'AI Assistance' },
-        { match: /(manage tools|review and maintain existing content|choose a page to edit|what do you want to do)/i, key: 'maintenance', label: 'Portfolio Manager Workflow' },
-    ];
-
-    function majorSectionOwnsHelp(section) {
-        return Array.from(section.querySelectorAll('[data-help-key]')).some((node) => {
-            const owner = node.closest('.dashboard-card, .git-safety-banner, .release-box');
-            return owner === section;
-        });
+    function sectionOwnHelpButton(section) {
+        return Array.from(section.querySelectorAll('.inline-help')).find((node) => closestMajorHelpSection(node) === section) || null;
     }
 
-    function sectionHelpRule(section, pageRule) {
-        const headingParts = Array.from(section.querySelectorAll('h2, h3, .eyebrow, summary strong'))
-            .slice(0, 8)
-            .map((node) => node.textContent.trim())
-            .filter(Boolean);
-        const text = headingParts.join(' · ');
-        const matched = sectionHelpRules.find((item) => item.match.test(text));
-        if (matched) return matched;
-        if (pageRule) return pageRule;
-        return { key: 'maintenance', label: 'Portfolio Manager Workflow' };
-    }
-
+    // Every major workflow section gets one local helper. Existing hand-placed ? buttons
+    // are converted to section-local behavior; new ones are added only when needed.
     function addContextualSectionHelp() {
         if (!drawer) return;
-        const pageRule = currentPageHelpRule();
-        const sections = document.querySelectorAll('main .dashboard-card, .git-safety-banner, .release-box');
+        const sections = document.querySelectorAll('.dashboard-card, .git-safety-banner, .release-box');
 
         sections.forEach((section) => {
-            if (section.classList.contains('v2-small-card') || majorSectionOwnsHelp(section)) return;
+            if (section.classList.contains('v2-small-card')) return;
 
-            const rule = sectionHelpRule(section, pageRule);
-            const button = makeHelpButton(rule.key, rule.label, 'contextual-section-help');
-            if (!button) return;
+            const existing = sectionOwnHelpButton(section);
+            if (existing) {
+                existing.dataset.localHelp = 'true';
+                existing.dataset.helpLabel = `${regionName(section)} help`;
+                existing.classList.add('contextual-section-help');
+                existing.setAttribute('aria-label', `Explain ${regionName(section)}`);
+                existing.title = `Explain ${regionName(section)}`;
+                return;
+            }
 
-            const directActionRow = Array.from(section.children).find((child) => child.classList && child.classList.contains('action-title-row'));
+            const button = makeLocalHelpButton(`${regionName(section)} help`, 'contextual-section-help');
+            const directActionRow = Array.from(section.children)
+                .find((child) => child.classList && child.classList.contains('action-title-row'));
             if (directActionRow) {
                 directActionRow.append(button);
                 return;
@@ -195,9 +422,6 @@
 
             const anchor = document.createElement('div');
             anchor.className = 'contextual-section-help-anchor';
-            anchor.style.display = 'flex';
-            anchor.style.justifyContent = 'flex-end';
-            anchor.style.marginBottom = '4px';
             anchor.append(button);
             section.prepend(anchor);
         });
@@ -229,8 +453,13 @@
         }
 
         if (event.target.closest('[data-help-home]')) {
-            if (drawer) drawer.dataset.helpCurrent = '';
             showHelpHome();
+            return;
+        }
+
+        const localHelp = event.target.closest('[data-local-help="true"]');
+        if (localHelp) {
+            openLocalHelp(localHelp);
             return;
         }
 
