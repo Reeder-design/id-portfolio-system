@@ -185,7 +185,7 @@
         if (lower === 'view approved sources') return `${prefix}Filters the Reference Library to sources whose sanitized derivatives have already been approved for portfolio use.`;
         if (lower === 'open ai drafting helper') return `${prefix}Opens the proposal-only AI helper for isolated drafting, rewriting, analysis, or placement support outside the guided Content Brief workflow.`;
         if (lower === 'add private source') return `${prefix}Stores the selected source and its private metadata in the Git-ignored Reference Library. It does not make the source public.`;
-        if (['all', 'private source', 'needs review', 'sanitized draft', 'approved for portfolio use'].includes(lower) && href.includes('status=')) {
+        if (['all', 'private source', 'needs review', 'sanitized draft', 'approved for portfolio use'].includes(lower) && (href.includes('status=') || lower === 'all')) {
             return lower === 'all'
                 ? `${prefix}Shows every Reference Library item regardless of review status.`
                 : `${prefix}Filters the Reference Library to items with the “${text}” status.`;
@@ -385,7 +385,7 @@
         if (!host || host.querySelector('.contextual-page-help')) return;
         const header = host.closest('.subpage-header, .manager-header');
         if (!header) return;
-        const button = makeLocalHelpButton(regionName(header), 'contextual-page-help');
+        const button = makeLocalHelpButton(`${regionName(header)} help`, 'contextual-page-help');
         host.prepend(button);
     }
 
