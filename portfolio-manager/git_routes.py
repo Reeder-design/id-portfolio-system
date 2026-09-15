@@ -72,16 +72,16 @@ def parse_status() -> list[dict]:
 
 
 def is_safe_repo_path(path_value: str) -> bool:
-    if not path_value or "\x00" in path_value:
+    if not path_value or "\x00" in path_value or "\\" in path_value:
         return False
     posix = PurePosixPath(path_value)
     if posix.is_absolute() or ".." in posix.parts:
         return False
-    first = posix.parts[0] if posix.parts else ""
-    if first in BLOCKED_PATH_PREFIXES:
-        return False
-    if first == ".env" or (first.startswith(".env.") and first != ".env.example"):
-        return False
+    for part in posix.parts:
+        if part in BLOCKED_PATH_PREFIXES:
+            return False
+        if part == ".env" or (part.startswith(".env.") and part != ".env.example"):
+            return False
     if path_value.lower().endswith(BLOCKED_FILE_SUFFIXES):
         return False
     return True
