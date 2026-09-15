@@ -11,6 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{CSS_PATH}}">
     <link rel="stylesheet" href="{{REFRESH_CSS_PATH}}">
+    <style>
+        /* Generated project pages inherit the approved portfolio visual baseline. */
+        .site-header{position:sticky;top:0;z-index:80;background:radial-gradient(circle at 12% 35%,rgba(121,201,158,.16),transparent 28rem),linear-gradient(108deg,rgba(47,52,56,.985) 0%,rgba(74,66,56,.98) 46%,rgba(63,104,104,.97) 100%);border-bottom:1px solid rgba(255,255,255,.11);box-shadow:0 14px 34px rgba(35,45,42,.17);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%)}
+        .site-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(121,201,158,.46),rgba(151,219,79,.26),transparent);pointer-events:none}.site-brand,.site-brand:hover,.site-brand:focus-visible{color:var(--white)}.site-brand span{color:#bfe8cf}.site-nav a{color:rgba(255,255,255,.82)}.site-nav a:hover{background:rgba(255,255,255,.08);color:var(--white)}.site-nav a.active{background:linear-gradient(135deg,rgba(121,201,158,.30),rgba(80,132,132,.44));color:var(--white);box-shadow:inset 0 0 0 1px rgba(255,255,255,.13),0 8px 22px rgba(29,43,39,.14)}
+        .site-footer{position:relative;overflow:hidden;background:radial-gradient(circle at 88% 20%,rgba(121,201,158,.13),transparent 26rem),radial-gradient(circle at 10% 90%,rgba(184,170,195,.12),transparent 24rem),linear-gradient(112deg,#2f3438 0%,#4a4238 48%,#3f6868 100%);color:rgba(255,255,255,.82);border-top:1px solid rgba(255,255,255,.10);box-shadow:0 -14px 38px rgba(35,45,42,.10)}.site-footer p{color:rgba(255,255,255,.76)}.site-footer a,.site-footer .footer-links a{color:#c9eed8}.site-footer a:hover,.site-footer .footer-links a:hover{color:var(--white)}
+        .template-flourish{position:relative;min-height:340px;display:grid;place-items:center;isolation:isolate}.template-flourish::before,.template-flourish::after{content:"";position:absolute;border-radius:50%;pointer-events:none}.template-flourish::before{width:min(86%,310px);aspect-ratio:1;border:1px solid rgba(80,132,132,.2);background:radial-gradient(circle at 32% 27%,rgba(151,219,79,.19),transparent 23%),radial-gradient(circle at 69% 69%,rgba(184,170,195,.18),transparent 27%),radial-gradient(circle at center,rgba(255,255,255,.88),rgba(238,245,241,.48));box-shadow:inset 0 0 0 18px rgba(255,255,255,.32),0 18px 50px rgba(50,75,68,.11)}.template-flourish::after{width:min(105%,380px);aspect-ratio:1;border:1px dashed rgba(80,132,132,.2)}
+        .template-flourish-core,.template-flourish-node{position:absolute;z-index:2;display:grid;place-items:center;border:1px solid rgba(80,132,132,.22);background:rgba(255,255,255,.92);color:var(--pine-blue);box-shadow:0 12px 30px rgba(50,75,68,.11)}.template-flourish-core{position:relative;width:112px;height:112px;border-radius:30px;transform:rotate(-4deg)}.template-flourish-node{width:62px;height:62px;border-radius:19px}.template-flourish-node:nth-of-type(2){top:12%;right:15%;transform:rotate(6deg)}.template-flourish-node:nth-of-type(3){right:5%;bottom:17%;transform:rotate(-7deg);color:var(--taupe)}.template-flourish-node:nth-of-type(4){left:7%;bottom:13%;transform:rotate(8deg)}.template-flourish-node:nth-of-type(5){top:16%;left:9%;transform:rotate(-5deg);color:#658b67}.template-flourish svg{width:32px;height:32px}.template-flourish-core svg{width:56px;height:56px}
+        @media(max-width:720px){.site-header{position:relative}}
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -35,21 +44,18 @@
                         <h1>{{TITLE}}</h1>
                         <p class="body-large">{{SUMMARY}}</p>
                         <div class="tag-row">{{TAGS}}</div>
-                        <div class="button-row" style="margin-top: 32px;">
+                        <div class="button-row" style="margin-top:32px;">
                             {{PRIMARY_ACTION}}
                             <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
                         </div>
                     </div>
-                    <aside class="refresh-visual-card" aria-label="Project snapshot">
-                        <p class="eyebrow">Project Snapshot</p>
-                        <h2>{{PROJECT_TYPE}}</h2>
-                        <div class="refresh-mini-grid">
-                            <div class="refresh-mini-tile"><strong>Role</strong><span>{{ROLE}}</span></div>
-                            <div class="refresh-mini-tile"><strong>Audience</strong><span>{{AUDIENCE}}</span></div>
-                            <div class="refresh-mini-tile"><strong>Tools</strong><span>{{TOOLS_SUMMARY}}</span></div>
-                            <div class="refresh-mini-tile"><strong>Status</strong><span>{{STATUS_LABEL}}</span></div>
-                        </div>
-                    </aside>
+                    <div class="template-flourish" aria-label="Decorative project design graphic">
+                        <span class="template-flourish-core" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h10M28 12h10M15 12v10c0 4 3 7 7 7h4c4 0 7 3 7 7v2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="8" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="24" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="40" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M28 38h10M33 33v10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+                        <span class="template-flourish-node" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="7" width="32" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15 17l3 3 5-6M27 17h7M15 29l3 3 5-6M27 29h7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                        <span class="template-flourish-node" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 39h32M12 35V24h6v11M22 35V14h6v21M32 35V20h6v15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                        <span class="template-flourish-node" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 10h32v23H23l-9 7v-7H8z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M15 18h18M15 25h12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+                        <span class="template-flourish-node" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M18 13L8 24l10 11M30 13l10 11-10 11M27 8l-6 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -68,66 +74,24 @@
         <section class="section">
             <div class="container case-study-layout">
                 <div class="case-study-content">
-                    <section class="case-anchor" id="challenge">
-                        <p class="eyebrow">The Challenge</p>
-                        <h2>What problem was I trying to solve?</h2>
-                        <p>{{BUSINESS_NEED}}</p>
-                    </section>
-
-                    <section class="case-anchor" id="audience">
-                        <p class="eyebrow">Audience</p>
-                        <h2>Who was this for?</h2>
-                        <p>{{AUDIENCE}}</p>
-                    </section>
-
-                    <section class="case-anchor" id="goals">
-                        <p class="eyebrow">Learning Goals</p>
-                        <h2>What should learners be able to do?</h2>
-                        <ul>{{LEARNING_OBJECTIVES}}</ul>
-                    </section>
-
-                    <section class="case-anchor" id="approach">
-                        <p class="eyebrow">Design Approach</p>
-                        <h2>How I approached it</h2>
-                        <p>{{DESIGN_APPROACH}}</p>
-                    </section>
-
-                    <section class="case-anchor" id="development">
-                        <p class="eyebrow">Development</p>
-                        <h2>How I built it</h2>
-                        <p>{{DEVELOPMENT_PROCESS}}</p>
-                    </section>
-
+                    <section class="case-anchor" id="challenge"><p class="eyebrow">The Challenge</p><h2>What problem was I trying to solve?</h2><p>{{BUSINESS_NEED}}</p></section>
+                    <section class="case-anchor" id="audience"><p class="eyebrow">Audience</p><h2>Who was this for?</h2><p>{{AUDIENCE}}</p></section>
+                    <section class="case-anchor" id="goals"><p class="eyebrow">Learning Goals</p><h2>What should learners be able to do?</h2><ul>{{LEARNING_OBJECTIVES}}</ul></section>
+                    <section class="case-anchor" id="approach"><p class="eyebrow">Design Approach</p><h2>How I approached it</h2><p>{{DESIGN_APPROACH}}</p></section>
+                    <section class="case-anchor" id="development"><p class="eyebrow">Development</p><h2>How I built it</h2><p>{{DEVELOPMENT_PROCESS}}</p></section>
                     {{ASSETS_SECTION}}
-
-                    <section class="case-anchor" id="results">
-                        <p class="eyebrow">Results</p>
-                        <h2>What came out of it?</h2>
-                        <div class="results-card"><ul>{{OUTCOMES}}</ul></div>
-                    </section>
-
+                    <section class="case-anchor" id="results"><p class="eyebrow">Results</p><h2>What came out of it?</h2><div class="results-card"><ul>{{OUTCOMES}}</ul></div></section>
                     {{CONFIDENTIALITY_NOTE}}
-
-                    <section>
-                        <div class="cta">
-                            <p class="eyebrow">Keep Exploring</p>
-                            <h2>{{CTA_HEADING}}</h2>
-                            <div class="button-row">
-                                {{PRIMARY_ACTION_CTA}}
-                                <a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a>
-                            </div>
-                        </div>
-                    </section>
+                    <section><div class="cta"><p class="eyebrow">Keep Exploring</p><h2>{{CTA_HEADING}}</h2><div class="button-row">{{PRIMARY_ACTION_CTA}}<a class="btn btn-secondary" href="{{BACK_PATH}}">{{BACK_LABEL}}</a></div></div></section>
                 </div>
 
                 <aside class="case-study-sidebar">
                     <p class="eyebrow">Project Details</p>
-                    <h3>Tools</h3>
-                    <ul class="sidebar-list">{{TOOLS_LIST}}</ul>
-                    <h3 style="margin-top: 32px;">Skills</h3>
-                    <ul class="sidebar-list">{{SKILLS_LIST}}</ul>
-                    <h3 style="margin-top: 32px;">Status</h3>
-                    <p><span class="status-badge {{STATUS_CLASS}}">{{STATUS_LABEL}}</span></p>
+                    <h3>Role</h3><p>{{ROLE}}</p>
+                    <h3 style="margin-top:28px;">Project Type</h3><p>{{PROJECT_TYPE}}</p>
+                    <h3 style="margin-top:28px;">Tools</h3><ul class="sidebar-list">{{TOOLS_LIST}}</ul>
+                    <h3 style="margin-top:28px;">Skills</h3><ul class="sidebar-list">{{SKILLS_LIST}}</ul>
+                    <h3 style="margin-top:28px;">Status</h3><p><span class="status-badge {{STATUS_CLASS}}">{{STATUS_LABEL}}</span></p>
                 </aside>
             </div>
         </section>
@@ -145,23 +109,9 @@
     </footer>
 
     <script>
-        const caseLinks = Array.from(document.querySelectorAll('.case-nav a'));
-        const caseSections = caseLinks
-            .map((link) => document.querySelector(link.getAttribute('href')))
-            .filter(Boolean);
-
-        if ('IntersectionObserver' in window && caseSections.length) {
-            const observer = new IntersectionObserver((entries) => {
-                const visible = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-                if (!visible) return;
-                caseLinks.forEach((link) => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${visible.target.id}`);
-                });
-            }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.1, 0.35, 0.6] });
-            caseSections.forEach((section) => observer.observe(section));
-        }
+        const caseLinks=Array.from(document.querySelectorAll('.case-nav a'));
+        const caseSections=caseLinks.map((link)=>document.querySelector(link.getAttribute('href'))).filter(Boolean);
+        if('IntersectionObserver' in window&&caseSections.length){const observer=new IntersectionObserver((entries)=>{const visible=entries.filter((entry)=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!visible)return;caseLinks.forEach((link)=>{link.classList.toggle('active',link.getAttribute('href')===`#${visible.target.id}`);});},{rootMargin:'-25% 0px -60% 0px',threshold:[0.1,0.35,0.6]});caseSections.forEach((section)=>observer.observe(section));}
     </script>
 </body>
 </html>
