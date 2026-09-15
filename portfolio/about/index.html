@@ -18,6 +18,156 @@
         .about-intro-copy > p { max-width: 760px; }
         .career-focus-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
         .career-focus-tag { padding:8px 13px; border:1px solid rgba(80,132,132,.24); border-radius:999px; background:rgba(255,255,255,.85); color:var(--charcoal); font-size:.82rem; font-weight:700; }
+
+        .about-practice-tabs {
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:14px;
+            margin-bottom:22px;
+        }
+
+        .about-practice-tab {
+            display:flex;
+            min-height:158px;
+            flex-direction:column;
+            align-items:flex-start;
+            gap:10px;
+            padding:19px;
+            border:1px solid var(--portfolio-line);
+            border-radius:20px;
+            background:rgba(255,255,255,.82);
+            color:var(--charcoal);
+            text-align:left;
+            box-shadow:0 10px 28px rgba(50,75,68,.06);
+            cursor:pointer;
+            transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease,background 180ms ease;
+        }
+
+        .about-practice-tab:hover,
+        .about-practice-tab:focus-visible {
+            transform:translateY(-3px);
+            border-color:rgba(121,201,158,.66);
+            box-shadow:0 16px 36px rgba(50,75,68,.11);
+            outline:none;
+        }
+
+        .about-practice-tab.active {
+            border-color:rgba(80,132,132,.45);
+            background:linear-gradient(145deg,rgba(238,245,241,.96),rgba(255,255,255,.94));
+            box-shadow:0 18px 42px rgba(50,75,68,.12);
+        }
+
+        .about-practice-tab .portfolio-icon {
+            width:30px;
+            height:30px;
+            color:var(--pine-blue);
+        }
+
+        .about-practice-tab strong {
+            display:block;
+            font-family:"Montserrat",sans-serif;
+            font-size:.95rem;
+            line-height:1.35;
+        }
+
+        .about-practice-tab small {
+            display:block;
+            color:var(--medium-text);
+            font-size:.78rem;
+            line-height:1.45;
+        }
+
+        .about-practice-detail {
+            position:relative;
+            overflow:hidden;
+        }
+
+        .about-practice-detail::after {
+            content:"";
+            position:absolute;
+            right:-70px;
+            bottom:-110px;
+            width:240px;
+            height:240px;
+            border:1px dashed rgba(80,132,132,.16);
+            border-radius:50%;
+            pointer-events:none;
+        }
+
+        .about-detail-heading {
+            display:grid;
+            grid-template-columns:72px minmax(0,1fr);
+            gap:20px;
+            align-items:start;
+            margin-bottom:24px;
+        }
+
+        .about-detail-icon {
+            display:grid;
+            place-items:center;
+            width:72px;
+            height:72px;
+            border:1px solid rgba(80,132,132,.24);
+            border-radius:22px;
+            background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(238,245,241,.8));
+            color:var(--pine-blue);
+            box-shadow:0 12px 30px rgba(50,75,68,.1);
+        }
+
+        .about-detail-icon .portfolio-icon { width:38px; height:38px; }
+        .about-detail-heading h3 { margin-bottom:8px; }
+        .about-detail-heading > div > p:last-child { margin-bottom:0; max-width:820px; }
+
+        .about-workflow {
+            margin-top:24px;
+            padding-top:22px;
+            border-top:1px solid var(--portfolio-line);
+        }
+
+        .about-workflow-label {
+            margin:0 0 11px;
+            color:var(--medium-text);
+            font-size:.75rem;
+            font-weight:800;
+            letter-spacing:.09em;
+            text-transform:uppercase;
+        }
+
+        .about-workflow-steps {
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+        }
+
+        .about-workflow-step {
+            position:relative;
+            padding:8px 13px;
+            border:1px solid rgba(80,132,132,.22);
+            border-radius:999px;
+            background:rgba(255,255,255,.78);
+            color:var(--charcoal);
+            font-size:.82rem;
+            font-weight:700;
+        }
+
+        .about-workflow-step:not(:last-child)::after {
+            content:"→";
+            position:absolute;
+            right:-10px;
+            color:rgba(80,132,132,.55);
+        }
+
+        @media(max-width:980px) {
+            .about-practice-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        }
+
+        @media(max-width:620px) {
+            .about-practice-tabs { grid-template-columns:1fr; }
+            .about-practice-tab { min-height:0; }
+            .about-detail-heading { grid-template-columns:1fr; }
+            .about-detail-icon { width:62px; height:62px; }
+            .about-workflow-step:not(:last-child)::after { display:none; }
+        }
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
 </head>
@@ -40,13 +190,14 @@
             <div class="container refresh-hero-grid">
                 <div class="about-intro-copy refresh-hero-copy">
                     <p class="eyebrow">About Me</p>
-                    <h1>Learning design, development, and the systems around it</h1>
-                    <p class="body-large">I design enterprise learning for sales and partner audiences, especially when the subject is technical or product-heavy. My work also reaches into LMS operations, reporting, automation, AI evaluation, and custom digital content when those pieces are part of the learning problem.</p>
-                    <p>Before corporate L&amp;D, I taught high school history and English. That classroom experience and my Master of Education still shape how I think about practice, feedback, assessment, and whether learning actually changes performance.</p>
+                    <h1>I design learning for complex products—and the systems around it</h1>
+                    <p class="body-large">Most of my work sits where instructional design, technical content, and learning operations overlap. I build for sales and partner audiences, but I also work on the LMS, reporting, automation, AI evaluation, and custom content when those pieces affect the learner experience.</p>
+                    <p>I started as a high school history and English teacher and earned a Master of Education before moving into corporate L&amp;D. That background still shows up in how I design: clear objectives, useful practice, direct feedback, and a constant check on whether the experience helps someone perform better.</p>
                     <div class="career-focus-row" aria-label="Primary practice areas">
-                        <span class="career-focus-tag">Learning Design &amp; Development</span>
-                        <span class="career-focus-tag">AI Training and Evaluation</span>
-                        <span class="career-focus-tag">System Integrations &amp; Workflows</span>
+                        <span class="career-focus-tag">eLearning &amp; Performance Support</span>
+                        <span class="career-focus-tag">AI Training &amp; Evaluation</span>
+                        <span class="career-focus-tag">LMS Administration &amp; Learning Ops</span>
+                        <span class="career-focus-tag">Live Instruction</span>
                     </div>
                 </div>
                 <div class="visual-flourish" data-parallax-soft aria-label="Visual map of Haley Reeder's learning design practice">
@@ -64,27 +215,58 @@
             <div class="container">
                 <div class="section-heading refresh-section-intro">
                     <h2>How I adapt the work to the learning need</h2>
-                    <p class="body-large reading-width">Different formats solve different problems. Select a project type to see what I pay attention to when I design it and what evidence I use to judge whether it works.</p>
+                    <p class="body-large reading-width">I don't start with a tool or format. I start with who needs to do what, what makes that difficult, and what constraints shape the experience. The method changes by the work; the standard stays the same: make it useful, usable, and maintainable.</p>
                 </div>
 
                 <div class="refresh-explorer">
-                    <div class="refresh-tabs" role="tablist" aria-label="Project types">
-                        <button class="refresh-tab active" type="button" data-work="paths" role="tab" aria-selected="true">Complete Learning Paths</button>
-                        <button class="refresh-tab" type="button" data-work="interactions" role="tab" aria-selected="false">Standalone Interactions</button>
-                        <button class="refresh-tab" type="button" data-work="micro" role="tab" aria-selected="false">Microlearning</button>
-                        <button class="refresh-tab" type="button" data-work="resources" role="tab" aria-selected="false">Training Resources</button>
-                        <button class="refresh-tab" type="button" data-work="ai" role="tab" aria-selected="false">AI Evaluation</button>
-                        <button class="refresh-tab" type="button" data-work="systems" role="tab" aria-selected="false">System Integrations &amp; Workflows</button>
+                    <div class="about-practice-tabs" role="tablist" aria-label="Practice areas">
+                        <button class="about-practice-tab active" type="button" data-work="elearning" role="tab" aria-selected="true" tabindex="0">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+                            <strong>Instructional Design for eLearning</strong>
+                            <small>Audience, performance, format, development, and measurement.</small>
+                        </button>
+                        <button class="about-practice-tab" type="button" data-work="ai" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg>
+                            <strong>AI Training &amp; Evaluation</strong>
+                            <small>Evidence, criteria, calibration, feedback, and quality patterns.</small>
+                        </button>
+                        <button class="about-practice-tab" type="button" data-work="lms" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg>
+                            <strong>LMS Administration &amp; Learning Ops</strong>
+                            <small>System UX, content structures, support, reporting, and learner flow.</small>
+                        </button>
+                        <button class="about-practice-tab" type="button" data-work="live" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg>
+                            <strong>Live Instruction</strong>
+                            <small>Facilitation, pacing, practice, discussion, and adaptable delivery.</small>
+                        </button>
                     </div>
 
-                    <div class="refresh-detail" aria-live="polite">
-                        <p class="eyebrow" id="workEyebrow">Complete Learning Paths</p>
-                        <h3 id="workTitle">Sequence learning around progressive performance.</h3>
-                        <p id="workSummary">I connect objectives, practice, assessment, support resources, delivery, and measurement so the pathway works as one learning system.</p>
+                    <div class="refresh-detail about-practice-detail" role="tabpanel" aria-live="polite">
+                        <div class="about-detail-heading">
+                            <span class="about-detail-icon" aria-hidden="true">
+                                <svg class="portfolio-icon"><use id="workIcon" href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+                            </span>
+                            <div>
+                                <p class="eyebrow" id="workEyebrow">Instructional Design for eLearning</p>
+                                <h3 id="workTitle">Design around the performance, then choose the format.</h3>
+                                <p id="workSummary">Sales, partner, technical, and internal audiences do not need the same amount of context, practice, or support. I adjust the depth, pacing, examples, and delivery to the audience and the job they need to do.</p>
+                            </div>
+                        </div>
                         <div class="refresh-detail-grid">
-                            <article class="refresh-detail-card"><span>L&amp;D lens</span><p id="workLens">Scaffolding, instructional alignment, retrieval, practice, and assessment validity.</p></article>
-                            <article class="refresh-detail-card"><span>Design decisions</span><p id="workDecisions">What belongs in the pathway, what can be reference material, and where learners need practice or proof of performance.</p></article>
-                            <article class="refresh-detail-card"><span>Evidence</span><p id="workEvidence">Completion patterns, assessment results, learner feedback, stakeholder input, and performance indicators.</p></article>
+                            <article class="refresh-detail-card"><span>How I think about it</span><p id="workPhilosophy">Start with the performance gap and the smallest learning solution that can close it. Objectives, practice, assessment, and support resources should all point to the same outcome.</p></article>
+                            <article class="refresh-detail-card"><span>How the work changes</span><p id="workAdaptation">I might use a full pathway for foundational knowledge, a scenario for judgment, multimedia for a process or concept, or a job aid when the need is retrieval rather than instruction.</p></article>
+                            <article class="refresh-detail-card"><span>What good looks like</span><p id="workQuality">Clear structure, relevant practice, accessible design, efficient development, clean review and QA, and source files or templates that another designer can maintain.</p></article>
+                        </div>
+                        <div class="about-workflow">
+                            <p class="about-workflow-label">Typical workflow</p>
+                            <div class="about-workflow-steps" id="workWorkflow" aria-label="Typical workflow">
+                                <span class="about-workflow-step">Analyze</span>
+                                <span class="about-workflow-step">Align</span>
+                                <span class="about-workflow-step">Build</span>
+                                <span class="about-workflow-step">Validate</span>
+                                <span class="about-workflow-step">Improve</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,76 +300,90 @@
 
     <script>
         const workData = {
-            paths: {
-                eyebrow: "Complete Learning Paths",
-                title: "Sequence learning around progressive performance.",
-                summary: "I connect objectives, practice, assessment, support resources, delivery, and measurement so the pathway works as one learning system.",
-                lens: "Scaffolding, instructional alignment, retrieval, practice, and assessment validity.",
-                decisions: "What belongs in the pathway, what can be reference material, and where learners need practice or proof of performance.",
-                evidence: "Completion patterns, assessment results, learner feedback, stakeholder input, and performance indicators."
-            },
-            interactions: {
-                eyebrow: "Standalone Interactions",
-                title: "Use interaction to rehearse a real decision.",
-                summary: "I design focused scenarios and practice activities when learners need to classify, choose, prioritize, troubleshoot, or apply a framework.",
-                lens: "Deliberate practice, feedback, cognitive load, authenticity, and transfer.",
-                decisions: "Which decision is worth practicing, what information learners should see, and what feedback helps them improve.",
-                evidence: "Response patterns, error types, confidence, completion behavior, and observation of transfer to real tasks."
-            },
-            micro: {
-                eyebrow: "Microlearning",
-                title: "Keep the scope small and the use case clear.",
-                summary: "I use microlearning for a focused concept, update, launch need, refresher, or just-in-time reinforcement rather than shrinking a full course into a smaller screen.",
-                lens: "Chunking, relevance, retrieval, spacing, and performance support.",
-                decisions: "What one outcome matters, what context is essential, and what can be linked or referenced instead of taught in full.",
-                evidence: "Use frequency, quick checks, learner questions, support trends, and whether the resource reduces friction."
-            },
-            resources: {
-                eyebrow: "Training Resources",
-                title: "Design references for the moment of use.",
-                summary: "Job aids, guides, one-pagers, and slide resources should help someone act quickly without requiring them to remember an entire course.",
-                lens: "Performance support, information architecture, readability, signaling, and retrieval.",
-                decisions: "What needs to be scannable, what belongs in the main flow, and how the resource will be used during real work.",
-                evidence: "Findability, reuse, stakeholder adoption, support questions, and whether users can locate the right information quickly."
+            elearning: {
+                eyebrow: "Instructional Design for eLearning",
+                title: "Design around the performance, then choose the format.",
+                summary: "Sales, partner, technical, and internal audiences do not need the same amount of context, practice, or support. I adjust the depth, pacing, examples, and delivery to the audience and the job they need to do.",
+                philosophy: "Start with the performance gap and the smallest learning solution that can close it. Objectives, practice, assessment, and support resources should all point to the same outcome.",
+                adaptation: "I might use a full pathway for foundational knowledge, a scenario for judgment, multimedia for a process or concept, or a job aid when the need is retrieval rather than instruction.",
+                quality: "Clear structure, relevant practice, accessible design, efficient development, clean review and QA, and source files or templates that another designer can maintain.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-elearning",
+                workflow: ["Analyze", "Align", "Build", "Validate", "Improve"]
             },
             ai: {
-                eyebrow: "AI Evaluation",
-                title: "Evaluate against the task and evidence.",
-                summary: "I define the task, evidence, criteria, and severity standards before judging an AI output so the review stays consistent and defensible.",
-                lens: "Assessment design, rubric quality, validity, feedback, calibration, and evidence-based judgment.",
-                decisions: "What success means, which errors are material, how evidence supports a score, and what feedback would improve the next output.",
-                evidence: "Source grounding, requirement coverage, error severity, reviewer consistency, and recurring failure patterns."
+                eyebrow: "AI Training & Evaluation",
+                title: "Make the evaluation criteria explicit before judging the output.",
+                summary: "AI work changes depending on whether the task is model evaluation, data-quality review, professional-document testing, or workflow testing. I define the task, evidence, rubric, and severity thresholds before reviewing.",
+                philosophy: "Evaluate what the model actually produced, not how fluent or confident it sounds. I separate material errors from stylistic preference and tie judgments to evidence.",
+                adaptation: "The workflow can include source-grounding checks, instruction-following, error classification, AI-ism and AI-slop review, rubric scoring, reviewer calibration, feedback writing, and recurring-pattern analysis.",
+                quality: "Consistent decisions, clear evidence, useful feedback, strong QA, and evaluation criteria that another reviewer can apply the same way.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-ai-evaluation",
+                workflow: ["Define criteria", "Evaluate", "Calibrate", "Give feedback", "Track patterns"]
             },
-            systems: {
-                eyebrow: "System Integrations & Workflows",
-                title: "Fix the workflow when the workflow is the problem.",
-                summary: "I work with LMS processes, reporting, automation, documentation, or custom code when those systems are creating friction for the learning team or learners.",
-                lens: "Systems thinking, feedback loops, performance support, usability, and continuous improvement.",
-                decisions: "Where information should live, what can be automated, what needs human review, and how ownership continues after launch.",
-                evidence: "Fewer manual steps, cleaner handoffs, reliable reporting, reduced rework, maintained documentation, and easier reuse."
+            lms: {
+                eyebrow: "LMS Administration & Learning Operations",
+                title: "Treat the platform as part of the learning experience.",
+                summary: "An LMS can create or remove friction long before someone opens a course. I look at the system from both the admin and operator side and the instructional-design side.",
+                philosophy: "Configuration, content structure, enrollment logic, pathways, reporting, and support should make the right learning easy to find, launch, complete, and maintain.",
+                adaptation: "On the admin side, I work with UX and UI, user support, content structures, workflows, documentation, migration, reporting, and platform constraints. On the ID side, I look at content compatibility, authoring patterns, feedback, pathways, and how system behavior changes the learner journey.",
+                quality: "Reliable enrollments, clear ownership, fewer support issues, maintainable structures, usable reporting, and learner workflows that make sense from entry through completion.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-lms",
+                workflow: ["Map", "Configure", "Test", "Support", "Improve"]
+            },
+            live: {
+                eyebrow: "Live Instruction",
+                title: "Design for what happens in the room, not just what is on the slide.",
+                summary: "When I design or facilitate live learning, I plan for pacing, discussion, practice, facilitator judgment, and the fact that the session has to flex to the people in front of me.",
+                philosophy: "Live time should be used for things that benefit from a person being there: explanation, questions, discussion, coaching, practice, and feedback.",
+                adaptation: "I adjust the balance of presentation, activity, discussion, and reference material based on audience knowledge, group size, delivery mode, time, and facilitator experience. I also design facilitator notes and handoff materials so the session is repeatable.",
+                quality: "Participants know what to do next, the facilitator can adapt without losing the objective, practice is built into the session, and the materials still work when someone else has to deliver them.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-live-instruction",
+                workflow: ["Prepare", "Engage", "Practice", "Debrief", "Follow up"]
             }
         };
 
-        const tabs = document.querySelectorAll(".refresh-tab[data-work]");
+        const tabs = Array.from(document.querySelectorAll(".about-practice-tab[data-work]"));
         const fields = {
             eyebrow: document.getElementById("workEyebrow"),
             title: document.getElementById("workTitle"),
             summary: document.getElementById("workSummary"),
-            lens: document.getElementById("workLens"),
-            decisions: document.getElementById("workDecisions"),
-            evidence: document.getElementById("workEvidence")
+            philosophy: document.getElementById("workPhilosophy"),
+            adaptation: document.getElementById("workAdaptation"),
+            quality: document.getElementById("workQuality")
         };
+        const workIcon = document.getElementById("workIcon");
+        const workflow = document.getElementById("workWorkflow");
 
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                const data = workData[tab.dataset.work];
-                tabs.forEach((item) => {
-                    item.classList.remove("active");
-                    item.setAttribute("aria-selected", "false");
-                });
-                tab.classList.add("active");
-                tab.setAttribute("aria-selected", "true");
-                Object.keys(fields).forEach((key) => { fields[key].textContent = data[key]; });
+        function selectPractice(tab) {
+            const data = workData[tab.dataset.work];
+            tabs.forEach((item) => {
+                const selected = item === tab;
+                item.classList.toggle("active", selected);
+                item.setAttribute("aria-selected", String(selected));
+                item.tabIndex = selected ? 0 : -1;
+            });
+            Object.keys(fields).forEach((key) => { fields[key].textContent = data[key]; });
+            workIcon.setAttribute("href", data.icon);
+            workflow.replaceChildren(...data.workflow.map((step) => {
+                const chip = document.createElement("span");
+                chip.className = "about-workflow-step";
+                chip.textContent = step;
+                return chip;
+            }));
+        }
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener("click", () => selectPractice(tab));
+            tab.addEventListener("keydown", (event) => {
+                if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+                event.preventDefault();
+                let nextIndex = index;
+                if (event.key === "Home") nextIndex = 0;
+                else if (event.key === "End") nextIndex = tabs.length - 1;
+                else if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % tabs.length;
+                else nextIndex = (index - 1 + tabs.length) % tabs.length;
+                tabs[nextIndex].focus();
+                selectPractice(tabs[nextIndex]);
             });
         });
     </script>
