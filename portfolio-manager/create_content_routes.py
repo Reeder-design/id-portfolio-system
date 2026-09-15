@@ -26,8 +26,6 @@ from create_content_build_service import (
     approve_plan,
     build_workspace_context,
     generate_build_proposal,
-    keep_local_build,
-    revert_local_build,
     revoke_plan_approval,
     save_build_proposal,
 )
@@ -35,6 +33,12 @@ from create_publish_bridge_service import (
     CreatePublishBridgeError,
     publish_bridge_context,
     start_or_resume_publish_bridge,
+)
+from state_safety_service import (
+    ensure_brief_editable,
+    safe_delete_brief,
+    safe_keep_local_build,
+    safe_revert_local_build,
 )
 
 
@@ -138,6 +142,7 @@ def brief(brief_id: str):
 def save_brief(brief_id: str):
     action = request.form.get("action", "save").strip()
     try:
+        ensure_brief_editable(brief_id)
         save_brief_fields(brief_id, request.form)
         record = save_brief_sources(brief_id, source_ids_from_form(request.form))
     except (CreateContentError, ContentSourceError) as exc:
@@ -298,7 +303,7 @@ def _continue_to_related_references(brief_id: str):
 @create_content_bp.post("/briefs/<brief_id>/build/keep")
 def keep_build(brief_id: str):
     try:
-        keep_local_build(brief_id)
+        safe_keep_local_build(brief_id)
     except CreateBuildError as exc:
         flash(str(exc), "error")
         return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
@@ -313,18 +318,18 @@ def continue_related_references(brief_id: str):
 @create_content_bp.post("/briefs/<brief_id>/build/revert")
 def revert_build(brief_id: str):
     try:
-        revert_local_build(brief_id)
+        safe_revert_local_build(brief_id)
     except CreateBuildError as exc:
         flash(str(exc), "error")
     else:
-        flash("Local build reverted. The private Content Brief and build proposal were preserved.", "success")
+        flash("Local build reverted atomically. The private Content Brief and build proposal were preserved.", "success")
     return redirect(url_for("create_content.build", brief_id=brief_id), code=303)
 
 
 @create_content_bp.post("/briefs/<brief_id>/delete")
 def remove_brief(brief_id: str):
     try:
-        delete_brief(brief_id)
+        safe_delete_brief(brief_id)
     except CreateContentError as exc:
         flash(str(exc), "error")
         return redirect(url_for("create_content.workspace"), code=303)
