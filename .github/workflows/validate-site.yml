@@ -44,6 +44,9 @@ jobs:
       - name: Validate final public polish and mobile readiness
         run: python scripts/check-final-polish.py
 
+      - name: Validate public privacy and leakage boundaries
+        run: python scripts/check-public-privacy.py
+
       - name: Validate project renderer
         run: python scripts/check-renderer.py
 
@@ -80,3 +83,4 @@ jobs:
           python scripts/check-final-polish.py
           python scripts/check-portfolio-manager.py
           python scripts/check-portfolio-manager-runtime.py
+          python scripts/check-adversarial-qa.py
