@@ -6,7 +6,7 @@ import json
 import re
 import sys
 
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 
@@ -69,10 +69,19 @@ app.jinja_env.globals["csrf_token"] = csrf_token
 register_security_headers(app)
 
 PUBLIC_ENDPOINTS = {"login", "static"}
+TRUSTED_LOCAL_HOSTS = {"127.0.0.1", "localhost"}
 
 
 @app.before_request
 def protect_manager():
+    # Reject an unexpected Host before any redirect/url generation. Flask's
+    # TRUSTED_HOSTS performs the framework-level check too, but an invalid host
+    # can leave URL generation unavailable during request preprocessing.
+    raw_host = request.environ.get("HTTP_HOST", "")
+    host_name = raw_host.rsplit(":", 1)[0].strip().lower() if raw_host else ""
+    if host_name not in TRUSTED_LOCAL_HOSTS:
+        abort(400, description="Untrusted host.")
+
     if request.method == "POST":
         validate_csrf()
 
