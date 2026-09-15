@@ -58,6 +58,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Reference sanitization safety", [sys.executable, "scripts/check-reference-sanitization.py"]),
         ("User Guide and privacy freshness", [sys.executable, "scripts/check-help-privacy.py"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
+        ("Security hardening contracts", [sys.executable, "scripts/check-security-hardening.py"]),
         ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
         ("Adversarial security/recovery QA", [sys.executable, "scripts/check-adversarial-qa.py"]),
     ]
