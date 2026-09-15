@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 import json
-import re
 import sys
 
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
-from werkzeug.utils import secure_filename
 
 from ai_apply_routes import ai_apply_bp
 from ai_routes import ai_bp
@@ -27,18 +25,8 @@ from validation_service import run_command, run_full_validation
 APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
 PORTFOLIO_ROOT = REPO_ROOT / "portfolio"
-PROJECTS_ROOT = PORTFOLIO_ROOT / "projects"
 DATA_ROOT = REPO_ROOT / "portfolio-data"
 VERSION_FILE = DATA_ROOT / "version.json"
-
-PRIVATE_ROOT = REPO_ROOT / ".portfolio-manager"
-REQUESTS_ROOT = PRIVATE_ROOT / "requests"
-UPLOADS_ROOT = PRIVATE_ROOT / "uploads"
-TEMP_ROOT = PRIVATE_ROOT / "temp"
-BACKUPS_ROOT = PRIVATE_ROOT / "backups"
-
-for directory in (REQUESTS_ROOT, UPLOADS_ROOT, TEMP_ROOT, BACKUPS_ROOT):
-    directory.mkdir(parents=True, exist_ok=True)
 
 load_local_env()
 SECRET_KEY, PASSWORD_HASH = require_security_settings()
@@ -119,13 +107,6 @@ def add_manager_security_headers(response):
     return response
 
 
-def slugify(value: str) -> str:
-    value = value.strip().lower()
-    value = re.sub(r"[^a-z0-9]+", "-", value)
-    value = re.sub(r"-+", "-", value).strip("-")
-    return value or "untitled"
-
-
 def load_version_data() -> dict:
     if VERSION_FILE.exists():
         try:
@@ -135,68 +116,8 @@ def load_version_data() -> dict:
     return {"current_version": "not-set", "history": []}
 
 
-def get_recent_requests(limit: int = 8) -> list[dict]:
-    files = sorted(
-        REQUESTS_ROOT.glob("*.json"),
-        key=lambda path: path.stat().st_mtime,
-        reverse=True,
-    )
-    items: list[dict] = []
-    for file_path in files[:limit]:
-        try:
-            items.append(json.loads(file_path.read_text(encoding="utf-8")))
-        except Exception:
-            continue
-    return items
-
-
-def scan_project_categories() -> list[dict]:
-    categories: list[dict] = []
-    if not PROJECTS_ROOT.exists():
-        return categories
-
-    for category_dir in sorted(path for path in PROJECTS_ROOT.iterdir() if path.is_dir()):
-        child_pages = []
-        for child in sorted(path for path in category_dir.iterdir() if path.is_dir()):
-            index_file = child / "index.html"
-            if index_file.exists():
-                child_pages.append({
-                    "name": child.name.replace("-", " ").title(),
-                    "slug": child.name,
-                    "path": str(index_file.relative_to(REPO_ROOT)),
-                })
-
-        category_index = category_dir / "index.html"
-        categories.append({
-            "name": category_dir.name.replace("-", " ").title(),
-            "slug": category_dir.name,
-            "index_exists": category_index.exists(),
-            "index_path": str(category_index.relative_to(REPO_ROOT)) if category_index.exists() else "Missing index.html",
-            "count": len(child_pages),
-            "children": child_pages,
-        })
-    return categories
-
-
 def count_portfolio_pages() -> int:
     return len(list(PORTFOLIO_ROOT.rglob("index.html"))) if PORTFOLIO_ROOT.exists() else 0
-
-
-def save_uploaded_files(files, request_id: str) -> list[str]:
-    upload_paths: list[str] = []
-    request_upload_dir = UPLOADS_ROOT / request_id
-    request_upload_dir.mkdir(parents=True, exist_ok=True)
-
-    for uploaded in files:
-        if not uploaded or not uploaded.filename:
-            continue
-        safe_name = secure_filename(Path(uploaded.filename).name)
-        if not safe_name:
-            continue
-        destination = request_upload_dir / safe_name
-        uploaded.save(destination)
-        upload_paths.append(str(destination.relative_to(REPO_ROOT)))
-    return upload_paths
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -236,74 +157,9 @@ def dashboard():
     version_data = load_version_data()
     return render_template(
         "dashboard.html",
-        repo_name=REPO_ROOT.name,
         version=version_data.get("current_version", "unknown"),
-        history=version_data.get("history", [])[:5],
-        categories=scan_project_categories(),
-        recent_requests=get_recent_requests(),
         page_count=count_portfolio_pages(),
-        private_workspace=str(PRIVATE_ROOT.relative_to(REPO_ROOT)),
     )
-
-
-@app.route("/submit-edit-request", methods=["POST"])
-def submit_edit_request():
-    request_title = request.form.get("request_title", "").strip()
-    instructions = request.form.get("instructions", "").strip()
-    if not request_title or not instructions:
-        flash("Please add a request title and instructions.", "error")
-        return redirect(url_for("dashboard"))
-
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    request_id = f"edit-{timestamp}-{slugify(request_title)}"
-    upload_paths = save_uploaded_files(request.files.getlist("support_files"), request_id)
-
-    payload = {
-        "id": request_id,
-        "type": "edit-request",
-        "created_at": datetime.now().isoformat(timespec="seconds"),
-        "page_area": request.form.get("page_area", "").strip(),
-        "edit_type": request.form.get("edit_type", "").strip(),
-        "request_title": request_title,
-        "instructions": instructions,
-        "priority": request.form.get("priority", "normal").strip(),
-        "uploads": upload_paths,
-        "status": "new",
-    }
-    (REQUESTS_ROOT / f"{request_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    flash("Edit request saved in the private local Portfolio Manager workspace.", "success")
-    return redirect(url_for("dashboard"))
-
-
-@app.route("/submit-new-content", methods=["POST"])
-def submit_new_content():
-    title = request.form.get("title", "").strip()
-    if not title:
-        flash("Please enter a title for the new content request.", "error")
-        return redirect(url_for("dashboard"))
-
-    slug = slugify(request.form.get("slug", "").strip() or title)
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    request_id = f"new-{timestamp}-{slug}"
-    upload_paths = save_uploaded_files(request.files.getlist("content_files"), request_id)
-
-    payload = {
-        "id": request_id,
-        "type": "new-content-request",
-        "created_at": datetime.now().isoformat(timespec="seconds"),
-        "content_type": request.form.get("content_type", "").strip(),
-        "parent_section": request.form.get("parent_section", "").strip(),
-        "title": title,
-        "slug": slug,
-        "summary": request.form.get("summary", "").strip(),
-        "goals": request.form.get("goals", "").strip(),
-        "notes": request.form.get("notes", "").strip(),
-        "uploads": upload_paths,
-        "status": "new",
-    }
-    (REQUESTS_ROOT / f"{request_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    flash("New content request saved in the private local Portfolio Manager workspace.", "success")
-    return redirect(url_for("dashboard"))
 
 
 @app.route("/run-action", methods=["POST"])
@@ -316,6 +172,7 @@ def run_action():
             release_e2e_passed = "Release end-to-end regression: PASS" in output
             security_passed = "Adversarial security/misuse: PASS" in output
             state_safety_passed = "Workflow state-safety/chaos: PASS" in output
+            system_docs_passed = "System docs/architecture freshness: PASS" in output
             message = "Full validation passed."
             if release_e2e_passed:
                 message += " Release end-to-end regression: PASS."
@@ -323,6 +180,8 @@ def run_action():
                 message += " Adversarial security/misuse: PASS."
             if state_safety_passed:
                 message += " Workflow state-safety/chaos: PASS."
+            if system_docs_passed:
+                message += " System docs/architecture freshness: PASS."
             flash(message, "success")
         else:
             flash(f"Validation failed:\n{output}", "error")
