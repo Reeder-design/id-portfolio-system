@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Interactive learning examples by Haley Reeder, including sales practice, framework identification, and custom scenario development.">
     <title>Interactive Learning | Haley Reeder</title>
+    <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/styles.css">
     <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
+    <link rel="stylesheet" href="../../../css/phase1-theme.css">
+    <link rel="stylesheet" href="../../../css/phase1-frame.css">
     <style>
         .scenario-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
-        .scenario-card { display:flex; flex-direction:column; min-height:390px; overflow:hidden; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:rgba(255,255,255,.9); box-shadow:0 15px 38px rgba(52,74,66,.1); }
-        .scenario-card-top { min-height:185px; padding:26px; background:radial-gradient(circle at 88% 18%,rgba(151,219,79,.18),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.16),rgba(121,201,158,.1)); }
+        .scenario-card { display:flex; flex-direction:column; min-height:390px; overflow:hidden; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(248,250,248,.84)); box-shadow:0 15px 38px rgba(52,74,66,.1); }
+        .scenario-card-top { min-height:205px; padding:26px; background:radial-gradient(circle at 88% 18%,rgba(151,219,79,.18),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.16),rgba(121,201,158,.1)); }
+        .scenario-card-top .icon-badge { margin-bottom:18px; }
         .scenario-card-body { display:flex; flex:1; flex-direction:column; padding:24px; }
         .scenario-card-body .button-row { margin-top:auto; }
         .scenario-focus { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:18px 0 0; }
         .scenario-focus span { padding:10px; border-radius:12px; background:rgba(243,240,232,.85); border:1px solid rgba(80,132,132,.15); color:var(--charcoal); font-size:.78rem; font-weight:700; text-align:center; }
         @media(max-width:800px){ .scenario-grid{grid-template-columns:1fr;} .scenario-focus{grid-template-columns:1fr;} }
     </style>
+    <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -43,11 +48,13 @@
                     <p class="body-large">Focused practice works best when the interaction mirrors a real decision. These examples use scenario logic, classification, feedback, and custom development to make the learner do something meaningful.</p>
                     <div class="refresh-chip-row"><span class="refresh-chip">Scenario Design</span><span class="refresh-chip">Assessment</span><span class="refresh-chip">Feedback</span><span class="refresh-chip">Custom Code</span></div>
                 </div>
-                <aside class="refresh-visual-card">
-                    <p class="eyebrow">Interaction Pattern</p>
-                    <h2>Decision, action, feedback</h2>
-                    <div class="refresh-step-line"><div class="refresh-step" data-step="1"><strong>Context</strong></div><div class="refresh-step" data-step="2"><strong>Decide</strong></div><div class="refresh-step" data-step="3"><strong>Act</strong></div><div class="refresh-step" data-step="4"><strong>Feedback</strong></div></div>
-                </aside>
+                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of interactive learning capabilities">
+                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-code"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
+                </div>
             </div>
         </section>
 
@@ -60,11 +67,11 @@
                 </div>
                 <div class="scenario-grid">
                     <article class="scenario-card meddpicc-card">
-                        <div class="scenario-card-top"><p class="eyebrow">Framework Identification</p><h2>MEDDPICC Practice</h2><p>Identify which customer information maps to each MEDDPICC category.</p></div>
+                        <div class="scenario-card-top"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><p class="eyebrow">Framework Identification</p><h2>MEDDPICC Practice</h2><p>Identify which customer information maps to each MEDDPICC category.</p></div>
                         <div class="scenario-card-body"><p>Match realistic opportunity evidence to the correct MEDDPICC category and practice distinguishing similar qualification signals.</p><div class="scenario-focus"><span>Classification</span><span>Evidence</span><span>Framework Recall</span></div><div class="button-row"><a class="btn btn-primary" href="./meddpicc-practice/index.html">Open MEDDPICC Practice</a></div></div>
                     </article>
                     <article class="scenario-card">
-                        <div class="scenario-card-top"><p class="eyebrow">Sales Decision Practice</p><h2>Pursuit Determination Lab</h2><p>Practice selecting an appropriate positioning response from a realistic sales context.</p></div>
+                        <div class="scenario-card-top"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><p class="eyebrow">Sales Decision Practice</p><h2>Pursuit Determination Lab</h2><p>Practice selecting an appropriate positioning response from a realistic sales context.</p></div>
                         <div class="scenario-card-body"><p>This example demonstrates scenario framing, choice design, feedback, and custom interaction behavior for sales enablement practice.</p><div class="scenario-focus"><span>Decision Making</span><span>Feedback</span><span>Transfer</span></div><div class="button-row"><a class="btn btn-primary" href="./pursuit-positioning/index.html">Open Pursuit Determination Lab</a></div></div>
                     </article>
                 </div>
@@ -75,9 +82,9 @@
             <div class="container">
                 <div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>More instructional design work</h2><p>Continue within the instructional design portfolio.</p></div>
                 <div class="refresh-card-grid">
-                    <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Multimedia</p><h3>Multimedia Training</h3></div><div class="refresh-link-card-body"><p>Video, visual, and presentation-based training content.</p><a class="project-family-link" href="../multimedia/index.html">Explore Multimedia →</a></div></article>
-                    <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Curriculum</p><h3>Complete Learning Pathways</h3></div><div class="refresh-link-card-body"><p>Connected content, assessment, delivery, tracking, and measurement.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Learning Pathways →</a></div></article>
-                    <article class="refresh-link-card"><div class="refresh-link-card-header"><p class="eyebrow">Category</p><h3>Instructional Design</h3></div><div class="refresh-link-card-body"><p>Return to the instructional design overview and project categories.</p><a class="project-family-link" href="../index.html">Back to Instructional Design →</a></div></article>
+                    <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><p class="eyebrow">Multimedia</p><h3>Multimedia Training</h3></div><div class="refresh-link-card-body"><p>Video, visual, and presentation-based training content.</p><a class="project-family-link" href="../multimedia/index.html">Explore Multimedia →</a></div></article>
+                    <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Curriculum</p><h3>Complete Learning Pathways</h3></div><div class="refresh-link-card-body"><p>Connected content, assessment, delivery, tracking, and measurement.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Learning Pathways →</a></div></article>
+                    <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><p class="eyebrow">Category</p><h3>Instructional Design</h3></div><div class="refresh-link-card-body"><p>Return to the instructional design overview and project categories.</p><a class="project-family-link" href="../index.html">Back to Instructional Design →</a></div></article>
                 </div>
             </div>
         </section>

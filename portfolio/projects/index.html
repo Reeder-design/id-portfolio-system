@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore instructional design, AI training and evaluation, and workflow projects by Haley Reeder.">
     <title>Projects | Haley Reeder</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/portfolio-refresh.css">
+    <link rel="stylesheet" href="../css/phase1-theme.css">
+    <link rel="stylesheet" href="../css/phase1-frame.css">
     <style>
         .project-family-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; align-items:stretch; }
         .project-family-card { display:flex; flex-direction:column; min-height:100%; overflow:hidden; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:rgba(255,255,255,.88); box-shadow:0 15px 38px rgba(52,74,66,.1); }
-        .project-family-header { min-height:190px; padding:25px; background:radial-gradient(circle at 88% 15%,rgba(151,219,79,.14),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.14),rgba(121,201,158,.09)); }
+        .project-family-header { min-height:210px; padding:25px; background:radial-gradient(circle at 88% 15%,rgba(151,219,79,.14),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.14),rgba(121,201,158,.09)); }
         .project-family-header h2 { margin-bottom:10px; }
         .project-family-header p:last-child { margin-bottom:0; }
+        .project-family-icon { margin-bottom:18px; }
         .project-family-body { display:flex; flex:1; flex-direction:column; padding:25px; }
         .project-family-body p { min-height:76px; }
         .project-family-list { margin:0 0 24px; padding-left:18px; }
@@ -24,6 +28,7 @@
         .project-family-link:hover { text-decoration:underline; }
         @media(max-width:960px){ .project-family-grid{grid-template-columns:1fr;} .project-family-header{min-height:0;} .project-family-body p{min-height:0;} }
     </style>
+    <script defer src="../js/portfolio-motion.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -51,16 +56,13 @@
                         <a class="btn btn-secondary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
                     </div>
                 </div>
-                <aside class="refresh-visual-card" aria-label="Portfolio scope">
-                    <p class="eyebrow">Practice Areas</p>
-                    <h2>Learning, evaluation, and systems</h2>
-                    <div class="refresh-mini-grid">
-                        <div class="refresh-mini-tile"><strong>Learning Design</strong></div>
-                        <div class="refresh-mini-tile"><strong>Development</strong></div>
-                        <div class="refresh-mini-tile"><strong>AI Evaluation</strong></div>
-                        <div class="refresh-mini-tile"><strong>Workflow Design</strong></div>
-                    </div>
-                </aside>
+                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of portfolio project areas">
+                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></div>
+                </div>
             </div>
         </section>
 
@@ -76,6 +78,7 @@
                 <div class="project-family-grid">
                     <article class="project-family-card">
                         <div class="project-family-header">
+                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
                             <p class="eyebrow">Learning Design &amp; Development</p>
                             <h2>Instructional Design</h2>
                             <p>Learning experiences built from performance need through development, assessment, and measurement.</p>
@@ -93,6 +96,7 @@
 
                     <article class="project-family-card">
                         <div class="project-family-header">
+                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span>
                             <p class="eyebrow">AI Quality &amp; Evaluation</p>
                             <h2>AI Training and Evaluation</h2>
                             <p>Structured review of AI-generated work using task requirements, evidence, scoring criteria, and actionable feedback.</p>
@@ -110,6 +114,7 @@
 
                     <article class="project-family-card">
                         <div class="project-family-header">
+                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
                             <p class="eyebrow">Systems &amp; Operations</p>
                             <h2>Systems and Workflows</h2>
                             <p>Processes and integrations that connect learning design, development, delivery, automation, reporting, and ownership.</p>
@@ -149,7 +154,7 @@
                     <h2>More about my approach and background</h2>
                     <div class="button-row">
                         <a class="btn btn-highlight" href="../about/index.html">About Me</a>
-                        <a class="btn btn-secondary" href="../contact/index.html" style="color:white;border-color:white;">Contact Me</a>
+                        <a class="btn btn-secondary" href="../contact/index.html">Contact Me</a>
                     </div>
                 </div>
             </div>

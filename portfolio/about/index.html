@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="About instructional designer Haley Reeder and her work across learning design, AI evaluation, systems, and workflow development.">
     <title>About Me | Haley Reeder</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/portfolio-refresh.css">
+    <link rel="stylesheet" href="../css/phase1-theme.css">
+    <link rel="stylesheet" href="../css/phase1-frame.css">
     <style>
         .about-intro-copy .body-large { font-size: 1rem; line-height: 1.75; }
         .about-intro-copy > p { max-width: 760px; }
         .career-focus-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
         .career-focus-tag { padding:8px 13px; border:1px solid rgba(80,132,132,.24); border-radius:999px; background:rgba(255,255,255,.85); color:var(--charcoal); font-size:.82rem; font-weight:700; }
-        .about-profile-card { display:grid; align-content:end; min-height:330px; }
-        .about-profile-card .profile-label { display:inline-flex; width:fit-content; padding:7px 11px; border-radius:999px; background:var(--pine-blue); color:white; font-size:.76rem; font-weight:700; }
     </style>
+    <script defer src="../js/portfolio-motion.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -47,17 +49,13 @@
                         <span class="career-focus-tag">System Integrations &amp; Workflows</span>
                     </div>
                 </div>
-                <aside class="refresh-visual-card about-profile-card" aria-label="Professional focus overview">
-                    <span class="profile-label">Instructional Designer</span>
-                    <h2>Instructional design with technical range</h2>
-                    <p>I can design the learning experience and also work with the LMS, reporting, automation, or custom code needed to support it.</p>
-                    <div class="refresh-mini-grid" aria-hidden="true">
-                        <div class="refresh-mini-tile"><strong>Design</strong></div>
-                        <div class="refresh-mini-tile"><strong>Develop</strong></div>
-                        <div class="refresh-mini-tile"><strong>Evaluate</strong></div>
-                        <div class="refresh-mini-tile"><strong>Integrate</strong></div>
-                    </div>
-                </aside>
+                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of Haley Reeder's learning design practice">
+                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div>
+                </div>
             </div>
         </section>
 

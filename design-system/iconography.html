@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iconography & Visual Language | Portfolio Design System</title>
+  <link rel="icon" type="image/svg+xml" href="../portfolio/assets/site/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    :root { --line: rgba(80,132,132,.2); --mist:#eef5f1; --lilac:#ddd5e5; }
+    body { background:radial-gradient(circle at 10% 4%,rgba(121,201,158,.12),transparent 26rem),radial-gradient(circle at 90% 20%,rgba(184,170,195,.12),transparent 24rem),#fff; }
+    .reference-nav { display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 0; }
+    .reference-nav a { padding:8px 12px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.82); text-decoration:none; font-weight:700; font-size:.82rem; }
+    .icon-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+    .icon-card { min-height:190px; padding:22px; border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.9); box-shadow:0 12px 32px rgba(50,75,68,.08); }
+    .icon-shell { display:grid; place-items:center; width:62px; height:62px; margin-bottom:18px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(145deg,#fff,var(--mist)); color:#508484; }
+    .portfolio-icon { width:34px; height:34px; }
+    .icon-card h3 { margin-bottom:5px; font-size:1.05rem; }
+    .icon-card p { margin:0; color:#6F777D; font-size:.85rem; line-height:1.55; }
+    .principle-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .principle { padding:22px; border-left:4px solid #79C99E; border-radius:14px; background:linear-gradient(135deg,rgba(238,245,241,.8),rgba(247,248,245,.9)); }
+    .mark-demo { display:grid; grid-template-columns:auto 1fr; gap:26px; align-items:center; padding:28px; border:1px solid var(--line); border-radius:24px; background:rgba(255,255,255,.88); }
+    .mark-demo img { width:96px; height:96px; }
+    .motion-demo { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .motion-card { padding:22px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.86); }
+    code { padding:2px 6px; border-radius:6px; background:#eef5f1; }
+    @media(max-width:900px){ .icon-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.principle-grid,.motion-demo{grid-template-columns:1fr;} }
+    @media(max-width:560px){ .icon-grid{grid-template-columns:1fr;}.mark-demo{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <a class="brand" href="./index.html">Portfolio Design System</a>
+      <nav class="site-nav" aria-label="Design system navigation">
+        <a href="./index.html">Foundations</a>
+        <a href="#icons">Icons</a>
+        <a href="#brand-mark">Mark</a>
+        <a href="#motion">Motion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro-section">
+      <p class="eyebrow">Visual Language</p>
+      <h1>Iconography, flourishes, and motion</h1>
+      <p class="body-large reading-width">A personal L&amp;D icon system for the portfolio. The visual language should feel clear, technical, and human: enough personality to make the work recognizable without competing with the content.</p>
+      <div class="reference-nav" aria-label="Quick reference">
+        <a href="#icons">Icon library</a><a href="#brand-mark">Favicon / mark</a><a href="#usage">Usage rules</a><a href="#motion">Motion rules</a>
+      </div>
+    </section>
+
+    <section class="design-section" id="usage">
+      <div class="section-heading"><p class="eyebrow">Direction</p><h2>Visual rules</h2></div>
+      <div class="principle-grid">
+        <article class="principle"><h3>Icon first</h3><p>Use icons to replace repetitive decorative copy, especially in right-side hero visuals. Important information remains in the primary content column.</p></article>
+        <article class="principle"><h3>Soft geometry</h3><p>Rounded squares, circles, connected nodes, fine lines, and restrained gradients create a systems-oriented visual language without looking like a software dashboard.</p></article>
+        <article class="principle"><h3>Purposeful motion</h3><p>Use small reveals, hover lift, and slow ambient movement to reinforce hierarchy. Never make content depend on animation, and honor reduced-motion preferences.</p></article>
+      </div>
+    </section>
+
+    <section class="design-section" id="icons">
+      <div class="section-heading"><p class="eyebrow">Library</p><h2>Portfolio icons</h2><p class="reading-width">The SVG sprite lives at <code>portfolio/assets/icons/portfolio-icons.svg</code>. Icons inherit <code>currentColor</code>, so one source asset works across cards, hero graphics, interactions, and future project pages.</p></div>
+      <div class="icon-grid">
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><h3>Learning Design</h3><p>Instructional design, pathways, learning architecture, connected experiences.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><h3>eLearning</h3><p>Digital courses, self-paced learning, content development.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span><h3>AI Evaluation</h3><p>Model review, scoring, evidence checks, evaluator workflows.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span><h3>LMS &amp; Systems</h3><p>Learning platforms, content structures, enrollments, system operations.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><h3>Live Instruction</h3><p>Facilitation, instructor-led learning, presentation design.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><h3>Multimedia</h3><p>Video, motion graphics, narration, visual media.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><h3>Interaction</h3><p>Scenario practice, decision making, interactive learning.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><h3>Assessment</h3><p>Checks, rubric scoring, certification, practice and feedback.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><h3>Automation</h3><p>Repeatable processes, system handoffs, reduced manual work.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span><h3>Analytics</h3><p>Reporting, measurement, learner data, feedback loops.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><h3>Workflow</h3><p>Development systems, review processes, operations and ownership.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-code"></use></svg></span><h3>Code</h3><p>Custom web content, scripting, development and integrations.</p></article>
+        <article class="icon-card"><span class="icon-shell"><svg class="portfolio-icon"><use href="../portfolio/assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><h3>Feedback</h3><p>Review cycles, learner feedback, stakeholder input and iteration.</p></article>
+      </div>
+    </section>
+
+    <section class="design-section" id="brand-mark">
+      <div class="section-heading"><p class="eyebrow">Identity</p><h2>Portfolio mark / favicon</h2></div>
+      <div class="mark-demo">
+        <img src="../portfolio/assets/site/favicon.svg" alt="Portfolio favicon showing connected learning nodes ending in a small spark">
+        <div><h3>Connected learning → useful outcome</h3><p>The mark combines a simple path, connected nodes, and a small spark. It represents the through-line of the portfolio: connect the pieces, reduce complexity, and design toward a usable outcome.</p></div>
+      </div>
+    </section>
+
+    <section class="design-section" id="motion">
+      <div class="section-heading"><p class="eyebrow">Behavior</p><h2>Motion language</h2></div>
+      <div class="motion-demo">
+        <article class="motion-card"><h3>Reveal</h3><p>Small vertical movement + fade as sections enter the viewport. Content is fully visible when JavaScript is unavailable.</p></article>
+        <article class="motion-card"><h3>Ambient</h3><p>Slow ring rotation and minimal parallax on decorative elements only. Never apply it to reading content.</p></article>
+        <article class="motion-card"><h3>Interaction</h3><p>2–5px hover lift, clearer borders, and short transitions for buttons/cards. Focus states remain keyboard-visible.</p></article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
