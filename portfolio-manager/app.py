@@ -312,7 +312,14 @@ def run_action():
 
     if action == "validate":
         success, output = run_full_validation()
-        flash("Full validation passed." if success else f"Validation failed:\n{output}", "success" if success else "error")
+        if success:
+            security_passed = "Adversarial security/misuse: PASS" in output
+            message = "Full validation passed."
+            if security_passed:
+                message += " Adversarial security/misuse: PASS."
+            flash(message, "success")
+        else:
+            flash(f"Validation failed:\n{output}", "error")
 
     elif action == "refresh_docs":
         result = run_command([sys.executable, "scripts/update-docs.py"])
