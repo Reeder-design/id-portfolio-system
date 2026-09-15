@@ -13,8 +13,6 @@ from reference_library_service import (
     ALLOWED_STATUSES,
     ReferenceLibraryError,
     create_reference_item,
-    delete_reference_item,
-    delete_sanitized_derivative,
     list_reference_items,
     load_reference_item,
     reference_file_path,
@@ -29,6 +27,10 @@ from reference_sanitization_service import (
     review_preflight,
     run_sanitization_review,
     save_finding_decisions,
+)
+from state_safety_service import (
+    safe_delete_reference_item,
+    safe_delete_sanitized_derivative,
 )
 
 
@@ -197,7 +199,7 @@ def upload_sanitized(item_id: str):
 @reference_library_bp.post("/<item_id>/sanitized/delete")
 def remove_sanitized(item_id: str):
     try:
-        delete_sanitized_derivative(item_id)
+        safe_delete_sanitized_derivative(item_id)
     except ReferenceLibraryError as exc:
         flash(str(exc), "error")
     else:
@@ -306,7 +308,7 @@ def download_file(item_id: str, kind: str):
 @reference_library_bp.post("/<item_id>/delete")
 def remove_item(item_id: str):
     try:
-        delete_reference_item(item_id)
+        safe_delete_reference_item(item_id)
     except ReferenceLibraryError as exc:
         flash(str(exc), "error")
         return redirect(url_for("reference_library.item", item_id=item_id), code=303)
