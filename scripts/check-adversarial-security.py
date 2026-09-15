@@ -8,6 +8,7 @@ import json
 import os
 import subprocess
 import sys
+import zipfile
 
 from werkzeug.security import generate_password_hash
 
@@ -32,6 +33,7 @@ from ai_service import SYSTEM_INSTRUCTIONS, preflight_request, preflight_source,
 from ai_upload_generation_service import UPLOAD_INSTRUCTIONS  # noqa: E402
 from asset_routes import project_asset_directory, resolve_asset_path  # noqa: E402
 from git_routes import is_safe_repo_path  # noqa: E402
+from office_archive_safety import MAX_REVIEW_XML_MEMBER_BYTES, validate_office_archive  # noqa: E402
 from reference_ai_analysis_service import ANALYSIS_INSTRUCTIONS  # noqa: E402
 from reference_library_service import _item_path  # noqa: E402
 from security import is_safe_next_url  # noqa: E402
@@ -164,6 +166,14 @@ def test_http_boundaries(errors: list[str]) -> None:
             session["portfolio_manager_authenticated"] = True
             session["_csrf_token"] = "known-synthetic-csrf"
 
+        private_page = csrf_client.get("/", base_url="http://localhost")
+        require(private_page.status_code == 200, "Authenticated local dashboard did not load.", errors)
+        require("no-store" in private_page.headers.get("Cache-Control", ""), "Private Manager responses may be browser-cached.", errors)
+        require(private_page.headers.get("Referrer-Policy") == "no-referrer", "Private Manager responses do not suppress referrer leakage.", errors)
+        require(private_page.headers.get("X-Content-Type-Options") == "nosniff", "MIME-sniffing protection is missing.", errors)
+        require(private_page.headers.get("X-Frame-Options") == "DENY", "Anti-framing protection is missing.", errors)
+        require("frame-ancestors 'none'" in private_page.headers.get("Content-Security-Policy", ""), "CSP anti-framing protection is missing.", errors)
+
         forged = csrf_client.post(
             "/logout",
             data={"csrf_token": "forged-token"},
@@ -183,6 +193,36 @@ def test_http_boundaries(errors: list[str]) -> None:
     finally:
         app.config["TESTING"] = original_testing
         app.config["PROPAGATE_EXCEPTIONS"] = original_propagate
+
+
+def test_office_archive_safety(errors: list[str]) -> None:
+    PRIVATE_TEST_ROOT.mkdir(parents=True, exist_ok=True)
+    small_path = PRIVATE_TEST_ROOT / "small-safe.docx"
+    oversized_path = PRIVATE_TEST_ROOT / "synthetic-expansion.docx"
+    try:
+        with zipfile.ZipFile(small_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("word/document.xml", "<document><t>safe synthetic text</t></document>")
+        try:
+            validate_office_archive(small_path)
+        except Exception as exc:
+            errors.append(f"Normal small Office archive was rejected: {type(exc).__name__}: {exc}")
+
+        oversized_xml = "<document><t>" + ("A" * (MAX_REVIEW_XML_MEMBER_BYTES + 1024)) + "</t></document>"
+        with zipfile.ZipFile(oversized_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("word/document.xml", oversized_xml)
+        expect_raises(
+            lambda: validate_office_archive(oversized_path),
+            "Highly compressed oversized Office XML was not rejected before extraction.",
+            errors,
+        )
+
+        ai_upload_text = (MANAGER / "ai_upload_service.py").read_text(encoding="utf-8")
+        reference_text = (MANAGER / "reference_sanitization_service.py").read_text(encoding="utf-8")
+        require("validate_office_archive(path)" in ai_upload_text, "Advanced AI file extraction is not wired to Office archive expansion checks.", errors)
+        require("validate_office_archive(path)" in reference_text, "Reference Library extraction is not wired to Office archive expansion checks.", errors)
+    finally:
+        small_path.unlink(missing_ok=True)
+        oversized_path.unlink(missing_ok=True)
 
 
 def load_renderer_module():
@@ -271,6 +311,7 @@ def main() -> int:
         test_ai_boundaries,
         test_private_path_guards,
         test_http_boundaries,
+        test_office_archive_safety,
         test_xss_escaping,
         test_tracked_privacy,
     )
@@ -287,7 +328,7 @@ def main() -> int:
         return 1
 
     print(f"Adversarial security/misuse validation passed ({len(tests)} test groups).")
-    print("Synthetic tests covered hostile hosts, CSRF forgery, redirects, traversal, AI secret preflight, prompt-injection boundaries, XSS escaping, and tracked private paths.")
+    print("Synthetic tests covered hostile hosts, CSRF forgery, redirects, traversal, AI secret preflight, prompt-injection boundaries, Office archive expansion, XSS escaping, private response headers, and tracked private paths.")
     return 0
 
 
