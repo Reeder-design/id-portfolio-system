@@ -32,6 +32,5 @@ These pages exist in the public site but are not represented by a structured pro
 
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
-- `portfolio/projects/project-template/index.html`
 
-Total public HTML pages: **16**
+Total public HTML pages: **15**
