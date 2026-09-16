@@ -93,6 +93,20 @@
 .portfolio-assistant-panel[hidden],
 .demo-help-panel[hidden] { display: none; }
 
+/* Demo Help is opt-in. portfolio-motion.js sets this attribute only on exact demo routes. */
+.demo-help-launcher,
+.demo-help-panel {
+  display: none !important;
+}
+
+body[data-demo-page="true"] .demo-help-launcher {
+  display: inline-flex !important;
+}
+
+body[data-demo-page="true"] .demo-help-panel:not([hidden]) {
+  display: block !important;
+}
+
 .portfolio-assistant-header,
 .demo-help-header {
   display: grid;
