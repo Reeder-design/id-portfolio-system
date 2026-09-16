@@ -6,37 +6,380 @@
   "category": "instructional-design",
   "subcategory": "complete-learning-paths",
   "status": "building",
-  "summary": "A sanitized case study of redesigning a complex enterprise sales certification into one maintainable learning pathway for internal sellers and external partners.",
+  "summary": "A sanitized case study of designing a role-based, region-aware sales enablement pathway that connected curriculum architecture, scenario practice, assessment, LMS behavior, reporting, migration validation, and maintenance.",
   "page_path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Consolidate overlapping legacy training, updated solution messaging, assessment requirements, and partner-facing enablement into one coherent certification experience that could be maintained as the portfolio changed.",
-    "audience": "Internal sales teams and external sales partners learning how to position a complex enterprise technology portfolio.",
+    "business_need": "Create a consistent and maintainable way for internal and channel sellers with different levels of prior knowledge to understand a complex enterprise technology portfolio, recognize suitable opportunities, communicate value, navigate regional requirements, and prepare for the next stage of a sale.",
+    "audience": "Internal sellers and channel partners, from newcomers to experienced practitioners, working with a complex enterprise technology portfolio.",
     "learning_objectives": [
-      "Explain the solution family in customer and business terms.",
-      "Connect customer needs and use cases to the appropriate solution.",
-      "Use realistic customer examples to support value conversations.",
-      "Demonstrate required knowledge through an objective-aligned certification assessment."
+      "Recognize customer opportunities that fit the portfolio and identify the most relevant solution path.",
+      "Distinguish related solution categories using customer needs, constraints, and business context.",
+      "Ask useful discovery questions and connect technical capabilities to customer value without drifting into implementation training.",
+      "Recommend appropriate next steps and recognize when a specialist or technical handoff is needed.",
+      "Demonstrate required knowledge through objective-aligned assessment and remediation."
     ],
-    "role": "Instructional Designer responsible for curriculum architecture, source-content synthesis, eLearning design, assessment design, SME review workflows, and maintenance planning.",
-    "design_approach": "Treat the certification as a connected system rather than a single course. I mapped legacy content against current objectives, separated must-know sales knowledge from reference material, planned where real customer use cases supported transfer, and connected learning, practice, assessment, LMS behavior, and update ownership.",
-    "development_process": "Built the pathway around modular eLearning content, a reusable source and asset library, structured storyboards and review notes, iterative SME validation, and a certification assessment. Development decisions favored reusable components and editable source files so later product, naming, or branding changes could be made without rebuilding the experience.",
+    "role": "Instructional Designer and Learning Experience Designer. I designed and developed the learning-path architecture and course experience, coordinated review cycles, maintained and updated content, supported LMS configuration, testing and migration validation, and created reporting workflow improvements.",
+    "design_approach": "I treated the certification as a connected learning system rather than a single course. I organized the experience as a progressive journey, separated broadly applicable and regional requirements, layered content for mixed experience levels, tied technical detail to seller decisions, and aligned practice, assessment, LMS behavior, reporting, and maintenance to the same learner outcomes.",
+    "development_process": "I translated approved source material into modular eLearning, multimedia, comparison activities, scenario prompts, knowledge checks, and assessment content. I staged internal QA and SME review, tracked issues and decisions, validated LMS behavior from the learner perspective, and kept released, temporary, and proposed content distinct so updates could be targeted without rebuilding the full pathway.",
     "outcomes": [
-      "Created a single pathway architecture for content that previously lived across overlapping training.",
-      "Aligned course content, customer examples, and assessment to the same sales-performance outcomes.",
-      "Established a reusable source-content, asset, review, and maintenance structure for future updates."
+      "Designed and developed a multi-course sales enablement pathway with role-based content, interactive practice, assessments, review documentation, and LMS implementation support.",
+      "The pathway was released and later restructured to provide distinct broadly applicable and regional learning routes.",
+      "A supplemental regional assessment and automated spreadsheet workflow provided a practical way to classify regional completion states when platform reporting did not fully match the learning design.",
+      "Project records support staged QA, stakeholder review, issue resolution, maintenance, and migration validation without relying on unsupported performance or revenue claims."
     ]
   },
+  "detail_sections": [
+    {
+      "id": "learning-architecture",
+      "eyebrow": "Learning Architecture",
+      "title": "Turn a broad portfolio into a progressive seller journey.",
+      "summary": "I organized the pathway so sellers could move from basic context to applied sales decisions. Separating core, regional, and optional requirements kept the main path focused and made future updates easier.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Core Path",
+          "description": "The broadly applicable sequence for the main seller audience.",
+          "items": [
+            "Orientation",
+            "Market Context",
+            "Solution Categories",
+            "Use Cases",
+            "Positioning Practice",
+            "Ordering Readiness",
+            "Assessment"
+          ]
+        },
+        {
+          "title": "Regional Extension",
+          "description": "Market-specific learning and assessment stayed separate from the broadly required path.",
+          "items": [
+            "Regional Context",
+            "Regional Assessment"
+          ]
+        },
+        {
+          "title": "Optional Foundations",
+          "description": "Deeper technical background remained available without turning sales enablement into implementation training.",
+          "items": [
+            "Technical Foundations",
+            "Role-Specific Deep Dives"
+          ]
+        }
+      ],
+      "note": "Recreated architecture using neutral labels rather than internal course, product, or regional names."
+    },
+    {
+      "id": "mixed-experience-design",
+      "eyebrow": "Audience Strategy",
+      "title": "Serve novices and experienced sellers without designing two separate programs.",
+      "summary": "The audience ranged from people new to the portfolio to experienced sellers and partners. I used layering and modularity rather than forcing one level of detail on everyone.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Newer sellers",
+          "body": "Use plain-language scaffolds, predictable sequencing, concise takeaways, and enough context to build a shared mental model before asking for application.",
+          "tag": "Scaffold"
+        },
+        {
+          "title": "Experienced sellers",
+          "body": "Provide expandable detail, quick-reference elements, and optional depth so experienced learners can move efficiently without losing access to useful context.",
+          "tag": "Layer"
+        },
+        {
+          "title": "Role boundary",
+          "body": "Keep technical detail only when it supports a seller decision, customer question, risk discussion, ordering step, or specialist handoff. Route deeper execution content to separate technical learning.",
+          "tag": "Focus"
+        }
+      ]
+    },
+    {
+      "id": "objective-alignment",
+      "eyebrow": "Objective Alignment",
+      "title": "Connect seller tasks, practice, assessment, and remediation.",
+      "summary": "I mapped learning objectives to the decisions sellers needed to make so the assessment checked qualification, comparison, risk recognition, and handoff judgment instead of recall alone.",
+      "layout": "table",
+      "columns": [
+        "Learning objective",
+        "Seller task",
+        "Practice",
+        "Assessment evidence",
+        "Remediation"
+      ],
+      "rows": [
+        [
+          "Identify when a customer opportunity fits the portfolio.",
+          "Recognize opportunity fit.",
+          "Scenario-based qualification check.",
+          "Learner selects the best-fit solution path.",
+          "Return to the use-case and customer-need lesson."
+        ],
+        [
+          "Distinguish related solution categories.",
+          "Compare needs, constraints, and options.",
+          "Side-by-side comparison interaction.",
+          "Learner matches need, constraint, and solution type.",
+          "Review the solution-comparison module."
+        ],
+        [
+          "Recommend the next step and recognize when specialist support is needed.",
+          "Prepare an appropriate handoff.",
+          "Guided discovery and next-action scenario.",
+          "Learner chooses an appropriate recommendation or escalation path.",
+          "Return to positioning and handoff guidance."
+        ]
+      ]
+    },
+    {
+      "id": "assessment-strategy",
+      "eyebrow": "Assessment Strategy",
+      "title": "Use assessment as part of the pathway, not a final attachment.",
+      "summary": "Formative checks corrected misconceptions during learning, while final assessment and remediation stayed tied to course objectives. A separate regional assessment closed a measurement gap without duplicating the entire path.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Formative checks",
+          "body": "Use feedback during the course to correct misunderstandings before they reach the final assessment.",
+          "tag": "Practice"
+        },
+        {
+          "title": "Primary assessment",
+          "body": "Map final items to broadly required objectives and source courses so the certification reflects the learning path rather than isolated trivia.",
+          "tag": "Validate"
+        },
+        {
+          "title": "Regional assessment",
+          "body": "Keep market-specific requirements in a supplemental assessment rather than forcing irrelevant required learning into the core pathway.",
+          "tag": "Route"
+        },
+        {
+          "title": "Remediation",
+          "body": "Point learners back to the relevant topic when an answer reveals a specific misconception or missing requirement.",
+          "tag": "Recover"
+        }
+      ]
+    },
+    {
+      "id": "qa-governance",
+      "eyebrow": "QA + Governance",
+      "title": "Stage reviews so each reviewer can focus on the right question.",
+      "summary": "I separated design QA, specialist review, messaging review, assessment review, LMS validation, and post-launch triage so feedback stayed traceable and release decisions were easier to verify.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Review workflow",
+          "description": "A recreated public-safe version of the review path used to move work toward release readiness.",
+          "items": [
+            "Draft Build",
+            "Design QA",
+            "Accessibility + Interaction QA",
+            "SME Review",
+            "Messaging Review",
+            "Assessment Review",
+            "Final Validation",
+            "LMS Test",
+            "Launch",
+            "Post-Launch Triage"
+          ]
+        }
+      ],
+      "note": "Real reviewer names, comments, internal links, dates, and approval records remain private."
+    },
+    {
+      "id": "lms-migration",
+      "eyebrow": "LMS + Migration",
+      "title": "Treat platform behavior as part of the learner experience.",
+      "summary": "I supported LMS setup, learner-perspective testing, migration validation, cleanup, and guidance. The goal was to protect valid learner history while finding visibility, mapping, renewal, and reporting issues before they created confusion.",
+      "layout": "table",
+      "columns": [
+        "Learner profile",
+        "Starting status",
+        "Expected behavior",
+        "Test focus"
+      ],
+      "rows": [
+        [
+          "New learner",
+          "No prior completion",
+          "Sees the correct required pathway and assessment.",
+          "Visibility, enrollment, launch behavior"
+        ],
+        [
+          "Renewing learner",
+          "Existing certification approaching renewal",
+          "Receives the intended renewal experience without unnecessary duplication.",
+          "Renewal rules, prerequisites, completion"
+        ],
+        [
+          "Imported history",
+          "Valid completion migrated from a legacy platform",
+          "Prior history remains understandable and usable after migration.",
+          "Mapping, displayed status, learner guidance"
+        ],
+        [
+          "Regional learner",
+          "Core learning plus an additional market requirement",
+          "Moves through the correct regional extension and assessment.",
+          "Routing, requirements, reporting"
+        ],
+        [
+          "Duplicate record",
+          "Overlapping or duplicated legacy materials",
+          "Learner-facing relationships are cleaned up without deleting legitimate history.",
+          "Duplicate cleanup, relationship mapping"
+        ],
+        [
+          "Hidden record",
+          "Deprecated or intentionally hidden material",
+          "Old content stays out of normal discovery while valid history remains protected.",
+          "Visibility, history, governance"
+        ]
+      ],
+      "note": "This is a fictionalized migration test matrix. It does not reproduce internal learner records or platform configuration."
+    },
+    {
+      "id": "reporting-workflow",
+      "eyebrow": "Reporting + Workflow Improvement",
+      "title": "Close a platform measurement gap without rebuilding the pathway.",
+      "summary": "When platform rules could not perfectly enforce and report every regional requirement, I added a supplemental assessment and a lightweight reporting workflow that combined status indicators into a clearer completion decision.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Inputs",
+          "description": "Synthetic portfolio version of the records used to determine status.",
+          "items": [
+            "Core completion",
+            "Regional assessment",
+            "Renewal status",
+            "Learner route"
+          ]
+        },
+        {
+          "title": "Logic",
+          "description": "Classify the learner state using the appropriate combination of requirements.",
+          "items": [
+            "Complete",
+            "Missing requirement",
+            "Renewal needed",
+            "Review exception"
+          ]
+        },
+        {
+          "title": "Output",
+          "description": "Create a clearer status view while keeping exceptions visible for human review.",
+          "items": [
+            "Completion status",
+            "Exception visibility",
+            "Follow-up queue"
+          ]
+        }
+      ],
+      "note": "The dedicated Certification Reporting Automation case study shows the deeper automation and data-processing work using synthetic data."
+    },
+    {
+      "id": "maintenance-lifecycle",
+      "eyebrow": "Maintenance",
+      "title": "Design the pathway to survive change.",
+      "summary": "Messaging, naming, features, source ownership, and platform structures changed over time. I used modular boundaries and source tracking so updates could be evaluated and released without treating every change as a full rebuild.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Living-content cycle",
+          "description": "A simple lifecycle for keeping released content separate from temporary or proposed work.",
+          "items": [
+            "Monitor",
+            "Evaluate",
+            "Update",
+            "Review",
+            "Publish",
+            "Archive"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evidence-boundaries",
+      "eyebrow": "Evidence-Safe Outcomes",
+      "title": "Separate what was delivered, observed, intended, and not claimed.",
+      "summary": "The public case study uses supported qualitative evidence and avoids turning intended outcomes into unsupported performance claims.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Deliverable",
+          "body": "A multi-course learning path with role-based content, interactive practice, assessments, review documentation, and LMS implementation support.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Observed outcome",
+          "body": "The pathway was released and later restructured to provide distinct broadly applicable and regional learning routes.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Process improvement",
+          "body": "A supplemental assessment and automated spreadsheet workflow provided a practical way to classify regional completion states.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Qualitative evidence",
+          "body": "Project records show staged QA, stakeholder review, issue resolution, maintenance, and migration validation.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Intended outcome",
+          "body": "The pathway was designed to help sellers recognize suitable opportunities, explain value, distinguish solution categories, and prepare next steps.",
+          "tag": "Intent"
+        },
+        {
+          "title": "Not claimed",
+          "body": "No public performance gains, revenue impact, customer outcomes, learner counts, ratings, or ROI are claimed without approved evidence.",
+          "tag": "Boundary"
+        }
+      ]
+    },
+    {
+      "id": "reflection",
+      "eyebrow": "Reflection",
+      "title": "What this project changed in how I design learning systems.",
+      "summary": "The work reinforced that curriculum design, governance, assessment, reporting, and LMS behavior cannot be treated as separate workstreams when learners experience them as one system.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "What I learned",
+          "body": "A strong learning design has to survive the platform and maintenance realities around it. I also learned to draw a sharper boundary between technical knowledge needed for a seller decision and technical knowledge that belongs in a separate role-based path.",
+          "tag": "Lesson"
+        },
+        {
+          "title": "What I would improve",
+          "body": "I would define routing and reporting rules earlier, establish a source-of-truth inventory before development, prototype certification logic with representative learner profiles, and move more assessment toward fictional performance scenarios.",
+          "tag": "Next"
+        }
+      ]
+    }
+  ],
+  "related_work": [
+    {
+      "project_id": "learning-platform-operations-migration-readiness",
+      "relationship": "LMS migration, certification, learner-path validation, and platform governance"
+    },
+    {
+      "project_id": "certification-reporting-automation",
+      "relationship": "Reporting automation, completion analysis, and exception handling"
+    }
+  ],
   "skills": [
     "Instructional Design",
+    "Learning Experience Design",
     "Curriculum Architecture",
     "Sales Enablement",
     "eLearning Design",
     "Assessment Design",
     "SME Collaboration",
     "Learning Pathways",
-    "QA"
+    "LMS Administration",
+    "QA",
+    "Governance",
+    "Workflow Improvement"
   ],
   "tools": [
     "Articulate Rise 360",
@@ -45,9 +388,9 @@
     "PowerPoint"
   ],
   "assets": [],
-  "source_material_notes": "Generalized from enterprise sales-enablement work. Product names, internal terminology, source materials, and proprietary customer details are intentionally omitted.",
+  "source_material_notes": "Generalized from documented enterprise sales-enablement work. Product names, internal terminology, real customer or partner details, learner records, screenshots, links, metrics, proprietary diagrams, and source materials are intentionally omitted. Public examples should remain fictional recreations until separately approved.",
   "dates": {
     "created": "2026-09-15",
-    "updated": "2026-09-15"
+    "updated": "2026-09-16"
   }
 }
