@@ -1,44 +1,128 @@
 # Project Page Template System
 
-The standard project-page system converts structured project records in `portfolio-data/projects/` into consistent portfolio HTML.
+The standard project-page system converts structured project records in `portfolio-data/projects/` into polished public case-study pages.
 
 ## Purpose
 
-The template system separates project content from page layout. Project-specific information lives in JSON; shared page structure lives in `templates/project-page/index.html`; `scripts/render-project.py` combines them.
+The template separates project content from page layout. Project-specific information lives in JSON; shared page structure lives in `templates/project-page/index.html`; `scripts/render-project.py` combines them.
 
-This is the foundation for the future Portfolio Manager dashboard and project generator.
+The standard template is intentionally a strong default, not a rule that every project must look identical. Bespoke interactive demos can remain custom pages when the interaction itself is part of the portfolio evidence.
 
 ## Files
 
-- `templates/project-page/index.html` — standard project case-study layout
+- `templates/project-page/index.html` — standard generated case-study layout
 - `scripts/render-project.py` — renders one structured project record into HTML
-- `scripts/check-renderer.py` — renders all project records in memory and checks generated navigation and template completeness
+- `scripts/check-renderer.py` — renders all project records in memory and checks links, shared styling, required architecture, and conditional Evidence behavior
+- `portfolio-data/schema/project.schema.json` — validates structured project records
 - `portfolio-data/taxonomy.json` — category labels and canonical portfolio paths
 - `portfolio-data/projects/*.json` — project-specific content
 
-## What the Renderer Generates
+## Final Standard Page Architecture
 
-The renderer automatically builds:
+Generated projects now follow the strongest patterns established across the live portfolio:
 
-- page title and meta description
-- shared stylesheet path
-- main navigation
-- breadcrumbs
-- category and subcategory labels
-- hero summary and tags
-- project at-a-glance details
-- challenge, audience, learning goals, design approach, development, and outcomes sections
-- public project assets
-- tools and skills sidebar
-- status badge
-- confidentiality note for sanitized examples
-- footer and resume path
+```text
+short visual hero
+    ↓
+project snapshot
+    ↓
+Need
+    ↓
+Design Decisions
+    ↓
+Build
+    ↓
+Evidence (only when public assets exist)
+    ↓
+Outcome
+    ↓
+Keep Exploring
+```
 
-Relative links are calculated from the project's final output location, so project pages can be nested at different folder depths without manually counting `../` segments.
+The design intentionally avoids the older long sidebar + six repetitive case-study sections pattern.
+
+### Hero
+
+The hero keeps the public project summary short and scan-friendly. It includes:
+
+- category
+- project title
+- short summary
+- up to six skill/tool tags
+- optional live-project action
+- back navigation
+- category-aware iconography
+
+### Project Snapshot
+
+A compact snapshot replaces the old metadata sidebar. It surfaces:
+
+- role
+- audience
+- project type
+- status
+
+### Need
+
+Uses the structured business need, audience, and learning objectives to establish why the project exists and what the audience needs to be able to do.
+
+### Design Decisions
+
+Uses the structured design approach and skill metadata to show how the solution was shaped.
+
+### Build
+
+Uses the development process, tools, and role fields to explain how the solution was built and validated.
+
+### Evidence
+
+Evidence is conditional. If the structured record contains assets with `"publish": true`, the renderer adds an Evidence nav item and an Evidence section. If there are no public assets, the page does not create an empty evidence block.
+
+Supported public asset treatments include:
+
+- images
+- video
+- PDFs/documents/downloads
+- embeds/code/other public references as linked artifacts
+
+The template does not invent an interaction or artifact when a project does not have one.
+
+### Outcome
+
+Uses the structured outcomes field and repeats a compact project/capability snapshot so the page closes on evidence and relevance rather than metadata.
+
+### Keep Exploring
+
+Every generated page ends with clear routes to the live project when available, the parent portfolio area, and the full Projects page.
+
+## Shared Portfolio Behavior
+
+Generated pages now load the same public styling and behavior stack as the hand-built portfolio pages:
+
+- `portfolio/css/styles.css`
+- `portfolio/css/portfolio-refresh.css`
+- `portfolio/css/phase1-theme.css`
+- `portfolio/css/phase1-frame.css`
+- `portfolio/js/portfolio-motion.js`
+
+Because the shared motion layer loads the hiring-support styles, generated pages also inherit the sitewide recruiter guide and the compact-UI spacing/overflow safeguards.
+
+Contextual Demo Help remains opt-in and is only enabled for selected demo URLs in `portfolio-motion.js`.
+
+## Supported Categories
+
+Structured projects may be created under:
+
+- Instructional Design
+- AI Training and Evaluation
+- LMS Administration & System Operations
+- Systems and Workflows
+
+The renderer uses category-aware portfolio icons automatically.
 
 ## Rendering a Project
 
-Preview the generated HTML without writing a file:
+Preview generated HTML without writing a file:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/pursuit-positioning.json --stdout
@@ -50,21 +134,21 @@ Render a new project to the `page_path` declared in its JSON record:
 python scripts/render-project.py portfolio-data/projects/my-project.json
 ```
 
-The renderer will refuse to overwrite an existing file by default.
-
-To intentionally replace an existing generated page:
+The renderer refuses to overwrite an existing file by default. To intentionally replace an existing generated page:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/my-project.json --force
 ```
 
-Use `--force` only when the structured record and template are intended to be the source for that page.
+Use `--force` only when the structured record and template are intended to remain the source of truth for that page.
 
-## Existing Bespoke Projects
+## Bespoke Interactive Projects
 
-The current interactive demos remain custom HTML/JavaScript experiences. This step does not replace them.
+Current custom demos remain custom HTML/JavaScript experiences. They are not forced back into the standard template.
 
-The standard template is intended for new case-study pages and future projects that fit the shared layout. A project may still contain a custom interaction or demo linked from its structured record.
+Use the standard template when the main portfolio story is the project process and outcome. Use a bespoke page when the interaction, simulation, evaluator, scoring model, or other custom experience is itself important evidence of the work.
+
+A standard case study can also link to a separate interactive demo through `links.live_project`.
 
 ## Project Links
 
@@ -78,31 +162,37 @@ Structured records may optionally include:
 }
 ```
 
-When `live_project` is present, the standard template displays launch buttons automatically.
+When `live_project` is present, launch buttons are displayed automatically.
 
-## Asset Safety
+## Asset and Confidentiality Safety
 
 Only assets with `"publish": true` are rendered onto the public page.
 
 Reference/source files used to create or edit a project should not be placed in the public repository unless they are explicitly safe to publish. Projects marked `needs-sanitization` cannot be rendered for publishing.
 
+Projects marked `sanitized` automatically receive a public-safe portfolio note explaining that the example uses sanitized, fictionalized, or generalized content.
+
 ## Validation
 
-Run all three checks locally:
+Run:
 
 ```bash
 python scripts/check-site.py
 python scripts/check-content.py
 python scripts/check-renderer.py
+python scripts/check-new-project.py
+python scripts/check-final-polish.py
 ```
 
-Pull requests run these checks automatically.
+Pull requests run the complete validation suite automatically.
 
-## Current Source-of-Truth Rule
+`check-renderer.py` specifically protects the final generated-page architecture by checking for the shared theme/motion stack, snapshot/story structure, conditional Evidence section, Keep Exploring path, valid links, and unresolved template tokens.
 
-For existing bespoke pages, the HTML remains authoritative for presentation and interaction behavior.
+## Source-of-Truth Rule
 
-For future standard case-study pages, the intended workflow is:
+For bespoke interactive pages, the custom HTML/JavaScript remains authoritative for presentation and interaction behavior.
+
+For standard generated project pages:
 
 ```text
 project JSON
@@ -114,4 +204,4 @@ render-project.py
 generated index.html
 ```
 
-The future Portfolio Manager dashboard will edit the structured project record and invoke this renderer rather than asking the user to manually edit repetitive HTML.
+Portfolio Manager should edit the structured project record and invoke the renderer instead of requiring manual edits to repetitive HTML.

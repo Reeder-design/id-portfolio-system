@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = ROOT / "scripts" / "new-project.py"
 TAXONOMY_PATH = ROOT / "portfolio-data" / "taxonomy.json"
+SCHEMA_PATH = ROOT / "portfolio-data" / "schema" / "project.schema.json"
 
 
 def load_generator():
@@ -28,6 +29,7 @@ def main() -> int:
     errors: list[str] = []
     generator = load_generator()
     taxonomy = json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     categories = {item["id"]: item for item in taxonomy["categories"]}
 
     require(
@@ -55,6 +57,20 @@ def main() -> int:
         generator.build_page_path(ai_category, None, "evaluation-calibration")
         == "portfolio/projects/ai-training-and-evaluation/evaluation-calibration/index.html",
         "AI project path is incorrect",
+        errors,
+    )
+
+    lms_category = categories["lms-administration"]
+    require(
+        generator.build_page_path(lms_category, None, "migration-case-study")
+        == "portfolio/projects/lms-administration/migration-case-study/index.html",
+        "LMS project path is incorrect",
+        errors,
+    )
+    schema_categories = schema["properties"]["category"]["enum"]
+    require(
+        "lms-administration" in schema_categories,
+        "structured project schema must allow LMS Administration projects",
         errors,
     )
 
@@ -133,6 +149,10 @@ def main() -> int:
             require("{{" not in rendered, "generated project should not contain unresolved template tokens", errors)
             require("Generator Test Project" in rendered, "rendered project title is missing", errors)
             require(output_path.name == "index.html", "renderer output should be an index.html page", errors)
+            require("project-snapshot-grid" in rendered, "generated project should use the compact project snapshot", errors)
+            require("project-story" in rendered, "generated project should use the modern project story structure", errors)
+            require("portfolio-motion.js" in rendered, "generated project should inherit shared portfolio motion/hiring support", errors)
+            require("case-study-sidebar" not in rendered, "generated project should not use the deprecated sidebar architecture", errors)
     except Exception as exc:
         errors.append(f"generated record failed renderer test: {exc}")
 
