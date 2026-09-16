@@ -17,6 +17,12 @@ TEMPLATE_PATH = ROOT / "templates" / "project-page" / "index.html"
 
 TOKEN_PATTERN = re.compile(r"\{\{([A-Z0-9_]+)\}\}")
 EXTERNAL_SCHEMES = ("http://", "https://", "mailto:", "tel:")
+CATEGORY_ICONS = {
+    "instructional-design": "icon-learning-design",
+    "ai-training-and-evaluation": "icon-ai-evaluation",
+    "workflows": "icon-workflow",
+    "lms-administration": "icon-lms",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -79,14 +85,26 @@ def render_list(items: list[str]) -> str:
     return "\n".join(f"<li>{esc(item)}</li>" for item in items)
 
 
-def render_tags(project: dict) -> str:
-    tags: list[str] = []
-    for value in project.get("skills", []) + project.get("tools", []):
-        if value and value not in tags:
-            tags.append(value)
-        if len(tags) == 6:
+def unique_values(values: list[str], limit: int | None = None) -> list[str]:
+    result: list[str] = []
+    for value in values:
+        if value and value not in result:
+            result.append(value)
+        if limit and len(result) >= limit:
             break
-    return "\n".join(f'<span class="tag">{esc(tag)}</span>' for tag in tags)
+    return result
+
+
+def render_tag_spans(values: list[str], *, fallback: str = "Not specified") -> str:
+    cleaned = unique_values(values)
+    if not cleaned:
+        return f'<span class="tag">{esc(fallback)}</span>'
+    return "\n".join(f'<span class="tag">{esc(value)}</span>' for value in cleaned)
+
+
+def render_tags(project: dict) -> str:
+    values = unique_values(project.get("skills", []) + project.get("tools", []), limit=6)
+    return render_tag_spans(values)
 
 
 def asset_href(output_path: Path, value: str) -> str:
@@ -95,17 +113,12 @@ def asset_href(output_path: Path, value: str) -> str:
     return relative_href(output_path, value)
 
 
-def render_assets(project: dict, output_path: Path) -> str:
+def render_assets(project: dict, output_path: Path) -> tuple[str, bool]:
     published = [asset for asset in project.get("assets", []) if asset.get("publish")]
     if not published:
-        return ""
+        return "", False
 
-    parts = [
-        "<section>",
-        '    <p class="eyebrow">Project Assets</p>',
-        "    <h2>Explore the work.</h2>",
-    ]
-
+    cards: list[str] = []
     for asset in published:
         asset_type = asset.get("type", "other")
         path = asset_href(output_path, asset.get("path", ""))
@@ -113,27 +126,37 @@ def render_assets(project: dict, output_path: Path) -> str:
         caption = esc(asset.get("caption", ""))
 
         if asset_type == "image":
-            parts.append(
-                f'    <figure><img src="{esc(path)}" alt="{alt}">'
-                + (f"<figcaption>{caption}</figcaption>" if caption else "")
+            cards.append(
+                '<figure class="project-asset-card">'
+                f'<img src="{esc(path)}" alt="{alt}">'
+                + (f'<figcaption class="project-asset-caption">{caption}</figcaption>' if caption else "")
                 + "</figure>"
             )
         elif asset_type == "video":
-            parts.append(
-                f'    <video controls preload="metadata"><source src="{esc(path)}">'
+            cards.append(
+                '<figure class="project-asset-card">'
+                f'<video controls preload="metadata"><source src="{esc(path)}">'
                 "Your browser does not support this video.</video>"
+                + (f'<figcaption class="project-asset-caption">{caption}</figcaption>' if caption else "")
+                + "</figure>"
             )
-            if caption:
-                parts.append(f"    <p>{caption}</p>")
         else:
-            label = caption or f"Open {asset_type}"
-            parts.append(
-                f'    <p><a class="btn btn-secondary" href="{esc(path)}" target="_blank" '
-                f'rel="noopener noreferrer">{label}</a></p>'
+            label = caption or f"Open {asset_type.replace('-', ' ').title()}"
+            cards.append(
+                '<div class="project-asset-card">'
+                f'<a class="project-asset-link" href="{esc(path)}" target="_blank" rel="noopener noreferrer">'
+                f'<strong>{label}</strong><span>Open asset →</span></a></div>'
             )
 
-    parts.append("</section>")
-    return "\n".join(parts)
+    section = (
+        '<section class="project-story-section project-assets" id="evidence">'
+        '<div class="project-story-heading"><span class="project-story-number">04</span>'
+        '<div><p class="eyebrow">Evidence</p><h2>Explore the work</h2></div></div>'
+        '<p>Public-safe artifacts and project outputs from this case study.</p>'
+        f'<div class="project-asset-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
+    return section, True
 
 
 def render_breadcrumbs(
@@ -187,7 +210,7 @@ def render_confidentiality_note(project: dict) -> str:
         return ""
 
     return (
-        '<section><div class="feature-callout">'
+        '<section class="project-template-note"><div class="feature-callout">'
         '<p class="eyebrow">Portfolio Note</p>'
         '<h2>Public-safe project example.</h2>'
         '<p>This example uses sanitized, fictionalized, or generalized content to demonstrate the '
@@ -219,11 +242,20 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
     project_type = subcategory["label"] if subcategory else category["label"]
 
     tools = project.get("tools", [])
+    skills = project.get("skills", [])
+    assets_section, has_assets = render_assets(project, final_output)
+    icon_id = CATEGORY_ICONS.get(project.get("category"), "icon-learning-design")
+    icon_sprite = relative_href(final_output, "portfolio/assets/icons/portfolio-icons.svg")
+
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
         "PAGE_TITLE": esc(f"{project['title']} | Haley Reeder"),
+        "FAVICON_PATH": esc(relative_href(final_output, "portfolio/assets/site/favicon.svg")),
         "CSS_PATH": esc(relative_href(final_output, "portfolio/css/styles.css")),
         "REFRESH_CSS_PATH": esc(relative_href(final_output, "portfolio/css/portfolio-refresh.css")),
+        "THEME_CSS_PATH": esc(relative_href(final_output, "portfolio/css/phase1-theme.css")),
+        "FRAME_CSS_PATH": esc(relative_href(final_output, "portfolio/css/phase1-frame.css")),
+        "MOTION_JS_PATH": esc(relative_href(final_output, "portfolio/js/portfolio-motion.js")),
         "HOME_PATH": esc(relative_href(final_output, "portfolio/index.html")),
         "ABOUT_PATH": esc(relative_href(final_output, "portfolio/about/index.html")),
         "PROJECTS_PATH": esc(relative_href(final_output, "portfolio/projects/index.html")),
@@ -231,6 +263,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "RESUME_PATH": esc(relative_href(final_output, "portfolio/assets/documents/Haley-Reeder-Resume.pdf")),
         "BREADCRUMBS": render_breadcrumbs(final_output, project, category, subcategory),
         "CATEGORY_LABEL": esc(category["label"]),
+        "CATEGORY_ICON_HREF": esc(f"{icon_sprite}#{icon_id}"),
         "TITLE": esc(project["title"]),
         "SUMMARY": esc(project["summary"]),
         "TAGS": render_tags(project),
@@ -240,17 +273,18 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "BACK_LABEL": esc(back_label),
         "ROLE": esc(content.get("role", "")),
         "AUDIENCE": esc(content.get("audience", "")),
-        "TOOLS_SUMMARY": esc(", ".join(tools[:3]) if tools else "Not specified"),
         "PROJECT_TYPE": esc(project_type),
         "BUSINESS_NEED": esc(content.get("business_need", "")),
         "LEARNING_OBJECTIVES": render_list(content.get("learning_objectives", [])),
         "DESIGN_APPROACH": esc(content.get("design_approach", "")),
         "DEVELOPMENT_PROCESS": esc(content.get("development_process", "")),
-        "ASSETS_SECTION": render_assets(project, final_output),
+        "SKILL_TAGS": render_tag_spans(skills, fallback="Project-specific skills"),
+        "TOOL_TAGS": render_tag_spans(tools, fallback="Tool-agnostic workflow"),
+        "ASSETS_SECTION": assets_section,
+        "EVIDENCE_NAV": '<a href="#evidence">Evidence</a>' if has_assets else "",
+        "OUTCOME_NUMBER": "05" if has_assets else "04",
         "OUTCOMES": render_list(content.get("outcomes", [])),
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
-        "TOOLS_LIST": render_list(tools),
-        "SKILLS_LIST": render_list(project.get("skills", [])),
         "STATUS_CLASS": esc(status),
         "STATUS_LABEL": esc(statuses.get(status, status.title())),
         "CTA_HEADING": esc("Explore the finished project." if project.get("links", {}).get("live_project") else "Explore more of my work."),
