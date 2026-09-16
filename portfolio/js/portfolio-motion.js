@@ -3,14 +3,27 @@
   const portfolioRoot = motionScript ? new URL('../', motionScript.src) : new URL('/portfolio/', window.location.href);
   const iconSprite = new URL('assets/icons/portfolio-icons.svg', portfolioRoot).href;
   const supportStylesHref = new URL('css/hiring-support.css', portfolioRoot).href;
+  const experienceStylesHref = new URL('css/experience-polish.css', portfolioRoot).href;
 
-  if (!document.querySelector('link[data-hiring-support-styles]')) {
-    const supportStyles = document.createElement('link');
-    supportStyles.rel = 'stylesheet';
-    supportStyles.href = supportStylesHref;
-    supportStyles.dataset.hiringSupportStyles = 'true';
-    document.head.appendChild(supportStyles);
-  }
+  const loadSharedStyles = () => {
+    if (!document.querySelector('link[data-hiring-support-styles]')) {
+      const supportStyles = document.createElement('link');
+      supportStyles.rel = 'stylesheet';
+      supportStyles.href = supportStylesHref;
+      supportStyles.dataset.hiringSupportStyles = 'true';
+      document.head.appendChild(supportStyles);
+    }
+
+    if (!document.querySelector('link[data-experience-polish-styles]')) {
+      const experienceStyles = document.createElement('link');
+      experienceStyles.rel = 'stylesheet';
+      experienceStyles.href = experienceStylesHref;
+      experienceStyles.dataset.experiencePolishStyles = 'true';
+      document.head.appendChild(experienceStyles);
+    }
+  };
+
+  loadSharedStyles();
 
   const escapeHtml = (value) => String(value)
     .replaceAll('&', '&amp;')
@@ -28,6 +41,189 @@
   const STOP_WORDS = new Set([
     'a','an','and','are','about','can','do','does','for','have','has','how','i','in','is','me','my','of','on','or','show','tell','the','to','what','where','with','you','your'
   ]);
+
+  const iconForLink = (link) => {
+    const haystack = `${link.textContent || ''} ${link.getAttribute('href') || ''}`.toLowerCase();
+    if (haystack.includes('ai') || haystack.includes('evaluation')) return 'icon-ai-evaluation';
+    if (haystack.includes('lms') || haystack.includes('learning platform')) return 'icon-lms';
+    if (haystack.includes('workflow') || haystack.includes('automation') || haystack.includes('systems')) return 'icon-workflow';
+    if (haystack.includes('multimedia') || haystack.includes('video')) return 'icon-multimedia';
+    if (haystack.includes('interactive') || haystack.includes('meddpicc') || haystack.includes('pursuit')) return 'icon-interaction';
+    if (haystack.includes('elearning') || haystack.includes('learning path') || haystack.includes('certification')) return 'icon-elearning';
+    if (haystack.includes('contact')) return 'icon-feedback';
+    return 'icon-learning-design';
+  };
+
+  const initExploreFooters = () => {
+    document.querySelectorAll('.cta').forEach((cta) => {
+      const eyebrow = cta.querySelector('.eyebrow');
+      if (!eyebrow || !/keep exploring/i.test(eyebrow.textContent || '')) return;
+      if (cta.classList.contains('portfolio-explore-footer')) return;
+
+      cta.classList.add('portfolio-explore-footer');
+      const heading = cta.querySelector('h2');
+      if (heading && /explore more of my work/i.test(heading.textContent || '')) {
+        heading.textContent = 'Explore more work';
+      }
+
+      cta.querySelectorAll('.button-row a').forEach((link) => {
+        if (link.classList.contains('portfolio-explore-link')) return;
+        const label = link.textContent.trim();
+        const icon = iconForLink(link);
+        link.classList.add('portfolio-explore-link');
+        link.innerHTML = `
+          <span class="portfolio-explore-icon" aria-hidden="true">
+            <svg class="portfolio-icon"><use href="${iconSprite}#${icon}"></use></svg>
+          </span>
+          <span class="portfolio-explore-link-text">${escapeHtml(label)}</span>`;
+      });
+    });
+  };
+
+  const initCompactProjectNote = () => {
+    document.querySelectorAll('.project-template-note .feature-callout').forEach((note) => {
+      if (note.classList.contains('portfolio-citation-note')) return;
+      note.classList.add('portfolio-citation-note');
+      note.innerHTML = `
+        <svg class="portfolio-icon" aria-hidden="true"><use href="${iconSprite}#icon-feedback"></use></svg>
+        <p><strong>Public-safe case study.</strong> Sanitized, fictionalized, or generalized details protect proprietary information.</p>`;
+    });
+  };
+
+  const EXPLORER_GROUPS = [
+    {
+      id: 'architecture',
+      label: 'Architecture',
+      sections: ['learning-architecture', 'mixed-experience-design']
+    },
+    {
+      id: 'learning-assessment',
+      label: 'Learning + Assessment',
+      sections: ['objective-alignment', 'assessment-strategy']
+    },
+    {
+      id: 'qa-lms',
+      label: 'QA + LMS',
+      sections: ['qa-governance', 'lms-migration']
+    },
+    {
+      id: 'operations',
+      label: 'Operations',
+      sections: ['reporting-workflow', 'maintenance-lifecycle']
+    },
+    {
+      id: 'evidence-reflection',
+      label: 'Evidence + Reflection',
+      sections: ['evidence-boundaries', 'reflection']
+    }
+  ];
+
+  const initProjectDetailExplorer = () => {
+    const detailSections = Array.from(document.querySelectorAll('.project-detail-section'));
+    if (detailSections.length < 2 || document.querySelector('.project-case-explorer')) return;
+
+    const detailMap = new Map(detailSections.map((section) => [section.id, section]));
+    const groups = EXPLORER_GROUPS
+      .map((group) => ({ ...group, sections: group.sections.filter((id) => detailMap.has(id)) }))
+      .filter((group) => group.sections.length);
+
+    if (!groups.length) return;
+
+    const firstDetail = detailSections[0];
+    const parent = firstDetail.parentElement;
+    if (!parent) return;
+
+    const explorer = document.createElement('section');
+    explorer.id = 'case-explorer';
+    explorer.className = 'project-case-explorer';
+    explorer.innerHTML = `
+      <div class="project-case-explorer-header">
+        <p class="eyebrow">Case Explorer</p>
+        <h2>Explore the decisions behind the work.</h2>
+        <p>Choose the evidence most relevant to you.</p>
+      </div>
+      <div class="project-case-explorer-tabs" role="tablist" aria-label="Case study evidence"></div>
+      <div class="project-case-explorer-panels"></div>`;
+
+    parent.insertBefore(explorer, firstDetail);
+    const tabs = explorer.querySelector('.project-case-explorer-tabs');
+    const panels = explorer.querySelector('.project-case-explorer-panels');
+
+    groups.forEach((group, index) => {
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.id = `case-tab-${group.id}`;
+      tab.className = 'project-case-explorer-tab';
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', `case-panel-${group.id}`);
+      tab.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+      tab.tabIndex = index === 0 ? 0 : -1;
+      tab.textContent = group.label;
+      tabs.appendChild(tab);
+
+      const panel = document.createElement('div');
+      panel.id = `case-panel-${group.id}`;
+      panel.className = 'project-case-explorer-panel';
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', tab.id);
+      panel.hidden = index !== 0;
+      panels.appendChild(panel);
+
+      group.sections.forEach((sectionId) => {
+        const section = detailMap.get(sectionId);
+        section.classList.add('project-explorer-detail');
+        panel.appendChild(section);
+      });
+    });
+
+    const tabButtons = Array.from(tabs.querySelectorAll('[role="tab"]'));
+    const panelEls = Array.from(panels.querySelectorAll('[role="tabpanel"]'));
+
+    const selectTab = (nextIndex, focus = false) => {
+      tabButtons.forEach((tab, index) => {
+        const selected = index === nextIndex;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        panelEls[index].hidden = !selected;
+      });
+      if (focus) tabButtons[nextIndex].focus();
+    };
+
+    tabButtons.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(index));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabButtons.length - 1;
+        else if (event.key === 'ArrowRight') next = (index + 1) % tabButtons.length;
+        else next = (index - 1 + tabButtons.length) % tabButtons.length;
+        selectTab(next, true);
+      });
+    });
+
+    const requestedHash = window.location.hash.replace('#', '');
+    if (requestedHash) {
+      const groupIndex = groups.findIndex((group) => group.sections.includes(requestedHash));
+      if (groupIndex >= 0) selectTab(groupIndex);
+    }
+
+    const storyNav = document.querySelector('.project-story-nav');
+    if (storyNav) {
+      storyNav.querySelectorAll('a').forEach((link) => {
+        const target = (link.getAttribute('href') || '').replace('#', '');
+        if (groups.some((group) => group.sections.includes(target))) link.remove();
+      });
+      if (!storyNav.querySelector('a[href="#case-explorer"]')) {
+        const outcomeLink = storyNav.querySelector('a[href="#outcome"]');
+        const explorerLink = document.createElement('a');
+        explorerLink.href = '#case-explorer';
+        explorerLink.textContent = 'Case Explorer';
+        storyNav.insertBefore(explorerLink, outcomeLink || null);
+      }
+    }
+  };
 
   let hiringIndex = [];
   let hiringIndexPromise = null;
@@ -216,13 +412,6 @@
       intro: 'Follow the review packet through four stages: Frame, Verify, Diagnose, and Calibrate.',
       steps: ['Frame the task.', 'Verify source-grounded claims.', 'Diagnose material issues.', 'Calibrate severity and feedback.'],
       signal: 'This demonstrates repeatable QA workflow design and evidence-based human review.'
-    },
-    {
-      match: '/instructional-design/complete-learning-paths/',
-      title: 'Pathway demo help',
-      intro: 'Use the scale selector and lifecycle controls to see how the workflow changes with solution size.',
-      steps: ['Choose the solution scale.', 'Move through the lifecycle stages.', 'Compare planning, build, and handoff needs.', 'Look for the closed-loop maintenance pattern.'],
-      signal: 'This demonstrates curriculum architecture, scalable eLearning workflow design, QA, and long-term maintainability.'
     }
   ];
 
@@ -272,6 +461,9 @@
     });
   };
 
+  initExploreFooters();
+  initCompactProjectNote();
+  initProjectDetailExplorer();
   initHiringAssistant();
   initDemoHelp();
 
@@ -284,7 +476,7 @@
   document.documentElement.classList.add('motion-ready');
 
   const revealTargets = document.querySelectorAll(
-    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout'
+    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer'
   );
 
   revealTargets.forEach((element) => element.classList.add('reveal-on-scroll'));
