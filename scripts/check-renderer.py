@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 import subprocess
 import sys
@@ -51,6 +50,19 @@ def main() -> int:
         print("ERROR: No structured projects found to render.")
         return 1
 
+    required_architecture = [
+        "phase1-theme.css",
+        "phase1-frame.css",
+        "portfolio-motion.js",
+        'class="project-snapshot-grid"',
+        'class="project-story"',
+        'href="#need"',
+        'href="#decisions"',
+        'href="#build"',
+        'href="#outcome"',
+        "Keep Exploring",
+    ]
+
     for project_file in project_files:
         project = json.loads(project_file.read_text(encoding="utf-8"))
         intended_output = (ROOT / project["page_path"]).resolve()
@@ -77,6 +89,20 @@ def main() -> int:
 
         if TOKEN_PATTERN.search(rendered):
             errors.append(f"{label}: unresolved template token detected")
+
+        for marker in required_architecture:
+            if marker not in rendered:
+                errors.append(f"{label}: generated page is missing modern template marker {marker!r}")
+
+        if "case-study-sidebar" in rendered or "template-flourish" in rendered:
+            errors.append(f"{label}: generated page still contains deprecated template architecture")
+
+        published_assets = [asset for asset in project.get("assets", []) if asset.get("publish")]
+        if published_assets:
+            if 'href="#evidence"' not in rendered or 'id="evidence"' not in rendered:
+                errors.append(f"{label}: published assets should produce an Evidence section and nav link")
+        elif 'href="#evidence"' in rendered:
+            errors.append(f"{label}: Evidence nav should not render when there are no public assets")
 
         parser = ReferenceParser()
         try:
