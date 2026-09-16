@@ -5,38 +5,368 @@
   "slug": "enterprise-sales-certification",
   "category": "instructional-design",
   "subcategory": "complete-learning-paths",
-  "status": "building",
-  "summary": "A sanitized case study of redesigning a complex enterprise sales certification into one maintainable learning pathway for internal sellers and external partners.",
+  "status": "live",
+  "summary": "I turned approved sales, product, and technical source material into a multi-course sales certification with core and regional routes, scenario practice, assessment, LMS delivery, review, and maintenance.",
   "page_path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Consolidate overlapping legacy training, updated solution messaging, assessment requirements, and partner-facing enablement into one coherent certification experience that could be maintained as the portfolio changed.",
-    "audience": "Internal sales teams and external sales partners learning how to position a complex enterprise technology portfolio.",
+    "business_need": "Create one maintainable sales learning path that helped internal and channel sellers recognize fit, explain value, navigate regional requirements, and prepare the next sales step.",
+    "audience": "Internal sellers and channel partners, from new to experienced.",
     "learning_objectives": [
-      "Explain the solution family in customer and business terms.",
-      "Connect customer needs and use cases to the appropriate solution.",
-      "Use realistic customer examples to support value conversations.",
-      "Demonstrate required knowledge through an objective-aligned certification assessment."
+      "Recognize opportunities that fit the portfolio.",
+      "Distinguish related solution categories using customer needs and constraints.",
+      "Ask useful discovery questions and connect capabilities to value.",
+      "Recommend next steps and know when specialist support is needed."
     ],
-    "role": "Instructional Designer responsible for curriculum architecture, source-content synthesis, eLearning design, assessment design, SME review workflows, and maintenance planning.",
-    "design_approach": "Treat the certification as a connected system rather than a single course. I mapped legacy content against current objectives, separated must-know sales knowledge from reference material, planned where real customer use cases supported transfer, and connected learning, practice, assessment, LMS behavior, and update ownership.",
-    "development_process": "Built the pathway around modular eLearning content, a reusable source and asset library, structured storyboards and review notes, iterative SME validation, and a certification assessment. Development decisions favored reusable components and editable source files so later product, naming, or branding changes could be made without rebuilding the experience.",
+    "role": "Lead instructional designer and LMS admin for learning path.",
+    "design_approach": "Built the certification as a connected system: core path, regional extension, optional foundations, practice, assessment, LMS behavior, and update ownership.",
+    "development_process": "Built modular Rise and Storyline learning, multimedia, comparisons, scenarios, knowledge checks, and assessment; staged QA and SME review; validated LMS behavior and maintenance paths.",
     "outcomes": [
-      "Created a single pathway architecture for content that previously lived across overlapping training.",
-      "Aligned course content, customer examples, and assessment to the same sales-performance outcomes.",
-      "Established a reusable source-content, asset, review, and maintenance structure for future updates."
+      "Released a multi-course pathway with role-based learning, practice, assessment, and LMS support.",
+      "Restructured broad and regional requirements into distinct learner routes.",
+      "Added a supplemental assessment and reporting workflow when platform reporting did not fully match the design."
     ]
   },
+  "detail_sections": [
+    {
+      "id": "learning-architecture",
+      "eyebrow": "Learning Architecture",
+      "title": "Turn a broad portfolio into a clear seller journey.",
+      "summary": "Core, regional, and optional routes kept the required path focused and easier to update.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Core Path",
+          "description": "Broadly applicable learning for the main seller audience.",
+          "items": [
+            "Orientation",
+            "Market Context",
+            "Solution Categories",
+            "Use Cases",
+            "Positioning Practice",
+            "Ordering Readiness",
+            "Assessment"
+          ]
+        },
+        {
+          "title": "Regional Extension",
+          "description": "Market-specific learning stayed outside the core requirement.",
+          "items": [
+            "Regional Context",
+            "Regional Assessment"
+          ]
+        },
+        {
+          "title": "Optional Foundations",
+          "description": "Deeper technical background remained available without becoming required sales training.",
+          "items": [
+            "Technical Foundations",
+            "Role-Specific Deep Dives"
+          ]
+        }
+      ],
+      "note": "Recreated architecture with neutral labels; internal course, product, and regional names are omitted."
+    },
+    {
+      "id": "mixed-experience-design",
+      "eyebrow": "Audience Strategy",
+      "title": "Support new and experienced sellers in one pathway.",
+      "summary": "Layering and modularity let learners use the amount of context they needed.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Newer sellers",
+          "body": "Plain-language scaffolds, predictable sequence, and concise takeaways build a shared mental model before application.",
+          "tag": "Scaffold"
+        },
+        {
+          "title": "Experienced sellers",
+          "body": "Expandable detail and quick-reference elements preserve speed without removing useful context.",
+          "tag": "Layer"
+        },
+        {
+          "title": "Role boundary",
+          "body": "Technical depth stays only when it supports a seller decision, customer question, ordering step, or specialist handoff.",
+          "tag": "Focus"
+        }
+      ]
+    },
+    {
+      "id": "objective-alignment",
+      "eyebrow": "Objective Alignment",
+      "title": "Tie seller tasks to practice, assessment, and remediation.",
+      "summary": "Assessment focused on decisions and judgment, not recall alone.",
+      "layout": "table",
+      "columns": [
+        "Objective",
+        "Seller task",
+        "Practice",
+        "Evidence",
+        "Remediation"
+      ],
+      "rows": [
+        [
+          "Identify opportunity fit.",
+          "Recognize fit.",
+          "Qualification scenario.",
+          "Select best-fit path.",
+          "Review use-case lesson."
+        ],
+        [
+          "Distinguish related solutions.",
+          "Compare needs and constraints.",
+          "Side-by-side comparison.",
+          "Match need to solution type.",
+          "Review comparison module."
+        ],
+        [
+          "Recommend the next step.",
+          "Prepare handoff.",
+          "Discovery scenario.",
+          "Choose recommendation or escalation.",
+          "Review positioning guidance."
+        ]
+      ]
+    },
+    {
+      "id": "assessment-strategy",
+      "eyebrow": "Assessment Strategy",
+      "title": "Make assessment part of the pathway.",
+      "summary": "Formative checks, final assessment, regional requirements, and remediation stayed aligned to the learning design.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Formative checks",
+          "body": "Correct misconceptions before the final assessment.",
+          "tag": "Practice"
+        },
+        {
+          "title": "Primary assessment",
+          "body": "Map final items to required objectives and source courses.",
+          "tag": "Validate"
+        },
+        {
+          "title": "Regional assessment",
+          "body": "Keep market-specific requirements separate from the core path.",
+          "tag": "Route"
+        },
+        {
+          "title": "Remediation",
+          "body": "Point learners back to the topic behind a missed requirement.",
+          "tag": "Recover"
+        }
+      ]
+    },
+    {
+      "id": "qa-governance",
+      "eyebrow": "QA + Governance",
+      "title": "Stage review by purpose.",
+      "summary": "Separate review stages kept feedback focused and release decisions traceable.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Review workflow",
+          "description": "Public-safe reconstruction of the release path.",
+          "items": [
+            "Draft Build",
+            "Design QA",
+            "Accessibility + Interaction QA",
+            "SME Review",
+            "Messaging Review",
+            "Assessment Review",
+            "Final Validation",
+            "LMS Test",
+            "Launch",
+            "Post-Launch Triage"
+          ]
+        }
+      ],
+      "note": "Reviewer names, comments, internal links, dates, and approvals remain private."
+    },
+    {
+      "id": "lms-migration",
+      "eyebrow": "LMS + Migration",
+      "title": "Test the platform as part of the learner experience.",
+      "summary": "Learner-perspective testing surfaced routing, renewal, visibility, history, and reporting issues.",
+      "layout": "table",
+      "columns": [
+        "Learner profile",
+        "Starting status",
+        "Expected behavior",
+        "Test focus"
+      ],
+      "rows": [
+        [
+          "New learner",
+          "No prior completion",
+          "Correct pathway and assessment.",
+          "Visibility, enrollment, launch"
+        ],
+        [
+          "Renewing learner",
+          "Certification nearing renewal",
+          "Intended renewal without duplication.",
+          "Renewal, prerequisites, completion"
+        ],
+        [
+          "Imported history",
+          "Legacy completion",
+          "Prior history remains understandable.",
+          "Mapping, status, guidance"
+        ],
+        [
+          "Regional learner",
+          "Core plus market requirement",
+          "Correct extension and assessment.",
+          "Routing, requirements, reporting"
+        ],
+        [
+          "Duplicate record",
+          "Overlapping legacy material",
+          "Clean relationships without losing valid history.",
+          "Cleanup, mapping"
+        ]
+      ],
+      "note": "Fictionalized test matrix; no learner records or internal configuration are reproduced."
+    },
+    {
+      "id": "reporting-workflow",
+      "eyebrow": "Reporting + Workflow",
+      "title": "Close a platform measurement gap.",
+      "summary": "A supplemental assessment and lightweight reporting workflow created a clearer regional completion decision.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Inputs",
+          "description": "Synthetic status inputs.",
+          "items": [
+            "Core completion",
+            "Regional assessment",
+            "Renewal status",
+            "Learner route"
+          ]
+        },
+        {
+          "title": "Logic",
+          "description": "Classify the learner state.",
+          "items": [
+            "Complete",
+            "Missing requirement",
+            "Renewal needed",
+            "Review exception"
+          ]
+        },
+        {
+          "title": "Output",
+          "description": "Keep status and exceptions easy to review.",
+          "items": [
+            "Completion status",
+            "Exception visibility",
+            "Follow-up queue"
+          ]
+        }
+      ],
+      "note": "See Certification Reporting Automation for the deeper automation workflow."
+    },
+    {
+      "id": "maintenance-lifecycle",
+      "eyebrow": "Maintenance",
+      "title": "Design for change.",
+      "summary": "Modular boundaries and source tracking made targeted updates easier as messaging, naming, and platform structures changed.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Living-content cycle",
+          "description": "Keep released work separate from temporary or proposed changes.",
+          "items": [
+            "Monitor",
+            "Evaluate",
+            "Update",
+            "Review",
+            "Publish",
+            "Archive"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evidence-boundaries",
+      "eyebrow": "Evidence",
+      "title": "Separate supported outcomes from intent.",
+      "summary": "The public case uses qualitative evidence and avoids unsupported performance claims.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Delivered",
+          "body": "Multi-course path with role-based content, practice, assessment, review documentation, and LMS support.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Observed",
+          "body": "The pathway launched and was later restructured into broad and regional routes.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Process improvement",
+          "body": "Supplemental assessment and reporting clarified regional completion states.",
+          "tag": "Supported"
+        },
+        {
+          "title": "Intended",
+          "body": "Help sellers recognize fit, explain value, distinguish options, and prepare next steps.",
+          "tag": "Intent"
+        },
+        {
+          "title": "Not claimed",
+          "body": "No revenue, ROI, customer-impact, learner-count, or performance-gain claims without approved evidence.",
+          "tag": "Boundary"
+        }
+      ]
+    },
+    {
+      "id": "reflection",
+      "eyebrow": "Reflection",
+      "title": "What changed in my approach.",
+      "summary": "Curriculum, assessment, reporting, governance, and LMS behavior have to work as one learner system.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "What I learned",
+          "body": "Strong learning design has to survive platform and maintenance realities. Seller training also needs a clear boundary from technical-role training.",
+          "tag": "Lesson"
+        },
+        {
+          "title": "What I would improve",
+          "body": "Define routing and reporting earlier, establish the source inventory sooner, prototype certification logic earlier, and use more performance scenarios.",
+          "tag": "Next"
+        }
+      ]
+    }
+  ],
+  "related_work": [
+    {
+      "project_id": "learning-platform-operations-migration-readiness",
+      "relationship": "LMS migration, learner-path validation, and platform governance"
+    },
+    {
+      "project_id": "certification-reporting-automation",
+      "relationship": "Reporting automation, completion analysis, and exception handling"
+    }
+  ],
   "skills": [
     "Instructional Design",
+    "Learning Experience Design",
     "Curriculum Architecture",
     "Sales Enablement",
     "eLearning Design",
     "Assessment Design",
     "SME Collaboration",
     "Learning Pathways",
-    "QA"
+    "LMS Administration",
+    "QA",
+    "Governance",
+    "Workflow Improvement"
   ],
   "tools": [
     "Articulate Rise 360",
@@ -45,9 +375,9 @@
     "PowerPoint"
   ],
   "assets": [],
-  "source_material_notes": "Generalized from enterprise sales-enablement work. Product names, internal terminology, source materials, and proprietary customer details are intentionally omitted.",
+  "source_material_notes": "Generalized from documented enterprise sales-enablement work. Product names, internal terminology, real customer or partner details, learner records, screenshots, links, metrics, proprietary diagrams, and source materials are intentionally omitted. Public examples should remain fictional recreations until separately approved.",
   "dates": {
     "created": "2026-09-15",
-    "updated": "2026-09-15"
+    "updated": "2026-09-16"
   }
 }

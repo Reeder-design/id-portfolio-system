@@ -23,91 +23,95 @@
     "dates"
   ],
   "properties": {
-    "schema_version": {
-      "type": "string",
-      "const": "1.0.0"
-    },
-    "id": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
-    },
-    "title": {
-      "type": "string",
-      "minLength": 1
-    },
-    "slug": {
-      "type": "string",
-      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
-    },
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 1},
+    "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
     "category": {
       "type": "string",
-      "enum": [
-        "instructional-design",
-        "ai-training-and-evaluation",
-        "lms-administration",
-        "workflows"
-      ]
+      "enum": ["instructional-design", "ai-training-and-evaluation", "lms-administration", "workflows"]
     },
-    "subcategory": {
-      "type": ["string", "null"]
-    },
-    "status": {
-      "type": "string",
-      "enum": ["live", "building", "planned", "archived"]
-    },
-    "summary": {
-      "type": "string",
-      "minLength": 1
-    },
-    "page_path": {
-      "type": "string",
-      "pattern": "^portfolio/projects/.+/index\\.html$"
-    },
-    "featured": {
-      "type": "boolean"
-    },
-    "confidentiality": {
-      "type": "string",
-      "enum": ["public", "sanitized", "needs-sanitization"]
-    },
+    "subcategory": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["live", "building", "planned", "archived"]},
+    "summary": {"type": "string", "minLength": 1},
+    "page_path": {"type": "string", "pattern": "^portfolio/projects/.+/index\\.html$"},
+    "featured": {"type": "boolean"},
+    "confidentiality": {"type": "string", "enum": ["public", "sanitized", "needs-sanitization"]},
     "content": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "business_need",
-        "audience",
-        "learning_objectives",
-        "role",
-        "design_approach",
-        "development_process",
-        "outcomes"
-      ],
+      "required": ["business_need", "audience", "learning_objectives", "role", "design_approach", "development_process", "outcomes"],
       "properties": {
         "business_need": {"type": "string"},
         "audience": {"type": "string"},
-        "learning_objectives": {
-          "type": "array",
-          "items": {"type": "string"}
-        },
+        "learning_objectives": {"type": "array", "items": {"type": "string"}},
         "role": {"type": "string"},
         "design_approach": {"type": "string"},
         "development_process": {"type": "string"},
-        "outcomes": {
-          "type": "array",
-          "items": {"type": "string"}
+        "outcomes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "detail_sections": {
+      "type": "array",
+      "description": "Optional reusable sections that add project-specific depth without changing the standard project page type.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "eyebrow", "title", "layout"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "eyebrow": {"type": "string"},
+          "title": {"type": "string"},
+          "summary": {"type": "string"},
+          "layout": {"type": "string", "enum": ["cards", "flow", "table"]},
+          "show_in_nav": {"type": "boolean"},
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title"],
+              "properties": {
+                "title": {"type": "string"},
+                "body": {"type": "string"},
+                "tag": {"type": "string"}
+              }
+            }
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "items"],
+              "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "items": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          },
+          "columns": {"type": "array", "items": {"type": "string"}},
+          "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}},
+          "note": {"type": "string"}
         }
       }
     },
-    "skills": {
+    "related_work": {
       "type": "array",
-      "uniqueItems": true,
-      "items": {"type": "string"}
+      "description": "Optional connections to other structured portfolio projects.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["project_id", "relationship"],
+        "properties": {
+          "project_id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "relationship": {"type": "string"}
+        }
+      }
     },
-    "tools": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": {"type": "string"}
-    },
+    "skills": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "tools": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
     "links": {
       "type": "object",
       "additionalProperties": false,
@@ -124,10 +128,7 @@
         "additionalProperties": false,
         "required": ["type", "path", "publish"],
         "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["image", "video", "pdf", "document", "download", "embed", "code", "other"]
-          },
+          "type": {"type": "string", "enum": ["image", "video", "pdf", "document", "download", "embed", "code", "other"]},
           "path": {"type": "string"},
           "alt": {"type": "string"},
           "caption": {"type": "string"},
@@ -144,14 +145,8 @@
       "additionalProperties": false,
       "required": ["created", "updated"],
       "properties": {
-        "created": {
-          "type": ["string", "null"],
-          "format": "date"
-        },
-        "updated": {
-          "type": ["string", "null"],
-          "format": "date"
-        }
+        "created": {"type": ["string", "null"], "format": "date"},
+        "updated": {"type": ["string", "null"], "format": "date"}
       }
     }
   }

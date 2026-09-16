@@ -37,6 +37,8 @@ REQUIRED_CONTENT_FIELDS = {
     "outcomes",
 }
 
+DETAIL_LAYOUTS = {"cards", "flow", "table"}
+
 
 def load_json(path: Path, errors: list[str]) -> dict | None:
     try:
@@ -48,6 +50,60 @@ def load_json(path: Path, errors: list[str]) -> dict | None:
             f"{path.relative_to(ROOT)}: invalid JSON at line {exc.lineno}, column {exc.colno}: {exc.msg}"
         )
     return None
+
+
+def validate_detail_sections(project: dict, label: Path, errors: list[str]) -> None:
+    sections = project.get("detail_sections", [])
+    if not isinstance(sections, list):
+        errors.append(f"{label}: detail_sections must be a list")
+        return
+
+    seen_ids: set[str] = set()
+    for index, section in enumerate(sections, start=1):
+        if not isinstance(section, dict):
+            errors.append(f"{label}: detail section {index} must be an object")
+            continue
+
+        section_id = str(section.get("id", "")).strip()
+        if not section_id:
+            errors.append(f"{label}: detail section {index} requires an id")
+        elif section_id in seen_ids:
+            errors.append(f"{label}: duplicate detail section id '{section_id}'")
+        else:
+            seen_ids.add(section_id)
+
+        layout = section.get("layout")
+        if layout not in DETAIL_LAYOUTS:
+            errors.append(f"{label}: detail section '{section_id or index}' has unknown layout '{layout}'")
+            continue
+
+        if layout == "cards":
+            items = section.get("items")
+            if not isinstance(items, list) or not items:
+                errors.append(f"{label}: cards section '{section_id}' requires at least one item")
+        elif layout == "flow":
+            groups = section.get("groups")
+            if not isinstance(groups, list) or not groups:
+                errors.append(f"{label}: flow section '{section_id}' requires at least one group")
+            else:
+                for group_index, group in enumerate(groups, start=1):
+                    if not isinstance(group, dict) or not isinstance(group.get("items"), list) or not group.get("items"):
+                        errors.append(
+                            f"{label}: flow section '{section_id}' group {group_index} requires items"
+                        )
+        elif layout == "table":
+            columns = section.get("columns")
+            rows = section.get("rows")
+            if not isinstance(columns, list) or not columns:
+                errors.append(f"{label}: table section '{section_id}' requires columns")
+            if not isinstance(rows, list) or not rows:
+                errors.append(f"{label}: table section '{section_id}' requires rows")
+            elif isinstance(columns, list) and columns:
+                for row_index, row in enumerate(rows, start=1):
+                    if not isinstance(row, list) or len(row) != len(columns):
+                        errors.append(
+                            f"{label}: table section '{section_id}' row {row_index} must match the column count"
+                        )
 
 
 def main() -> int:
@@ -71,6 +127,7 @@ def main() -> int:
 
     seen_ids: set[str] = set()
     seen_page_paths: set[str] = set()
+    related_references: list[tuple[Path, str, str]] = []
 
     for project_file in project_files:
         project = load_json(project_file, errors)
@@ -154,8 +211,39 @@ def main() -> int:
                 if asset.get("publish") and not asset.get("path"):
                     errors.append(f"{label}: published asset {index} requires a path")
 
+        validate_detail_sections(project, label, errors)
+
+        related_work = project.get("related_work", [])
+        if not isinstance(related_work, list):
+            errors.append(f"{label}: related_work must be a list")
+        else:
+            seen_related: set[str] = set()
+            for index, reference in enumerate(related_work, start=1):
+                if not isinstance(reference, dict):
+                    errors.append(f"{label}: related work item {index} must be an object")
+                    continue
+                target_id = str(reference.get("project_id", "")).strip()
+                relationship = str(reference.get("relationship", "")).strip()
+                if not target_id:
+                    errors.append(f"{label}: related work item {index} requires project_id")
+                    continue
+                if target_id == project_id:
+                    errors.append(f"{label}: project cannot reference itself as related work")
+                if target_id in seen_related:
+                    errors.append(f"{label}: duplicate related work reference '{target_id}'")
+                seen_related.add(target_id)
+                if not relationship:
+                    errors.append(f"{label}: related work reference '{target_id}' requires relationship text")
+                related_references.append((label, project_id, target_id))
+
         if not project["summary"].strip():
             warnings.append(f"{label}: summary is empty")
+
+    for label, source_id, target_id in related_references:
+        if target_id not in seen_ids:
+            errors.append(
+                f"{label}: project '{source_id}' references missing related project '{target_id}'"
+            )
 
     print(f"Checked {len(project_files)} structured project record(s).")
 

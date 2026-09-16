@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = ROOT / "portfolio"
 DATA_ROOT = ROOT / "portfolio-data"
+PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 TEMPLATE_PATH = ROOT / "templates" / "project-page" / "index.html"
 
@@ -113,7 +114,91 @@ def asset_href(output_path: Path, value: str) -> str:
     return relative_href(output_path, value)
 
 
-def render_assets(project: dict, output_path: Path) -> tuple[str, bool]:
+def render_detail_layout(section: dict) -> str:
+    layout = section.get("layout")
+
+    if layout == "cards":
+        cards: list[str] = []
+        for item in section.get("items", []):
+            tag = item.get("tag", "").strip()
+            body = item.get("body", "").strip()
+            tag_html = f'<span class="project-detail-tag">{esc(tag)}</span>' if tag else ""
+            body_html = f"<p>{esc(body)}</p>" if body else ""
+            cards.append(
+                '<article class="project-detail-card">'
+                f"{tag_html}<h3>{esc(item.get('title', ''))}</h3>{body_html}"
+                "</article>"
+            )
+        return f'<div class="project-detail-card-grid">{"".join(cards)}</div>'
+
+    if layout == "flow":
+        groups: list[str] = []
+        for group in section.get("groups", []):
+            description = group.get("description", "").strip()
+            description_html = f"<p>{esc(description)}</p>" if description else ""
+            steps = "".join(
+                f'<span class="project-flow-step">{esc(item)}</span>'
+                for item in group.get("items", [])
+            )
+            groups.append(
+                '<article class="project-flow-group">'
+                f"<h3>{esc(group.get('title', ''))}</h3>{description_html}"
+                f'<div class="project-flow-steps">{steps}</div>'
+                "</article>"
+            )
+        return f'<div class="project-detail-flow-groups">{"".join(groups)}</div>'
+
+    if layout == "table":
+        columns = section.get("columns", [])
+        rows = section.get("rows", [])
+        header_html = "".join(f"<th scope=\"col\">{esc(column)}</th>" for column in columns)
+        row_html = "".join(
+            "<tr>" + "".join(f"<td>{esc(cell)}</td>" for cell in row) + "</tr>"
+            for row in rows
+        )
+        return (
+            '<div class="project-detail-table-wrap"><table class="project-detail-table">'
+            f"<thead><tr>{header_html}</tr></thead><tbody>{row_html}</tbody>"
+            "</table></div>"
+        )
+
+    raise ValueError(f"Unknown detail section layout: {layout}")
+
+
+def render_detail_sections(project: dict, start_number: int) -> tuple[str, str, int]:
+    sections = project.get("detail_sections", [])
+    if not sections:
+        return "", "", start_number
+
+    html_parts: list[str] = []
+    nav_parts: list[str] = []
+    number = start_number
+
+    for section in sections:
+        section_id = section.get("id", "").strip()
+        if not section_id:
+            raise ValueError(f"Project '{project.get('id')}' has a detail section without an id.")
+
+        nav_parts.append(f'<a href="#{esc(section_id)}">{esc(section.get("eyebrow", section.get("title", "Details")))}</a>')
+        summary = section.get("summary", "").strip()
+        note = section.get("note", "").strip()
+        summary_html = f"<p>{esc(summary)}</p>" if summary else ""
+        note_html = f'<p class="project-detail-note">{esc(note)}</p>' if note else ""
+        layout_html = render_detail_layout(section)
+
+        html_parts.append(
+            f'<section class="project-story-section project-detail-section" id="{esc(section_id)}">'
+            f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
+            f'<div><p class="eyebrow">{esc(section.get("eyebrow", "Project Detail"))}</p>'
+            f'<h2>{esc(section.get("title", ""))}</h2></div></div>'
+            f"{summary_html}{layout_html}{note_html}</section>"
+        )
+        number += 1
+
+    return "".join(html_parts), "".join(nav_parts), number
+
+
+def render_assets(project: dict, output_path: Path, number: int) -> tuple[str, bool]:
     published = [asset for asset in project.get("assets", []) if asset.get("publish")]
     if not published:
         return "", False
@@ -150,13 +235,58 @@ def render_assets(project: dict, output_path: Path) -> tuple[str, bool]:
 
     section = (
         '<section class="project-story-section project-assets" id="evidence">'
-        '<div class="project-story-heading"><span class="project-story-number">04</span>'
+        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
         '<div><p class="eyebrow">Evidence</p><h2>Explore the work</h2></div></div>'
         '<p>Public-safe artifacts and project outputs from this case study.</p>'
         f'<div class="project-asset-grid">{"".join(cards)}</div>'
         '</section>'
     )
     return section, True
+
+
+def render_related_work(project: dict, output_path: Path, taxonomy: dict, number: int) -> tuple[str, str]:
+    references = project.get("related_work", [])
+    if not references:
+        return "", ""
+
+    cards: list[str] = []
+    for reference in references:
+        project_id = reference.get("project_id", "").strip()
+        if not project_id or project_id == project.get("id"):
+            continue
+
+        target_path = PROJECT_ROOT / f"{project_id}.json"
+        if not target_path.exists():
+            raise ValueError(
+                f"Project '{project.get('id')}' references missing related project '{project_id}'."
+            )
+        target = load_json(target_path)
+        target_category, _ = find_taxonomy_item(taxonomy, target)
+        href = relative_href(output_path, target["page_path"])
+        relationship = reference.get("relationship", "").strip()
+
+        cards.append(
+            '<a class="related-work-card" href="' + esc(href) + '">'
+            f'<span class="related-work-category">{esc(target_category["label"])}</span>'
+            f'<h3>{esc(target["title"])}</h3>'
+            f'<p class="related-work-relationship">{esc(relationship)}</p>'
+            f'<p>{esc(target["summary"])}</p>'
+            '<span class="related-work-link">Explore project →</span>'
+            '</a>'
+        )
+
+    if not cards:
+        return "", ""
+
+    section = (
+        '<section class="project-story-section related-work-section" id="related-work">'
+        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
+        '<div><p class="eyebrow">Related Work</p><h2>See how this work connects across the portfolio.</h2></div></div>'
+        '<p>These projects show adjacent parts of the same learning ecosystem without duplicating the full story here.</p>'
+        f'<div class="related-work-grid">{"".join(cards)}</div>'
+        '</section>'
+    )
+    return section, '<a href="#related-work">Related Work</a>'
 
 
 def render_breadcrumbs(
@@ -243,9 +373,23 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
 
     tools = project.get("tools", [])
     skills = project.get("skills", [])
-    assets_section, has_assets = render_assets(project, final_output)
+    tool_summary = ", ".join(unique_values(tools, limit=4)) or "Tool-agnostic workflow"
     icon_id = CATEGORY_ICONS.get(project.get("category"), "icon-learning-design")
     icon_sprite = relative_href(final_output, "portfolio/assets/icons/portfolio-icons.svg")
+
+    next_number = 4
+    detail_sections, detail_nav, next_number = render_detail_sections(project, next_number)
+    assets_section, has_assets = render_assets(project, final_output, next_number)
+    if has_assets:
+        next_number += 1
+    outcome_number = next_number
+    next_number += 1
+    related_work_section, related_work_nav = render_related_work(
+        project,
+        final_output,
+        taxonomy,
+        next_number,
+    )
 
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
@@ -274,16 +418,21 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "ROLE": esc(content.get("role", "")),
         "AUDIENCE": esc(content.get("audience", "")),
         "PROJECT_TYPE": esc(project_type),
+        "TOOL_SUMMARY": esc(tool_summary),
         "BUSINESS_NEED": esc(content.get("business_need", "")),
         "LEARNING_OBJECTIVES": render_list(content.get("learning_objectives", [])),
         "DESIGN_APPROACH": esc(content.get("design_approach", "")),
         "DEVELOPMENT_PROCESS": esc(content.get("development_process", "")),
         "SKILL_TAGS": render_tag_spans(skills, fallback="Project-specific skills"),
         "TOOL_TAGS": render_tag_spans(tools, fallback="Tool-agnostic workflow"),
+        "DETAIL_NAV": detail_nav,
+        "DETAIL_SECTIONS": detail_sections,
         "ASSETS_SECTION": assets_section,
         "EVIDENCE_NAV": '<a href="#evidence">Evidence</a>' if has_assets else "",
-        "OUTCOME_NUMBER": "05" if has_assets else "04",
+        "OUTCOME_NUMBER": f"{outcome_number:02d}",
         "OUTCOMES": render_list(content.get("outcomes", [])),
+        "RELATED_WORK_SECTION": related_work_section,
+        "RELATED_WORK_NAV": related_work_nav,
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
         "STATUS_CLASS": esc(status),
         "STATUS_LABEL": esc(statuses.get(status, status.title())),

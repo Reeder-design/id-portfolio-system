@@ -17,13 +17,15 @@ Current portfolio version: **1.0.0**
   - **Interactive Learning** — `portfolio/projects/instructional-design/interactive-learning/index.html`
     - MEDDPICC Qualification Lab — `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` (live)
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
+  - **Microlearning & Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/index.html`
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
+  - **Live Training: Content & Facilitation** — `portfolio/projects/instructional-design/live-training/index.html`
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
-    - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (building)
+    - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
 - **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
-  - Learning Platform Operations & Migration Readiness — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (building)
+  - Learning Platform Operations & Migration Readiness — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (live)
 - **Systems and Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
@@ -37,4 +39,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **19**
+Total public HTML pages: **21**
