@@ -98,7 +98,7 @@ def protect_manager():
 def add_manager_security_headers(response):
     # The manager handles private local working data. Avoid browser caching/referrer leakage
     # and prevent the local UI from being embedded or granted device capabilities.
-    response.headers["Cache-Control"] = "no-store, max-age=0"
+    response.headers["Cache-Control"] = "no-store"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     response.headers["Referrer-Policy"] = "no-referrer"
