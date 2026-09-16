@@ -373,6 +373,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
 
     tools = project.get("tools", [])
     skills = project.get("skills", [])
+    tool_summary = ", ".join(unique_values(tools, limit=4)) or "Tool-agnostic workflow"
     icon_id = CATEGORY_ICONS.get(project.get("category"), "icon-learning-design")
     icon_sprite = relative_href(final_output, "portfolio/assets/icons/portfolio-icons.svg")
 
@@ -417,6 +418,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "ROLE": esc(content.get("role", "")),
         "AUDIENCE": esc(content.get("audience", "")),
         "PROJECT_TYPE": esc(project_type),
+        "TOOL_SUMMARY": esc(tool_summary),
         "BUSINESS_NEED": esc(content.get("business_need", "")),
         "LEARNING_OBJECTIVES": render_list(content.get("learning_objectives", [])),
         "DESIGN_APPROACH": esc(content.get("design_approach", "")),
