@@ -1,0 +1,302 @@
+/* Phase 7 consistency polish
+   Shared safeguards for compact highlighted UI, chip groups, small controls,
+   and dense interactive layouts. The goal is simple: text should stay centered,
+   readable, evenly spaced, and inside its container at every supported width. */
+
+/* Let grid/flex children actually shrink instead of forcing parent overflow. */
+.refresh-hero-grid > *,
+.refresh-card-grid > *,
+.refresh-detail-grid > *,
+.sticky-evidence-layout > *,
+.id-workbench > *,
+.id-loop-grid > *,
+.ai-hero-grid > *,
+.ai-lens-buttons > *,
+.signal-explorer > *,
+.ai-demo-grid > *,
+.mini-signal-grid > *,
+.mini-score-row > *,
+.mini-flow-row > *,
+.lms-hero-options > *,
+.lms-lens-shell > *,
+.lms-lens-picker > *,
+.lms-focus-grid > *,
+.lms-flow > *,
+.journey-shell > *,
+.journey-steps > *,
+.journey-detail-grid > *,
+.lms-ops-grid > *,
+.systems-hero-row > *,
+.workflow-principles > *,
+.case-shell > *,
+.case-picker > *,
+.case-flow > *,
+.case-grid > *,
+.outcome-strip > *,
+.meddpicc-grid > *,
+.match-intro > *,
+.match-board > *,
+.answer-grid > *,
+.snapshot-stats > *,
+.signal-grid > *,
+.evidence-tabs > *,
+.score-layout > *,
+.score-buttons > *,
+.matrix-scores > *,
+.result-summary > *,
+.scenario-picker > *,
+.evaluation-preview-row > *,
+.severity-row > *,
+.calibration-row > *,
+.rubric-preview-grid > *,
+.rubric-workspace > *,
+.criterion-nav > *,
+.score-options > * {
+  min-width: 0;
+}
+
+/* Shared pill / chip behavior. */
+.tag,
+.refresh-chip,
+.id-focus-chip,
+.lms-priority,
+.stack-chip,
+.progress-chip,
+.benchmark-signal,
+.watch-chip,
+.criterion-status strong,
+.portfolio-assistant-prompts button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 32px;
+  padding: 7px 11px;
+  text-align: center;
+  line-height: 1.28;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Keep bubble groups predictable and evenly spaced without stretching tiny labels. */
+.tag-row,
+.refresh-chip-row,
+.id-focus-row,
+.lms-priority-row,
+.stack-row,
+.progress-strip,
+.benchmark-signals,
+.watch-row,
+.portfolio-assistant-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.tag-row > *,
+.refresh-chip-row > *,
+.id-focus-row > *,
+.lms-priority-row > *,
+.stack-row > *,
+.progress-strip > *,
+.benchmark-signals > *,
+.watch-row > *,
+.portfolio-assistant-prompts > * {
+  flex: 0 1 auto;
+}
+
+/* Small highlighted tiles and interactive bubbles should center their label safely. */
+.ai-lens-button,
+.lms-hero-option,
+.meddpicc-key,
+.evaluation-preview-step,
+.rubric-preview-button,
+.mini-quadrant,
+.quadrant,
+.lms-flow-step,
+.journey-step,
+.score-button,
+.score-option,
+.criterion-button,
+.signal-button,
+.severity-button,
+.reference-tab,
+.evidence-tab,
+.portfolio-assistant-launcher,
+.demo-help-launcher {
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.ai-lens-button,
+.lms-hero-option,
+.meddpicc-key,
+.evaluation-preview-step,
+.rubric-preview-button,
+.mini-quadrant,
+.quadrant,
+.lms-flow-step,
+.journey-step {
+  align-content: center;
+  justify-items: center;
+}
+
+/* Left-aligned selector cards may wrap, but their content must never clip. */
+.id-work-button,
+.refresh-tab,
+.signal-button,
+.case-button,
+.lms-lens-button,
+.scenario-button,
+.evidence-card,
+.category-card {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.id-work-button > *,
+.signal-button > *,
+.case-button > *,
+.lms-lens-button > *,
+.scenario-button > *,
+.evidence-card > *,
+.category-card > * {
+  min-width: 0;
+}
+
+/* Dense preview grids need enough room to breathe even when labels wrap. */
+.ai-lens-button,
+.lms-hero-option,
+.meddpicc-key,
+.evaluation-preview-step,
+.rubric-preview-button {
+  height: auto;
+  padding-block: 11px;
+  line-height: 1.25;
+}
+
+.mini-signal-grid span,
+.mini-score-row span,
+.mini-flow-row span {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 34px;
+  padding: 8px 9px;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Protect long headings/body copy inside compact cards. */
+.refresh-link-card,
+.home-feature-card,
+.project-family-card,
+.refresh-detail-card,
+.id-loop-card,
+.lms-focus-card,
+.journey-detail-card,
+.lms-op-card,
+.workflow-principle,
+.case-info,
+.outcome-card,
+.snapshot-card,
+.signal-card,
+.result-card,
+.artifact-panel,
+.judge-panel,
+.score-panel,
+.result-panel {
+  min-width: 0;
+}
+
+.refresh-link-card *,
+.home-feature-card *,
+.project-family-card *,
+.refresh-detail-card *,
+.id-loop-card *,
+.lms-focus-card *,
+.journey-detail-card *,
+.lms-op-card *,
+.workflow-principle *,
+.case-info *,
+.outcome-card *,
+.snapshot-card *,
+.signal-card *,
+.result-card * {
+  overflow-wrap: anywhere;
+}
+
+/* Hiring support controls: centered label, predictable width, no collision. */
+.portfolio-assistant-launcher,
+.demo-help-launcher {
+  text-align: center;
+}
+
+.portfolio-assistant-launcher span,
+.demo-help-launcher span {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.portfolio-assistant-prompts button {
+  min-height: 34px;
+}
+
+/* Tooltip bubbles around the home constellation should never run off-screen. */
+.constellation-node::after {
+  width: max-content;
+  max-width: min(180px, calc(100vw - 32px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+/* Mobile: let long pills take a sensible full row instead of squeezing beside neighbors. */
+@media (max-width: 620px) {
+  .tag-row,
+  .refresh-chip-row,
+  .id-focus-row,
+  .lms-priority-row,
+  .stack-row,
+  .progress-strip,
+  .benchmark-signals,
+  .watch-row,
+  .portfolio-assistant-prompts {
+    gap: 7px;
+  }
+
+  .tag,
+  .refresh-chip,
+  .id-focus-chip,
+  .lms-priority,
+  .stack-chip,
+  .progress-chip,
+  .benchmark-signal,
+  .watch-chip,
+  .portfolio-assistant-prompts button {
+    min-height: 34px;
+    padding: 7px 10px;
+  }
+
+  .portfolio-assistant-prompts button {
+    flex: 1 1 calc(50% - 7px);
+  }
+}
+
+@media (max-width: 420px) {
+  .portfolio-assistant-prompts button {
+    flex-basis: 100%;
+  }
+}

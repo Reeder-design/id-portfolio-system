@@ -8,6 +8,9 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO = ROOT / "portfolio"
 REFRESH_CSS = PORTFOLIO / "css" / "portfolio-refresh.css"
+CONSISTENCY_CSS = PORTFOLIO / "css" / "consistency-polish.css"
+HIRING_SUPPORT_CSS = PORTFOLIO / "css" / "hiring-support.css"
+MOTION_JS = PORTFOLIO / "js" / "portfolio-motion.js"
 ABOUT = PORTFOLIO / "about" / "index.html"
 HOME = PORTFOLIO / "index.html"
 APP = ROOT / "portfolio-manager" / "app.py"
@@ -118,6 +121,36 @@ def main() -> int:
     ]:
         require(marker in css, f"Shared portfolio responsive/polish CSS is missing {marker!r}.", errors)
     require(".btn-highlight {\n    background: var(--yellow-green)" not in css, "Highlight buttons must not use the lime yellow-green background.", errors)
+
+    require(CONSISTENCY_CSS.exists(), "Portfolio compact-UI consistency stylesheet is missing.", errors)
+    if CONSISTENCY_CSS.exists():
+        compact_css = CONSISTENCY_CSS.read_text(encoding="utf-8")
+        for marker in [
+            ".refresh-chip,",
+            ".id-focus-chip,",
+            ".lms-priority,",
+            ".stack-chip,",
+            ".progress-chip,",
+            ".benchmark-signal,",
+            ".watch-chip,",
+            ".portfolio-assistant-prompts button",
+            "justify-content: center;",
+            "text-align: center;",
+            "white-space: normal;",
+            "overflow-wrap: anywhere;",
+            "min-width: 0;",
+        ]:
+            require(marker in compact_css, f"Compact-UI safeguards are missing {marker!r}.", errors)
+
+    require(HIRING_SUPPORT_CSS.exists(), "Hiring-support stylesheet is missing.", errors)
+    if HIRING_SUPPORT_CSS.exists():
+        hiring_css = HIRING_SUPPORT_CSS.read_text(encoding="utf-8")
+        require('@import url("./consistency-polish.css");' in hiring_css, "Hiring support must load the shared compact-UI consistency layer.", errors)
+        require(".portfolio-assistant-launcher {" in hiring_css and "text-align: center;" in hiring_css, "Hiring launcher text should remain centered.", errors)
+        require("overflow-wrap: anywhere;" in hiring_css, "Hiring prompt/result text needs wrapping safeguards.", errors)
+
+    motion_js = MOTION_JS.read_text(encoding="utf-8")
+    require("css/hiring-support.css" in motion_js, "Shared portfolio JS must continue loading hiring-support styles sitewide.", errors)
 
     for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
