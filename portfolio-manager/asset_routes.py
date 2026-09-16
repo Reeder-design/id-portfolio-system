@@ -6,6 +6,7 @@ import sys
 from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
 from werkzeug.utils import secure_filename
 
+from asset_security import validate_public_asset_file
 from content_routes import load_project, list_projects, refresh_docs, run_command, write_json
 
 
@@ -226,6 +227,7 @@ def upload_asset(project_id: str):
         directory = project_asset_directory(project_id)
         destination = unique_destination(directory, filename)
         upload.save(destination)
+        validate_public_asset_file(destination, destination.suffix.lower())
 
         asset = {
             "type": asset_type,
@@ -316,6 +318,11 @@ def replace_asset(project_id: str, asset_index: int):
 
         original_bytes = path.read_bytes()
         upload.save(path)
+        try:
+            validate_public_asset_file(path, path.suffix.lower())
+        except Exception:
+            path.write_bytes(original_bytes)
+            raise
 
         site_ok, site_output = run_command([
             sys.executable,
