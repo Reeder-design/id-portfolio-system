@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0.0",
+  "id": "virtual-sales-workshop-facilitation",
+  "title": "Virtual Sales Workshop Facilitation",
+  "slug": "virtual-sales-workshop-facilitation",
+  "category": "instructional-design",
+  "subcategory": "live-training",
+  "status": "live",
+  "summary": "A sanitized facilitation case study from a multi-session virtual sales workshop for experienced sellers, focused on participation, real-time adaptation, and feedback that improves future learning design.",
+  "page_path": "portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Help experienced sellers work through a shared sales-qualification framework in a live virtual setting without reducing the session to slide narration or one-way explanation.",
+    "audience": "Experienced enterprise sellers participating in a multi-session virtual sales workshop.",
+    "learning_objectives": [
+      "Connect qualification concepts to realistic seller situations and customer evidence.",
+      "Use discussion and polling to distinguish stronger and weaker interpretations.",
+      "Explain reasoning through seller examples rather than terminology alone.",
+      "Surface questions and friction that need clarification during or after the session."
+    ],
+    "role": "Facilitator for assigned workshop modules, responsible for preparation, live delivery, learner engagement, pacing adjustments, and reflection after the session.",
+    "design_approach": "Use the prepared facilitator and participant materials as the backbone, but treat live time as a place for explanation, discussion, polling, examples, and application. Keep the objective fixed while adjusting pacing and explanation to the audience response.",
+    "development_process": "Prepared from the workshop materials, planned transitions and discussion points for assigned modules, facilitated the live virtual sessions, used questions and polls to check understanding, invited seller examples, adjusted explanations and pacing in real time, and captured recurring questions as input for future learning design.",
+    "outcomes": [
+      "Facilitated assigned modules within a larger multi-session sales workshop for experienced sellers.",
+      "Used discussion, polling, and seller examples to create participation instead of relying on presentation alone.",
+      "Adjusted pacing and explanations based on learner response while keeping the session aligned to its objectives.",
+      "Turned recurring learner questions and friction into useful input for future content, scenarios, and facilitator guidance."
+    ]
+  },
+  "detail_sections": [
+    {
+      "id": "session-arc",
+      "eyebrow": "Session Arc",
+      "title": "Structure the live time around participation and application.",
+      "summary": "The session materials provide consistency; facilitation turns them into a responsive learning experience.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Facilitation flow",
+          "description": "A public-safe reconstruction of how I approach an assigned live module.",
+          "items": [
+            "Prepare",
+            "Frame the objective",
+            "Explain",
+            "Ask + poll",
+            "Apply with examples",
+            "Debrief",
+            "Capture questions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "facilitation-moves",
+      "eyebrow": "Facilitation Moves",
+      "title": "Use the room as part of the learning design.",
+      "summary": "Participation gives me evidence about what needs more explanation, less explanation, or a different example.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Ask before telling",
+          "body": "Use questions to surface the learner's current interpretation before adding more explanation.",
+          "tag": "Diagnose"
+        },
+        {
+          "title": "Poll with a purpose",
+          "body": "Use quick polls to check confidence or interpretation, then change the debrief based on the response.",
+          "tag": "Check"
+        },
+        {
+          "title": "Use seller examples",
+          "body": "Invite relevant examples from experienced learners so abstract concepts stay connected to actual sales work.",
+          "tag": "Apply"
+        },
+        {
+          "title": "Reframe when needed",
+          "body": "Change the explanation, example, or pacing when the first version does not land cleanly.",
+          "tag": "Adapt"
+        }
+      ]
+    },
+    {
+      "id": "adaptation-signals",
+      "eyebrow": "Real-Time Adaptation",
+      "title": "Read signals instead of following the deck mechanically.",
+      "summary": "Live facilitation requires decisions about what to expand, compress, repeat, or hand off.",
+      "layout": "table",
+      "columns": [
+        "Signal",
+        "What it suggests",
+        "Facilitation response"
+      ],
+      "rows": [
+        [
+          "Low confidence in a poll",
+          "The concept or distinction is not stable yet.",
+          "Slow down, reframe, and test again with an example."
+        ],
+        [
+          "The same question keeps returning",
+          "The current explanation is not resolving the friction.",
+          "Use a different explanation or connect it to a concrete seller situation."
+        ],
+        [
+          "Learners offer strong relevant examples",
+          "The group already has usable experience to build from.",
+          "Use peer examples and compress lower-value background."
+        ],
+        [
+          "Time is tightening",
+          "The agenda needs a tradeoff rather than a rushed ending.",
+          "Protect application and debrief time; shorten lower-value narration."
+        ]
+      ]
+    },
+    {
+      "id": "design-feedback-loop",
+      "eyebrow": "Design Feedback Loop",
+      "title": "Facilitation makes me a better instructional designer.",
+      "summary": "Live questions reveal where future self-paced or facilitator-led learning needs better support.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Recurring questions",
+          "body": "Show where future content needs clearer explanation, examples, or reference support.",
+          "tag": "Clarify"
+        },
+        {
+          "title": "Common misconceptions",
+          "body": "Become candidates for scenario distractors, feedback, and formative checks.",
+          "tag": "Practice"
+        },
+        {
+          "title": "Strong learner examples",
+          "body": "Reveal the kinds of realistic situations that make later learning feel more credible.",
+          "tag": "Ground"
+        },
+        {
+          "title": "Timing friction",
+          "body": "Shows which explanations or activities need to be simplified before another facilitator delivers the session.",
+          "tag": "Refine"
+        }
+      ]
+    },
+    {
+      "id": "evidence-boundaries",
+      "eyebrow": "Evidence",
+      "title": "Keep facilitation claims tied to what is actually supported.",
+      "summary": "This case demonstrates delivery and design judgment without inventing learner-performance results.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Supported",
+          "body": "Assigned modules were facilitated in a multi-session virtual sales workshop using discussion, polls, seller examples, and real-time pacing adjustments.",
+          "tag": "Delivered"
+        },
+        {
+          "title": "Supported",
+          "body": "Recurring questions were captured as useful feedback for future learning design and facilitator support.",
+          "tag": "Observed"
+        },
+        {
+          "title": "Not claimed",
+          "body": "No learner-score improvement, sales-performance lift, revenue impact, or workshop satisfaction metric is claimed without approved evidence.",
+          "tag": "Boundary"
+        }
+      ]
+    }
+  ],
+  "related_work": [
+    {
+      "project_id": "meddpicc-practice",
+      "relationship": "Interactive qualification practice that applies the same sales-methodology skill family in a self-paced format"
+    },
+    {
+      "project_id": "enterprise-sales-certification",
+      "relationship": "Broader sales-enablement curriculum design, assessment, review, and learning-path architecture"
+    }
+  ],
+  "skills": [
+    "Virtual Facilitation",
+    "Adult Learning",
+    "Sales Enablement",
+    "Instructor-Led Training",
+    "Learner Engagement",
+    "Formative Assessment",
+    "Adaptive Facilitation",
+    "Instructional Design"
+  ],
+  "tools": [
+    "Virtual Meeting Platform",
+    "Facilitator Materials",
+    "Participant Materials",
+    "Live Polling"
+  ],
+  "assets": [],
+  "source_material_notes": "Generalized from documented facilitation work in a virtual enterprise sales workshop. Employer names, participant details, internal slides, facilitator materials, learner comments, session links, dates, recordings, and performance metrics are intentionally omitted.",
+  "dates": {
+    "created": "2026-09-16",
+    "updated": "2026-09-16"
+  }
+}
