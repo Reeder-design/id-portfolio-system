@@ -90,6 +90,59 @@
     });
   };
 
+  const initCertificationCaseCopy = () => {
+    if (!window.location.pathname.toLowerCase().includes('/enterprise-sales-certification/')) return;
+
+    const heroSummary = document.querySelector('.project-hero-content .body-large');
+    if (heroSummary) {
+      heroSummary.textContent = 'Role-based sales certification for a complex enterprise technology portfolio, designed for mixed experience levels, regional routing, assessment, LMS delivery, and ongoing updates.';
+    }
+
+    const snapshotItems = Array.from(document.querySelectorAll('.project-snapshot-item'));
+    if (snapshotItems[0]) {
+      const role = snapshotItems[0].querySelector('strong');
+      if (role) role.textContent = 'Instructional Designer / Learning Experience Designer. Designed the pathway and course experience; coordinated QA and SME review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
+    }
+    if (snapshotItems[1]) {
+      const audience = snapshotItems[1].querySelector('strong');
+      if (audience) audience.textContent = 'Internal sellers and channel partners, from new to experienced.';
+    }
+
+    const need = document.querySelector('#need > p');
+    if (need) need.textContent = 'Create one maintainable sales learning path that helped sellers recognize fit, explain value, navigate regional requirements, and prepare the next sales step.';
+
+    const audienceCard = document.querySelector('#need .project-story-card:first-child p');
+    if (audienceCard) audienceCard.textContent = 'Internal sellers and channel partners, from new to experienced.';
+
+    const objectives = document.querySelector('#need .project-story-card:nth-child(2) ul');
+    if (objectives) {
+      objectives.innerHTML = [
+        'Recognize opportunities that fit the portfolio.',
+        'Distinguish related solution categories using customer needs and constraints.',
+        'Ask useful discovery questions and connect capabilities to value.',
+        'Recommend next steps and know when specialist support is needed.'
+      ].map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+    }
+
+    const approach = document.querySelector('#decisions .project-story-card:first-child p');
+    if (approach) approach.textContent = 'Built the certification as a connected system: core path, regional extension, optional foundations, practice, assessment, LMS behavior, and update ownership.';
+
+    const build = document.querySelector('#build > p');
+    if (build) build.textContent = 'Built modular Rise and Storyline learning, multimedia, comparisons, scenarios, knowledge checks, and assessment; staged QA and SME review; validated LMS behavior and maintenance paths.';
+
+    const buildRole = document.querySelector('#build .project-story-card:nth-child(2) p');
+    if (buildRole) buildRole.textContent = 'Designed the pathway and course experience; coordinated review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
+
+    const outcomes = document.querySelector('#outcome .project-outcome-list');
+    if (outcomes) {
+      outcomes.innerHTML = [
+        'Released a multi-course pathway with role-based learning, practice, assessment, and LMS support.',
+        'Restructured broad and regional requirements into distinct learner routes.',
+        'Added a supplemental assessment and reporting workflow when platform reporting did not fully match the design.'
+      ].map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+    }
+  };
+
   const EXPLORER_GROUPS = [
     {
       id: 'architecture',
@@ -463,6 +516,7 @@
 
   initExploreFooters();
   initCompactProjectNote();
+  initCertificationCaseCopy();
   initProjectDetailExplorer();
   initHiringAssistant();
   initDemoHelp();
