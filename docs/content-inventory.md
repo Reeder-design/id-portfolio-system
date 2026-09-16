@@ -6,13 +6,13 @@ Current portfolio version: **1.0.0**
 
 ## Summary
 
-- Structured projects: **6**
-- Live: **6**
+- Structured projects: **8**
+- Live: **8**
 - Building: **0**
 - Planned: **0**
 - Archived: **0**
-- Featured projects: **6**
-- Sanitized / fictionalized projects: **6**
+- Featured projects: **8**
+- Sanitized / fictionalized projects: **8**
 
 ## Structured Projects
 
@@ -22,6 +22,8 @@ Current portfolio version: **1.0.0**
 | Enterprise Sales Certification Pathway | Instructional Design | Complete eLearning Pathways | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
 | Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
+| Product-Launch Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` |
+| Vertical-Positioning Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` |
 | Learning Platform Operations & Migration Readiness | LMS Administration & System Operations | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` |
 | Certification Reporting Automation | Systems and Workflows | Data + Reporting | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` |
 
