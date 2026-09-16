@@ -49,12 +49,12 @@
       "page_path": "portfolio/projects/ai-training-and-evaluation/index.html",
       "fields": {
         "hero_title": {"label": "Hero title", "type": "short", "value": "AI Training and Evaluation"},
-        "hero_intro_primary": {"label": "Hero introduction", "type": "long", "value": "I evaluate AI-generated work against task requirements, source evidence, and quality standards rather than surface fluency alone."},
-        "hero_intro_secondary": {"label": "Hero supporting paragraph", "type": "long", "value": "My work includes structured evaluation, analytical review, error detection, feedback writing, quality assurance, and testing AI within professional learning workflows."},
-        "overview_heading": {"label": "Overview heading", "type": "short", "value": "Evaluation starts with requirements and evidence"},
-        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "A polished response can still be inaccurate, incomplete, unsupported, or misaligned with the task."},
-        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "I define the task, audience, source material, and success criteria before evaluating accuracy, completeness, instruction adherence, consistency, and usability."},
-        "overview_body_three": {"label": "Overview paragraph 3", "type": "long", "value": "I separate material quality issues from stylistic preference and focus feedback on problems that affect correctness, usefulness, or reliability."}
+        "hero_intro_primary": {"label": "Hero introduction", "type": "long", "value": "I evaluate AI-generated work by asking whether it follows the task, stays grounded, reasons clearly, reads naturally, and helps the intended user."},
+        "hero_intro_secondary": {"label": "Hero supporting paragraph", "type": "long", "value": "My work spans structured output review, error detection, rubric design, calibration, QA, and actionable feedback."},
+        "overview_heading": {"label": "Overview heading", "type": "short", "value": "Find the issue that actually matters."},
+        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "Good evaluation separates material problems from personal preference."},
+        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "I trace claims to evidence, weigh their impact, and look for patterns that affect correctness, reliability, or user action."},
+        "overview_body_three": {"label": "Overview paragraph 3", "type": "long", "value": "Select a failure signal to see what I look for in practice."}
       }
     },
     "workflows": {
