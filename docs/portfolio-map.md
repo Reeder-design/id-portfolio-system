@@ -21,7 +21,8 @@ Current portfolio version: **1.0.0**
   - **Complete Learning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
-- **Workflows** — `portfolio/projects/workflows/index.html`
+- **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
+- **Systems and Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
   - **Data + Reporting**
@@ -33,4 +34,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **15**
+Total public HTML pages: **16**

@@ -76,11 +76,11 @@
             <aside class="dashboard-card v2-preview-panel">
                 <div class="action-title-row">
                     <div><p class="eyebrow">Live local preview</p><h2>Current page</h2></div>
-                    <a class="btn btn-secondary" href="http://127.0.0.1:8000/{{ page.page_path|replace('portfolio/', '')|replace('index.html', '') }}" target="_blank">Open Full Preview</a>
+                    <a class="btn btn-secondary" href="http://127.0.0.1:8000/{{ page.page_path|replace('index.html', '') }}" target="_blank">Open Full Preview</a>
                 </div>
                 <p class="section-copy">If the preview server is running on port 8000, this shows the actual portfolio page. After saving, refresh the preview to see the local edit.</p>
                 <div class="v2-preview-frame-wrap">
-                    <iframe class="v2-preview-frame" src="http://127.0.0.1:8000/{{ page.page_path|replace('portfolio/', '')|replace('index.html', '') }}" title="Preview of {{ page.label }}"></iframe>
+                    <iframe class="v2-preview-frame" src="http://127.0.0.1:8000/{{ page.page_path|replace('index.html', '') }}" title="Preview of {{ page.label }}"></iframe>
                 </div>
             </aside>
         </main>
