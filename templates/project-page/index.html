@@ -26,7 +26,7 @@
         .project-template-visual h2{margin:2px 0 5px;font-size:clamp(1.25rem,2.4vw,1.7rem)}
         .project-template-visual p:last-child{margin-bottom:0}
         .project-template-mini-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:20px}
-        .project-template-mini-flow span{display:grid;place-items:center;min-height:54px;padding:9px;border:1px solid rgba(80,132,132,.16);border-radius:13px;background:rgba(255,255,255,.78);color:var(--pine-blue);font:700 .7rem/1.25 var(--font-heading);text-align:center}
+        .project-template-mini-flow span{display:grid;place-items:center;min-width:0;min-height:54px;padding:9px;border:1px solid rgba(80,132,132,.16);border-radius:13px;background:rgba(255,255,255,.78);color:var(--pine-blue);font:700 .7rem/1.25 var(--font-heading);text-align:center;overflow-wrap:anywhere}
 
         .project-snapshot{margin-top:-26px;position:relative;z-index:4}
         .project-snapshot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:16px;border:1px solid rgba(80,132,132,.18);border-radius:22px;background:rgba(255,255,255,.94);box-shadow:0 16px 42px rgba(52,74,66,.1);backdrop-filter:blur(12px)}
@@ -38,7 +38,7 @@
         .project-story-nav-shell{position:sticky;top:72px;z-index:30;border-bottom:1px solid rgba(80,132,132,.12);background:rgba(255,255,255,.9);backdrop-filter:blur(14px)}
         .project-story-nav{display:flex;gap:8px;overflow-x:auto;padding:11px 0;scrollbar-width:none}
         .project-story-nav::-webkit-scrollbar{display:none}
-        .project-story-nav a{flex:0 0 auto;padding:8px 12px;border-radius:999px;color:var(--charcoal);font:700 .74rem/1.2 var(--font-heading);text-decoration:none;white-space:nowrap}
+        .project-story-nav a{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:36px;padding:8px 12px;border-radius:999px;color:var(--charcoal);font:700 .74rem/1.2 var(--font-heading);text-align:center;text-decoration:none;white-space:nowrap}
         .project-story-nav a:hover,.project-story-nav a.active{background:rgba(80,132,132,.1);color:var(--pine-blue)}
 
         .project-story{display:grid;gap:28px;max-width:1000px}
@@ -54,6 +54,25 @@
         .project-story-card li+li{margin-top:7px}
         .project-tool-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
         .project-tool-row .tag{display:inline-flex;align-items:center;justify-content:center;min-height:34px;text-align:center}
+
+        .project-detail-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+        .project-detail-card{min-width:0;padding:20px;border:1px solid rgba(80,132,132,.15);border-radius:18px;background:rgba(255,255,255,.8)}
+        .project-detail-card h3{margin:8px 0;color:var(--pine-blue);font-size:1rem}
+        .project-detail-card p{margin:0;line-height:1.65}
+        .project-detail-tag{display:inline-flex;align-items:center;justify-content:center;min-width:0;min-height:30px;padding:6px 10px;border-radius:999px;background:rgba(121,201,158,.14);color:var(--pine-blue);font:800 .68rem/1.2 var(--font-heading);text-align:center;overflow-wrap:anywhere}
+        .project-detail-flow-groups{display:grid;gap:16px;margin-top:22px}
+        .project-flow-group{min-width:0;padding:20px;border:1px solid rgba(80,132,132,.15);border-radius:18px;background:rgba(255,255,255,.8)}
+        .project-flow-group h3{margin-bottom:7px;color:var(--pine-blue);font-size:1rem}
+        .project-flow-group>p{margin-bottom:14px;color:#5f6965;font-size:.9rem}
+        .project-flow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:9px;align-items:stretch}
+        .project-flow-step{display:flex;align-items:center;justify-content:center;min-width:0;min-height:50px;padding:10px 11px;border:1px solid rgba(80,132,132,.17);border-radius:14px;background:linear-gradient(145deg,rgba(238,245,241,.92),rgba(255,255,255,.94));color:var(--charcoal);font:700 .75rem/1.35 var(--font-heading);text-align:center;overflow-wrap:anywhere}
+        .project-detail-table-wrap{max-width:100%;margin-top:22px;overflow-x:auto;border:1px solid rgba(80,132,132,.16);border-radius:18px;background:rgba(255,255,255,.82)}
+        .project-detail-table{width:100%;min-width:720px;border-collapse:collapse}
+        .project-detail-table th,.project-detail-table td{padding:14px 15px;border-bottom:1px solid rgba(80,132,132,.12);vertical-align:top;text-align:left;line-height:1.5}
+        .project-detail-table th{background:rgba(80,132,132,.1);color:var(--pine-blue);font:800 .74rem/1.35 var(--font-heading)}
+        .project-detail-table td{font-size:.86rem}
+        .project-detail-table tr:last-child td{border-bottom:0}
+        .project-detail-note{margin:18px 0 0;padding:13px 15px;border-radius:14px;background:rgba(243,240,232,.7);color:#5f6965;font-size:.82rem;line-height:1.55}
 
         .project-assets{scroll-margin-top:150px}
         .project-asset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
@@ -71,11 +90,20 @@
         .project-capability-card h3{font-size:1rem;color:var(--pine-blue)}
         .project-capability-card .tag-row{margin-top:12px}
 
+        .related-work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+        .related-work-card{display:flex;flex-direction:column;min-width:0;padding:20px;border:1px solid rgba(80,132,132,.16);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(238,245,241,.72));color:inherit;text-decoration:none;transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease}
+        .related-work-card:hover,.related-work-card:focus-visible{transform:translateY(-3px);border-color:rgba(121,201,158,.65);box-shadow:0 14px 32px rgba(52,74,66,.09);outline:none}
+        .related-work-category{color:#68716e;font:800 .67rem/1.25 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
+        .related-work-card h3{margin:8px 0;color:var(--pine-blue);font-size:1.05rem}
+        .related-work-relationship{margin-bottom:9px;font-weight:700}
+        .related-work-card>p:last-of-type{margin-bottom:16px;color:#5f6965;font-size:.88rem;line-height:1.55}
+        .related-work-link{margin-top:auto;color:var(--pine-blue);font:800 .78rem/1.3 var(--font-heading)}
+
         .project-template-note{margin-top:0}
         .project-template-cta{margin-top:4px}
 
-        @media(max-width:900px){.project-template-hero .refresh-hero-grid,.project-outcomes{grid-template-columns:1fr}.project-snapshot{margin-top:0}.project-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.project-story-nav-shell{top:0}.project-asset-grid{grid-template-columns:1fr}}
-        @media(max-width:620px){.project-template-mini-flow,.project-snapshot-grid,.project-need-grid,.project-decision-grid,.project-build-grid{grid-template-columns:1fr}.project-story-heading{grid-template-columns:1fr}.project-template-visual{padding:20px}.project-story-section{padding:22px}.project-snapshot-grid{padding:12px}.project-story-nav a{white-space:normal;text-align:center;min-width:92px}}
+        @media(max-width:900px){.project-template-hero .refresh-hero-grid,.project-outcomes{grid-template-columns:1fr}.project-snapshot{margin-top:0}.project-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.project-story-nav-shell{top:0}.project-asset-grid,.related-work-grid{grid-template-columns:1fr}}
+        @media(max-width:620px){.project-template-mini-flow,.project-snapshot-grid,.project-need-grid,.project-decision-grid,.project-build-grid,.project-detail-card-grid{grid-template-columns:1fr}.project-story-heading{grid-template-columns:1fr}.project-template-visual{padding:20px}.project-story-section{padding:22px}.project-snapshot-grid{padding:12px}.project-story-nav a{white-space:normal;min-width:92px}.project-flow-steps{grid-template-columns:1fr}.project-detail-table{min-width:650px}}
     </style>
     <script defer src="{{MOTION_JS_PATH}}"></script>
 </head>
@@ -132,8 +160,10 @@
                 <a href="#need">Need</a>
                 <a href="#decisions">Design Decisions</a>
                 <a href="#build">Build</a>
+                {{DETAIL_NAV}}
                 {{EVIDENCE_NAV}}
                 <a href="#outcome">Outcome</a>
+                {{RELATED_WORK_NAV}}
             </div>
         </nav>
 
@@ -165,6 +195,8 @@
                     </div>
                 </section>
 
+                {{DETAIL_SECTIONS}}
+
                 {{ASSETS_SECTION}}
 
                 <section class="project-story-section" id="outcome">
@@ -174,6 +206,8 @@
                         <aside class="project-capability-card"><p class="eyebrow">Project Snapshot</p><h3>{{PROJECT_TYPE}}</h3><p>Built with a public-safe case-study structure designed to keep the project easy to scan, maintain, and extend.</p><div class="tag-row">{{TAGS}}</div></aside>
                     </div>
                 </section>
+
+                {{RELATED_WORK_SECTION}}
 
                 {{CONFIDENTIALITY_NOTE}}
 
