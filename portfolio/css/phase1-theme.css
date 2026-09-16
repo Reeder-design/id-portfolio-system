@@ -345,6 +345,114 @@ body {
   min-width: 0;
 }
 
+/* Portfolio-wide polish: keep circular intro graphics visually consistent. */
+.visual-flourish-core,
+.visual-flourish-node,
+.constellation-core,
+.constellation-node {
+  color: var(--pine-blue) !important;
+}
+
+/* Project/card links use one centered button treatment so long labels wrap cleanly. */
+.project-family-link {
+  box-sizing: border-box;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 14px !important;
+  border: 1px solid rgba(80,132,132,.18) !important;
+  border-radius: 14px;
+  background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(238,245,241,.72));
+  color: var(--pine-blue) !important;
+  font: 800 .76rem/1.3 var(--font-heading) !important;
+  text-align: center;
+  text-decoration: none !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition: transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease,background 160ms ease;
+}
+
+.project-family-link:hover,
+.project-family-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(121,201,158,.68) !important;
+  background: rgba(238,245,241,.96);
+  box-shadow: 0 10px 24px rgba(52,74,66,.08);
+  outline: none;
+}
+
+/* Existing generated/demo Keep Exploring blocks inherit the same card-grid language as Interactive Learning. */
+.portfolio-explore-footer {
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+  padding: 26px !important;
+  border: 1px solid rgba(80,132,132,.16) !important;
+  border-radius: 24px !important;
+  background: linear-gradient(145deg,rgba(238,245,241,.72),rgba(255,255,255,.94)) !important;
+  box-shadow: 0 12px 30px rgba(52,74,66,.055) !important;
+}
+
+.portfolio-explore-footer > .eyebrow,
+.portfolio-explore-footer > h2,
+.portfolio-explore-footer .button-row {
+  grid-column: 1 !important;
+  grid-row: auto !important;
+}
+
+.portfolio-explore-footer .button-row {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+.portfolio-explore-link {
+  grid-template-columns: 44px minmax(0,1fr) !important;
+  min-height: 82px !important;
+  padding: 16px !important;
+  border-radius: 18px !important;
+  background: rgba(255,255,255,.92) !important;
+  box-shadow: 0 10px 24px rgba(52,74,66,.055) !important;
+}
+
+.portfolio-explore-icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 14px !important;
+}
+
+/* Keep the four workflow-pattern labels and icons fully inside their cards. */
+@media (min-width: 981px) {
+  .systems-hero-row {
+    grid-template-columns: repeat(4,minmax(68px,1fr)) !important;
+    gap: 8px !important;
+  }
+  .systems-hero-node {
+    min-width: 0 !important;
+    min-height: 86px !important;
+    padding: 10px 6px !important;
+    gap: 5px !important;
+    overflow: hidden;
+    font-size: .66rem !important;
+    line-height: 1.15 !important;
+  }
+  .systems-hero-node .portfolio-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .systems-hero-node span {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: normal;
+  }
+}
+
 @keyframes flourish-spin {
   to { transform: rotate(360deg); }
 }
@@ -355,6 +463,7 @@ body {
   .home-constellation { transform: scale(.88) translateY(var(--parallax-shift, 0)); }
   .sticky-evidence-layout { grid-template-columns: 1fr; }
   .sticky-question-panel { position: static; }
+  .portfolio-explore-footer .button-row { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 560px) {
@@ -368,5 +477,5 @@ body {
   .home-constellation::after { animation: none; }
   .motion-ready .reveal-on-scroll { opacity: 1; transform: none; transition: none; }
   [data-parallax-soft] { transform: none !important; }
-  .btn, .constellation-node { transition: none; }
+  .btn, .constellation-node, .project-family-link { transition: none; }
 }
