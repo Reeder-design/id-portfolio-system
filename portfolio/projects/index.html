@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore instructional design, AI training and evaluation, and workflow projects by Haley Reeder.">
+    <meta name="description" content="Explore instructional design, AI training and evaluation, LMS administration, and systems and workflow projects by Haley Reeder.">
     <title>Projects | Haley Reeder</title>
     <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +14,12 @@
     <link rel="stylesheet" href="../css/phase1-theme.css">
     <link rel="stylesheet" href="../css/phase1-frame.css">
     <style>
-        .project-family-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; align-items:stretch; }
+        .project-family-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; align-items:stretch; }
         .project-family-card { display:flex; flex-direction:column; min-height:100%; overflow:hidden; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:rgba(255,255,255,.88); box-shadow:0 15px 38px rgba(52,74,66,.1); }
         .project-family-header { min-height:210px; padding:25px; background:radial-gradient(circle at 88% 15%,rgba(151,219,79,.14),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.14),rgba(121,201,158,.09)); }
+        .project-family-card:nth-child(2) .project-family-header { background:radial-gradient(circle at 88% 15%,rgba(184,170,195,.22),transparent 30%),linear-gradient(135deg,rgba(221,213,229,.38),rgba(255,255,255,.7)); }
+        .project-family-card:nth-child(3) .project-family-header { background:radial-gradient(circle at 88% 15%,rgba(121,201,158,.22),transparent 31%),linear-gradient(135deg,rgba(80,132,132,.16),rgba(238,245,241,.92)); }
+        .project-family-card:nth-child(4) .project-family-header { background:radial-gradient(circle at 88% 15%,rgba(151,219,79,.12),transparent 30%),linear-gradient(135deg,rgba(77,83,89,.08),rgba(255,255,255,.82)); }
         .project-family-header h2 { margin-bottom:10px; }
         .project-family-header p:last-child { margin-bottom:0; }
         .project-family-icon { margin-bottom:18px; }
@@ -26,6 +29,7 @@
         .project-family-list li + li { margin-top:8px; }
         .project-family-link { margin-top:auto; font-weight:800; color:var(--pine-blue); text-decoration:none; }
         .project-family-link:hover { text-decoration:underline; }
+        .projects-contact-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
         @media(max-width:960px){ .project-family-grid{grid-template-columns:1fr;} .project-family-header{min-height:0;} .project-family-body p{min-height:0;} }
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
@@ -50,7 +54,7 @@
                 <div class="projects-intro refresh-hero-copy">
                     <p class="eyebrow">Portfolio</p>
                     <h1>Projects</h1>
-                    <p class="body-large">Explore examples of instructional design, AI training and evaluation, and the workflows and systems that support learning development, delivery, measurement, and maintenance.</p>
+                    <p class="body-large">Explore instructional design, AI training and evaluation, LMS administration, and the systems and workflows that support learning development, delivery, measurement, and maintenance.</p>
                     <div class="button-row">
                         <a class="btn btn-primary" href="#project-families">Browse by Area</a>
                         <a class="btn btn-secondary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
@@ -72,7 +76,7 @@
                 <div class="section-heading refresh-section-intro">
                     <p class="eyebrow">Project Areas</p>
                     <h2>Browse by area</h2>
-                    <p class="body-large reading-width">Each area includes practical examples, interactive demonstrations, and reusable approaches to learning and performance work.</p>
+                    <p class="body-large reading-width">Each area shows a different part of how I design, build, evaluate, operate, and improve learning experiences.</p>
                 </div>
 
                 <div class="project-family-grid">
@@ -114,49 +118,47 @@
 
                     <article class="project-family-card">
                         <div class="project-family-header">
-                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
-                            <p class="eyebrow">Systems &amp; Operations</p>
-                            <h2>Systems and Workflows</h2>
-                            <p>Processes and integrations that connect learning design, development, delivery, automation, reporting, and ownership.</p>
+                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span>
+                            <p class="eyebrow">Learning Platform Operations</p>
+                            <h2>LMS Administration &amp; System Operations</h2>
+                            <p>The platform experience behind learning, including structure, access, support, reporting, migration, and learner flow.</p>
                         </div>
                         <div class="project-family-body">
-                            <p>Examples cover reusable development practices, AI integration, LMS operations, custom code, automation, analytics, and documentation.</p>
+                            <p>This work connects platform constraints and capabilities with content delivery, enrollment logic, learning pathways, user support, and long-term maintainability.</p>
+                            <ul class="project-family-list">
+                                <li>Platform administration and learner UX</li>
+                                <li>Content structures, pathways, and compatibility</li>
+                                <li>Support, reporting, documentation, and migration</li>
+                            </ul>
+                            <a class="project-family-link" href="./lms-administration/index.html">Explore LMS Administration →</a>
+                        </div>
+                    </article>
+
+                    <article class="project-family-card">
+                        <div class="project-family-header">
+                            <span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
+                            <p class="eyebrow">Systems &amp; Automation</p>
+                            <h2>Systems and Workflows</h2>
+                            <p>Processes and integrations that connect design, development, automation, data, reporting, documentation, and ownership.</p>
+                        </div>
+                        <div class="project-family-body">
+                            <p>Examples cover reusable development practices, AI integration, custom code, automation, analytics, reporting, and documentation.</p>
                             <ul class="project-family-list">
                                 <li>Learning design and development workflows</li>
                                 <li>AI and work automation</li>
-                                <li>LMS, reporting, and content operations</li>
+                                <li>Data, reporting, and documentation</li>
                             </ul>
                             <a class="project-family-link" href="./workflows/index.html">Explore Systems and Workflows →</a>
                         </div>
                     </article>
                 </div>
-
-                <section class="experience-panel" aria-label="Professional experience">
-                    <div>
-                        <p class="eyebrow">Professional Experience</p>
-                        <h2>Résumé and broader experience</h2>
-                        <p>My résumé provides the role-by-role view of my instructional design, learning technology, sales and partner enablement, technical training, AI evaluation, LMS administration, and development experience.</p>
-                        <div class="refresh-step-line" aria-hidden="true">
-                            <div class="refresh-step" data-step="1"><strong>Design</strong></div>
-                            <div class="refresh-step" data-step="2"><strong>Develop</strong></div>
-                            <div class="refresh-step" data-step="3"><strong>Integrate</strong></div>
-                            <div class="refresh-step" data-step="4"><strong>Improve</strong></div>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
-                </section>
             </div>
         </section>
 
         <section class="section section-soft">
-            <div class="container">
-                <div class="cta">
-                    <h2>More about my approach and background</h2>
-                    <div class="button-row">
-                        <a class="btn btn-highlight" href="../about/index.html">About Me</a>
-                        <a class="btn btn-secondary" href="../contact/index.html">Contact Me</a>
-                    </div>
-                </div>
+            <div class="container projects-contact-actions">
+                <a class="btn btn-highlight" href="../contact/index.html">Contact Me</a>
+                <a class="btn btn-secondary" href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
         </section>
     </main>
