@@ -19,7 +19,7 @@ Current portfolio version: **1.0.0**
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
   - **Microlearning & Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/index.html`
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
-  - **Live Training: Content & Facilitation** — `portfolio/projects/instructional-design/live-training/index.html`
+  - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
     - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
