@@ -38,6 +38,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Structured content", [sys.executable, "scripts/check-content.py"]),
         ("General site content", [sys.executable, "scripts/check-site-content.py"]),
         ("Final public polish/mobile", [sys.executable, "scripts/check-final-polish.py"]),
+        ("Public privacy/leakage", [sys.executable, "scripts/check-public-privacy.py"]),
         ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),
         ("Documentation versioning", [sys.executable, "scripts/check-docs.py"]),
@@ -60,6 +61,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Reference sanitization safety", [sys.executable, "scripts/check-reference-sanitization.py"]),
         ("User Guide and privacy freshness", [sys.executable, "scripts/check-help-privacy.py"]),
         ("Adversarial security/misuse", [sys.executable, "scripts/check-adversarial-security.py"]),
+        ("Recovered security regression", [sys.executable, "scripts/check-security-recovery.py"]),
         ("Portfolio Manager security", [sys.executable, "scripts/check-portfolio-manager.py"]),
         ("Portfolio Manager runtime", [sys.executable, "scripts/check-portfolio-manager-runtime.py"]),
     ]
