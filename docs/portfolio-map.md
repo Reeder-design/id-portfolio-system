@@ -22,6 +22,7 @@ Current portfolio version: **1.0.0**
     - Vertical-Positioning Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` (live)
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
+    - Virtual Sales Workshop Facilitation — `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` (live)
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
     - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
@@ -41,4 +42,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **23**
+Total public HTML pages: **24**
