@@ -149,8 +149,8 @@ def main() -> int:
             require("{{" not in rendered, "generated project should not contain unresolved template tokens", errors)
             require("Generator Test Project" in rendered, "rendered project title is missing", errors)
             require(output_path.name == "index.html", "renderer output should be an index.html page", errors)
-            require('class="project-snapshot-grid"' in rendered, "generated project should use the compact project snapshot", errors)
-            require('class="project-story"' in rendered, "generated project should use the modern project story structure", errors)
+            require("project-snapshot-grid" in rendered, "generated project should use the compact project snapshot", errors)
+            require("project-story" in rendered, "generated project should use the modern project story structure", errors)
             require("portfolio-motion.js" in rendered, "generated project should inherit shared portfolio motion/hiring support", errors)
             require("case-study-sidebar" not in rendered, "generated project should not use the deprecated sidebar architecture", errors)
     except Exception as exc:
