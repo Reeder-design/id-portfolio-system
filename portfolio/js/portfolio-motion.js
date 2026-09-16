@@ -2,6 +2,15 @@
   const motionScript = [...document.scripts].find((script) => /portfolio-motion\.js(?:\?|$)/.test(script.src));
   const portfolioRoot = motionScript ? new URL('../', motionScript.src) : new URL('/portfolio/', window.location.href);
   const iconSprite = new URL('assets/icons/portfolio-icons.svg', portfolioRoot).href;
+  const supportStylesHref = new URL('css/hiring-support.css', portfolioRoot).href;
+
+  if (!document.querySelector('link[data-hiring-support-styles]')) {
+    const supportStyles = document.createElement('link');
+    supportStyles.rel = 'stylesheet';
+    supportStyles.href = supportStylesHref;
+    supportStyles.dataset.hiringSupportStyles = 'true';
+    document.head.appendChild(supportStyles);
+  }
 
   const escapeHtml = (value) => String(value)
     .replaceAll('&', '&amp;')
