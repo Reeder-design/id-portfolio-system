@@ -1,7 +1,5 @@
 /* Phase 10 experience polish
-   Interactive case-study navigation, compact source notes, and a shared
-   icon-led exploration footer. These rules layer on top of the existing
-   portfolio theme without changing the public page hierarchy. */
+   Interactive case-study navigation, compact source notes, and shared visual cleanup. */
 
 /* ---------- Case study explorer ---------- */
 .project-case-explorer {
@@ -178,7 +176,7 @@
   color: var(--charcoal);
 }
 
-/* ---------- Shared Keep Exploring treatment ---------- */
+/* ---------- Keep Exploring: mirror Interactive Learning card language ---------- */
 .portfolio-explore-footer {
   display: block;
   margin: 0;
@@ -188,95 +186,134 @@
   background: transparent;
   box-shadow: none;
   text-align: left;
+  overflow: visible;
+}
+
+.portfolio-explore-footer::after {
+  display: none !important;
+  content: none !important;
 }
 
 .portfolio-explore-footer > .eyebrow {
   margin: 0 0 6px;
+  color: var(--pine-blue) !important;
 }
 
 .portfolio-explore-footer > h2 {
   margin: 0;
   max-width: 720px;
+  color: var(--charcoal);
   font-size: clamp(1.45rem, 3vw, 2rem);
 }
 
 .portfolio-explore-footer .button-row {
-  display: grid;
+  display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 20px;
   width: 100%;
-  margin: 22px 0 0;
+  margin: 24px 0 0;
 }
 
 .portfolio-explore-link {
   position: relative;
   display: grid !important;
-  grid-template-columns: 48px minmax(0,1fr);
-  grid-template-rows: auto auto;
-  align-items: center;
-  column-gap: 14px;
-  row-gap: 8px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 108px auto auto;
+  align-items: stretch;
   min-width: 0;
-  min-height: 118px;
-  padding: 18px !important;
-  border: 1px solid rgba(80,132,132,.18) !important;
-  border-radius: 20px !important;
-  background:
-    radial-gradient(circle at 92% 8%, rgba(151,219,79,.12), transparent 28%),
-    linear-gradient(155deg, rgba(255,255,255,.97), rgba(248,250,248,.84)) !important;
+  min-height: 192px;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid var(--refresh-line) !important;
+  border-radius: 22px !important;
+  background: var(--refresh-panel) !important;
   color: var(--charcoal) !important;
-  box-shadow: 0 12px 30px rgba(52,74,66,.07) !important;
+  box-shadow: 0 14px 36px rgba(52,74,66,.09) !important;
   font: 800 .82rem/1.35 var(--font-heading) !important;
   text-align: left !important;
   white-space: normal !important;
   overflow-wrap: anywhere;
   transform: none !important;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.portfolio-explore-link::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 108px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(151,219,79,.16), transparent 28%),
+    linear-gradient(135deg, rgba(80,132,132,.15), rgba(121,201,158,.12));
+  pointer-events: none;
 }
 
 .portfolio-explore-link::after {
-  content: "Open →";
-  grid-column: 2;
+  content: "Explore →";
+  grid-row: 3;
+  align-self: end;
+  padding: 0 20px 20px;
   color: var(--pine-blue);
-  font: 800 .7rem/1.2 var(--font-heading);
-  letter-spacing: .02em;
+  font: 800 .72rem/1.2 var(--font-heading);
+  position: relative;
+  z-index: 1;
 }
 
 .portfolio-explore-link:hover,
 .portfolio-explore-link:focus-visible {
-  transform: translateY(-3px) !important;
-  border-color: rgba(121,201,158,.68) !important;
-  background:
-    radial-gradient(circle at 92% 8%, rgba(151,219,79,.16), transparent 30%),
-    linear-gradient(155deg, rgba(255,255,255,.99), rgba(238,245,241,.9)) !important;
-  color: var(--pine-blue) !important;
-  box-shadow: 0 18px 40px rgba(52,74,66,.11) !important;
+  transform: translateY(-4px) !important;
+  border-color: rgba(121,201,158,.65) !important;
+  box-shadow: 0 20px 45px rgba(52,74,66,.14) !important;
+  color: var(--charcoal) !important;
   outline: none;
 }
 
 .portfolio-explore-icon {
-  grid-row: 1 / span 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: start;
   display: grid;
   place-items: center;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(80,132,132,.15);
+  margin: 22px;
+  border: 1px solid var(--portfolio-line);
   border-radius: 15px;
-  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(238,245,241,.8));
-  color: var(--pine-blue);
-  box-shadow: 0 8px 20px rgba(52,74,66,.06);
+  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(238,245,241,.78));
+  color: var(--pine-blue) !important;
+  box-shadow: 0 10px 28px rgba(50,75,68,.08);
+  position: relative;
+  z-index: 1;
 }
 
 .portfolio-explore-icon .portfolio-icon {
   width: 26px;
   height: 26px;
+  color: var(--pine-blue) !important;
 }
 
 .portfolio-explore-link-text {
+  grid-row: 2;
   min-width: 0;
+  padding: 18px 20px 8px;
+  color: var(--charcoal);
+  font-size: .9rem;
+  line-height: 1.35;
   overflow-wrap: anywhere;
+  position: relative;
+  z-index: 1;
 }
 
 /* ---------- Hero icon consistency ---------- */
+.visual-flourish .portfolio-icon,
+.visual-flourish-core .portfolio-icon,
+.visual-flourish-node .portfolio-icon,
+.home-constellation .portfolio-icon,
+.constellation-core .portfolio-icon,
+.constellation-node .portfolio-icon {
+  color: var(--pine-blue) !important;
+}
+
 .visual-flourish-core,
 .visual-flourish-node,
 .visual-flourish-node:nth-of-type(2),
@@ -294,34 +331,45 @@
 
 /* ---------- Workflow hero label fit ---------- */
 .systems-hero-row {
-  grid-template-columns: repeat(4, minmax(96px, 1fr)) !important;
-  gap: 8px !important;
+  grid-template-columns: repeat(4, minmax(78px, 1fr)) !important;
+  gap: 7px !important;
 }
 
 .systems-hero-node {
   box-sizing: border-box;
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  justify-items: center !important;
+  gap: 5px !important;
   min-width: 0 !important;
-  min-height: 102px;
-  padding: 12px 8px !important;
-  overflow: hidden;
+  min-height: 80px !important;
+  padding: 7px 5px !important;
+  overflow: hidden !important;
+  text-align: center !important;
 }
 
 .systems-hero-node .portfolio-icon {
-  width: 25px !important;
-  height: 25px !important;
+  width: 19px !important;
+  height: 19px !important;
   color: var(--pine-blue) !important;
 }
 
 .systems-hero-node span {
-  display: block;
+  display: block !important;
+  width: 100%;
   max-width: 100%;
   min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   color: var(--charcoal);
-  font-size: .67rem;
-  line-height: 1.15;
-  text-align: center;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  font-size: .58rem !important;
+  font-weight: 800;
+  line-height: 1.05 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 /* ---------- Legacy information callouts ---------- */
@@ -381,7 +429,7 @@
   }
 
   .portfolio-explore-link {
-    min-height: 92px;
+    min-height: 174px;
   }
 }
 
@@ -402,17 +450,25 @@
   }
 
   .systems-hero-row {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+
+  .systems-hero-node {
+    min-height: 74px !important;
   }
 
   .portfolio-explore-link {
-    min-height: 86px;
+    min-height: 166px;
   }
 }
 
 @media (max-width: 390px) {
   .project-case-explorer-tabs {
     grid-template-columns: 1fr;
+  }
+
+  .systems-hero-row {
+    grid-template-columns: 1fr 1fr !important;
   }
 }
 
