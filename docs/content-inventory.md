@@ -6,21 +6,24 @@ Current portfolio version: **1.0.0**
 
 ## Summary
 
-- Structured projects: **3**
-- Live: **3**
-- Building: **0**
+- Structured projects: **6**
+- Live: **4**
+- Building: **2**
 - Planned: **0**
 - Archived: **0**
-- Featured projects: **3**
-- Sanitized / fictionalized projects: **3**
+- Featured projects: **6**
+- Sanitized / fictionalized projects: **6**
 
 ## Structured Projects
 
 | Project | Category | Subcategory | Status | Featured | Confidentiality | Page |
 | --- | --- | --- | --- | --- | --- | --- |
 | AI Training and Evaluation Demo | AI Training and Evaluation | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` |
+| Enterprise Sales Certification Pathway | Instructional Design | Complete eLearning Pathways | Building | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
 | Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
+| Learning Platform Operations & Migration Readiness | LMS Administration & System Operations | — | Building | Yes | Sanitized / Fictionalized | `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` |
+| Certification Reporting Automation | Systems and Workflows | Data + Reporting | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` |
 
 ## Source Records
 
