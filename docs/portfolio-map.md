@@ -18,6 +18,8 @@ Current portfolio version: **1.0.0**
     - MEDDPICC Qualification Lab — `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` (live)
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
   - **Microlearning & Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/index.html`
+    - Product-Launch Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` (live)
+    - Vertical-Positioning Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` (live)
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
@@ -39,4 +41,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **21**
+Total public HTML pages: **23**
