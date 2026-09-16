@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "entries": [
     {
       "title": "About Haley",
@@ -24,6 +24,12 @@
       "path": "projects/instructional-design/complete-learning-paths/index.html",
       "summary": "A closed-loop eLearning lifecycle from analysis and architecture through development, delivery, measurement, maintenance, and handoff.",
       "keywords": ["elearning pathway", "curriculum", "certification", "learning path", "learning pathway", "course development", "objectives", "storyboard", "qa", "maintenance", "articulate rise", "sales certification"]
+    },
+    {
+      "title": "Enterprise Sales Certification Pathway",
+      "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
+      "summary": "A sanitized enterprise sales-enablement case study connecting curriculum architecture, customer use cases, eLearning, assessment, SME review, LMS delivery, and maintenance.",
+      "keywords": ["sales certification", "enterprise sales", "sales enablement", "partner enablement", "curriculum architecture", "curriculum", "certification", "assessment design", "articulate rise", "storyline", "sme", "learning pathway", "customer use cases", "technical training"]
     },
     {
       "title": "Interactive Learning",
@@ -80,10 +86,22 @@
       "keywords": ["lms", "learning management system", "lms administration", "system operations", "absorb", "docebo", "cornerstone", "workday", "migration", "enrollment", "pathway", "certification", "user support", "reporting", "content operations", "learning platform", "learner experience", "ux", "ui"]
     },
     {
+      "title": "Learning Platform Operations & Migration Readiness",
+      "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html",
+      "summary": "A sanitized LMS case study covering content inventory, pathway mapping, enrollment and completion logic, documentation, support, reporting, and learner-experience QA for a platform transition.",
+      "keywords": ["lms migration", "migration readiness", "platform transition", "learning operations", "absorb", "content inventory", "content governance", "enrollment logic", "completion logic", "learning pathways", "learner experience", "documentation", "support workflow", "reporting", "qa"]
+    },
+    {
       "title": "Systems & Workflows",
       "path": "projects/workflows/index.html",
       "summary": "Real sanitized workflow examples for Salesforce-to-LMS operations, report automation, completion analysis, migration, QA, and documentation.",
       "keywords": ["systems", "workflow", "automation", "python", "selenium", "pandas", "excel", "salesforce", "absorb", "lms", "reporting", "analytics", "data", "migration", "qa", "process", "browser automation"]
+    },
+    {
+      "title": "Certification Reporting Automation",
+      "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html",
+      "summary": "A sanitized automation case study using browser automation and Python data processing to turn recurring LMS reports into review-ready certification status outputs.",
+      "keywords": ["python", "selenium", "pandas", "openpyxl", "excel", "report automation", "reporting automation", "certification reporting", "lms reporting", "data analysis", "complete incomplete", "completion reporting", "qa", "browser automation", "learning operations"]
     },
     {
       "title": "Projects",
