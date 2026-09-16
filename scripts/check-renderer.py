@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from html import escape
+from html.parser import HTMLParser
 import json
 import re
 import subprocess
 import sys
-from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -84,7 +85,8 @@ def main() -> int:
         if not rendered.lstrip().lower().startswith("<!doctype html>"):
             errors.append(f"{label}: rendered output is missing a valid DOCTYPE")
 
-        if project["title"] not in rendered:
+        expected_title = escape(project["title"], quote=True)
+        if expected_title not in rendered:
             errors.append(f"{label}: rendered output is missing project title")
 
         if TOKEN_PATTERN.search(rendered):
