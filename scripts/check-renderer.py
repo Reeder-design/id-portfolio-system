@@ -99,12 +99,39 @@ def main() -> int:
         if "case-study-sidebar" in rendered or "template-flourish" in rendered:
             errors.append(f"{label}: generated page still contains deprecated template architecture")
 
+        for section in project.get("detail_sections", []):
+            section_id = section.get("id", "")
+            if f'id="{section_id}"' not in rendered:
+                errors.append(f"{label}: detail section '{section_id}' did not render")
+            if f'href="#{section_id}"' not in rendered:
+                errors.append(f"{label}: detail section '{section_id}' is missing from project navigation")
+            expected_heading = escape(section.get("title", ""), quote=True)
+            if expected_heading and expected_heading not in rendered:
+                errors.append(f"{label}: detail section '{section_id}' is missing its heading")
+
         published_assets = [asset for asset in project.get("assets", []) if asset.get("publish")]
         if published_assets:
             if 'href="#evidence"' not in rendered or 'id="evidence"' not in rendered:
                 errors.append(f"{label}: published assets should produce an Evidence section and nav link")
         elif 'href="#evidence"' in rendered:
             errors.append(f"{label}: Evidence nav should not render when there are no public assets")
+
+        related_work = project.get("related_work", [])
+        if related_work:
+            if 'href="#related-work"' not in rendered or 'id="related-work"' not in rendered:
+                errors.append(f"{label}: related work should produce a section and nav link")
+            for reference in related_work:
+                target_path = PROJECT_ROOT / f"{reference.get('project_id', '')}.json"
+                if not target_path.exists():
+                    continue
+                target = json.loads(target_path.read_text(encoding="utf-8"))
+                expected_related_title = escape(target.get("title", ""), quote=True)
+                if expected_related_title and expected_related_title not in rendered:
+                    errors.append(
+                        f"{label}: related project '{reference.get('project_id')}' did not render"
+                    )
+        elif 'href="#related-work"' in rendered:
+            errors.append(f"{label}: Related Work nav should not render when there are no references")
 
         parser = ReferenceParser()
         try:
