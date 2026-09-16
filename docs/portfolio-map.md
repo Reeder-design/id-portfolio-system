@@ -19,13 +19,16 @@ Current portfolio version: **1.0.0**
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
+    - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (building)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
 - **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
+  - Learning Platform Operations & Migration Readiness — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (building)
 - **Systems and Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
   - **Data + Reporting**
+    - Certification Reporting Automation — `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` (live)
 
 ## Other Public HTML Pages
 
@@ -34,4 +37,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **16**
+Total public HTML pages: **19**

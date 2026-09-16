@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "id": "enterprise-sales-certification",
+  "title": "Enterprise Sales Certification Pathway",
+  "slug": "enterprise-sales-certification",
+  "category": "instructional-design",
+  "subcategory": "complete-learning-paths",
+  "status": "building",
+  "summary": "A sanitized case study of redesigning a complex enterprise sales certification into one maintainable learning pathway for internal sellers and external partners.",
+  "page_path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Consolidate overlapping legacy training, updated solution messaging, assessment requirements, and partner-facing enablement into one coherent certification experience that could be maintained as the portfolio changed.",
+    "audience": "Internal sales teams and external sales partners learning how to position a complex enterprise technology portfolio.",
+    "learning_objectives": [
+      "Explain the solution family in customer and business terms.",
+      "Connect customer needs and use cases to the appropriate solution.",
+      "Use realistic customer examples to support value conversations.",
+      "Demonstrate required knowledge through an objective-aligned certification assessment."
+    ],
+    "role": "Instructional Designer responsible for curriculum architecture, source-content synthesis, eLearning design, assessment design, SME review workflows, and maintenance planning.",
+    "design_approach": "Treat the certification as a connected system rather than a single course. I mapped legacy content against current objectives, separated must-know sales knowledge from reference material, planned where real customer use cases supported transfer, and connected learning, practice, assessment, LMS behavior, and update ownership.",
+    "development_process": "Built the pathway around modular eLearning content, a reusable source and asset library, structured storyboards and review notes, iterative SME validation, and a certification assessment. Development decisions favored reusable components and editable source files so later product, naming, or branding changes could be made without rebuilding the experience.",
+    "outcomes": [
+      "Created a single pathway architecture for content that previously lived across overlapping training.",
+      "Aligned course content, customer examples, and assessment to the same sales-performance outcomes.",
+      "Established a reusable source-content, asset, review, and maintenance structure for future updates."
+    ]
+  },
+  "skills": [
+    "Instructional Design",
+    "Curriculum Architecture",
+    "Sales Enablement",
+    "eLearning Design",
+    "Assessment Design",
+    "SME Collaboration",
+    "Learning Pathways",
+    "QA"
+  ],
+  "tools": [
+    "Articulate Rise 360",
+    "Articulate Storyline 360",
+    "LMS",
+    "PowerPoint"
+  ],
+  "assets": [],
+  "source_material_notes": "Generalized from enterprise sales-enablement work. Product names, internal terminology, source materials, and proprietary customer details are intentionally omitted.",
+  "dates": {
+    "created": "2026-09-15",
+    "updated": "2026-09-15"
+  }
+}

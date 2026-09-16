@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "id": "learning-platform-operations-migration-readiness",
+  "title": "Learning Platform Operations & Migration Readiness",
+  "slug": "learning-platform-operations-migration-readiness",
+  "category": "lms-administration",
+  "subcategory": null,
+  "status": "building",
+  "summary": "A sanitized LMS operations case study focused on preparing learning content, pathways, documentation, reporting, and support workflows for a platform transition.",
+  "page_path": "portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Prepare a mature learning ecosystem for platform change without losing learner pathways, completion logic, reporting expectations, support knowledge, or maintainability during the transition.",
+    "audience": "Learning operations administrators, instructional designers, internal learners, and partner learners who depend on stable course access and completion tracking.",
+    "learning_objectives": [
+      "Inventory and classify content, pathways, dependencies, and ownership before migration.",
+      "Map enrollments, prerequisites, certifications, completion behavior, and reporting needs to the target platform.",
+      "Document support workflows, exceptions, and platform constraints so operational knowledge survives the transition.",
+      "Validate the learner journey from discovery through completion and follow-up."
+    ],
+    "role": "LMS administrator and instructional designer responsible for migration readiness, content and pathway mapping, learner-experience QA, documentation, and operational handoff planning.",
+    "design_approach": "Use two validation tracks at the same time: the administrator workflow and the learner journey. I map what the platform needs to preserve, where behavior will change, which dependencies are easy to miss, and what must be documented so technical migration decisions do not create learner friction.",
+    "development_process": "Built a migration-readiness structure around content inventory, pathway and enrollment mapping, compatibility notes, test checklists, issue and exception tracking, reporting requirements, and administrator documentation. QA is staged so content behavior, learner access, completion logic, and support workflows can be reviewed before cutover decisions are treated as complete.",
+    "outcomes": [
+      "Created a migration-readiness structure that makes content, pathway, reporting, and ownership dependencies visible before platform change.",
+      "Connected administrator QA with the learner journey instead of treating migration as a technical-only exercise.",
+      "Established reusable documentation and validation patterns for future platform changes and operational handoff."
+    ]
+  },
+  "skills": [
+    "LMS Administration",
+    "Learning Operations",
+    "LMS Migration",
+    "Learner Experience",
+    "Content Governance",
+    "Documentation",
+    "QA",
+    "Reporting"
+  ],
+  "tools": [
+    "Absorb LMS",
+    "Excel",
+    "Articulate 360"
+  ],
+  "assets": [],
+  "source_material_notes": "Generalized from learning-platform administration and migration-readiness work. Internal configurations, account data, platform credentials, and proprietary documentation are intentionally omitted.",
+  "dates": {
+    "created": "2026-09-15",
+    "updated": "2026-09-15"
+  }
+}
