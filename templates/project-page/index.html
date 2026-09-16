@@ -33,7 +33,6 @@
         .project-snapshot-item{min-width:0;padding:14px 15px;border-radius:15px;background:rgba(243,240,232,.55)}
         .project-snapshot-item span{display:block;margin-bottom:6px;color:#68716e;font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
         .project-snapshot-item strong{display:block;font:700 .86rem/1.4 var(--font-heading);overflow-wrap:anywhere}
-        .project-snapshot-item .status-badge{display:inline-flex;justify-content:center;text-align:center}
 
         .project-story-nav-shell{position:sticky;top:72px;z-index:30;border-bottom:1px solid rgba(80,132,132,.12);background:rgba(255,255,255,.9);backdrop-filter:blur(14px)}
         .project-story-nav{display:flex;gap:8px;overflow-x:auto;padding:11px 0;scrollbar-width:none}
@@ -151,7 +150,7 @@
                 <div class="project-snapshot-item"><span>Role</span><strong>{{ROLE}}</strong></div>
                 <div class="project-snapshot-item"><span>Audience</span><strong>{{AUDIENCE}}</strong></div>
                 <div class="project-snapshot-item"><span>Project Type</span><strong>{{PROJECT_TYPE}}</strong></div>
-                <div class="project-snapshot-item"><span>Status</span><strong><span class="status-badge {{STATUS_CLASS}}">{{STATUS_LABEL}}</span></strong></div>
+                <div class="project-snapshot-item"><span>Tools Used</span><strong>{{TOOL_SUMMARY}}</strong></div>
             </div>
         </section>
 
