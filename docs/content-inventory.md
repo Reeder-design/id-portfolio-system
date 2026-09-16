@@ -6,13 +6,13 @@ Current portfolio version: **1.0.0**
 
 ## Summary
 
-- Structured projects: **8**
-- Live: **8**
+- Structured projects: **9**
+- Live: **9**
 - Building: **0**
 - Planned: **0**
 - Archived: **0**
-- Featured projects: **8**
-- Sanitized / fictionalized projects: **8**
+- Featured projects: **9**
+- Sanitized / fictionalized projects: **9**
 
 ## Structured Projects
 
@@ -22,6 +22,7 @@ Current portfolio version: **1.0.0**
 | Enterprise Sales Certification Pathway | Instructional Design | Complete eLearning Pathways | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
 | Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
+| Virtual Sales Workshop Facilitation | Instructional Design | Live Training | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` |
 | Product-Launch Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` |
 | Vertical-Positioning Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` |
 | Learning Platform Operations & Migration Readiness | LMS Administration & System Operations | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` |
