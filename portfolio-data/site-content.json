@@ -16,11 +16,9 @@
       "label": "About Me",
       "page_path": "portfolio/about/index.html",
       "fields": {
-        "hero_title": {"label": "About hero title", "type": "short", "value": "Learning design, development, and the systems around it"},
-        "hero_intro_primary": {"label": "Primary introduction", "type": "long", "value": "I design enterprise learning for sales and partner audiences, especially when the subject is technical or product-heavy. My work also reaches into LMS operations, reporting, automation, AI evaluation, and custom digital content when those pieces are part of the learning problem."},
-        "hero_intro_secondary": {"label": "Background paragraph", "type": "long", "value": "Before corporate L&D, I taught high school history and English. That classroom experience and my Master of Education still shape how I think about practice, feedback, assessment, and whether learning actually changes performance."},
-        "thread_heading": {"label": "Common thread heading", "type": "short", "value": "How I adapt the work to the learning need"},
-        "thread_intro": {"label": "Common thread introduction", "type": "long", "value": "Different formats solve different problems. Select a project type to see what I pay attention to when I design it and what evidence I use to judge whether it works."}
+        "hero_title": {"label": "Experience heading", "type": "short", "value": "From classroom teaching to enterprise enablement"},
+        "hero_intro_primary": {"label": "Experience summary", "type": "long", "value": "I started as a high-school teacher and now design enterprise learning for sales and partner audiences. My work also includes LMS administration, AI evaluation, multimedia production, automation, and reporting when those capabilities support the learning solution."},
+        "thread_heading": {"label": "Workflow comparison heading", "type": "short", "value": "How I adapt the work to the learning need"}
       }
     },
     "projects": {

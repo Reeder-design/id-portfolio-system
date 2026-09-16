@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About instructional designer Haley Reeder and her work across learning design, AI evaluation, systems, and workflow development.">
+    <meta name="description" content="About instructional designer Haley Reeder and her work across learning design, AI evaluation, LMS administration, and live instruction.">
     <title>About Me | Haley Reeder</title>
     <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,10 +14,239 @@
     <link rel="stylesheet" href="../css/phase1-theme.css">
     <link rel="stylesheet" href="../css/phase1-frame.css">
     <style>
-        .about-intro-copy .body-large { font-size: 1rem; line-height: 1.75; }
-        .about-intro-copy > p { max-width: 760px; }
-        .career-focus-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
-        .career-focus-tag { padding:8px 13px; border:1px solid rgba(80,132,132,.24); border-radius:999px; background:rgba(255,255,255,.85); color:var(--charcoal); font-size:.82rem; font-weight:700; }
+        .about-experience-hero {
+            padding: clamp(52px, 8vw, 92px) 0 44px;
+            background:
+                radial-gradient(circle at 82% 16%, rgba(121,201,158,.14), transparent 20rem),
+                radial-gradient(circle at 12% 86%, rgba(184,170,195,.12), transparent 18rem);
+        }
+
+        .about-experience-panel {
+            position:relative;
+            overflow:hidden;
+            display:grid;
+            grid-template-columns:minmax(0,1fr) auto;
+            gap:36px;
+            align-items:end;
+            padding:clamp(28px,5vw,52px);
+            border:1px solid rgba(80,132,132,.22);
+            border-radius:30px;
+            background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(238,245,241,.78));
+            box-shadow:var(--portfolio-shadow);
+        }
+
+        .about-experience-panel::after {
+            content:"";
+            position:absolute;
+            right:-74px;
+            top:-92px;
+            width:250px;
+            height:250px;
+            border:1px dashed rgba(80,132,132,.2);
+            border-radius:50%;
+            pointer-events:none;
+        }
+
+        .about-experience-copy { position:relative; z-index:1; max-width:820px; }
+        .about-experience-copy h1 { margin-bottom:16px; font-size:clamp(2rem,4vw,3rem); }
+        .about-experience-copy .body-large { margin-bottom:0; max-width:760px; }
+        .about-experience-actions { position:relative; z-index:1; align-self:end; }
+
+        .workflow-lab {
+            margin-top:32px;
+            border:1px solid rgba(80,132,132,.22);
+            border-radius:30px;
+            background:rgba(255,255,255,.82);
+            box-shadow:var(--portfolio-shadow);
+            overflow:hidden;
+        }
+
+        .workflow-switcher {
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:1px;
+            background:rgba(80,132,132,.15);
+            border-bottom:1px solid rgba(80,132,132,.2);
+        }
+
+        .workflow-switch {
+            display:flex;
+            align-items:center;
+            gap:11px;
+            min-width:0;
+            min-height:74px;
+            padding:16px 18px;
+            border:0;
+            background:rgba(255,255,255,.9);
+            color:var(--charcoal);
+            text-align:left;
+            cursor:pointer;
+            transition:background 180ms ease,color 180ms ease,box-shadow 180ms ease;
+        }
+
+        .workflow-switch:hover,
+        .workflow-switch:focus-visible {
+            background:rgba(238,245,241,.98);
+            outline:none;
+            box-shadow:inset 0 -3px 0 rgba(121,201,158,.75);
+        }
+
+        .workflow-switch.active {
+            background:linear-gradient(145deg,rgba(79,92,89,.98),rgba(80,132,132,.96));
+            color:#fff;
+            box-shadow:inset 0 -3px 0 var(--yellow-green);
+        }
+
+        .workflow-switch .portfolio-icon { flex:0 0 auto; width:27px; height:27px; }
+        .workflow-switch strong { font-family:"Montserrat",sans-serif; font-size:.88rem; line-height:1.28; }
+
+        .workflow-stage {
+            padding:clamp(24px,4vw,42px);
+        }
+
+        .workflow-context {
+            display:grid;
+            grid-template-columns:minmax(0,1.45fr) minmax(240px,.55fr);
+            gap:32px;
+            align-items:start;
+            margin-bottom:32px;
+        }
+
+        .workflow-context-main {
+            display:grid;
+            grid-template-columns:72px minmax(0,1fr);
+            gap:20px;
+            align-items:start;
+        }
+
+        .workflow-context-icon {
+            display:grid;
+            place-items:center;
+            width:72px;
+            height:72px;
+            border:1px solid rgba(80,132,132,.25);
+            border-radius:22px;
+            background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(238,245,241,.86));
+            color:var(--pine-blue);
+            box-shadow:0 12px 30px rgba(50,75,68,.09);
+        }
+
+        .workflow-context-icon .portfolio-icon { width:38px; height:38px; }
+        .workflow-context h3 { margin-bottom:9px; }
+        .workflow-context p { margin-bottom:0; }
+
+        .workflow-priorities {
+            padding:18px;
+            border:1px solid rgba(80,132,132,.18);
+            border-radius:20px;
+            background:rgba(248,250,248,.9);
+        }
+
+        .workflow-priorities-label,
+        .workflow-change-label {
+            margin:0 0 12px;
+            color:var(--medium-text);
+            font-size:.73rem;
+            font-weight:800;
+            letter-spacing:.1em;
+            text-transform:uppercase;
+        }
+
+        .workflow-priority-list { display:flex; flex-wrap:wrap; gap:8px; }
+        .workflow-priority {
+            padding:7px 10px;
+            border:1px solid rgba(80,132,132,.2);
+            border-radius:999px;
+            background:#fff;
+            color:var(--charcoal);
+            font-size:.77rem;
+            font-weight:700;
+        }
+
+        .workflow-change-label { margin-top:0; color:var(--pine-blue); }
+
+        .workflow-track {
+            position:relative;
+            display:grid;
+            grid-template-columns:repeat(5,minmax(0,1fr));
+            gap:14px;
+            margin-top:18px;
+        }
+
+        .workflow-track::before {
+            content:"";
+            position:absolute;
+            left:8%;
+            right:8%;
+            top:29px;
+            height:1px;
+            background:linear-gradient(90deg,rgba(80,132,132,.2),rgba(121,201,158,.7),rgba(80,132,132,.2));
+            pointer-events:none;
+        }
+
+        .workflow-step-card {
+            position:relative;
+            z-index:1;
+            min-width:0;
+            padding-top:0;
+        }
+
+        .workflow-step-number {
+            display:grid;
+            place-items:center;
+            width:58px;
+            height:58px;
+            margin:0 0 14px;
+            border:1px solid rgba(80,132,132,.28);
+            border-radius:18px;
+            background:#fff;
+            color:var(--pine-blue);
+            font-family:"Montserrat",sans-serif;
+            font-size:.82rem;
+            font-weight:800;
+            box-shadow:0 9px 24px rgba(50,75,68,.09);
+        }
+
+        .workflow-step-card h4 { margin-bottom:8px; font-size:1rem; }
+        .workflow-step-card p { margin:0; color:var(--medium-text); font-size:.84rem; line-height:1.58; }
+
+        .workflow-quality {
+            display:grid;
+            grid-template-columns:auto minmax(0,1fr);
+            gap:16px;
+            align-items:center;
+            margin-top:32px;
+            padding:18px 20px;
+            border:1px solid rgba(151,219,79,.35);
+            border-radius:20px;
+            background:linear-gradient(135deg,rgba(151,219,79,.1),rgba(255,255,255,.86));
+        }
+
+        .workflow-quality .icon-badge { width:46px; height:46px; }
+        .workflow-quality strong { display:block; margin-bottom:3px; font-family:"Montserrat",sans-serif; }
+        .workflow-quality p { margin:0; }
+
+        @media(max-width:980px) {
+            .about-experience-panel { grid-template-columns:1fr; align-items:start; }
+            .about-experience-actions { align-self:start; }
+            .workflow-switcher { grid-template-columns:repeat(2,minmax(0,1fr)); }
+            .workflow-context { grid-template-columns:1fr; }
+            .workflow-track { grid-template-columns:1fr; gap:0; }
+            .workflow-track::before { left:28px; right:auto; top:28px; bottom:28px; width:1px; height:auto; }
+            .workflow-step-card { display:grid; grid-template-columns:58px minmax(0,1fr); gap:16px; padding-bottom:22px; }
+            .workflow-step-number { margin:0; }
+            .workflow-step-copy { padding-top:3px; }
+        }
+
+        @media(max-width:620px) {
+            .workflow-switcher { grid-template-columns:1fr; }
+            .workflow-switch { min-height:58px; }
+            .workflow-context-main { grid-template-columns:1fr; }
+            .workflow-context-icon { width:62px; height:62px; }
+            .workflow-quality { grid-template-columns:1fr; }
+            .about-experience-actions .button-row { align-items:stretch; }
+            .about-experience-actions .btn { width:100%; justify-content:center; }
+        }
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
 </head>
@@ -36,25 +265,20 @@
 
     <main>
         <!-- PROFESSIONAL INTRO -->
-        <section class="page-hero refresh-hero">
-            <div class="container refresh-hero-grid">
-                <div class="about-intro-copy refresh-hero-copy">
-                    <p class="eyebrow">About Me</p>
-                    <h1>Learning design, development, and the systems around it</h1>
-                    <p class="body-large">I design enterprise learning for sales and partner audiences, especially when the subject is technical or product-heavy. My work also reaches into LMS operations, reporting, automation, AI evaluation, and custom digital content when those pieces are part of the learning problem.</p>
-                    <p>Before corporate L&amp;D, I taught high school history and English. That classroom experience and my Master of Education still shape how I think about practice, feedback, assessment, and whether learning actually changes performance.</p>
-                    <div class="career-focus-row" aria-label="Primary practice areas">
-                        <span class="career-focus-tag">Learning Design &amp; Development</span>
-                        <span class="career-focus-tag">AI Training and Evaluation</span>
-                        <span class="career-focus-tag">System Integrations &amp; Workflows</span>
+        <section class="page-hero about-experience-hero">
+            <div class="container">
+                <div class="about-experience-panel">
+                    <div class="about-experience-copy">
+                        <p class="eyebrow">Experience</p>
+                        <h1>From classroom teaching to enterprise enablement</h1>
+                        <p class="body-large">I started as a high-school teacher and now design enterprise learning for sales and partner audiences. My work also includes LMS administration, AI evaluation, multimedia production, automation, and reporting when those capabilities support the learning solution.</p>
                     </div>
-                </div>
-                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of Haley Reeder's learning design practice">
-                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
-                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></div>
-                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div>
-                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></div>
-                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div>
+                    <div class="about-experience-actions">
+                        <div class="button-row">
+                            <a class="btn btn-primary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
+                            <a class="btn btn-secondary" href="../projects/index.html">View Projects</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -64,41 +288,79 @@
             <div class="container">
                 <div class="section-heading refresh-section-intro">
                     <h2>How I adapt the work to the learning need</h2>
-                    <p class="body-large reading-width">Different formats solve different problems. Select a project type to see what I pay attention to when I design it and what evidence I use to judge whether it works.</p>
                 </div>
 
-                <div class="refresh-explorer">
-                    <div class="refresh-tabs" role="tablist" aria-label="Project types">
-                        <button class="refresh-tab active" type="button" data-work="paths" role="tab" aria-selected="true">Complete Learning Paths</button>
-                        <button class="refresh-tab" type="button" data-work="interactions" role="tab" aria-selected="false">Standalone Interactions</button>
-                        <button class="refresh-tab" type="button" data-work="micro" role="tab" aria-selected="false">Microlearning</button>
-                        <button class="refresh-tab" type="button" data-work="resources" role="tab" aria-selected="false">Training Resources</button>
-                        <button class="refresh-tab" type="button" data-work="ai" role="tab" aria-selected="false">AI Evaluation</button>
-                        <button class="refresh-tab" type="button" data-work="systems" role="tab" aria-selected="false">System Integrations &amp; Workflows</button>
+                <div class="workflow-lab">
+                    <div class="workflow-switcher" role="tablist" aria-label="Choose a type of learning work">
+                        <button class="workflow-switch active" type="button" data-work="elearning" role="tab" aria-selected="true" tabindex="0">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+                            <strong>eLearning</strong>
+                        </button>
+                        <button class="workflow-switch" type="button" data-work="ai" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg>
+                            <strong>AI Training &amp; Evaluation</strong>
+                        </button>
+                        <button class="workflow-switch" type="button" data-work="lms" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg>
+                            <strong>LMS Administration &amp; Learning Ops</strong>
+                        </button>
+                        <button class="workflow-switch" type="button" data-work="live" role="tab" aria-selected="false" tabindex="-1">
+                            <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg>
+                            <strong>Live Instruction</strong>
+                        </button>
                     </div>
 
-                    <div class="refresh-detail" aria-live="polite">
-                        <p class="eyebrow" id="workEyebrow">Complete Learning Paths</p>
-                        <h3 id="workTitle">Sequence learning around progressive performance.</h3>
-                        <p id="workSummary">I connect objectives, practice, assessment, support resources, delivery, and measurement so the pathway works as one learning system.</p>
-                        <div class="refresh-detail-grid">
-                            <article class="refresh-detail-card"><span>L&amp;D lens</span><p id="workLens">Scaffolding, instructional alignment, retrieval, practice, and assessment validity.</p></article>
-                            <article class="refresh-detail-card"><span>Design decisions</span><p id="workDecisions">What belongs in the pathway, what can be reference material, and where learners need practice or proof of performance.</p></article>
-                            <article class="refresh-detail-card"><span>Evidence</span><p id="workEvidence">Completion patterns, assessment results, learner feedback, stakeholder input, and performance indicators.</p></article>
+                    <div class="workflow-stage" role="tabpanel" aria-live="polite">
+                        <div class="workflow-context">
+                            <div class="workflow-context-main">
+                                <span class="workflow-context-icon" aria-hidden="true">
+                                    <svg class="portfolio-icon"><use id="workflowIcon" href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+                                </span>
+                                <div>
+                                    <p class="eyebrow" id="workflowEyebrow">Instructional Design for eLearning</p>
+                                    <h3 id="workflowTitle">Build the shortest path from need to performance.</h3>
+                                    <p id="workflowSummary">The audience, task, complexity, source material, delivery environment, and maintenance needs determine whether the solution becomes a course, scenario, multimedia asset, assessment, reference tool, or connected pathway.</p>
+                                </div>
+                            </div>
+                            <aside class="workflow-priorities" aria-label="What I optimize for">
+                                <p class="workflow-priorities-label">What I optimize for</p>
+                                <div class="workflow-priority-list" id="workflowPriorities">
+                                    <span class="workflow-priority">Relevance</span>
+                                    <span class="workflow-priority">Transfer</span>
+                                    <span class="workflow-priority">Accessibility</span>
+                                    <span class="workflow-priority">Maintainability</span>
+                                </div>
+                            </aside>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section class="section section-soft">
-            <div class="container">
-                <div class="cta">
-                    <p class="eyebrow">Keep Exploring</p>
-                    <h2>See the work in practice</h2>
-                    <div class="button-row">
-                        <a class="btn btn-highlight" href="../projects/index.html">View Projects</a>
-                        <a class="btn btn-secondary" href="../contact/index.html">Contact Me</a>
+                        <p class="workflow-change-label">How the workflow changes</p>
+                        <div class="workflow-track" id="workflowTrack" aria-label="eLearning workflow">
+                            <article class="workflow-step-card">
+                                <span class="workflow-step-number">01</span>
+                                <div class="workflow-step-copy"><h4>Understand the need</h4><p>Define the audience, performance gap, business context, constraints, and what success should look like.</p></div>
+                            </article>
+                            <article class="workflow-step-card">
+                                <span class="workflow-step-number">02</span>
+                                <div class="workflow-step-copy"><h4>Align the solution</h4><p>Translate the need into objectives, evidence of performance, scope, source-content requirements, and the right delivery format.</p></div>
+                            </article>
+                            <article class="workflow-step-card">
+                                <span class="workflow-step-number">03</span>
+                                <div class="workflow-step-copy"><h4>Design the experience</h4><p>Plan structure, practice, assessment, storyboards, scripts, prompts, visuals, and reusable assets before heavy development.</p></div>
+                            </article>
+                            <article class="workflow-step-card">
+                                <span class="workflow-step-number">04</span>
+                                <div class="workflow-step-copy"><h4>Develop and validate</h4><p>Build efficiently, review with SMEs, test accessibility and functionality, complete QA, and confirm the experience works in its delivery environment.</p></div>
+                            </article>
+                            <article class="workflow-step-card">
+                                <span class="workflow-step-number">05</span>
+                                <div class="workflow-step-copy"><h4>Launch and improve</h4><p>Measure use and outcomes, collect feedback, document ownership, and keep the content editable enough to update instead of rebuild.</p></div>
+                            </article>
+                        </div>
+
+                        <div class="workflow-quality">
+                            <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span>
+                            <div><strong>What good looks like</strong><p id="workflowQuality">A clear, relevant experience that gives learners useful practice, supports the required performance, survives review and QA, and can be maintained after launch.</p></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,77 +379,135 @@
     </footer>
 
     <script>
-        const workData = {
-            paths: {
-                eyebrow: "Complete Learning Paths",
-                title: "Sequence learning around progressive performance.",
-                summary: "I connect objectives, practice, assessment, support resources, delivery, and measurement so the pathway works as one learning system.",
-                lens: "Scaffolding, instructional alignment, retrieval, practice, and assessment validity.",
-                decisions: "What belongs in the pathway, what can be reference material, and where learners need practice or proof of performance.",
-                evidence: "Completion patterns, assessment results, learner feedback, stakeholder input, and performance indicators."
-            },
-            interactions: {
-                eyebrow: "Standalone Interactions",
-                title: "Use interaction to rehearse a real decision.",
-                summary: "I design focused scenarios and practice activities when learners need to classify, choose, prioritize, troubleshoot, or apply a framework.",
-                lens: "Deliberate practice, feedback, cognitive load, authenticity, and transfer.",
-                decisions: "Which decision is worth practicing, what information learners should see, and what feedback helps them improve.",
-                evidence: "Response patterns, error types, confidence, completion behavior, and observation of transfer to real tasks."
-            },
-            micro: {
-                eyebrow: "Microlearning",
-                title: "Keep the scope small and the use case clear.",
-                summary: "I use microlearning for a focused concept, update, launch need, refresher, or just-in-time reinforcement rather than shrinking a full course into a smaller screen.",
-                lens: "Chunking, relevance, retrieval, spacing, and performance support.",
-                decisions: "What one outcome matters, what context is essential, and what can be linked or referenced instead of taught in full.",
-                evidence: "Use frequency, quick checks, learner questions, support trends, and whether the resource reduces friction."
-            },
-            resources: {
-                eyebrow: "Training Resources",
-                title: "Design references for the moment of use.",
-                summary: "Job aids, guides, one-pagers, and slide resources should help someone act quickly without requiring them to remember an entire course.",
-                lens: "Performance support, information architecture, readability, signaling, and retrieval.",
-                decisions: "What needs to be scannable, what belongs in the main flow, and how the resource will be used during real work.",
-                evidence: "Findability, reuse, stakeholder adoption, support questions, and whether users can locate the right information quickly."
+        const workflowData = {
+            elearning: {
+                eyebrow: "Instructional Design for eLearning",
+                title: "Build the shortest path from need to performance.",
+                summary: "The audience, task, complexity, source material, delivery environment, and maintenance needs determine whether the solution becomes a course, scenario, multimedia asset, assessment, reference tool, or connected pathway.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-elearning",
+                priorities: ["Relevance", "Transfer", "Accessibility", "Maintainability"],
+                quality: "A clear, relevant experience that gives learners useful practice, supports the required performance, survives review and QA, and can be maintained after launch.",
+                steps: [
+                    ["Understand the need", "Define the audience, performance gap, business context, constraints, and what success should look like."],
+                    ["Align the solution", "Translate the need into objectives, evidence of performance, scope, source-content requirements, and the right delivery format."],
+                    ["Design the experience", "Plan structure, practice, assessment, storyboards, scripts, prompts, visuals, and reusable assets before heavy development."],
+                    ["Develop and validate", "Build efficiently, review with SMEs, test accessibility and functionality, complete QA, and confirm the experience works in its delivery environment."],
+                    ["Launch and improve", "Measure use and outcomes, collect feedback, document ownership, and keep the content editable enough to update instead of rebuild."]
+                ]
             },
             ai: {
-                eyebrow: "AI Evaluation",
-                title: "Evaluate against the task and evidence.",
-                summary: "I define the task, evidence, criteria, and severity standards before judging an AI output so the review stays consistent and defensible.",
-                lens: "Assessment design, rubric quality, validity, feedback, calibration, and evidence-based judgment.",
-                decisions: "What success means, which errors are material, how evidence supports a score, and what feedback would improve the next output.",
-                evidence: "Source grounding, requirement coverage, error severity, reviewer consistency, and recurring failure patterns."
+                eyebrow: "AI Training & Evaluation",
+                title: "Make the judgment criteria explicit before judging the output.",
+                summary: "AI evaluation changes with the task. Model-output review, document evaluation, data-quality work, and workflow testing all need clear source evidence, criteria, severity standards, and reviewer expectations before scoring begins.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-ai-evaluation",
+                priorities: ["Evidence", "Consistency", "Specificity", "Defensibility"],
+                quality: "Reviewers can point to the evidence behind a judgment, distinguish material errors from preference, apply the rubric consistently, and give feedback that improves the next output.",
+                steps: [
+                    ["Frame the task", "Define the user goal, source material, output requirements, audience, and what a successful response must accomplish."],
+                    ["Build the rubric", "Set evaluation dimensions and severity thresholds for accuracy, instruction following, relevance, logic, style, unsupported claims, AI-isms, verbosity, and other task-specific risks."],
+                    ["Evaluate the output", "Compare the response to the source and criteria, identify material errors, flag AI slop or unnatural phrasing, and capture evidence for each judgment."],
+                    ["Calibrate and QA", "Compare reviewer decisions, resolve inconsistent interpretations, check data quality, and make sure the rubric can be applied repeatedly."],
+                    ["Feedback and patterns", "Write actionable feedback, track recurring failure modes, and use those patterns to improve prompts, guidance, evaluation criteria, or the broader workflow."]
+                ]
             },
-            systems: {
-                eyebrow: "System Integrations & Workflows",
-                title: "Fix the workflow when the workflow is the problem.",
-                summary: "I work with LMS processes, reporting, automation, documentation, or custom code when those systems are creating friction for the learning team or learners.",
-                lens: "Systems thinking, feedback loops, performance support, usability, and continuous improvement.",
-                decisions: "Where information should live, what can be automated, what needs human review, and how ownership continues after launch.",
-                evidence: "Fewer manual steps, cleaner handoffs, reliable reporting, reduced rework, maintained documentation, and easier reuse."
+            lms: {
+                eyebrow: "LMS Administration & Learning Operations",
+                title: "Treat the platform workflow as part of the learning experience.",
+                summary: "The LMS shapes discovery, enrollment, launch, completion, reporting, support, and maintenance. I work from both the administrator's view of the system and the instructional designer's view of the learner journey.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-lms",
+                priorities: ["Usability", "Reliability", "Scalability", "Supportability"],
+                quality: "Learners can find and complete the right learning, admins can support it without fragile manual work, reporting is useful, and content structures remain understandable as the system grows or changes.",
+                steps: [
+                    ["Map the experience", "Trace the learner journey and the admin workflow together, including entry points, enrollments, pathways, support needs, reporting, and platform constraints."],
+                    ["Structure and configure", "Design course structures, metadata, audiences, enrollment rules, pathways, permissions, notifications, and content relationships around the intended experience."],
+                    ["Connect the operation", "Align authoring, publishing, integrations, automations, reporting, user support, and documentation so the system does not depend on hidden manual steps."],
+                    ["Test both sides", "Validate learner UX, content compatibility, admin handoffs, enrollment behavior, reporting, edge cases, and the support experience before release."],
+                    ["Maintain and evolve", "Use feedback and system data to improve workflows, document ownership, support migrations, and adapt learning structures when platform capabilities or business needs change."]
+                ]
+            },
+            live: {
+                eyebrow: "Live Instruction",
+                title: "Design for the room, the facilitator, and the decisions made in real time.",
+                summary: "Live learning works differently because pacing, discussion, questions, practice, and facilitator judgment all change the experience. The design has to support adaptation without losing the objective.",
+                icon: "../assets/icons/portfolio-icons.svg#icon-live-instruction",
+                priorities: ["Participation", "Pacing", "Flexibility", "Transfer"],
+                quality: "The session uses live time for practice, discussion, coaching, and feedback; participants know what to do next; and another facilitator can deliver it without reverse-engineering the design.",
+                steps: [
+                    ["Define the live need", "Clarify the audience, desired behavior, existing knowledge, group size, delivery mode, timing, and what specifically benefits from a facilitator being present."],
+                    ["Design the session", "Build the agenda around explanation, discussion, activity, practice, and debrief rather than treating slides as the learning experience."],
+                    ["Prepare the facilitator", "Create facilitator notes, timing cues, questions, transitions, materials, contingency options, and guidance for handling different levels of participation or knowledge."],
+                    ["Deliver and adapt", "Read the room, adjust pacing and examples, invite questions, coach practice, and make real-time decisions without drifting from the learning objective."],
+                    ["Debrief and follow up", "Capture questions and friction, reinforce action items or reference resources, gather feedback, and update the design before the next delivery."]
+                ]
             }
         };
 
-        const tabs = document.querySelectorAll(".refresh-tab[data-work]");
-        const fields = {
-            eyebrow: document.getElementById("workEyebrow"),
-            title: document.getElementById("workTitle"),
-            summary: document.getElementById("workSummary"),
-            lens: document.getElementById("workLens"),
-            decisions: document.getElementById("workDecisions"),
-            evidence: document.getElementById("workEvidence")
-        };
+        const switches = Array.from(document.querySelectorAll(".workflow-switch[data-work]"));
+        const workflowIcon = document.getElementById("workflowIcon");
+        const workflowEyebrow = document.getElementById("workflowEyebrow");
+        const workflowTitle = document.getElementById("workflowTitle");
+        const workflowSummary = document.getElementById("workflowSummary");
+        const workflowPriorities = document.getElementById("workflowPriorities");
+        const workflowTrack = document.getElementById("workflowTrack");
+        const workflowQuality = document.getElementById("workflowQuality");
 
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                const data = workData[tab.dataset.work];
-                tabs.forEach((item) => {
-                    item.classList.remove("active");
-                    item.setAttribute("aria-selected", "false");
-                });
-                tab.classList.add("active");
-                tab.setAttribute("aria-selected", "true");
-                Object.keys(fields).forEach((key) => { fields[key].textContent = data[key]; });
+        function renderWorkflow(key) {
+            const data = workflowData[key];
+            if (!data) return;
+
+            switches.forEach((item) => {
+                const selected = item.dataset.work === key;
+                item.classList.toggle("active", selected);
+                item.setAttribute("aria-selected", String(selected));
+                item.tabIndex = selected ? 0 : -1;
+            });
+
+            workflowIcon.setAttribute("href", data.icon);
+            workflowEyebrow.textContent = data.eyebrow;
+            workflowTitle.textContent = data.title;
+            workflowSummary.textContent = data.summary;
+            workflowQuality.textContent = data.quality;
+            workflowTrack.setAttribute("aria-label", `${data.eyebrow} workflow`);
+
+            workflowPriorities.replaceChildren(...data.priorities.map((priority) => {
+                const chip = document.createElement("span");
+                chip.className = "workflow-priority";
+                chip.textContent = priority;
+                return chip;
+            }));
+
+            workflowTrack.replaceChildren(...data.steps.map(([title, body], index) => {
+                const card = document.createElement("article");
+                card.className = "workflow-step-card";
+
+                const number = document.createElement("span");
+                number.className = "workflow-step-number";
+                number.textContent = String(index + 1).padStart(2, "0");
+
+                const copy = document.createElement("div");
+                copy.className = "workflow-step-copy";
+                const heading = document.createElement("h4");
+                heading.textContent = title;
+                const paragraph = document.createElement("p");
+                paragraph.textContent = body;
+                copy.append(heading, paragraph);
+                card.append(number, copy);
+                return card;
+            }));
+        }
+
+        switches.forEach((button, index) => {
+            button.addEventListener("click", () => renderWorkflow(button.dataset.work));
+            button.addEventListener("keydown", (event) => {
+                if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+                event.preventDefault();
+                let nextIndex = index;
+                if (event.key === "Home") nextIndex = 0;
+                else if (event.key === "End") nextIndex = switches.length - 1;
+                else if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % switches.length;
+                else nextIndex = (index - 1 + switches.length) % switches.length;
+                switches[nextIndex].focus();
+                renderWorkflow(switches[nextIndex].dataset.work);
             });
         });
     </script>
