@@ -5,8 +5,8 @@
       title: 'I checked whether the right learners could see the right content.',
       text: 'I participated in UAT for employee, partner, and customer experiences and validated audience-facing catalogs, training, and learning structures before launch.',
       checks: [
-        ['Checked', 'Audience visibility, catalogs, and learner-facing content.'],
-        ['Looked for', 'Missing content, incorrect access, and visibility problems.']
+        ['What I checked', 'Audience visibility, catalogs, and learner-facing content.'],
+        ['What I looked for', 'Missing courses, hidden content, or content visible to the wrong audience.']
       ]
     },
     plans: {
@@ -14,8 +14,8 @@
       title: 'I reviewed how learning plans were structured and behaved.',
       text: 'I validated learning-plan relationships and learner-facing behavior so migrated content still connected to the intended learning journey.',
       checks: [
-        ['Checked', 'Learning-plan structure, content relationships, and learner experience.'],
-        ['Looked for', 'Mapping issues, broken relationships, and duplicate content.']
+        ['What I checked', 'Learning-plan structure, content relationships, and learner experience.'],
+        ['What I looked for', 'Mapping issues, broken relationships, and duplicate content.']
       ]
     },
     certifications: {
@@ -23,8 +23,8 @@
       title: 'I tested certification and renewal workflows.',
       text: 'I reviewed certification behavior and renewal paths so returning learners followed the intended experience instead of getting a confusing duplicate or broken path.',
       checks: [
-        ['Checked', 'Certification workflows, renewal paths, and learning-plan configuration.'],
-        ['Looked for', 'Unexpected renewal behavior, duplicate records, and completion-path issues.']
+        ['What I checked', 'Certification workflows, renewal paths, and learning-plan configuration.'],
+        ['What I looked for', 'Unexpected renewal behavior, duplicate records, and completion-path issues.']
       ]
     },
     experience: {
@@ -32,8 +32,8 @@
       title: 'I validated the learner-facing details around the migration.',
       text: 'I checked learner-facing content, thumbnails, navigation, onboarding guidance, and support resources because a technically correct migration still has to be understandable to use.',
       checks: [
-        ['Checked', 'Content, thumbnails, navigation, catalogs, and learner guidance.'],
-        ['Looked for', 'Confusing placement, outdated assets, navigation friction, and support gaps.']
+        ['What I checked', 'Content, thumbnails, navigation, catalogs, and learner guidance.'],
+        ['What I looked for', 'Confusing placement, outdated assets, navigation friction, and support gaps.']
       ]
     },
     launch: {
@@ -41,8 +41,8 @@
       title: 'I supported issue triage and launch readiness.',
       text: 'As testing surfaced problems, I documented issues, helped validate fixes, and supported launch-readiness and post-launch troubleshooting work with the broader team.',
       checks: [
-        ['Checked', 'Known issues, retest status, and learner-facing impact.'],
-        ['Looked for', 'Problems that still needed resolution, documentation, or support guidance.']
+        ['What I checked', 'Known issues, retest status, and learner-facing impact.'],
+        ['What I looked for', 'Problems that still needed resolution, documentation, or support guidance.']
       ]
     }
   };
@@ -62,7 +62,7 @@
     },
     launch: {
       title: 'Support launch readiness and triage.',
-      text: 'I contributed learner guidance, support feedback, issue triage, and post-launch troubleshooting without claiming ownership of the full migration program.'
+      text: 'I contributed learner guidance, support feedback, issue triage, and post-launch troubleshooting as part of the broader migration team.'
     }
   };
 
@@ -79,14 +79,6 @@
     ]
   };
 
-  const swapPanel = (panel, update) => {
-    panel.classList.add('is-switching');
-    window.setTimeout(() => {
-      update();
-      panel.classList.remove('is-switching');
-    }, 120);
-  };
-
   const setupTabs = (selector, dataKey, handler) => {
     const buttons = [...document.querySelectorAll(selector)];
     buttons.forEach((button, index) => {
@@ -95,7 +87,9 @@
           const active = item === button;
           item.classList.toggle('active', active);
           item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
         });
+        document.getElementById(button.getAttribute("aria-controls")).setAttribute("aria-labelledby", button.id);
         handler(button.dataset[dataKey]);
       };
       button.addEventListener('click', activate);
@@ -113,15 +107,13 @@
     });
   };
 
-  const validationPanel = document.getElementById('validationPanel');
   const renderValidation = (key) => {
     const data = validationData[key];
-    swapPanel(validationPanel, () => {
-      document.getElementById('validationLabel').textContent = data.label;
-      document.getElementById('validationTitle').textContent = data.title;
-      document.getElementById('validationText').textContent = data.text;
-      document.getElementById('validationChecks').innerHTML = data.checks.map(([label, body]) => `<div class="validation-check"><span>${label}</span><strong>${body}</strong></div>`).join('');
-    });
+    // Synchronous updates keep rapid keyboard navigation and panel content aligned.
+    document.getElementById('validationLabel').textContent = data.label;
+    document.getElementById('validationTitle').textContent = data.title;
+    document.getElementById('validationText').textContent = data.text;
+    document.getElementById('validationChecks').innerHTML = data.checks.map(([label, body]) => `<div class="validation-check"><span>${label}</span><strong>${body}</strong></div>`).join('');
   };
   setupTabs('[data-validation]', 'validation', renderValidation);
   renderValidation('visibility');
