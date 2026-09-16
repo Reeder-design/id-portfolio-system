@@ -1,0 +1,140 @@
+/* Shared card presentation from Projects → Browse by area.
+   Home uses the same component with a shorter content layout. */
+.project-areas .project-family-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.project-areas .project-family-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(80,132,132,.2);
+  border-radius: 22px;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 12px 32px rgba(52,74,66,.08);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.project-areas .project-family-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(121,201,158,.58);
+  box-shadow: 0 18px 40px rgba(52,74,66,.12);
+}
+
+.project-areas .project-family-header {
+  min-height: 0;
+  padding: 22px 22px 18px;
+  background: radial-gradient(circle at 88% 15%,rgba(151,219,79,.14),transparent 30%),linear-gradient(135deg,rgba(80,132,132,.14),rgba(121,201,158,.09));
+}
+
+.project-areas .project-family-card:nth-child(2) .project-family-header {
+  background: radial-gradient(circle at 88% 15%,rgba(184,170,195,.22),transparent 30%),linear-gradient(135deg,rgba(221,213,229,.38),rgba(255,255,255,.7));
+}
+.project-areas .project-family-card:nth-child(3) .project-family-header {
+  background: radial-gradient(circle at 88% 15%,rgba(121,201,158,.22),transparent 31%),linear-gradient(135deg,rgba(80,132,132,.16),rgba(238,245,241,.92));
+}
+.project-areas .project-family-card:nth-child(4) .project-family-header {
+  background: radial-gradient(circle at 88% 15%,rgba(151,219,79,.12),transparent 30%),linear-gradient(135deg,rgba(77,83,89,.08),rgba(255,255,255,.82));
+}
+
+.project-areas .project-family-header :is(h2, h3) {
+  margin: 5px 0 7px;
+  font-size: clamp(1.25rem,2.4vw,1.6rem);
+}
+.project-areas .project-family-header p:last-child {
+  margin-bottom: 0;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+.project-areas .project-family-body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0;
+  padding: 18px 22px 22px;
+}
+.project-areas .project-family-body > p {
+  min-height: 0;
+  margin-bottom: 12px;
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.project-areas .project-family-list {
+  align-self: start;
+  display: grid;
+  gap: 4px;
+  margin: 0 0 16px;
+  padding-left: 18px;
+}
+.project-areas .project-family-list li {
+  margin: 0;
+  font-size: .84rem;
+  line-height: 1.4;
+}
+.project-areas .project-family-link {
+  align-self: end;
+  min-height: 42px;
+  margin: 0;
+  padding: 9px 12px !important;
+}
+.project-areas .project-family-link:focus-visible {
+  outline: 2px solid var(--pine-blue);
+  outline-offset: 3px;
+}
+
+.project-areas .project-family-icon {
+  position: relative;
+  isolation: isolate;
+  width: 54px;
+  height: 54px;
+  margin: 5px 0 14px 6px;
+  border-radius: 50%;
+}
+.project-areas .project-family-icon::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  border: 1px dashed rgba(80,132,132,.34);
+  border-radius: 50%;
+  animation: project-area-orbit 13s linear infinite;
+}
+.project-areas .project-family-icon::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint-leaf);
+  box-shadow: 0 0 0 4px rgba(121,201,158,.10);
+  transform: translateX(-50%);
+}
+.project-areas .project-family-icon .portfolio-icon {
+  color: var(--pine-blue);
+}
+@keyframes project-area-orbit {
+  to { transform: rotate(360deg); }
+}
+
+/* Home omits the Projects body paragraph; its list fills the remaining space. */
+.project-areas--compact .project-family-body {
+  grid-template-rows: 1fr auto;
+}
+
+@media (max-width: 960px) {
+  .project-areas .project-family-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-areas .project-family-icon::before { animation: none; }
+  .project-areas .project-family-card,
+  .project-areas .project-family-link { transition: none; }
+  .project-areas .project-family-card:hover,
+  .project-areas .project-family-link:hover { transform: none; }
+}
