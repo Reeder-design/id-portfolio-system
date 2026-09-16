@@ -95,13 +95,13 @@
 
     const heroSummary = document.querySelector('.project-hero-content .body-large');
     if (heroSummary) {
-      heroSummary.textContent = 'Role-based sales certification for a complex enterprise technology portfolio, designed for mixed experience levels, regional routing, assessment, LMS delivery, and ongoing updates.';
+      heroSummary.textContent = 'I turned sales, product, and technical source material into a multi-course sales certification, then built the learning, assessment, review, LMS testing, and reporting support around it.';
     }
 
     const snapshotItems = Array.from(document.querySelectorAll('.project-snapshot-item'));
     if (snapshotItems[0]) {
       const role = snapshotItems[0].querySelector('strong');
-      if (role) role.textContent = 'Instructional Designer / Learning Experience Designer. Designed the pathway and course experience; coordinated QA and SME review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
+      if (role) role.textContent = 'Designed and developed the curriculum, interactions, and assessments; coordinated QA and SME review; supported LMS testing, migration validation, maintenance, and reporting.';
     }
     if (snapshotItems[1]) {
       const audience = snapshotItems[1].querySelector('strong');
@@ -109,7 +109,7 @@
     }
 
     const need = document.querySelector('#need > p');
-    if (need) need.textContent = 'Create one maintainable sales learning path that helped sellers recognize fit, explain value, navigate regional requirements, and prepare the next sales step.';
+    if (need) need.textContent = 'Turn broad, changing source material into focused sales learning that helped sellers recognize fit, explain value, and choose the next step without teaching installation.';
 
     const audienceCard = document.querySelector('#need .project-story-card:first-child p');
     if (audienceCard) audienceCard.textContent = 'Internal sellers and channel partners, from new to experienced.';
@@ -125,50 +125,30 @@
     }
 
     const approach = document.querySelector('#decisions .project-story-card:first-child p');
-    if (approach) approach.textContent = 'Built the certification as a connected system: core path, regional extension, optional foundations, practice, assessment, LMS behavior, and update ownership.';
+    if (approach) approach.textContent = 'I wrote seller-focused objectives, grouped approved source material into courses, separated core and regional requirements, and moved deeper technical detail into optional or technical learning.';
 
     const build = document.querySelector('#build > p');
-    if (build) build.textContent = 'Built modular Rise and Storyline learning, multimedia, comparisons, scenarios, knowledge checks, and assessment; staged QA and SME review; validated LMS behavior and maintenance paths.';
+    if (build) build.textContent = 'I built modular Rise and Storyline lessons, comparisons, scenarios, knowledge checks, multimedia, and assessment content; coordinated QA and SME review; then tested the learner experience in the LMS.';
 
     const buildRole = document.querySelector('#build .project-story-card:nth-child(2) p');
-    if (buildRole) buildRole.textContent = 'Designed the pathway and course experience; coordinated review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
+    if (buildRole) buildRole.textContent = 'Designed and developed the learning; coordinated review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
 
     const outcomes = document.querySelector('#outcome .project-outcome-list');
     if (outcomes) {
       outcomes.innerHTML = [
-        'Released a multi-course pathway with role-based learning, practice, assessment, and LMS support.',
-        'Restructured broad and regional requirements into distinct learner routes.',
-        'Added a supplemental assessment and reporting workflow when platform reporting did not fully match the design.'
+        'Released a multi-course sales certification with practice, assessment, review documentation, and LMS support.',
+        'Separated broadly applicable and regional requirements into distinct learner routes.',
+        'Added a supplemental regional assessment and spreadsheet workflow when LMS reporting did not fully match the design.'
       ].map((item) => `<li>${escapeHtml(item)}</li>`).join('');
     }
   };
 
   const EXPLORER_GROUPS = [
-    {
-      id: 'architecture',
-      label: 'Architecture',
-      sections: ['learning-architecture', 'mixed-experience-design']
-    },
-    {
-      id: 'learning-assessment',
-      label: 'Learning + Assessment',
-      sections: ['objective-alignment', 'assessment-strategy']
-    },
-    {
-      id: 'qa-lms',
-      label: 'QA + LMS',
-      sections: ['qa-governance', 'lms-migration']
-    },
-    {
-      id: 'operations',
-      label: 'Operations',
-      sections: ['reporting-workflow', 'maintenance-lifecycle']
-    },
-    {
-      id: 'evidence-reflection',
-      label: 'Evidence + Reflection',
-      sections: ['evidence-boundaries', 'reflection']
-    }
+    { id: 'architecture', label: 'Architecture', sections: ['learning-architecture', 'mixed-experience-design'] },
+    { id: 'learning-assessment', label: 'Learning + Assessment', sections: ['objective-alignment', 'assessment-strategy'] },
+    { id: 'qa-lms', label: 'QA + LMS', sections: ['qa-governance', 'lms-migration'] },
+    { id: 'operations', label: 'Operations', sections: ['reporting-workflow', 'maintenance-lifecycle'] },
+    { id: 'evidence-reflection', label: 'Evidence + Reflection', sections: ['evidence-boundaries', 'reflection'] }
   ];
 
   const initProjectDetailExplorer = () => {
@@ -179,7 +159,6 @@
     const groups = EXPLORER_GROUPS
       .map((group) => ({ ...group, sections: group.sections.filter((id) => detailMap.has(id)) }))
       .filter((group) => group.sections.length);
-
     if (!groups.length) return;
 
     const firstDetail = detailSections[0];
@@ -231,7 +210,6 @@
 
     const tabButtons = Array.from(tabs.querySelectorAll('[role="tab"]'));
     const panelEls = Array.from(panels.querySelectorAll('[role="tabpanel"]'));
-
     const selectTab = (nextIndex, focus = false) => {
       tabButtons.forEach((tab, index) => {
         const selected = index === nextIndex;
@@ -303,7 +281,6 @@
   const rankHiringResults = (query) => {
     const cleanQuery = normalize(query);
     if (!cleanQuery) return hiringIndex.slice(0, 6);
-
     const tokens = cleanQuery.split(' ').filter((token) => token.length > 1 && !STOP_WORDS.has(token));
     if (!tokens.length) return hiringIndex.slice(0, 6);
 
@@ -314,13 +291,11 @@
         const keywords = normalize((entry.keywords || []).join(' '));
         const combined = `${title} ${summary} ${keywords}`;
         let score = combined.includes(cleanQuery) ? 14 : 0;
-
         tokens.forEach((token) => {
           if (title.includes(token)) score += 7;
           if (keywords.includes(token)) score += 5;
           if (summary.includes(token)) score += 2;
         });
-
         return { entry, score };
       })
       .filter(({ score }) => score > 0)
@@ -392,7 +367,6 @@
       <div class="portfolio-assistant-results" aria-live="polite"></div>`;
 
     document.body.append(panel, launcher);
-
     const input = panel.querySelector('.portfolio-assistant-search');
     const results = panel.querySelector('.portfolio-assistant-results');
     const close = panel.querySelector('.portfolio-assistant-close');
@@ -404,7 +378,6 @@
       renderHiringResults(results, input.value);
       requestAnimationFrame(() => input.focus());
     };
-
     const closePanel = () => {
       panel.hidden = true;
       launcher.setAttribute('aria-expanded', 'false');
@@ -424,7 +397,6 @@
         input.focus();
       });
     });
-
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !panel.hidden) closePanel();
     });
@@ -469,9 +441,15 @@
   ];
 
   const initDemoHelp = () => {
-    const path = window.location.pathname.toLowerCase();
-    const help = demoHelpMap.find((item) => path.includes(item.match.toLowerCase()));
-    if (!help) return;
+    const path = window.location.pathname.toLowerCase().replace(/\/index\.html$/, '/').replace(/\/+$/, '/');
+    const help = demoHelpMap.find((item) => path.endsWith(item.match.toLowerCase()));
+
+    if (!help) {
+      document.querySelectorAll('.demo-help-launcher, .demo-help-panel').forEach((element) => element.remove());
+      return;
+    }
+
+    document.body.dataset.demoPage = 'true';
 
     const button = document.createElement('button');
     button.type = 'button';
@@ -499,7 +477,6 @@
       <div class="demo-help-signal"><strong>What this demonstrates</strong><span>${escapeHtml(help.signal)}</span></div>`;
 
     document.body.append(panel, button);
-
     const close = panel.querySelector('.demo-help-close');
     const setOpen = (open) => {
       panel.hidden = !open;
@@ -532,7 +509,6 @@
   const revealTargets = document.querySelectorAll(
     '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer'
   );
-
   revealTargets.forEach((element) => element.classList.add('reveal-on-scroll'));
 
   const observer = new IntersectionObserver((entries) => {
@@ -542,11 +518,7 @@
         observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -7% 0px'
-  });
-
+  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
   revealTargets.forEach((element) => observer.observe(element));
 
   document.querySelectorAll('[data-parallax-soft]').forEach((element) => {
@@ -557,7 +529,6 @@
       const offset = Math.max(-1, Math.min(1, (elementCenter - viewportCenter) / window.innerHeight));
       element.style.setProperty('--parallax-shift', `${offset * -10}px`);
     };
-
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
