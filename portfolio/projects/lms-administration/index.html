@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LMS administration and system operations work by Haley Reeder, including platform UX, learning pathways, content operations, support, reporting, and migration.">
+    <title>LMS Administration &amp; System Operations | Haley Reeder</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/site/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/portfolio-refresh.css">
+    <link rel="stylesheet" href="../../css/phase1-theme.css">
+    <link rel="stylesheet" href="../../css/phase1-frame.css">
+    <style>
+        .lms-lens-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+        .lms-lens-card { position:relative; overflow:hidden; padding:28px; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:rgba(255,255,255,.88); box-shadow:0 15px 38px rgba(52,74,66,.09); }
+        .lms-lens-card::after { content:""; position:absolute; right:-45px; bottom:-58px; width:155px; height:155px; border:1px dashed rgba(80,132,132,.17); border-radius:50%; }
+        .lms-lens-card .icon-badge { margin-bottom:18px; }
+        .lms-lens-card h3 { color:var(--pine-blue); }
+        .lms-lens-list { margin:18px 0 0; padding-left:18px; }
+        .lms-lens-list li + li { margin-top:9px; }
+        .lms-system-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+        .lms-system-card { min-width:0; padding:22px; border:1px solid rgba(80,132,132,.18); border-radius:20px; background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(238,245,241,.74)); }
+        .lms-system-card .portfolio-icon { width:30px; height:30px; margin-bottom:14px; color:var(--pine-blue); }
+        .lms-system-card h3 { font-size:1rem; }
+        .lms-system-card p { margin-bottom:0; font-size:.92rem; }
+        .lms-principle { display:grid; grid-template-columns:auto minmax(0,1fr); gap:18px; align-items:center; padding:24px 26px; border:1px solid rgba(80,132,132,.2); border-radius:24px; background:linear-gradient(135deg,rgba(80,132,132,.11),rgba(121,201,158,.08),rgba(255,255,255,.92)); }
+        .lms-principle .icon-badge { margin:0; }
+        .lms-principle p { margin:4px 0 0; }
+        @media(max-width:980px){ .lms-system-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+        @media(max-width:760px){ .lms-lens-grid,.lms-system-grid{grid-template-columns:1fr;} .lms-principle{grid-template-columns:1fr;} }
+    </style>
+    <script defer src="../../js/portfolio-motion.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-container">
+            <a class="site-brand" href="../../index.html">Haley <span>Reeder</span></a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="../../index.html">Home</a>
+                <a href="../../about/index.html">About Me</a>
+                <a class="active" href="../index.html">Projects</a>
+                <a href="../../contact/index.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero refresh-hero">
+            <div class="container refresh-hero-grid">
+                <div class="refresh-hero-copy">
+                    <p class="eyebrow">Learning Platform Operations</p>
+                    <h1>LMS Administration &amp; System Operations</h1>
+                    <p class="body-large">The learning experience starts before a course opens. I work on the platform structures, enrollment logic, content operations, support processes, reporting, and system decisions that determine whether learning is easy to find, launch, complete, measure, and maintain.</p>
+                    <div class="button-row">
+                        <a class="btn btn-primary" href="#lms-lenses">Explore the Work</a>
+                        <a class="btn btn-secondary" href="../index.html">All Projects</a>
+                    </div>
+                </div>
+                <div class="visual-flourish" data-parallax-soft aria-label="Visual map of LMS administration and learning operations">
+                    <div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div>
+                    <div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="lms-lenses">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">Two Perspectives</p>
+                    <h2>The platform and the learning experience are one system</h2>
+                    <p class="body-large reading-width">I approach LMS work from both the administrator and operator side and the instructional-design side. The system has to work for the people maintaining it and for the learner moving through it.</p>
+                </div>
+
+                <div class="lms-lens-grid">
+                    <article class="lms-lens-card">
+                        <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span>
+                        <p class="eyebrow">Admin &amp; Operations Lens</p>
+                        <h3>Make the platform predictable to operate</h3>
+                        <p>I look at how configuration, structure, support, reporting, documentation, and governance affect the people responsible for running the learning environment.</p>
+                        <ul class="lms-lens-list">
+                            <li>Platform UX and administrative workflows</li>
+                            <li>User support and issue resolution</li>
+                            <li>Content structures, enrollment logic, and ownership</li>
+                            <li>Documentation, migration, reporting, and governance</li>
+                            <li>Working within platform constraints without creating unnecessary learner friction</li>
+                        </ul>
+                    </article>
+
+                    <article class="lms-lens-card">
+                        <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
+                        <p class="eyebrow">Instructional Design Lens</p>
+                        <h3>Make the learner journey make sense</h3>
+                        <p>I also look at how the LMS changes the experience of the learning itself, including what learners see, how content launches, how pathways connect, and how feedback reaches the design team.</p>
+                        <ul class="lms-lens-list">
+                            <li>Learner UX across discovery, enrollment, launch, and completion</li>
+                            <li>Authoring-tool and content compatibility</li>
+                            <li>Pathways, prerequisites, certifications, and reinforcement</li>
+                            <li>User feedback and support patterns as design signals</li>
+                            <li>Analytics and platform behavior that influence content decisions</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft">
+            <div class="container">
+                <div class="lms-principle">
+                    <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span>
+                    <div>
+                        <p class="eyebrow">Operating Principle</p>
+                        <h2>Reduce friction without hiding complexity</h2>
+                        <p>The goal is not to make the platform look simple by pushing complexity onto administrators or learners. Good system design puts complexity in the right place, documents it clearly, and makes routine actions dependable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">System Operations</p>
+                    <h2>What this work includes</h2>
+                </div>
+                <div class="lms-system-grid">
+                    <article class="lms-system-card">
+                        <svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>
+                        <h3>Structure &amp; Governance</h3>
+                        <p>Roles, permissions, content organization, ownership, naming, lifecycle rules, and repeatable administrative processes.</p>
+                    </article>
+                    <article class="lms-system-card">
+                        <svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+                        <h3>Pathways &amp; Delivery</h3>
+                        <p>Enrollments, prerequisites, certifications, content compatibility, launch behavior, and the learner path through the system.</p>
+                    </article>
+                    <article class="lms-system-card">
+                        <svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>
+                        <h3>Support &amp; Documentation</h3>
+                        <p>User support, troubleshooting, administrator guidance, process documentation, and clear handoffs across teams.</p>
+                    </article>
+                    <article class="lms-system-card">
+                        <svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg>
+                        <h3>Reporting &amp; Change</h3>
+                        <p>Reporting quality, migration planning, validation, data cleanup, platform transitions, and evidence for continuous improvement.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft">
+            <div class="container">
+                <div class="cta">
+                    <p class="eyebrow">Related Work</p>
+                    <h2>See the systems around the platform</h2>
+                    <div class="button-row">
+                        <a class="btn btn-highlight" href="../workflows/index.html">Systems &amp; Workflows</a>
+                        <a class="btn btn-secondary" href="../../contact/index.html">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <p>© Haley Reeder</p>
+            <div class="footer-links">
+                <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
