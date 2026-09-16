@@ -2,86 +2,86 @@
   const architectureData = {
     core: {
       label: 'Core Path',
-      title: 'Move from context to applied seller decisions.',
-      text: 'The required route builds a shared foundation, then moves into use cases, positioning, ordering readiness, and assessment.',
+      title: 'I grouped the required sales content into a clear sequence.',
+      text: 'I moved from market context and solution comparison into use cases, positioning, ordering readiness, and assessment so each course had a clear purpose.',
       flow: ['Orientation', 'Market Context', 'Solution Categories', 'Use Cases', 'Positioning Practice', 'Ordering Readiness', 'Assessment']
     },
     regional: {
       label: 'Regional Extension',
-      title: 'Keep market-specific requirements out of the universal path.',
-      text: 'Regional context and assessment sit beside the core route so learners only complete what applies to their market.',
-      flow: ['Core Path Complete', 'Regional Context', 'Regional Assessment', 'Completion Check']
+      title: 'I pulled market-specific requirements out of the main path.',
+      text: 'When some content only applied to certain regions, I created a separate extension and regional assessment instead of making every learner complete the same material.',
+      flow: ['Core Path', 'Regional Context', 'Regional Assessment', 'Completion Check']
     },
     optional: {
       label: 'Optional Foundations',
-      title: 'Offer technical depth without turning sellers into implementers.',
-      text: 'Optional foundations support learners who need more context while deeper execution content stays in separate technical learning.',
+      title: 'I moved deeper technical background out of required sales learning.',
+      text: 'I kept technical detail only when it helped with discovery, positioning, risk, ordering, or handoff. Deeper implementation content stayed optional or moved to technical learning.',
       flow: ['Technical Foundations', 'Role-Specific Deep Dives', 'Specialist Handoff']
     }
   };
 
   const audienceData = {
     new: {
-      title: 'Give newer sellers enough structure to build a mental model.',
-      text: 'Plain-language scaffolds, predictable sequencing, and concise takeaways establish context before application.',
+      title: 'For newer sellers, I added more context before asking for application.',
+      text: 'I used plain-language explanations, predictable sequencing, and short takeaways so learners could build a basic mental model first.',
       cards: [
-        ['Scaffold', 'Shared context', 'Start with the concepts needed to understand later seller decisions.'],
-        ['Sequence', 'Predictable flow', 'Move from context to use cases before asking learners to position a solution.']
+        ['Start', 'Build context first', 'Introduce the minimum background needed before solution comparison or scenarios.'],
+        ['Sequence', 'Move in a clear order', 'Teach context and use cases before asking learners to position or recommend.']
       ]
     },
     experienced: {
-      title: 'Let experienced sellers move faster without losing depth.',
-      text: 'Expandable detail and quick-reference content reduce unnecessary repetition while keeping useful context available.',
+      title: 'For experienced sellers, I made basic content easier to move through.',
+      text: 'I used expandable detail, comparisons, and quick-reference elements so experienced learners could get what they needed without repeating every explanation.',
       cards: [
-        ['Layer', 'Optional depth', 'Keep deeper context available without forcing everyone through it.'],
-        ['Reference', 'Fast retrieval', 'Use concise comparison and reference elements for experienced learners.']
+        ['Layer', 'Keep depth optional', 'Put extra detail behind expandable or supporting content instead of making it required.'],
+        ['Reference', 'Make comparison fast', 'Use short reference elements for information sellers may need again later.']
       ]
     },
     boundary: {
-      title: 'Keep technical content tied to a seller decision.',
-      text: 'Technical detail stays only when it supports discovery, positioning, risk discussion, ordering, or a specialist handoff.',
+      title: 'I kept the certification focused on sales work.',
+      text: 'I removed installation and engineering detail unless it directly supported a customer question, seller decision, risk discussion, ordering step, or specialist handoff.',
       cards: [
-        ['Include', 'Decision support', 'Customer questions, constraints, value, risk, and next steps.'],
-        ['Route out', 'Implementation depth', 'Execution details move to technical or specialist learning.']
+        ['Keep', 'Seller decisions', 'Customer needs, discovery questions, value, constraints, risk, and next steps.'],
+        ['Move out', 'Technical execution', 'Installation, deployment, and deep implementation detail belong in technical training.']
       ]
     }
   };
 
   const alignmentData = {
-    fit: ['Opportunity Fit', 'Scenario qualification', 'Choose the best-fit solution path', 'Return to use-case guidance'],
-    compare: ['Compare Paths', 'Side-by-side comparison', 'Match need + constraint to solution type', 'Review solution comparison'],
-    handoff: ['Choose Next Step', 'Guided discovery scenario', 'Recommend or escalate appropriately', 'Return to positioning + handoff guidance']
+    fit: ['Identify when an opportunity fits', 'Scenario qualification check', 'Select the best-fit solution path', 'Return to use-case guidance'],
+    compare: ['Distinguish related solution options', 'Side-by-side comparison', 'Match need and constraint to solution type', 'Review solution comparison'],
+    handoff: ['Choose the next sales step', 'Guided discovery scenario', 'Recommend, continue discovery, or involve a specialist', 'Return to positioning and handoff guidance']
   };
 
   const opsData = {
     qa: {
-      title: 'QA + staged review',
-      text: 'Separate design QA, accessibility checks, SME review, messaging review, assessment review, and final validation so feedback stays traceable.'
+      title: 'I staged QA and SME review instead of sending one giant review request.',
+      text: 'I checked editorial quality, visuals, interactions, accessibility, and learner experience first. Then I coordinated SME, messaging, and assessment review, tracked feedback, fixed issues, and verified the changes.'
     },
     lms: {
-      title: 'LMS + migration validation',
-      text: 'Test visibility, enrollment, launch behavior, renewal paths, imported history, and regional routing from the learner perspective.'
+      title: 'I tested the certification from the learner side of the LMS.',
+      text: 'I checked pathway visibility, descriptions, catalogs, enrollment rules, launch behavior, assessment links, first-time and renewal journeys, imported completion history, regional routing, duplicate content, and mapping issues.'
     },
     reporting: {
-      title: 'Supplement platform reporting',
-      text: 'Use a separate regional assessment and lightweight reporting logic when the LMS cannot cleanly represent every requirement.'
+      title: 'I built a workaround when LMS reporting did not match the learning design.',
+      text: 'I created a separate regional assessment and a lightweight spreadsheet workflow that combined core completion, regional assessment, renewal status, and learner route into a clearer completion decision.'
     },
     maintenance: {
-      title: 'Design for change',
-      text: 'Keep content modular, track sources, and separate released, temporary, and proposed work so updates do not become full rebuilds.'
+      title: 'I maintained the certification as source information changed.',
+      text: 'I tracked source owners and affected course sections, updated approved changes, held back premature information, and used modular course boundaries so one change did not require rebuilding the full pathway.'
     }
   };
 
   const evidenceData = {
     supported: [
-      ['Deliverable', 'Multi-course sales certification with role-based content, practice, assessment, review documentation, and LMS support.'],
-      ['Observed', 'The pathway was released and later restructured into broadly applicable and regional routes.'],
-      ['Process improvement', 'A supplemental assessment and reporting workflow made regional completion states easier to review.']
+      ['Delivered', 'A multi-course sales certification with role-based content, interactions, multimedia, formative checks, final assessment, review documentation, and LMS implementation support.'],
+      ['Changed the structure', 'The pathway was later split into broadly applicable and regional routes so learners did not have to complete irrelevant requirements.'],
+      ['Solved a reporting gap', 'A supplemental assessment and spreadsheet workflow provided a practical way to review regional completion states.']
     ],
     learned: [
-      ['System thinking', 'Curriculum, assessment, reporting, governance, and LMS behavior have to be designed as one learner experience.'],
-      ['Role clarity', 'Sales training improves when technical depth is tied to seller decisions and deeper execution moves elsewhere.'],
-      ['Next iteration', 'I would define routing, reporting, source ownership, and certification logic earlier in the design cycle.']
+      ['Curriculum is only one part', 'The learning path, assessment, LMS rules, reporting, review process, and maintenance plan all affect the learner experience.'],
+      ['Scope matters', 'Sales training is stronger when technical detail is included only when it supports a seller decision.'],
+      ['What I would change', 'I would define routing, reporting rules, source ownership, and certification logic earlier, then use more performance-based scenarios in the assessment.']
     ]
   };
 
@@ -146,7 +146,7 @@
 
   const renderAlignment = (key) => {
     const values = alignmentData[key];
-    document.getElementById('alignmentRoute').innerHTML = ['Seller Task', 'Practice', 'Assessment Evidence', 'Remediation'].map((label, index) => `<div class="alignment-node"><span>${label}</span><strong>${values[index]}</strong></div>`).join('');
+    document.getElementById('alignmentRoute').innerHTML = ['Seller Task', 'Practice I Built', 'What the Assessment Checked', 'Where Remediation Sent Them'].map((label, index) => `<div class="alignment-node"><span>${label}</span><strong>${values[index]}</strong></div>`).join('');
   };
   setupTabs('[data-align]', 'align', renderAlignment);
   renderAlignment('fit');
