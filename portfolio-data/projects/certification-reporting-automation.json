@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "id": "certification-reporting-automation",
+  "title": "Certification Reporting Automation",
+  "slug": "certification-reporting-automation",
+  "category": "workflows",
+  "subcategory": "data-reporting",
+  "status": "live",
+  "summary": "A sanitized automation case study that turns recurring LMS report pulls into a repeatable download, analysis, and review workflow.",
+  "page_path": "portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Reduce repetitive manual work required to generate a recurring certification reporting package while keeping learner completion logic and exception review transparent.",
+    "audience": "Learning operations and enablement stakeholders who need consistent course and certification status reporting.",
+    "learning_objectives": [
+      "Generate the required LMS activity and certificate reports consistently.",
+      "Normalize exported data and join records using a stable learner key.",
+      "Separate complete and incomplete states using documented rules.",
+      "Preserve exception visibility and a reviewable output workbook."
+    ],
+    "role": "Workflow designer and developer responsible for browser automation, data transformation, QA logic, and output structure.",
+    "design_approach": "Map the existing report workflow before automating it. Keep saved-report generation and download repeatable, use a stable learner key during analysis, and separate automation from the human review of unusual records or missing matches.",
+    "development_process": "Used Python and Selenium to generate and download four saved LMS reports, then pandas and openpyxl to read the exports, normalize the relevant data, compare course and certificate records, and write review-ready Complete and Incomplete worksheets with user type.",
+    "outcomes": [
+      "Reduced a repetitive multi-report process to a repeatable workflow with consistent inputs and outputs.",
+      "Created clear Complete and Incomplete review views instead of requiring manual comparison across exports.",
+      "Kept exceptions and validation visible so automation supports, rather than replaces, operational judgment."
+    ]
+  },
+  "skills": [
+    "Workflow Design",
+    "Python Automation",
+    "Data Analysis",
+    "QA",
+    "Reporting",
+    "LMS Operations",
+    "Process Documentation"
+  ],
+  "tools": [
+    "Python",
+    "Selenium",
+    "pandas",
+    "openpyxl",
+    "Excel",
+    "Absorb LMS"
+  ],
+  "assets": [],
+  "source_material_notes": "Generalized from a recurring certification-reporting workflow. Course identifiers, report names, account data, learner data, and internal file structures are intentionally omitted.",
+  "dates": {
+    "created": "2026-09-15",
+    "updated": "2026-09-15"
+  }
+}
