@@ -329,6 +329,45 @@
   color: var(--pine-blue) !important;
 }
 
+/* Cache-independent replacement for the old branching Learning Design glyph
+   inside hero circle graphics. This keeps the decorative icon meaningful even
+   if a browser has cached an older external SVG sprite. */
+.visual-flourish-core:has(use[href$="#icon-learning-design"]) .portfolio-icon,
+.visual-flourish-node:has(use[href$="#icon-learning-design"]) .portfolio-icon,
+.constellation-core:has(use[href$="#icon-learning-design"]) .portfolio-icon,
+.constellation-node:has(use[href$="#icon-learning-design"]) .portfolio-icon {
+  visibility: hidden;
+}
+
+.visual-flourish-core:has(use[href$="#icon-learning-design"])::before,
+.visual-flourish-node:has(use[href$="#icon-learning-design"])::before,
+.constellation-core:has(use[href$="#icon-learning-design"])::before,
+.constellation-node:has(use[href$="#icon-learning-design"])::before {
+  content: "";
+  position: absolute;
+  width: 27px;
+  height: 34px;
+  border: 2.4px solid var(--pine-blue);
+  border-radius: 4px;
+  box-sizing: border-box;
+  z-index: 4;
+}
+
+.visual-flourish-core:has(use[href$="#icon-learning-design"])::after,
+.visual-flourish-node:has(use[href$="#icon-learning-design"])::after,
+.constellation-core:has(use[href$="#icon-learning-design"])::after,
+.constellation-node:has(use[href$="#icon-learning-design"])::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--pine-blue);
+  transform: translate(9px, 9px) rotate(-44deg);
+  transform-origin: center;
+  z-index: 5;
+}
+
 /* ---------- Workflow hero label fit ---------- */
 .systems-hero-row {
   grid-template-columns: repeat(4, minmax(78px, 1fr)) !important;
