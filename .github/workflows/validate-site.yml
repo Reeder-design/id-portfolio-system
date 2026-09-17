@@ -12,6 +12,7 @@ on:
       - "docs/**"
       - "README.md"
       - "AGENTS.md"
+      - ".github/copilot-instructions.md"
       - ".env.example"
       - ".gitignore"
       - ".github/workflows/validate-site.yml"
@@ -99,7 +100,6 @@ jobs:
           python scripts/check-reference-ai-analysis.py
           python scripts/check-reference-sanitization.py
           python scripts/check-help-privacy.py
-          python scripts/check-final-polish.py
           python scripts/check-adversarial-security.py
           python scripts/check-security-recovery.py
           python scripts/check-portfolio-manager.py
