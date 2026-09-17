@@ -374,10 +374,17 @@
     "LMS",
     "PowerPoint"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "embed",
+      "path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/evidence/certification-design-blueprint/index.html",
+      "caption": "Interactive certification design blueprint showing learner routing, objective alignment, assessment evidence, and remediation using public-safe reconstructed content.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Generalized from documented enterprise sales-enablement work. Product names, internal terminology, real customer or partner details, learner records, screenshots, links, metrics, proprietary diagrams, and source materials are intentionally omitted. Public examples should remain fictional recreations until separately approved.",
   "dates": {
     "created": "2026-09-15",
-    "updated": "2026-09-16"
+    "updated": "2026-09-17"
   }
 }
