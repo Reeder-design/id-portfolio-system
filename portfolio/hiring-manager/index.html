@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A hiring-manager guide to Haley Reeder's instructional design, sales enablement, LMS, AI evaluation, facilitation, learning technology, multimedia, and automation experience.">
+  <meta name="description" content="A hiring-manager guide to Haley Reeder's instructional design, sales enablement, learning technology, accessibility, LMS, AI evaluation, multimedia, and automation experience.">
   <title>Ask Haley | Hiring Manager Guide</title>
   <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../css/phase1-frame.css">
   <link rel="stylesheet" href="../css/hiring-manager.css">
   <link rel="stylesheet" href="../css/hiring-manager-v2.css">
+  <link rel="stylesheet" href="../css/hiring-manager-v3.css">
   <style>
     body.hiring-manager-page .portfolio-assistant-launcher,
     body.hiring-manager-page .portfolio-assistant-panel { display: none !important; }
@@ -23,6 +24,7 @@
   </style>
   <script defer src="../js/portfolio-motion.js"></script>
   <script defer src="../js/hiring-manager.js"></script>
+  <script defer src="../js/hiring-manager-v3.js"></script>
 </head>
 <body class="hiring-manager-page">
   <header class="site-header">
@@ -44,13 +46,13 @@
           <div class="hm-hero-kicker"><span class="hm-live-dot" aria-hidden="true"></span><span>Interactive hiring guide</span></div>
           <p class="eyebrow">Hiring Manager Guide</p>
           <h1>Ask Haley the questions you would ask in the interview.</h1>
-          <p class="body-large">Skip the generic portfolio tour. Ask about instructional design decisions, technical sales training, tools, LMS administration, facilitation, AI evaluation, reporting, automation, collaboration, or how I handle the messy parts of real projects.</p>
+          <p class="body-large">Skip the generic portfolio tour. Ask about instructional design decisions, technical sales training, learning architecture, tools, LMS administration, accessibility, AI, data, automation, collaboration, or how I handle the messy parts of real projects.</p>
           <div class="hm-hero-tags" aria-label="Topics this guide can answer">
             <span class="hm-hero-tag">Instructional Design</span>
             <span class="hm-hero-tag">Sales Enablement</span>
-            <span class="hm-hero-tag">Technical Training</span>
-            <span class="hm-hero-tag">Tools + Multimedia</span>
-            <span class="hm-hero-tag">LMS + Learning Ops</span>
+            <span class="hm-hero-tag">Learning Architecture</span>
+            <span class="hm-hero-tag">Accessibility + UX</span>
+            <span class="hm-hero-tag">Learning Technology</span>
             <span class="hm-hero-tag">AI + Automation</span>
           </div>
         </div>
@@ -62,7 +64,7 @@
           <span class="hm-signal-node hm-node-build">Build</span>
           <span class="hm-signal-node hm-node-operate">Operate</span>
           <span class="hm-signal-node hm-node-automate">Automate</span>
-          <div class="hm-signal-meta"><span>Learning + visual design</span><span>Systems + workflow</span></div>
+          <div class="hm-signal-meta"><span>Human-centered learning</span><span>Systems + workflow</span></div>
         </aside>
       </div>
     </section>
@@ -70,9 +72,9 @@
     <div class="hm-flow-strip">
       <div class="container">
         <div class="hm-flow-card" aria-label="How to use the hiring guide">
-          <div class="hm-flow-step"><span class="hm-flow-number">01</span><div><strong>Ask</strong><span>Choose a real interview question or type your own.</span></div></div>
-          <div class="hm-flow-step"><span class="hm-flow-number">02</span><div><strong>Check the evidence</strong><span>Answers connect directly to public portfolio examples.</span></div></div>
-          <div class="hm-flow-step"><span class="hm-flow-number">03</span><div><strong>Go deeper</strong><span>Use follow-ups to explore judgment, tools, and working style.</span></div></div>
+          <div class="hm-flow-step"><span class="hm-flow-number">01</span><div><strong>Choose your depth</strong><span>Quick screen, design judgment, or technical depth.</span></div></div>
+          <div class="hm-flow-step"><span class="hm-flow-number">02</span><div><strong>Ask like an interviewer</strong><span>Use a prompt or type the question you actually care about.</span></div></div>
+          <div class="hm-flow-step"><span class="hm-flow-number">03</span><div><strong>Check the evidence</strong><span>Answers connect back to public work instead of floating claims.</span></div></div>
         </div>
       </div>
     </div>
@@ -87,6 +89,14 @@
           </div>
           <div class="hm-categories" data-hm-categories aria-label="Filter interview questions"></div>
           <div class="hm-question-list" data-hm-question-list></div>
+          <div class="hm-specialist-drawer">
+            <div class="hm-specialist-head">
+              <span>Deep Dive</span>
+              <strong>Specialist questions</strong>
+              <p>Learning architecture, accessibility, enterprise systems, xAPI, UX, AI, and HPI.</p>
+            </div>
+            <div class="hm-specialist-list" data-hm-specialist-list></div>
+          </div>
         </aside>
 
         <section class="hm-chat-panel" aria-labelledby="hmChatTitle">
@@ -99,7 +109,25 @@
                 <span class="hm-chat-status">Grounded in published portfolio content</span>
               </div>
             </div>
-            <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
+            <div class="hm-chat-actions">
+              <span class="hm-interview-badge"><i aria-hidden="true"></i> Interview mode</span>
+              <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
+            </div>
+          </div>
+
+          <div class="hm-mode-deck" aria-label="Choose an interview path">
+            <button type="button" data-hm-v3-prompt="What would make you valuable on an instructional design team?">
+              <span>01</span><strong>Quick Screen</strong><small>Value, ownership, fit</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How do you diagnose whether a performance problem actually needs training?">
+              <span>02</span><strong>Design Judgment</strong><small>Needs, tradeoffs, HPI</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How do you think about xAPI, cmi5, and learning data beyond SCORM completion tracking?">
+              <span>03</span><strong>Technical Depth</strong><small>xAPI, systems, data</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How deep is your accessibility experience beyond adding alt text and captions?">
+              <span>04</span><strong>Accessible UX</strong><small>WCAG, UI, universal design</small>
+            </button>
           </div>
 
           <div class="hm-starter-wrap">
@@ -112,12 +140,31 @@
           <div class="hm-form-wrap">
             <form class="hm-form" data-hm-form>
               <label class="sr-only" for="hiringQuestion">Ask a question about Haley's experience</label>
-              <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Try: What do you do when an SME wants everything in the course?">
+              <div class="hm-input-shell">
+                <span class="hm-input-icon" aria-hidden="true">↗</span>
+                <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Ask about a project, tradeoff, tool, system, theory, or working style…">
+              </div>
               <button class="hm-submit" type="submit">Ask Haley</button>
             </form>
-            <p class="hm-disclosure">This guide uses a public, prewritten knowledge base and portfolio search. It does not call an external AI service or create new claims about my experience.</p>
+            <p class="hm-disclosure">Curated public answers, not a free-form AI persona. If the guide cannot support a claim from approved portfolio context, it should not invent one.</p>
           </div>
         </section>
+      </div>
+    </section>
+
+    <section class="hm-capability-section" id="capabilities">
+      <div class="container">
+        <div class="hm-capability-heading">
+          <div>
+            <p class="eyebrow">Capability Depth</p>
+            <h2>More than course building.</h2>
+          </div>
+          <p>Explore the learning architecture, enterprise technology, accessibility, AI, performance consulting, and delivery skills I bring around the actual content build.</p>
+        </div>
+        <div class="hm-capability-shell">
+          <div class="hm-capability-tabs" data-hm-capability-tabs role="tablist" aria-label="Capability depth areas"></div>
+          <div class="hm-capability-panel" data-hm-capability-panel role="tabpanel" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 
@@ -128,7 +175,7 @@
             <p class="eyebrow">Tool Breadth</p>
             <h2>I learn tools fast because the workflow matters more than the interface.</h2>
           </div>
-          <p>I work across authoring, multimedia, LMS administration, visual design, automation, and custom web interactions. This map separates tools I have used directly from capabilities that transfer across platforms.</p>
+          <p>I work across authoring, multimedia, LMS administration, visual design, accessibility, integrations, learning data, automation, and custom web interaction. The map separates direct tool experience from adjacent platform familiarity and transferable capability.</p>
         </div>
 
         <div class="hm-tool-lab">
