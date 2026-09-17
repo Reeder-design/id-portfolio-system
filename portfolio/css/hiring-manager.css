@@ -1,0 +1,533 @@
+/* Dedicated Hiring Manager Experience */
+
+.hm-hero {
+  padding: clamp(58px, 8vw, 94px) 0 46px;
+  background:
+    radial-gradient(circle at 85% 18%, rgba(121,201,158,.17), transparent 24rem),
+    radial-gradient(circle at 10% 88%, rgba(184,170,195,.12), transparent 20rem),
+    linear-gradient(135deg, rgba(80,132,132,.08), rgba(151,219,79,.05));
+}
+
+.hm-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: clamp(28px, 6vw, 70px);
+  align-items: center;
+}
+
+.hm-hero-copy { max-width: 790px; }
+.hm-hero-copy h1 { margin-bottom: 18px; }
+.hm-hero-copy .body-large { max-width: 740px; }
+
+.hm-hero-note {
+  display: grid;
+  gap: 10px;
+  padding: 24px;
+  border: 1px solid rgba(80,132,132,.2);
+  border-radius: 24px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 18px 48px rgba(52,74,66,.1);
+}
+
+.hm-hero-note .portfolio-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--pine-blue);
+}
+
+.hm-hero-note h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.hm-hero-note p {
+  margin: 0;
+  color: #5f6965;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+.hm-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.hm-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 11px;
+  border: 1px solid rgba(80,132,132,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.82);
+  color: var(--charcoal);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.hm-main {
+  padding: 64px 0 80px;
+  background: var(--off-white);
+}
+
+.hm-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, .42fr) minmax(0, 1.58fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.hm-library,
+.hm-chat-panel {
+  border: 1px solid rgba(80,132,132,.18);
+  border-radius: 26px;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 18px 48px rgba(52,74,66,.09);
+}
+
+.hm-library {
+  position: sticky;
+  top: 98px;
+  overflow: hidden;
+}
+
+.hm-library-header {
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid rgba(80,132,132,.12);
+  background:
+    radial-gradient(circle at 88% 10%, rgba(151,219,79,.12), transparent 24%),
+    rgba(248,250,248,.9);
+}
+
+.hm-library-header h2 {
+  margin-bottom: 7px;
+  font-size: 1.22rem;
+}
+
+.hm-library-header p {
+  margin: 0;
+  color: #65706c;
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.hm-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 16px 18px 10px;
+}
+
+.hm-categories button,
+.hm-starters button,
+.hm-followups button {
+  border: 1px solid rgba(80,132,132,.18);
+  background: rgba(80,132,132,.06);
+  color: var(--pine-blue);
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.hm-categories button {
+  min-height: 32px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  font: 700 .67rem/1.2 var(--font-heading);
+}
+
+.hm-categories button:hover,
+.hm-categories button:focus-visible,
+.hm-categories button.active {
+  border-color: var(--pine-blue);
+  background: var(--pine-blue);
+  color: #fff;
+  outline: none;
+}
+
+.hm-question-list {
+  display: grid;
+  gap: 8px;
+  max-height: 560px;
+  overflow: auto;
+  padding: 10px 18px 20px;
+}
+
+.hm-question-card {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(80,132,132,.14);
+  border-radius: 14px;
+  background: #fff;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.hm-question-card span {
+  color: #71807a;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.hm-question-card strong {
+  color: var(--charcoal);
+  font: 700 .82rem/1.35 var(--font-heading);
+}
+
+.hm-question-card:hover,
+.hm-question-card:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(121,201,158,.7);
+  box-shadow: 0 9px 22px rgba(52,74,66,.07);
+  outline: none;
+}
+
+.hm-chat-panel {
+  overflow: hidden;
+}
+
+.hm-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(80,132,132,.13);
+  background:
+    radial-gradient(circle at 92% 12%, rgba(121,201,158,.14), transparent 28%),
+    linear-gradient(145deg, rgba(248,250,248,.97), rgba(238,245,241,.83));
+}
+
+.hm-chat-identity {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.hm-avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(80,132,132,.2);
+  border-radius: 16px;
+  background: rgba(255,255,255,.92);
+  color: var(--pine-blue);
+}
+
+.hm-avatar .portfolio-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.hm-chat-identity strong {
+  display: block;
+  color: var(--charcoal);
+  font-family: var(--font-heading);
+}
+
+.hm-chat-identity span {
+  display: block;
+  margin-top: 2px;
+  color: #69746f;
+  font-size: .76rem;
+}
+
+.hm-clear {
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid rgba(80,132,132,.2);
+  border-radius: 11px;
+  background: rgba(255,255,255,.82);
+  color: var(--pine-blue);
+  font: 700 .72rem/1.2 var(--font-heading);
+  cursor: pointer;
+}
+
+.hm-clear:hover,
+.hm-clear:focus-visible {
+  border-color: var(--mint-leaf);
+  outline: none;
+}
+
+.hm-starter-wrap {
+  padding: 17px 22px 4px;
+}
+
+.hm-starter-label {
+  margin: 0 0 9px;
+  color: #6b7672;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.hm-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.hm-starters button,
+.hm-followups button {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font: 700 .7rem/1.25 var(--font-heading);
+  text-align: left;
+}
+
+.hm-starters button:hover,
+.hm-starters button:focus-visible,
+.hm-followups button:hover,
+.hm-followups button:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--mint-leaf);
+  background: rgba(121,201,158,.12);
+  outline: none;
+}
+
+.hm-chat-log {
+  display: grid;
+  gap: 18px;
+  min-height: 430px;
+  max-height: 650px;
+  overflow-y: auto;
+  padding: 24px;
+  scroll-behavior: smooth;
+}
+
+.hm-message {
+  display: grid;
+  gap: 5px;
+  max-width: 92%;
+}
+
+.hm-message-label {
+  color: #78827e;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.hm-message-bubble {
+  padding: 16px 17px;
+  border-radius: 18px;
+  line-height: 1.6;
+}
+
+.hm-message-bubble > p:last-child { margin-bottom: 0; }
+
+.hm-message-haley {
+  justify-self: start;
+}
+
+.hm-message-haley .hm-message-bubble {
+  border: 1px solid rgba(80,132,132,.16);
+  border-top-left-radius: 6px;
+  background: rgba(248,250,248,.96);
+}
+
+.hm-message-user {
+  justify-self: end;
+}
+
+.hm-message-user .hm-message-label { text-align: right; }
+
+.hm-message-user .hm-message-bubble {
+  border-top-right-radius: 6px;
+  background: linear-gradient(145deg, var(--pine-blue), #456f70);
+  color: #fff;
+}
+
+.hm-chat-note {
+  color: #63706b;
+  font-size: .84rem;
+}
+
+.hm-evidence {
+  margin-top: 17px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(80,132,132,.12);
+}
+
+.hm-evidence-label {
+  margin: 0 0 9px;
+  color: var(--pine-blue);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.hm-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 9px;
+}
+
+.hm-evidence-card {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(80,132,132,.15);
+  border-radius: 13px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.hm-evidence-card strong {
+  color: var(--pine-blue);
+  font: 700 .78rem/1.3 var(--font-heading);
+}
+
+.hm-evidence-card span {
+  color: #66716d;
+  font-size: .74rem;
+  line-height: 1.4;
+}
+
+.hm-evidence-card em {
+  margin-top: 3px;
+  color: var(--taupe);
+  font-size: .7rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.hm-evidence-card:hover,
+.hm-evidence-card:focus-visible {
+  border-color: rgba(121,201,158,.72);
+  outline: none;
+}
+
+.hm-followups {
+  display: grid;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.hm-followups > span {
+  color: #69746f;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.hm-followups > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.hm-form-wrap {
+  padding: 17px 22px 22px;
+  border-top: 1px solid rgba(80,132,132,.12);
+  background: rgba(248,250,248,.72);
+}
+
+.hm-form {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 9px;
+}
+
+.hm-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1px solid rgba(80,132,132,.24);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--charcoal);
+  outline: none;
+}
+
+.hm-input:focus {
+  border-color: var(--pine-blue);
+  box-shadow: 0 0 0 3px rgba(80,132,132,.1);
+}
+
+.hm-submit {
+  min-width: 96px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--pine-blue);
+  color: #fff;
+  font: 700 .8rem/1.2 var(--font-heading);
+  cursor: pointer;
+}
+
+.hm-submit:hover,
+.hm-submit:focus-visible {
+  background: var(--taupe);
+  outline: none;
+}
+
+.hm-disclosure {
+  margin: 9px 2px 0;
+  color: #74807b;
+  font-size: .7rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 980px) {
+  .hm-hero-grid,
+  .hm-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .hm-library {
+    position: static;
+  }
+
+  .hm-question-list {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    max-height: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .hm-main { padding-top: 42px; }
+  .hm-question-list,
+  .hm-evidence-grid,
+  .hm-form {
+    grid-template-columns: 1fr;
+  }
+
+  .hm-chat-header {
+    align-items: flex-start;
+  }
+
+  .hm-chat-log {
+    min-height: 360px;
+    max-height: none;
+    padding: 18px;
+  }
+
+  .hm-message { max-width: 100%; }
+  .hm-submit { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-question-card,
+  .hm-categories button,
+  .hm-starters button,
+  .hm-followups button {
+    transition: none;
+  }
+
+  .hm-chat-log { scroll-behavior: auto; }
+}
