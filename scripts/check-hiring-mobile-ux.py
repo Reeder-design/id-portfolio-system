@@ -42,7 +42,13 @@ def main() -> int:
 
     require("hiring-manager-v4.css" in page, "Hiring Manager page must load the V4 presentation layer.", errors)
     require("hiring-manager-v5.css" in page, "Hiring Manager page must load the final top-layer presentation layer.", errors)
-    require("hiring-manager-v5.js" in page, "Hiring Manager page must load the final top-layer interaction controller.", errors)
+    require("hiring-manager-v4.js" in page, "Hiring Manager page must load the V4 layout controller.", errors)
+    require("hiring-manager-v5.js" in page, "Hiring Manager page must load the V5 Question Library controller.", errors)
+    require(
+        page.find("hiring-manager-v4.js") < page.find("hiring-manager-v5.js"),
+        "V5 Question Library controller must load after V4 layout controller.",
+        errors,
+    )
     require('@import url("./hiring-manager-mobile.css");' in base_css, "V4 CSS must import the compact Hiring Manager UX layer.", errors)
 
     page_markers = [
@@ -92,13 +98,24 @@ def main() -> int:
     for marker in hero_markers:
         require(marker in base_css, f"Hiring Manager hero motion is missing {marker!r}.", errors)
 
-    legacy_js_markers = [
+    retained_v4_markers = [
         "const setupMobileDock = () =>",
         "const setupSuggestionToggle = () =>",
         "chatLog.scrollTop = chatLog.scrollHeight",
+        "hm:close-question-overlays",
+        'data-hm-v5-topic="Deep Dive"',
     ]
-    for marker in legacy_js_markers:
-        require(marker in controller, f"Hiring Manager V4 controller is missing retained behavior {marker!r}.", errors)
+    for marker in retained_v4_markers:
+        require(marker in controller, f"Hiring Manager V4 controller is missing retained layout behavior {marker!r}.", errors)
+
+    forbidden_v4_markers = [
+        "const buildTopicBrowser = () =>",
+        "const openTopic = (category, records, anchor) =>",
+        "data-hm-topic-question",
+        "document.body.appendChild(topicPopover)",
+    ]
+    for marker in forbidden_v4_markers:
+        require(marker not in controller, f"V4 must not own Question Library behavior; found legacy marker {marker!r}.", errors)
 
     final_js_markers = [
         "const supportsTopLayer = 'showPopover' in HTMLElement.prototype",
@@ -109,13 +126,12 @@ def main() -> int:
         "closeHelperPopover",
         "libraryHelperSummary.addEventListener",
         "event.stopImmediatePropagation()",
-        "if (node !== topicBrowser) node.remove()",
-        "if (node !== topicPopover) node.remove()",
-        "renderTimer = window.setTimeout(renderTopicBrowser, 180)",
+        "document.addEventListener('hm:close-question-overlays', closeAllOverlays)",
         "new MutationObserver(scheduleRender)",
+        "Loading interview topics",
     ]
     for marker in final_js_markers:
-        require(marker in final_controller, f"Hiring Manager V5 controller is missing top-layer/race-protection marker {marker!r}.", errors)
+        require(marker in final_controller, f"Hiring Manager V5 controller is missing single-owner/top-layer marker {marker!r}.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
@@ -139,8 +155,8 @@ def main() -> int:
         return 1
 
     print(
-        "Hiring Manager UX validation passed: visible V5 topic bubbles, native top-layer prompt/helper overlays, "
-        "curated-answer disclosure, purposeful hero motion, bounded mobile chat, homepage spotlight, and sitewide Hiring Guide navigation are present."
+        "Hiring Manager UX validation passed: V4 owns layout only, V5 exclusively owns visible Question Library interactions, "
+        "native top-layer prompt/helper overlays are loaded, and the existing chat/homepage/sitewide behaviors remain present."
     )
     return 0
 
