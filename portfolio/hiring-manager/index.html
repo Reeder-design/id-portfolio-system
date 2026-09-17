@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A hiring-manager guide to Haley Reeder's instructional design, sales enablement, LMS, AI evaluation, facilitation, and learning technology experience.">
+  <meta name="description" content="A hiring-manager guide to Haley Reeder's instructional design, sales enablement, LMS, AI evaluation, facilitation, learning technology, multimedia, and automation experience.">
   <title>Ask Haley | Hiring Manager Guide</title>
   <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/phase1-theme.css">
   <link rel="stylesheet" href="../css/phase1-frame.css">
   <link rel="stylesheet" href="../css/hiring-manager.css">
+  <link rel="stylesheet" href="../css/hiring-manager-v2.css">
   <style>
     body.hiring-manager-page .portfolio-assistant-launcher,
     body.hiring-manager-page .portfolio-assistant-panel { display: none !important; }
@@ -40,35 +41,49 @@
     <section class="page-hero hm-hero">
       <div class="container hm-hero-grid">
         <div class="hm-hero-copy">
+          <div class="hm-hero-kicker"><span class="hm-live-dot" aria-hidden="true"></span><span>Interactive hiring guide</span></div>
           <p class="eyebrow">Hiring Manager Guide</p>
-          <h1>Ask Haley about the work.</h1>
-          <p class="body-large">Use this like a compact first-round interview. Ask about instructional design, technical sales training, LMS administration, facilitation, AI evaluation, reporting, automation, or the way I work with source material and reviewers.</p>
+          <h1>Ask Haley the questions you would ask in the interview.</h1>
+          <p class="body-large">Skip the generic portfolio tour. Ask about instructional design decisions, technical sales training, tools, LMS administration, facilitation, AI evaluation, reporting, automation, collaboration, or how I handle the messy parts of real projects.</p>
           <div class="hm-hero-tags" aria-label="Topics this guide can answer">
             <span class="hm-hero-tag">Instructional Design</span>
             <span class="hm-hero-tag">Sales Enablement</span>
             <span class="hm-hero-tag">Technical Training</span>
+            <span class="hm-hero-tag">Tools + Multimedia</span>
             <span class="hm-hero-tag">LMS + Learning Ops</span>
-            <span class="hm-hero-tag">AI Evaluation</span>
-            <span class="hm-hero-tag">Automation</span>
+            <span class="hm-hero-tag">AI + Automation</span>
           </div>
         </div>
 
-        <aside class="hm-hero-note">
-          <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>
-          <p class="eyebrow">How it works</p>
-          <h2>A portfolio assistant, not a fake interview transcript.</h2>
-          <p>The answers on this page are curated from my public portfolio. The guide matches your question to a prepared answer, shows the project evidence behind it, and refuses to invent experience that is not published here.</p>
+        <aside class="hm-signal-board" aria-label="Connected capability map">
+          <div class="hm-orbit" aria-hidden="true"></div>
+          <div class="hm-signal-core"><div><strong>Haley</strong><span>Learning Designer</span></div></div>
+          <span class="hm-signal-node hm-node-design">Design</span>
+          <span class="hm-signal-node hm-node-build">Build</span>
+          <span class="hm-signal-node hm-node-operate">Operate</span>
+          <span class="hm-signal-node hm-node-automate">Automate</span>
+          <div class="hm-signal-meta"><span>Learning + visual design</span><span>Systems + workflow</span></div>
         </aside>
       </div>
     </section>
+
+    <div class="hm-flow-strip">
+      <div class="container">
+        <div class="hm-flow-card" aria-label="How to use the hiring guide">
+          <div class="hm-flow-step"><span class="hm-flow-number">01</span><div><strong>Ask</strong><span>Choose a real interview question or type your own.</span></div></div>
+          <div class="hm-flow-step"><span class="hm-flow-number">02</span><div><strong>Check the evidence</strong><span>Answers connect directly to public portfolio examples.</span></div></div>
+          <div class="hm-flow-step"><span class="hm-flow-number">03</span><div><strong>Go deeper</strong><span>Use follow-ups to explore judgment, tools, and working style.</span></div></div>
+        </div>
+      </div>
+    </div>
 
     <section class="hm-main">
       <div class="container hm-shell">
         <aside class="hm-library" aria-label="Interview question library">
           <div class="hm-library-header">
             <p class="eyebrow">Question Library</p>
-            <h2>Interview prompts</h2>
-            <p>Browse common hiring-manager questions or type your own in the chat.</p>
+            <h2>What would you want to know?</h2>
+            <p>Start with the basics, then move into strategy, tradeoffs, collaboration, tools, and reflection.</p>
           </div>
           <div class="hm-categories" data-hm-categories aria-label="Filter interview questions"></div>
           <div class="hm-question-list" data-hm-question-list></div>
@@ -81,13 +96,14 @@
               <div>
                 <strong id="hmChatTitle">Portfolio Haley</strong>
                 <span>Curated answers + direct portfolio evidence</span>
+                <span class="hm-chat-status">Grounded in published portfolio content</span>
               </div>
             </div>
             <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
           </div>
 
           <div class="hm-starter-wrap">
-            <p class="hm-starter-label">Suggested questions</p>
+            <p class="hm-starter-label">Good places to start</p>
             <div class="hm-starters" data-hm-starters></div>
           </div>
 
@@ -96,12 +112,33 @@
           <div class="hm-form-wrap">
             <form class="hm-form" data-hm-form>
               <label class="sr-only" for="hiringQuestion">Ask a question about Haley's experience</label>
-              <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Try: How do you work with SMEs?">
+              <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Try: What do you do when an SME wants everything in the course?">
               <button class="hm-submit" type="submit">Ask Haley</button>
             </form>
             <p class="hm-disclosure">This guide uses a public, prewritten knowledge base and portfolio search. It does not call an external AI service or create new claims about my experience.</p>
           </div>
         </section>
+      </div>
+    </section>
+
+    <section class="hm-tool-section" id="tools">
+      <div class="container">
+        <div class="hm-tool-heading">
+          <div>
+            <p class="eyebrow">Tool Breadth</p>
+            <h2>I learn tools fast because the workflow matters more than the interface.</h2>
+          </div>
+          <p>I work across authoring, multimedia, LMS administration, visual design, automation, and custom web interactions. This map separates tools I have used directly from capabilities that transfer across platforms.</p>
+        </div>
+
+        <div class="hm-tool-lab">
+          <div class="hm-tool-tabs" data-hm-tool-tabs role="tablist" aria-label="Tool capability areas"></div>
+          <div class="hm-tool-panel" data-hm-tool-panel role="tabpanel" aria-live="polite"></div>
+        </div>
+        <div class="hm-learning-statement" data-hm-learning-statement>
+          <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>
+          <p>Loading tool approach…</p>
+        </div>
       </div>
     </section>
   </main>
