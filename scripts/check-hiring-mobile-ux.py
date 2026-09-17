@@ -56,10 +56,14 @@ def main() -> int:
         "Curated answers, not live AI generation.",
         "I wrote and reviewed the answers in this portfolio library myself.",
         "Ask Haley matches your question to those stored responses",
+        "hm-library-helper",
+        "hm-helper-subhead",
     ]
     for marker in page_markers:
         require(marker in page, f"Hiring Manager page is missing disclosure/content marker {marker!r}.", errors)
 
+    require("hm-library-disclaimer" not in page, "Curated-answer disclosure must live inside the Question Library helper, not as a standalone block.", errors)
+    require("topic bubbles" not in page.lower(), "Hiring Manager copy must not reference the abandoned topic-bubble interaction.", errors)
     require("Human-centered learning" not in page, "Hiring Manager hero should not include the removed Human-centered learning label.", errors)
     require("Systems + workflow" not in page, "Hiring Manager hero should not include the removed Systems + workflow label.", errors)
 
@@ -95,8 +99,10 @@ def main() -> int:
         ".hm-library-detail-close",
         ".hm-library-prompt",
         ".hm-mobile-chat-dock.hm-guide-switch",
-        ".hm-library .hm-helper-card",
-        "position: static !important;",
+        ".hm-library .hm-library-helper .hm-helper-card",
+        "position: absolute !important;",
+        "top: calc(100% + 8px) !important;",
+        ".hm-helper-subhead",
     ]
     for marker in final_css_markers:
         require(marker in final_css, f"Hiring Manager contained-library CSS is missing {marker!r}.", errors)
@@ -195,8 +201,8 @@ def main() -> int:
 
     print(
         "Hiring Manager UX validation passed: the Question Library is a contained accordion above the chat, "
-        "V4 owns layout only, V5 owns the accordion only, floating popover code is absent, and the existing "
-        "bounded chat/homepage/sitewide behaviors remain present."
+        "the curated-answer disclosure lives inside a non-layout-shifting helper popup, V4 owns layout only, "
+        "V5 owns the accordion only, floating question overlays are absent, and the existing bounded chat/homepage/sitewide behaviors remain present."
     )
     return 0
 
