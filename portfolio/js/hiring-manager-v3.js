@@ -2,6 +2,7 @@
   const root = new URL('../', window.location.href);
   const specialistUrl = new URL('data/hiring-faq-specialist.json', root);
   const capabilitiesUrl = new URL('data/hiring-capabilities.json', root);
+  const iconSprite = new URL('assets/icons/portfolio-icons.svg', root).href;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const chatLog = document.querySelector('[data-hm-chat-log]');
@@ -18,6 +19,15 @@
     specialistQuestions: [],
     pillars: [],
     specialistReplying: false
+  };
+
+  const CAPABILITY_ICONS = {
+    'learning-architecture': 'icon-learning-design',
+    'enterprise-tech': 'icon-lms',
+    'accessible-ux': 'icon-elearning',
+    'ai-automation': 'icon-workflow',
+    'performance-consulting': 'icon-analytics',
+    'delivery-leadership': 'icon-feedback'
   };
 
   const STOP_WORDS = new Set([
@@ -174,9 +184,10 @@
 
   const renderCapability = (pillar, index) => {
     if (!capabilityPanel || !pillar) return;
+    const iconId = CAPABILITY_ICONS[pillar.id] || 'icon-learning-design';
     capabilityPanel.classList.remove('is-entering');
     capabilityPanel.innerHTML = `
-      <span class="hm-capability-index">${String(index + 1).padStart(2, '0')}</span>
+      <span class="hm-capability-index" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${iconId}"></use></svg></span>
       <p class="eyebrow">${escapeHtml(pillar.label)}</p>
       <h3>${escapeHtml(pillar.headline)}</h3>
       <p class="hm-capability-proof">${escapeHtml(pillar.proof)}</p>
