@@ -1,141 +1,369 @@
-/* Hiring Manager final interaction polish
-   Topic prompts and the Question Library helper use the browser top layer so chat stacking can never cover them. */
+/* Hiring Manager final Question Library layout
+   The library is a contained accordion above the chat. Nothing floats over the chat. */
 
-.hm-topic-browser-v5 {
-  display: block !important;
-  position: relative;
-  z-index: 5;
-  min-height: 70px;
+.hm-shell {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 16px !important;
 }
 
-.hm-top-layer-popover {
-  position: fixed !important;
-  inset: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 0;
-  max-width: calc(100vw - 24px);
-  border: 1px solid rgba(80,132,132,.2);
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at 94% 5%, rgba(121,201,158,.12), transparent 14rem),
-    rgba(255,255,255,.99);
-  color: var(--charcoal);
-  box-shadow: 0 28px 78px rgba(34,48,43,.28) !important;
-  overflow: visible !important;
-  isolation: isolate;
+.hm-library,
+.hm-chat-panel {
+  position: relative !important;
+  top: auto !important;
+  z-index: auto !important;
+  width: 100%;
 }
 
-.hm-top-layer-popover.is-open {
-  display: block !important;
+.hm-library {
+  overflow: hidden !important;
 }
 
-.hm-topic-popover {
-  width: min(430px, calc(100vw - 24px));
-  max-height: min(430px, calc(100vh - 24px));
-  transform-origin: var(--hm-topic-arrow-x, 50%) top;
-  animation: hm-topic-pop 150ms ease both;
-}
-
-.hm-topic-popover[data-placement="above"] {
-  transform-origin: var(--hm-topic-arrow-x, 50%) bottom;
-}
-
-.hm-topic-popover::before,
-.hm-library-helper-popover::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  left: clamp(18px, var(--hm-topic-arrow-x, 50%), calc(100% - 18px));
-  width: 14px;
-  height: 14px;
-  border: solid rgba(80,132,132,.2);
-  background: rgba(255,255,255,.99);
-  transform: translateX(-50%) rotate(45deg);
-  pointer-events: none;
-}
-
-.hm-topic-popover[data-placement="below"]::before,
-.hm-topic-popover[data-placement="viewport"]::before,
-.hm-library-helper-popover[data-placement="below"]::before,
-.hm-library-helper-popover[data-placement="viewport"]::before {
-  top: -8px;
-  border-width: 1px 0 0 1px;
-}
-
-.hm-topic-popover[data-placement="above"]::before,
-.hm-library-helper-popover[data-placement="above"]::before {
-  bottom: -8px;
-  border-width: 0 1px 1px 0;
-}
-
-.hm-topic-popover-head,
-.hm-topic-prompts {
-  position: relative;
-  z-index: 3;
-  background: inherit;
-}
-
-.hm-topic-popover-head {
-  border-radius: 20px 20px 0 0;
-}
-
-.hm-topic-prompts {
-  max-height: min(318px, calc(100vh - 118px)) !important;
-  border-radius: 0 0 20px 20px;
-}
-
-.hm-library-helper-popover {
-  width: min(330px, calc(100vw - 24px));
-  padding: 16px 17px;
-  line-height: 1.52;
-  animation: hm-helper-in 150ms ease both;
-}
-
-.hm-library-helper-popover strong {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--charcoal);
-  font: 800 .78rem/1.3 var(--font-heading);
-}
-
-.hm-library-helper-popover p {
-  margin: 0;
-  color: #58645f;
-  font-size: .78rem;
-}
-
-.hm-topic-bubble.active {
-  position: relative;
-  z-index: 6;
-}
-
-/* The library's native details card is replaced by the top-layer helper controller. */
-.hm-library .hm-helper > .hm-helper-card {
+.hm-categories,
+.hm-question-list,
+.hm-specialist-drawer {
   display: none !important;
 }
 
-/* Keep the page workspace uncomplicated underneath native top-layer overlays. */
-.hm-chat-panel,
-.hm-library {
-  z-index: 1;
+/* Keep the Question Library helper inside the library instead of floating over the page. */
+.hm-library .hm-heading-with-help {
+  flex-wrap: wrap;
+}
+
+.hm-library .hm-helper {
+  z-index: auto !important;
+}
+
+.hm-library .hm-helper[open] {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  flex: 1 0 100%;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.hm-library .hm-helper[open] summary {
+  grid-column: 1;
+}
+
+.hm-library .hm-helper-card,
+.hm-library .hm-helper[open] .hm-helper-card {
+  position: static !important;
+  inset: auto !important;
+  grid-column: 2;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  background: rgba(238, 245, 241, .82) !important;
+}
+
+/* Always-visible Library / Ask Haley selector. */
+.hm-mobile-chat-dock.hm-guide-switch {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: min(100%, 560px);
+  margin: 0 auto 14px;
+  padding: 6px;
+  border: 1px solid rgba(80, 132, 132, .18);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 12px 30px rgba(48, 67, 61, .09);
+}
+
+.hm-mobile-chat-dock.hm-guide-switch button {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #68736e;
+  font: 800 .72rem/1.2 var(--font-heading);
+  cursor: pointer;
+}
+
+.hm-mobile-chat-dock.hm-guide-switch button:hover,
+.hm-mobile-chat-dock.hm-guide-switch button:focus-visible,
+.hm-mobile-chat-dock.hm-guide-switch button.active {
+  background: linear-gradient(145deg, var(--charcoal), var(--pine-blue));
+  color: #fff;
+  outline: none;
+}
+
+/* Contained accordion workspace. */
+.hm-library-accordion {
+  margin: 0 18px 18px;
+  border: 1px solid rgba(80, 132, 132, .17);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 28px rgba(48, 67, 61, .06);
+  overflow: hidden;
+}
+
+.hm-library-toggle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 58px;
+  padding: 13px 15px;
+  border: 0;
+  background: linear-gradient(145deg, rgba(248, 250, 248, .98), rgba(238, 245, 241, .9));
+  color: var(--charcoal);
+  text-align: left;
+  cursor: pointer;
+}
+
+.hm-library-toggle:disabled {
+  cursor: default;
+  opacity: .72;
+}
+
+.hm-library-toggle > span:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.hm-library-toggle strong {
+  font: 800 .78rem/1.25 var(--font-heading);
+}
+
+.hm-library-toggle small {
+  color: #6b7771;
+  font-size: .7rem;
+  line-height: 1.35;
+}
+
+.hm-library-toggle-icon {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 10px;
+  background: rgba(80, 132, 132, .1);
+  color: var(--pine-blue);
+  font-size: 1rem;
+  transition: transform 160ms ease;
+}
+
+.hm-library-toggle[aria-expanded="true"] .hm-library-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.hm-library-window {
+  position: relative;
+  height: 318px;
+  max-height: min(42vh, 340px);
+  border-top: 1px solid rgba(80, 132, 132, .11);
+  background: #fff;
+  overflow: hidden;
+}
+
+.hm-library-window[hidden] {
+  display: none !important;
+}
+
+.hm-library-selection,
+.hm-library-detail {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.hm-library-selection[hidden],
+.hm-library-detail[hidden] {
+  display: none !important;
+}
+
+.hm-library-selection {
+  padding: 14px;
+}
+
+.hm-library-window-intro {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 10px;
+  padding: 0 2px 8px;
+}
+
+.hm-library-window-intro strong {
+  color: var(--charcoal);
+  font: 800 .76rem/1.2 var(--font-heading);
+}
+
+.hm-library-window-intro span {
+  color: #6b7771;
+  font-size: .7rem;
+  line-height: 1.45;
+}
+
+.hm-library-topic-list {
+  display: grid;
+  gap: 8px;
+}
+
+.hm-library-topic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 12px;
+  border: 1px solid rgba(80, 132, 132, .13);
+  border-radius: 14px;
+  background: rgba(248, 250, 248, .82);
+  color: var(--charcoal);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.hm-library-topic:hover,
+.hm-library-topic:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(121, 201, 158, .65);
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(48, 67, 61, .07);
+  outline: none;
+}
+
+.hm-library-topic > span:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.hm-library-topic strong {
+  font: 800 .73rem/1.28 var(--font-heading);
+}
+
+.hm-library-topic small {
+  color: #76817c;
+  font-size: .65rem;
+}
+
+.hm-library-topic > span:last-child {
+  color: var(--pine-blue);
+  font-weight: 800;
+}
+
+.hm-library-detail {
+  padding: 15px;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(121, 201, 158, .1), transparent 13rem),
+    #fff;
+}
+
+.hm-library-detail-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.hm-library-detail-head .eyebrow {
+  margin: 0 0 4px;
+}
+
+.hm-library-detail-head h3 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+}
+
+.hm-library-detail-head p:last-child {
+  margin: 0;
+  color: #68746f;
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
+.hm-library-detail-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(80, 132, 132, .16);
+  border-radius: 10px;
+  background: rgba(248, 250, 248, .92);
+  color: var(--pine-blue);
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.hm-library-detail-close:hover,
+.hm-library-detail-close:focus-visible {
+  border-color: var(--mint-leaf);
+  outline: none;
+}
+
+.hm-library-prompt-list {
+  display: grid;
+  gap: 8px;
+}
+
+.hm-library-prompt {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid rgba(80, 132, 132, .13);
+  border-radius: 13px;
+  background: rgba(248, 250, 248, .82);
+  color: var(--charcoal);
+  font: 700 .71rem/1.38 var(--font-heading);
+  text-align: left;
+  cursor: pointer;
+}
+
+.hm-library-prompt:hover,
+.hm-library-prompt:focus-visible {
+  border-color: rgba(121, 201, 158, .65);
+  background: #fff;
+  outline: none;
+}
+
+@media (max-width: 980px) {
+  .hm-mobile-chat-dock.hm-guide-switch {
+    position: sticky;
+    top: 10px;
+    z-index: 70;
+    backdrop-filter: blur(16px) saturate(125%);
+    -webkit-backdrop-filter: blur(16px) saturate(125%);
+  }
 }
 
 @media (max-width: 680px) {
-  .hm-top-layer-popover {
-    max-height: calc(100svh - 24px) !important;
-    border-radius: 20px !important;
+  .hm-library-accordion {
+    margin: 0 14px 14px;
   }
 
-  .hm-topic-prompts {
-    max-height: min(52svh, 330px) !important;
+  .hm-library-window {
+    height: 286px;
+    max-height: 38vh;
+  }
+
+  .hm-library .hm-helper[open] {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .hm-library .hm-helper-card,
+  .hm-library .hm-helper[open] .hm-helper-card {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hm-topic-popover,
-  .hm-library-helper-popover {
-    animation: none !important;
+  .hm-library-toggle-icon,
+  .hm-library-topic {
+    transition: none !important;
   }
 }
