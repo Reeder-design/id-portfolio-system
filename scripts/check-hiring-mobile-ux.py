@@ -53,16 +53,25 @@ def main() -> int:
 
     page_markers = [
         "Interactive hiring guide",
+        "hm-library-header-grid",
+        "hm-library-notes",
+        "Browse instead of typing.",
         "Curated answers, not live AI generation.",
         "I wrote and reviewed the answers in this portfolio library myself.",
         "Ask Haley matches your question to those stored responses",
-        "hm-library-helper",
-        "hm-helper-subhead",
     ]
     for marker in page_markers:
         require(marker in page, f"Hiring Manager page is missing disclosure/content marker {marker!r}.", errors)
 
-    require("hm-library-disclaimer" not in page, "Curated-answer disclosure must live inside the Question Library helper, not as a standalone block.", errors)
+    obsolete_library_helper_markers = [
+        "hm-library-helper",
+        "hm-helper-subhead",
+        'aria-label="About the question library"',
+    ]
+    for marker in obsolete_library_helper_markers:
+        require(marker not in page, f"Question Library still contains removed helper feature marker {marker!r}.", errors)
+
+    require("hm-library-disclaimer" not in page, "Question Library disclosure must live in the static header notes, not as a standalone block.", errors)
     require("topic bubbles" not in page.lower(), "Hiring Manager copy must not reference the abandoned topic-bubble interaction.", errors)
     require("Human-centered learning" not in page, "Hiring Manager hero should not include the removed Human-centered learning label.", errors)
     require("Systems + workflow" not in page, "Hiring Manager hero should not include the removed Systems + workflow label.", errors)
@@ -90,6 +99,9 @@ def main() -> int:
     final_css_markers = [
         ".hm-shell",
         "grid-template-columns: minmax(0, 1fr) !important;",
+        ".hm-library-header-grid",
+        ".hm-library-notes",
+        ".hm-library-notes p + p",
         ".hm-library-accordion",
         ".hm-library-toggle",
         ".hm-library-window",
@@ -99,10 +111,6 @@ def main() -> int:
         ".hm-library-detail-close",
         ".hm-library-prompt",
         ".hm-mobile-chat-dock.hm-guide-switch",
-        ".hm-library .hm-library-helper .hm-helper-card",
-        "position: absolute !important;",
-        "top: calc(100% + 8px) !important;",
-        ".hm-helper-subhead",
     ]
     for marker in final_css_markers:
         require(marker in final_css, f"Hiring Manager contained-library CSS is missing {marker!r}.", errors)
@@ -112,9 +120,11 @@ def main() -> int:
         ".hm-topic-popover",
         "--hm-topic-arrow-x",
         ".hm-library-helper-popover",
+        ".hm-library-helper",
+        ".hm-helper-subhead",
     ]
     for marker in obsolete_final_css_markers:
-        require(marker not in final_css, f"Final CSS still contains abandoned floating overlay rule {marker!r}.", errors)
+        require(marker not in final_css, f"Final CSS still contains abandoned Question Library helper/overlay rule {marker!r}.", errors)
 
     hero_markers = [
         ".hm-signal-board::before",
@@ -143,9 +153,10 @@ def main() -> int:
         "data-hm-v5-topic",
         "showPopover",
         "hidePopover",
+        "hm-library-helper",
     ]
     for marker in forbidden_v4_markers:
-        require(marker not in controller, f"V4 must not own Question Library rendering; found legacy marker {marker!r}.", errors)
+        require(marker not in controller, f"V4 must not own removed Question Library interaction behavior; found legacy marker {marker!r}.", errors)
 
     final_js_markers = [
         "const ensureWorkspace = () =>",
@@ -174,9 +185,10 @@ def main() -> int:
         "hm-top-layer-popover",
         "hm-topic-popover",
         "positionTopicPopover",
+        "hm-library-helper",
     ]
     for marker in forbidden_final_js_markers:
-        require(marker not in final_controller, f"V5 still contains abandoned floating-overlay behavior {marker!r}.", errors)
+        require(marker not in final_controller, f"V5 still contains abandoned helper/floating-overlay behavior {marker!r}.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
@@ -200,9 +212,9 @@ def main() -> int:
         return 1
 
     print(
-        "Hiring Manager UX validation passed: the Question Library is a contained accordion above the chat, "
-        "the curated-answer disclosure lives inside a non-layout-shifting helper popup, V4 owns layout only, "
-        "V5 owns the accordion only, floating question overlays are absent, and the existing bounded chat/homepage/sitewide behaviors remain present."
+        "Hiring Manager UX validation passed: the Question Library uses static header notes plus a contained accordion above the chat, "
+        "the removed Question Library helper has no remaining markup/CSS/controller ownership, V4 owns layout only, V5 owns the accordion only, "
+        "and the existing bounded chat/homepage/sitewide behaviors remain present."
     )
     return 0
 
