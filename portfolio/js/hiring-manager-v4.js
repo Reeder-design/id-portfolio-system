@@ -10,11 +10,17 @@
   const specialistList = document.querySelector('[data-hm-specialist-list]');
   const chatPanel = document.querySelector('.hm-chat-panel');
   const chatLog = document.querySelector('[data-hm-chat-log]');
-  const chatInput = document.querySelector('[data-hm-input]');
   const starterWrap = document.querySelector('.hm-starter-wrap');
   let mobileLibrary = null;
   let mobileDock = null;
   let rebuildTimer = null;
+
+  const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
 
   const showView = (view) => {
     viewButtons.forEach((button) => {
@@ -93,12 +99,12 @@
   const mobileGroupMarkup = (category, records, specialist = false) => `
     <details class="hm-mobile-question-group" ${specialist ? 'data-hm-mobile-specialist' : ''}>
       <summary>
-        <strong>${category}</strong>
+        <strong>${escapeHtml(category)}</strong>
         <span class="hm-mobile-question-count">${records.length}</span>
         <span class="hm-mobile-question-chevron" aria-hidden="true">+</span>
       </summary>
       <div class="hm-mobile-question-items">
-        ${records.map((record) => `<button type="button" data-hm-mobile-question="${record.id}" data-hm-mobile-type="${record.type}">${record.label}</button>`).join('')}
+        ${records.map((record) => `<button type="button" data-hm-mobile-question="${escapeHtml(record.id)}" data-hm-mobile-type="${escapeHtml(record.type)}">${escapeHtml(record.label)}</button>`).join('')}
       </div>
     </details>`;
 
@@ -235,8 +241,8 @@
     });
   });
 
-  // Keep the message viewport pinned to the newest exchange even when images/fonts
-  // or evidence cards finish laying out after the answer is inserted.
+  // Keep the bounded message viewport pinned to the newest exchange even when
+  // evidence cards finish laying out after an answer is inserted.
   if (chatLog) {
     new MutationObserver(() => {
       requestAnimationFrame(() => {
