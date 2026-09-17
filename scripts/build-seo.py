@@ -160,7 +160,7 @@ def build_seo_block(path: Path, text: str) -> str:
 
 def strip_existing_block(text: str) -> str:
     pattern = re.compile(
-        re.escape(SEO_START) + r".*?" + re.escape(SEO_END) + r"\s*",
+        r"(?:\r?\n)?" + re.escape(SEO_START) + r".*?" + re.escape(SEO_END),
         flags=re.DOTALL,
     )
     return pattern.sub("", text)
