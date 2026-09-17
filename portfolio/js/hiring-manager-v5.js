@@ -3,6 +3,7 @@
   const questionList = document.querySelector('[data-hm-question-list]');
   const specialistList = document.querySelector('[data-hm-specialist-list]');
   const chatPanel = document.querySelector('.hm-chat-panel');
+  const categoryList = document.querySelector('[data-hm-categories]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!library || !questionList) return;
 
@@ -13,82 +14,11 @@
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
 
-  let topicBrowser = null;
-  let topicPopover = null;
-  let topicAnchor = null;
-  let helperPopover = null;
-  let helperAnchor = null;
+  let workspace = null;
   let renderTimer = null;
-
-  const supportsTopLayer = 'showPopover' in HTMLElement.prototype;
-
-  const isPopoverOpen = (popover) => {
-    if (!popover) return false;
-    if (supportsTopLayer) {
-      try { return popover.matches(':popover-open'); } catch { return false; }
-    }
-    return popover.classList.contains('is-open');
-  };
-
-  const showTopLayer = (popover) => {
-    if (!popover) return;
-    if (supportsTopLayer) {
-      if (!isPopoverOpen(popover)) popover.showPopover();
-    } else {
-      popover.classList.add('is-open');
-    }
-  };
-
-  const hideTopLayer = (popover) => {
-    if (!popover) return;
-    if (supportsTopLayer) {
-      if (isPopoverOpen(popover)) popover.hidePopover();
-    } else {
-      popover.classList.remove('is-open');
-    }
-  };
-
-  const clearPopoverPosition = (popover) => {
-    if (!popover) return;
-    popover.removeAttribute('data-placement');
-    popover.style.removeProperty('left');
-    popover.style.removeProperty('top');
-    popover.style.removeProperty('width');
-    popover.style.removeProperty('--hm-topic-arrow-x');
-  };
-
-  const positionFromAnchor = (popover, anchor, preferredWidth = 430) => {
-    if (!popover || !anchor?.isConnected || !isPopoverOpen(popover)) return;
-    const pad = 12;
-    const gap = 10;
-    const rect = anchor.getBoundingClientRect();
-    const width = Math.min(preferredWidth, window.innerWidth - pad * 2);
-
-    popover.style.width = `${width}px`;
-    popover.style.left = `${pad}px`;
-    popover.style.top = `${pad}px`;
-
-    const height = Math.min(popover.offsetHeight, window.innerHeight - pad * 2);
-    const center = rect.left + rect.width / 2;
-    const left = Math.max(pad, Math.min(center - width / 2, window.innerWidth - width - pad));
-    const roomBelow = window.innerHeight - rect.bottom - pad;
-    const roomAbove = rect.top - pad;
-    let top = rect.bottom + gap;
-    let placement = 'below';
-
-    if (roomBelow < height + gap && roomAbove >= height + gap) {
-      top = rect.top - height - gap;
-      placement = 'above';
-    } else if (roomBelow < height + gap && roomAbove < height + gap) {
-      top = Math.max(pad, Math.min(rect.bottom + gap, window.innerHeight - height - pad));
-      placement = 'viewport';
-    }
-
-    const arrowX = Math.max(18, Math.min(width - 18, center - left));
-    popover.style.left = `${left}px`;
-    popover.style.top = `${top}px`;
-    popover.style.setProperty('--hm-topic-arrow-x', `${arrowX}px`);
-    popover.dataset.placement = placement;
+  const state = {
+    open: false,
+    activeTopic: null
   };
 
   const questionRecords = () => [...questionList.querySelectorAll('.hm-question-card')].map((button) => ({
@@ -105,207 +35,166 @@
     type: 'specialist'
   })).filter((record) => record.id);
 
-  const clickOriginalQuestion = (record) => {
-    const selector = record.type === 'specialist'
-      ? `[data-hm-specialist-id="${CSS.escape(record.id)}"]`
-      : `[data-question-id="${CSS.escape(record.id)}"]`;
-    (record.type === 'specialist' ? specialistList : questionList)?.querySelector(selector)?.click();
-  };
-
-  const ensureTopicPopover = () => {
-    if (topicPopover?.isConnected) return;
-    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => node.remove());
-    topicPopover = document.createElement('div');
-    topicPopover.className = 'hm-topic-popover hm-top-layer-popover';
-    topicPopover.id = 'hmTopicPromptPopover';
-    topicPopover.setAttribute('popover', 'manual');
-    topicPopover.setAttribute('role', 'dialog');
-    topicPopover.setAttribute('aria-label', 'Interview question prompts');
-    document.body.appendChild(topicPopover);
-  };
-
-  const closeTopicPopover = () => {
-    hideTopLayer(topicPopover);
-    clearPopoverPosition(topicPopover);
-    topicAnchor = null;
-    topicBrowser?.querySelectorAll('.hm-topic-bubble').forEach((button) => {
-      button.classList.remove('active');
-      button.setAttribute('aria-expanded', 'false');
-    });
-  };
-
-  const libraryHelper = library.querySelector('.hm-helper');
-  const libraryHelperSummary = libraryHelper?.querySelector('summary');
-  const libraryHelperCard = libraryHelper?.querySelector('.hm-helper-card');
-
-  const ensureHelperPopover = () => {
-    if (helperPopover?.isConnected) return;
-    helperPopover = document.createElement('div');
-    helperPopover.className = 'hm-library-helper-popover hm-top-layer-popover';
-    helperPopover.setAttribute('popover', 'manual');
-    helperPopover.setAttribute('role', 'dialog');
-    helperPopover.setAttribute('aria-label', 'About the question library');
-    helperPopover.innerHTML = libraryHelperCard?.innerHTML || '<strong>Question Library</strong><p>Choose a topic bubble to browse curated interview prompts.</p>';
-    document.body.appendChild(helperPopover);
-  };
-
-  const closeHelperPopover = () => {
-    hideTopLayer(helperPopover);
-    clearPopoverPosition(helperPopover);
-    helperAnchor = null;
-    libraryHelperSummary?.setAttribute('aria-expanded', 'false');
-  };
-
-  const closeAllOverlays = () => {
-    closeTopicPopover();
-    closeHelperPopover();
-  };
-
-  const openTopic = (topic, anchor) => {
-    ensureTopicPopover();
-    if (isPopoverOpen(topicPopover) && topicAnchor === anchor) {
-      closeTopicPopover();
-      return;
-    }
-
-    closeHelperPopover();
-    topicAnchor = anchor;
-    topicPopover.innerHTML = `
-      <div class="hm-topic-popover-head">
-        <div>
-          <strong>${escapeHtml(topic.category)}</strong>
-          <p>Choose a question to send it directly to Ask Haley.</p>
-        </div>
-        <button class="hm-topic-close" type="button" aria-label="Close ${escapeHtml(topic.category)} questions">×</button>
-      </div>
-      <div class="hm-topic-prompts">
-        ${topic.records.map((record) => `<button class="hm-topic-prompt" type="button" data-hm-topic-question="${escapeHtml(record.id)}" data-hm-topic-type="${escapeHtml(record.type)}">${escapeHtml(record.label)}</button>`).join('')}
-      </div>`;
-
-    topicBrowser.querySelectorAll('.hm-topic-bubble').forEach((button) => {
-      const active = button === anchor;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-expanded', String(active));
-    });
-
-    showTopLayer(topicPopover);
-    requestAnimationFrame(() => positionFromAnchor(topicPopover, anchor));
-
-    topicPopover.querySelector('.hm-topic-close')?.addEventListener('click', closeTopicPopover);
-    topicPopover.querySelectorAll('[data-hm-topic-question]').forEach((button) => {
-      button.addEventListener('click', () => {
-        clickOriginalQuestion({
-          id: button.dataset.hmTopicQuestion,
-          type: button.dataset.hmTopicType || 'standard'
-        });
-        closeTopicPopover();
-        if (chatPanel) {
-          window.setTimeout(() => chatPanel.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }), reducedMotion ? 0 : 70);
-        }
-      });
-    });
-  };
-
-  const renderTopicBrowser = () => {
-    closeTopicPopover();
-    const standard = questionRecords();
-    const specialist = specialistRecords();
-
-    if (!topicBrowser?.isConnected) {
-      document.querySelectorAll('.hm-topic-browser').forEach((node) => node.remove());
-      topicBrowser = document.createElement('div');
-      topicBrowser.className = 'hm-topic-browser hm-topic-browser-v5';
-      topicBrowser.setAttribute('aria-label', 'Interview topic browser');
-      library.appendChild(topicBrowser);
-    }
-
-    if (!standard.length) {
-      topicBrowser.innerHTML = `
-        <div class="hm-topic-browser-intro">
-          <span>Loading interview topics…</span>
-          <strong>Question library</strong>
-        </div>`;
-      return;
-    }
-
+  const groupedTopics = () => {
     const grouped = new Map();
-    standard.forEach((record) => {
+    questionRecords().forEach((record) => {
       if (!grouped.has(record.category)) grouped.set(record.category, []);
       grouped.get(record.category).push(record);
     });
 
     const topics = [...grouped.entries()].map(([category, records]) => ({ category, records }));
+    const specialist = specialistRecords();
     if (specialist.length) topics.push({ category: 'Deep Dive', records: specialist });
+    return topics;
+  };
 
-    topicBrowser.innerHTML = `
-      <div class="hm-topic-browser-intro">
-        <span>Pick a topic bubble for focused prompts, or skip these and type directly into Ask Haley.</span>
-        <strong>${standard.length + specialist.length} prompts</strong>
+  const clickOriginalQuestion = (record) => {
+    const selector = record.type === 'specialist'
+      ? `[data-hm-specialist-id="${CSS.escape(record.id)}"]`
+      : `[data-question-id="${CSS.escape(record.id)}"]`;
+    const source = record.type === 'specialist' ? specialistList : questionList;
+    source?.querySelector(selector)?.click();
+  };
+
+  const ensureWorkspace = () => {
+    if (workspace?.isConnected) return;
+    workspace = document.createElement('div');
+    workspace.className = 'hm-library-accordion';
+    workspace.dataset.hmLibraryAccordion = '';
+
+    if (categoryList?.parentElement === library) library.insertBefore(workspace, categoryList);
+    else library.appendChild(workspace);
+  };
+
+  const closeDetail = () => {
+    state.activeTopic = null;
+    const detail = workspace?.querySelector('[data-hm-library-detail]');
+    const selection = workspace?.querySelector('[data-hm-library-selection]');
+    if (detail) detail.hidden = true;
+    if (selection) selection.hidden = false;
+  };
+
+  const setOpen = (open) => {
+    state.open = Boolean(open);
+    const toggle = workspace?.querySelector('[data-hm-library-toggle]');
+    const windowPanel = workspace?.querySelector('[data-hm-library-window]');
+    if (toggle) toggle.setAttribute('aria-expanded', String(state.open));
+    if (windowPanel) windowPanel.hidden = !state.open;
+    if (!state.open) closeDetail();
+  };
+
+  const showTopic = (category) => {
+    const topics = groupedTopics();
+    const topic = topics.find((item) => item.category === category);
+    if (!topic || !workspace) return;
+
+    state.activeTopic = category;
+    const selection = workspace.querySelector('[data-hm-library-selection]');
+    const detail = workspace.querySelector('[data-hm-library-detail]');
+    if (!selection || !detail) return;
+
+    detail.innerHTML = `
+      <div class="hm-library-detail-head">
+        <div>
+          <p class="eyebrow">${escapeHtml(topic.category)}</p>
+          <h3>${escapeHtml(topic.category)} questions</h3>
+          <p>${topic.records.length} curated prompt${topic.records.length === 1 ? '' : 's'} in this topic. Choose one to send it directly to Ask Haley.</p>
+        </div>
+        <button class="hm-library-detail-close" type="button" aria-label="Close ${escapeHtml(topic.category)} questions">×</button>
       </div>
-      <div class="hm-topic-cloud">
-        ${topics.map((topic) => `<button class="hm-topic-bubble" type="button" data-hm-v5-topic="${escapeHtml(topic.category)}" aria-expanded="false" aria-controls="hmTopicPromptPopover"><span>${escapeHtml(topic.category)}</span><small>${topic.records.length}</small></button>`).join('')}
+      <div class="hm-library-prompt-list">
+        ${topic.records.map((record) => `<button type="button" class="hm-library-prompt" data-hm-library-question="${escapeHtml(record.id)}" data-hm-library-question-type="${escapeHtml(record.type)}">${escapeHtml(record.label)}</button>`).join('')}
       </div>`;
 
-    topicBrowser.querySelectorAll('[data-hm-v5-topic]').forEach((button) => {
-      button.addEventListener('click', (event) => {
-        event.preventDefault();
-        const topic = topics.find((item) => item.category === button.dataset.hmV5Topic);
-        if (topic) openTopic(topic, button);
+    selection.hidden = true;
+    detail.hidden = false;
+    detail.scrollTop = 0;
+
+    detail.querySelector('.hm-library-detail-close')?.addEventListener('click', closeDetail);
+    detail.querySelectorAll('[data-hm-library-question]').forEach((button) => {
+      button.addEventListener('click', () => {
+        clickOriginalQuestion({
+          id: button.dataset.hmLibraryQuestion,
+          type: button.dataset.hmLibraryQuestionType || 'standard'
+        });
+        setOpen(false);
+        if (chatPanel) {
+          window.setTimeout(() => {
+            chatPanel.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+          }, reducedMotion ? 0 : 80);
+        }
       });
     });
   };
 
-  const scheduleRender = () => {
-    window.clearTimeout(renderTimer);
-    renderTimer = window.setTimeout(renderTopicBrowser, 80);
-  };
+  const renderWorkspace = () => {
+    ensureWorkspace();
+    const topics = groupedTopics();
+    const promptCount = topics.reduce((total, topic) => total + topic.records.length, 0);
 
-  const toggleLibraryHelper = () => {
-    ensureHelperPopover();
-    if (isPopoverOpen(helperPopover) && helperAnchor === libraryHelperSummary) {
-      closeHelperPopover();
+    if (!topics.length) {
+      workspace.innerHTML = `
+        <button class="hm-library-toggle" type="button" disabled aria-expanded="false">
+          <span><strong>Browse question topics</strong><small>Loading curated interview prompts…</small></span>
+          <span class="hm-library-toggle-icon" aria-hidden="true">⌄</span>
+        </button>`;
       return;
     }
-    closeTopicPopover();
-    helperAnchor = libraryHelperSummary;
-    libraryHelperSummary?.setAttribute('aria-expanded', 'true');
-    showTopLayer(helperPopover);
-    requestAnimationFrame(() => positionFromAnchor(helperPopover, libraryHelperSummary, 330));
+
+    workspace.innerHTML = `
+      <button class="hm-library-toggle" type="button" data-hm-library-toggle aria-expanded="${String(state.open)}" aria-controls="hmLibraryWindow">
+        <span><strong>Browse question topics</strong><small>${promptCount} curated prompts across ${topics.length} topics</small></span>
+        <span class="hm-library-toggle-icon" aria-hidden="true">⌄</span>
+      </button>
+      <div class="hm-library-window" id="hmLibraryWindow" data-hm-library-window ${state.open ? '' : 'hidden'}>
+        <div class="hm-library-selection" data-hm-library-selection>
+          <div class="hm-library-window-intro">
+            <strong>Choose a topic</strong>
+            <span>Scroll through the library, then open a topic to see its suggested interview questions.</span>
+          </div>
+          <div class="hm-library-topic-list">
+            ${topics.map((topic) => `
+              <button class="hm-library-topic" type="button" data-hm-library-topic="${escapeHtml(topic.category)}">
+                <span><strong>${escapeHtml(topic.category)}</strong><small>${topic.records.length} prompt${topic.records.length === 1 ? '' : 's'}</small></span>
+                <span aria-hidden="true">→</span>
+              </button>`).join('')}
+          </div>
+        </div>
+        <article class="hm-library-detail" data-hm-library-detail hidden></article>
+      </div>`;
+
+    workspace.querySelector('[data-hm-library-toggle]')?.addEventListener('click', () => setOpen(!state.open));
+    workspace.querySelectorAll('[data-hm-library-topic]').forEach((button) => {
+      button.addEventListener('click', () => showTopic(button.dataset.hmLibraryTopic));
+    });
+
+    if (state.activeTopic) showTopic(state.activeTopic);
   };
 
-  if (libraryHelperSummary) {
-    libraryHelperSummary.setAttribute('aria-expanded', 'false');
-    libraryHelperSummary.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      libraryHelper.open = false;
-      toggleLibraryHelper();
-    }, true);
-  }
-
-  document.addEventListener('click', (event) => {
-    if (isPopoverOpen(topicPopover) && !topicPopover.contains(event.target) && !topicAnchor?.contains(event.target)) closeTopicPopover();
-    if (isPopoverOpen(helperPopover) && !helperPopover.contains(event.target) && !libraryHelperSummary?.contains(event.target)) closeHelperPopover();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeAllOverlays();
-  });
-
-  document.addEventListener('hm:close-question-overlays', closeAllOverlays);
-
-  const repositionOpenOverlays = () => {
-    if (isPopoverOpen(topicPopover)) positionFromAnchor(topicPopover, topicAnchor);
-    if (isPopoverOpen(helperPopover)) positionFromAnchor(helperPopover, helperAnchor, 330);
+  const scheduleRender = () => {
+    window.clearTimeout(renderTimer);
+    renderTimer = window.setTimeout(renderWorkspace, 80);
   };
-
-  window.addEventListener('resize', repositionOpenOverlays);
-  window.addEventListener('scroll', repositionOpenOverlays, true);
 
   new MutationObserver(scheduleRender).observe(questionList, { childList: true, subtree: true });
   if (specialistList) new MutationObserver(scheduleRender).observe(specialistList, { childList: true, subtree: true });
 
-  ensureTopicPopover();
-  renderTopicBrowser();
+  document.addEventListener('hm:close-question-workspace', () => setOpen(false));
+  document.addEventListener('hm:open-question-topic', (event) => {
+    const topic = event.detail?.topic;
+    if (!topic) return;
+    state.open = true;
+    renderWorkspace();
+    window.setTimeout(() => showTopic(topic), 0);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    if (state.activeTopic) closeDetail();
+    else if (state.open) setOpen(false);
+  });
+
+  ensureWorkspace();
+  renderWorkspace();
   window.addEventListener('load', scheduleRender, { once: true });
 })();
