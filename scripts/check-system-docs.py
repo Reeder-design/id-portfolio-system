@@ -156,10 +156,10 @@ def main() -> int:
     for phrase in [
         "Portfolio Manager **Create Content** is the normal human-facing workflow",
         "Reference Library",
-        "Routine approved portfolio-content maintenance",
+        "routine approved portfolio-content maintenance",
         "portfolio-data/taxonomy.json",
     ]:
-        require(phrase in new_project_guide, f"New project guide is missing current workflow language: {phrase!r}.", errors)
+        require(phrase.lower() in new_project_guide.lower(), f"New project guide is missing current workflow language: {phrase!r}.", errors)
 
     stale_phrases = [
         "The v1 dashboard is intentionally narrow",
@@ -196,19 +196,32 @@ def main() -> int:
     ]:
         require(marker not in app, f"Retired v1 request-intake code must stay removed: {marker!r}.", errors)
 
+    for label, script in [
+        ("System docs/architecture freshness", "scripts/check-system-docs.py"),
+        ("Breadcrumb consistency", "scripts/check-breadcrumb-consistency.py"),
+        ("Hiring Manager UX", "scripts/check-hiring-mobile-ux.py"),
+    ]:
+        require(
+            f'("{label}", [sys.executable, "{script}"]' in validation,
+            f"Portfolio Manager Full Validation must include {label}: {script}.",
+            errors,
+        )
+
+    for script in [
+        "python scripts/check-system-docs.py",
+        "python scripts/check-breadcrumb-consistency.py",
+        "python scripts/check-hiring-mobile-ux.py",
+    ]:
+        require(script in workflow, f"Pull-request CI must run {script}.", errors)
+
     require(
-        '"System docs/architecture freshness"' in validation and "scripts/check-system-docs.py" in validation,
-        "Portfolio Manager Full Validation must include the system documentation freshness regression.",
+        workflow.count("python scripts/check-final-polish.py") == 1,
+        "Pull-request CI should run check-final-polish.py exactly once.",
         errors,
     )
     require(
-        "python scripts/check-system-docs.py" in workflow,
-        "Pull-request CI must run the system documentation freshness regression.",
-        errors,
-    )
-    require(
-        '- "README.md"' in workflow and '- "AGENTS.md"' in workflow,
-        "Pull-request CI path filters must trigger for README.md and AGENTS.md changes.",
+        '- "README.md"' in workflow and '- "AGENTS.md"' in workflow and '- ".github/copilot-instructions.md"' in workflow,
+        "Pull-request CI path filters must trigger for README, AGENTS, and Copilot instruction changes.",
         errors,
     )
 
