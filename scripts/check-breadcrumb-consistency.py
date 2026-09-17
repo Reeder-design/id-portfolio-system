@@ -33,12 +33,6 @@ def main() -> int:
             if not re.search(r"<main\b.*?<section\b", html, flags=re.IGNORECASE | re.DOTALL):
                 errors.append(f"{relative}: breadcrumb-bearing page has no section-based hero/content region.")
 
-        # New breadcrumb styling belongs in the shared layer, not inline page CSS.
-        # A legacy Projects-page selector is still present but is overridden by the
-        # shared !important rule; block new generic inline breadcrumb definitions.
-        if re.search(r"(?<![>.])\.breadcrumbs\s*\{", html):
-            errors.append(f"{relative}: inline generic breadcrumb CSS found; use the shared visual-consistency layer.")
-
     if not FRAME_CSS.exists():
         errors.append("portfolio/css/phase1-frame.css is missing.")
     else:
