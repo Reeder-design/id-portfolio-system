@@ -24,58 +24,56 @@
   display: none !important;
 }
 
-/* Question Library helper: popup inside the library, never part of document flow. */
+/* Question Library header: explanation stays visible with no helper interaction. */
 .hm-library-header {
-  position: relative;
-  z-index: 20;
-  overflow: visible !important;
+  padding: 22px !important;
 }
 
-.hm-library .hm-heading-with-help {
-  flex-wrap: nowrap;
+.hm-library-header-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
 }
 
-.hm-library .hm-library-helper {
-  position: static !important;
-  z-index: 50;
-  flex: 0 0 auto;
+.hm-library-heading-copy .eyebrow {
+  margin: 0 0 8px;
 }
 
-.hm-library .hm-library-helper .hm-helper-card {
-  position: absolute !important;
-  z-index: 80 !important;
-  top: calc(100% + 8px) !important;
-  left: 18px !important;
-  right: 18px !important;
-  bottom: auto !important;
-  width: auto !important;
-  max-width: none !important;
+.hm-library-heading-copy h2 {
+  margin: 0 0 7px;
+}
+
+.hm-library-heading-copy > p:last-child {
+  max-width: 640px;
+}
+
+.hm-library-notes {
+  display: grid;
+  align-self: stretch;
+}
+
+.hm-library-notes p {
   margin: 0 !important;
-  padding: 16px 17px !important;
-  border: 1px solid rgba(80, 132, 132, .18) !important;
-  border-radius: 17px !important;
-  background: rgba(255, 255, 255, .99) !important;
-  box-shadow: 0 18px 48px rgba(48, 67, 61, .17) !important;
-  animation: hm-helper-in 150ms ease both;
+  padding: 0 0 13px;
+  color: #64706b !important;
+  font-size: .74rem !important;
+  line-height: 1.52 !important;
 }
 
-.hm-library .hm-library-helper .hm-helper-card::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 116px;
-  width: 12px;
-  height: 12px;
-  border-top: 1px solid rgba(80, 132, 132, .18);
-  border-left: 1px solid rgba(80, 132, 132, .18);
-  background: rgba(255, 255, 255, .99);
-  transform: rotate(45deg);
+.hm-library-notes p + p {
+  margin-top: 13px !important;
+  padding-top: 13px;
+  border-top: 1px solid rgba(80, 132, 132, .15);
 }
 
-.hm-library .hm-helper-subhead {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(80, 132, 132, .1);
+.hm-library-notes p:last-child {
+  padding-bottom: 0;
+}
+
+.hm-library-notes strong {
+  color: var(--charcoal);
+  font: 800 .72rem/1.35 var(--font-heading);
 }
 
 /* Always-visible Library / Ask Haley selector. */
@@ -355,9 +353,37 @@
     backdrop-filter: blur(16px) saturate(125%);
     -webkit-backdrop-filter: blur(16px) saturate(125%);
   }
+
+  .hm-library-header-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .hm-library-notes {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(80, 132, 132, .15);
+  }
+
+  .hm-library-notes p,
+  .hm-library-notes p + p {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top: 0;
+  }
+
+  .hm-library-notes p + p {
+    padding-left: 18px !important;
+    border-left: 1px solid rgba(80, 132, 132, .15);
+  }
 }
 
 @media (max-width: 680px) {
+  .hm-library-header {
+    padding: 18px !important;
+  }
+
   .hm-library-accordion {
     margin: 0 14px 14px;
   }
@@ -367,22 +393,23 @@
     max-height: 38vh;
   }
 
-  .hm-library .hm-library-helper .hm-helper-card {
-    left: 14px !important;
-    right: 14px !important;
-    top: calc(100% + 7px) !important;
+  .hm-library-notes {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .hm-library .hm-library-helper .hm-helper-card::before {
-    left: 112px;
+  .hm-library-notes p + p {
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+    padding-left: 0 !important;
+    border-top: 1px solid rgba(80, 132, 132, .15);
+    border-left: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hm-library-toggle-icon,
-  .hm-library-topic,
-  .hm-library .hm-library-helper .hm-helper-card {
+  .hm-library-topic {
     transition: none !important;
-    animation: none !important;
   }
 }
