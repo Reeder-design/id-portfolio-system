@@ -43,5 +43,6 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/hiring-manager/index.html`
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
+- `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/evidence/certification-design-blueprint/index.html`
 
-Total public HTML pages: **26**
+Total public HTML pages: **27**
