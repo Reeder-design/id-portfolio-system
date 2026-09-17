@@ -93,7 +93,37 @@ Uses the structured outcomes field and repeats a compact project/capability snap
 
 ### Keep Exploring
 
-Every generated page ends with clear routes to the live project when available, the parent portfolio area, and the full Projects page.
+Every generated page ends with clear routes to the parent portfolio area, the full Projects page, and the portfolio overview.
+
+There is now one public Keep Exploring presentation standard: the component used by the Interactive Learning page. Generated project pages use the same structure natively:
+
+- `section section-soft`
+- `section-heading refresh-section-intro`
+- `refresh-card-grid`
+- `refresh-link-card`
+- `refresh-link-card-header`
+- `refresh-link-card-body`
+- `project-family-link`
+
+Do not create a new closing CTA, explore strip, category-specific card grid, or project-only Keep Exploring treatment. Extend the canonical component instead.
+
+For legacy hand-built pages, `portfolio/js/portfolio-motion.js` normalizes existing Keep Exploring sections into the same structure at runtime so older markup cannot display a competing design while those pages are gradually migrated.
+
+## Breadcrumb and Page Path Standard
+
+Breadcrumbs are a shared navigation component rather than a page-by-page styling choice.
+
+The expected behavior is:
+
+- `Home` is clickable
+- every parent page in the hierarchy is clickable
+- the current page is the only non-clickable breadcrumb, following standard breadcrumb behavior
+- labels and separators use the same visual treatment throughout the portfolio
+- the breadcrumb hierarchy reflects only real public landing pages, avoiding links to folders that do not have a public index page
+
+Generated project pages write linked parent breadcrumbs directly through `render-project.py`.
+
+`portfolio/js/portfolio-motion.js` also normalizes breadcrumbs across hand-built and generated pages. It can rebuild inconsistent breadcrumb markup and insert the standard breadcrumb into a page hero when a public page does not already include one.
 
 ## Shared Portfolio Behavior
 
@@ -187,6 +217,8 @@ python scripts/check-final-polish.py
 Pull requests run the complete validation suite automatically.
 
 `check-renderer.py` specifically protects the final generated-page architecture by checking for the shared theme/motion stack, snapshot/story structure, conditional Evidence section, Keep Exploring path, valid links, and unresolved template tokens.
+
+`check-final-polish.py` also protects the sitewide breadcrumb and Keep Exploring standards by verifying the shared normalizer and canonical generated-page component.
 
 ## Source-of-Truth Rule
 

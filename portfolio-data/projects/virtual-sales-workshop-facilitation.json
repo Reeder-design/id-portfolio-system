@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "id": "virtual-sales-workshop-facilitation",
+  "title": "Virtual Sales Workshop Facilitation",
+  "slug": "virtual-sales-workshop-facilitation",
+  "category": "instructional-design",
+  "subcategory": "live-training",
+  "status": "live",
+  "summary": "A completed virtual MEDDPICC sales-workshop facilitation project for internal sales teams and external partners across U.S. and international audiences.",
+  "page_path": "portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Support internal sales teams and external partners in applying a shared MEDDPICC qualification framework during live virtual sessions without reducing the workshop to slide narration or one-way explanation.",
+    "audience": "Internal sales teams and external partners across U.S. and international audiences, including experienced enterprise sellers with different levels of company and market context.",
+    "learning_objectives": [
+      "Connect MEDDPICC concepts to realistic seller situations and customer evidence.",
+      "Use discussion and polling to distinguish stronger and weaker interpretations.",
+      "Explain reasoning through seller examples rather than terminology alone.",
+      "Surface questions and friction that need clarification during or after the session."
+    ],
+    "role": "Facilitator for assigned MEDDPICC workshop modules, responsible for preparation, live delivery, learner engagement, pacing adjustments, and reflection after U.S. and international sessions.",
+    "design_approach": "I used the prepared facilitator and participant materials as the backbone, then treated live time as a place for explanation, discussion, polling, examples, and application. I kept the learning objective fixed while adjusting pacing, examples, and explanation to the audience response.",
+    "development_process": "I prepared from the workshop materials, planned transitions and discussion points for assigned modules, facilitated virtual sessions for internal sales teams and external partners, used questions and polls to check understanding, invited seller examples, adjusted explanations and pacing in real time, and captured recurring questions as input for future learning design.",
+    "outcomes": [
+      "Facilitated assigned MEDDPICC modules within a larger multi-session sales workshop for internal sales teams and external partners.",
+      "Delivered to both U.S. and international audiences with different levels of company and market context.",
+      "Used discussion, polling, seller examples, and real-time pacing adjustments to create participation instead of relying on presentation alone.",
+      "Turned recurring learner questions and friction into useful input for future content, scenarios, and facilitator guidance."
+    ]
+  },
+  "detail_sections": [
+    {
+      "id": "session-arc",
+      "eyebrow": "Session Arc",
+      "title": "How I moved through each assigned module.",
+      "summary": "The materials created consistency; my facilitation made the live session responsive to the audience.",
+      "layout": "flow",
+      "groups": [
+        {
+          "title": "Facilitation flow",
+          "description": "A public-safe reconstruction of the live delivery pattern I used.",
+          "items": [
+            "Prepare",
+            "Frame the objective",
+            "Explain",
+            "Ask + poll",
+            "Apply with examples",
+            "Debrief",
+            "Capture questions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "facilitation-moves",
+      "eyebrow": "Facilitation Moves",
+      "title": "How I used the audience as part of the learning design.",
+      "summary": "Participation gave me evidence about what needed more explanation, less explanation, or a different example.",
+      "layout": "cards",
+      "items": [
+        {"title": "Ask before telling", "body": "I used questions to surface the learner's current interpretation before adding more explanation.", "tag": "Diagnose"},
+        {"title": "Poll with a purpose", "body": "I used quick polls to check confidence or interpretation, then changed the debrief based on the response.", "tag": "Check"},
+        {"title": "Use seller examples", "body": "I invited relevant examples from internal sellers and partners so abstract concepts stayed connected to actual sales work.", "tag": "Apply"},
+        {"title": "Reframe when needed", "body": "I changed the explanation, example, or pacing when the first version did not land cleanly.", "tag": "Adapt"}
+      ]
+    },
+    {
+      "id": "adaptation-signals",
+      "eyebrow": "Real-Time Adaptation",
+      "title": "How I decided what to expand, compress, repeat, or change.",
+      "summary": "I used learner signals rather than following the deck mechanically.",
+      "layout": "table",
+      "columns": ["Signal", "What I read from it", "What I did next"],
+      "rows": [
+        ["Low confidence in a poll", "The concept or distinction was not stable yet.", "I slowed down, reframed, and tested again with an example."],
+        ["The same question kept returning", "The current explanation was not resolving the friction.", "I changed the explanation or connected it to a more concrete seller situation."],
+        ["Learners offered strong relevant examples", "The group already had usable experience to build from.", "I used peer examples and compressed lower-value background."],
+        ["Time was tightening", "The agenda required a deliberate tradeoff.", "I protected application and debrief time and shortened lower-value narration."]
+      ]
+    },
+    {
+      "id": "design-feedback-loop",
+      "eyebrow": "Design Feedback Loop",
+      "title": "What I brought from the live sessions back into learning design.",
+      "summary": "Live questions showed me where future self-paced or facilitator-led learning needed better support.",
+      "layout": "cards",
+      "items": [
+        {"title": "Recurring questions", "body": "I used repeated questions as a signal that future content needed clearer explanation, examples, or reference support.", "tag": "Clarify"},
+        {"title": "Common misconceptions", "body": "I treated recurring misunderstandings as candidates for scenario distractors, feedback, and formative checks.", "tag": "Practice"},
+        {"title": "Strong learner examples", "body": "I noted the realistic situations that made the framework feel more credible across audiences.", "tag": "Ground"},
+        {"title": "Timing friction", "body": "I identified explanations or activities that should be simplified before another delivery.", "tag": "Refine"}
+      ]
+    },
+    {
+      "id": "evidence-boundaries",
+      "eyebrow": "Evidence",
+      "title": "Keep the contribution tied to what I actually completed.",
+      "summary": "This case reflects real delivery work while keeping proprietary material and unsupported performance claims out of the portfolio.",
+      "layout": "cards",
+      "items": [
+        {"title": "Completed", "body": "I facilitated assigned MEDDPICC modules for internal sales teams and external partners in U.S. and international sessions.", "tag": "Delivered"},
+        {"title": "Completed", "body": "I used discussion, polls, seller examples, and real-time pacing or explanation adjustments during delivery.", "tag": "Observed"},
+        {"title": "Not claimed", "body": "I do not claim sole ownership of the full workshop curriculum, learner-score improvement, sales-performance lift, revenue impact, or satisfaction metrics without approved evidence.", "tag": "Boundary"}
+      ]
+    }
+  ],
+  "related_work": [
+    {"project_id": "meddpicc-practice", "relationship": "Interactive qualification practice that applies the same MEDDPICC skill family in a self-paced format"},
+    {"project_id": "enterprise-sales-certification", "relationship": "Broader sales-enablement curriculum design, assessment, review, and learning-path architecture"}
+  ],
+  "skills": ["Virtual Facilitation", "Adult Learning", "Sales Enablement", "Instructor-Led Training", "Learner Engagement", "Formative Assessment", "Adaptive Facilitation", "Instructional Design"],
+  "tools": ["Virtual Meeting Platform", "Facilitator Materials", "Participant Materials", "Live Polling"],
+  "assets": [],
+  "source_material_notes": "Generalized from completed facilitation work in a virtual MEDDPICC sales workshop. Employer names, participant details, internal slides, facilitator materials, learner comments, session links, dates, recordings, and performance metrics are intentionally omitted.",
+  "dates": {"created": "2026-09-16", "updated": "2026-09-16"}
+}

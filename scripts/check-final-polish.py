@@ -13,6 +13,7 @@ HIRING_SUPPORT_CSS = PORTFOLIO / "css" / "hiring-support.css"
 MOTION_JS = PORTFOLIO / "js" / "portfolio-motion.js"
 ABOUT = PORTFOLIO / "about" / "index.html"
 HOME = PORTFOLIO / "index.html"
+PROJECT_TEMPLATE = ROOT / "templates" / "project-page" / "index.html"
 APP = ROOT / "portfolio-manager" / "app.py"
 HELP_CSS = ROOT / "portfolio-manager" / "static" / "help.css"
 CREATE_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "create-content.html"
@@ -98,6 +99,19 @@ def main() -> int:
         require("—" not in prose, f"{relative}: visible prose contains an em dash; review final public copy.", errors)
         require(" | " not in prose, f"{relative}: visible prose contains a spaced vertical bar; review final public copy.", errors)
 
+        if path != HOME:
+            require(
+                "portfolio-motion.js" in html,
+                f"{relative}: public pages must load the shared navigation/component normalizer.",
+                errors,
+            )
+        if "Keep Exploring" in html:
+            require(
+                "portfolio-motion.js" in html,
+                f"{relative}: Keep Exploring must be normalized by the shared Interactive Learning standard.",
+                errors,
+            )
+
     combined_public = "\n".join(path.read_text(encoding="utf-8") for path in html_files)
     for phrase in STALE_SLOGANS:
         require(phrase not in combined_public, f"Public copy still contains stale/slogan-like phrase: {phrase!r}.", errors)
@@ -151,6 +165,31 @@ def main() -> int:
 
     motion_js = MOTION_JS.read_text(encoding="utf-8")
     require("css/hiring-support.css" in motion_js, "Shared portfolio JS must continue loading hiring-support styles sitewide.", errors)
+    for marker in [
+        "const initCanonicalBreadcrumbs = () =>",
+        "BREADCRUMB_ROUTES",
+        "initCanonicalBreadcrumbs();",
+        "const initExploreFooters = () =>",
+        "section.className = 'section section-soft';",
+        "refresh-card-grid",
+        "refresh-link-card-header",
+        "refresh-link-card-body",
+        "project-family-link",
+    ]:
+        require(marker in motion_js, f"Shared portfolio navigation/component logic is missing {marker!r}.", errors)
+
+    project_template = PROJECT_TEMPLATE.read_text(encoding="utf-8")
+    require("project-template-cta" not in project_template, "Generated project pages must not use the retired project-template-cta Keep Exploring variant.", errors)
+    for marker in [
+        '<p class="eyebrow">Keep Exploring</p>',
+        'class="section-heading refresh-section-intro"',
+        'class="refresh-card-grid"',
+        'class="refresh-link-card"',
+        'class="refresh-link-card-header"',
+        'class="refresh-link-card-body"',
+        'class="project-family-link"',
+    ]:
+        require(marker in project_template, f"Generated project template is missing canonical Keep Exploring marker {marker!r}.", errors)
 
     for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
