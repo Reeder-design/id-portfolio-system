@@ -113,7 +113,10 @@
   };
 
   const ensureTopicPopover = () => {
-    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => node.remove());
+    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => {
+      if (node !== topicPopover) node.remove();
+    });
+    if (topicPopover?.isConnected) return;
     topicPopover = document.createElement('div');
     topicPopover.className = 'hm-topic-popover hm-top-layer-popover';
     topicPopover.id = 'hmTopicPromptPopover';
@@ -134,7 +137,7 @@
   };
 
   const openTopic = (topic, anchor) => {
-    if (!topicPopover) ensureTopicPopover();
+    ensureTopicPopover();
     if (isPopoverOpen(topicPopover) && topicAnchor === anchor) {
       closeTopicPopover();
       return;
@@ -179,11 +182,20 @@
   };
 
   const renderTopicBrowser = () => {
+    /* V4 can finish its async render after this controller initializes. Remove any
+       older browser/popover every time V5 renders so there is only one visible owner. */
+    document.querySelectorAll('.hm-topic-browser').forEach((node) => {
+      if (node !== topicBrowser) node.remove();
+    });
+    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => {
+      if (node !== topicPopover) node.remove();
+    });
+    ensureTopicPopover();
+
     const standard = questionRecords();
     const specialist = specialistRecords();
 
-    if (!topicBrowser) {
-      document.querySelectorAll('.hm-topic-browser').forEach((node) => node.remove());
+    if (!topicBrowser?.isConnected) {
       topicBrowser = document.createElement('div');
       topicBrowser.className = 'hm-topic-browser hm-topic-browser-v5';
       topicBrowser.setAttribute('aria-label', 'Interview topic browser');
@@ -229,7 +241,9 @@
 
   const scheduleRender = () => {
     window.clearTimeout(renderTimer);
-    renderTimer = window.setTimeout(renderTopicBrowser, 120);
+    /* V4 schedules its async library rebuild at 40ms. V5 deliberately renders later
+       and removes that legacy instance, eliminating the two-controller race. */
+    renderTimer = window.setTimeout(renderTopicBrowser, 180);
   };
 
   const libraryHelper = library.querySelector('.hm-helper');
@@ -237,7 +251,7 @@
   const libraryHelperCard = libraryHelper?.querySelector('.hm-helper-card');
 
   const ensureHelperPopover = () => {
-    if (helperPopover) return;
+    if (helperPopover?.isConnected) return;
     helperPopover = document.createElement('div');
     helperPopover.className = 'hm-library-helper-popover hm-top-layer-popover';
     helperPopover.setAttribute('popover', 'manual');
