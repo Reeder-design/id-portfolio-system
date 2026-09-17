@@ -117,7 +117,7 @@ The expected behavior is:
 
 - `Home` is clickable
 - every parent page in the hierarchy is clickable
-- the current page is the only non-clickable breadcrumb
+- the current page is the only non-clickable breadcrumb, following standard breadcrumb behavior
 - labels and separators use the same visual treatment throughout the portfolio
 - the breadcrumb hierarchy reflects only real public landing pages, avoiding links to folders that do not have a public index page
 
