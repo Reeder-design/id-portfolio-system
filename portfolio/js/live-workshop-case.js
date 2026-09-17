@@ -1,37 +1,37 @@
 (() => {
   const arcData = {
-    prepare:{title:'Prepare for the assigned module.',text:'Review the facilitator and participant materials, identify the objective, mark transitions, and anticipate where experienced sellers may need more discussion or a clearer example.'},
-    frame:{title:'Frame the objective before adding detail.',text:'Open with what the learner should be able to recognize or do so the discussion has a clear purpose instead of feeling like a walk through slides.'},
-    explain:{title:'Explain only enough to support the next decision.',text:'Keep the concept concise, connect it to seller language, and avoid turning live time into background narration that learners could read on their own.'},
-    check:{title:'Use questions and polls as diagnostic signals.',text:'Ask before telling, compare interpretations, and use quick polling to see whether the group is ready to move on or needs another example.'},
-    apply:{title:'Bring the framework into realistic seller situations.',text:'Invite relevant seller examples and use them to distinguish stronger evidence, weaker evidence, and the reasoning behind the difference.'},
-    reflect:{title:'Debrief and capture what the room taught me.',text:'Close the loop on the objective, capture recurring questions or friction, and carry those signals into future content, scenarios, checks, or facilitator guidance.'}
+    prepare:{title:'Prepare for the assigned module.',text:'Before delivery, I reviewed the facilitator and participant materials, identified the objective, marked transitions, and anticipated where the seller or partner audience might need a clearer example or more discussion.'},
+    frame:{title:'Frame the objective before adding detail.',text:'I opened each section by making the purpose clear so the group understood what they should be able to recognize or do before we moved into the content.'},
+    explain:{title:'Explain only enough to support the next decision.',text:'I kept explanations concise, connected the framework to seller language, and avoided using live time for background material the audience could absorb on its own.'},
+    check:{title:'Use questions and polls as diagnostic signals.',text:'I asked before telling, compared interpretations, and used polling to decide whether the audience was ready to move on or needed another example.'},
+    apply:{title:'Bring MEDDPICC into realistic seller situations.',text:'I invited relevant seller and partner examples and used them to distinguish stronger evidence, weaker evidence, and the reasoning behind the difference.'},
+    reflect:{title:'Debrief and capture what the audience taught me.',text:'I closed the loop on the objective, captured recurring questions or friction, and carried those signals into future content, scenarios, checks, and facilitator guidance.'}
   };
 
   const moveData = {
-    ask:{label:'Diagnose',title:'Ask before telling.',summary:'Questions reveal the learner’s current interpretation before I add more explanation.',do:'Use targeted prompts before giving the answer or definition.',why:'The response shows whether the group needs clarification, a stronger example, or simply confirmation.',signal:'Listen for uncertainty, competing interpretations, or language that reveals a misconception.'},
-    poll:{label:'Check',title:'Poll with a purpose.',summary:'A poll is useful when the result changes what I do next.',do:'Use quick confidence or interpretation checks at decision points.',why:'The distribution gives me a fast read on whether the concept is stable enough to advance.',signal:'Low confidence or a split response means the debrief needs more time or a different explanation.'},
-    examples:{label:'Apply',title:'Use seller examples.',summary:'Experienced learners bring useful context that can make an abstract framework concrete.',do:'Invite relevant customer or pursuit examples without exposing private account details.',why:'Peer examples connect the concept to actual work and can reduce unnecessary background explanation.',signal:'Strong examples show where the group already has usable experience to build from.'},
-    reframe:{label:'Adapt',title:'Reframe when the first explanation does not land.',summary:'The objective stays fixed; the explanation does not have to.',do:'Change the example, wording, sequence, or amount of detail while preserving the learning goal.',why:'Live facilitation should respond to the room rather than follow the deck mechanically.',signal:'Repeated questions, silence, or confusion indicate the current framing is not resolving the friction.'}
+    ask:{label:'Diagnose',title:'Ask before telling.',summary:'I used questions to hear the group’s current interpretation before adding more explanation.',do:'I used targeted prompts before giving the answer or definition.',why:'The response showed me whether the group needed clarification, a stronger example, or simply confirmation.',signal:'I listened for uncertainty, competing interpretations, or language that revealed a misconception.'},
+    poll:{label:'Check',title:'Poll with a purpose.',summary:'I used polls when the result could change what I did next.',do:'I used quick confidence or interpretation checks at decision points.',why:'The distribution gave me a fast read on whether the concept was stable enough to advance.',signal:'Low confidence or a split response meant I needed more debrief time or a different explanation.'},
+    examples:{label:'Apply',title:'Use seller examples.',summary:'I used relevant examples from experienced learners to make the framework concrete across internal and partner audiences.',do:'I invited useful customer or pursuit examples without exposing private account details.',why:'Peer examples connected the framework to real work and helped me reduce unnecessary background explanation.',signal:'Strong examples showed me where the group already had usable experience to build from.'},
+    reframe:{label:'Adapt',title:'Reframe when the first explanation does not land.',summary:'I kept the learning objective fixed, but changed the explanation when the audience needed a different route.',do:'I changed the example, wording, sequence, or amount of detail while preserving the learning goal.',why:'The live session worked better when I responded to the audience instead of following the deck mechanically.',signal:'Repeated questions, silence, or confusion told me the current framing was not resolving the friction.'}
   };
 
   const signalData = {
-    confidence:{suggests:'The concept or distinction is not stable yet.',response:'Slow down, reframe the concept, and test it again with a concrete seller example.'},
-    repeated:{suggests:'The current explanation is not resolving the learner friction.',response:'Use a different explanation, analogy, or seller situation instead of repeating the same wording.'},
-    examples:{suggests:'The group already has relevant experience to build from.',response:'Use peer examples and compress lower-value background so more time stays available for application.'},
-    time:{suggests:'The agenda now requires a deliberate tradeoff.',response:'Protect application and debrief time; shorten lower-value narration rather than rushing the close.'}
+    confidence:{suggests:'The concept or distinction was not stable yet.',response:'I slowed down, reframed the concept, and tested it again with a concrete seller example.'},
+    repeated:{suggests:'The current explanation was not resolving the learner friction.',response:'I changed the explanation, analogy, or seller situation instead of repeating the same wording.'},
+    examples:{suggests:'The group already had relevant experience I could build from.',response:'I used peer examples and compressed lower-value background so more time stayed available for application.'},
+    time:{suggests:'The agenda now required a deliberate tradeoff.',response:'I protected application and debrief time and shortened lower-value narration instead of rushing the close.'}
   };
 
   const evidenceData = {
     supported:[
-      ['Live delivery','Facilitated assigned modules in a multi-session virtual sales workshop for experienced sellers.'],
-      ['Responsive facilitation','Used discussion, polling, seller examples, and real-time pacing or explanation adjustments.'],
-      ['Design feedback','Captured recurring learner questions and friction as input for future content and facilitator support.']
+      ['Live delivery','I facilitated assigned MEDDPICC workshop modules for internal sales teams and external partners.'],
+      ['Audience range','I delivered to U.S. and international audiences with different levels of company and market context.'],
+      ['Responsive facilitation','I used discussion, polling, seller examples, and real-time pacing or explanation adjustments during delivery.']
     ],
     boundaries:[
-      ['Performance metrics','No learner-score improvement or sales-performance lift is claimed without approved evidence.'],
-      ['Business impact','No revenue impact is attributed to the workshop without supported measurement.'],
-      ['Satisfaction','No workshop satisfaction score or testimonial is invented or generalized from private feedback.']
+      ['Program ownership','I am not claiming sole ownership of the full MEDDPICC workshop curriculum or all facilitator materials.'],
+      ['Performance metrics','I do not claim learner-score improvement or sales-performance lift without approved evidence.'],
+      ['Business impact','I do not attribute revenue impact or satisfaction metrics to the workshop without supported measurement.']
     ]
   };
 
