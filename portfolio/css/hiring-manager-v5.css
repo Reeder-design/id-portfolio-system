@@ -1,0 +1,96 @@
+/* Hiring Manager final interaction polish
+   Topic prompt panels are portaled to the page layer and anchored to the selected topic bubble. */
+
+.hm-topic-popover {
+  position: fixed !important;
+  z-index: 2600 !important;
+  inset: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  max-width: calc(100vw - 24px);
+  max-height: min(430px, calc(100vh - 24px));
+  overflow: visible !important;
+  isolation: isolate;
+  transform-origin: var(--hm-topic-arrow-x, 50%) top;
+  box-shadow: 0 28px 78px rgba(34,48,43,.28) !important;
+}
+
+.hm-topic-popover[data-placement="above"] {
+  transform-origin: var(--hm-topic-arrow-x, 50%) bottom;
+}
+
+.hm-topic-popover::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: clamp(18px, var(--hm-topic-arrow-x, 50%), calc(100% - 18px));
+  width: 14px;
+  height: 14px;
+  border: solid rgba(80,132,132,.2);
+  background: rgba(255,255,255,.99);
+  transform: translateX(-50%) rotate(45deg);
+  pointer-events: none;
+}
+
+.hm-topic-popover[data-placement="below"]::before,
+.hm-topic-popover[data-placement="viewport"]::before {
+  top: -8px;
+  border-width: 1px 0 0 1px;
+}
+
+.hm-topic-popover[data-placement="above"]::before {
+  bottom: -8px;
+  border-width: 0 1px 1px 0;
+}
+
+.hm-topic-popover-head,
+.hm-topic-prompts {
+  position: relative;
+  z-index: 3;
+  background: inherit;
+}
+
+.hm-topic-popover-head {
+  border-radius: 20px 20px 0 0;
+}
+
+.hm-topic-prompts {
+  max-height: min(318px, calc(100vh - 118px)) !important;
+  border-radius: 0 0 20px 20px;
+}
+
+.hm-topic-bubble.active {
+  position: relative;
+  z-index: 120;
+}
+
+/* Keep the chat workspace below any active prompt or helper layer. */
+.hm-chat-panel,
+.hm-library {
+  z-index: 1;
+}
+
+.hm-library .hm-helper,
+.hm-library .hm-helper-card {
+  z-index: 2700 !important;
+}
+
+@media (max-width: 680px) {
+  .hm-topic-popover {
+    right: auto !important;
+    bottom: auto !important;
+    border-radius: 20px !important;
+    max-height: calc(100svh - 24px) !important;
+  }
+
+  .hm-topic-prompts {
+    max-height: min(52svh, 330px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-topic-popover {
+    animation: none !important;
+  }
+}
