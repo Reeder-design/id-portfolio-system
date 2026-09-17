@@ -76,11 +76,11 @@
             <section class="dashboard-card full-width v2-transition-card">
                 <div class="action-title-row">
                     <div>
-                        <p class="eyebrow">Publishing during the v2 transition</p>
+                        <p class="eyebrow">Publishing</p>
                         <h2>Review and publish approved changes</h2>
                     </div>
                 </div>
-                <p class="section-copy">The current validation and publishing engine stays available from the homepage while the content workflows evolve.</p>
+                <p class="section-copy">Use the shared validation and publishing controls after you have reviewed the local changes you want to keep.</p>
                 <div class="button-row">
                     <form method="post" action="{{ url_for('run_action') }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -119,7 +119,7 @@
                             <form method="post" action="{{ url_for('run_action') }}" class="release-form" data-confirm-action="version">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <label for="release_message">Release message</label>
-                                <input type="text" id="release_message" name="release_message" placeholder="Example: Introduce Portfolio Manager v2 content workflow" required>
+                                <input type="text" id="release_message" name="release_message" placeholder="Example: Introduce Portfolio Manager content workflow" required>
                                 <div class="button-row">
                                     <button class="btn btn-secondary" type="submit" name="action" value="patch">Patch</button>
                                     <button class="btn btn-secondary" type="submit" name="action" value="minor">Minor</button>
