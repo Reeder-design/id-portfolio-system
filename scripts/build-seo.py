@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -16,6 +17,7 @@ PERSON_ID = BASE_URL + "#haley-reeder"
 WEBSITE_ID = BASE_URL + "#website"
 SEO_START = "<!-- SEO:AUTO START -->"
 SEO_END = "<!-- SEO:AUTO END -->"
+EXPERTISE_LINK_MARKER = "<!-- SEO:EXPERTISE LINK -->"
 
 KNOWS_ABOUT = [
     "Instructional Design",
@@ -164,9 +166,33 @@ def strip_existing_block(text: str) -> str:
     return pattern.sub("", text)
 
 
+def add_expertise_footer_link(path: Path, text: str) -> str:
+    clean = re.sub(
+        re.escape(EXPERTISE_LINK_MARKER) + r'<a\s+href=["\'][^"\']+["\']>Expertise</a>',
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if path.relative_to(SITE_ROOT).as_posix() == "expertise/index.html":
+        return clean
+
+    target = SITE_ROOT / "expertise" / "index.html"
+    href = Path(os.path.relpath(target, path.parent)).as_posix()
+    link = f'{EXPERTISE_LINK_MARKER}<a href="{href}">Expertise</a>'
+    resume_pattern = re.compile(
+        r'(<a\b[^>]*href=["\'][^"\']*Haley-Reeder-Resume\.pdf[^"\']*["\'][^>]*>(?:Résumé|Resume)</a>)',
+        flags=re.IGNORECASE,
+    )
+    match = resume_pattern.search(clean)
+    if not match:
+        raise ValueError(f"{path.relative_to(ROOT)}: footer résumé link not found for Expertise navigation injection")
+    return clean[: match.end()] + link + clean[match.end():]
+
+
 def rendered_html(path: Path) -> str:
     source = path.read_text(encoding="utf-8")
     clean = strip_existing_block(source)
+    clean = add_expertise_footer_link(path, clean)
     block = build_seo_block(path, clean)
     match = re.search(r"</title>", clean, flags=re.IGNORECASE)
     if not match:
