@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "portfolio/**"
-      - "scripts/check-site.py"
+      - "scripts/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -35,6 +35,12 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - name: Build SEO and GEO metadata
+        run: python scripts/build-seo.py
+
+      - name: Validate generated SEO output
+        run: python scripts/build-seo.py --check
 
       - name: Validate portfolio
         run: python scripts/check-site.py
