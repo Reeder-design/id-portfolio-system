@@ -13,6 +13,7 @@
   const starterWrap = document.querySelector('.hm-starter-wrap');
   let topicBrowser = null;
   let topicPopover = null;
+  let topicAnchor = null;
   let mobileDock = null;
   let rebuildTimer = null;
 
@@ -56,12 +57,6 @@
     });
   });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    helpers.forEach((helper) => { helper.open = false; });
-    closeTopicPopover();
-  });
-
   const smoothScroll = (target, block = 'start') => {
     target?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block });
   };
@@ -95,14 +90,61 @@
   const closeTopicPopover = () => {
     if (!topicPopover) return;
     topicPopover.hidden = true;
+    topicPopover.removeAttribute('data-placement');
+    topicPopover.style.removeProperty('left');
+    topicPopover.style.removeProperty('top');
+    topicPopover.style.removeProperty('width');
+    topicPopover.style.removeProperty('--hm-topic-arrow-x');
+    topicAnchor = null;
     topicBrowser?.querySelectorAll('.hm-topic-bubble').forEach((button) => {
       button.classList.remove('active');
       button.setAttribute('aria-expanded', 'false');
     });
   };
 
-  const openTopic = (category, records) => {
-    if (!topicPopover || !topicBrowser) return;
+  const positionTopicPopover = () => {
+    if (!topicPopover || topicPopover.hidden || !topicAnchor?.isConnected) return;
+
+    const viewportPad = 12;
+    const gap = 10;
+    const anchorRect = topicAnchor.getBoundingClientRect();
+    const width = Math.min(430, window.innerWidth - (viewportPad * 2));
+
+    topicPopover.style.width = `${width}px`;
+    topicPopover.style.left = `${viewportPad}px`;
+    topicPopover.style.top = `${viewportPad}px`;
+
+    const measuredHeight = Math.min(topicPopover.offsetHeight, window.innerHeight - (viewportPad * 2));
+    const anchorCenter = anchorRect.left + (anchorRect.width / 2);
+    let left = anchorCenter - (width / 2);
+    left = Math.max(viewportPad, Math.min(left, window.innerWidth - width - viewportPad));
+
+    const roomBelow = window.innerHeight - anchorRect.bottom - viewportPad;
+    const roomAbove = anchorRect.top - viewportPad;
+    let top;
+    let placement;
+
+    if (roomBelow >= measuredHeight + gap) {
+      top = anchorRect.bottom + gap;
+      placement = 'below';
+    } else if (roomAbove >= measuredHeight + gap) {
+      top = anchorRect.top - measuredHeight - gap;
+      placement = 'above';
+    } else {
+      top = Math.max(viewportPad, Math.min(anchorRect.bottom + gap, window.innerHeight - measuredHeight - viewportPad));
+      placement = 'viewport';
+    }
+
+    const arrowX = Math.max(18, Math.min(width - 18, anchorCenter - left));
+    topicPopover.style.left = `${left}px`;
+    topicPopover.style.top = `${top}px`;
+    topicPopover.style.setProperty('--hm-topic-arrow-x', `${arrowX}px`);
+    topicPopover.dataset.placement = placement;
+  };
+
+  const openTopic = (category, records, anchor) => {
+    if (!topicPopover || !topicBrowser || !anchor) return;
+    topicAnchor = anchor;
     topicPopover.innerHTML = `
       <div class="hm-topic-popover-head">
         <div>
@@ -117,10 +159,12 @@
     topicPopover.hidden = false;
 
     topicBrowser.querySelectorAll('.hm-topic-bubble').forEach((button) => {
-      const active = button.dataset.hmTopic === category;
+      const active = button === anchor;
       button.classList.toggle('active', active);
       button.setAttribute('aria-expanded', String(active));
     });
+
+    requestAnimationFrame(positionTopicPopover);
 
     topicPopover.querySelector('.hm-topic-close')?.addEventListener('click', closeTopicPopover);
     topicPopover.querySelectorAll('[data-hm-topic-question]').forEach((button) => {
@@ -157,6 +201,15 @@
       library.appendChild(topicBrowser);
     }
 
+    if (!topicPopover) {
+      topicPopover = document.createElement('div');
+      topicPopover.className = 'hm-topic-popover';
+      topicPopover.dataset.hmTopicPopover = '';
+      topicPopover.hidden = true;
+      document.body.appendChild(topicPopover);
+    }
+
+    closeTopicPopover();
     topicBrowser.innerHTML = `
       <div class="hm-topic-browser-intro">
         <span>Pick a topic bubble for focused prompts, or skip these and type directly into Ask Haley.</span>
@@ -164,20 +217,18 @@
       </div>
       <div class="hm-topic-cloud">
         ${topics.map(({ category, records }) => `<button class="hm-topic-bubble" type="button" data-hm-topic="${escapeHtml(category)}" aria-expanded="false"><span>${escapeHtml(category)}</span><small>${records.length}</small></button>`).join('')}
-      </div>
-      <div class="hm-topic-popover" data-hm-topic-popover hidden></div>`;
+      </div>`;
 
-    topicPopover = topicBrowser.querySelector('[data-hm-topic-popover]');
     topicBrowser.querySelectorAll('[data-hm-topic]').forEach((button) => {
       button.addEventListener('click', () => {
         const category = button.dataset.hmTopic;
         if (!category) return;
-        if (!topicPopover.hidden && button.classList.contains('active')) {
+        if (!topicPopover.hidden && topicAnchor === button) {
           closeTopicPopover();
           return;
         }
         const topic = topics.find((item) => item.category === category);
-        if (topic) openTopic(topic.category, topic.records);
+        if (topic) openTopic(topic.category, topic.records, button);
       });
     });
   };
@@ -193,8 +244,17 @@
 
   document.addEventListener('click', (event) => {
     if (!topicPopover || topicPopover.hidden || !topicBrowser) return;
-    if (!topicBrowser.contains(event.target)) closeTopicPopover();
+    if (!topicBrowser.contains(event.target) && !topicPopover.contains(event.target)) closeTopicPopover();
   });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    helpers.forEach((helper) => { helper.open = false; });
+    closeTopicPopover();
+  });
+
+  window.addEventListener('resize', positionTopicPopover);
+  window.addEventListener('scroll', positionTopicPopover, true);
 
   const setupMobileDock = () => {
     if (!shell || !library || !chatPanel || mobileDock) return;
@@ -215,6 +275,7 @@
       button.addEventListener('click', () => {
         const isChat = button.dataset.hmMobileJump === 'chat';
         setActive(isChat ? 'chat' : 'questions');
+        closeTopicPopover();
         smoothScroll(isChat ? chatPanel : library);
       });
     });
@@ -266,6 +327,7 @@
       const target = document.querySelector(href);
       if (!target) return;
       event.preventDefault();
+      closeTopicPopover();
       smoothScroll(target);
       history.replaceState(null, '', href);
     });
@@ -284,6 +346,7 @@
   buildTopicBrowser();
   window.addEventListener('load', scheduleTopicBuild, { once: true });
   compactQuery.addEventListener?.('change', () => {
+    closeTopicPopover();
     scheduleTopicBuild();
     if (!compactQuery.matches && starterWrap) starterWrap.classList.remove('is-open');
   });
