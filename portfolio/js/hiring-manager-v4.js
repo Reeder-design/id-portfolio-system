@@ -1,6 +1,7 @@
 (() => {
   const viewButtons = [...document.querySelectorAll('[data-hm-expertise-view]')];
   const panels = [...document.querySelectorAll('[data-hm-expertise-panel]')];
+  const helpers = [...document.querySelectorAll('.hm-helper')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const compactQuery = window.matchMedia('(max-width: 980px)');
   const shell = document.querySelector('.hm-shell');
@@ -8,9 +9,7 @@
   const chatPanel = document.querySelector('.hm-chat-panel');
   const chatLog = document.querySelector('[data-hm-chat-log]');
   const starterWrap = document.querySelector('.hm-starter-wrap');
-  const libraryHelper = library?.querySelector('.hm-helper') || null;
-  const helpers = [...document.querySelectorAll('.hm-helper')].filter((helper) => helper !== libraryHelper);
-  let mobileDock = null;
+  let guideDock = null;
 
   const showView = (view) => {
     viewButtons.forEach((button) => {
@@ -50,25 +49,25 @@
     helpers.forEach((helper) => { helper.open = false; });
   });
 
-  const closeQuestionOverlays = () => {
-    document.dispatchEvent(new CustomEvent('hm:close-question-overlays'));
+  const closeQuestionWorkspace = () => {
+    document.dispatchEvent(new CustomEvent('hm:close-question-workspace'));
   };
 
   const smoothScroll = (target, block = 'start') => {
     target?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block });
   };
 
-  const setupMobileDock = () => {
-    if (!shell || !library || !chatPanel || mobileDock) return;
-    mobileDock = document.createElement('nav');
-    mobileDock.className = 'hm-mobile-chat-dock';
-    mobileDock.setAttribute('aria-label', 'Hiring guide section navigation');
-    mobileDock.innerHTML = `
-      <button type="button" data-hm-mobile-jump="questions">Browse questions</button>
+  const setupGuideDock = () => {
+    if (!shell || !library || !chatPanel || guideDock) return;
+    guideDock = document.createElement('nav');
+    guideDock.className = 'hm-mobile-chat-dock hm-guide-switch';
+    guideDock.setAttribute('aria-label', 'Hiring guide section navigation');
+    guideDock.innerHTML = `
+      <button type="button" data-hm-mobile-jump="questions">Question Library</button>
       <button type="button" data-hm-mobile-jump="chat">Ask Haley</button>`;
-    shell.parentElement?.insertBefore(mobileDock, shell);
+    shell.parentElement?.insertBefore(guideDock, shell);
 
-    const buttons = [...mobileDock.querySelectorAll('[data-hm-mobile-jump]')];
+    const buttons = [...guideDock.querySelectorAll('[data-hm-mobile-jump]')];
     const setActive = (name) => {
       buttons.forEach((button) => button.classList.toggle('active', button.dataset.hmMobileJump === name));
     };
@@ -77,7 +76,7 @@
       button.addEventListener('click', () => {
         const isChat = button.dataset.hmMobileJump === 'chat';
         setActive(isChat ? 'chat' : 'questions');
-        closeQuestionOverlays();
+        if (isChat) closeQuestionWorkspace();
         smoothScroll(isChat ? chatPanel : library);
       });
     });
@@ -119,11 +118,9 @@
 
       if (href === '#deep-dive') {
         event.preventDefault();
-        closeQuestionOverlays();
         smoothScroll(library);
         window.setTimeout(() => {
-          const deepDive = document.querySelector('[data-hm-v5-topic="Deep Dive"]');
-          deepDive?.click();
+          document.dispatchEvent(new CustomEvent('hm:open-question-topic', { detail: { topic: 'Deep Dive' } }));
         }, reducedMotion ? 0 : 120);
         history.replaceState(null, '', href);
         return;
@@ -132,7 +129,7 @@
       const target = document.querySelector(href);
       if (!target) return;
       event.preventDefault();
-      closeQuestionOverlays();
+      if (href === '#chat') closeQuestionWorkspace();
       smoothScroll(target);
       history.replaceState(null, '', href);
     });
@@ -146,12 +143,11 @@
     }).observe(chatLog, { childList: true, subtree: true });
   }
 
-  setupMobileDock();
+  setupGuideDock();
   setupSuggestionToggle();
   showView('capabilities');
 
   compactQuery.addEventListener?.('change', () => {
-    closeQuestionOverlays();
     if (!compactQuery.matches && starterWrap) starterWrap.classList.remove('is-open');
   });
 })();
