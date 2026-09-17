@@ -29,6 +29,42 @@ main > section:first-child .container:not(:has(> :nth-child(3))) > .breadcrumbs 
   line-height: 1.35;
 }
 
+/* ---------- Sitewide Hiring Guide nav CTA ---------- */
+.site-nav .site-nav-hiring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid rgba(121,201,158,.34);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(121,201,158,.13), rgba(80,132,132,.12));
+  color: inherit;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 7px 18px rgba(52,74,66,.08);
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+
+.site-nav .site-nav-hiring:hover,
+.site-nav .site-nav-hiring:focus-visible,
+.site-nav .site-nav-hiring.active {
+  transform: translateY(-1px);
+  border-color: rgba(151,219,79,.62);
+  background: linear-gradient(145deg, rgba(80,132,132,.96), rgba(77,83,89,.98));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(52,74,66,.16);
+  outline: none;
+}
+
+@media (max-width: 820px) {
+  .site-nav .site-nav-hiring {
+    min-height: 32px;
+    padding: 6px 9px;
+    font-size: .72rem;
+  }
+}
+
 /* ---------- About: adaptation lab ---------- */
 .about-experience-hero + .section {
   padding-top: clamp(46px, 6vw, 64px);
@@ -202,14 +238,18 @@ main > section:first-child .container:not(:has(> :nth-child(3))) > .breadcrumbs 
   .adapt-step:hover,
   .adapt-tab:hover,
   .adapt-tab:focus-visible,
-  .adapt-tab.active {
+  .adapt-tab.active,
+  .site-nav .site-nav-hiring:hover,
+  .site-nav .site-nav-hiring:focus-visible,
+  .site-nav .site-nav-hiring.active {
     transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .adapt-tab,
-  .adapt-step {
+  .adapt-step,
+  .site-nav .site-nav-hiring {
     transition: none !important;
   }
 }
