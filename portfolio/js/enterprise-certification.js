@@ -165,6 +165,35 @@
   setupTabs('[data-evidence]', 'evidence', renderEvidence);
   renderEvidence('supported');
 
+  const resultsSection = document.getElementById('evidence');
+  if (resultsSection && !document.getElementById('design-blueprint')) {
+    const blueprintSection = document.createElement('section');
+    blueprintSection.className = 'section section-soft flagship-section';
+    blueprintSection.id = 'design-blueprint';
+    blueprintSection.innerHTML = `
+      <div class="container">
+        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><p class="eyebrow">Evidence Artifact</p></div>
+        <h2>Inspect the curriculum and assessment blueprint behind the case.</h2>
+        <p class="body-large short-copy">This public-safe reconstruction turns the planning logic into something you can explore: learner routes, objective-to-practice alignment, assessment evidence, and remediation.</p>
+        <div class="challenge-grid">
+          <article class="challenge-card"><h3>Pathway architecture</h3><p>Compare the core seller path, regional extension, and optional foundations without exposing internal course names.</p></article>
+          <article class="challenge-card"><h3>Objective map</h3><p>Trace seller decisions through module placement, practice, assessment evidence, and remediation.</p></article>
+          <article class="challenge-card"><h3>Assessment blueprint</h3><p>Review reconstructed scenario patterns and the rules I used to assess judgment rather than isolated recall.</p></article>
+        </div>
+        <div class="button-row" style="margin-top:24px"><a class="btn btn-primary" href="./evidence/certification-design-blueprint/index.html">Open Certification Design Blueprint</a></div>
+      </div>`;
+    resultsSection.before(blueprintSection);
+
+    const caseNav = document.querySelector('.case-nav');
+    const resultsLink = caseNav?.querySelector('a[href="#evidence"]');
+    if (caseNav && resultsLink && !caseNav.querySelector('a[href="#design-blueprint"]')) {
+      const blueprintLink = document.createElement('a');
+      blueprintLink.href = '#design-blueprint';
+      blueprintLink.textContent = 'Design Blueprint';
+      caseNav.insertBefore(blueprintLink, resultsLink);
+    }
+  }
+
   const navLinks = [...document.querySelectorAll('.case-nav a')];
   const navSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
   if ('IntersectionObserver' in window) {
