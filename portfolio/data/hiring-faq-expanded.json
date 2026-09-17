@@ -1,0 +1,175 @@
+{
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "tool-choice",
+      "category": "Working Style",
+      "short_label": "Choosing the right tool",
+      "prompt": "How do you decide which tool or format to use for a learning project?",
+      "featured": true,
+      "keywords": ["tool choice", "format", "rise", "storyline", "video", "job aid", "performance support", "custom", "authoring tool", "technology"],
+      "answer": "I am not very attached to a specific tool. I start with what the learner actually has to do, how much time they have, how often the content will change, and what the delivery environment can support. If a short Rise module solves it, I do not turn it into a giant Storyline build. If the learner needs to make decisions, I will use Storyline or a custom interaction. If the problem is reference-heavy, a job aid may be better than a course. I like having a broad toolset because it gives me more ways to solve the problem without forcing every request into the same format.",
+      "evidence": [
+        {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Multiple learning formats selected around different seller needs."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Rise for concise launch content and Storyline for customer-facing practice."},
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Custom browser interactions used when decision practice benefits from a different format."}
+      ],
+      "followups": ["learn-new-tools", "performance-vs-training", "interactive-learning"]
+    },
+    {
+      "id": "learn-new-tools",
+      "category": "Working Style",
+      "short_label": "Learning new tools",
+      "prompt": "How quickly can you learn a new authoring tool, LMS, or platform?",
+      "featured": true,
+      "keywords": ["learn tool", "new tool", "new platform", "software", "adapt", "ramp", "learning curve", "authoring system", "lms"],
+      "answer": "Pretty quickly. I care more about understanding the underlying job than memorizing one interface. Once I know the content model, publishing rules, data flow, and what the tool is good or bad at, I can usually transfer what I already know from other authoring systems, LMS platforms, design tools, or code. That is how I have moved between classroom technology, Articulate, Adobe tools, LMS administration, automation, and web-based prototyping. I would rather be known as someone who can learn the next tool than someone whose value disappears when a company changes software.",
+      "evidence": [
+        {"title": "About Me", "path": "about/index.html", "note": "Work across learning design, LMS operations, AI evaluation, facilitation, multimedia, and automation."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Learning beyond traditional authoring tools into Python, browser automation, and system workflows."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Hands-on work adapting from Absorb into Docebo structures and learner journeys."}
+      ],
+      "followups": ["tool-choice", "independent-ownership", "why-hire-me"]
+    },
+    {
+      "id": "performance-vs-training",
+      "category": "Strategy",
+      "short_label": "Training vs performance support",
+      "prompt": "How do you decide whether something should be training at all?",
+      "featured": true,
+      "keywords": ["training need", "performance support", "job aid", "course", "not training", "learning solution", "needs analysis", "microlearning"],
+      "answer": "I try not to solve every problem with a course. If someone needs to remember a concept, practice a decision, or build confidence before doing something, training can make sense. If they mainly need a reference at the moment of work, I would rather give them a usable job aid, checklist, searchable resource, or short performance-support asset. I also look for system or process problems before calling something a learning problem. That usually keeps the learning smaller and more useful.",
+      "evidence": [
+        {"title": "Microlearning & Performance Support", "path": "projects/instructional-design/microlearning-performance-support/index.html", "note": "Short-form learning and support designed around immediate seller needs."},
+        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Examples where support, documentation, reporting, or system changes sit around the learning itself."}
+      ],
+      "followups": ["tool-choice", "scope-control", "business-problem"]
+    },
+    {
+      "id": "scope-control",
+      "category": "Strategy",
+      "short_label": "Controlling scope",
+      "prompt": "What do you do when a stakeholder wants to put everything into the training?",
+      "featured": true,
+      "keywords": ["scope", "too much content", "stakeholder", "everything", "content dump", "technical detail", "push back", "prioritize"],
+      "answer": "That happens a lot with technical products. I usually bring the conversation back to the learner's job: what do they need to recognize, explain, decide, or do after this? Then I map the requested content against those decisions. Important reference material can still exist, but it does not all need equal weight inside the learning. I am comfortable saying, 'This is accurate and useful information, but it is not necessary for this audience in this moment.' That is one of the places where I think an instructional designer earns their keep.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Core, regional, and optional content separated to protect the seller role boundary."},
+        {"title": "Vertical-Positioning Microlearning", "path": "projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html", "note": "A short module kept focused despite broad industry context."}
+      ],
+      "followups": ["technical-training", "sme-pushback", "performance-vs-training"]
+    },
+    {
+      "id": "sme-pushback",
+      "category": "Collaboration",
+      "short_label": "Disagreeing with an SME",
+      "prompt": "What do you do when you disagree with a subject matter expert or stakeholder?",
+      "featured": false,
+      "keywords": ["disagree", "sme", "push back", "stakeholder conflict", "feedback", "collaboration", "review"],
+      "answer": "I try to separate factual ownership from design ownership. If an SME tells me something is technically wrong, that is their lane and I need to fix it. If the disagreement is about putting six screens of detail in front of a seller who only needs one decision, that is where I will push back and explain the learning consequence. I usually make the tradeoff visible instead of turning it into a taste argument: audience, objective, time, cognitive load, maintenance cost, and what behavior we are actually trying to change.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Large-scale SME review while maintaining seller-focused scope."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Focused launch content built from broader approved product sources."}
+      ],
+      "followups": ["sme-collaboration", "scope-control", "content-change"]
+    },
+    {
+      "id": "messy-source-material",
+      "category": "Strategy",
+      "short_label": "Messy source material",
+      "prompt": "How do you work when the source material is incomplete, inconsistent, or changing?",
+      "featured": true,
+      "keywords": ["messy source", "incomplete requirements", "changing content", "source material", "ambiguous", "inconsistent", "late changes", "product updates"],
+      "answer": "I expect source material to be messy, especially around product launches. I build a source-of-truth trail first, flag contradictions instead of quietly resolving them myself, and separate stable learning architecture from details that are likely to change. I also try to make the course modular enough that one product update does not force a rebuild of everything around it. If a decision is still pending, I would rather leave a visible placeholder in development than publish a confident guess.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Maintenance and source-change handling across a multi-course certification."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Launch work designed for independent updates and changing source material."}
+      ],
+      "followups": ["content-change", "sme-pushback", "quality-speed"]
+    },
+    {
+      "id": "quality-speed",
+      "category": "Working Style",
+      "short_label": "Speed vs quality",
+      "prompt": "How do you balance speed, polish, and accuracy when a project has a tight deadline?",
+      "featured": false,
+      "keywords": ["deadline", "speed", "quality", "fast", "launch", "priority", "tradeoff", "accuracy"],
+      "answer": "I prioritize the parts that create risk first: accuracy, learner path, completion behavior, and the decisions the learner has to make. Visual polish matters to me, but I will not spend three hours perfecting animation while the assessment logic is still wrong. I like reusable patterns because they let me move faster without making every project look generic. On tight launch work, I also separate what must be ready for day one from what can be improved in the next maintenance pass.",
+      "evidence": [
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Focused launch-readiness assets with separate update cycles."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Launch support, issue retesting, and immediate post-migration action planning."}
+      ],
+      "followups": ["messy-source-material", "quality-bar", "independent-ownership"]
+    },
+    {
+      "id": "quality-bar",
+      "category": "Working Style",
+      "short_label": "Quality bar",
+      "prompt": "What does high-quality instructional design mean to you?",
+      "featured": false,
+      "keywords": ["quality", "good instructional design", "standard", "bar", "great learning", "effective"],
+      "answer": "For me, good instructional design is not the fanciest course. It is learning that respects the audience, gets the content right, gives people a useful chance to think or practice, and works inside the system where it has to live. I also care a lot about whether someone else can maintain it six months later. A beautiful course that is confusing, impossible to update, or disconnected from the learner's job is still a bad deliverable.",
+      "evidence": [
+        {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Examples across complete pathways, interactive learning, microlearning, multimedia, and live training."},
+        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "The operational side of making learning usable after development."}
+      ],
+      "followups": ["tool-choice", "assessment-design", "maintenance-thinking"]
+    },
+    {
+      "id": "independent-ownership",
+      "category": "Working Style",
+      "short_label": "Independent ownership",
+      "prompt": "What can you own independently without a lot of hand-holding?",
+      "featured": true,
+      "keywords": ["independent", "ownership", "autonomous", "self directed", "own", "hand holding", "project management"],
+      "answer": "Give me the audience, business need, access to the right source material and people, and a clear approval path, and I can usually take the work a long way independently. I am comfortable scoping, organizing source content, designing the learning architecture, building in authoring tools, creating visuals and multimedia, coordinating review, testing in the LMS, documenting issues, and handling the operational pieces around launch. I ask questions early when something affects accuracy or ownership, but I do not need someone to prescribe every screen or interaction for me.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Broad ownership across curriculum, development, QA, LMS testing, reporting, and maintenance."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Independent workflow and automation problem-solving beyond course authoring."}
+      ],
+      "followups": ["why-hire-me", "learn-new-tools", "ownership-boundaries"]
+    },
+    {
+      "id": "maintenance-thinking",
+      "category": "Strategy",
+      "short_label": "Designing for maintenance",
+      "prompt": "How do you design learning that will be maintained after launch?",
+      "featured": false,
+      "keywords": ["maintenance", "updates", "maintainable", "modular", "source ownership", "future updates", "governance"],
+      "answer": "I try to design the maintenance model while I am designing the learning. That means keeping volatile product details from being duplicated across five places, documenting which source owns which claims, building reusable components where they actually help, and separating regional or optional material when it has a different update cycle. I have inherited enough changing product content to know that maintenance is not an afterthought. It is part of the design.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Modular boundaries and source ownership used to support ongoing curriculum changes."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Separate assets could be updated independently as launch content changed."}
+      ],
+      "followups": ["messy-source-material", "scope-control", "quality-bar"]
+    },
+    {
+      "id": "self-critique",
+      "category": "Reflection",
+      "short_label": "What would you improve?",
+      "prompt": "What would you change if you could redo one of your strongest projects?",
+      "featured": true,
+      "keywords": ["improve", "redo", "change", "lesson learned", "mistake", "reflection", "strongest project", "next time"],
+      "answer": "On the certification work, I would define some of the operational rules earlier, especially routing, reporting, source ownership, and certification logic. The learning itself can be well designed and still create extra work later if those surrounding rules are fuzzy. I would also push the final assessment further toward performance-based seller decisions instead of letting any unnecessary recall creep in. That project taught me to design the course and the operating model together much earlier.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Results, lessons learned, reporting workarounds, and future improvements."}
+      ],
+      "followups": ["quality-bar", "measurement-reporting", "maintenance-thinking"]
+    },
+    {
+      "id": "why-hire-me",
+      "category": "Reflection",
+      "short_label": "Why hire you?",
+      "prompt": "What would make you valuable on an instructional design team?",
+      "featured": true,
+      "keywords": ["why hire", "value", "strength", "team", "differentiator", "instructional designer", "what makes you different"],
+      "answer": "I can move between the learning problem and the stuff around it. I am comfortable doing the actual instructional design, building the course, making the visuals, editing media, working in the LMS, troubleshooting the learner path, looking at reporting, and using code when there is repetitive work worth automating. I also came from teaching, so I care about whether another human can actually understand and use what I build. I think my strongest value is that I do not stop at 'the course is published.' I tend to notice the surrounding workflow and fix what I reasonably can.",
+      "evidence": [
+        {"title": "Projects", "path": "projects/index.html", "note": "Portfolio breadth across learning design, LMS operations, AI evaluation, and system workflows."},
+        {"title": "About Me", "path": "about/index.html", "note": "Background and how my role changes across different kinds of work."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Examples of solving operational problems around the learning ecosystem."}
+      ],
+      "followups": ["independent-ownership", "learn-new-tools", "self-critique"]
+    }
+  ]
+}
