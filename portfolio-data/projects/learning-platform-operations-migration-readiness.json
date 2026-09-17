@@ -6,229 +6,117 @@
   "category": "lms-administration",
   "subcategory": null,
   "status": "live",
-  "summary": "I helped prepare learning content and learner journeys for a transition to Docebo LMS by testing migrated courses, learning plans, certifications, visibility, navigation, and support workflows across multiple audiences.",
+  "summary": "I supported the transition from Absorb LMS to Docebo LMS by testing how migrated courses, learning plans, certifications, renewals, visibility, navigation, and support workflows behaved across employee, partner, and customer experiences.",
   "page_path": "portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Move a learning ecosystem into Docebo LMS while preserving or rebuilding course visibility, catalogs, learning plans, certifications, renewals, content relationships, learner navigation, support guidance, and reporting expectations.",
+    "business_need": "Move a working learning ecosystem from Absorb LMS into Docebo LMS while preserving or rebuilding course visibility, catalogs, learning plans, certifications, renewals, content relationships, learner navigation, support guidance, and reporting expectations.",
     "audience": "Employees, partners, customers, and learning operations teams.",
     "learning_objectives": [
-      "Validate learner-facing catalogs, learning plans, certifications, renewal paths, navigation, and content before launch.",
-      "Test employee, partner, and customer experiences from a learner point of view.",
+      "Validate how learner-facing catalogs, learning plans, certifications, renewal paths, navigation, and content translated from Absorb into Docebo before launch.",
+      "Test employee, partner, and customer experiences from a learner point of view in Docebo.",
       "Identify content mapping, duplicate-content, visibility, and relationship issues before they reached learners.",
-      "Document issues, support triage, and contribute to launch-readiness and learner-support work."
+      "Document issues, support retesting, and contribute to launch-readiness and learner-support work."
     ],
-    "role": "Instructional designer + LMS content administrator supporting migration readiness.",
-    "design_approach": "I treated the migration as both a platform change and a learner-experience change. I tested what learners could see and do, checked the structures behind those journeys, documented issues, and worked with the broader migration team to resolve problems before and after launch.",
-    "development_process": "Participated in UAT for employee, partner, and customer experiences; validated catalogs, learning plans, certifications, renewals, thumbnails, navigation, and learner-facing content; surfaced mapping, duplicate-content, and visibility issues; reviewed learner guidance; and supported issue triage and launch readiness.",
+    "role": "Instructional designer and LMS content administrator supporting the Absorb-to-Docebo migration, UAT, learner-experience validation, and launch readiness.",
+    "design_approach": "I treated the migration as both a platform change and a learner-experience change. I used my knowledge of the existing Absorb learning ecosystem as a baseline, then tested what learners could see and do in Docebo, checked the structures behind those journeys, documented issues, and worked with the broader migration team to validate fixes before and after launch.",
+    "development_process": "I participated in UAT for employee, partner, and customer experiences; validated migrated catalogs, learning plans, certifications, renewals, thumbnails, navigation, and learner-facing content in Docebo; surfaced mapping, duplicate-content, and visibility issues; reviewed learner guidance; and supported issue triage, retesting, and launch readiness.",
     "outcomes": [
-      "I participated in UAT for employee, partner, and customer learner experiences.",
-      "I reviewed learning plans, certifications, renewals, catalogs, visibility, navigation, and learner-facing content.",
-      "I helped document issues, validate fixes, and support launch readiness and post-launch issue triage."
+      "Used the existing Absorb LMS experience as a baseline for validating how learning content and learner journeys translated into Docebo LMS.",
+      "Tested employee, partner, and customer learner experiences in Docebo across learning plans, certifications, renewals, catalogs, visibility, navigation, and learner-facing content.",
+      "Documented issues, helped validate fixes, and supported migration readiness and post-launch issue triage."
     ]
   },
   "detail_sections": [
     {
       "id": "uat-validation",
       "eyebrow": "UAT + Validation",
-      "title": "Test the parts learners actually touch.",
-      "summary": "I checked learner-facing behavior and the platform structures behind it before launch.",
+      "title": "What I tested in Docebo before and around launch.",
+      "summary": "I checked learner-facing behavior and the platform structures behind it using the existing Absorb experience as a baseline.",
       "layout": "cards",
       "items": [
-        {
-          "title": "Audience visibility",
-          "body": "Tested employee, partner, and customer experiences and checked whether content appeared to the right audiences.",
-          "tag": "Access"
-        },
-        {
-          "title": "Learning plans",
-          "body": "Reviewed learning-plan structure, relationships, and learner-facing behavior in the new platform.",
-          "tag": "Pathways"
-        },
-        {
-          "title": "Certifications + renewals",
-          "body": "Tested certification workflows and reviewed renewal paths so repeat learners followed the intended experience.",
-          "tag": "Certification"
-        },
-        {
-          "title": "Content + navigation",
-          "body": "Validated learner-facing content, thumbnails, navigation, catalogs, and supporting materials for launch readiness.",
-          "tag": "Experience"
-        },
-        {
-          "title": "Issue triage",
-          "body": "Documented problems, supported troubleshooting, and helped move launch-readiness issues toward resolution.",
-          "tag": "QA"
-        }
+        {"title": "Audience visibility", "body": "Tested employee, partner, and customer experiences and checked whether migrated content appeared to the right audiences in Docebo.", "tag": "Access"},
+        {"title": "Learning plans", "body": "Reviewed how learning-plan structure, relationships, and learner-facing behavior translated from Absorb into Docebo.", "tag": "Pathways"},
+        {"title": "Certifications + renewals", "body": "Tested certification workflows and renewal paths so new and returning learners followed the intended experience.", "tag": "Certification"},
+        {"title": "Content + navigation", "body": "Validated learner-facing content, thumbnails, navigation, catalogs, and supporting materials for Docebo launch readiness.", "tag": "Experience"},
+        {"title": "Issue triage", "body": "Documented problems, supported troubleshooting, and helped move migration issues through retesting and resolution.", "tag": "QA"}
       ]
     },
     {
       "id": "migration-issues",
       "eyebrow": "Migration Issues",
-      "title": "Catch problems before they become learner problems.",
-      "summary": "The migration created new structures and relationships that needed active validation.",
+      "title": "What I looked for when Absorb behavior did not translate cleanly into Docebo.",
+      "summary": "The migration created new structures and relationships that needed active comparison and validation.",
       "layout": "table",
-      "columns": [
-        "Issue area",
-        "What I checked",
-        "Why it mattered"
-      ],
+      "columns": ["Issue area", "What I checked", "Why it mattered"],
       "rows": [
-        [
-          "Content mapping",
-          "Whether migrated content was connected to the intended learning structure.",
-          "Incorrect mapping could break the learner journey or completion logic."
-        ],
-        [
-          "Duplicate content",
-          "Overlapping or repeated records created during transition work.",
-          "Duplicates could confuse learners and administrators."
-        ],
-        [
-          "Visibility",
-          "Which audiences could see catalogs, training, and learning structures.",
-          "The right content had to appear to the right learner group."
-        ],
-        [
-          "Renewal behavior",
-          "How certification and renewal paths behaved for returning learners.",
-          "Renewal logic needed to preserve a clear repeat-learning experience."
-        ],
-        [
-          "Learner guidance",
-          "Navigation, onboarding guidance, and support resources.",
-          "A technically correct migration still needed to be understandable to learners."
-        ]
+        ["Content mapping", "Whether migrated content was connected to the intended learning structure in Docebo.", "Incorrect mapping could break the learner journey or completion logic."],
+        ["Duplicate content", "Overlapping or repeated records created during transition work.", "Duplicates could confuse learners and administrators."],
+        ["Visibility", "Which audiences could see catalogs, training, and learning structures.", "The right content had to appear to the right learner group."],
+        ["Renewal behavior", "How certification and renewal paths behaved for returning learners.", "Renewal logic needed to preserve a clear repeat-learning experience."],
+        ["Learner guidance", "Navigation, onboarding guidance, and support resources in the new LMS.", "A technically correct migration still needed to be understandable to learners."]
       ],
       "note": "This is a public-safe reconstruction. Internal configuration, learner records, issue logs, and proprietary screenshots are omitted."
     },
     {
       "id": "migration-workflow",
       "eyebrow": "Migration Workflow",
-      "title": "My contribution moved from testing into launch support.",
+      "title": "How my contribution moved from Absorb comparison into Docebo launch support.",
       "summary": "I worked inside the broader migration effort rather than owning the entire platform transition.",
       "layout": "flow",
       "groups": [
         {
-          "title": "Contribution",
+          "title": "My contribution",
           "description": "Public-safe summary of the work I directly supported.",
-          "items": [
-            "Review migrated structures",
-            "Test learner journeys",
-            "Document issues",
-            "Retest fixes",
-            "Support launch readiness",
-            "Help triage post-launch issues"
-          ]
+          "items": ["Compare Absorb and migrated structures", "Test learner journeys in Docebo", "Document issues", "Retest fixes", "Support launch readiness", "Help triage post-launch issues"]
         }
       ]
     },
     {
       "id": "learner-support",
       "eyebrow": "Learner Experience",
-      "title": "Platform behavior and learner communication belong together.",
+      "title": "How I connected platform behavior to learner communication.",
       "summary": "I contributed feedback on navigation, onboarding guidance, and support resources in addition to system validation.",
       "layout": "cards",
       "items": [
-        {
-          "title": "Navigation",
-          "body": "Reviewed how learners moved through the new environment and flagged friction in the learner-facing experience.",
-          "tag": "UX"
-        },
-        {
-          "title": "Onboarding guidance",
-          "body": "Contributed feedback on guidance that helped learners understand the new platform and learning structure.",
-          "tag": "Support"
-        },
-        {
-          "title": "Launch support",
-          "body": "Supported issue triage and launch-readiness work as real platform behavior was validated and refined.",
-          "tag": "Operations"
-        }
+        {"title": "Navigation", "body": "Reviewed how learners moved through Docebo and flagged friction in the learner-facing experience.", "tag": "UX"},
+        {"title": "Onboarding guidance", "body": "Contributed feedback on guidance that helped learners understand the new platform and learning structure.", "tag": "Support"},
+        {"title": "Launch support", "body": "Supported issue triage, retesting, and launch-readiness work as real platform behavior was validated and refined.", "tag": "Operations"}
       ]
     },
     {
       "id": "evidence-boundaries",
       "eyebrow": "Evidence",
-      "title": "Keep the contribution accurate.",
-      "summary": "This case shows the migration work I directly supported without claiming ownership of the full platform program.",
+      "title": "Keep my migration contribution accurate.",
+      "summary": "This case shows the work I directly completed without claiming ownership of the full platform program.",
       "layout": "cards",
       "items": [
-        {
-          "title": "Directly supported",
-          "body": "UAT, content validation, learning-plan reviews, learner-experience audits, certification workflow testing, issue triage, and launch support.",
-          "tag": "Supported"
-        },
-        {
-          "title": "Operational support",
-          "body": "I supported learner guidance, issue documentation, fix validation, and post-launch troubleshooting.",
-          "tag": "Operations"
-        },
-        {
-          "title": "Not claimed",
-          "body": "I do not claim ownership of the full migration, platform architecture, or quantitative business impact.",
-          "tag": "Boundary"
-        }
+        {"title": "Directly supported", "body": "Absorb-to-Docebo UAT, content validation, learning-plan reviews, learner-experience audits, certification workflow testing, issue triage, retesting, and launch support.", "tag": "Supported"},
+        {"title": "Operational support", "body": "I supported learner guidance, issue documentation, fix validation, and post-launch troubleshooting.", "tag": "Operations"},
+        {"title": "Not claimed", "body": "I do not claim sole ownership of the full migration, platform architecture, or quantitative business impact.", "tag": "Boundary"}
       ]
     },
     {
       "id": "reflection",
       "eyebrow": "Reflection",
-      "title": "What the migration reinforced for me.",
+      "title": "What the Absorb-to-Docebo migration reinforced for me.",
       "summary": "LMS migrations depend on governance, testing, and learner communication as much as configuration.",
       "layout": "cards",
       "items": [
-        {
-          "title": "Test by role",
-          "body": "Employee, partner, and customer experiences need to be tested as different learner journeys rather than assumed to behave the same way.",
-          "tag": "Lesson"
-        },
-        {
-          "title": "Validate before launch",
-          "body": "Early UAT and content validation make mapping, visibility, renewal, and navigation problems easier to catch before they spread.",
-          "tag": "Lesson"
-        },
-        {
-          "title": "Treat support as part of launch",
-          "body": "Learner guidance and support resources matter because a technically correct platform change can still be confusing to use.",
-          "tag": "Lesson"
-        }
+        {"title": "Test by role", "body": "Employee, partner, and customer experiences need to be tested as different learner journeys rather than assumed to behave the same way.", "tag": "Lesson"},
+        {"title": "Compare behavior, not just files", "body": "A course existing in Docebo did not mean the migration was finished; visibility, relationships, renewals, tracking, and navigation still needed validation.", "tag": "Lesson"},
+        {"title": "Treat support as part of launch", "body": "Learner guidance and support resources matter because a technically correct platform change can still be confusing to use.", "tag": "Lesson"}
       ]
     }
   ],
   "related_work": [
-    {
-      "project_id": "enterprise-sales-certification",
-      "relationship": "Learning-path implementation, certification behavior, and migration validation"
-    },
-    {
-      "project_id": "certification-reporting-automation",
-      "relationship": "LMS reporting, completion analysis, and operational review"
-    }
+    {"project_id": "enterprise-sales-certification", "relationship": "Learning-path implementation, certification behavior, and migration validation"},
+    {"project_id": "certification-reporting-automation", "relationship": "LMS reporting, completion analysis, and operational review"}
   ],
-  "skills": [
-    "LMS Administration",
-    "User Acceptance Testing",
-    "LMS Migration",
-    "Content Governance",
-    "Learner Experience",
-    "Certification Workflows",
-    "Troubleshooting",
-    "Documentation",
-    "Launch Readiness",
-    "Stakeholder Collaboration"
-  ],
-  "tools": [
-    "Docebo LMS",
-    "Articulate Rise 360",
-    "xAPI / SCORM",
-    "Microsoft 365"
-  ],
+  "skills": ["LMS Administration", "User Acceptance Testing", "LMS Migration", "Content Governance", "Learner Experience", "Certification Workflows", "Troubleshooting", "Documentation", "Launch Readiness", "Stakeholder Collaboration"],
+  "tools": ["Absorb LMS", "Docebo LMS", "Articulate Rise 360", "xAPI / SCORM", "Microsoft 365"],
   "assets": [],
-  "source_material_notes": "Generalized from documented LMS migration and launch-support work. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted. This case reflects a contributor/support role and does not claim ownership of the full migration.",
-  "dates": {
-    "created": "2026-09-15",
-    "updated": "2026-09-16"
-  }
+  "source_material_notes": "Generalized from completed LMS migration and launch-support work moving learning operations from Absorb LMS into Docebo LMS. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted. This case reflects my contributor/support role and does not claim ownership of the full migration.",
+  "dates": {"created": "2026-09-15", "updated": "2026-09-16"}
 }
