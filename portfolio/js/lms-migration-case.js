@@ -1,33 +1,33 @@
 (() => {
   const transitionData = {
     absorb: {
-      label: 'Legacy Platform / Absorb LMS',
-      title: 'I used the existing Absorb environment as the migration baseline.',
-      text: 'I already knew the courses, learning plans, certifications, catalogs, learner expectations, and support patterns, which made it easier to identify what needed to be rebuilt or validated in Docebo.',
+      label: 'Existing Absorb Environment',
+      title: 'I started with the courses, paths, and support patterns learners already used.',
+      text: 'Knowing the existing Absorb setup helped me identify what had to be recreated, what could change, and what learner behavior needed to stay intact in Docebo.',
       cards: [
-        ['Known structures', 'Courses, learning paths, certifications, catalogs, audiences, and support workflows.'],
-        ['Migration question', 'What needed to be recreated, reconfigured, or communicated differently in Docebo?'],
-        ['My baseline', 'The existing learner journey gave me a concrete comparison point for the new platform.']
+        ['Learning setup', 'Courses, learning plans, certifications, catalogs, audiences, and learner history.'],
+        ['Support setup', 'Common learner questions, navigation patterns, existing guidance, and admin processes.'],
+        ['What I compared', 'What learners needed to see and do before and after the move.']
       ]
     },
     docebo: {
-      label: 'Target Platform / Docebo LMS',
-      title: 'I helped set up and validate the new learning environment.',
-      text: 'My work included configuring learning structures, plans, content, catalogs, certifications, visibility, and learner-facing assets, then testing how those pieces behaved for different audiences.',
+      label: 'Docebo Setup',
+      title: 'I configured the learning structures learners would use in the new platform.',
+      text: 'My work included learning plans, content relationships, catalogs, certifications, audience visibility, and learner-facing assets, followed by testing for each audience type.',
       cards: [
-        ['Setup', 'Learning structures, learning plans, content relationships, catalogs, certifications, and audience visibility.'],
-        ['Validation', 'Employee, partner, and customer journeys, renewals, navigation, completion behavior, and migrated content.'],
-        ['Launch operations', 'Issue documentation, retesting, learner support, documentation workflows, and post-launch reporting.']
+        ['Learning plans', 'Plan structure, sequencing, content relationships, and audience access.'],
+        ['Content + catalogs', 'Migrated content, learner-facing assets, catalogs, navigation, and visibility.'],
+        ['Certifications', 'Certification paths, renewal behavior, and completion logic.']
       ]
     },
     role: {
-      label: 'My Migration Role',
-      title: 'My role covered setup, UAT, learner support, and post-launch operations.',
-      text: 'I worked at the learning-content, learner-experience, and LMS-operations layer of the migration rather than owning the entire platform program.',
+      label: 'My Role',
+      title: 'I handled the learning-content and learner-experience side of the move.',
+      text: 'I worked across setup, UAT, issue retesting, learner support, documentation, and reporting as part of the broader migration team.',
       cards: [
-        ['Configure', 'Set up learning structures, plans, content, catalogs, certifications, and learner-facing relationships.'],
-        ['Test', 'Validate learner journeys, document issues, and retest fixes across employee, partner, and customer experiences.'],
-        ['Support', 'Help with inbox support, documentation, reusable customer-support email templates, reporting, and immediate action planning.']
+        ['Configure', 'Set up learning plans, content, catalogs, certifications, and learner-facing relationships.'],
+        ['Test', 'Check learner journeys, document issues, and retest fixes across employee, partner, and customer experiences.'],
+        ['Support', 'Help with the inbox, support documentation, reusable email templates, reporting, and follow-up actions.']
       ]
     }
   };
@@ -35,8 +35,8 @@
   const validationData = {
     visibility: {
       label: 'Audience Visibility',
-      title: 'I checked whether the right learners could see the right content in Docebo.',
-      text: 'I tested employee, partner, and customer experiences because audience rules and catalogs could behave differently after migration.',
+      title: 'I checked whether the right learners could see the right content.',
+      text: 'Employee, partner, and customer audiences did not all use the same catalogs or assignments, so I tested each learner type separately.',
       checks: [
         ['What I checked', 'Audience visibility, catalogs, groups, and learner-facing content.'],
         ['What I looked for', 'Missing content, wrong visibility, duplicate assignments, or broken learner paths.']
@@ -44,8 +44,8 @@
     },
     plans: {
       label: 'Learning Plans',
-      title: 'I configured and validated learning-plan structures.',
-      text: 'I worked with learning plans and content relationships in Docebo, then checked whether the resulting learner path matched the intended experience.',
+      title: 'I checked the plan structure from assignment through completion.',
+      text: 'I configured and tested learning plans so the content order, relationships, prerequisites, and audience access matched the intended path.',
       checks: [
         ['What I checked', 'Plan structure, content relationships, sequencing, prerequisites, and audience access.'],
         ['What I looked for', 'Missing content, wrong relationships, duplicate assignments, or confusing sequencing.']
@@ -53,17 +53,17 @@
     },
     certifications: {
       label: 'Certifications + Renewals',
-      title: 'I tested certification and renewal behavior after migration.',
-      text: 'I reviewed how new and returning learners moved through certification requirements and renewal paths in Docebo.',
+      title: 'I tested new certification paths and returning-learner renewals.',
+      text: 'I checked how first-time and returning learners moved through certification requirements and renewal paths in Docebo.',
       checks: [
-        ['What I checked', 'Certification workflows, renewal paths, completion behavior, and learner-plan configuration.'],
+        ['What I checked', 'Certification workflows, renewal paths, completion behavior, and learning-plan configuration.'],
         ['What I looked for', 'Unexpected renewal behavior, duplicate records, incorrect credit, or completion-path issues.']
       ]
     },
     experience: {
       label: 'Content + Navigation',
-      title: 'I validated the learner-facing content and navigation around the platform change.',
-      text: 'I checked course assets, thumbnails, navigation, guidance, and support resources so the migrated environment made sense to learners.',
+      title: 'I checked the learner-facing content around the migration.',
+      text: 'I reviewed migrated course assets, thumbnails, links, catalogs, navigation, and guidance so the new environment made sense to learners.',
       checks: [
         ['What I checked', 'Content, thumbnails, navigation, catalogs, links, and learner guidance.'],
         ['What I looked for', 'Outdated assets, confusing placement, navigation friction, broken links, and support gaps.']
@@ -71,44 +71,77 @@
     },
     launch: {
       label: 'Support + Launch',
-      title: 'I supported issue resolution and the processes learners needed after launch.',
-      text: 'I documented issues, retested fixes, helped with learner inbox support, contributed reusable support responses, and supported post-launch reporting and action planning.',
+      title: 'I tracked what still needed attention once learners entered the new platform.',
+      text: 'I documented issues, retested fixes, helped with learner inbox support, contributed reusable support responses, and supported post-launch reporting.',
       checks: [
         ['What I checked', 'Known issues, retest status, recurring support questions, and learner-facing impact.'],
-        ['What I looked for', 'Problems that still needed resolution, documentation, communication, reporting, or follow-up ownership.']
+        ['What I looked for', 'Problems that still needed a fix, documentation, communication, reporting, or clear ownership.']
       ]
     }
   };
 
   const migrationData = {
     review: {
-      title: 'Use Absorb as the baseline.',
-      text: 'I reviewed the existing courses, learning plans, certifications, catalogs, and support patterns before building and validating the corresponding Docebo experience.'
+      title: 'Map what learners and admins already relied on.',
+      text: 'I reviewed courses, learning plans, certifications, catalogs, and support patterns in Absorb before configuring and testing their Docebo counterparts.'
     },
     test: {
-      title: 'Configure the Docebo learning structures.',
-      text: 'I helped set up learning plans, content relationships, catalogs, certifications, visibility, and learner-facing assets needed for the migrated experience.'
+      title: 'Configure the Docebo learning setup.',
+      text: 'I helped set up learning plans, content relationships, catalogs, certifications, audience visibility, and learner-facing assets.'
     },
     resolve: {
-      title: 'Validate the learner journeys and fix issues.',
-      text: 'I tested employee, partner, and customer experiences, documented problems, supported triage, and retested fixes as migration issues were resolved.'
+      title: 'Test the learner paths and retest fixes.',
+      text: 'I tested employee, partner, and customer experiences, documented problems, supported triage, and checked the fixes once they were ready.'
     },
     launch: {
-      title: 'Support launch and stabilize operations.',
-      text: 'I helped with learner inbox support, documentation workflows, reusable customer-support email templates, post-launch reporting, and immediate action planning.'
+      title: 'Support learners and track what still needed work.',
+      text: 'I helped with inbox support, documentation, reusable customer-support email templates, post-launch reporting, and immediate follow-up actions.'
+    }
+  };
+
+  const supportOpsData = {
+    inbox: {
+      label: 'Learner + Customer Inbox',
+      title: 'I helped troubleshoot the questions that appeared after launch.',
+      text: 'I responded to learner and customer issues, tracked recurring questions, and used those patterns to identify where guidance or processes needed to improve.',
+      cards: [
+        ['Inputs', 'Learner questions, customer issues, access problems, and navigation confusion.'],
+        ['My work', 'Troubleshoot, document, route, and identify repeated patterns.'],
+        ['Output', 'Clearer responses and a better picture of what needed follow-up.']
+      ]
+    },
+    docs: {
+      label: 'Documentation + Templates',
+      title: 'I helped turn common support questions into reusable responses.',
+      text: 'I documented support processes and helped build customer-support email templates so repeat questions did not require starting from scratch every time.',
+      cards: [
+        ['Inputs', 'Recurring questions, known fixes, escalation paths, and common account issues.'],
+        ['My work', 'Document the response process and draft reusable customer email templates.'],
+        ['Output', 'More consistent support responses and clearer handoff guidance.']
+      ]
+    },
+    reporting: {
+      label: 'Post-Launch Reporting',
+      title: 'I helped make unresolved issues and follow-up work visible.',
+      text: 'I supported immediate post-launch reporting and action planning so open issues, exceptions, and next steps were easier to track.',
+      cards: [
+        ['Inputs', 'Support trends, known issues, exceptions, retest status, and follow-up needs.'],
+        ['My work', 'Organize reporting and surface items that still needed an owner or action.'],
+        ['Output', 'A clearer immediate plan of action after launch.']
+      ]
     }
   };
 
   const evidenceData = {
     supported: [
-      ['Configuration + migration support', 'I helped set up learning structures, learning plans, content, catalogs, and learner-facing relationships in Docebo.'],
-      ['UAT + issue validation', 'I tested employee, partner, and customer experiences, documented migration problems, and retested fixes.'],
+      ['Configuration', 'I helped set up learning structures, learning plans, content, catalogs, and learner-facing relationships in Docebo.'],
+      ['UAT + retesting', 'I tested employee, partner, and customer experiences, documented migration problems, and retested fixes.'],
       ['Support + reporting', 'I supported the learner inbox, documentation and email-template workflows, and immediate post-launch reporting and action planning.']
     ],
     learned: [
-      ['Configure and test together', 'A migrated structure needs both correct setup and learner-path validation; one does not replace the other.'],
-      ['Support data is operational data', 'Recurring inbox questions can reveal missing guidance, broken paths, or unclear ownership that needs a system or process fix.'],
-      ['Post-launch needs a plan', 'Immediate reporting and action tracking help separate launch noise from issues that need sustained follow-up.']
+      ['Setup and testing belong together', 'A learning plan can be configured correctly on paper and still fail when a real learner moves through it.'],
+      ['Support questions reveal system problems', 'Repeated inbox questions often pointed to missing guidance, access issues, or a process that needed to change.'],
+      ['Launch is not the finish line', 'Reporting and follow-up made it easier to separate one-off questions from problems that needed continued work.']
     ]
   };
 
@@ -168,6 +201,16 @@
   };
   setupTabs('[data-migration]', 'migration', renderMigration);
   renderMigration('review');
+
+  const renderSupportOps = (key) => {
+    const data = supportOpsData[key];
+    document.getElementById('supportOpsLabel').textContent = data.label;
+    document.getElementById('supportOpsTitle').textContent = data.title;
+    document.getElementById('supportOpsText').textContent = data.text;
+    document.getElementById('supportOpsCards').innerHTML = data.cards.map(([label, body]) => `<article class="transition-lens-card"><span>${label}</span><p>${body}</p></article>`).join('');
+  };
+  setupTabs('[data-supportops]', 'supportops', renderSupportOps);
+  renderSupportOps('inbox');
 
   const renderEvidence = (key) => {
     document.getElementById('evidencePanel').innerHTML = evidenceData[key].map(([title, body]) => `<article class="evidence-card"><strong>${title}</strong><p>${body}</p></article>`).join('');
