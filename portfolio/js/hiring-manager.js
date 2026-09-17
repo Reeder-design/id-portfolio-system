@@ -1,13 +1,21 @@
 (() => {
   const root = new URL('../', window.location.href);
   const faqUrl = new URL('data/hiring-faq.json', root);
+  const expandedFaqUrl = new URL('data/hiring-faq-expanded.json', root);
+  const toolsUrl = new URL('data/hiring-tools.json', root);
   const searchUrl = new URL('data/hiring-search.json', root);
+  const iconSprite = new URL('assets/icons/portfolio-icons.svg', root).href;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const state = {
     questions: [],
     searchEntries: [],
+    tools: [],
+    learningStatement: '',
     activeCategory: 'All',
-    lastQuestionId: null
+    activeTool: null,
+    lastQuestionId: null,
+    isReplying: false
   };
 
   const STOP_WORDS = new Set([
@@ -83,8 +91,15 @@
   const categoryList = document.querySelector('[data-hm-categories]');
   const starterList = document.querySelector('[data-hm-starters]');
   const clearButton = document.querySelector('[data-hm-clear]');
+  const toolTabs = document.querySelector('[data-hm-tool-tabs]');
+  const toolPanel = document.querySelector('[data-hm-tool-panel]');
+  const learningStatement = document.querySelector('[data-hm-learning-statement] p');
 
   if (!chatLog || !form || !input || !questionList || !categoryList || !starterList) return;
+
+  const animateMessage = (article) => {
+    article.classList.add('is-entering');
+  };
 
   const scrollChat = () => {
     requestAnimationFrame(() => {
@@ -99,6 +114,8 @@
       <div class="hm-message-label">Hiring manager</div>
       <div class="hm-message-bubble">${escapeHtml(text)}</div>`;
     chatLog.appendChild(article);
+    animateMessage(article);
+    scrollChat();
   };
 
   const evidenceMarkup = (evidence = []) => {
@@ -125,45 +142,60 @@
     if (!related.length) return '';
     return `
       <div class="hm-followups">
-        <span>Good follow-up questions</span>
+        <span>Go one level deeper</span>
         <div>
           ${related.map((question) => `<button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('')}
         </div>
       </div>`;
   };
 
-  const appendHaleyAnswer = (question) => {
+  const createTypingMessage = () => {
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley is-entering hm-typing-message';
+    article.innerHTML = `
+      <div class="hm-message-label">Portfolio Haley</div>
+      <div class="hm-message-bubble"><span class="hm-typing" aria-label="Preparing answer"><span></span><span></span><span></span></span></div>`;
+    chatLog.appendChild(article);
+    scrollChat();
+    return article;
+  };
+
+  const appendHaleyAnswerNow = (question, typingNode = null) => {
     state.lastQuestionId = question.id;
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-haley';
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley</div>
+      <div class="hm-message-label">Portfolio Haley · ${escapeHtml(question.category)}</div>
       <div class="hm-message-bubble">
         <p>${escapeHtml(question.answer)}</p>
         ${evidenceMarkup(question.evidence)}
         ${followupMarkup(question.followups)}
       </div>`;
-    chatLog.appendChild(article);
+    if (typingNode) typingNode.replaceWith(article);
+    else chatLog.appendChild(article);
     article.querySelectorAll('[data-question-id]').forEach((button) => {
       button.addEventListener('click', () => askById(button.dataset.questionId));
     });
+    animateMessage(article);
+    state.isReplying = false;
     scrollChat();
   };
 
-  const appendFallback = (query) => {
-    const matches = state.searchEntries
-      .map((entry) => ({ entry, score: scoreSearchEntry(query, entry) }))
-      .filter((item) => item.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3)
-      .map((item) => item.entry);
+  const appendHaleyAnswer = (question) => {
+    if (state.isReplying) return;
+    state.isReplying = true;
+    const typingNode = createTypingMessage();
+    const delay = reducedMotion ? 0 : 360;
+    window.setTimeout(() => appendHaleyAnswerNow(question, typingNode), delay);
+  };
 
+  const appendFallbackNow = (query, matches, typingNode = null) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-haley';
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley</div>
+      <div class="hm-message-label">Portfolio Haley · Evidence check</div>
       <div class="hm-message-bubble">
-        <p>I do not have a prewritten interview answer for that exact question, so I would rather point you to the closest published work than invent an answer.</p>
+        <p>I do not have a supported interview answer for that exact question, so I would rather point you to the closest published work than make something up.</p>
         ${matches.length ? `
           <div class="hm-evidence">
             <p class="hm-evidence-label">Closest portfolio matches</p>
@@ -175,15 +207,32 @@
                   <em>Open evidence →</em>
                 </a>`).join('')}
             </div>
-          </div>` : '<p class="hm-chat-note">Try asking about instructional design, technical sales training, LMS work, AI evaluation, facilitation, reporting, or automation.</p>'}
+          </div>` : '<p class="hm-chat-note">Try asking about instructional design, technical sales training, tools, LMS work, AI evaluation, facilitation, reporting, collaboration, or automation.</p>'}
       </div>`;
-    chatLog.appendChild(article);
+    if (typingNode) typingNode.replaceWith(article);
+    else chatLog.appendChild(article);
+    animateMessage(article);
+    state.isReplying = false;
     scrollChat();
+  };
+
+  const appendFallback = (query) => {
+    if (state.isReplying) return;
+    state.isReplying = true;
+    const matches = state.searchEntries
+      .map((entry) => ({ entry, score: scoreSearchEntry(query, entry) }))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((item) => item.entry);
+    const typingNode = createTypingMessage();
+    const delay = reducedMotion ? 0 : 280;
+    window.setTimeout(() => appendFallbackNow(query, matches, typingNode), delay);
   };
 
   const askQuestion = (query, options = {}) => {
     const clean = String(query || '').trim();
-    if (!clean) return;
+    if (!clean || state.isReplying) return;
     if (!options.skipUserMessage) appendUserMessage(clean);
 
     const ranked = state.questions
@@ -195,6 +244,7 @@
   };
 
   const askById = (id) => {
+    if (state.isReplying) return;
     const question = state.questions.find((item) => item.id === id);
     if (!question) return;
     appendUserMessage(question.prompt);
@@ -227,7 +277,10 @@
   };
 
   const renderStarters = () => {
-    const starters = state.questions.filter((question) => question.featured).slice(0, 8);
+    const priorityIds = ['why-hire-me','end-to-end-project','technical-training','tool-choice','sme-pushback','learn-new-tools','self-critique','coding-automation'];
+    const starters = priorityIds
+      .map((id) => state.questions.find((question) => question.id === id))
+      .filter(Boolean);
     starterList.innerHTML = starters.map((question) => `
       <button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('');
     starterList.querySelectorAll('[data-question-id]').forEach((button) => {
@@ -235,14 +288,55 @@
     });
   };
 
+  const renderToolPanel = (group) => {
+    if (!toolPanel || !group) return;
+    state.activeTool = group.id;
+    const familiarity = Array.isArray(group.familiarity) && group.familiarity.length
+      ? `<div class="hm-tool-familiarity"><strong>Additional platform familiarity:</strong> ${group.familiarity.map(escapeHtml).join(' · ')}</div>`
+      : '';
+    toolPanel.innerHTML = `
+      <div class="hm-tool-panel-head">
+        <span class="hm-tool-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg></span>
+        <div><p class="eyebrow">Capability Area</p><h3>${escapeHtml(group.label)}</h3><p>${escapeHtml(group.summary)}</p></div>
+      </div>
+      <div class="hm-tool-columns">
+        <div class="hm-tool-column"><h4>Hands-on tools</h4><div class="hm-tool-chip-row">${(group.hands_on || []).map((item) => `<span class="hm-tool-chip">${escapeHtml(item)}</span>`).join('')}</div></div>
+        <div class="hm-tool-column"><h4>What transfers across tools</h4><div class="hm-tool-chip-row">${(group.capabilities || []).map((item) => `<span class="hm-tool-chip capability">${escapeHtml(item)}</span>`).join('')}</div></div>
+      </div>
+      ${familiarity}`;
+    toolTabs?.querySelectorAll('[data-tool-id]').forEach((button) => {
+      const active = button.dataset.toolId === group.id;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+  };
+
+  const renderTools = () => {
+    if (!toolTabs || !toolPanel || !state.tools.length) return;
+    toolTabs.innerHTML = state.tools.map((group, index) => `
+      <button class="hm-tool-tab ${index === 0 ? 'active' : ''}" type="button" role="tab" aria-selected="${String(index === 0)}" data-tool-id="${escapeHtml(group.id)}">
+        <svg class="portfolio-icon" aria-hidden="true"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg>
+        <span>${escapeHtml(group.label)}</span>
+      </button>`).join('');
+    toolTabs.querySelectorAll('[data-tool-id]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const group = state.tools.find((item) => item.id === button.dataset.toolId);
+        renderToolPanel(group);
+      });
+    });
+    renderToolPanel(state.tools[0]);
+    if (learningStatement) learningStatement.textContent = state.learningStatement;
+  };
+
   const resetConversation = () => {
     state.lastQuestionId = null;
+    state.isReplying = false;
     chatLog.innerHTML = `
-      <article class="hm-message hm-message-haley">
+      <article class="hm-message hm-message-haley is-entering">
         <div class="hm-message-label">Portfolio Haley</div>
         <div class="hm-message-bubble">
-          <p>Hi — I’m a curated portfolio version of Haley. Ask me the kinds of questions you would ask in a first-round instructional design interview. My answers come from published portfolio content, and I will link you to the evidence behind them.</p>
-          <p class="hm-chat-note"><strong>Good place to start:</strong> ask about an end-to-end project, technical training, sales enablement, LMS work, AI evaluation, or automation.</p>
+          <p>Hi — use this like the part of an interview where you get past the résumé bullets. Ask what I actually owned, how I make tradeoffs, how I work with technical content and SMEs, what tools I use, what I would improve, or where I add value beyond building the course.</p>
+          <p class="hm-chat-note"><strong>Try a stronger first question:</strong> “Why would I hire you?” or “What do you do when an SME wants everything in the course?”</p>
         </div>
       </article>`;
     scrollChat();
@@ -251,7 +345,7 @@
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const value = input.value.trim();
-    if (!value) return;
+    if (!value || state.isReplying) return;
     askQuestion(value);
     input.value = '';
     input.focus();
@@ -264,22 +358,35 @@
       if (!response.ok) throw new Error('Hiring FAQ unavailable');
       return response.json();
     }),
+    fetch(expandedFaqUrl).then((response) => {
+      if (!response.ok) throw new Error('Advanced hiring FAQ unavailable');
+      return response.json();
+    }),
     fetch(searchUrl).then((response) => {
       if (!response.ok) throw new Error('Portfolio search unavailable');
       return response.json();
+    }),
+    fetch(toolsUrl).then((response) => {
+      if (!response.ok) throw new Error('Hiring tools unavailable');
+      return response.json();
     })
   ])
-    .then(([faqData, searchData]) => {
-      state.questions = Array.isArray(faqData.questions) ? faqData.questions : [];
+    .then(([faqData, expandedData, searchData, toolsData]) => {
+      const baseQuestions = Array.isArray(faqData.questions) ? faqData.questions : [];
+      const advancedQuestions = Array.isArray(expandedData.questions) ? expandedData.questions : [];
+      state.questions = [...baseQuestions, ...advancedQuestions];
       state.searchEntries = Array.isArray(searchData.entries) ? searchData.entries : [];
+      state.tools = Array.isArray(toolsData.groups) ? toolsData.groups : [];
+      state.learningStatement = toolsData.learning_statement || '';
       renderCategories();
       renderQuestionLibrary();
       renderStarters();
+      renderTools();
       resetConversation();
     })
     .catch(() => {
       chatLog.innerHTML = `
-        <article class="hm-message hm-message-haley">
+        <article class="hm-message hm-message-haley is-entering">
           <div class="hm-message-label">Portfolio guide</div>
           <div class="hm-message-bubble"><p>The interview guide could not load its public data. You can still browse the Projects page or open the résumé.</p></div>
         </article>`;
