@@ -52,6 +52,9 @@ jobs:
       - name: Validate final public polish and mobile readiness
         run: python scripts/check-final-polish.py
 
+      - name: Validate breadcrumb consistency across all public pages
+        run: python scripts/check-breadcrumb-consistency.py
+
       - name: Validate public privacy and leakage boundaries
         run: python scripts/check-public-privacy.py
 
