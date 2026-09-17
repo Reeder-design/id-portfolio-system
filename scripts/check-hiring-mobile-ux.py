@@ -41,7 +41,7 @@ def main() -> int:
     seo_builder = SEO_BUILDER.read_text(encoding="utf-8")
 
     require("hiring-manager-v4.css" in page, "Hiring Manager page must load the V4 presentation layer.", errors)
-    require("hiring-manager-v5.css" in page, "Hiring Manager page must load the final top-layer presentation layer.", errors)
+    require("hiring-manager-v5.css" in page, "Hiring Manager page must load the contained-library presentation layer.", errors)
     require("hiring-manager-v4.js" in page, "Hiring Manager page must load the V4 layout controller.", errors)
     require("hiring-manager-v5.js" in page, "Hiring Manager page must load the V5 Question Library controller.", errors)
     require(
@@ -63,11 +63,7 @@ def main() -> int:
     require("Human-centered learning" not in page, "Hiring Manager hero should not include the removed Human-centered learning label.", errors)
     require("Systems + workflow" not in page, "Hiring Manager hero should not include the removed Systems + workflow label.", errors)
 
-    css_markers = [
-        ".hm-topic-browser",
-        ".hm-topic-bubble",
-        ".hm-topic-popover",
-        ".hm-mobile-chat-dock",
+    mobile_css_markers = [
         ".hm-mobile-suggestions-toggle",
         "height: min(78svh, 680px);",
         "overflow-y: auto !important;",
@@ -75,19 +71,44 @@ def main() -> int:
         "@media (max-width: 680px)",
         "@media (prefers-reduced-motion: reduce)",
     ]
-    for marker in css_markers:
+    for marker in mobile_css_markers:
         require(marker in mobile_css, f"Hiring Manager compact CSS is missing {marker!r}.", errors)
 
+    obsolete_mobile_markers = [
+        ".hm-topic-browser",
+        ".hm-topic-bubble",
+        ".hm-topic-popover",
+        ".hm-topic-prompt",
+    ]
+    for marker in obsolete_mobile_markers:
+        require(marker not in mobile_css, f"Compact CSS still contains abandoned floating Question Library rule {marker!r}.", errors)
+
     final_css_markers = [
-        ".hm-topic-browser-v5",
-        ".hm-top-layer-popover",
-        ".hm-library-helper-popover",
-        "--hm-topic-arrow-x",
-        '.hm-topic-popover[data-placement="above"]',
-        ".hm-library .hm-helper > .hm-helper-card",
+        ".hm-shell",
+        "grid-template-columns: minmax(0, 1fr) !important;",
+        ".hm-library-accordion",
+        ".hm-library-toggle",
+        ".hm-library-window",
+        "height: 318px;",
+        ".hm-library-selection",
+        ".hm-library-detail",
+        ".hm-library-detail-close",
+        ".hm-library-prompt",
+        ".hm-mobile-chat-dock.hm-guide-switch",
+        ".hm-library .hm-helper-card",
+        "position: static !important;",
     ]
     for marker in final_css_markers:
-        require(marker in final_css, f"Hiring Manager top-layer CSS is missing {marker!r}.", errors)
+        require(marker in final_css, f"Hiring Manager contained-library CSS is missing {marker!r}.", errors)
+
+    obsolete_final_css_markers = [
+        ".hm-top-layer-popover",
+        ".hm-topic-popover",
+        "--hm-topic-arrow-x",
+        ".hm-library-helper-popover",
+    ]
+    for marker in obsolete_final_css_markers:
+        require(marker not in final_css, f"Final CSS still contains abandoned floating overlay rule {marker!r}.", errors)
 
     hero_markers = [
         ".hm-signal-board::before",
@@ -99,39 +120,57 @@ def main() -> int:
         require(marker in base_css, f"Hiring Manager hero motion is missing {marker!r}.", errors)
 
     retained_v4_markers = [
-        "const setupMobileDock = () =>",
+        "const setupGuideDock = () =>",
+        "Question Library</button>",
         "const setupSuggestionToggle = () =>",
         "chatLog.scrollTop = chatLog.scrollHeight",
-        "hm:close-question-overlays",
-        'data-hm-v5-topic="Deep Dive"',
+        "hm:close-question-workspace",
+        "hm:open-question-topic",
     ]
     for marker in retained_v4_markers:
         require(marker in controller, f"Hiring Manager V4 controller is missing retained layout behavior {marker!r}.", errors)
 
     forbidden_v4_markers = [
         "const buildTopicBrowser = () =>",
-        "const openTopic = (category, records, anchor) =>",
+        "const openTopic =",
         "data-hm-topic-question",
-        "document.body.appendChild(topicPopover)",
+        "data-hm-v5-topic",
+        "showPopover",
+        "hidePopover",
     ]
     for marker in forbidden_v4_markers:
-        require(marker not in controller, f"V4 must not own Question Library behavior; found legacy marker {marker!r}.", errors)
+        require(marker not in controller, f"V4 must not own Question Library rendering; found legacy marker {marker!r}.", errors)
 
     final_js_markers = [
-        "const supportsTopLayer = 'showPopover' in HTMLElement.prototype",
-        "popover.showPopover()",
-        "popover.hidePopover()",
-        "hm-topic-browser-v5",
-        "data-hm-v5-topic",
-        "closeHelperPopover",
-        "libraryHelperSummary.addEventListener",
-        "event.stopImmediatePropagation()",
-        "document.addEventListener('hm:close-question-overlays', closeAllOverlays)",
+        "const ensureWorkspace = () =>",
+        "hm-library-accordion",
+        "data-hm-library-toggle",
+        "data-hm-library-window",
+        "data-hm-library-selection",
+        "data-hm-library-detail",
+        "const setOpen = (open) =>",
+        "const showTopic = (category) =>",
+        "data-hm-library-topic",
+        "hm-library-detail-close",
+        "data-hm-library-question",
         "new MutationObserver(scheduleRender)",
-        "Loading interview topics",
+        "hm:close-question-workspace",
+        "hm:open-question-topic",
+        "Loading curated interview prompts",
     ]
     for marker in final_js_markers:
-        require(marker in final_controller, f"Hiring Manager V5 controller is missing single-owner/top-layer marker {marker!r}.", errors)
+        require(marker in final_controller, f"Hiring Manager V5 controller is missing contained-library marker {marker!r}.", errors)
+
+    forbidden_final_js_markers = [
+        "showPopover",
+        "hidePopover",
+        ":popover-open",
+        "hm-top-layer-popover",
+        "hm-topic-popover",
+        "positionTopicPopover",
+    ]
+    for marker in forbidden_final_js_markers:
+        require(marker not in final_controller, f"V5 still contains abandoned floating-overlay behavior {marker!r}.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
@@ -155,8 +194,9 @@ def main() -> int:
         return 1
 
     print(
-        "Hiring Manager UX validation passed: V4 owns layout only, V5 exclusively owns visible Question Library interactions, "
-        "native top-layer prompt/helper overlays are loaded, and the existing chat/homepage/sitewide behaviors remain present."
+        "Hiring Manager UX validation passed: the Question Library is a contained accordion above the chat, "
+        "V4 owns layout only, V5 owns the accordion only, floating popover code is absent, and the existing "
+        "bounded chat/homepage/sitewide behaviors remain present."
     )
     return 0
 
