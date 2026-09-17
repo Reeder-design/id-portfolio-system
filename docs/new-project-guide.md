@@ -1,6 +1,8 @@
 # New Project Generator
 
-`scripts/new-project.py` is the guided creation workflow for standard portfolio case-study pages.
+`scripts/new-project.py` is the lower-level guided generator for standard portfolio case-study pages.
+
+Portfolio Manager **Create Content** is the normal human-facing workflow for new portfolio work. The script remains useful for deterministic development, maintenance, testing, and direct structured-page generation.
 
 It sits on top of the structured content model and project renderer:
 
@@ -55,6 +57,8 @@ The guided flow asks for:
 
 New projects default to `building` rather than `live`.
 
+Category labels and output locations come from `portfolio-data/taxonomy.json`. Do not hard-code an alternate category list in documentation or helper code.
+
 ## What It Creates
 
 For a standard public-safe project, the generator creates both:
@@ -104,7 +108,7 @@ Do not place proprietary, confidential, customer, employer, or private reference
 
 The generator only records assets that are explicitly intended to be public.
 
-Private/reference uploads will be handled separately by the future Portfolio Manager dashboard and should not automatically become committed portfolio assets.
+Private/reference originals belong in the local-only Portfolio Manager **Reference Library** / `.portfolio-manager/` workflow. Approved sanitized derivatives can later be attached to Create Content or managed project work without exposing the original source file.
 
 ## Useful Options
 
@@ -130,9 +134,15 @@ The prompts themselves still run; `--yes` only skips the final confirmation.
 
 ## After Creating a Project
 
-Review the generated JSON and HTML in VS Code.
+Review the generated JSON and HTML before treating the output as complete.
 
-For substantial work, create or remain on a content/feature branch, then commit and push that branch for pull-request review. The generator intentionally does not merge or publish directly to `main`.
+For substantial code, shared-layout, renderer, validation, or repository-infrastructure changes, use the normal development workflow:
+
+```text
+feature branch → PR → CI → UAT → explicit merge approval
+```
+
+For routine approved portfolio-content maintenance, use Portfolio Manager Save & Publish on local `main` as documented in `AGENTS.md` and `docs/maintenance-guide.md`. Do not create a development PR solely because a content record was generated if no infrastructure change is involved.
 
 ## Validation
 
@@ -149,3 +159,5 @@ python scripts/check-content.py
 python scripts/check-renderer.py
 python scripts/check-site.py
 ```
+
+For substantial work, use the repository's complete validation suite rather than stopping after these generator-specific checks.

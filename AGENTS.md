@@ -3,7 +3,7 @@
 This repository contains Haley Reeder's public instructional design portfolio and supporting development system.
 
 ## Primary Goal
-Maintain a professional, reliable, reusable portfolio system that is easy to update without introducing broken links, inconsistent design, unnecessary duplication, unsafe publication paths, or privacy regressions.
+Maintain a professional, reliable, reusable portfolio system that is easy to update without introducing broken links, inconsistent design, unnecessary duplication, unsafe publication paths, privacy regressions, or competing implementations of the same behavior.
 
 ## Repository Structure
 - `portfolio/` — public website deployed to GitHub Pages
@@ -19,13 +19,38 @@ Maintain a professional, reliable, reusable portfolio system that is easy to upd
 
 The repository is public. Treat all tracked content and Git metadata as publicly visible.
 
-## Public Portfolio Categories
-The portfolio is organized around three primary areas:
+## Current Public Portfolio Taxonomy
+`portfolio-data/taxonomy.json` is the canonical source for public category labels and paths. Do not recreate taxonomy from memory or from older documentation.
+
+Current top-level areas are:
 1. Instructional Design
 2. AI Training and Evaluation
-3. Workflows
+3. LMS Administration & System Operations
+4. System Integrations and Workflows
 
-Instructional Design includes interactive learning, multimedia training content, and complete learning pathways.
+Instructional Design currently includes:
+- Interactive Learning
+- Microlearning & Performance Support
+- Multimedia Training Content
+- Live Training
+- Complete eLearning Pathways
+
+System Integrations and Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
+
+## Source-of-Truth Order
+When files disagree, resolve the conflict before editing instead of choosing the most convenient version.
+
+Use this authority order:
+1. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
+2. Structured records under `portfolio-data/` for content fields they explicitly own.
+3. `templates/` + deterministic renderers for standard generated pages.
+4. Bespoke public HTML/CSS/JavaScript for custom interactive experiences that are intentionally not template-generated.
+5. Portfolio Manager code for Manager workflow/state behavior.
+6. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override live code/data.
+
+Generated documentation produced by `scripts/update-docs.py` is output, not an editing source.
+
+Do not revive retired experiments, old UI concepts, temporary workarounds, or superseded architecture merely because they still appear in Git history, old PR descriptions, comments, or versioned filenames. Verify the current live owner first.
 
 ## Structured Content and Templates
 Standard project case-study pages should use structured records in `portfolio-data/projects/` and the reusable template in `templates/project-page/` when the shared layout fits the project.
@@ -35,6 +60,8 @@ For standard project generation, prefer the existing Create Content workflow or 
 Use `python scripts/render-project.py <project-json>` when intentionally re-rendering an existing generated project page. The renderer fails closed rather than guessing and does not overwrite an existing page without explicit force behavior.
 
 Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study template.
+
+Before adding another shared stylesheet, script, renderer, helper, or interaction controller, inspect the current stack and extend an existing owner when practical. Avoid multiple implementations competing for the same DOM behavior.
 
 ## Portfolio Manager Product Boundaries
 Portfolio Manager must remain local-only on `127.0.0.1:5055`.
@@ -125,20 +152,24 @@ Run `python scripts/update-docs.py` after portfolio structure or structured proj
 
 Use semantic version bumps only for intentional releases, not for drafts, experiments, or validation-only changes.
 
-Manual architecture documentation must stay aligned with the actual Manager behavior. Update `README.md`, `docs/maintenance-guide.md`, and `docs/ai-assistance.md` when their described workflow or privacy boundary changes.
+Manual architecture documentation must describe the current implementation, not planned/future behavior as though it already exists. Update `README.md`, `docs/maintenance-guide.md`, `docs/ai-assistance.md`, `docs/content-model.md`, `docs/template-system.md`, and `docs/new-project-guide.md` when their described ownership or workflow changes.
 
 ## Development Rules
 When modifying the public portfolio:
-1. Preserve the existing visual system unless a redesign is explicitly requested.
-2. Use shared CSS variables and existing components before creating new styles.
-3. Keep HTML semantic, responsive, and accessible.
-4. Use relative internal links compatible with the GitHub Pages project-site subpath.
-5. Preserve working navigation and footer paths.
-6. Avoid escaped HTML or Markdown-formatted URLs inside HTML attributes.
-7. Use `target="_blank"` with `rel="noopener noreferrer"`.
-8. Keep JavaScript understandable and maintainable.
-9. Prefer reusable components, templates, data objects, and interaction patterns over duplication.
-10. Keep unfinished templates/demos outside the deployed `portfolio/` tree.
+1. Inspect the existing implementation and identify the current owner before adding code.
+2. Preserve the existing visual system unless a redesign is explicitly requested.
+3. Use shared CSS variables and existing components before creating new styles.
+4. Keep HTML semantic, responsive, and accessible.
+5. Use relative internal links compatible with the GitHub Pages project-site subpath.
+6. Preserve working navigation and footer paths.
+7. Avoid escaped HTML or Markdown-formatted URLs inside HTML attributes.
+8. Use `target="_blank"` with `rel="noopener noreferrer"`.
+9. Keep JavaScript understandable, maintainable, and single-owner where practical.
+10. Prefer reusable components, templates, data objects, and interaction patterns over duplication.
+11. Keep unfinished templates/demos outside the deployed `portfolio/` tree.
+12. Prefer boring, deterministic fixes over adding another cross-site runtime layer.
+
+For shared/sitewide changes, validate the major page families rather than assuming one successful page proves the change is safe.
 
 ## Validation Rules
 For substantial changes, use the existing Full Validation suite rather than selecting only convenient checks.
@@ -163,13 +194,14 @@ Keep `.github/workflows/validate-site.yml` aligned with `portfolio-manager/valid
 For substantial repository changes:
 1. Work on a separate branch.
 2. Keep the change focused.
-3. Run/regard the complete CI suite as authoritative before UAT.
-4. Describe concrete findings and fixes in the PR.
-5. Ask the user to test only the human-facing behavior automation cannot meaningfully judge.
-6. Do not merge until the user explicitly approves the exact PR.
-7. Re-check the PR head SHA and successful CI on that exact SHA immediately before merging.
+3. Inspect before adding a new architectural layer.
+4. Run/regard the complete CI suite as authoritative before UAT.
+5. Describe concrete findings and fixes in the PR.
+6. Ask the user to test only the human-facing behavior automation cannot meaningfully judge.
+7. Do not merge until the user explicitly approves the exact PR.
+8. Re-check the PR head SHA and successful CI on that exact SHA immediately before merging.
 
 For deterministic maintenance tasks, use existing scripts/automation instead of manually reproducing the work.
 
 ## Design Principle
-Build it once, understand how it works, and make it reusable.
+Build it once, understand how it works, and make it reusable. Prefer one clear source of truth and one owner for each behavior.
