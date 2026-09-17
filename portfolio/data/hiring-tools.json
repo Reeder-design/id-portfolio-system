@@ -1,63 +1,89 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "groups": [
     {
       "id": "authoring",
       "label": "eLearning + Authoring",
       "icon": "icon-elearning",
-      "summary": "Rapid authoring, custom interactions, scenario practice, assessment, and presentation-based learning.",
-      "hands_on": ["Articulate 360", "Rise 360", "Storyline 360", "Review 360", "PowerPoint", "Prezi", "Canva"],
-      "capabilities": ["Rapid eLearning", "Branching scenarios", "Interactive assessment", "Sales simulations", "Reusable templates", "Responsive course design"]
+      "summary": "Rapid authoring, custom interactions, branching, simulations, assessment, and responsive course development.",
+      "hands_on": ["Articulate 360", "Storyline 360", "Rise 360", "Review 360", "Adobe Captivate", "PowerPoint", "Prezi", "Canva"],
+      "capabilities": ["Variables + triggers", "Branching scenarios", "Software simulations", "Interactive assessment", "Sales simulations", "Reusable templates", "Responsive course design", "Storyboarding + scripting"]
     },
     {
       "id": "multimedia",
       "label": "Multimedia + Visual Design",
       "icon": "icon-multimedia",
-      "summary": "Video, motion, audio, illustration, visual storytelling, and media prepared for learning experiences.",
-      "hands_on": ["Adobe Premiere Pro", "After Effects", "Audition", "Illustrator", "Camtasia", "Procreate", "Canva", "Colossyan"],
-      "capabilities": ["Video editing", "Motion graphics", "Audio cleanup", "Narration workflows", "Vector graphics", "Visual composition", "Screen capture", "AI-presenter media"]
+      "summary": "Video, motion, audio, illustration, interface mockups, visual storytelling, and media built for learning experiences.",
+      "hands_on": ["Adobe Photoshop", "Illustrator", "Premiere Pro", "After Effects", "Audition", "Camtasia", "Snagit", "Procreate", "Canva", "Figma", "Adobe XD", "Colossyan"],
+      "capabilities": ["Video editing", "Motion graphics", "Audio cleanup", "Narration workflows", "Vector graphics", "Image editing", "UI mockups", "Wireframing", "Screen capture", "AI-presenter media"]
     },
     {
       "id": "lms",
       "label": "LMS + Learning Operations",
       "icon": "icon-lms",
-      "summary": "Content administration, pathways, certifications, migrations, learner support, testing, and reporting.",
+      "summary": "Content administration, pathways, certifications, migrations, learner support, testing, reporting, and enterprise delivery rules.",
       "hands_on": ["Absorb LMS", "Docebo"],
-      "familiarity": ["Canvas", "Schoology", "Cornerstone", "Workday learning environments"],
-      "capabilities": ["Course setup", "Learning plans", "Catalogs", "Certifications", "Enrollment logic", "UAT", "Learner support", "Migration validation"]
+      "familiarity": ["Canvas", "Schoology", "Cornerstone Galaxy / OnDemand", "Workday Learning", "Moodle", "SAP SuccessFactors Learning"],
+      "capabilities": ["Course setup", "Learning plans", "Catalogs", "Certifications", "Enrollment logic", "Audience rules", "UAT", "Learner support", "Migration validation", "Completion + renewal workflows"]
+    },
+    {
+      "id": "integrations",
+      "label": "Enterprise Integrations",
+      "icon": "icon-workflow",
+      "summary": "Learning systems connected to identity, HR, CRM, credential, reporting, and downstream business workflows.",
+      "hands_on": ["Salesforce", "Okta", "Microsoft 365", "LMS integrations", "API-based workflow design"],
+      "familiarity": ["SAML 2.0", "HRIS data bridges", "Workday / SAP integration patterns", "Learning Record Store architectures"],
+      "capabilities": ["SSO workflow design", "CRM-to-LMS handoffs", "Enrollment + offboarding logic", "API data flows", "Identity + access thinking", "Credential workflows", "Integration QA", "System boundary mapping"]
     },
     {
       "id": "systems",
-      "label": "Systems + Automation",
+      "label": "Data + Automation",
       "icon": "icon-workflow",
-      "summary": "System handoffs, browser automation, data cleaning, reporting workflows, and repetitive-task reduction.",
-      "hands_on": ["Python", "Selenium", "pandas", "openpyxl", "Excel", "Salesforce", "Git", "GitHub", "VS Code"],
-      "capabilities": ["Browser automation", "Data joins", "Report generation", "QA workflows", "System handoffs", "Structured data", "Version control"]
+      "summary": "Browser automation, data cleaning, reporting workflows, QA, and repetitive-task reduction around learning operations.",
+      "hands_on": ["Python", "Selenium", "pandas", "openpyxl", "Excel", "Git", "GitHub", "VS Code"],
+      "capabilities": ["Browser automation", "Data joins", "Report generation", "QA workflows", "System handoffs", "Structured data", "Version control", "Exception handling", "Repeatable operational workflows"]
     },
     {
       "id": "web",
       "label": "Custom Web + Interaction",
       "icon": "icon-code",
-      "summary": "Browser-based prototypes and custom learning interactions when an authoring tool is not the best fit.",
-      "hands_on": ["HTML", "CSS", "JavaScript", "GitHub Pages workflows"],
-      "capabilities": ["Interactive prototypes", "Custom UI", "Decision practice", "Dynamic feedback", "Responsive layouts", "Reusable components"]
+      "summary": "Browser-based prototypes, custom learning interactions, accessible interface patterns, and JavaScript hooks beyond standard authoring-tool limits.",
+      "hands_on": ["HTML", "CSS", "JavaScript", "GitHub Pages workflows", "JavaScript triggers in learning content"],
+      "capabilities": ["Interactive prototypes", "Custom UI", "Decision practice", "Dynamic feedback", "Responsive layouts", "Reusable components", "Keyboard interaction", "Semantic structure", "Custom event tracking"]
+    },
+    {
+      "id": "learning-data",
+      "label": "Learning Data + Standards",
+      "icon": "icon-analytics",
+      "summary": "Publishing standards and learning-data patterns that move beyond simple completion tracking.",
+      "hands_on": ["xAPI workflows", "Custom xAPI statements", "cmi5 concepts", "SCORM", "AICC", "Credly", "LMS reporting", "Excel reporting"],
+      "familiarity": ["LRS architectures", "Rustici / Veracity-style LRS workflows", "BI and data-lake handoffs"],
+      "capabilities": ["JavaScript xAPI triggers", "Granular learner-event tracking", "Completion reporting", "Credential support", "Certification tracking", "Operational analytics", "Learning-data schemas", "Analytics handoff design"]
+    },
+    {
+      "id": "accessibility",
+      "label": "Accessibility + UX/UI",
+      "icon": "icon-feedback",
+      "summary": "Universal-design and interface engineering for learning experiences that are usable, navigable, readable, and accessible.",
+      "hands_on": ["WCAG-informed design", "Section 508 workflows", "Figma", "Adobe XD", "HTML / CSS accessibility patterns", "Accessible Storyline / Rise design"],
+      "capabilities": ["Keyboard navigation", "Focus order", "Screen-reader structure", "Color contrast", "Captioning + transcripts", "Reduced-motion support", "Responsive UI", "Cognitive-load reduction", "Zero-friction navigation"]
+    },
+    {
+      "id": "ai",
+      "label": "AI + Agentic Workflows",
+      "icon": "icon-ai-evaluation",
+      "summary": "AI evaluation, prompt design, internal-agent workflows, structured generation, and human QA for learning and business content.",
+      "hands_on": ["ChatGPT", "Claude", "Microsoft 365 agents", "AI output evaluation", "Prompt engineering", "Custom agent prototyping", "Colossyan"],
+      "capabilities": ["Agent instructions", "Evaluation rubrics", "Source-grounded generation", "Human-in-the-loop QA", "Modular content generation", "Workflow orchestration", "Prompt libraries", "AI privacy boundaries"]
     },
     {
       "id": "collaboration",
-      "label": "Review + Collaboration",
+      "label": "Project + Collaboration",
       "icon": "icon-feedback",
-      "summary": "Source review, SME collaboration, task tracking, documentation, and cross-functional feedback loops.",
-      "hands_on": ["Microsoft Teams", "OneDrive", "Asana", "Review 360", "Microsoft 365"],
-      "capabilities": ["SME review", "QA tracking", "Source management", "Feedback cycles", "Documentation", "Launch coordination"]
-    },
-    {
-      "id": "learning-tech",
-      "label": "Learning Technology",
-      "icon": "icon-analytics",
-      "summary": "Credentials, learning data, analytics, and integrations that sit around the learner experience.",
-      "hands_on": ["xAPI workflows", "Credly", "LMS reporting", "Excel reporting"],
-      "capabilities": ["Completion reporting", "Credential support", "Learning data", "Certification tracking", "Operational analytics"]
+      "summary": "Cross-functional planning, review, source management, task tracking, stakeholder alignment, and launch coordination.",
+      "hands_on": ["Microsoft Teams", "Slack", "Asana", "Smartsheet", "Jira", "Monday.com", "Trello", "OneDrive", "Microsoft 365", "Review 360"],
+      "capabilities": ["SME review", "QA tracking", "Source management", "Feedback cycles", "Documentation", "Milestone planning", "Localization tracking", "Launch coordination", "Agile iteration"]
     }
   ],
-  "learning_statement": "I do not treat software knowledge as a fixed list. I learn new tools by understanding the workflow, data model, publishing constraints, and learner need underneath the interface, then transfer patterns from the systems I already know."
+  "learning_statement": "I do not treat software knowledge as a fixed list. I learn new tools by understanding the workflow, data model, publishing constraints, accessibility requirements, and learner need underneath the interface, then transfer patterns from the systems I already know."
 }
