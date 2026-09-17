@@ -19,7 +19,7 @@ Current portfolio version: **1.0.0**
 | Project | Category | Subcategory | Status | Featured | Confidentiality | Page |
 | --- | --- | --- | --- | --- | --- | --- |
 | AI Training and Evaluation Demo | AI Training and Evaluation | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` |
-| Enterprise Sales Certification Pathway | Instructional Design | Complete eLearning Pathways | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
+| Ericsson Cellular Networking Sales Certification | Instructional Design | Complete eLearning Pathways | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
 | Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |
 | Virtual Sales Workshop Facilitation | Instructional Design | Live Training | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` |
