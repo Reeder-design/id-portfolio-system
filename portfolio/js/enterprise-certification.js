@@ -1,169 +1,203 @@
 (() => {
-  const architectureData = {
-    core: {
-      label: 'Core Path',
-      title: 'Required learning stayed focused on the decisions most sellers shared.',
-      text: 'I sequenced market context, solution comparison, use cases, positioning, ordering readiness, and assessment so the required path moved from understanding to application.',
-      flow: ['Orientation', 'Market Context', 'Solution Categories', 'Use Cases', 'Positioning Practice', 'Ordering Readiness', 'Assessment']
+  const blueprintData = {
+    pathway: {
+      title: 'Sequence the seller journey from context to application.',
+      text: 'The required path stayed focused on the decisions most sellers shared. Market-specific requirements and deeper technical foundations were separated so they did not inflate the core certification.',
+      html: `
+        <div class="blueprint-flow" aria-label="Core certification sequence">
+          ${['Cellular context','Customer use cases','Solution fit','Discovery + value','Scenario practice','Ordering readiness','Certification'].map((item) => `<span class="blueprint-step">${item}</span>`).join('')}
+        </div>
+        <div class="blueprint-mini-grid" style="margin-top:10px">
+          <article class="blueprint-mini-card"><strong>Core seller path</strong><p>Required concepts and decisions shared across the main audience.</p></article>
+          <article class="blueprint-mini-card"><strong>Regional extension</strong><p>Market-specific requirements stayed in a separate route and assessment.</p></article>
+          <article class="blueprint-mini-card"><strong>Optional foundations</strong><p>Deeper technical background remained available without becoming required sales training.</p></article>
+          <article class="blueprint-mini-card"><strong>Role boundary</strong><p>Engineering detail stayed out unless it supported discovery, risk, ordering, or specialist handoff.</p></article>
+        </div>`
     },
-    regional: {
-      label: 'Regional Extension',
-      title: 'Market-specific requirements became a separate route.',
-      text: 'When content applied only to certain regions, I moved it into a separate extension and assessment instead of adding irrelevant requirements to every learner path.',
-      flow: ['Core Path', 'Regional Context', 'Regional Assessment', 'Completion Check']
+    alignment: {
+      title: 'Map each objective to a seller task and observable evidence.',
+      text: 'I used backward design so practice and assessment checked the decisions the certification was meant to support, rather than isolated product recall.',
+      html: `
+        <div class="blueprint-table" aria-label="Objective alignment examples">
+          ${[
+            ['Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
+            ['Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
+            ['Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
+          ].map(([objective, task, practice, evidence]) => `
+            <div class="blueprint-row">
+              <div class="blueprint-cell"><strong>Objective</strong>${objective}</div>
+              <div class="blueprint-cell"><strong>Seller task</strong>${task}</div>
+              <div class="blueprint-cell"><strong>Practice</strong>${practice}</div>
+              <div class="blueprint-cell"><strong>Assessment evidence</strong>${evidence}</div>
+            </div>`).join('')}
+        </div>`
     },
-    optional: {
-      label: 'Optional Foundations',
-      title: 'Deeper technical content stayed outside the required sales path.',
-      text: 'I kept technical detail only when it supported discovery, positioning, risk, ordering, or specialist handoff. Implementation depth moved to optional or technical-role learning.',
-      flow: ['Technical Foundations', 'Role-Specific Deep Dives', 'Specialist Handoff']
+    release: {
+      title: 'Treat release, platform behavior, and maintenance as part of the learning design.',
+      text: 'The certification had to work after authoring was finished. I planned review, LMS testing, reporting logic, and source updates as part of the same system.',
+      html: `
+        <div class="blueprint-mini-grid">
+          <article class="blueprint-mini-card"><strong>1. Design QA</strong><p>Editorial, visual, interaction, accessibility, and learner-flow checks before broader review.</p></article>
+          <article class="blueprint-mini-card"><strong>2. SME + assessment review</strong><p>Resolve accuracy and messaging feedback while protecting the seller-focused scope.</p></article>
+          <article class="blueprint-mini-card"><strong>3. LMS UAT</strong><p>Validate visibility, launch, routes, renewal behavior, imported history, and regional requirements.</p></article>
+          <article class="blueprint-mini-card"><strong>4. Maintain + report</strong><p>Track source changes and support workarounds when platform reporting does not match the certification logic.</p></article>
+        </div>`
     }
   };
 
-  const audienceData = {
-    new: {
-      title: 'Newer sellers received more context before application.',
-      text: 'I used plain-language explanations, predictable sequencing, and short takeaways so learners could build a basic mental model before comparing solutions or entering scenarios.',
-      cards: [
-        ['Start', 'Build context first', 'Introduce only the background needed before solution comparison or scenario practice.'],
-        ['Sequence', 'Move in a clear order', 'Establish context and use cases before asking for positioning or recommendations.']
+  const blueprintPanel = document.getElementById('blueprintPanel');
+  const blueprintButtons = [...document.querySelectorAll('[data-blueprint]')];
+
+  const renderBlueprint = (key) => {
+    const data = blueprintData[key];
+    if (!data || !blueprintPanel) return;
+    blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
+  };
+
+  blueprintButtons.forEach((button, index) => {
+    const activate = () => {
+      blueprintButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+      });
+      renderBlueprint(button.dataset.blueprint);
+    };
+    button.addEventListener('click', activate);
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = blueprintButtons.length - 1;
+      else if (event.key === 'ArrowRight') next = (index + 1) % blueprintButtons.length;
+      else next = (index - 1 + blueprintButtons.length) % blueprintButtons.length;
+      blueprintButtons[next].focus();
+      blueprintButtons[next].click();
+    });
+  });
+  renderBlueprint('pathway');
+
+  const scenarioSteps = [
+    {
+      prompt: 'What is the strongest first discovery question?',
+      guidance: 'Start with the workflow and business impact before jumping to a solution.',
+      options: [
+        {
+          text: 'What budget has already been approved for the project?',
+          feedback: 'Budget matters later, but this skips the operational problem. You still do not know which workflows are failing or what the failure costs the customer.'
+        },
+        {
+          text: 'Which devices and workflows are losing service, where does it happen, and what happens operationally when connectivity drops?',
+          feedback: 'Strong choice. It connects the technical symptom to a business workflow and gives the seller evidence for the next discovery step.'
+        },
+        {
+          text: 'Would you like us to walk through a complete technical architecture now?',
+          feedback: 'Too early. The seller has not established requirements yet, and the conversation would drift into engineering before the problem is qualified.'
+        }
       ]
     },
-    experienced: {
-      title: 'Experienced sellers could move quickly through familiar material.',
-      text: 'Expandable detail, comparisons, and quick-reference elements let experienced learners find what they needed without repeating every explanation.',
-      cards: [
-        ['Layer', 'Keep depth optional', 'Place extra detail behind expandable or supporting content instead of making it required.'],
-        ['Reference', 'Make comparison fast', 'Use concise references for information sellers may need again during the work.']
+    {
+      prompt: 'What should the seller clarify before recommending a direction?',
+      guidance: 'A cellular networking conversation can include different needs. The seller should separate them before mapping a solution approach.',
+      options: [
+        {
+          text: 'Whether the primary need is reliable connectivity for on-site operational devices, improved public mobile coverage for people, or a combination of both.',
+          feedback: 'Exactly. Distinguishing the use case keeps the recommendation tied to the customer requirement instead of a memorized product pitch.'
+        },
+        {
+          text: 'Which solution has the largest feature set so the customer has room to grow.',
+          feedback: 'Feature breadth is not the decision criterion. The right direction depends on the workflows, users, constraints, and desired operating model.'
+        },
+        {
+          text: 'Which implementation model engineering prefers to deploy.',
+          feedback: 'That may matter later, but it is not the seller’s first decision. Discovery should establish the business and connectivity requirement before implementation design.'
+        }
       ]
     },
-    boundary: {
-      title: 'The certification stayed focused on sales work.',
-      text: 'I removed installation and engineering detail unless it directly supported a customer question, seller decision, risk discussion, ordering step, or specialist handoff.',
-      cards: [
-        ['Keep', 'Seller decisions', 'Customer needs, discovery questions, value, constraints, risk, and next steps.'],
-        ['Move out', 'Technical execution', 'Installation, deployment, and deep implementation detail belong in technical training.']
+    {
+      prompt: 'What is the strongest next step after the need is qualified?',
+      guidance: 'The seller should advance the opportunity without pretending to be the deployment engineer.',
+      options: [
+        {
+          text: 'Summarize the customer requirement, confirm success criteria, and involve the appropriate technical specialist when architecture or validation becomes necessary.',
+          feedback: 'Strong choice. The seller owns the customer conversation and next-step clarity while bringing in technical depth at the right point.'
+        },
+        {
+          text: 'Provide a detailed implementation recommendation immediately so the customer sees expertise.',
+          feedback: 'That crosses the role boundary. The seller needs enough technical fluency to guide the conversation, not to replace solution engineering.'
+        },
+        {
+          text: 'Send generic product materials and wait for the customer to select what looks relevant.',
+          feedback: 'That gives up the consultative part of the sales role. The stronger move is to connect the qualified need to a clear next action.'
+        }
       ]
     }
-  };
+  ];
 
-  const alignmentData = {
-    fit: ['Identify when an opportunity fits', 'Qualification scenario', 'Select the best-fit solution path', 'Return to use-case guidance'],
-    compare: ['Distinguish related solution options', 'Side-by-side comparison', 'Match need and constraint to solution type', 'Review solution comparison'],
-    handoff: ['Choose the next sales step', 'Guided discovery scenario', 'Recommend, continue discovery, or involve a specialist', 'Return to positioning and handoff guidance']
-  };
+  const stage = document.getElementById('scenarioStage');
+  const progress = document.getElementById('scenarioProgress');
+  const reset = document.getElementById('scenarioReset');
+  let scenarioIndex = 0;
+  let selectedOption = null;
 
-  const opsData = {
-    qa: {
-      title: 'QA and SME review happened in stages.',
-      text: 'I checked editorial quality, visuals, interactions, accessibility, and learner flow before broader review. Then I coordinated SME, messaging, and assessment feedback, resolved comments, and verified revisions.'
-    },
-    lms: {
-      title: 'I tested the certification from the learner side of the LMS.',
-      text: 'I checked pathway visibility, descriptions, catalogs, enrollment rules, launch behavior, assessment links, first-time and renewal journeys, imported completion history, regional routing, duplicate content, and mapping issues.'
-    },
-    reporting: {
-      title: 'I created a workaround for a reporting gap.',
-      text: 'When LMS reporting did not fully match the learning design, I used a separate regional assessment and a lightweight spreadsheet workflow to combine core completion, regional assessment, renewal status, and learner route into a clearer completion decision.'
-    },
-    maintenance: {
-      title: 'I maintained the certification as approved source information changed.',
-      text: 'I tracked source owners and affected course sections, updated approved changes, held back premature information, and used modular course boundaries so one change did not require rebuilding the full pathway.'
-    }
-  };
+  const renderScenario = () => {
+    if (!stage || !progress) return;
+    selectedOption = null;
+    const step = scenarioSteps[scenarioIndex];
+    progress.textContent = `Step ${scenarioIndex + 1} of ${scenarioSteps.length}`;
+    stage.innerHTML = `
+      <h3>${step.prompt}</h3>
+      <p>${step.guidance}</p>
+      <div class="scenario-options">
+        ${step.options.map((option, optionIndex) => `<button class="scenario-option" type="button" data-scenario-option="${optionIndex}">${option.text}</button>`).join('')}
+      </div>
+      <div id="scenarioFeedback" aria-live="polite"></div>`;
 
-  const evidenceData = {
-    supported: [
-      ['Delivered', 'A multi-course sales certification with role-based content, scenario practice, formative checks, final assessment, review documentation, and LMS implementation support.'],
-      ['Restructured', 'Broad and regional requirements were split into distinct learner routes so sellers did not have to complete irrelevant content.'],
-      ['Reporting support', 'A supplemental assessment and spreadsheet workflow provided a practical way to review regional completion states.']
-    ],
-    learned: [
-      ['Design beyond the course', 'Pathway rules, assessment, LMS behavior, reporting, review, and maintenance all shape the learner experience.'],
-      ['Protect the role boundary', 'Sales training is stronger when technical depth appears only where it supports a seller decision.'],
-      ['Next iteration', 'I would define routing, reporting rules, source ownership, and certification logic earlier and use more performance-based scenarios in the final assessment.']
-    ]
-  };
-
-  const swapPanel = (panel, update) => {
-    panel.classList.add('is-switching');
-    window.setTimeout(() => {
-      update();
-      panel.classList.remove('is-switching');
-    }, 120);
-  };
-
-  const setupTabs = (selector, dataKey, handler) => {
-    const buttons = [...document.querySelectorAll(selector)];
-    buttons.forEach((button, index) => {
-      const activate = () => {
-        buttons.forEach((item) => {
-          const active = item === button;
-          item.classList.toggle('active', active);
-          item.setAttribute('aria-selected', String(active));
+    stage.querySelectorAll('[data-scenario-option]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const optionIndex = Number(button.dataset.scenarioOption);
+        selectedOption = optionIndex;
+        stage.querySelectorAll('[data-scenario-option]').forEach((item) => item.classList.toggle('is-selected', item === button));
+        const feedback = document.getElementById('scenarioFeedback');
+        const isLast = scenarioIndex === scenarioSteps.length - 1;
+        feedback.innerHTML = `
+          <div class="scenario-feedback"><strong>Coaching feedback</strong><p>${step.options[optionIndex].feedback}</p></div>
+          <button class="scenario-next" type="button">${isLast ? 'Finish scenario' : 'Continue'}</button>`;
+        feedback.querySelector('.scenario-next').addEventListener('click', () => {
+          if (isLast) renderScenarioSummary();
+          else {
+            scenarioIndex += 1;
+            renderScenario();
+          }
         });
-        handler(button.dataset[dataKey]);
-      };
-      button.addEventListener('click', activate);
-      button.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-        event.preventDefault();
-        let next = index;
-        if (event.key === 'Home') next = 0;
-        else if (event.key === 'End') next = buttons.length - 1;
-        else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % buttons.length;
-        else next = (index - 1 + buttons.length) % buttons.length;
-        buttons[next].focus();
-        buttons[next].click();
       });
     });
   };
 
-  const architecturePanel = document.getElementById('architecturePanel');
-  const renderArchitecture = (key) => {
-    const data = architectureData[key];
-    swapPanel(architecturePanel, () => {
-      document.getElementById('architectureLabel').textContent = data.label;
-      document.getElementById('architectureTitle').textContent = data.title;
-      document.getElementById('architectureText').textContent = data.text;
-      document.getElementById('architectureFlow').innerHTML = data.flow.map((item) => `<span class="flow-step">${item}</span>`).join('');
+  const renderScenarioSummary = () => {
+    if (!stage || !progress) return;
+    progress.textContent = 'Scenario complete';
+    stage.innerHTML = `
+      <h3>The learning goal is judgment, not memorized product language.</h3>
+      <p>This pattern lets sellers practice the sequence used in real customer conversations while feedback explains why a decision is stronger or weaker.</p>
+      <div class="scenario-summary">
+        <div><span>1. Discover</span><strong>Connect the technical symptom to the business workflow.</strong></div>
+        <div><span>2. Distinguish</span><strong>Clarify the type of connectivity need before mapping a solution direction.</strong></div>
+        <div><span>3. Advance</span><strong>Choose the next sales step and bring in technical depth at the right time.</strong></div>
+      </div>
+      <button class="scenario-next" type="button" id="scenarioReplay">Try again</button>`;
+    document.getElementById('scenarioReplay').addEventListener('click', () => {
+      scenarioIndex = 0;
+      renderScenario();
     });
   };
-  setupTabs('[data-arch]', 'arch', renderArchitecture);
-  renderArchitecture('core');
 
-  const audiencePanel = document.getElementById('audiencePanel');
-  const renderAudience = (key) => {
-    const data = audienceData[key];
-    swapPanel(audiencePanel, () => {
-      document.getElementById('audienceTitle').textContent = data.title;
-      document.getElementById('audienceText').textContent = data.text;
-      document.getElementById('audienceCards').innerHTML = data.cards.map(([label, title, body]) => `<article class="panel-card"><span>${label}</span><strong>${title}</strong><p>${body}</p></article>`).join('');
-    });
-  };
-  setupTabs('[data-audience]', 'audience', renderAudience);
-  renderAudience('new');
-
-  const renderAlignment = (key) => {
-    const values = alignmentData[key];
-    document.getElementById('alignmentRoute').innerHTML = ['Seller Task', 'Practice I Built', 'What the Assessment Checked', 'Where Remediation Sent Them'].map((label, index) => `<div class="alignment-node"><span>${label}</span><strong>${values[index]}</strong></div>`).join('');
-  };
-  setupTabs('[data-align]', 'align', renderAlignment);
-  renderAlignment('fit');
-
-  const renderOps = (key) => {
-    const data = opsData[key];
-    document.getElementById('opsTitle').textContent = data.title;
-    document.getElementById('opsText').textContent = data.text;
-  };
-  setupTabs('[data-ops]', 'ops', renderOps);
-  renderOps('qa');
-
-  const renderEvidence = (key) => {
-    document.getElementById('evidencePanel').innerHTML = evidenceData[key].map(([title, body]) => `<article class="evidence-card"><strong>${title}</strong><p>${body}</p></article>`).join('');
-  };
-  setupTabs('[data-evidence]', 'evidence', renderEvidence);
-  renderEvidence('supported');
+  reset?.addEventListener('click', () => {
+    scenarioIndex = 0;
+    renderScenario();
+  });
+  renderScenario();
 
   const navLinks = [...document.querySelectorAll('.case-nav a')];
   const navSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
