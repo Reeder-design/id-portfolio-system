@@ -1,3 +1,5 @@
+@import url("./hiring-manager-mobile.css");
+
 /* Hiring Manager Experience v4: consolidated overview and helper cues */
 
 .hm-explore-nav-wrap {
@@ -247,6 +249,123 @@
   gap: 10px;
 }
 
+/* Curated-library disclosure */
+.hm-library-disclaimer {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr);
+  gap: 10px;
+  align-items: start;
+  margin: 0 18px 16px;
+  padding: 12px 13px;
+  border: 1px solid rgba(80,132,132,.15);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(238,245,241,.82), rgba(255,255,255,.95));
+  color: #5f6b66;
+  font-size: .73rem;
+  line-height: 1.48;
+}
+
+.hm-library-disclaimer::before {
+  content: "i";
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 999px;
+  background: var(--pine-blue);
+  color: #fff;
+  font: 800 .7rem/1 var(--font-heading);
+}
+
+.hm-library-disclaimer strong {
+  color: var(--charcoal);
+}
+
+/* Purposeful bounded hero signal map */
+.hm-signal-board {
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+.hm-signal-board::before {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  background: var(--yellow-green);
+  box-shadow: 0 0 0 7px rgba(151,219,79,.13), 0 0 24px rgba(121,201,158,.46);
+  pointer-events: none;
+  animation: hm-signal-route 10s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+
+.hm-signal-board::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 20px;
+  border-radius: 24px;
+  background:
+    linear-gradient(31deg, transparent 49.72%, rgba(80,132,132,.14) 49.88%, rgba(80,132,132,.14) 50.12%, transparent 50.28%),
+    linear-gradient(-31deg, transparent 49.72%, rgba(80,132,132,.14) 49.88%, rgba(80,132,132,.14) 50.12%, transparent 50.28%);
+  opacity: .7;
+  pointer-events: none;
+  animation: hm-connection-reveal 5s ease-in-out infinite alternate;
+}
+
+.hm-orbit {
+  width: 232px !important;
+  height: 232px !important;
+  opacity: .48;
+  animation: hm-orbit-breathe 6s ease-in-out infinite !important;
+}
+
+.hm-signal-core,
+.hm-signal-node,
+.hm-signal-meta {
+  z-index: 6;
+}
+
+.hm-signal-node {
+  animation: hm-node-signal 10s ease-in-out infinite !important;
+}
+
+.hm-node-design { left: 18px !important; top: 28px !important; animation-delay: 0s !important; }
+.hm-node-build { right: 18px !important; top: 28px !important; animation-delay: -7.5s !important; }
+.hm-node-operate { left: 18px !important; bottom: 34px !important; animation-delay: -2.5s !important; }
+.hm-node-automate { right: 18px !important; bottom: 34px !important; animation-delay: -5s !important; }
+
+@keyframes hm-signal-route {
+  0%, 5%, 100% { left: 50%; top: 50%; }
+  12% { left: 17%; top: 18%; }
+  20%, 25% { left: 50%; top: 50%; }
+  37% { left: 17%; top: 82%; }
+  45%, 50% { left: 50%; top: 50%; }
+  62% { left: 83%; top: 82%; }
+  70%, 75% { left: 50%; top: 50%; }
+  87% { left: 83%; top: 18%; }
+  95% { left: 50%; top: 50%; }
+}
+
+@keyframes hm-connection-reveal {
+  from { opacity: .28; transform: scale(.965); }
+  to { opacity: .78; transform: scale(1); }
+}
+
+@keyframes hm-orbit-breathe {
+  0%,100% { transform: translate(-50%,-50%) scale(.96); opacity: .32; }
+  50% { transform: translate(-50%,-50%) scale(1.035); opacity: .62; }
+}
+
+@keyframes hm-node-signal {
+  0%, 9%, 18%, 100% { transform: translateY(0); border-color: rgba(80,132,132,.18); box-shadow: 0 10px 28px rgba(50,75,68,.1); }
+  12% { transform: translateY(-3px); border-color: rgba(151,219,79,.62); box-shadow: 0 12px 30px rgba(80,132,132,.16), 0 0 0 5px rgba(151,219,79,.08); }
+}
+
 @keyframes hm-helper-in {
   from { opacity: 0; transform: translateY(-3px) scale(.985); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -299,11 +418,23 @@
     width: auto;
     max-width: none;
   }
+
+  .hm-library-disclaimer {
+    margin: 0 14px 14px;
+  }
+
+  .hm-signal-board::after {
+    inset: 14px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hm-helper-card,
-  .hm-expertise-panel.active {
+  .hm-expertise-panel.active,
+  .hm-signal-board::before,
+  .hm-signal-board::after,
+  .hm-orbit,
+  .hm-signal-node {
     animation: none !important;
   }
 

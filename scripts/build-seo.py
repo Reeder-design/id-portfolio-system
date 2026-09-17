@@ -18,6 +18,7 @@ WEBSITE_ID = BASE_URL + "#website"
 SEO_START = "<!-- SEO:AUTO START -->"
 SEO_END = "<!-- SEO:AUTO END -->"
 EXPERTISE_LINK_MARKER = "<!-- SEO:EXPERTISE LINK -->"
+HIRING_NAV_MARKER = "<!-- SEO:HIRING GUIDE NAV -->"
 
 KNOWS_ABOUT = [
     "Instructional Design",
@@ -189,10 +190,40 @@ def add_expertise_footer_link(path: Path, text: str) -> str:
     return clean[: match.end()] + link + clean[match.end():]
 
 
+def add_hiring_nav_link(path: Path, text: str) -> str:
+    clean = re.sub(
+        re.escape(HIRING_NAV_MARKER) + r'<a\b[^>]*class=["\'][^"\']*site-nav-hiring[^"\']*["\'][^>]*>.*?</a>',
+        "",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+
+    nav_match = re.search(
+        r'(<nav\b[^>]*class=["\'][^"\']*site-nav[^"\']*["\'][^>]*>)(.*?)(</nav>)',
+        clean,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not nav_match:
+        return clean
+
+    target = SITE_ROOT / "hiring-manager" / "index.html"
+    href = Path(os.path.relpath(target, path.parent)).as_posix()
+    rel = path.relative_to(SITE_ROOT).as_posix()
+    active = " active" if rel == "hiring-manager/index.html" else ""
+    link = (
+        f'{HIRING_NAV_MARKER}<a class="site-nav-hiring{active}" href="{href}" '
+        'aria-label="Hiring Manager Guide">Hiring Guide</a>'
+    )
+
+    body = nav_match.group(2)
+    return clean[: nav_match.start(2)] + body.rstrip() + "\n        " + link + "\n      " + clean[nav_match.end(2):]
+
+
 def rendered_html(path: Path) -> str:
     source = path.read_text(encoding="utf-8")
     clean = strip_existing_block(source)
     clean = add_expertise_footer_link(path, clean)
+    clean = add_hiring_nav_link(path, clean)
     block = build_seo_block(path, clean)
     match = re.search(r"</title>", clean, flags=re.IGNORECASE)
     if not match:

@@ -55,6 +55,9 @@ jobs:
       - name: Validate breadcrumb consistency across all public pages
         run: python scripts/check-breadcrumb-consistency.py
 
+      - name: Validate Hiring Manager mobile UX
+        run: python scripts/check-hiring-mobile-ux.py
+
       - name: Validate public privacy and leakage boundaries
         run: python scripts/check-public-privacy.py
 
