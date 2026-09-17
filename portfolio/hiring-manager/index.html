@@ -69,6 +69,18 @@
       </div>
     </section>
 
+    <div class="hm-explore-nav-wrap">
+      <div class="container">
+        <nav class="hm-explore-nav" aria-label="Explore the hiring guide">
+          <span class="hm-explore-label">Explore this guide</span>
+          <a href="#chat">Ask Haley</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#tools">Tools + Tech</a>
+          <a href="#deep-dive">Deep Dive</a>
+        </nav>
+      </div>
+    </div>
+
     <div class="hm-flow-strip">
       <div class="container">
         <div class="hm-flow-card" aria-label="How to use the hiring guide">
@@ -78,82 +90,6 @@
         </div>
       </div>
     </div>
-
-    <section class="hm-main">
-      <div class="container hm-shell">
-        <aside class="hm-library" aria-label="Interview question library">
-          <div class="hm-library-header">
-            <p class="eyebrow">Question Library</p>
-            <h2>What would you want to know?</h2>
-            <p>Browse everything or filter the visible question list by topic. Filtering never limits what the chat can answer.</p>
-          </div>
-          <div class="hm-categories" data-hm-categories aria-label="Filter visible interview questions"></div>
-          <div class="hm-question-list" data-hm-question-list></div>
-          <div class="hm-specialist-drawer">
-            <div class="hm-specialist-head">
-              <span>Deep Dive</span>
-              <strong>Specialist questions</strong>
-              <p>Learning architecture, accessibility, enterprise systems, xAPI, UX, AI, and HPI.</p>
-            </div>
-            <div class="hm-specialist-list" data-hm-specialist-list></div>
-          </div>
-        </aside>
-
-        <section class="hm-chat-panel" aria-labelledby="hmChatTitle">
-          <div class="hm-chat-header">
-            <div class="hm-chat-identity">
-              <span class="hm-avatar" aria-hidden="true"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
-              <div>
-                <strong id="hmChatTitle">Portfolio Haley</strong>
-                <span>Curated answers + direct portfolio evidence</span>
-                <span class="hm-chat-status">Full knowledge base available at all times</span>
-              </div>
-            </div>
-            <div class="hm-chat-actions">
-              <span class="hm-interview-badge"><i aria-hidden="true"></i> Interview mode</span>
-              <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
-            </div>
-          </div>
-
-          <div class="hm-starter-wrap">
-            <p class="hm-starter-label">Optional quick starts — skip these and ask anything</p>
-          </div>
-          <div class="hm-mode-deck" aria-label="Optional quick-start interview prompts">
-            <button type="button" data-hm-v3-prompt="What would make you valuable on an instructional design team?">
-              <span>01</span><strong>Quick Screen</strong><small>Value, ownership, fit</small>
-            </button>
-            <button type="button" data-hm-v3-prompt="How do you diagnose whether a performance problem actually needs training?">
-              <span>02</span><strong>Design Judgment</strong><small>Needs, tradeoffs, HPI</small>
-            </button>
-            <button type="button" data-hm-v3-prompt="How do you think about xAPI, cmi5, and learning data beyond SCORM completion tracking?">
-              <span>03</span><strong>Technical Depth</strong><small>xAPI, systems, data</small>
-            </button>
-            <button type="button" data-hm-v3-prompt="How deep is your accessibility experience beyond adding alt text and captions?">
-              <span>04</span><strong>Accessible UX</strong><small>WCAG, UI, universal design</small>
-            </button>
-          </div>
-
-          <div class="hm-starter-wrap">
-            <p class="hm-starter-label">More suggested questions</p>
-            <div class="hm-starters" data-hm-starters></div>
-          </div>
-
-          <div class="hm-chat-log" data-hm-chat-log aria-live="polite" aria-label="Hiring manager conversation"></div>
-
-          <div class="hm-form-wrap">
-            <form class="hm-form" data-hm-form>
-              <label class="sr-only" for="hiringQuestion">Ask a question about Haley's experience</label>
-              <div class="hm-input-shell">
-                <span class="hm-input-icon" aria-hidden="true">↗</span>
-                <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Ask about a project, tradeoff, tool, system, theory, or working style…">
-              </div>
-              <button class="hm-submit" type="submit">Ask Haley</button>
-            </form>
-            <p class="hm-disclosure">The shortcuts and filters only change what is surfaced visually. The full curated knowledge base remains available to every free-text question.</p>
-          </div>
-        </section>
-      </div>
-    </section>
 
     <section class="hm-capability-section" id="capabilities">
       <div class="container">
@@ -189,6 +125,82 @@
           <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>
           <p>Loading tool approach…</p>
         </div>
+      </div>
+    </section>
+
+    <section class="hm-main" id="chat">
+      <div class="container hm-shell">
+        <aside class="hm-library" aria-label="Interview question library">
+          <div class="hm-library-header">
+            <p class="eyebrow">Question Library</p>
+            <h2>What would you want to know?</h2>
+            <p>Browse everything or filter the visible question list by topic. Filtering never limits what the chat can answer.</p>
+          </div>
+          <div class="hm-categories" data-hm-categories aria-label="Filter visible interview questions"></div>
+          <div class="hm-question-list" data-hm-question-list></div>
+          <div class="hm-specialist-drawer" id="deep-dive">
+            <div class="hm-specialist-head">
+              <span>Deep Dive</span>
+              <strong>Specialist questions</strong>
+              <p>Learning architecture, accessibility, enterprise systems, xAPI, UX, AI, and HPI.</p>
+            </div>
+            <div class="hm-specialist-list" data-hm-specialist-list></div>
+          </div>
+        </aside>
+
+        <section class="hm-chat-panel" aria-labelledby="hmChatTitle">
+          <div class="hm-chat-header">
+            <div class="hm-chat-identity">
+              <span class="hm-avatar" aria-hidden="true"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
+              <div>
+                <strong id="hmChatTitle">Portfolio Haley</strong>
+                <span>Curated answers + direct portfolio evidence</span>
+                <span class="hm-chat-status">Full knowledge base available at all times</span>
+              </div>
+            </div>
+            <div class="hm-chat-actions">
+              <span class="hm-interview-badge"><i aria-hidden="true"></i> Interview mode</span>
+              <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
+            </div>
+          </div>
+
+          <div class="hm-starter-wrap">
+            <p class="hm-starter-label">Optional quick starts: skip these and ask anything</p>
+          </div>
+          <div class="hm-mode-deck" aria-label="Optional quick-start interview prompts">
+            <button type="button" data-hm-v3-prompt="What would make you valuable on an instructional design team?">
+              <span>01</span><strong>Quick Screen</strong><small>Value, ownership, fit</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How do you diagnose whether a performance problem actually needs training?">
+              <span>02</span><strong>Design Judgment</strong><small>Needs, tradeoffs, HPI</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How do you think about xAPI, cmi5, and learning data beyond SCORM completion tracking?">
+              <span>03</span><strong>Technical Depth</strong><small>xAPI, systems, data</small>
+            </button>
+            <button type="button" data-hm-v3-prompt="How deep is your accessibility experience beyond adding alt text and captions?">
+              <span>04</span><strong>Accessible UX</strong><small>WCAG, UI, universal design</small>
+            </button>
+          </div>
+
+          <div class="hm-starter-wrap">
+            <p class="hm-starter-label">More suggested questions</p>
+            <div class="hm-starters" data-hm-starters></div>
+          </div>
+
+          <div class="hm-chat-log" data-hm-chat-log aria-live="polite" aria-label="Hiring manager conversation"></div>
+
+          <div class="hm-form-wrap">
+            <form class="hm-form" data-hm-form>
+              <label class="sr-only" for="hiringQuestion">Ask a question about Haley's experience</label>
+              <div class="hm-input-shell">
+                <span class="hm-input-icon" aria-hidden="true">↗</span>
+                <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Ask about a project, tradeoff, tool, system, theory, or working style…">
+              </div>
+              <button class="hm-submit" type="submit">Ask Haley</button>
+            </form>
+            <p class="hm-disclosure">The shortcuts and filters only change what is surfaced visually. The full curated knowledge base remains available to every free-text question.</p>
+          </div>
+        </section>
       </div>
     </section>
   </main>
