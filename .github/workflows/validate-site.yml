@@ -34,6 +34,12 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Build SEO and GEO metadata
+        run: python scripts/build-seo.py
+
+      - name: Validate generated SEO output
+        run: python scripts/build-seo.py --check
+
       - name: Validate portfolio
         run: python scripts/check-site.py
 
