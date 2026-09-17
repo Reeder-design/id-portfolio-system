@@ -11,7 +11,8 @@
   const chatPanel = document.querySelector('.hm-chat-panel');
   const chatLog = document.querySelector('[data-hm-chat-log]');
   const starterWrap = document.querySelector('.hm-starter-wrap');
-  let mobileLibrary = null;
+  let topicBrowser = null;
+  let topicPopover = null;
   let mobileDock = null;
   let rebuildTimer = null;
 
@@ -58,16 +59,11 @@
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     helpers.forEach((helper) => { helper.open = false; });
+    closeTopicPopover();
   });
 
   const smoothScroll = (target, block = 'start') => {
     target?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block });
-  };
-
-  const closeOtherMobileGroups = (opened) => {
-    mobileLibrary?.querySelectorAll('.hm-mobile-question-group').forEach((group) => {
-      if (group !== opened) group.open = false;
-    });
   };
 
   const questionRecords = () => [...(questionList?.querySelectorAll('.hm-question-card') || [])].map((button) => ({
@@ -96,29 +92,53 @@
     original?.click();
   };
 
-  const mobileGroupMarkup = (category, records, specialist = false) => `
-    <details class="hm-mobile-question-group" ${specialist ? 'data-hm-mobile-specialist' : ''}>
-      <summary>
-        <strong>${escapeHtml(category)}</strong>
-        <span class="hm-mobile-question-count">${records.length}</span>
-        <span class="hm-mobile-question-chevron" aria-hidden="true">+</span>
-      </summary>
-      <div class="hm-mobile-question-items">
-        ${records.map((record) => `<button type="button" data-hm-mobile-question="${escapeHtml(record.id)}" data-hm-mobile-type="${escapeHtml(record.type)}">${escapeHtml(record.label)}</button>`).join('')}
-      </div>
-    </details>`;
+  const closeTopicPopover = () => {
+    if (!topicPopover) return;
+    topicPopover.hidden = true;
+    topicBrowser?.querySelectorAll('.hm-topic-bubble').forEach((button) => {
+      button.classList.remove('active');
+      button.setAttribute('aria-expanded', 'false');
+    });
+  };
 
-  const buildMobileLibrary = () => {
+  const openTopic = (category, records) => {
+    if (!topicPopover || !topicBrowser) return;
+    topicPopover.innerHTML = `
+      <div class="hm-topic-popover-head">
+        <div>
+          <strong>${escapeHtml(category)}</strong>
+          <p>Choose a question to send it directly to Ask Haley.</p>
+        </div>
+        <button class="hm-topic-close" type="button" aria-label="Close ${escapeHtml(category)} questions">×</button>
+      </div>
+      <div class="hm-topic-prompts">
+        ${records.map((record) => `<button class="hm-topic-prompt" type="button" data-hm-topic-question="${escapeHtml(record.id)}" data-hm-topic-type="${escapeHtml(record.type)}">${escapeHtml(record.label)}</button>`).join('')}
+      </div>`;
+    topicPopover.hidden = false;
+
+    topicBrowser.querySelectorAll('.hm-topic-bubble').forEach((button) => {
+      const active = button.dataset.hmTopic === category;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-expanded', String(active));
+    });
+
+    topicPopover.querySelector('.hm-topic-close')?.addEventListener('click', closeTopicPopover);
+    topicPopover.querySelectorAll('[data-hm-topic-question]').forEach((button) => {
+      button.addEventListener('click', () => {
+        clickOriginalQuestion({
+          id: button.dataset.hmTopicQuestion,
+          type: button.dataset.hmTopicType || 'standard'
+        });
+        closeTopicPopover();
+        if (chatPanel) window.setTimeout(() => smoothScroll(chatPanel), reducedMotion ? 0 : 70);
+      });
+    });
+  };
+
+  const buildTopicBrowser = () => {
     if (!library || !questionList) return;
     const standard = questionRecords();
     if (!standard.length) return;
-
-    if (!mobileLibrary) {
-      mobileLibrary = document.createElement('div');
-      mobileLibrary.className = 'hm-mobile-library';
-      mobileLibrary.setAttribute('aria-label', 'Collapsible interview question library');
-      library.appendChild(mobileLibrary);
-    }
 
     const grouped = new Map();
     standard.forEach((record) => {
@@ -127,42 +147,53 @@
     });
 
     const specialist = specialistRecords();
-    mobileLibrary.innerHTML = `
-      <div class="hm-mobile-library-intro">
-        <span>Open one topic at a time, then tap a question to send it to Ask Haley.</span>
+    const topics = [...grouped.entries()].map(([category, records]) => ({ category, records }));
+    if (specialist.length) topics.push({ category: 'Deep Dive', records: specialist });
+
+    if (!topicBrowser) {
+      topicBrowser = document.createElement('div');
+      topicBrowser.className = 'hm-topic-browser';
+      topicBrowser.setAttribute('aria-label', 'Interview topic browser');
+      library.appendChild(topicBrowser);
+    }
+
+    topicBrowser.innerHTML = `
+      <div class="hm-topic-browser-intro">
+        <span>Pick a topic bubble for focused prompts, or skip these and type directly into Ask Haley.</span>
         <strong>${standard.length + specialist.length} prompts</strong>
       </div>
-      ${[...grouped.entries()].map(([category, records]) => mobileGroupMarkup(category, records)).join('')}
-      ${specialist.length ? mobileGroupMarkup('Deep Dive', specialist, true) : ''}`;
+      <div class="hm-topic-cloud">
+        ${topics.map(({ category, records }) => `<button class="hm-topic-bubble" type="button" data-hm-topic="${escapeHtml(category)}" aria-expanded="false"><span>${escapeHtml(category)}</span><small>${records.length}</small></button>`).join('')}
+      </div>
+      <div class="hm-topic-popover" data-hm-topic-popover hidden></div>`;
 
-    mobileLibrary.querySelectorAll('.hm-mobile-question-group').forEach((group) => {
-      group.addEventListener('toggle', () => {
-        if (group.open) closeOtherMobileGroups(group);
-      });
-    });
-
-    mobileLibrary.querySelectorAll('[data-hm-mobile-question]').forEach((button) => {
+    topicPopover = topicBrowser.querySelector('[data-hm-topic-popover]');
+    topicBrowser.querySelectorAll('[data-hm-topic]').forEach((button) => {
       button.addEventListener('click', () => {
-        const record = {
-          id: button.dataset.hmMobileQuestion,
-          type: button.dataset.hmMobileType || 'standard'
-        };
-        clickOriginalQuestion(record);
-        button.closest('details')?.removeAttribute('open');
-        if (compactQuery.matches && chatPanel) {
-          window.setTimeout(() => smoothScroll(chatPanel), reducedMotion ? 0 : 80);
+        const category = button.dataset.hmTopic;
+        if (!category) return;
+        if (!topicPopover.hidden && button.classList.contains('active')) {
+          closeTopicPopover();
+          return;
         }
+        const topic = topics.find((item) => item.category === category);
+        if (topic) openTopic(topic.category, topic.records);
       });
     });
   };
 
-  const scheduleMobileLibraryBuild = () => {
+  const scheduleTopicBuild = () => {
     window.clearTimeout(rebuildTimer);
-    rebuildTimer = window.setTimeout(buildMobileLibrary, 40);
+    rebuildTimer = window.setTimeout(buildTopicBrowser, 40);
   };
 
   [questionList, specialistList].filter(Boolean).forEach((node) => {
-    new MutationObserver(scheduleMobileLibraryBuild).observe(node, { childList: true, subtree: true });
+    new MutationObserver(scheduleTopicBuild).observe(node, { childList: true, subtree: true });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!topicPopover || topicPopover.hidden || !topicBrowser) return;
+    if (!topicBrowser.contains(event.target)) closeTopicPopover();
   });
 
   const setupMobileDock = () => {
@@ -221,13 +252,12 @@
   document.querySelectorAll('.hm-explore-nav a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const href = link.getAttribute('href');
-      if (compactQuery.matches && href === '#deep-dive') {
-        const specialistGroup = mobileLibrary?.querySelector('[data-hm-mobile-specialist]');
-        if (specialistGroup) {
-          event.preventDefault();
-          specialistGroup.open = true;
-          closeOtherMobileGroups(specialistGroup);
-          smoothScroll(specialistGroup);
+      if (href === '#deep-dive') {
+        event.preventDefault();
+        const deepDive = topicBrowser?.querySelector('[data-hm-topic="Deep Dive"]');
+        if (deepDive) {
+          smoothScroll(library);
+          window.setTimeout(() => deepDive.click(), reducedMotion ? 0 : 120);
           history.replaceState(null, '', href);
           return;
         }
@@ -241,8 +271,6 @@
     });
   });
 
-  // Keep the bounded message viewport pinned to the newest exchange even when
-  // evidence cards finish laying out after an answer is inserted.
   if (chatLog) {
     new MutationObserver(() => {
       requestAnimationFrame(() => {
@@ -253,10 +281,10 @@
 
   setupMobileDock();
   setupSuggestionToggle();
-  buildMobileLibrary();
-  window.addEventListener('load', scheduleMobileLibraryBuild, { once: true });
+  buildTopicBrowser();
+  window.addEventListener('load', scheduleTopicBuild, { once: true });
   compactQuery.addEventListener?.('change', () => {
-    scheduleMobileLibraryBuild();
+    scheduleTopicBuild();
     if (!compactQuery.matches && starterWrap) starterWrap.classList.remove('is-open');
   });
 
