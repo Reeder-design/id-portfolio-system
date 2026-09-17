@@ -1,0 +1,215 @@
+/* Phase 21 visual consistency
+   Keeps runtime breadcrumbs compact across every hero family and gives the About adaptation lab a stronger visual identity. */
+
+/* ---------- Breadcrumb rhythm ---------- */
+/* portfolio-motion.js injects breadcrumbs as the first child of the first hero container.
+   Some hero containers are grids, so a generic grid gap can otherwise become a large vertical gap. */
+main > section:first-child .container:has(> .breadcrumbs) {
+  row-gap: 12px !important;
+}
+
+main > section:first-child .container > .breadcrumbs,
+.page-hero > .container > .breadcrumbs,
+.refresh-hero > .container > .breadcrumbs {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+}
+
+/* Give block-based hero shells the same compact separation that grid heroes get from row-gap. */
+main > section:first-child .container:not(:has(> :nth-child(3))) > .breadcrumbs + * {
+  margin-top: 12px !important;
+}
+
+.breadcrumbs {
+  line-height: 1.35;
+}
+
+/* ---------- About: adaptation lab ---------- */
+.about-experience-hero + .section {
+  padding-top: clamp(46px, 6vw, 64px);
+}
+
+.about-experience-hero + .section .section-heading {
+  margin-bottom: 18px;
+}
+
+.about-experience-hero + .section .section-heading p:last-child {
+  margin-bottom: 0;
+}
+
+.adapt-lab {
+  position: relative;
+  isolation: isolate;
+  margin-top: 0 !important;
+  overflow: hidden;
+  border: 1px solid rgba(80,132,132,.28) !important;
+  border-radius: 30px !important;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(151,219,79,.13), transparent 24rem),
+    radial-gradient(circle at 8% 92%, rgba(121,201,158,.12), transparent 22rem),
+    linear-gradient(145deg, rgba(247,250,248,.98), rgba(235,243,240,.96)) !important;
+  box-shadow: 0 24px 70px rgba(52,74,66,.13) !important;
+}
+
+.adapt-lab::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  z-index: 3;
+  background: linear-gradient(90deg, var(--pine-blue), var(--mint-leaf), var(--yellow-green));
+}
+
+.adapt-lab::after {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  right: -96px;
+  bottom: -116px;
+  border: 1px dashed rgba(80,132,132,.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.adapt-tabs {
+  position: relative;
+  z-index: 2;
+  gap: 8px !important;
+  padding: 12px !important;
+  background: rgba(74,66,56,.055) !important;
+  border-bottom: 1px solid rgba(80,132,132,.12);
+}
+
+.adapt-tab {
+  min-height: 62px !important;
+  border: 1px solid rgba(80,132,132,.12) !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,.8) !important;
+  box-shadow: 0 8px 20px rgba(52,74,66,.035);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease !important;
+}
+
+.adapt-tab:hover,
+.adapt-tab:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(121,201,158,.6) !important;
+  background: rgba(255,255,255,.98) !important;
+  color: var(--pine-blue) !important;
+  box-shadow: 0 12px 26px rgba(52,74,66,.09);
+}
+
+.adapt-tab.active {
+  transform: translateY(-2px);
+  border-color: rgba(121,201,158,.52) !important;
+  background: linear-gradient(145deg, rgba(62,78,76,.98), rgba(80,132,132,.96)) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 30px rgba(52,74,66,.18);
+}
+
+.adapt-tab.active .portfolio-icon {
+  color: var(--mint-leaf) !important;
+}
+
+.adapt-panel {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 4vw, 40px) !important;
+  background: rgba(255,255,255,.58);
+}
+
+.adapt-summary {
+  max-width: 940px !important;
+}
+
+.adapt-summary-icon {
+  border-color: rgba(80,132,132,.28) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(221,238,231,.92)) !important;
+  box-shadow: 0 12px 28px rgba(52,74,66,.09);
+}
+
+.adapt-steps {
+  gap: 14px !important;
+  margin-top: 22px !important;
+}
+
+.adapt-step {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(80,132,132,.17) !important;
+  background: rgba(255,255,255,.84) !important;
+  box-shadow: 0 10px 26px rgba(52,74,66,.045);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.adapt-step::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(80,132,132,.7), rgba(121,201,158,.75));
+  opacity: .45;
+}
+
+.adapt-step:hover {
+  transform: translateY(-4px);
+  border-color: rgba(121,201,158,.52) !important;
+  box-shadow: 0 18px 34px rgba(52,74,66,.1);
+}
+
+.adapt-step-icon {
+  background: rgba(80,132,132,.1) !important;
+  border: 1px solid rgba(80,132,132,.1);
+}
+
+.adapt-priorities {
+  margin-top: 20px !important;
+  border-color: rgba(80,132,132,.18) !important;
+  background: linear-gradient(145deg, rgba(237,246,241,.96), rgba(255,255,255,.88)) !important;
+}
+
+.adapt-priority {
+  box-shadow: 0 6px 16px rgba(52,74,66,.04);
+}
+
+.adapt-quality {
+  margin-top: 18px !important;
+  padding-top: 16px;
+  border-top: 1px solid rgba(80,132,132,.13);
+}
+
+@media (max-width: 900px) {
+  .adapt-tabs {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .adapt-tabs {
+    grid-template-columns: 1fr !important;
+    padding: 9px !important;
+  }
+
+  .adapt-panel {
+    padding: 22px 18px 24px !important;
+  }
+
+  .adapt-step:hover,
+  .adapt-tab:hover,
+  .adapt-tab:focus-visible,
+  .adapt-tab.active {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adapt-tab,
+  .adapt-step {
+    transition: none !important;
+  }
+}
