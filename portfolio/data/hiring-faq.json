@@ -1,0 +1,316 @@
+{
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "about-me",
+      "category": "Background",
+      "short_label": "Tell me about yourself",
+      "prompt": "Tell me about yourself and your background in instructional design.",
+      "featured": true,
+      "keywords": ["about", "background", "career", "teacher", "teaching", "transition", "instructional designer", "learning and development", "experience"],
+      "answer": "I started as a high-school history and English teacher and moved into corporate instructional design and enterprise enablement. My current work centers on learning for sellers and partners working with complex technical products. I build product-launch learning, microlearning, interactive practice, certification paths, and live workshops. I also work hands-on with LMS administration, AI evaluation, reporting automation, and multimedia production when those pieces are part of the learning problem.",
+      "evidence": [
+        {"title": "About Me", "path": "about/index.html", "note": "Career transition and the range of work I handle."},
+        {"title": "Projects", "path": "projects/index.html", "note": "Portfolio overview across learning design, LMS, AI, and systems work."}
+      ],
+      "followups": ["end-to-end-project", "technical-training", "sales-enablement"]
+    },
+    {
+      "id": "end-to-end-project",
+      "category": "Instructional Design",
+      "short_label": "End-to-end ID project",
+      "prompt": "Walk me through an instructional design project you owned end to end.",
+      "featured": true,
+      "keywords": ["end to end", "full project", "project ownership", "curriculum", "certification", "analysis", "design", "development", "implementation", "evaluation", "addie"],
+      "answer": "My Enterprise Sales Certification Pathway is the clearest end-to-end example. I took product, technical, and sales source material; defined seller-focused objectives; organized the material into a multi-course path; built lessons, scenarios, knowledge checks, and assessment content in Rise and Storyline; coordinated SME review and QA; tested learner paths in the LMS; and supported reporting and maintenance after release. The scope extended beyond course authoring because the certification also had routing, regional requirements, LMS behavior, and reporting needs.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Curriculum architecture, development, assessment, LMS testing, reporting, and maintenance."},
+        {"title": "Complete eLearning Pathways", "path": "projects/instructional-design/complete-learning-paths/index.html", "note": "How I approach larger learning programs and certifications."}
+      ],
+      "followups": ["technical-training", "sme-collaboration", "assessment-design"]
+    },
+    {
+      "id": "technical-training",
+      "category": "Instructional Design",
+      "short_label": "Technical training",
+      "prompt": "How do you design technical training for a non-technical or sales audience?",
+      "featured": true,
+      "keywords": ["technical training", "technical content", "complex product", "non technical", "sales audience", "seller", "technical foundations", "product training", "simplify", "translate"],
+      "answer": "I do not try to turn sellers into engineers. I work backward from the decisions the audience actually has to make: recognize fit, ask useful discovery questions, explain value, compare solution paths, choose a next step, or know when specialist support is needed. Technical detail stays when it supports one of those decisions. That keeps the learning accurate without letting product or engineering source material take over the course.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Role-based decisions and technical-depth boundaries in a sales certification."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Focused product positioning and customer-facing practice."}
+      ],
+      "followups": ["sales-enablement", "audience-design", "sme-collaboration"]
+    },
+    {
+      "id": "sales-enablement",
+      "category": "Sales Enablement",
+      "short_label": "Sales enablement experience",
+      "prompt": "What sales enablement experience do you have?",
+      "featured": true,
+      "keywords": ["sales enablement", "seller enablement", "partner enablement", "channel", "sales training", "product launch", "sales certification", "meddpicc", "seller readiness"],
+      "answer": "Sales and partner enablement are central to my current instructional design work. I have built product-launch microlearning, vertical-positioning learning, scenario-based sales practice, multi-course certification, and performance support, and I have facilitated MEDDPICC workshop modules for internal sellers and external partners. I design around seller tasks such as discovery, opportunity fit, positioning, customer conversations, qualification, and choosing the next step.",
+      "evidence": [
+        {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Overview of sales and partner learning formats across the portfolio."},
+        {"title": "Virtual Sales Workshop Facilitation", "path": "projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html", "note": "MEDDPICC facilitation for internal and partner audiences."},
+        {"title": "Microlearning & Performance Support", "path": "projects/instructional-design/microlearning-performance-support/index.html", "note": "Launch and vertical-positioning sales learning."}
+      ],
+      "followups": ["technical-training", "global-audiences", "live-facilitation"]
+    },
+    {
+      "id": "sme-collaboration",
+      "category": "Instructional Design",
+      "short_label": "Working with SMEs",
+      "prompt": "How do you work with subject matter experts and reviewers?",
+      "featured": true,
+      "keywords": ["sme", "subject matter expert", "reviewer", "stakeholder", "review", "feedback", "qa", "approval", "source material"],
+      "answer": "I try to make SME review specific instead of asking someone to react to an entire course at once. I start from approved source material, identify what decision or objective each section supports, and use review cycles to verify accuracy, positioning, assessment logic, and anything that changed in the source. I keep instructional decisions separate from factual approval so SMEs can focus on the content they own while I keep responsibility for the learning experience, structure, and usability.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "SME review, QA, source changes, and maintenance across a large program."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Focused review and QA for launch learning."}
+      ],
+      "followups": ["content-change", "end-to-end-project", "assessment-design"]
+    },
+    {
+      "id": "audience-design",
+      "category": "Instructional Design",
+      "short_label": "Different audiences",
+      "prompt": "How do you design for learners with different levels of experience?",
+      "featured": false,
+      "keywords": ["audience", "beginner", "experienced", "new seller", "mixed experience", "different learners", "role based", "personalization", "optional content"],
+      "answer": "I separate what everyone needs from what only some learners need. In certification work, that has meant keeping shared seller decisions in the core path, separating regional requirements, and moving deeper technical foundations into optional learning when they are not necessary for every seller. I also use expandable detail, comparisons, quick references, and scenarios so experienced learners can move efficiently without leaving newer learners without context.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Core, regional, and optional learning routes for mixed-experience sellers."}
+      ],
+      "followups": ["technical-training", "assessment-design", "global-audiences"]
+    },
+    {
+      "id": "assessment-design",
+      "category": "Instructional Design",
+      "short_label": "Assessment design",
+      "prompt": "How do you approach assessment design?",
+      "featured": true,
+      "keywords": ["assessment", "knowledge check", "quiz", "scenario", "practice", "evaluation", "objectives", "measurement", "exam", "formative", "summative"],
+      "answer": "I start with the decision or behavior the learner should demonstrate, then choose the lightest assessment that can show it. For sales learning, I prefer practice that asks the learner to identify opportunity fit, compare solution paths, interpret customer information, or choose a next step rather than only recall product facts. I use formative checks throughout the learning and reserve final assessment for the evidence that matters to completion or certification.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Seller-task practice, formative checks, and final certification assessment."},
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Decision-based practice and explanatory feedback."}
+      ],
+      "followups": ["end-to-end-project", "interactive-learning", "measurement-reporting"]
+    },
+    {
+      "id": "interactive-learning",
+      "category": "Instructional Design",
+      "short_label": "Scenario design",
+      "prompt": "What is your approach to scenario-based or interactive learning?",
+      "featured": false,
+      "keywords": ["scenario", "interactive", "branching", "simulation", "decision", "storyline", "practice", "feedback", "customer conversation"],
+      "answer": "I use interaction when the learner needs to make a decision, not just because a page needs more clicks. I build scenarios around realistic evidence, customer conversations, qualification choices, or positioning decisions, then use feedback to explain the reasoning behind the stronger choice. I also build browser-based interaction demos when HTML, CSS, and JavaScript are a better fit for the experience I want to prototype.",
+      "evidence": [
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Scenario-based and decision-based learning examples."},
+        {"title": "MEDDPICC Qualification Lab", "path": "projects/instructional-design/interactive-learning/meddpicc-practice/index.html", "note": "Evidence-classification practice using a fictional enterprise account."},
+        {"title": "Pursuit Determination Lab", "path": "projects/instructional-design/interactive-learning/pursuit-positioning/index.html", "note": "Guided sales-pursuit decisions with scoring and visual feedback."}
+      ],
+      "followups": ["assessment-design", "coding-automation", "sales-enablement"]
+    },
+    {
+      "id": "lms-experience",
+      "category": "LMS & Operations",
+      "short_label": "LMS experience",
+      "prompt": "What LMS administration and learning operations experience do you have?",
+      "featured": true,
+      "keywords": ["lms", "absorb", "docebo", "learning management system", "learning operations", "admin", "learning plan", "certification", "enrollment", "support"],
+      "answer": "I have hands-on LMS administration and learning-operations experience across Absorb and Docebo. My work includes course and content setup, learning plans, catalogs, certifications, audience and access rules, enrollment behavior, renewals, learner support, reporting, documentation, and troubleshooting. I think about the full learner path from finding the right content through completion, renewal, and support rather than treating the LMS as only a publishing destination.",
+      "evidence": [
+        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Content administration, learning plans, certifications, support, and reporting."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Absorb-to-Docebo setup, UAT, support, and post-launch operations."}
+      ],
+      "followups": ["lms-migration", "measurement-reporting", "coding-automation"]
+    },
+    {
+      "id": "lms-migration",
+      "category": "LMS & Operations",
+      "short_label": "LMS migration",
+      "prompt": "What did you do during the Absorb to Docebo migration?",
+      "featured": true,
+      "keywords": ["migration", "absorb to docebo", "docebo", "uat", "platform transition", "configuration", "learning plan", "inbox", "support documentation", "post launch"],
+      "answer": "My migration work covered the content and learner-experience layer of the move from Absorb to Docebo. I helped set up learning structures, configured learning plans and content, tested employee, partner, and customer learner journeys, documented issues, retested fixes, supported the learner inbox, helped establish support documentation and reusable customer-support email responses, and supported immediate post-launch reporting and action planning. I was part of the broader migration team rather than the sole owner of platform architecture.",
+      "evidence": [
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Detailed migration scope, UAT, launch support, and ownership boundaries."}
+      ],
+      "followups": ["lms-experience", "measurement-reporting", "ownership-boundaries"]
+    },
+    {
+      "id": "measurement-reporting",
+      "category": "LMS & Operations",
+      "short_label": "Measurement + reporting",
+      "prompt": "How do you measure learning or work with reporting?",
+      "featured": false,
+      "keywords": ["measurement", "reporting", "analytics", "completion", "certificate", "excel", "data", "learning analytics", "outcomes", "metrics", "report"],
+      "answer": "I work with the evidence that the system and project can actually support. That includes completion and certificate data, assessment results, learner-path exceptions, support patterns, and operational reporting. When LMS reporting has not matched the learning design, I have built supplemental workflows instead of pretending the limitation did not exist. One example uses four recurring LMS reports and Python-based analysis to produce Complete and Incomplete review sheets with learner type and visible exceptions.",
+      "evidence": [
+        {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Automated report downloads and completion analysis."},
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Certification reporting workaround and assessment evidence."}
+      ],
+      "followups": ["coding-automation", "lms-experience", "evidence-boundaries"]
+    },
+    {
+      "id": "coding-automation",
+      "category": "Systems & AI",
+      "short_label": "Coding + automation",
+      "prompt": "How do you use coding or automation in your learning work?",
+      "featured": true,
+      "keywords": ["coding", "code", "python", "selenium", "pandas", "openpyxl", "automation", "javascript", "html", "css", "reporting", "workflow"],
+      "answer": "I use code when it removes repetitive operational work or lets me prototype learning interactions that authoring tools do not handle as cleanly. My workflow examples use Python, Selenium, pandas, openpyxl, and Excel for browser automation, LMS reporting, and data analysis. I also use HTML, CSS, and JavaScript to build interactive portfolio and learning prototypes such as sales-practice and evaluation demos.",
+      "evidence": [
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Python, Selenium, data workflows, and system handoffs."},
+        {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Four-report automation and analysis workflow."},
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Browser-based interaction prototypes."}
+      ],
+      "followups": ["measurement-reporting", "interactive-learning", "ai-evaluation"]
+    },
+    {
+      "id": "ai-evaluation",
+      "category": "Systems & AI",
+      "short_label": "AI evaluation",
+      "prompt": "What experience do you have evaluating or training AI systems?",
+      "featured": true,
+      "keywords": ["ai", "artificial intelligence", "llm", "model evaluation", "ai training", "rubric", "grounding", "hallucination", "quality assurance", "calibration"],
+      "answer": "My AI work focuses on evaluating model outputs against the task, approved evidence, scoring criteria, and the needs of the intended user. I look for instruction-following failures, unsupported claims, logic gaps, writing-quality problems, and subtle issues that make an answer less useful even when it sounds polished. I also write actionable feedback and use rubrics and calibration to keep judgments consistent.",
+      "evidence": [
+        {"title": "AI Training & Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation lenses, quality signals, and human-review approach."},
+        {"title": "AI Evaluation Rubric", "path": "projects/ai-training-and-evaluation/rubric-demo/index.html", "note": "Criterion-by-criterion scoring demo."},
+        {"title": "AI Evaluation Workflow", "path": "projects/ai-training-and-evaluation/workflow-demo/index.html", "note": "Frame, verify, diagnose, and calibrate review workflow."}
+      ],
+      "followups": ["coding-automation", "evidence-boundaries", "assessment-design"]
+    },
+    {
+      "id": "live-facilitation",
+      "category": "Facilitation",
+      "short_label": "Live facilitation",
+      "prompt": "What live training and facilitation experience do you have?",
+      "featured": false,
+      "keywords": ["live training", "facilitation", "virtual workshop", "ilt", "vilt", "meddpicc", "poll", "discussion", "instructor led", "presentation"],
+      "answer": "I have both classroom-teaching experience and corporate virtual facilitation experience. In my current work, I have facilitated assigned MEDDPICC workshop modules for internal sales teams and external partners. I use questions, polls, seller examples, and discussion to check understanding, and I adjust pacing or explanation when learner signals show that the group needs something different. I also bring repeated questions and misconceptions back into future learning design.",
+      "evidence": [
+        {"title": "Virtual Sales Workshop Facilitation", "path": "projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html", "note": "Completed MEDDPICC facilitation work and live adaptation."},
+        {"title": "Live Training", "path": "projects/instructional-design/live-training/index.html", "note": "Live-learning development and facilitation experience."}
+      ],
+      "followups": ["global-audiences", "sales-enablement", "about-me"]
+    },
+    {
+      "id": "global-audiences",
+      "category": "Facilitation",
+      "short_label": "Global audiences",
+      "prompt": "Have you designed or facilitated learning for international or partner audiences?",
+      "featured": false,
+      "keywords": ["international", "global", "partner", "channel partner", "external partner", "regional", "us audience", "worldwide", "audience"],
+      "answer": "Yes. My enterprise learning serves internal sellers and external partners, and my live facilitation has included both U.S. and international audiences. That changes how I think about examples, terminology, regional requirements, pacing, and what belongs in a shared core versus a regional extension. I try to keep the common learning path focused while separating requirements that only apply to part of the audience.",
+      "evidence": [
+        {"title": "Virtual Sales Workshop Facilitation", "path": "projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html", "note": "U.S. and international seller/partner facilitation."},
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Core and regional learning routes."}
+      ],
+      "followups": ["audience-design", "sales-enablement", "live-facilitation"]
+    },
+    {
+      "id": "multimedia",
+      "category": "Tools & Production",
+      "short_label": "Multimedia production",
+      "prompt": "What multimedia and content production tools do you use?",
+      "featured": false,
+      "keywords": ["multimedia", "video", "motion graphics", "audio", "premiere", "after effects", "audition", "camtasia", "colossyan", "media", "production"],
+      "answer": "I use multimedia when it helps explain, orient, demonstrate, or add useful visual context to the learning. My production toolkit includes Adobe Premiere, After Effects, Audition, Camtasia, and AI-presenter media such as Colossyan, alongside graphics and interactive web assets. I do not treat video as the default; I choose it when motion, voice, demonstration, or visual sequencing does something that static content cannot.",
+      "evidence": [
+        {"title": "Multimedia", "path": "projects/instructional-design/multimedia/index.html", "note": "Video, motion, audio, AI-presenter media, and public-safe sample slots."},
+        {"title": "Vertical-Positioning Microlearning", "path": "projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html", "note": "Selective multimedia inside a short Rise module."}
+      ],
+      "followups": ["toolkit", "technical-training", "interactive-learning"]
+    },
+    {
+      "id": "toolkit",
+      "category": "Tools & Production",
+      "short_label": "Tools I use",
+      "prompt": "What tools and platforms are you comfortable working in?",
+      "featured": false,
+      "keywords": ["tools", "platforms", "software", "rise", "storyline", "articulate", "absorb", "docebo", "python", "selenium", "adobe", "powerpoint", "html", "javascript"],
+      "answer": "My learning-development stack includes Articulate Rise and Storyline, Review 360, PowerPoint, Adobe creative tools, Camtasia, and browser-based HTML/CSS/JavaScript work. On the learning-operations side I have hands-on experience with Absorb and Docebo. For workflow and reporting work I use Python, Selenium, pandas, openpyxl, and Excel. I choose the tool after the learning or operational need is clear rather than designing the project around a favorite platform.",
+      "evidence": [
+        {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Authoring and learning-development work."},
+        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Absorb and Docebo operations."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Python and workflow tooling."}
+      ],
+      "followups": ["coding-automation", "multimedia", "lms-experience"]
+    },
+    {
+      "id": "content-change",
+      "category": "Working Style",
+      "short_label": "Changing content",
+      "prompt": "How do you handle fast-changing product content or shifting source material?",
+      "featured": false,
+      "keywords": ["change", "changing content", "maintenance", "update", "product update", "source material", "version", "rapid change", "scope change"],
+      "answer": "I design for maintenance from the beginning when I know the product or source material will keep changing. I keep modules and interactions as independent as practical, track which source owns a claim or section, avoid publishing information that is not approved yet, and isolate regional or optional content when it will change on a different schedule. That makes future updates smaller and reduces the chance that one change forces a complete rebuild.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Maintenance approach across a changing product portfolio."},
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Independent launch assets with different update cycles."}
+      ],
+      "followups": ["sme-collaboration", "end-to-end-project", "ownership-boundaries"]
+    },
+    {
+      "id": "ownership-boundaries",
+      "category": "Working Style",
+      "short_label": "Role + ownership",
+      "prompt": "How do you describe your role when a project was completed by a larger team?",
+      "featured": false,
+      "keywords": ["ownership", "team", "role", "collaboration", "boundary", "claim", "credit", "migration team", "workshop program"],
+      "answer": "I separate what I personally owned from what the larger team or program owned. For example, I can say that I facilitated assigned MEDDPICC modules without claiming ownership of the entire workshop curriculum, or that I handled LMS content administration, UAT, support, and learner-experience work without claiming that I architected the entire platform migration. I would rather be precise about my contribution than make a project sound larger by blurring ownership.",
+      "evidence": [
+        {"title": "Virtual Sales Workshop Facilitation", "path": "projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html", "note": "Clear facilitation ownership boundaries."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Clear migration-team ownership boundaries."}
+      ],
+      "followups": ["sme-collaboration", "lms-migration", "evidence-boundaries"]
+    },
+    {
+      "id": "evidence-boundaries",
+      "category": "Working Style",
+      "short_label": "Evidence + metrics",
+      "prompt": "How do you talk about results when confidential metrics or direct ROI are not available?",
+      "featured": false,
+      "keywords": ["results", "roi", "metrics", "confidential", "evidence", "outcome", "impact", "privacy", "public safe"],
+      "answer": "I do not manufacture ROI or imply that a metric exists when I cannot support it publicly. I use the evidence I actually have: what was delivered, how the learner path changed, what decisions the design supported, what QA or reporting problem was solved, and what operational workflow was created. When confidential or unapproved metrics are not available, I say that clearly and use public-safe recreated examples to show the quality of the work instead.",
+      "evidence": [
+        {"title": "Projects", "path": "projects/index.html", "note": "Public case studies use explicit, supportable project evidence."},
+        {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Concrete workflow evidence without exposing learner records."}
+      ],
+      "followups": ["measurement-reporting", "ownership-boundaries", "end-to-end-project"]
+    },
+    {
+      "id": "system-constraint",
+      "category": "Working Style",
+      "short_label": "System constraint example",
+      "prompt": "Tell me about a time a system constraint changed your design or workflow.",
+      "featured": false,
+      "keywords": ["challenge", "constraint", "system limitation", "workaround", "reporting limitation", "problem solving", "lms limitation"],
+      "answer": "In certification work, the LMS reporting available to the project did not fully match the learner-routing and regional assessment design. Rather than redesign the learning around the report, I kept the learning structure and added a supplemental assessment plus a lightweight spreadsheet workflow to combine the evidence needed for review. That experience also pushed me toward more automation work for recurring reporting tasks.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Regional assessment and reporting workaround."},
+        {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Automation of recurring LMS reporting work."}
+      ],
+      "followups": ["measurement-reporting", "coding-automation", "end-to-end-project"]
+    },
+    {
+      "id": "where-add-value",
+      "category": "Background",
+      "short_label": "Where I add value",
+      "prompt": "Where do you add the most value on a learning team?",
+      "featured": false,
+      "keywords": ["strength", "value", "best at", "role", "team", "contribution", "complex", "learning team"],
+      "answer": "I add the most value when a project sits between several disciplines: complex product information, sales or learner needs, authoring, LMS delivery, and operational reality. I am comfortable moving between instructional design and the systems around it, so I can build the learning and also notice when the real problem is routing, reporting, support, content maintenance, or a workflow that needs to be fixed around the course.",
+      "evidence": [
+        {"title": "About Me", "path": "about/index.html", "note": "How my role changes across learning design, LMS, AI, and live work."},
+        {"title": "Projects", "path": "projects/index.html", "note": "Range across design, platform operations, and automation."}
+      ],
+      "followups": ["about-me", "end-to-end-project", "lms-experience"]
+    }
+  ]
+}

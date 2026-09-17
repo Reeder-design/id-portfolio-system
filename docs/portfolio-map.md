@@ -39,7 +39,8 @@ Current portfolio version: **1.0.0**
 
 These pages exist in the public site but are not represented by a structured project record or canonical taxonomy page.
 
+- `portfolio/hiring-manager/index.html`
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **24**
+Total public HTML pages: **25**

@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "pillars": [
+    {
+      "id": "learning-architecture",
+      "label": "Learning Architecture",
+      "headline": "I can structure the learning before I ever open an authoring tool.",
+      "skills": ["Needs assessment", "ADDIE", "SAM", "Backward design", "Bloom's Taxonomy", "Gagne's Nine Events", "Adult Learning Theory", "Kirkpatrick evaluation", "Curriculum mapping", "Learning objectives", "Storyboarding", "Assessment design"],
+      "proof": "I use the models as decision tools, not ceremony. The pattern is audience → performance need → objective → practice → evidence → delivery constraints."
+    },
+    {
+      "id": "enterprise-tech",
+      "label": "Enterprise Learning Tech",
+      "headline": "I understand the systems around the course, not just the course itself.",
+      "skills": ["SCORM", "xAPI", "cmi5", "AICC", "LRS patterns", "SAML 2.0", "Okta / SSO", "API data flows", "HRIS bridges", "Salesforce / CRM integration", "Credential workflows", "Learning analytics"],
+      "proof": "I can translate between the learner experience and the technical owners responsible for identity, enrollment, CRM, reporting, and downstream data."
+    },
+    {
+      "id": "accessible-ux",
+      "label": "Accessible UX/UI",
+      "headline": "I treat accessibility and usability as interaction design, not a final checklist.",
+      "skills": ["WCAG 2.2", "Section 508", "Keyboard navigation", "Focus order", "Screen-reader structure", "Color contrast", "Captions + transcripts", "Reduced motion", "Responsive design", "Figma", "Adobe XD", "Universal design"],
+      "proof": "I design for clear navigation, low cognitive friction, multiple ways to access information, and custom interactions that still work with keyboard and assistive technology."
+    },
+    {
+      "id": "ai-automation",
+      "label": "AI + Automation",
+      "headline": "I use AI and code to extend the ID workflow instead of replacing the ID judgment.",
+      "skills": ["Prompt engineering", "Agent instructions", "Custom agent workflows", "AI evaluation", "Source grounding", "Human QA", "Python", "Selenium", "JavaScript", "pandas", "openpyxl", "Workflow automation"],
+      "proof": "I build constrained, reviewable systems: the model or script gets a defined job, inputs, boundaries, and QA rather than unlimited freedom."
+    },
+    {
+      "id": "performance-consulting",
+      "label": "Performance Consulting",
+      "headline": "I am comfortable saying training is not the answer when the root cause is somewhere else.",
+      "skills": ["Human Performance Improvement", "Root-cause analysis", "Performance gaps", "Job aids", "Performance support", "Process friction", "System friction", "Stakeholder consulting", "Measurement planning", "Continuous improvement"],
+      "proof": "I look for knowledge, process, access, ownership, documentation, incentive, and system problems before recommending a course. I am continuing formal HPI development and certification work."
+    },
+    {
+      "id": "delivery-leadership",
+      "label": "Delivery + Collaboration",
+      "headline": "I can keep a complex learning project moving without turning review into chaos.",
+      "skills": ["Stakeholder management", "SME facilitation", "Agile iteration", "Asana", "Smartsheet", "Jira", "Monday.com", "Trello", "Teams", "Slack", "Review 360", "Localization tracking"],
+      "proof": "I separate decisions, dependencies, factual approval, design review, QA, and launch requirements so people know what they own and what needs to happen next."
+    }
+  ]
+}
