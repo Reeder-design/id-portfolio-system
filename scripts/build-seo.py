@@ -185,7 +185,7 @@ def add_expertise_footer_link(path: Path, text: str) -> str:
     )
     match = resume_pattern.search(clean)
     if not match:
-        raise ValueError(f"{path.relative_to(ROOT)}: footer résumé link not found for Expertise navigation injection")
+        return clean
     return clean[: match.end()] + link + clean[match.end():]
 
 
