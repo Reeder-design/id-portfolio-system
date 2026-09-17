@@ -29,7 +29,7 @@ Current portfolio version: **1.0.0**
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
 - **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
   - LMS Migration Experience — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (live)
-- **Systems and Workflows** — `portfolio/projects/workflows/index.html`
+- **System Integrations and Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
   - **Data + Reporting**
