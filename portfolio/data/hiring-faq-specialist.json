@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "id-frameworks",
+      "category": "Learning Architecture",
+      "short_label": "Frameworks I actually use",
+      "prompt": "Which instructional design models and learning theories do you actually use in your work?",
+      "keywords": ["addie", "sam", "backward design", "gagne", "kirkpatrick", "andragogy", "adult learning", "bloom", "framework", "learning theory"],
+      "answer": "I know the frameworks, but I do not treat them like a checklist I have to perform for every project. ADDIE is useful when I need a clear end-to-end structure. SAM is helpful when the work needs fast prototypes and repeated review. Backward design is probably the habit I use most consistently because I start with what the learner needs to do, then work backward into objectives, practice, assessment, and content. Bloom helps me keep objectives measurable. Gagne, adult learning principles, and Kirkpatrick are useful lenses when I am thinking about engagement, relevance, transfer, and what evidence is realistic to collect. I use the theory to make better decisions, not to make the project sound academic.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "A large learning path built from seller decisions, objectives, practice, assessment, review, and operational constraints."},
+        {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Examples across eLearning, interactive practice, microlearning, live learning, and performance support."}
+      ]
+    },
+    {
+      "id": "needs-hpi",
+      "category": "Strategy",
+      "short_label": "Needs assessment + HPI",
+      "prompt": "How do you diagnose whether a performance problem actually needs training?",
+      "keywords": ["needs assessment", "performance gap", "hpi", "human performance improvement", "training not answer", "business problem", "root cause"],
+      "answer": "I start by asking what is happening now, what should be happening instead, and what is actually stopping the person from doing it. If the gap is knowledge, confidence, or practice, training may be the right answer. If the issue is a broken process, bad access, missing documentation, unclear ownership, system friction, or an incentive problem, I would rather fix that than build a course nobody needed. I use an HPI mindset because I want to solve the performance problem, not win an argument for more training. I am also continuing to build formal depth in HPI and related certifications because that consulting side of the work is where I want to keep growing.",
+      "evidence": [
+        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Examples where learner support, documentation, system behavior, and reporting sit around the learning itself."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Operational fixes and automation used when the problem is bigger than course content."}
+      ]
+    },
+    {
+      "id": "curriculum-mapping",
+      "category": "Learning Architecture",
+      "short_label": "Curriculum mapping",
+      "prompt": "How do you turn a large amount of source material into a coherent curriculum?",
+      "keywords": ["curriculum map", "scaffold", "learning objectives", "bloom", "sequence", "content architecture", "curriculum"],
+      "answer": "I usually start by getting the source material out of document order and into learner-decision order. I map the audience, business need, objectives, dependencies, practice, assessment, and any optional or regional content before I worry about screens. Then I look for what has to come first, what can be referenced later, what is duplicated, and what should not be in the learning at all. For large technical programs, I also separate stable foundations from fast-changing product detail so the curriculum is easier to maintain. That is how I keep a big content set from turning into one giant linear information dump.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Multi-course architecture with core, regional, optional, practice, and assessment layers."}
+      ]
+    },
+    {
+      "id": "accessibility-engineering",
+      "category": "Advanced Design",
+      "short_label": "Accessibility engineering",
+      "prompt": "How deep is your accessibility experience beyond adding alt text and captions?",
+      "keywords": ["accessibility", "wcag", "wcag 2.2", "section 508", "screen reader", "keyboard", "focus order", "universal design", "aaa"],
+      "answer": "I think about accessibility as part of the interaction design, not a cleanup pass. That means keyboard navigation, logical focus order, semantic structure, readable contrast, captions and transcripts, reduced-motion behavior, clear labels, predictable navigation, and not making meaning depend on color or hover alone. In custom HTML and JavaScript work, I can control those mechanics directly. In authoring tools, I work inside the platform's accessibility model and test the experience instead of assuming a checkbox makes it compliant. I understand the engineering required for strict WCAG 2.2 and Section 508 expectations, and I design toward universal access from the beginning.",
+      "evidence": [
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Custom interaction work where navigation, feedback, responsiveness, and usability can be controlled directly."},
+        {"title": "Multimedia Training Content", "path": "projects/instructional-design/multimedia/index.html", "note": "Media and visual design work where captions, readable graphics, motion, and alternative access matter."}
+      ]
+    },
+    {
+      "id": "xapi-analytics",
+      "category": "Learning Technology",
+      "short_label": "xAPI + learning data",
+      "prompt": "How do you think about xAPI, cmi5, and learning data beyond SCORM completion tracking?",
+      "keywords": ["xapi", "tin can", "cmi5", "lrs", "scorm", "learning record store", "custom statements", "javascript trigger", "analytics", "tableau"],
+      "answer": "SCORM is fine when all you need is launch, completion, score, and pass or fail. I am interested in the data that explains what happened inside the experience. With xAPI and cmi5, I can think in terms of meaningful events: which decision a learner made, what evidence they selected, where they changed an answer, what path they took, or whether they used a resource before succeeding. I can write custom JavaScript triggers to send those statements and design the statement structure so an LRS, data lake, or BI layer can actually use it. The important part is not tracking everything because you can. It is defining the events that answer a real learning or business question.",
+      "evidence": [
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Examples of data flow, structured automation, and system handoffs around learning operations."},
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Decision-based interactions that can support richer event tracking than simple completion."}
+      ]
+    },
+    {
+      "id": "enterprise-integrations",
+      "category": "Learning Technology",
+      "short_label": "Enterprise integrations",
+      "prompt": "How comfortable are you with the technical ecosystem around an enterprise LMS?",
+      "keywords": ["sso", "saml", "okta", "api", "hris", "workday", "sap", "salesforce", "integration", "lms integration", "crm"],
+      "answer": "I am comfortable thinking past the LMS screen and into the systems around it. I understand SSO and SAML-style identity flows, Okta-based access, HRIS-driven enrollment and offboarding patterns, CRM handoffs with Salesforce, API-based data movement, credentials, reporting, and where an LRS or analytics layer fits. I am not trying to be the identity engineer or backend developer on every implementation. My value is that I can understand the integration logic well enough to design the learner experience, define the right requirements, test the handoffs, spot where the workflow is breaking, and communicate with the technical owners without treating the LMS like an isolated box.",
+      "evidence": [
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Salesforce-to-learning workflows, automation, reporting, and system handoffs."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Platform setup, learner-path testing, launch support, and operational validation across a migration."}
+      ]
+    },
+    {
+      "id": "agentic-ai",
+      "category": "AI + Automation",
+      "short_label": "Agentic AI for L&D",
+      "prompt": "What does advanced AI use look like in your instructional design work?",
+      "keywords": ["agentic ai", "prompt engineering", "chatgpt", "claude", "agent", "gpt", "llm", "automation", "ai workflow", "fine tune"],
+      "answer": "For me, advanced AI use is not asking a chatbot to write a course and pasting the result. I am much more interested in structured systems: clear agent instructions, reusable prompt patterns, source boundaries, evaluation rubrics, modular generation, human review, and workflows that move content from one stage to the next without losing context. I have built and tested custom-agent style workflows, used AI for evaluation work, and designed processes where the model has a defined job instead of unlimited creative freedom. I also care a lot about privacy and source control, especially when the content is internal or technical. The goal is to make the ID faster and more consistent without outsourcing judgment.",
+      "evidence": [
+        {"title": "AI Training and Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation, rubric scoring, source-grounded review, and quality feedback."},
+        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Structured automation and workflow thinking beyond traditional course authoring."}
+      ]
+    },
+    {
+      "id": "ux-learning",
+      "category": "Advanced Design",
+      "short_label": "UX/UI for learning",
+      "prompt": "How do you apply UX and UI thinking to learning experiences?",
+      "keywords": ["ux", "ui", "user experience", "interface", "cognitive load", "navigation", "figma", "adobe xd", "learning experience design"],
+      "answer": "I think a learning interface should make the next useful action obvious. I pay attention to hierarchy, navigation, chunking, visual rhythm, interaction cost, responsive behavior, accessibility, and how much the learner has to remember just to use the course. I prototype when the interface itself is part of the problem, and I am comfortable moving between Figma or Adobe XD-style planning, authoring tools, and HTML/CSS/JavaScript when I need more control. Good learning UX is not decoration. It is removing friction so the learner can spend attention on the decision or skill instead of figuring out the interface.",
+      "evidence": [
+        {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Browser-based interactions built around decision flow, feedback, and usable interface patterns."},
+        {"title": "Multimedia Training Content", "path": "projects/instructional-design/multimedia/index.html", "note": "Visual communication and media choices supporting the learning experience."}
+      ]
+    },
+    {
+      "id": "project-management",
+      "category": "Working Style",
+      "short_label": "Project management",
+      "prompt": "How do you manage a complex learning project with multiple reviewers, assets, and deadlines?",
+      "keywords": ["project management", "agile", "asana", "smartsheet", "jira", "monday", "trello", "stakeholder", "timeline", "milestone"],
+      "answer": "I make the work visible. I break the project into decisions, dependencies, assets, review points, and launch requirements instead of treating 'build the course' like one task. I use tools such as Asana, Smartsheet, Jira, Monday, Trello, Teams, Slack, and Review 360 depending on the environment, but the tool matters less than having clear owners and a clean approval path. I also separate content review from design review when I can, because mixing every kind of feedback into one giant comment cycle is how projects get slow and weird.",
+      "evidence": [
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Large-scale curriculum, SME review, QA, LMS testing, reporting, and maintenance work."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Cross-functional setup, UAT, issue retesting, support, documentation, and launch follow-through."}
+      ]
+    },
+    {
+      "id": "storyboarding-scripting",
+      "category": "Learning Architecture",
+      "short_label": "Storyboarding + scripting",
+      "prompt": "How do you storyboard or script learning when other people may need to build or review it?",
+      "keywords": ["storyboard", "script", "voiceover", "developer handoff", "visual notes", "screen design", "audio script"],
+      "answer": "I storyboard to remove ambiguity, not to create another document nobody wants to maintain. I include the learning purpose, screen or interaction intent, copy, visual direction, narration or audio notes when needed, feedback logic, accessibility notes, and anything the developer or reviewer needs to understand the behavior. If I am building the content myself, I can work lighter and prototype sooner. If the work is handed to another developer, designer, or voice talent, I make the specifications much more explicit so the handoff does not depend on reading my mind.",
+      "evidence": [
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Multiple formats and media components coordinated around a common launch objective."},
+        {"title": "Multimedia Training Content", "path": "projects/instructional-design/multimedia/index.html", "note": "Examples of visual, motion, and audio production inside learning projects."}
+      ]
+    }
+  ]
+}
