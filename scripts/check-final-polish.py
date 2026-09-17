@@ -34,6 +34,27 @@ STALE_SLOGANS = [
     "Workflow first, score second",
 ]
 
+KEEP_EXPLORING_REQUIRED_MARKERS = [
+    'class="section section-soft"',
+    'class="section-heading refresh-section-intro"',
+    'class="refresh-card-grid"',
+    'class="refresh-link-card"',
+    'class="refresh-link-card-header"',
+    'class="refresh-link-card-body"',
+    'class="project-family-link"',
+]
+
+KEEP_EXPLORING_DEPRECATED_MARKERS = [
+    "explore-strip",
+    "explore-grid",
+    "explore-card",
+    "live-explore-grid",
+    "live-explore-card",
+    "micro-explore-grid",
+    "micro-explore-card",
+    "project-template-cta",
+]
+
 VIEWPORT_RE = re.compile(
     r'<meta\s+name=["\']viewport["\']\s+content=["\']width=device-width,\s*initial-scale=1\.0["\']\s*/?>',
     re.IGNORECASE | re.DOTALL,
@@ -97,6 +118,20 @@ def main() -> int:
         prose = visible_text(path)
         require("—" not in prose, f"{relative}: visible prose contains an em dash; review final public copy.", errors)
         require(" | " not in prose, f"{relative}: visible prose contains a spaced vertical bar; review final public copy.", errors)
+
+        if "Keep Exploring" in html:
+            for marker in KEEP_EXPLORING_REQUIRED_MARKERS:
+                require(
+                    marker in html,
+                    f"{relative}: Keep Exploring must use the Interactive Learning standard marker {marker!r}.",
+                    errors,
+                )
+            for marker in KEEP_EXPLORING_DEPRECATED_MARKERS:
+                require(
+                    marker not in html,
+                    f"{relative}: Keep Exploring still uses deprecated component marker {marker!r}.",
+                    errors,
+                )
 
     combined_public = "\n".join(path.read_text(encoding="utf-8") for path in html_files)
     for phrase in STALE_SLOGANS:
