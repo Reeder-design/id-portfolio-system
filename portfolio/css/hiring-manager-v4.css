@@ -1,5 +1,11 @@
 /* Hiring Manager Experience v4: consolidated overview and helper cues */
 
+.hm-explore-nav-wrap {
+  position: relative;
+  z-index: 30;
+  overflow: visible;
+}
+
 .hm-explore-nav {
   position: relative;
 }
@@ -8,6 +14,10 @@
   position: relative;
   display: inline-block;
   z-index: 12;
+}
+
+.hm-helper-page {
+  z-index: 50;
 }
 
 .hm-helper summary {
@@ -41,6 +51,7 @@
 
 .hm-helper-card {
   position: absolute;
+  z-index: 20;
   top: calc(100% + 10px);
   left: 0;
   width: min(330px, calc(100vw - 44px));
@@ -67,6 +78,7 @@
 }
 
 .hm-helper-page .hm-helper-card {
+  z-index: 60;
   left: auto;
   right: 0;
 }
@@ -176,6 +188,12 @@
 
 .hm-expertise-section .hm-learning-statement {
   margin-bottom: 0;
+}
+
+.hm-capability-index .portfolio-icon {
+  width: 24px;
+  height: 24px;
+  color: #fff;
 }
 
 .hm-chat-instructions {
