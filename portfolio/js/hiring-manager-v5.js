@@ -48,6 +48,15 @@
     }
   };
 
+  const clearPopoverPosition = (popover) => {
+    if (!popover) return;
+    popover.removeAttribute('data-placement');
+    popover.style.removeProperty('left');
+    popover.style.removeProperty('top');
+    popover.style.removeProperty('width');
+    popover.style.removeProperty('--hm-topic-arrow-x');
+  };
+
   const positionFromAnchor = (popover, anchor, preferredWidth = 430) => {
     if (!popover || !anchor?.isConnected || !isPopoverOpen(popover)) return;
     const pad = 12;
@@ -82,15 +91,6 @@
     popover.dataset.placement = placement;
   };
 
-  const clearPopoverPosition = (popover) => {
-    if (!popover) return;
-    popover.removeAttribute('data-placement');
-    popover.style.removeProperty('left');
-    popover.style.removeProperty('top');
-    popover.style.removeProperty('width');
-    popover.style.removeProperty('--hm-topic-arrow-x');
-  };
-
   const questionRecords = () => [...questionList.querySelectorAll('.hm-question-card')].map((button) => ({
     id: button.dataset.questionId,
     category: button.querySelector('span')?.textContent.trim() || 'Interview Questions',
@@ -113,10 +113,8 @@
   };
 
   const ensureTopicPopover = () => {
-    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => {
-      if (node !== topicPopover) node.remove();
-    });
     if (topicPopover?.isConnected) return;
+    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => node.remove());
     topicPopover = document.createElement('div');
     topicPopover.className = 'hm-topic-popover hm-top-layer-popover';
     topicPopover.id = 'hmTopicPromptPopover';
@@ -134,6 +132,33 @@
       button.classList.remove('active');
       button.setAttribute('aria-expanded', 'false');
     });
+  };
+
+  const libraryHelper = library.querySelector('.hm-helper');
+  const libraryHelperSummary = libraryHelper?.querySelector('summary');
+  const libraryHelperCard = libraryHelper?.querySelector('.hm-helper-card');
+
+  const ensureHelperPopover = () => {
+    if (helperPopover?.isConnected) return;
+    helperPopover = document.createElement('div');
+    helperPopover.className = 'hm-library-helper-popover hm-top-layer-popover';
+    helperPopover.setAttribute('popover', 'manual');
+    helperPopover.setAttribute('role', 'dialog');
+    helperPopover.setAttribute('aria-label', 'About the question library');
+    helperPopover.innerHTML = libraryHelperCard?.innerHTML || '<strong>Question Library</strong><p>Choose a topic bubble to browse curated interview prompts.</p>';
+    document.body.appendChild(helperPopover);
+  };
+
+  const closeHelperPopover = () => {
+    hideTopLayer(helperPopover);
+    clearPopoverPosition(helperPopover);
+    helperAnchor = null;
+    libraryHelperSummary?.setAttribute('aria-expanded', 'false');
+  };
+
+  const closeAllOverlays = () => {
+    closeTopicPopover();
+    closeHelperPopover();
   };
 
   const openTopic = (topic, anchor) => {
@@ -182,20 +207,12 @@
   };
 
   const renderTopicBrowser = () => {
-    /* V4 can finish its async render after this controller initializes. Remove any
-       older browser/popover every time V5 renders so there is only one visible owner. */
-    document.querySelectorAll('.hm-topic-browser').forEach((node) => {
-      if (node !== topicBrowser) node.remove();
-    });
-    document.querySelectorAll('body > .hm-topic-popover').forEach((node) => {
-      if (node !== topicPopover) node.remove();
-    });
-    ensureTopicPopover();
-
+    closeTopicPopover();
     const standard = questionRecords();
     const specialist = specialistRecords();
 
     if (!topicBrowser?.isConnected) {
+      document.querySelectorAll('.hm-topic-browser').forEach((node) => node.remove());
       topicBrowser = document.createElement('div');
       topicBrowser.className = 'hm-topic-browser hm-topic-browser-v5';
       topicBrowser.setAttribute('aria-label', 'Interview topic browser');
@@ -232,7 +249,6 @@
     topicBrowser.querySelectorAll('[data-hm-v5-topic]').forEach((button) => {
       button.addEventListener('click', (event) => {
         event.preventDefault();
-        event.stopImmediatePropagation();
         const topic = topics.find((item) => item.category === button.dataset.hmV5Topic);
         if (topic) openTopic(topic, button);
       });
@@ -241,32 +257,8 @@
 
   const scheduleRender = () => {
     window.clearTimeout(renderTimer);
-    /* V4 schedules its async library rebuild at 40ms. V5 deliberately renders later
-       and removes that legacy instance, eliminating the two-controller race. */
-    renderTimer = window.setTimeout(renderTopicBrowser, 180);
+    renderTimer = window.setTimeout(renderTopicBrowser, 80);
   };
-
-  const libraryHelper = library.querySelector('.hm-helper');
-  const libraryHelperSummary = libraryHelper?.querySelector('summary');
-  const libraryHelperCard = libraryHelper?.querySelector('.hm-helper-card');
-
-  const ensureHelperPopover = () => {
-    if (helperPopover?.isConnected) return;
-    helperPopover = document.createElement('div');
-    helperPopover.className = 'hm-library-helper-popover hm-top-layer-popover';
-    helperPopover.setAttribute('popover', 'manual');
-    helperPopover.setAttribute('role', 'dialog');
-    helperPopover.setAttribute('aria-label', 'About the question library');
-    helperPopover.innerHTML = libraryHelperCard?.innerHTML || '<strong>Question Library</strong><p>Choose a topic bubble to browse curated interview prompts.</p>';
-    document.body.appendChild(helperPopover);
-  };
-
-  function closeHelperPopover() {
-    hideTopLayer(helperPopover);
-    clearPopoverPosition(helperPopover);
-    helperAnchor = null;
-    libraryHelperSummary?.setAttribute('aria-expanded', 'false');
-  }
 
   const toggleLibraryHelper = () => {
     ensureHelperPopover();
@@ -297,10 +289,10 @@
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    closeTopicPopover();
-    closeHelperPopover();
+    if (event.key === 'Escape') closeAllOverlays();
   });
+
+  document.addEventListener('hm:close-question-overlays', closeAllOverlays);
 
   const repositionOpenOverlays = () => {
     if (isPopoverOpen(topicPopover)) positionFromAnchor(topicPopover, topicAnchor);
