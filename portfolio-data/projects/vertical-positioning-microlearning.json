@@ -6,26 +6,26 @@
   "category": "instructional-design",
   "subcategory": "microlearning-performance-support",
   "status": "live",
-  "summary": "A sanitized short-form sales-learning case study that split a broad industry topic into two focused modules built around operating context, use cases, scenario practice, and follow-up resources.",
+  "summary": "A short-form sales-learning case study built as one Rise module with separate seaport and airport components, scenario practice, selective multimedia, and follow-up resources.",
   "page_path": "portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Help sellers build usable industry context quickly while avoiding a broad vertical course that would be too long for the moment of need.",
+    "business_need": "Help sellers build usable context for two industry settings without creating separate trainings or a broad vertical course.",
     "audience": "Internal sellers and channel partners who need concise industry context before discovery and positioning conversations.",
     "learning_objectives": [
-      "Recognize the operating context and common priorities within each industry setting.",
+      "Recognize the operating context and common priorities within the seaport and airport settings.",
       "Connect customer needs to relevant solution use cases at a sales-ready level.",
       "Practice making a customer-facing decision in a short scenario.",
-      "Locate supporting resources for deeper follow-up instead of overloading the lesson."
+      "Locate supporting resources for deeper follow-up instead of overloading the module."
     ],
-    "role": "Instructional designer and developer responsible for content scoping, learning architecture, build, scenario design, multimedia integration, and review coordination.",
-    "design_approach": "Split the original scope into separate industry modules so each experience could stay focused and short. Reuse a consistent pattern of context, use cases, practice, and resources, and use multimedia only where it supported the learning rather than turning the lesson into a video-first experience.",
-    "development_process": "Built two Rise modules designed to stay under seven minutes, added scenario practice and a short AI-presenter video as one supporting element, and coordinated internal QA plus specialist review for each industry area. The structure was refined when the original combined scope proved too broad.",
+    "role": "Instructional designer and developer responsible for content scoping, learning structure, build, scenario design, multimedia integration, and review coordination.",
+    "design_approach": "Organized one Rise module into distinct seaport and airport components. Both sections use a consistent pattern of context, use cases, practice, and resources while keeping the industry examples specific. Multimedia supports orientation without replacing the interactive learning.",
+    "development_process": "Built one Rise microlearning module with two industry components, customer-facing scenario practice, and a short Colossyan presenter segment where narration added value. Coordinated internal QA and specialist review and revised wording, examples, scope, and media based on feedback.",
     "outcomes": [
-      "Turned one broad vertical topic into two focused modules with clearer boundaries and shorter learner paths.",
-      "Created a repeatable short-form pattern that connects context, use cases, practice, and follow-up resources.",
-      "Used specialist review and scoped multimedia to keep the content useful without adding unnecessary depth."
+      "Delivered one focused Rise module with distinct seaport and airport components.",
+      "Used a consistent short-form pattern that connects context, use cases, practice, and follow-up resources.",
+      "Used specialist review and selective multimedia to keep the content useful without adding unnecessary depth."
     ]
   },
   "skills": [

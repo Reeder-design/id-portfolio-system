@@ -22,19 +22,6 @@
     time:{suggests:'The agenda now required a deliberate tradeoff.',response:'I protected application and debrief time and shortened lower-value narration instead of rushing the close.'}
   };
 
-  const evidenceData = {
-    supported:[
-      ['Live delivery','I facilitated assigned MEDDPICC workshop modules for internal sales teams and external partners.'],
-      ['Audience range','I delivered to U.S. and international audiences with different levels of company and market context.'],
-      ['Responsive facilitation','I used discussion, polling, seller examples, and real-time pacing or explanation adjustments during delivery.']
-    ],
-    boundaries:[
-      ['Program ownership','I am not claiming sole ownership of the full MEDDPICC workshop curriculum or all facilitator materials.'],
-      ['Performance metrics','I do not claim learner-score improvement or sales-performance lift without approved evidence.'],
-      ['Business impact','I do not attribute revenue impact or satisfaction metrics to the workshop without supported measurement.']
-    ]
-  };
-
   const setupTabs = (selector, dataKey, render) => {
     const buttons=[...document.querySelectorAll(selector)];
     buttons.forEach((button,index)=>{
@@ -59,7 +46,6 @@
   setupTabs('[data-arc]','arc',(key)=>{const d=arcData[key];document.getElementById('arcTitle').textContent=d.title;document.getElementById('arcText').textContent=d.text;});
   setupTabs('[data-move]','move',(key)=>{const d=moveData[key];document.getElementById('moveLabel').textContent=d.label;document.getElementById('moveTitle').textContent=d.title;document.getElementById('moveSummary').textContent=d.summary;document.getElementById('moveDo').textContent=d.do;document.getElementById('moveWhy').textContent=d.why;document.getElementById('moveSignal').textContent=d.signal;});
   setupTabs('[data-signal]','signal',(key)=>{const d=signalData[key];document.getElementById('signalSuggests').textContent=d.suggests;document.getElementById('signalResponse').textContent=d.response;});
-  setupTabs('[data-evidence]','evidence',(key)=>{document.getElementById('evidencePanel').innerHTML=evidenceData[key].map(([title,body])=>`<article class="evidence-card"><strong>${title}</strong><p>${body}</p></article>`).join('');});
 
   const navLinks=[...document.querySelectorAll('.case-nav a')];
   const navSections=navLinks.map((link)=>document.querySelector(link.getAttribute('href'))).filter(Boolean);

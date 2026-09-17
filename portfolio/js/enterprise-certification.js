@@ -2,43 +2,43 @@
   const architectureData = {
     core: {
       label: 'Core Path',
-      title: 'I grouped the required sales content into a clear sequence.',
-      text: 'I moved from market context and solution comparison into use cases, positioning, ordering readiness, and assessment so each course had a clear purpose.',
+      title: 'Required learning stayed focused on the decisions most sellers shared.',
+      text: 'I sequenced market context, solution comparison, use cases, positioning, ordering readiness, and assessment so the required path moved from understanding to application.',
       flow: ['Orientation', 'Market Context', 'Solution Categories', 'Use Cases', 'Positioning Practice', 'Ordering Readiness', 'Assessment']
     },
     regional: {
       label: 'Regional Extension',
-      title: 'I pulled market-specific requirements out of the main path.',
-      text: 'When some content only applied to certain regions, I created a separate extension and regional assessment instead of making every learner complete the same material.',
+      title: 'Market-specific requirements became a separate route.',
+      text: 'When content applied only to certain regions, I moved it into a separate extension and assessment instead of adding irrelevant requirements to every learner path.',
       flow: ['Core Path', 'Regional Context', 'Regional Assessment', 'Completion Check']
     },
     optional: {
       label: 'Optional Foundations',
-      title: 'I moved deeper technical background out of required sales learning.',
-      text: 'I kept technical detail only when it helped with discovery, positioning, risk, ordering, or handoff. Deeper implementation content stayed optional or moved to technical learning.',
+      title: 'Deeper technical content stayed outside the required sales path.',
+      text: 'I kept technical detail only when it supported discovery, positioning, risk, ordering, or specialist handoff. Implementation depth moved to optional or technical-role learning.',
       flow: ['Technical Foundations', 'Role-Specific Deep Dives', 'Specialist Handoff']
     }
   };
 
   const audienceData = {
     new: {
-      title: 'For newer sellers, I added more context before asking for application.',
-      text: 'I used plain-language explanations, predictable sequencing, and short takeaways so learners could build a basic mental model first.',
+      title: 'Newer sellers received more context before application.',
+      text: 'I used plain-language explanations, predictable sequencing, and short takeaways so learners could build a basic mental model before comparing solutions or entering scenarios.',
       cards: [
-        ['Start', 'Build context first', 'Introduce the minimum background needed before solution comparison or scenarios.'],
-        ['Sequence', 'Move in a clear order', 'Teach context and use cases before asking learners to position or recommend.']
+        ['Start', 'Build context first', 'Introduce only the background needed before solution comparison or scenario practice.'],
+        ['Sequence', 'Move in a clear order', 'Establish context and use cases before asking for positioning or recommendations.']
       ]
     },
     experienced: {
-      title: 'For experienced sellers, I made basic content easier to move through.',
-      text: 'I used expandable detail, comparisons, and quick-reference elements so experienced learners could get what they needed without repeating every explanation.',
+      title: 'Experienced sellers could move quickly through familiar material.',
+      text: 'Expandable detail, comparisons, and quick-reference elements let experienced learners find what they needed without repeating every explanation.',
       cards: [
-        ['Layer', 'Keep depth optional', 'Put extra detail behind expandable or supporting content instead of making it required.'],
-        ['Reference', 'Make comparison fast', 'Use short reference elements for information sellers may need again later.']
+        ['Layer', 'Keep depth optional', 'Place extra detail behind expandable or supporting content instead of making it required.'],
+        ['Reference', 'Make comparison fast', 'Use concise references for information sellers may need again during the work.']
       ]
     },
     boundary: {
-      title: 'I kept the certification focused on sales work.',
+      title: 'The certification stayed focused on sales work.',
       text: 'I removed installation and engineering detail unless it directly supported a customer question, seller decision, risk discussion, ordering step, or specialist handoff.',
       cards: [
         ['Keep', 'Seller decisions', 'Customer needs, discovery questions, value, constraints, risk, and next steps.'],
@@ -48,40 +48,40 @@
   };
 
   const alignmentData = {
-    fit: ['Identify when an opportunity fits', 'Scenario qualification check', 'Select the best-fit solution path', 'Return to use-case guidance'],
+    fit: ['Identify when an opportunity fits', 'Qualification scenario', 'Select the best-fit solution path', 'Return to use-case guidance'],
     compare: ['Distinguish related solution options', 'Side-by-side comparison', 'Match need and constraint to solution type', 'Review solution comparison'],
     handoff: ['Choose the next sales step', 'Guided discovery scenario', 'Recommend, continue discovery, or involve a specialist', 'Return to positioning and handoff guidance']
   };
 
   const opsData = {
     qa: {
-      title: 'I staged QA and SME review instead of sending one giant review request.',
-      text: 'I checked editorial quality, visuals, interactions, accessibility, and learner experience first. Then I coordinated SME, messaging, and assessment review, tracked feedback, fixed issues, and verified the changes.'
+      title: 'QA and SME review happened in stages.',
+      text: 'I checked editorial quality, visuals, interactions, accessibility, and learner flow before broader review. Then I coordinated SME, messaging, and assessment feedback, resolved comments, and verified revisions.'
     },
     lms: {
       title: 'I tested the certification from the learner side of the LMS.',
       text: 'I checked pathway visibility, descriptions, catalogs, enrollment rules, launch behavior, assessment links, first-time and renewal journeys, imported completion history, regional routing, duplicate content, and mapping issues.'
     },
     reporting: {
-      title: 'I built a workaround when LMS reporting did not match the learning design.',
-      text: 'I created a separate regional assessment and a lightweight spreadsheet workflow that combined core completion, regional assessment, renewal status, and learner route into a clearer completion decision.'
+      title: 'I created a workaround for a reporting gap.',
+      text: 'When LMS reporting did not fully match the learning design, I used a separate regional assessment and a lightweight spreadsheet workflow to combine core completion, regional assessment, renewal status, and learner route into a clearer completion decision.'
     },
     maintenance: {
-      title: 'I maintained the certification as source information changed.',
+      title: 'I maintained the certification as approved source information changed.',
       text: 'I tracked source owners and affected course sections, updated approved changes, held back premature information, and used modular course boundaries so one change did not require rebuilding the full pathway.'
     }
   };
 
   const evidenceData = {
     supported: [
-      ['Delivered', 'A multi-course sales certification with role-based content, interactions, multimedia, formative checks, final assessment, review documentation, and LMS implementation support.'],
-      ['Changed the structure', 'The pathway was later split into broadly applicable and regional routes so learners did not have to complete irrelevant requirements.'],
-      ['Solved a reporting gap', 'A supplemental assessment and spreadsheet workflow provided a practical way to review regional completion states.']
+      ['Delivered', 'A multi-course sales certification with role-based content, scenario practice, formative checks, final assessment, review documentation, and LMS implementation support.'],
+      ['Restructured', 'Broad and regional requirements were split into distinct learner routes so sellers did not have to complete irrelevant content.'],
+      ['Reporting support', 'A supplemental assessment and spreadsheet workflow provided a practical way to review regional completion states.']
     ],
     learned: [
-      ['Curriculum is only one part', 'The learning path, assessment, LMS rules, reporting, review process, and maintenance plan all affect the learner experience.'],
-      ['Scope matters', 'Sales training is stronger when technical detail is included only when it supports a seller decision.'],
-      ['What I would change', 'I would define routing, reporting rules, source ownership, and certification logic earlier, then use more performance-based scenarios in the assessment.']
+      ['Design beyond the course', 'Pathway rules, assessment, LMS behavior, reporting, review, and maintenance all shape the learner experience.'],
+      ['Protect the role boundary', 'Sales training is stronger when technical depth appears only where it supports a seller decision.'],
+      ['Next iteration', 'I would define routing, reporting rules, source ownership, and certification logic earlier and use more performance-based scenarios in the final assessment.']
     ]
   };
 
