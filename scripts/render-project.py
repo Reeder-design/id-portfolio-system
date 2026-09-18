@@ -402,6 +402,10 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
     tool_summary = ", ".join(unique_values(tools, limit=4)) or "Tool-agnostic workflow"
     icon_id = CATEGORY_ICONS.get(project.get("category"), "icon-learning-design")
     icon_sprite = relative_href(final_output, "portfolio/assets/icons/portfolio-icons.svg")
+    category_pixel = CATEGORY_PIXEL_ASSETS.get(
+        project.get("category"),
+        "portfolio/assets/icons/pixel/portfolio-general/portfolio.webp",
+    )
 
     next_number = 4
     detail_sections, detail_nav, next_number = render_detail_sections(project, next_number)
@@ -440,6 +444,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "BREADCRUMBS": render_breadcrumbs(final_output, project, category, subcategory),
         "CATEGORY_LABEL": esc(category["label"]),
         "CATEGORY_ICON_HREF": esc(f"{icon_sprite}#{icon_id}"),
+        "CATEGORY_PIXEL_PATH": esc(relative_href(final_output, category_pixel)),
         "TITLE": esc(project["title"]),
         "SUMMARY": esc(project["summary"]),
         "TAGS": render_tags(project),
