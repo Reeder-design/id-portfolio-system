@@ -154,10 +154,39 @@
     "Docebo LMS",
     "PowerPoint"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/enterprise-certification/cert-rise-introduction.webp",
+      "alt": "Public-safe Rise-style cellular networking sales course introduction.",
+      "caption": "Representative Rise 360 course introduction reconstruction.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/enterprise-certification/cert-rise-knowledge-check.webp",
+      "alt": "Public-safe Rise-style cellular sales knowledge check.",
+      "caption": "Representative Rise 360 reinforcement and knowledge-check reconstruction.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/enterprise-certification/cert-storyline-product-explorer.webp",
+      "alt": "Public-safe Storyline-style interactive cellular solution explorer.",
+      "caption": "Representative Storyline 360 interactive explorer reconstruction.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/enterprise-certification/cert-storyline-scenario.webp",
+      "alt": "Public-safe Storyline-style customer recommendation scenario.",
+      "caption": "Representative Storyline 360 scenario-practice reconstruction.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "The employer, project type, responsibilities, and instructional-design approach are real. Customer details, internal course names, product names, proprietary source material, Ericsson positioning language, learner records, screenshots, links, reviewer material, and internal metrics are intentionally omitted. The public sample learning scenario uses fictional customer and solution language created for the portfolio.",
   "dates": {
     "created": "2026-09-15",
-    "updated": "2026-09-17"
+    "updated": "2026-09-18"
   }
 }
