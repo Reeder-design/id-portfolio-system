@@ -385,19 +385,17 @@ nav[aria-label="Project sections"] a.active{
 }
 .portfolio-explore-card{
   position:relative;
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr);
-  gap:14px;
-  align-items:start;
+  display:flex;
+  flex-direction:column;
   min-width:0;
-  padding:18px;
+  padding:0;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.1)!important;
   border-radius:18px;
-  background:rgba(255,255,255,.055);
+  background:rgba(255,255,255,.055)!important;
   color:#e7f1ec;
   text-decoration:none;
-  box-shadow:0 12px 28px rgba(0,0,0,.09);
+  box-shadow:0 12px 28px rgba(0,0,0,.09)!important;
   transition:transform .17s ease,border-color .17s ease,background .17s ease;
 }
 .portfolio-explore-card::after{
@@ -410,15 +408,26 @@ nav[aria-label="Project sections"] a.active{
 }
 .portfolio-explore-card:hover,
 .portfolio-explore-card:focus-visible{
-  transform:translateY(-4px);
-  border-color:rgba(151,219,79,.38);
-  background:rgba(255,255,255,.09);
+  transform:translateY(-4px)!important;
+  border-color:rgba(151,219,79,.38)!important;
+  background:rgba(255,255,255,.09)!important;
   color:#fff;
   outline:none;
+}
+.portfolio-explore-card .refresh-link-card-header{
+  min-height:0;
+  padding:18px 18px 8px;
+  background:transparent!important;
+}
+.portfolio-explore-card .refresh-link-card-body{
+  flex:1;
+  padding:0 18px 18px;
+  background:transparent;
 }
 .portfolio-explore-card .icon-badge{
   width:43px;
   height:43px;
+  margin-bottom:12px;
   border-color:rgba(255,255,255,.12);
   background:rgba(121,201,158,.09);
   color:#a7e1bf;
@@ -435,14 +444,24 @@ nav[aria-label="Project sections"] a.active{
 }
 .portfolio-explore-card h3{
   margin:0 24px 5px 0;
-  color:#fff;
+  color:#fff!important;
   font-size:.96rem;
 }
 .portfolio-explore-card p{
-  margin:0;
-  color:#c5d4cd;
+  margin:0 0 14px;
+  color:#c5d4cd!important;
   font-size:.78rem;
   line-height:1.45;
+}
+.portfolio-explore-card .project-family-link{
+  margin-top:auto;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#a8e2c0;
+  font-size:.7rem;
+  justify-content:flex-start;
+  box-shadow:none;
 }
 @keyframes fsOrbit{to{transform:rotate(360deg)}}
 
