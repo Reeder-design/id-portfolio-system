@@ -37,18 +37,35 @@
     .live-landing-hero h1{color:#fff}
     .live-landing-hero .body-large,.live-landing-hero .eyebrow,.live-landing-hero .breadcrumbs,.live-landing-hero .breadcrumbs a{color:#dce9e2}
     .live-landing-hero .btn-secondary{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff}
-    .live-role-visual{
-      position:relative;display:grid;grid-template-columns:110px minmax(90px,1fr) 110px;align-items:center;gap:10px;
-      min-height:250px;padding:30px;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:rgba(8,22,28,.55);
-      box-shadow:0 24px 60px rgba(0,0,0,.2);backdrop-filter:blur(12px);
+    .live-training-hero-art{position:relative;min-height:430px;display:grid;place-items:center}
+    .live-training-photo{position:relative;width:min(100%,620px);isolation:isolate}
+    .live-training-photo::before{
+      content:"";position:absolute;z-index:-1;inset:8% -5% -7% 7%;
+      border-radius:42% 58% 46% 54% / 54% 42% 58% 46%;
+      background:radial-gradient(circle at 70% 20%,rgba(151,219,79,.2),transparent 26%),rgba(121,201,158,.08);
+      filter:blur(1px);
     }
-    .live-role-node{display:grid;place-items:center;gap:10px;min-height:120px;border:1px solid rgba(121,201,158,.2);border-radius:20px;background:#12272e;color:#eef6f2}
-    .live-role-node .portfolio-icon{width:34px;height:34px;color:var(--mint-leaf)}
-    .live-role-node span{font:800 .66rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
-    .live-role-track{position:relative;height:2px;background:linear-gradient(90deg,rgba(121,201,158,.15),var(--mint-leaf),var(--yellow-green),rgba(121,201,158,.15))}
-    .live-role-track i{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:var(--yellow-green);transform:translateY(-50%);box-shadow:0 0 13px rgba(151,219,79,.55);animation:liveRoleFlow 4.2s linear infinite}
-    .live-role-track i:nth-child(2){animation-delay:1.4s}.live-role-track i:nth-child(3){animation-delay:2.8s}
-    @keyframes liveRoleFlow{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 7px);opacity:0}}
+    .live-training-photo img{
+      display:block;width:100%;height:auto;border:0;border-radius:0;background:transparent;
+      box-shadow:0 28px 68px rgba(0,0,0,.24);
+      clip-path:polygon(6% 0,100% 0,100% 92%,94% 100%,0 100%,0 8%);
+    }
+    .live-training-cue{
+      position:absolute;z-index:3;padding:8px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+      background:rgba(12,31,37,.88);color:#eef6f2;
+      font:800 .58rem/1 var(--font-heading);letter-spacing:.045em;text-transform:uppercase;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);backdrop-filter:blur(8px);
+    }
+    .live-training-cue--design{left:-3%;top:15%}
+    .live-training-cue--facilitate{right:-2%;top:42%}
+    .live-training-cue--adapt{left:7%;bottom:7%}
+    .live-training-flow{
+      position:absolute;z-index:2;right:7%;bottom:8%;display:flex;gap:5px;align-items:center;
+      padding:8px 10px;border-radius:999px;background:rgba(12,31,37,.68);backdrop-filter:blur(8px);
+    }
+    .live-training-flow i{display:block;width:7px;height:7px;border-radius:50%;background:var(--mint-leaf);animation:liveTrainingCue 2.2s ease-in-out infinite}
+    .live-training-flow i:nth-child(2){animation-delay:.25s}.live-training-flow i:nth-child(3){animation-delay:.5s}
+    @keyframes liveTrainingCue{0%,100%{opacity:.35;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
 
     #live-work{background:#f8faf8}
     #live-work .live-mode-tab,#live-work .live-detail-card,#live-work .live-mode-panel{color:#26383f}
@@ -70,18 +87,22 @@
     .live-explore-section .live-explore-card{background:#fff;color:#26383f}
     .live-explore-section .live-explore-card h3{color:#26383f}.live-explore-section .live-explore-card p{color:#596862}
 
-    @media(max-width:700px){.live-role-visual{grid-template-columns:1fr;min-height:0}.live-role-track{width:2px;height:64px;margin:auto;background:linear-gradient(180deg,rgba(121,201,158,.15),var(--mint-leaf),var(--yellow-green),rgba(121,201,158,.15))}.live-role-track i{left:50%!important;top:0;transform:translateX(-50%);animation:liveRoleFlowMobile 4.2s linear infinite}@keyframes liveRoleFlowMobile{0%{top:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{top:calc(100% - 7px);opacity:0}}}
-    @media(prefers-reduced-motion:reduce){.live-role-track i{animation:none!important}}
+    @media(max-width:700px){.live-training-hero-art{min-height:360px}.live-training-photo{width:94%}.live-training-cue{font-size:.5rem}.live-training-cue--design{left:-2%;top:10%}.live-training-cue--facilitate{right:-2%;top:45%}.live-training-cue--adapt{left:3%;bottom:5%}}
+    @media(prefers-reduced-motion:reduce){.live-training-flow i{animation:none!important}}
   </style>
   <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
 <body>
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
 <main>
-  <section class="page-hero refresh-hero live-landing-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Live Training</span></nav><div class="live-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Live Learning</p><h1>Live Training</h1><p class="body-large">I develop facilitator-led content and facilitate virtual sales workshops for internal sellers and external partners.</p><div class="button-row"><a class="btn btn-primary" href="#live-work">Explore the Work</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div></div><aside class="live-role-visual" aria-label="Visual showing live training moving from session design into facilitation">
-  <div class="live-role-node role-build" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg><span>Build</span></div>
-  <div class="live-role-track" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="live-role-node role-facilitate" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><span>Facilitate</span></div>
+  <section class="page-hero refresh-hero live-landing-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Live Training</span></nav><div class="live-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Live Learning</p><h1>Live Training</h1><p class="body-large">I develop facilitator-led content and facilitate virtual sales workshops for internal sellers and external partners.</p><div class="button-row"><a class="btn btn-primary" href="#live-work">Explore the Work</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div></div><aside class="live-training-hero-art" aria-label="Virtual sales workshop facilitation visual">
+  <div class="live-training-photo">
+    <img src="../../../assets/project-images/live-training/virtual-training-facilitation.webp" alt="Illustrated virtual training session with a facilitator, participant grid, and shared learning content." loading="eager">
+    <span class="live-training-cue live-training-cue--design">Design the session</span>
+    <span class="live-training-cue live-training-cue--facilitate">Facilitate live</span>
+    <span class="live-training-cue live-training-cue--adapt">Adapt to the room</span>
+    <div class="live-training-flow" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
 </aside></div></div></section>
 
   <section class="section" id="live-work"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Live Training Work</p><h2>Two parts of my role</h2><p class="body-large reading-width">I either build the session and facilitator materials, facilitate the session, or contribute to both parts of the work.</p></div><div class="live-mode-shell"><div class="live-mode-tabs" role="tablist" aria-label="Live training perspectives"><button class="live-mode-tab active" type="button" role="tab" aria-selected="true" data-mode="content"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg><span>Content Development</span></button><button class="live-mode-tab" type="button" role="tab" aria-selected="false" data-mode="facilitation"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><span>Facilitation</span></button></div><div class="live-mode-panel" role="tabpanel" aria-live="polite"><p class="eyebrow" id="modeLabel">Content Development</p><h2 id="modeTitle">Build the session, materials, and facilitator guidance.</h2><p id="modeSummary">I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.</p><div class="live-detail-grid" id="modeDetails"><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><h3>Structure the session</h3><p>Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><h3>Build the materials</h3><p>Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Add practice</h3><p>Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Prepare for delivery</h3><p>Document timing, instructions, transitions, resources, and backup plans for the facilitator.</p></article></div></div></div></div></section>
