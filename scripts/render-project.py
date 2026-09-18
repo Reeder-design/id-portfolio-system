@@ -297,7 +297,7 @@ def render_related_work(project: dict, output_path: Path, taxonomy: dict, number
         return "", ""
 
     section = (
-        '<section class="project-story-section related-work-section" id="related-work">'
+        '<section class="project-story-section related-work-section portfolio-explore-section fs-surface-light" id="related-work">'
         f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
         '<div><p class="eyebrow">Related Work</p><h2>See how this work connects across the portfolio.</h2></div></div>'
         '<p>These projects show adjacent parts of the same learning ecosystem without duplicating the full story here.</p>'
