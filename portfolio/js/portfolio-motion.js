@@ -289,7 +289,8 @@
       if (!cards.length) return;
 
       section.dataset.keepExploringStandardized = 'true';
-      section.className = 'section portfolio-explore-section';
+      section.className = 'section section-soft';
+      section.classList.add('portfolio-explore-section');
       section.removeAttribute('aria-labelledby');
       section.innerHTML = `
         <div class="container">
@@ -298,15 +299,18 @@
             <h2>${escapeHtml(headingText)}</h2>
             <p>${escapeHtml(introText)}</p>
           </div>
-          <div class="portfolio-explore-grid">
+          <div class="refresh-card-grid portfolio-explore-grid">
             ${cards.map((card) => `
-              <a class="portfolio-explore-card" href="${escapeHtml(card.href)}">
-                <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
-                <span>
+              <a class="refresh-link-card portfolio-explore-card" href="${escapeHtml(card.href)}">
+                <div class="refresh-link-card-header">
+                  <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
                   <span class="portfolio-explore-category">${escapeHtml(card.category)}</span>
                   <h3>${escapeHtml(card.title)}</h3>
+                </div>
+                <div class="refresh-link-card-body">
                   <p>${escapeHtml(card.description)}</p>
-                </span>
+                  <span class="project-family-link">Explore related work →</span>
+                </div>
               </a>`).join('')}
           </div>
         </div>`;
