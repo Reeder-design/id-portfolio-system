@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0.0",
   "id": "vertical-positioning-microlearning",
-  "title": "Vertical-Positioning Microlearning",
+  "title": "Vertical Positioning Microlearning",
   "slug": "vertical-positioning-microlearning",
   "category": "instructional-design",
   "subcategory": "microlearning-performance-support",
   "status": "live",
-  "summary": "A short-form sales-learning case study built as one Rise module with separate seaport and airport components, scenario practice, selective multimedia, and follow-up resources.",
+  "summary": "A sales-enablement microlearning case study built as one Rise module with distinct seaport and airport components, a shared learning architecture, scenario practice, selective multimedia, and specialist review.",
   "page_path": "portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Help sellers build usable context for two industry settings without creating separate trainings or a broad vertical course.",
+    "business_need": "Help sellers build usable context for two industry settings without creating separate trainings or flattening the two environments into one generic vertical story.",
     "audience": "Internal sellers and channel partners who need concise industry context before discovery and positioning conversations.",
     "learning_objectives": [
       "Recognize the operating context and common priorities within the seaport and airport settings.",
@@ -19,13 +19,13 @@
       "Practice making a customer-facing decision in a short scenario.",
       "Locate supporting resources for deeper follow-up instead of overloading the module."
     ],
-    "role": "Instructional designer and developer responsible for content scoping, learning structure, build, scenario design, multimedia integration, and review coordination.",
-    "design_approach": "Organized one Rise module into distinct seaport and airport components. Both sections use a consistent pattern of context, use cases, practice, and resources while keeping the industry examples specific. Multimedia supports orientation without replacing the interactive learning.",
-    "development_process": "Built one Rise microlearning module with two industry components, customer-facing scenario practice, and a short Colossyan presenter segment where narration added value. Coordinated internal QA and specialist review and revised wording, examples, scope, and media based on feedback.",
+    "role": "Instructional designer and developer responsible for content scoping, learning architecture, Rise build, scenario design, multimedia integration, and review coordination.",
+    "design_approach": "Built one Rise module around a repeatable Context → Use Cases → Practice → Resources pattern. The learner rhythm stays consistent while the customer priorities, examples, and scenario judgment change by vertical.",
+    "development_process": "Scoped approved source material, structured distinct seaport and airport components, built the module in Rise 360, used a short Colossyan presenter segment where narration improved orientation, and coordinated internal QA and specialist review through Review 360 and Asana.",
     "outcomes": [
       "Delivered one focused Rise module with distinct seaport and airport components.",
-      "Used a consistent short-form pattern that connects context, use cases, practice, and follow-up resources.",
-      "Used specialist review and selective multimedia to keep the content useful without adding unnecessary depth."
+      "Used a consistent learning pattern that reduced navigation friction without treating the two verticals as interchangeable.",
+      "Kept deeper reference material outside the core microlearning so the experience remained concise and maintainable."
     ]
   },
   "skills": [
@@ -44,10 +44,26 @@
     "Articulate Review 360",
     "Asana"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/vertical-positioning/smarter-seaports.webp",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/vertical-positioning/airports-connected.webp",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/vertical-positioning/vertical-use-case-knowledge-check.webp",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Generalized from documented industry-focused sales enablement work. Industry-specific proprietary messaging, internal screenshots, customer details, reviewer comments, dates, links, and source material are intentionally omitted.",
   "dates": {
     "created": "2026-09-16",
-    "updated": "2026-09-16"
+    "updated": "2026-09-17"
   }
 }
