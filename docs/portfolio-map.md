@@ -32,6 +32,7 @@ Current portfolio version: **1.0.0**
 - **System Integrations and Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
+    - Salesforce-to-LMS Account Automation — `portfolio/projects/workflows/ai-automation/salesforce-lms-account-automation/index.html` (live)
   - **Data + Reporting**
     - Certification Reporting Automation — `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` (live)
 
@@ -44,4 +45,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 
-Total public HTML pages: **26**
+Total public HTML pages: **27**

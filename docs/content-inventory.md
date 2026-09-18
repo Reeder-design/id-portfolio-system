@@ -6,13 +6,13 @@ Current portfolio version: **1.0.0**
 
 ## Summary
 
-- Structured projects: **9**
-- Live: **9**
+- Structured projects: **10**
+- Live: **10**
 - Building: **0**
 - Planned: **0**
 - Archived: **0**
-- Featured projects: **9**
-- Sanitized / fictionalized projects: **9**
+- Featured projects: **10**
+- Sanitized / fictionalized projects: **10**
 
 ## Structured Projects
 
@@ -26,6 +26,7 @@ Current portfolio version: **1.0.0**
 | Product Launch Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` |
 | Vertical Positioning Microlearning | Instructional Design | Microlearning & Performance Support | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` |
 | LMS Migration Experience | LMS Administration & System Operations | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` |
+| Salesforce-to-LMS Account Automation | System Integrations and Workflows | AI + Automation | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/workflows/ai-automation/salesforce-lms-account-automation/index.html` |
 | Certification Reporting Automation | System Integrations and Workflows | Data + Reporting | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` |
 
 ## Source Records
