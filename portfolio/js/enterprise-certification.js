@@ -15,26 +15,43 @@
         </div>`
     },
     alignment: {
-      title: 'Map each objective to a seller task and observable evidence.',
-      text: 'I used backward design so practice and assessment checked the decisions the certification was meant to support, rather than isolated product recall.',
+      title: 'Trace each objective through the exact evidence used to assess it.',
+      text: 'Each lane below follows one objective from the seller behavior I wanted to support through practice and into the evidence used to judge performance.',
       html: `
-        <div class="blueprint-table" aria-label="Objective alignment examples">
+        <div class="alignment-lanes" aria-label="Objective alignment examples">
           ${[
-            ['Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
-            ['Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
-            ['Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
-          ].map(([objective, task, practice, evidence]) => `
-            <div class="blueprint-row">
-              <div class="blueprint-cell"><strong>Objective</strong>${objective}</div>
-              <div class="blueprint-cell"><strong>Seller task</strong>${task}</div>
-              <div class="blueprint-cell"><strong>Practice</strong>${practice}</div>
-              <div class="blueprint-cell"><strong>Assessment evidence</strong>${evidence}</div>
-            </div>`).join('')}
+            ['01','Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
+            ['02','Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
+            ['03','Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
+          ].map(([number, objective, task, practice, evidence]) => `
+            <article class="alignment-lane">
+              <div class="alignment-objective">
+                <span class="alignment-number">${number}</span>
+                <small>Objective</small>
+                <strong>${objective}</strong>
+              </div>
+              <div class="alignment-route">
+                <div class="alignment-stage">
+                  <span>Seller task</span>
+                  <strong>${task}</strong>
+                </div>
+                <span class="alignment-arrow" aria-hidden="true">→</span>
+                <div class="alignment-stage">
+                  <span>Practice</span>
+                  <strong>${practice}</strong>
+                </div>
+                <span class="alignment-arrow" aria-hidden="true">→</span>
+                <div class="alignment-stage alignment-stage-evidence">
+                  <span>Assessment evidence</span>
+                  <strong>${evidence}</strong>
+                </div>
+              </div>
+            </article>`).join('')}
         </div>`
     },
-    release: {
-      title: 'Treat release, platform behavior, and maintenance as part of the learning design.',
-      text: 'The certification had to work after authoring was finished. I planned review, LMS testing, reporting logic, and source updates as part of the same system.',
+    launch: {
+      title: 'Plan launch, platform behavior, and maintenance as part of the learning design.',
+      text: 'The certification had to work after authoring was finished. I treated review, LMS testing, reporting logic, and source updates as part of the same launch system.',
       html: `
         <div class="blueprint-mini-grid">
           <article class="blueprint-mini-card"><strong>1. Design QA</strong><p>Editorial, visual, interaction, accessibility, and learner-flow checks before broader review.</p></article>
@@ -240,6 +257,99 @@
     renderScenario();
   });
   renderScenario();
+
+  const deliveryData = {
+    build: {
+      label: 'Build',
+      icon: 'icon-elearning',
+      title: 'Turn the architecture into usable seller learning.',
+      action: 'I built Rise lessons, Storyline practice, diagrams, comparisons, knowledge checks, and the certification assessment around the seller decisions defined in the blueprint.',
+      resultLabel: 'Delivered',
+      result: 'A multi-course cellular networking sales certification with role-focused learning, scenario practice, assessment, and LMS implementation support.'
+    },
+    review: {
+      label: 'Review',
+      icon: 'icon-feedback',
+      title: 'Protect accuracy without letting the course drift back into source-document language.',
+      action: 'I coordinated editorial QA, interaction and accessibility checks, SME review, assessment review, and revision tracking across the certification.',
+      resultLabel: 'Protected',
+      result: 'A seller-focused scope where accuracy and approved messaging could be reviewed without turning the experience into engineering or product-document training.'
+    },
+    lms: {
+      label: 'LMS + UAT',
+      icon: 'icon-lms',
+      title: 'Validate the learner journey, not just the course files.',
+      action: 'I tested visibility, enrollment, launch behavior, learner routes, renewal behavior, imported history, and regional requirements in the LMS.',
+      resultLabel: 'Improved',
+      result: 'Core and regional routes stayed separate so sellers could complete the requirements relevant to their role and market instead of taking unnecessary content.'
+    },
+    maintain: {
+      label: 'Maintain',
+      icon: 'icon-automation',
+      title: 'Keep the certification usable after launch.',
+      action: 'I tracked affected content as approved sources changed and supported a reporting workaround when LMS status logic did not fully match the certification design.',
+      resultLabel: 'Learned',
+      result: 'Routing, assessment, reporting, governance, and platform behavior need to be designed as one system before the learning screens are finished.'
+    }
+  };
+
+  const deliveryPanel = document.getElementById('deliveryPanel');
+  const deliveryButtons = [...document.querySelectorAll('[data-delivery]')];
+
+  const renderDelivery = (key, animate = false) => {
+    const data = deliveryData[key];
+    if (!data || !deliveryPanel) return;
+    const update = () => {
+      deliveryPanel.innerHTML = `
+        <div class="delivery-panel-main">
+          <span class="delivery-panel-icon" aria-hidden="true">
+            <svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#${data.icon}"></use></svg>
+          </span>
+          <div>
+            <p class="delivery-panel-label">${data.label}</p>
+            <h3>${data.title}</h3>
+            <p>${data.action}</p>
+          </div>
+        </div>
+        <aside class="delivery-result">
+          <span>${data.resultLabel}</span>
+          <strong>${data.result}</strong>
+        </aside>`;
+      deliveryPanel.classList.remove('is-switching');
+    };
+    if (!animate) {
+      update();
+      return;
+    }
+    deliveryPanel.classList.add('is-switching');
+    window.setTimeout(update, 120);
+  };
+
+  deliveryButtons.forEach((button, index) => {
+    const activate = () => {
+      deliveryButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      renderDelivery(button.dataset.delivery, true);
+    };
+    button.addEventListener('click', activate);
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = deliveryButtons.length - 1;
+      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % deliveryButtons.length;
+      else next = (index - 1 + deliveryButtons.length) % deliveryButtons.length;
+      deliveryButtons[next].focus();
+      deliveryButtons[next].click();
+    });
+  });
+  deliveryButtons.forEach((button, index) => { button.tabIndex = index === 0 ? 0 : -1; });
+  renderDelivery('build');
 
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
