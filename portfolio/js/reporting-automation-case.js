@@ -98,11 +98,23 @@
       label: 'Learner progress export',
       caption: 'A consolidated progress view demonstrating how multiple learning states can be made easier to scan after data cleanup.'
     },
+    courseAnalytics: {
+      src: '../../../../assets/project-images/reporting-automation/analytics-course-completion.webp',
+      alt: 'Public-safe fictional course completion analytics dashboard with learner rows, departments, course names, status, and completion dates.',
+      label: 'Course completion analytics',
+      caption: 'A dashboard-style completion view that turns learner status data into a faster scan for learning-operations review.'
+    },
     analytics: {
       src: '../../../../assets/project-images/reporting-automation/analytics-certification-status.webp',
       alt: 'Public-safe fictional certification analytics dashboard with certified, in-progress, and not-started learner status summaries.',
       label: 'Certification analytics view',
-      caption: 'An analytics layer built from the same type of learning data, showing how reporting outputs can support faster interpretation.'
+      caption: 'An analytics layer built from the same type of learning data, showing how certification outputs can support faster interpretation.'
+    },
+    detail: {
+      src: '../../../../assets/project-images/reporting-automation/analytics-detailed-export.webp',
+      alt: 'Public-safe fictional detailed learner data export with course activity, completion percentage, and certificate status.',
+      label: 'Detailed reporting export',
+      caption: 'A row-level export view showing the type of granular evidence available when a summary status needs closer review.'
     }
   };
 
