@@ -15,22 +15,152 @@
     <link rel="stylesheet" href="../../../css/phase1-frame.css">
     <style>
         .micro-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:38px;align-items:center}.micro-principle{padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(238,245,241,.78));box-shadow:0 16px 40px rgba(52,74,66,.08)}.micro-principle-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:18px}.micro-principle-flow span{display:grid;place-items:center;min-width:0;min-height:54px;padding:9px;border:1px solid rgba(80,132,132,.16);border-radius:13px;background:rgba(255,255,255,.82);font:700 .72rem/1.25 var(--font-heading);text-align:center;overflow-wrap:anywhere}.micro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.micro-card{display:flex;flex-direction:column;min-width:0;padding:26px;border:1px solid rgba(80,132,132,.18);border-radius:22px;background:rgba(255,255,255,.9);box-shadow:0 14px 34px rgba(52,74,66,.07)}.micro-card .icon-badge{margin-bottom:16px}.micro-card h3{color:var(--pine-blue)}.micro-card ul{padding-left:20px}.micro-card li+li{margin-top:7px}.micro-card .tag-row{margin-top:14px;padding-top:0}.micro-card-action{margin-top:auto;padding-top:18px}.pattern-shell{display:grid;grid-template-columns:minmax(190px,.55fr) minmax(0,1.45fr);gap:16px;align-items:start}.pattern-tabs{display:grid;gap:8px}.pattern-tab{display:flex;align-items:center;gap:10px;min-height:54px;padding:11px 13px;border:1px solid rgba(80,132,132,.18);border-radius:15px;background:rgba(255,255,255,.86);color:var(--charcoal);font:700 .78rem/1.25 var(--font-heading);text-align:left;cursor:pointer}.pattern-tab.active,.pattern-tab:hover,.pattern-tab:focus-visible{border-color:rgba(121,201,158,.65);background:rgba(238,245,241,.94);color:var(--pine-blue);outline:none}.pattern-tab .portfolio-icon{width:24px;height:24px}.pattern-panel{min-height:190px;padding:25px;border:1px solid rgba(80,132,132,.18);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(248,250,248,.9));box-shadow:0 14px 34px rgba(52,74,66,.07)}.pattern-panel h3{margin:4px 0 8px;color:var(--pine-blue)}.pattern-panel p:last-child{margin-bottom:0}.micro-explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.micro-explore-card{display:flex;flex-direction:column;min-width:0;padding:20px;border:1px solid rgba(80,132,132,.17);border-radius:20px;background:linear-gradient(150deg,rgba(255,255,255,.96),rgba(238,245,241,.68));box-shadow:0 12px 30px rgba(52,74,66,.06)}.micro-explore-card .icon-badge{margin-bottom:13px}.micro-explore-card h3{margin-bottom:7px;color:var(--pine-blue);font-size:1rem}.micro-explore-card p{margin:0;color:#5f6965;font-size:.88rem;line-height:1.55}.micro-explore-card .project-family-link{margin-top:auto;padding-top:10px}@media(max-width:820px){.micro-hero-grid,.pattern-shell{grid-template-columns:1fr}.micro-grid,.micro-explore-grid{grid-template-columns:1fr}}@media(max-width:620px){.micro-principle-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    </style>
+    
+        /* Visual integration */
+        .micro-hero-player{position:relative;min-height:430px;display:grid;place-items:center}
+        .micro-player-shell{position:relative;width:min(78%,360px);transform:rotate(1.5deg)}
+        .micro-player-bar{display:none}
+        .micro-player-screen{display:block;overflow:visible}
+        .micro-player-screen img{display:block;width:100%;height:auto;max-height:none;object-fit:initial;border:0;border-radius:0;background:transparent;box-shadow:0 24px 54px rgba(38,63,62,.18)}
+        .micro-player-signals{position:absolute;left:2%;right:1%;bottom:22px;display:flex;justify-content:space-between;gap:8px}
+        .micro-player-signals span{display:grid;justify-items:center;min-width:86px;padding:9px 10px;border:1px solid rgba(80,132,132,.16);border-radius:14px;background:rgba(248,250,248,.93);box-shadow:0 10px 24px rgba(52,74,66,.08);backdrop-filter:blur(8px)}
+        .micro-player-signals strong{color:var(--pine-blue);font:800 .8rem/1 var(--font-heading)}
+        .micro-player-signals small{margin-top:4px;color:#65706c;font-size:.52rem}
+
+        .micro-examples-section{color:#eef6f2;background:radial-gradient(circle at 88% 12%,rgba(151,219,79,.09),transparent 24%),linear-gradient(145deg,#15272e,#244044)}
+        .micro-examples-section h2,.micro-examples-section h3{color:#fff}
+        .micro-examples-section .section-heading p,.micro-examples-section .micro-spotlight-copy>p,.micro-examples-section li{color:#c8d8d0}
+        .micro-examples-section .eyebrow{color:#bfe4ce}
+        .micro-spotlight-list{display:grid;gap:22px;margin-top:28px}
+        .micro-spotlight{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(0,1.05fr);gap:34px;align-items:center;padding:26px;border:1px solid rgba(255,255,255,.09);border-radius:26px;background:rgba(16,36,43,.72);box-shadow:0 18px 42px rgba(0,0,0,.14)}
+        .micro-spotlight-reverse .micro-spotlight-visual{order:2}
+        .micro-spotlight-visual{min-width:0}
+        .micro-visual-frame{display:block;min-height:0;padding:0;border:0;border-radius:0;background:transparent}
+        .micro-visual-frame img{display:block;width:100%;height:auto;object-fit:initial;object-position:initial;border:0;border-radius:0;background:transparent;box-shadow:0 18px 38px rgba(0,0,0,.18)}
+        .micro-spotlight-copy ul{padding-left:20px}
+        .micro-spotlight-copy li+li{margin-top:7px}
+        .micro-spotlight-copy .tag{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#dce9e2}
+        .micro-spotlight-copy .project-family-link{display:inline-block;margin-top:18px;color:#9fe0bd}
+
+        .pattern-panel{display:grid;grid-template-columns:minmax(0,.9fr) minmax(300px,1.1fr);gap:28px;align-items:center;min-height:0}
+        .pattern-copy{min-width:0}
+        .pattern-visual-stage{min-width:0}
+        .pattern-image-frame{display:block;min-height:0;padding:0;border:0;border-radius:0;background:transparent}
+        .pattern-image-frame[hidden]{display:none}
+        .pattern-image-frame img{display:block;width:100%;height:auto;object-fit:initial;object-position:initial;border:0;border-radius:0;background:transparent;box-shadow:0 16px 34px rgba(52,74,66,.14)}
+        .pattern-reference-visual{min-height:320px;padding:20px;border:1px solid rgba(80,132,132,.18);border-radius:20px;background:linear-gradient(145deg,#173139,#214247);color:#eef6f2}
+        .pattern-reference-visual[hidden]{display:none}
+        .reference-header{display:grid;gap:5px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1)}
+        .reference-header span{color:#9fcdb4;font:800 .56rem/1 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
+        .reference-header strong{color:#fff;font:800 .9rem/1.3 var(--font-heading)}
+        .reference-list{display:grid;gap:10px;margin-top:14px}
+        .reference-list span{display:grid;grid-template-columns:28px auto 1fr;gap:8px;align-items:center;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#10242b}
+        .reference-list i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#234e47;color:#bfe4ce;font:800 .58rem/1 var(--font-heading)}
+        .reference-list b{color:#fff;font:800 .62rem/1.2 var(--font-heading)}
+        .reference-list small{color:#bdcec5;font-size:.56rem;line-height:1.35}
+
+        .micro-explore-section{color:#eef6f2;background:linear-gradient(145deg,#17272e,#263f44)}
+        .micro-explore-section h2{color:#fff}
+        .micro-explore-section .eyebrow{color:#bfe4ce}
+        .micro-explore-section .micro-explore-card{border-color:rgba(255,255,255,.08);background:#10242b}
+        .micro-explore-section .micro-explore-card h3{color:#fff}
+        .micro-explore-section .micro-explore-card p{color:#bfd0c8}
+        .micro-explore-section .project-family-link{color:#9fe0bd}
+
+        @media(max-width:900px){.micro-spotlight,.pattern-panel{grid-template-columns:1fr}.micro-spotlight-reverse .micro-spotlight-visual{order:0}}
+        @media(max-width:620px){.micro-hero-player{min-height:390px}.micro-player-shell{width:88%}.micro-player-signals{position:static;margin-top:12px;justify-content:center;flex-wrap:wrap}}
+</style>
     <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
 <body>
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
 <main>
-    <section class="page-hero refresh-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Microlearning &amp; Performance Support</span></nav><div class="micro-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Short-Form Learning</p><h1>Microlearning &amp; Performance Support</h1><p class="body-large">I build short sales learning when sellers need focused context, practice, or a reference they can use quickly before or during customer work.</p><div class="button-row"><a class="btn btn-primary" href="#examples">See Examples</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div></div><aside class="micro-principle"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><p class="eyebrow">Short-Form Pattern</p><h2>Give sellers what they need for the next task.</h2><div class="micro-principle-flow" aria-hidden="true"><span>Context</span><span>Use Cases</span><span>Practice</span><span>Resources</span></div></aside></div></div></section>
+    <section class="page-hero refresh-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Microlearning &amp; Performance Support</span></nav><div class="micro-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Short-Form Learning</p><h1>Microlearning &amp; Performance Support</h1><p class="body-large">I build short sales learning when sellers need focused context, practice, or a reference they can use quickly before or during customer work.</p><div class="button-row"><a class="btn btn-primary" href="#examples">See Examples</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div></div><aside class="micro-hero-player" aria-label="Public-safe microlearning example">
+  <div class="micro-player-shell">
+    <div class="micro-player-bar" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+    <div class="micro-player-screen"><img src="../../../assets/project-images/microlearning/micro-marketing-hero.webp" alt="Public-safe marketing enablement microlearning interface." loading="eager"></div>
+  </div>
+  <div class="micro-player-signals" aria-hidden="true">
+    <span><strong>1</strong><small>focused topic</small></span>
+    <span><strong>5–10</strong><small>minutes</small></span>
+    <span><strong>1</strong><small>next action</small></span>
+  </div>
+</aside></div></div></section>
 
-    <section class="section" id="examples"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Project Examples</p><h2>Two examples of short-form sales learning.</h2><p class="body-large reading-width">One supported a product launch; the other used one Rise module to introduce seaport and airport positioning.</p></div><div class="micro-grid">
-        <article class="micro-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Product Launch</p><h3>Product-Launch Microlearning</h3><p>I built a concise Rise overview for product positioning and a Storyline scenario for customer-facing practice.</p><ul><li>Scoped approved launch material to customer problem, value, fit, and next steps.</li><li>Built scenario choices with explanatory feedback.</li><li>Coordinated SME and QA review through Review 360 and Asana.</li></ul><div class="tag-row"><span class="tag">Rise 360</span><span class="tag">Storyline</span><span class="tag">Review 360</span><span class="tag">Asana</span></div><div class="micro-card-action"><a class="project-family-link" href="product-launch-microlearning/index.html">Explore Product-Launch Case Study</a></div></article>
-        <article class="micro-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><p class="eyebrow">Vertical Sales Learning</p><h3>Vertical-Positioning Microlearning</h3><p>I built one Rise module with separate seaport and airport components, customer-facing practice, a short Colossyan presenter segment, and deeper follow-up resources.</p><ul><li>Structured one module around two distinct industry sections.</li><li>Used the same learning pattern while keeping each industry’s context and examples specific.</li><li>Coordinated internal QA and specialist review.</li></ul><div class="tag-row"><span class="tag">Rise 360</span><span class="tag">Colossyan</span><span class="tag">Review 360</span><span class="tag">Asana</span></div><div class="micro-card-action"><a class="project-family-link" href="vertical-positioning-microlearning/index.html">Explore Vertical-Positioning Case Study</a></div></article>
-    </div></div></section>
+    <section class="section micro-examples-section" id="examples">
+      <div class="container">
+        <div class="section-heading refresh-section-intro">
+          <p class="eyebrow">Project Examples</p>
+          <h2>Two examples of short-form sales learning.</h2>
+          <p class="body-large reading-width">One supported a product launch; the other used one Rise module to introduce seaport and airport positioning.</p>
+        </div>
 
-    <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Format Choice</p><h2>Match the format to the seller task.</h2><p class="body-large reading-width">Use a short lesson for new context, an interaction for practice, or a reference when the information only needs to be found.</p></div><div class="pattern-shell"><div class="pattern-tabs" role="tablist" aria-label="Short-form learning patterns"><button class="pattern-tab active" type="button" role="tab" aria-selected="true" data-pattern="learn"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span>Learn</span></button><button class="pattern-tab" type="button" role="tab" aria-selected="false" data-pattern="practice"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Practice</span></button><button class="pattern-tab" type="button" role="tab" aria-selected="false" data-pattern="retrieve"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Retrieve</span></button></div><div class="pattern-panel" role="tabpanel" aria-live="polite"><p class="eyebrow" id="patternLabel">Learn</p><h3 id="patternTitle">Use a short lesson when someone needs new context.</h3><p id="patternText">Give the learner only the background needed to understand a product, market, use case, or task before applying it.</p></div></div></div></section>
+        <div class="micro-spotlight-list">
+          <article class="micro-spotlight">
+            <div class="micro-spotlight-visual">
+              <div class="micro-visual-frame">
+                <img src="../../../assets/project-images/product-launch/product-launch-key-features.webp" alt="Public-safe TaskMate AI product-launch key-features screen." loading="lazy">
+              </div>
+            </div>
+            <div class="micro-spotlight-copy">
+              <p class="eyebrow">Product Launch</p>
+              <h3>Product-Launch Microlearning</h3>
+              <p>I built a concise Rise overview for product positioning and a Storyline scenario for customer-facing practice.</p>
+              <ul>
+                <li>Scoped approved launch material to customer problem, value, fit, and next steps.</li>
+                <li>Built scenario choices with explanatory feedback.</li>
+                <li>Coordinated SME and QA review through Review 360 and Asana.</li>
+              </ul>
+              <div class="tag-row"><span class="tag">Rise 360</span><span class="tag">Storyline</span><span class="tag">Review 360</span><span class="tag">Asana</span></div>
+              <a class="project-family-link" href="product-launch-microlearning/index.html">Explore Product-Launch Case Study</a>
+            </div>
+          </article>
 
-    <section class="section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>Explore more instructional design work.</h2></div><div class="micro-explore-grid">
+          <article class="micro-spotlight micro-spotlight-reverse">
+            <div class="micro-spotlight-visual">
+              <div class="micro-visual-frame">
+                <img src="../../../assets/project-images/microlearning/micro-airport-use-case.webp" alt="Public-safe airport positioning microlearning use-case screen." loading="lazy">
+              </div>
+            </div>
+            <div class="micro-spotlight-copy">
+              <p class="eyebrow">Vertical Sales Learning</p>
+              <h3>Vertical-Positioning Microlearning</h3>
+              <p>I built one Rise module with separate seaport and airport components, customer-facing practice, a short Colossyan presenter segment, and deeper follow-up resources.</p>
+              <ul>
+                <li>Structured one module around two distinct industry sections.</li>
+                <li>Used the same learning pattern while keeping each industry's context and examples specific.</li>
+                <li>Coordinated internal QA and specialist review.</li>
+              </ul>
+              <div class="tag-row"><span class="tag">Rise 360</span><span class="tag">Colossyan</span><span class="tag">Review 360</span><span class="tag">Asana</span></div>
+              <a class="project-family-link" href="vertical-positioning-microlearning/index.html">Explore Vertical-Positioning Case Study</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Format Choice</p><h2>Match the format to the seller task.</h2><p class="body-large reading-width">Use a short lesson for new context, an interaction for practice, or a reference when the information only needs to be found.</p></div><div class="pattern-shell"><div class="pattern-tabs" role="tablist" aria-label="Short-form learning patterns"><button class="pattern-tab active" type="button" role="tab" aria-selected="true" data-pattern="learn"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span>Learn</span></button><button class="pattern-tab" type="button" role="tab" aria-selected="false" data-pattern="practice"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Practice</span></button><button class="pattern-tab" type="button" role="tab" aria-selected="false" data-pattern="retrieve"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Retrieve</span></button></div><div class="pattern-panel" role="tabpanel" aria-live="polite">
+  <div class="pattern-copy">
+    <p class="eyebrow" id="patternLabel">Learn</p>
+    <h3 id="patternTitle">Use a short lesson when someone needs new context.</h3>
+    <p id="patternText">Give the learner only the background needed to understand a product, market, use case, or task before applying it.</p>
+  </div>
+  <div class="pattern-visual-stage">
+    <div class="pattern-image-frame" id="patternImageFrame">
+      <img id="patternImage" src="../../../assets/project-images/microlearning/micro-seaport-spotlight.webp" alt="Public-safe seaport microlearning spotlight." loading="lazy">
+    </div>
+    <div class="pattern-reference-visual" id="patternReferenceVisual" hidden aria-hidden="true">
+      <div class="reference-header"><span>Quick Reference</span><strong>Customer Conversation Checklist</strong></div>
+      <div class="reference-list">
+        <span><i>1</i><b>Need</b><small>What problem is the customer trying to solve?</small></span>
+        <span><i>2</i><b>Fit</b><small>Which use case best matches the situation?</small></span>
+        <span><i>3</i><b>Next</b><small>What should the seller do after the conversation?</small></span>
+      </div>
+    </div>
+  </div>
+</div></div></div></section>
+
+    <section class="section micro-explore-section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>Explore more instructional design work.</h2></div><div class="micro-explore-grid">
         <article class="micro-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><h3>Complete eLearning Pathways</h3><p>Courses, curricula, certifications, and connected learning paths.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Complete eLearning Pathways</a></article>
         <article class="micro-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><h3>Live Training</h3><p>Content development and facilitation for live learning.</p><a class="project-family-link" href="../live-training/index.html">Explore Live Training</a></article>
         <article class="micro-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><h3>Instructional Design</h3><p>Return to the full instructional design portfolio.</p><a class="project-family-link" href="../index.html">Explore Instructional Design</a></article>
@@ -38,8 +168,45 @@
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 <script>
-const patternData={learn:{label:'Learn',title:'Use a short lesson when someone needs new context.',text:'Give the learner only the background needed to understand a product, market, use case, or task before applying it.'},practice:{label:'Practice',title:'Use a focused interaction when judgment is the real skill.',text:'Give the learner a short customer situation, a meaningful choice, and feedback that explains why the decision fits or misses the need.'},retrieve:{label:'Retrieve',title:'Use performance support when the information only needs to be found.',text:'Keep checklists, references, links, and job aids easy to scan so the learner can use them during the work instead of memorizing them.'}};
-const patternButtons=[...document.querySelectorAll('[data-pattern]')];function selectPattern(button){const data=patternData[button.dataset.pattern];patternButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));});document.getElementById('patternLabel').textContent=data.label;document.getElementById('patternTitle').textContent=data.title;document.getElementById('patternText').textContent=data.text;}patternButtons.forEach((button)=>button.addEventListener('click',()=>selectPattern(button)));
+const patternData={
+  learn:{label:'Learn',title:'Use a short lesson when someone needs new context.',text:'Give the learner only the background needed to understand a product, market, use case, or task before applying it.',image:'../../../assets/project-images/microlearning/micro-seaport-spotlight.webp',alt:'Public-safe seaport microlearning spotlight.',reference:false},
+  practice:{label:'Practice',title:'Use a focused interaction when judgment is the real skill.',text:'Give the learner a short customer situation, a meaningful choice, and feedback that explains why the decision fits or misses the need.',image:'../../../assets/project-images/product-launch/product-launch-use-case-practice.webp',alt:'Public-safe TaskMate AI product-launch scenario practice.',reference:false},
+  retrieve:{label:'Retrieve',title:'Use performance support when the information only needs to be found.',text:'Keep checklists, references, links, and job aids easy to scan so the learner can use them during the work instead of memorizing them.',image:null,alt:'',reference:true}
+};
+const patternButtons=[...document.querySelectorAll('[data-pattern]')];
+function selectPattern(button){
+  const data=patternData[button.dataset.pattern];
+  patternButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));});
+  document.getElementById('patternLabel').textContent=data.label;
+  document.getElementById('patternTitle').textContent=data.title;
+  document.getElementById('patternText').textContent=data.text;
+  const imageFrame=document.getElementById('patternImageFrame');
+  const image=document.getElementById('patternImage');
+  const reference=document.getElementById('patternReferenceVisual');
+  if(data.reference){
+    imageFrame.hidden=true;
+    reference.hidden=false;
+  }else{
+    imageFrame.hidden=false;
+    reference.hidden=true;
+    image.src=data.image;
+    image.alt=data.alt;
+  }
+}
+patternButtons.forEach((button,index)=>{
+  button.addEventListener('click',()=>selectPattern(button));
+  button.addEventListener('keydown',(event)=>{
+    if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();
+    let next=index;
+    if(event.key==='Home')next=0;
+    else if(event.key==='End')next=patternButtons.length-1;
+    else if(event.key==='ArrowDown'||event.key==='ArrowRight')next=(index+1)%patternButtons.length;
+    else next=(index-1+patternButtons.length)%patternButtons.length;
+    patternButtons[next].focus();
+    selectPattern(patternButtons[next]);
+  });
+});
 </script>
 </body>
 </html>
