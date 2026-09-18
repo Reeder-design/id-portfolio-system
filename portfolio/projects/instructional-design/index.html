@@ -24,8 +24,8 @@
         .id-hero-device-bar{display:flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-bottom:1px solid rgba(80,132,132,.14);background:linear-gradient(180deg,#edf4f0,#e6efea)}
         .id-hero-device-bar span{width:8px;height:8px;border-radius:50%;background:rgba(80,132,132,.45)}
         .id-hero-device-bar i{margin-left:auto;width:78px;height:6px;border-radius:999px;background:rgba(80,132,132,.16)}
-        .id-hero-device-screen{position:relative;overflow:hidden;aspect-ratio:16/9;background:#dfece6}
-        .id-hero-device-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+        .id-hero-device-screen{position:relative;overflow:hidden;aspect-ratio:16/9;padding:16px;background:linear-gradient(145deg,#edf4f0,#e5eee9)}
+        .id-hero-device-screen img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;border-radius:14px;background:#f8fbf9}
         .id-hero-scan{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,rgba(255,255,255,.2) 48%,transparent 52%);transform:translateY(-100%);animation:idHeroScan 5.8s ease-in-out infinite;pointer-events:none}
         .id-hero-node{position:absolute;z-index:5;display:grid;place-items:center;width:54px;height:54px;border:1px solid rgba(80,132,132,.2);border-radius:18px;background:rgba(248,250,248,.94);box-shadow:0 16px 32px rgba(38,63,62,.14);color:var(--pine-blue)}
         .id-hero-node .portfolio-icon{width:28px;height:28px}
@@ -37,9 +37,9 @@
         .id-detail-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(300px,.96fr);gap:24px;align-items:start;position:relative;z-index:1}
         .id-loop-heading{margin-bottom:0}
         .id-evidence-stage{min-width:0}
-        .id-evidence-frame{position:relative;overflow:hidden;min-height:330px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:#173138;box-shadow:0 16px 38px rgba(52,74,66,.1)}
-        .id-evidence-frame img{display:block;width:100%;height:330px;object-fit:cover;object-position:center;transition:opacity .16s ease,transform .25s ease}
-        .id-evidence-stage:hover .id-evidence-frame img{transform:scale(1.015)}
+        .id-evidence-frame{position:relative;overflow:hidden;min-height:330px;padding:16px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(145deg,#edf4f0,#e5eee9);box-shadow:0 16px 38px rgba(52,74,66,.1)}
+        .id-evidence-frame img{display:block;width:100%;height:298px;object-fit:contain;object-position:center;border-radius:14px;background:#f8fbf9;transition:opacity .16s ease}
+        .id-evidence-stage:hover .id-evidence-frame img{transform:none}
         .id-evidence-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(13,30,35,.9) 100%);pointer-events:none}
         .id-evidence-overlay{position:absolute;z-index:2;left:16px;right:16px;bottom:15px;display:grid;gap:4px}
         .id-evidence-overlay span{color:#bfe4ce;font:800 .54rem/1 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
@@ -47,8 +47,8 @@
         #idWorkEvidenceNote{margin:10px 3px 0;color:#66716d;font-size:.72rem;line-height:1.45}
         .id-loop-grid{margin-top:22px}
 
-        @media(max-width:980px){.id-hero-showcase{min-height:390px;max-width:680px;width:100%;margin:0 auto}.id-detail-grid{grid-template-columns:1fr}.id-evidence-frame{min-height:360px}.id-evidence-frame img{height:360px}}
-        @media(max-width:620px){.id-hero-showcase{min-height:330px}.id-hero-device{width:96%}.id-hero-node{width:46px;height:46px}.id-hero-node--one{left:-2%;top:16%}.id-hero-node--two{right:-2%;top:20%}.id-hero-node--three{right:7%;bottom:5%}.id-evidence-frame{min-height:280px}.id-evidence-frame img{height:280px}}
+        @media(max-width:980px){.id-hero-showcase{min-height:390px;max-width:680px;width:100%;margin:0 auto}.id-detail-grid{grid-template-columns:1fr}.id-evidence-frame{min-height:360px}.id-evidence-frame img{height:328px}}
+        @media(max-width:620px){.id-hero-showcase{min-height:330px}.id-hero-device{width:96%}.id-hero-device-screen{padding:12px}.id-hero-node{width:46px;height:46px}.id-hero-node--one{left:-2%;top:16%}.id-hero-node--two{right:-2%;top:20%}.id-hero-node--three{right:7%;bottom:5%}.id-evidence-frame{min-height:280px;padding:12px}.id-evidence-frame img{height:256px}}
         @media(prefers-reduced-motion:reduce){.id-hero-device,.id-evidence-frame img{transition:none}.id-hero-device:hover{transform:rotate(-2deg)}.id-hero-scan{animation:none}}
 </style>
     <script defer src="../../js/portfolio-motion.js"></script>
