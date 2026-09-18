@@ -137,6 +137,46 @@
     });
   };
 
+  const initProjectFamilyVisuals = () => {
+    const visualMap = [
+      {
+        match: '/projects/instructional-design/',
+        image: 'assets/project-images/main-pages/instructional-design.webp',
+        alt: 'Instructional design portfolio illustration with learning design and development elements.'
+      },
+      {
+        match: '/projects/ai-training-and-evaluation/',
+        image: 'assets/project-images/main-pages/ai-training-evaluation.webp',
+        alt: 'AI training and evaluation portfolio illustration with quality review elements.'
+      },
+      {
+        match: '/projects/lms-administration/',
+        image: 'assets/project-images/main-pages/lms-administration.webp',
+        alt: 'LMS administration portfolio illustration with learning platform operations elements.'
+      },
+      {
+        match: '/projects/workflows/',
+        image: 'assets/project-images/main-pages/system-integrations-workflows.webp',
+        alt: 'System integration and workflow portfolio illustration with connected process elements.'
+      }
+    ];
+
+    document.querySelectorAll('.project-family-card').forEach((card) => {
+      if (card.querySelector('.project-family-visual')) return;
+      const link = card.querySelector('.project-family-link[href]');
+      if (!link) return;
+      const href = new URL(link.getAttribute('href'), window.location.href).pathname.toLowerCase();
+      const visual = visualMap.find((item) => href.includes(item.match));
+      if (!visual) return;
+
+      const figure = document.createElement('figure');
+      figure.className = 'project-family-visual';
+      figure.innerHTML = `<img src="${new URL(visual.image, portfolioRoot).href}" alt="${escapeHtml(visual.alt)}" loading="lazy">`;
+      const header = card.querySelector('.project-family-header');
+      card.insertBefore(figure, header || card.firstChild);
+    });
+  };
+
   const initHeroCleanup = () => {
     const hero = document.querySelector('main > section:first-of-type');
     const h1 = hero?.querySelector('h1');
@@ -778,6 +818,7 @@
   initHiringGuideNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
+  initProjectFamilyVisuals();
   initHeroCleanup();
   initExploreFooters();
   initPortfolioSafetyNotes();
