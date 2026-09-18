@@ -46,10 +46,18 @@
     "CSS",
     "JavaScript"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/ai-training-and-evaluation/nexusai-home.webp",
+      "alt": "Public-safe AI evaluation task environment.",
+      "caption": "Representative public-safe AI task environment used to contextualize the evaluator practice workflow.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Public demo uses fictional and sanitized evaluation scenarios.",
   "dates": {
     "created": null,
-    "updated": "2026-09-08"
+    "updated": "2026-09-18"
   }
 }
