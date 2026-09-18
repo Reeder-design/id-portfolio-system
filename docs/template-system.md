@@ -1,43 +1,38 @@
 # Project Page Template System
 
-The standard project-page system converts structured project records in `portfolio-data/projects/` into polished public case-study pages.
+The standard project-page system converts structured project records in `portfolio-data/projects/` into public case-study pages that inherit the approved portfolio component system.
 
 ## Purpose
 
-The template separates project content from page layout. Project-specific information lives in JSON; shared page structure lives in `templates/project-page/index.html`; `scripts/render-project.py` combines them.
+Project-specific information lives in JSON. Shared case-study structure lives in `templates/project-page/index.html`. `scripts/render-project.py` combines them.
 
-The standard template is a strong default, not a requirement that every project look identical. Bespoke interactive demos can remain custom pages when the interaction itself is meaningful portfolio evidence.
+The standard template is the default for projects whose portfolio value is the case-study story. Bespoke demos remain custom when the interaction itself is important evidence.
 
 ## Source of Truth
 
 Use these files for their specific responsibilities:
 
-- `portfolio-data/taxonomy.json` — canonical category IDs, labels, subcategories, and public paths
-- `portfolio-data/schema/project.schema.json` — structured project requirements
-- `portfolio-data/projects/*.json` — project-specific structured content
-- `templates/project-page/index.html` — standard generated case-study markup
-- `scripts/render-project.py` — deterministic rendering behavior
-- bespoke files under `portfolio/` — authoritative interaction/presentation for intentionally custom experiences
+- `portfolio-data/taxonomy.json` - canonical category IDs, labels, subcategories, and public paths
+- `portfolio-data/schema/project.schema.json` - structured project requirements
+- `portfolio-data/projects/*.json` - project-specific structured content
+- `templates/project-page/index.html` - standard generated case-study markup
+- `scripts/render-project.py` - deterministic rendering behavior
+- `portfolio/css/final-stretch-system.css` - approved shared public component and surface rules
+- `portfolio/js/portfolio-motion.js` - shared motion plus compatibility normalization for older hand-built pages
+- bespoke files under `portfolio/` - authoritative interaction/presentation for intentionally custom experiences
 
-Documentation should describe this system, not duplicate its taxonomy or override its behavior.
-
-## Files
-
-- `templates/project-page/index.html` — standard generated case-study layout
-- `scripts/render-project.py` — renders one structured project record into HTML
-- `scripts/check-renderer.py` — renders all project records in memory and checks links, shared styling, required architecture, and conditional Evidence behavior
-- `portfolio-data/schema/project.schema.json` — validates structured project records
-- `portfolio-data/taxonomy.json` — category labels and canonical portfolio paths
-- `portfolio-data/projects/*.json` — project-specific content
+Documentation describes the system. It does not override these sources.
 
 ## Standard Page Architecture
 
-Generated projects use the established public case-study pattern:
+Generated projects use this pattern:
 
 ```text
-short visual hero
+case-study hero
     ↓
-project snapshot
+dark project snapshot bridge
+    ↓
+flush-top sticky project navigation
     ↓
 Need
     ↓
@@ -49,117 +44,181 @@ Evidence (only when public assets exist)
     ↓
 Outcome
     ↓
+Related Work (when structured relationships exist)
+    ↓
+Portfolio-safe note (when needed)
+    ↓
 Keep Exploring
 ```
 
-The design intentionally avoids the older long-sidebar / repetitive-section pattern.
-
 ### Hero
 
-The hero keeps the public project summary short and scan-friendly. It includes:
+The generated hero uses the approved case-study family.
 
-- category
-- project title
-- short summary
+It includes:
+
+- breadcrumb directly above the project title
+- project title and short summary
+- category context chip
 - up to six skill/tool tags
-- optional live-project action
-- back navigation
-- category-aware iconography
+- optional meaningful live-project action
+- a compact visual process panel
+
+Generated heroes do not add a redundant back button or a button whose only purpose is jumping to a section already available in the sticky project navigation.
 
 ### Project Snapshot
 
-A compact snapshot surfaces:
+The snapshot is the visual bridge between the hero and project navigation.
 
-- role
-- audience
-- project type
-- status
+The shared source markup uses:
 
-### Need
+- `.snapshot-band`
+- `.snapshot-grid`
+- `.snapshot-item`
 
-Uses the structured business need, audience, and learning objectives to establish why the project exists and what the audience needs to be able to do.
+The band is dark. Individual metadata items stay light for contrast.
 
-### Design Decisions
+The standard metadata fields are:
 
-Uses the structured design approach and skill metadata to show how the solution was shaped.
+- My Role
+- Audience
+- Project Type
+- Built With
 
-### Build
+Do not recreate the retired white `.project-snapshot-grid` treatment.
 
-Uses the development process, tools, and role fields to explain how the solution was built and validated.
+### Project Navigation
+
+Generated case studies use:
+
+- `.case-nav-shell`
+- `.case-nav`
+
+The navigation is dark and sticky at `top: 0` after the user scrolls past it. It must not leave a browser-top gap that covers content.
+
+Navigation items are generated only for sections that exist.
+
+### Story Sections
+
+Need, Design Decisions, Build, optional detail sections, Evidence, Outcome, and Related Work use the structured content record.
+
+The page may use tabs, cards, flows, and evidence layouts when they improve comprehension, but shared components should be extended rather than copied into project-specific variants.
 
 ### Evidence
 
-Evidence is conditional. If the structured record contains assets with `"publish": true`, the renderer adds an Evidence nav item and an Evidence section. If there are no public assets, the page does not create an empty evidence block.
+Evidence is conditional. When a structured project includes assets with `"publish": true`, the renderer adds an Evidence nav item and Evidence section.
 
 Supported public asset treatments include:
 
 - images
 - video
 - PDFs/documents/downloads
-- embeds/code/other public references as linked artifacts
+- embeds/code/other approved public references
 
-The template does not invent an interaction or artifact when a project does not have one.
+The renderer does not invent evidence when a project has none.
 
-### Outcome
+### Related Work
 
-Uses the structured outcomes field and a compact project/capability snapshot so the page closes on relevance and evidence rather than metadata.
+Structured `related_work` relationships render with the shared asset-led portfolio explore card family. The section carries its own light surface state so card contrast does not depend on surrounding page markup.
+
+### Portfolio-Safe Notes
+
+Projects marked `sanitized` render the shared portfolio-safe component rather than a generic warning box.
+
+The component includes:
+
+- a public-safe explanation
+- the approved case-study pixel asset
+- no proprietary identifiers, learner data, credentials, screenshots, or internal implementation details
 
 ### Keep Exploring
 
-Generated pages end with routes to the parent portfolio area, Projects, and the portfolio overview.
+Generated pages end with the approved shared Keep Exploring component.
 
-The canonical presentation uses the same shared component pattern as the broader portfolio. Do not create a competing category-specific closing component unless the public design system is intentionally being changed.
+The standard destinations are:
 
-`portfolio/js/portfolio-motion.js` still normalizes some older hand-built page structures at runtime. Treat that as compatibility behavior, not permission to add another parallel markup pattern.
+- the parent project area
+- all Projects
+- the portfolio overview
 
-## Breadcrumb and Page Path Standard
+The component uses the approved pixel assets and light ending surface before the dark shared footer.
 
-Breadcrumbs are a shared navigation component rather than a page-by-page styling choice.
+## Shared Frame
+
+Generated pages write the current frame directly into source HTML:
+
+- current nav links
+- Hiring Guide CTA
+- shared dark nav/footer visual language
+- left-aligned footer links
+- GitHub, LinkedIn, Résumé, and Expertise footer destinations
+
+Generated pages explicitly load:
+
+- `styles.css`
+- `portfolio-refresh.css`
+- `phase1-theme.css`
+- `phase1-frame.css`
+- `final-stretch-system.css`
+- `portfolio-motion.js`
+
+New generated pages should already be correct before JavaScript compatibility normalization runs.
+
+## Breadcrumb Standard
 
 Expected behavior:
 
-- `Home` is clickable
-- every real parent page in the hierarchy is clickable
+- Home is clickable
+- every real parent page is clickable
 - the current page is the only non-clickable breadcrumb
+- the breadcrumb sits inside hero copy directly above the H1
 - labels and separators use the shared treatment
-- the hierarchy links only to real public landing pages
 
-Generated project pages write linked parent breadcrumbs through `render-project.py`. The shared portfolio behavior may normalize legacy/custom markup, but new generated markup should be correct without relying on runtime repair.
+Do not place breadcrumbs as an independent grid item above the hero content.
 
-## Shared Portfolio Behavior
+## Light and Dark Rhythm
 
-Generated pages load the shared public styling/behavior stack used by the rest of the portfolio, including the core theme/frame and portfolio motion behavior.
+The approved portfolio uses intentional light and dark section contrast.
 
-Sitewide features that are injected or normalized by shared build/runtime code should have one clear owner. Before adding another shared layer, inspect the current generator, static build, and `portfolio-motion.js` responsibilities.
+Rules:
 
-Contextual demo help remains opt-in for selected demo experiences.
+- dark surfaces use the teal/mint/gold visual language rather than near-black slabs
+- light surfaces use paper/mint accents
+- sections should alternate when it improves separation
+- the final content section resolves light before the dark footer
+- project metadata remains a dark bridge between hero and project navigation
 
-## Supported Categories
+Do not convert entire pages into a dark theme.
 
-Structured categories and paths come from `portfolio-data/taxonomy.json`. The current top-level public areas are:
+## Component Ownership
 
-- Instructional Design
-- AI Training and Evaluation
-- LMS Administration & System Operations
-- System Integrations and Workflows
+When a visual or behavior should apply to many pages, change the shared source instead of copying page-specific CSS.
 
-Instructional Design subcategories and workflow groupings should also be read from the taxonomy rather than duplicated in renderer logic when avoidable.
+Ownership is:
+
+- shared visuals and component states: `portfolio/css/final-stretch-system.css`
+- standard generated case-study markup: `templates/project-page/index.html`
+- deterministic dynamic markup: `scripts/render-project.py`
+- shared motion and legacy normalization: `portfolio/js/portfolio-motion.js`
+- intentionally bespoke demo behavior: the demo's own files
+
+Runtime compatibility behavior is not permission to create another parallel markup pattern.
 
 ## Rendering a Project
 
-Preview generated HTML without writing a file:
+Preview generated HTML:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/pursuit-positioning.json --stdout
 ```
 
-Render a new project to the `page_path` declared in its JSON record:
+Render a new project:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/my-project.json
 ```
 
-The renderer refuses to overwrite an existing file by default. To intentionally replace an existing generated page:
+Intentionally replace an existing generated page:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/my-project.json --force
@@ -169,39 +228,25 @@ Use `--force` only when the structured record and template are intended to remai
 
 ## Bespoke Interactive Projects
 
-Custom demos remain custom HTML/CSS/JavaScript experiences when the interaction, simulation, evaluator, scoring model, or other bespoke behavior is itself important evidence.
+Use the standard template when the main portfolio story is the project process and outcome.
 
-Use the standard template when the main portfolio story is the project process and outcome. Use a bespoke page when the custom experience itself is part of what should be evaluated.
+Use a bespoke page when the custom interaction, simulator, evaluator, scoring model, or other experience is itself important evidence.
 
-A standard case study can link to a separate interactive demo through `links.live_project`.
+A standard case study may link to a separate bespoke demo through `links.live_project`.
 
-Do not copy a standard generated page into a hand-maintained variant merely to make small visual changes. Extend the shared template/component when the change should apply broadly.
-
-## Project Links
-
-Structured records may optionally include:
-
-```json
-"links": {
-  "live_project": "https://example.com/demo",
-  "repository": null,
-  "download": null
-}
-```
-
-When supported links are present, the renderer exposes the corresponding actions.
+Do not clone a standard generated page merely to make small visual changes. Extend the shared component when the change should apply broadly.
 
 ## Asset and Confidentiality Safety
 
-Only assets intentionally approved for public use should be rendered or linked publicly.
+Only assets explicitly approved for public use may be rendered or linked publicly.
 
-Reference/source files used to create or edit a project belong in the local-only Reference Library workflow unless they are explicitly safe to publish. Projects marked `needs-sanitization` cannot be treated as public-ready work.
+Private/reference originals belong in the local-only Reference Library workflow unless they are explicitly safe to publish.
 
-Projects marked `sanitized` may use public-safe notes explaining that details are sanitized, fictionalized, or generalized when appropriate.
+Projects marked `needs-sanitization` cannot be rendered as public-ready work. Projects marked `sanitized` may render the shared portfolio-safe note.
 
 ## Validation
 
-Relevant lower-level checks include:
+Relevant checks include:
 
 ```bash
 python scripts/check-site.py
@@ -209,17 +254,18 @@ python scripts/check-content.py
 python scripts/check-renderer.py
 python scripts/check-new-project.py
 python scripts/check-final-polish.py
+python scripts/check-system-docs.py
 ```
 
-Pull requests run the complete validation suite automatically. For substantial work, use the full suite rather than treating this list as a substitute for release validation.
+`check-renderer.py` protects the current generated architecture, including the final shared CSS, dark snapshot band, flush-top case nav, shared Keep Exploring family, Hiring Guide CTA, and absence of retired template architecture.
 
-`check-renderer.py` protects generated-page architecture and unresolved template/link problems. `check-final-polish.py` protects broader shared presentation expectations.
+Pull requests run the complete validation suite.
 
 ## Portfolio Manager Relationship
 
 Portfolio Manager **Create Content** is the normal human-facing workflow for new projects. Manage Content is the normal supported workflow for editing existing structured projects.
 
-For standard generated project pages, the intended relationship is:
+For standard generated projects:
 
 ```text
 Portfolio Manager / project JSON
@@ -228,7 +274,7 @@ project-page template
     ↓
 render-project.py
     ↓
-generated index.html
+generated public page
 ```
 
-For bespoke pages, custom public files remain authoritative for custom interaction behavior while supported structured metadata/content can still participate in Manager workflows.
+For bespoke pages, custom public files remain authoritative for interaction behavior while supported structured metadata can still participate in Portfolio Manager workflows.
