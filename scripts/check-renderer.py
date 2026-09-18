@@ -54,9 +54,18 @@ def main() -> int:
     required_architecture = [
         "phase1-theme.css",
         "phase1-frame.css",
+        "final-stretch-system.css",
         "portfolio-motion.js",
-        "project-snapshot-grid",
+        'data-page-family="case"',
+        "snapshot-band",
+        "snapshot-grid",
+        "snapshot-item",
+        "case-nav-shell",
+        "case-nav",
         "project-story",
+        "portfolio-explore-section",
+        "portfolio-explore-card",
+        "nav-hiring-guide",
         'href="#need"',
         'href="#decisions"',
         'href="#build"',
@@ -96,7 +105,13 @@ def main() -> int:
             if marker not in rendered:
                 errors.append(f"{label}: generated page is missing modern template marker {marker!r}")
 
-        if "case-study-sidebar" in rendered or "template-flourish" in rendered:
+        deprecated_markers = [
+            "case-study-sidebar",
+            "template-flourish",
+            "project-snapshot-grid",
+            "project-story-nav-shell",
+        ]
+        if any(marker in rendered for marker in deprecated_markers):
             errors.append(f"{label}: generated page still contains deprecated template architecture")
 
         for section in project.get("detail_sections", []):
