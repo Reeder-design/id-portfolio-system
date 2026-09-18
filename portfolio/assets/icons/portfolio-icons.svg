@@ -40,4 +40,12 @@
   <symbol id="icon-feedback" viewBox="0 0 48 48">
     <path d="M8 10h32v23H23l-9 7v-7H8z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M15 18h18M15 25h12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
   </symbol>
+  <symbol id="icon-ship" viewBox="0 0 48 48">
+    <path d="M8 29h32l-4 9H14z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M15 29V18h18v11M20 18V11h8v7M24 11V7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9 41c3 2 6 2 9 0 3 2 6 2 9 0 3 2 6 2 9 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-plane" viewBox="0 0 48 48">
+    <path d="M42 22.5L28 18 26 8l-4-2-2 10-9-3-3 2 10 8-10 8 3 2 9-3 2 10 4-2 2-10 14-4.5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+  </symbol>
 </svg>
