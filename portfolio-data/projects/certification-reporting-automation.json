@@ -45,7 +45,36 @@
     "Excel",
     "Absorb LMS"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/report-course-completion.webp",
+      "publish": true,
+      "alt": "Public-safe fictional course completion report.",
+      "caption": "Course completion report sample."
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/report-certification.webp",
+      "publish": true,
+      "alt": "Public-safe fictional certification report.",
+      "caption": "Certification report sample."
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/report-learner-progress.webp",
+      "publish": true,
+      "alt": "Public-safe fictional learner progress export.",
+      "caption": "Learner progress export sample."
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/analytics-certification-status.webp",
+      "publish": true,
+      "alt": "Public-safe fictional certification analytics dashboard.",
+      "caption": "Certification analytics sample."
+    }
+  ],
   "source_material_notes": "Generalized from a recurring certification-reporting workflow. Course identifiers, report names, account data, learner data, and internal file structures are intentionally omitted.",
   "dates": {
     "created": "2026-09-15",
