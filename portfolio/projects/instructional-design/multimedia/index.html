@@ -1,90 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Multimedia learning work by instructional designer Haley Reeder, including video editing, motion graphics, audio production, AI-presenter media, and interactive learning assets.">
-    <title>Multimedia Training Content | Haley Reeder</title>
-    <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
-    <link rel="stylesheet" href="../../../css/phase1-theme.css">
-    <link rel="stylesheet" href="../../../css/phase1-frame.css">
-    <style>
-        .media-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.9fr);gap:clamp(30px,5vw,58px);align-items:center}.media-hero-lab{padding:24px;border:1px solid rgba(80,132,132,.2);border-radius:28px;background:radial-gradient(circle at 88% 12%,rgba(151,219,79,.16),transparent 28%),linear-gradient(145deg,rgba(255,255,255,.97),rgba(238,245,241,.82));box-shadow:0 18px 46px rgba(52,74,66,.1)}.media-hero-lab h2{margin:4px 0 7px;font-size:clamp(1.35rem,2.4vw,1.8rem)}.media-purpose-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}.media-purpose-btn{display:grid;grid-template-columns:38px minmax(0,1fr);gap:10px;align-items:center;min-width:0;min-height:72px;padding:12px;border:1px solid rgba(80,132,132,.17);border-radius:16px;background:rgba(255,255,255,.88);color:var(--charcoal);font:700 .78rem/1.25 var(--font-heading);text-align:left;cursor:pointer;transition:transform 160ms ease,border-color 160ms ease,box-shadow 160ms ease,background 160ms ease}.media-purpose-btn .portfolio-icon{width:27px;height:27px;color:var(--pine-blue)}.media-purpose-btn:hover,.media-purpose-btn:focus-visible,.media-purpose-btn.active{transform:translateY(-2px);border-color:rgba(121,201,158,.68);box-shadow:0 10px 24px rgba(52,74,66,.08);outline:none}.media-purpose-btn.active{background:linear-gradient(145deg,rgba(238,245,241,.98),rgba(255,255,255,.97))}.media-purpose-detail{min-height:126px;margin-top:12px;padding:17px 18px;border-radius:16px;background:rgba(80,132,132,.075)}.media-purpose-detail strong{display:block;margin-bottom:5px;color:var(--pine-blue);font-family:var(--font-heading)}.media-purpose-detail p{margin:0;font-size:.87rem;line-height:1.55}
-        .showcase-shell{display:grid;grid-template-columns:minmax(230px,.48fr) minmax(0,1.52fr);gap:20px;margin-top:28px;align-items:start}.showcase-picker{display:grid;gap:10px}.showcase-btn{display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;align-items:center;width:100%;padding:14px 15px;border:1px solid rgba(80,132,132,.17);border-radius:17px;background:rgba(255,255,255,.9);color:var(--charcoal);text-align:left;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease,background .15s ease}.showcase-btn:hover,.showcase-btn:focus-visible{transform:translateY(-2px);border-color:var(--mint-leaf);outline:none}.showcase-btn.active{border-color:var(--pine-blue);background:linear-gradient(145deg,rgba(80,132,132,.97),rgba(77,83,89,.95));color:#fff;box-shadow:0 10px 24px rgba(52,74,66,.08)}.showcase-btn .portfolio-icon{width:25px;height:25px;color:var(--pine-blue)}.showcase-btn.active .portfolio-icon{color:#fff}.showcase-btn small{display:block;margin-bottom:3px;font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.72}.showcase-btn strong{display:block;font:700 .84rem/1.35 var(--font-heading)}.showcase-stage{overflow:hidden;border:1px solid rgba(80,132,132,.18);border-radius:26px;background:linear-gradient(150deg,rgba(255,255,255,.98),rgba(238,245,241,.72));box-shadow:0 18px 44px rgba(52,74,66,.09)}.showcase-preview{position:relative;display:grid;place-items:center;min-height:330px;padding:32px;background:radial-gradient(circle at 16% 18%,rgba(121,201,158,.2),transparent 25%),radial-gradient(circle at 86% 18%,rgba(151,219,79,.16),transparent 24%),linear-gradient(145deg,rgba(77,83,89,.97),rgba(80,132,132,.92));color:#fff;text-align:center;overflow:hidden}.showcase-preview::before{content:"";position:absolute;inset:26px;border:1px solid rgba(255,255,255,.18);border-radius:22px}.showcase-preview-inner{position:relative;z-index:2;max-width:520px}.showcase-preview .portfolio-icon{width:52px;height:52px;margin-bottom:16px}.showcase-preview h3{margin:0 0 8px;color:#fff;font-size:clamp(1.45rem,3vw,2.1rem)}.showcase-preview p{margin:0 auto;max-width:470px;color:rgba(255,255,255,.84)}.showcase-visual{display:flex;justify-content:center;gap:6px;margin:24px auto 0}.showcase-visual span{display:block;width:7px;border-radius:999px;background:rgba(255,255,255,.72);animation:mediaPulse 1.8s ease-in-out infinite}.showcase-visual span:nth-child(1){height:24px}.showcase-visual span:nth-child(2){height:44px;animation-delay:.12s}.showcase-visual span:nth-child(3){height:32px;animation-delay:.24s}.showcase-visual span:nth-child(4){height:54px;animation-delay:.36s}.showcase-visual span:nth-child(5){height:28px;animation-delay:.48s}.showcase-visual span:nth-child(6){height:40px;animation-delay:.6s}@keyframes mediaPulse{0%,100%{transform:scaleY(.7);opacity:.62}50%{transform:scaleY(1.08);opacity:1}}.showcase-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:18px}.showcase-meta-card{padding:14px;border-radius:14px;background:rgba(255,255,255,.8);border:1px solid rgba(80,132,132,.12)}.showcase-meta-card span{display:block;margin-bottom:5px;color:#68716e;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.showcase-meta-card strong{display:block;color:var(--pine-blue);font:700 .8rem/1.4 var(--font-heading)}
-        .media-example-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}.media-example-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid rgba(80,132,132,.18);border-radius:23px;background:rgba(255,255,255,.92);box-shadow:0 14px 36px rgba(52,74,66,.08)}.media-example-preview{min-height:176px;padding:22px;background:radial-gradient(circle at 86% 14%,rgba(151,219,79,.16),transparent 27%),linear-gradient(140deg,rgba(80,132,132,.13),rgba(121,201,158,.07))}.media-example-preview .icon-badge{margin-bottom:16px}.media-example-preview h3{margin:5px 0 0;color:var(--charcoal);font-size:1.08rem}.media-mini-stage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:18px}.media-mini-stage span{display:grid;place-items:center;min-height:42px;padding:7px;border:1px solid rgba(80,132,132,.14);border-radius:10px;background:rgba(255,255,255,.78);color:var(--pine-blue);font:700 .66rem/1.2 var(--font-heading);text-align:center}.media-example-body{display:flex;flex:1;flex-direction:column;padding:22px}.media-example-body p{margin-bottom:16px;font-size:.9rem;line-height:1.6}.media-example-note{margin-top:auto;padding:13px 14px;border-radius:13px;background:rgba(243,240,232,.65);color:#5f6965;font-size:.79rem;line-height:1.45}.media-example-body .project-family-link{margin-top:16px}
-        .media-workbench{display:grid;grid-template-columns:minmax(220px,.48fr) minmax(0,1.52fr);gap:20px;align-items:start;margin-top:28px}.media-workbench-tabs{display:grid;gap:9px;position:sticky;top:106px}.media-workbench-btn{display:flex;align-items:center;gap:11px;width:100%;padding:15px 16px;border:1px solid rgba(80,132,132,.17);border-radius:16px;background:rgba(255,255,255,.9);color:var(--charcoal);font:700 .8rem/1.3 var(--font-heading);text-align:left;cursor:pointer;transition:transform 150ms ease,border-color 150ms ease,box-shadow 150ms ease,background 150ms ease}.media-workbench-btn .portfolio-icon{width:24px;height:24px;flex:0 0 auto;color:var(--pine-blue)}.media-workbench-btn:hover,.media-workbench-btn:focus-visible{transform:translateY(-2px);border-color:var(--mint-leaf);outline:none}.media-workbench-btn.active{border-color:var(--pine-blue);background:var(--pine-blue);color:#fff;box-shadow:0 10px 24px rgba(52,74,66,.08)}.media-workbench-btn.active .portfolio-icon{color:#fff}.media-workbench-panel{padding:28px;border:1px solid rgba(80,132,132,.18);border-radius:24px;background:radial-gradient(circle at 92% 9%,rgba(121,201,158,.13),transparent 26%),rgba(255,255,255,.94);box-shadow:0 15px 38px rgba(52,74,66,.08)}.media-workbench-panel h3{margin:4px 0 8px;color:var(--pine-blue);font-size:clamp(1.3rem,2.3vw,1.75rem)}.media-workbench-panel>p{max-width:760px}.media-workbench-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.media-workbench-card{padding:17px;border:1px solid rgba(80,132,132,.14);border-radius:15px;background:rgba(248,250,248,.82)}.media-workbench-card span{display:block;margin-bottom:6px;color:#68716e;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.media-workbench-card p{margin:0;font-size:.86rem;line-height:1.5}
-        .tool-bands{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin-top:24px}.tool-band{min-width:0;padding:17px;border:1px solid rgba(80,132,132,.15);border-radius:17px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));text-align:center}.tool-band .portfolio-icon{width:27px;height:27px;margin-bottom:10px;color:var(--pine-blue)}.tool-band strong{display:block;margin-bottom:8px;color:var(--pine-blue);font:700 .82rem/1.3 var(--font-heading)}.tool-band span{display:block;color:#616c68;font-size:.76rem;line-height:1.45}
-        @media(max-width:980px){.media-hero-grid,.showcase-shell,.media-workbench{grid-template-columns:1fr}.media-example-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.media-workbench-tabs{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.tool-bands{grid-template-columns:repeat(3,minmax(0,1fr))}}
-        @media(max-width:680px){.media-purpose-grid,.media-example-grid,.media-workbench-tabs,.media-workbench-grid,.tool-bands,.showcase-meta{grid-template-columns:1fr}.media-hero-lab,.media-workbench-panel{padding:21px}.showcase-preview{min-height:280px;padding:24px}.showcase-preview::before{inset:16px}}
-        @media(prefers-reduced-motion:reduce){.showcase-visual span{animation:none}}
-    </style>
-    <script defer src="../../../js/portfolio-motion.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Multimedia training content by instructional designer Haley Reeder, including video editing, motion graphics, audio production, AI-assisted visual ideation, storyboarding, and learning integration.">
+  <title>Multimedia Training Content | Haley Reeder</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
+  <link rel="stylesheet" href="../../../css/phase1-theme.css">
+  <link rel="stylesheet" href="../../../css/phase1-frame.css">
+  <link rel="stylesheet" href="../../../css/multimedia-showcase.css">
+  <script defer src="../../../js/portfolio-motion.js"></script>
+  <script defer src="../../../js/multimedia-showcase.js"></script>
 </head>
-<body>
-    <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
+<body class="multimedia-page">
+<header class="site-header">
+  <div class="container nav-container">
+    <a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../index.html">Home</a>
+      <a href="../../../about/index.html">About Me</a>
+      <a class="active" href="../../index.html">Projects</a>
+      <a href="../../../contact/index.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <section class="page-hero refresh-hero">
-            <div class="container">
-                <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span aria-current="page">Multimedia Training Content</span></nav>
-                <div class="media-hero-grid">
-                    <div class="refresh-hero-copy">
-                        <p class="eyebrow">Instructional Design / Multimedia</p>
-                        <h1>Multimedia Training Content</h1>
-                        <p class="body-large">I produce video, motion graphics, audio, AI-presenter segments, and interactive media for learning. My work includes scripting, editing, visual sequencing, audio cleanup, asset integration, and QA inside Rise, Storyline, and other delivery formats.</p>
-                        <div class="refresh-chip-row"><span class="refresh-chip">Video Editing</span><span class="refresh-chip">Motion Graphics</span><span class="refresh-chip">Audio</span><span class="refresh-chip">AI-Presenter Media</span><span class="refresh-chip">Interactive Media</span></div>
-                        <div class="button-row"><a class="btn btn-primary" href="#media-showcase">View Media Showcase</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div>
-                    </div>
-                    <aside class="media-hero-lab" aria-labelledby="mediaLabTitle">
-                        <p class="eyebrow">Choose a Medium</p>
-                        <h2 id="mediaLabTitle">What I handle in production</h2>
-                        <div class="media-purpose-grid" role="tablist" aria-label="Multimedia formats">
-                            <button class="media-purpose-btn active" type="button" role="tab" aria-selected="true" data-media-purpose="video"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><span>Video</span></button>
-                            <button class="media-purpose-btn" type="button" role="tab" aria-selected="false" data-media-purpose="motion"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><span>Motion</span></button>
-                            <button class="media-purpose-btn" type="button" role="tab" aria-selected="false" data-media-purpose="audio"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Audio</span></button>
-                            <button class="media-purpose-btn" type="button" role="tab" aria-selected="false" data-media-purpose="ai"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>AI Presenter</span></button>
-                        </div>
-                        <div class="media-purpose-detail" aria-live="polite"><strong id="mediaPurposeTitle">Video editing and screen-based production</strong><p id="mediaPurposeText">I script, sequence, edit, caption, and QA short instructional or enablement videos using Premiere Pro or Camtasia, depending on the asset and delivery need.</p></div>
-                    </aside>
-                </div>
+<main id="main-content">
+  <section class="page-hero refresh-hero multimedia-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="../../../index.html">Home</a><span>/</span>
+        <a href="../../index.html">Projects</a><span>/</span>
+        <a href="../index.html">Instructional Design</a><span>/</span>
+        <span>Multimedia Training Content</span>
+      </nav>
+
+      <div class="multimedia-hero-grid">
+        <div class="multimedia-hero-copy">
+          <h1>Multimedia Training Content</h1>
+          <p class="body-large">I produce video, motion graphics, audio, AI-assisted visuals, and reusable media assets for learning. I work from planning and storyboarding through editing, QA, and integration into Rise, Storyline, and other learning experiences.</p>
+          <div class="tag-row">
+            <span class="tag">Premiere Pro</span>
+            <span class="tag">After Effects</span>
+            <span class="tag">Audition</span>
+            <span class="tag">Illustrator</span>
+            <span class="tag">Camtasia</span>
+            <span class="tag">AI-Assisted Visuals</span>
+          </div>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#showcase">Explore the Production Showcase</a>
+          </div>
+        </div>
+
+        <aside class="media-flow-visual" aria-label="Motion graphic showing the multimedia production workflow from plan to integration">
+          <div class="media-flow-stage" aria-hidden="true">
+            <article class="media-flow-node">
+              <span>01</span>
+              <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg>
+              <strong>Plan</strong>
+              <small>Script + storyboard</small>
+            </article>
+            <div class="media-flow-line"><i></i></div>
+            <article class="media-flow-node">
+              <span>02</span>
+              <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg>
+              <strong>Produce</strong>
+              <small>Video + graphics + audio</small>
+            </article>
+            <div class="media-flow-line"><i></i></div>
+            <article class="media-flow-node">
+              <span>03</span>
+              <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>
+              <strong>Refine</strong>
+              <small>Edit + caption + QA</small>
+            </article>
+            <div class="media-flow-line"><i></i></div>
+            <article class="media-flow-node">
+              <span>04</span>
+              <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+              <strong>Integrate</strong>
+              <small>Course + interaction</small>
+            </article>
+          </div>
+          <div class="media-flow-output" aria-hidden="true">
+            <span>Video</span><span>Motion</span><span>Audio</span><span>Visuals</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <nav class="case-nav-shell" aria-label="Page sections">
+    <div class="container case-nav">
+      <a href="#showcase">Showcase</a>
+      <a href="#workflow">Production Workflow</a>
+      <a href="#projects">Learning Projects</a>
+      <a href="#toolkit">Toolkit</a>
+    </div>
+  </nav>
+
+  <section class="section flagship-section media-showcase-section" id="showcase">
+    <div class="container">
+      <div class="section-kicker">
+        <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
+        <p class="eyebrow">Production Showcase</p>
+      </div>
+      <h2>Six views of the production work behind the learning.</h2>
+      <p class="short-copy">These public-safe reconstructions show the types of production environments and assets I work across. They demonstrate process and capability without exposing internal course files or confidential media.</p>
+
+      <div class="media-evidence-shell">
+        <div class="media-evidence-tabs" role="tablist" aria-label="Multimedia production samples">
+          <button class="media-evidence-tab active" type="button" role="tab" aria-selected="true" data-media-sample="premiere"><span>01</span><strong>Video Editing</strong><small>Premiere Pro workflow</small></button>
+          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="motion"><span>02</span><strong>Motion Graphics</strong><small>After Effects workflow</small></button>
+          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="ai"><span>03</span><strong>AI Visual Ideation</strong><small>Custom learning visuals</small></button>
+          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="audio"><span>04</span><strong>Audio Production</strong><small>Narration cleanup</small></button>
+          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="library"><span>05</span><strong>Asset Library</strong><small>Reusable visual system</small></button>
+          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="storyboard"><span>06</span><strong>Storyboard</strong><small>Video planning</small></button>
+        </div>
+
+        <figure class="media-evidence-frame" role="tabpanel" aria-live="polite">
+          <figcaption>
+            <span id="mediaEvidenceLabel">Video editing and sequencing</span>
+            <strong id="mediaEvidenceTool">Premiere Pro</strong>
+          </figcaption>
+          <div class="media-evidence-screen">
+            <img id="mediaEvidenceImage" src="../../../assets/project-images/multimedia/multimedia-premiere-editing.webp" alt="Public-safe reconstructed video editing workspace with timeline, footage, graphics, narration, and music tracks.">
+          </div>
+          <div class="media-evidence-detail">
+            <p id="mediaEvidenceText">I use timeline-based editing to combine footage, narration, graphics, on-screen text, and music while controlling pacing and visual hierarchy.</p>
+            <div class="media-evidence-meta">
+              <article><span>My work</span><strong id="mediaEvidenceRole">Sequence, edit, caption, polish</strong></article>
+              <article><span>Quality check</span><strong id="mediaEvidenceQa">Timing, readability, audio balance, export</strong></article>
             </div>
-        </section>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
 
-        <section class="section section-soft" id="media-showcase"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Media Showcase</p><h2>Space for the actual media.</h2><p class="body-large reading-width">I will add public-safe video, motion, and audio samples here. The placeholders below are already structured so each sample can include the asset, my role, tools, and where it was used.</p></div><div class="showcase-shell"><div class="showcase-picker" role="tablist" aria-label="Media sample placeholders"><button class="showcase-btn active" type="button" role="tab" aria-selected="true" data-showcase="video"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><span><small>Sample 01</small><strong>Instructional Video</strong></span></button><button class="showcase-btn" type="button" role="tab" aria-selected="false" data-showcase="motion"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><span><small>Sample 02</small><strong>Motion + Graphics</strong></span></button><button class="showcase-btn" type="button" role="tab" aria-selected="false" data-showcase="audio"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><small>Sample 03</small><strong>Audio + Narration</strong></span></button></div><div class="showcase-stage" aria-live="polite"><div class="showcase-preview"><div class="showcase-preview-inner"><svg class="portfolio-icon" aria-hidden="true"><use id="showcaseIcon" href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><p class="eyebrow" id="showcaseLabel">Instructional Video Sample</p><h3 id="showcaseTitle">Public-safe video sample coming here.</h3><p id="showcaseText">This slot is ready for a finished video or screen-recording example. When the asset is added, it can play or open directly from this panel.</p><div class="showcase-visual" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div><div class="showcase-meta"><div class="showcase-meta-card"><span>My Role</span><strong id="showcaseRole">Script, edit, captions, QA</strong></div><div class="showcase-meta-card"><span>Tools</span><strong id="showcaseTools">Premiere Pro / Camtasia</strong></div><div class="showcase-meta-card"><span>Use</span><strong id="showcaseUse">Course or enablement media</strong></div></div></div></div></div></section>
+  <section class="section flagship-section media-workflow-section" id="workflow">
+    <div class="container">
+      <div class="section-kicker">
+        <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
+        <p class="eyebrow">Production Workflow</p>
+      </div>
+      <h2>Media decisions start with the learning need.</h2>
+      <p class="short-copy">I do not add multimedia just to make a course look busy. I choose the medium based on what needs to be explained, demonstrated, reinforced, or remembered.</p>
 
-        <section class="section" id="media-examples"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Multimedia in Learning Projects</p><h2>Projects where multimedia was part of the larger build.</h2><p class="body-large reading-width">These links open full learning case studies, not standalone media samples. They show where video, graphics, Storyline interactions, and other media were used inside a broader learning experience. The actual media files will live in the showcase above.</p></div><div class="media-example-grid">
-            <article class="media-example-card"><div class="media-example-preview"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><p class="eyebrow">AI-Presenter Video</p><h3>Vertical-Positioning Microlearning</h3><div class="media-mini-stage" aria-hidden="true"><span>Rise</span><span>Video</span><span>Scenario</span></div></div><div class="media-example-body"><p>I built one Rise module with seaport and airport components and added a short Colossyan presenter segment where a spoken introduction helped orient the learner.</p><div class="media-example-note">The case study shows the full module structure; the standalone presenter sample can be added to the showcase above later.</div><a class="project-family-link" href="../microlearning-performance-support/vertical-positioning-microlearning/index.html">Explore the learning project →</a></div></article>
-            <article class="media-example-card"><div class="media-example-preview"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Mixed Media + Interaction</p><h3>Enterprise Sales Certification Pathway</h3><div class="media-mini-stage" aria-hidden="true"><span>Rise</span><span>Storyline</span><span>Media</span></div></div><div class="media-example-body"><p>I developed modular Rise and Storyline learning that used graphics, multimedia, comparisons, scenarios, knowledge checks, and assessment across a larger sales-certification path.</p><div class="media-example-note">This case shows how multimedia fit into curriculum architecture, practice, LMS delivery, and maintenance.</div><a class="project-family-link" href="../complete-learning-paths/enterprise-sales-certification/index.html">Explore the learning project →</a></div></article>
-            <article class="media-example-card"><div class="media-example-preview"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><p class="eyebrow">Storyline Interaction</p><h3>Product-Launch Microlearning</h3><div class="media-mini-stage" aria-hidden="true"><span>Rise</span><span>Storyline</span><span>Feedback</span></div></div><div class="media-example-body"><p>I built a Rise product overview and a separate Storyline scenario so sellers could move from launch context into a customer-facing decision with feedback.</p><div class="media-example-note">The project shows how I combine visual production with interaction design instead of treating media as a separate layer.</div><a class="project-family-link" href="../microlearning-performance-support/product-launch-microlearning/index.html">Explore the learning project →</a></div></article>
-        </div></div></section>
+      <div class="media-workflow-shell">
+        <div class="media-workflow-tabs" role="tablist" aria-label="Multimedia production workflow">
+          <button class="media-workflow-tab active" type="button" role="tab" aria-selected="true" data-media-workflow="plan"><span>01</span><strong>Plan</strong></button>
+          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="build"><span>02</span><strong>Build</strong></button>
+          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="refine"><span>03</span><strong>Refine</strong></button>
+          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="integrate"><span>04</span><strong>Integrate</strong></button>
+        </div>
 
-        <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Production Capabilities</p><h2>What I do with each medium</h2><p class="body-large reading-width">Choose a production area to see the hands-on work behind the asset.</p></div><div class="media-workbench"><div class="media-workbench-tabs" role="tablist" aria-label="Multimedia production areas"><button class="media-workbench-btn active" type="button" role="tab" aria-selected="true" data-workbench="video"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg>Video</button><button class="media-workbench-btn" type="button" role="tab" aria-selected="false" data-workbench="motion"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>Motion + Graphics</button><button class="media-workbench-btn" type="button" role="tab" aria-selected="false" data-workbench="audio"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>Audio</button><button class="media-workbench-btn" type="button" role="tab" aria-selected="false" data-workbench="ai"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg>AI-Presenter Media</button></div><div class="media-workbench-panel" role="tabpanel" aria-live="polite"><p class="eyebrow" id="workbenchLabel">Video</p><h3 id="workbenchTitle">Edit instructional and enablement video for clarity and pace.</h3><p id="workbenchSummary">I work from the script and learning context through the final edit, including screen capture or footage sequencing, text overlays, pacing, captions, audio cleanup, and integration into the course.</p><div class="media-workbench-grid"><article class="media-workbench-card"><span>Pre-production</span><p id="workbenchPlan">Script, storyboard, screen or shot plan, visual hierarchy, and delivery context.</p></article><article class="media-workbench-card"><span>Production</span><p id="workbenchProduce">Edit footage or screen capture, add graphics and text, clean audio, and control pacing.</p></article><article class="media-workbench-card"><span>QA</span><p id="workbenchQa">Check captions, readability, audio levels, timing, export quality, and course playback.</p></article></div></div></div></div></section>
+        <div class="media-workflow-panel" role="tabpanel" aria-live="polite">
+          <p class="eyebrow" id="mediaWorkflowLabel">Pre-production</p>
+          <h3 id="mediaWorkflowTitle">Plan the message before opening the production tool.</h3>
+          <p id="mediaWorkflowText">I define the purpose, script, storyboard, screen or shot plan, visual hierarchy, and where the finished asset belongs in the learner journey.</p>
+          <div class="media-workflow-grid">
+            <article><span>Decision</span><p id="mediaWorkflowDecision">Choose the medium only when it supports the learning objective or learner task.</p></article>
+            <article><span>Output</span><p id="mediaWorkflowOutput">Script, storyboard, production notes, and a clear role for the asset.</p></article>
+            <article><span>QA lens</span><p id="mediaWorkflowQa">Check scope, length, accessibility needs, and maintenance expectations before production begins.</p></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <section class="section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Production Toolkit</p><h2>Tools I use</h2><p>My tool choice depends on the asset, the delivery environment, and how often the content will need to be updated.</p></div><div class="tool-bands"><div class="tool-band"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><strong>Video Editing</strong><span>Adobe Premiere Pro<br>Camtasia</span></div><div class="tool-band"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><strong>Motion + Graphics</strong><span>After Effects<br>Illustrator</span></div><div class="tool-band"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><strong>Audio</strong><span>Adobe Audition</span></div><div class="tool-band"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><strong>AI-Presenter Media</strong><span>Colossyan</span></div><div class="tool-band"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><strong>Learning Integration</strong><span>Rise 360<br>Storyline 360</span></div></div></div></section>
+  <section class="section flagship-section media-projects-section" id="projects">
+    <div class="container">
+      <div class="section-kicker">
+        <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span>
+        <p class="eyebrow">Multimedia in Learning Projects</p>
+      </div>
+      <h2>Media as part of the learning experience, not a separate layer.</h2>
 
-        <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>Explore more instructional design work.</h2></div><div class="refresh-card-grid"><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><p class="eyebrow">Practice</p><h3>Interactive Learning</h3></div><div class="refresh-link-card-body"><p>Decision practice, simulations, scoring, and feedback.</p><a class="project-family-link" href="../interactive-learning/index.html">Explore Interactive Learning →</a></div></article><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><p class="eyebrow">Short Form</p><h3>Microlearning &amp; Performance Support</h3></div><div class="refresh-link-card-body"><p>Product-launch and industry-positioning microlearning.</p><a class="project-family-link" href="../microlearning-performance-support/index.html">Explore Microlearning →</a></div></article><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Learning Systems</p><h3>Complete eLearning Pathways</h3></div><div class="refresh-link-card-body"><p>Courses and certifications with media, practice, assessment, LMS delivery, and reporting.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Learning Pathways →</a></div></article></div></div></section>
-    </main>
+      <div class="media-project-grid">
+        <article class="media-project-card">
+          <div class="media-project-top"><span>AI-presenter video</span><h3>Vertical Positioning Microlearning</h3></div>
+          <p>I combined Rise content, industry visuals, scenario practice, and a short Colossyan presenter segment to orient sellers before they moved into the learning.</p>
+          <div class="media-project-tags"><span>Rise 360</span><span>Colossyan</span><span>Scenario</span></div>
+          <a class="project-family-link" href="../microlearning-performance-support/vertical-positioning-microlearning/index.html">Explore the project →</a>
+        </article>
 
-    <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
+        <article class="media-project-card">
+          <div class="media-project-top"><span>Mixed media curriculum</span><h3>Enterprise Sales Certification</h3></div>
+          <p>I used graphics, multimedia, comparisons, Storyline interactions, knowledge checks, and assessments across a larger certification experience.</p>
+          <div class="media-project-tags"><span>Rise 360</span><span>Storyline</span><span>Media</span></div>
+          <a class="project-family-link" href="../complete-learning-paths/enterprise-sales-certification/index.html">Explore the project →</a>
+        </article>
 
-    <script>
-        const sprite='../../../assets/icons/portfolio-icons.svg';
-        const purposeData={video:{title:'Video editing and screen-based production',text:'I script, sequence, edit, caption, and QA short instructional or enablement videos using Premiere Pro or Camtasia, depending on the asset and delivery need.'},motion:{title:'Motion graphics and visual explanation',text:'I use After Effects and Illustrator for animated callouts, visual hierarchy, transitions, diagrams, and reusable graphics when movement helps show sequence or change.'},audio:{title:'Narration cleanup and audio finishing',text:'I use Audition to clean narration, balance levels, remove distracting noise, tighten edits, and prepare audio that works cleanly with captions and on-screen content.'},ai:{title:'AI-presenter segments inside larger lessons',text:'I use Colossyan for short presenter-led segments when spoken delivery adds value, then review the script, pronunciation, pacing, visual fit, and surrounding learning context.'}};
-        const purposeButtons=[...document.querySelectorAll('[data-media-purpose]')];
-        purposeButtons.forEach((button)=>button.addEventListener('click',()=>{purposeButtons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});const data=purposeData[button.dataset.mediaPurpose];document.getElementById('mediaPurposeTitle').textContent=data.title;document.getElementById('mediaPurposeText').textContent=data.text;}));
+        <article class="media-project-card">
+          <div class="media-project-top"><span>Visual + interactive support</span><h3>Product Launch Microlearning</h3></div>
+          <p>I paired a concise product overview with an interactive customer-facing scenario so visual explanation led directly into seller practice.</p>
+          <div class="media-project-tags"><span>Rise 360</span><span>Storyline</span><span>Feedback</span></div>
+          <a class="project-family-link" href="../microlearning-performance-support/product-launch-microlearning/index.html">Explore the project →</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-        const showcaseData={video:{icon:'icon-multimedia',label:'Instructional Video Sample',title:'Public-safe video sample coming here.',text:'This slot is ready for a finished video or screen-recording example. When the asset is added, it can play or open directly from this panel.',role:'Script, edit, captions, QA',tools:'Premiere Pro / Camtasia',use:'Course or enablement media'},motion:{icon:'icon-workflow',label:'Motion + Graphics Sample',title:'Motion graphics sample coming here.',text:'This slot is ready for an animated explainer, visual sequence, or motion-graphics clip that shows the finished production work rather than only describing it.',role:'Visual design, animation, edit',tools:'After Effects / Illustrator',use:'Explainer or course visual'},audio:{icon:'icon-feedback',label:'Audio + Narration Sample',title:'Audio sample coming here.',text:'This slot is ready for a narration, audio cleanup, or before-and-after production sample with enough context to explain what I handled.',role:'Edit, cleanup, mix, QA',tools:'Adobe Audition',use:'Narration or course audio'}};
-        const showcaseButtons=[...document.querySelectorAll('[data-showcase]')];
-        showcaseButtons.forEach((button)=>button.addEventListener('click',()=>{showcaseButtons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});const data=showcaseData[button.dataset.showcase];document.getElementById('showcaseIcon').setAttribute('href',`${sprite}#${data.icon}`);document.getElementById('showcaseLabel').textContent=data.label;document.getElementById('showcaseTitle').textContent=data.title;document.getElementById('showcaseText').textContent=data.text;document.getElementById('showcaseRole').textContent=data.role;document.getElementById('showcaseTools').textContent=data.tools;document.getElementById('showcaseUse').textContent=data.use;}));
+  <section class="section flagship-section media-toolkit-section" id="toolkit">
+    <div class="container">
+      <div class="section-kicker">
+        <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
+        <p class="eyebrow">Production Toolkit</p>
+      </div>
+      <h2>The tools I reach for across production.</h2>
+      <p class="short-copy">I use different tool combinations depending on what I am building, how the asset will be delivered, and how often it needs to be updated.</p>
 
-        const workbenchData={video:{label:'Video',title:'Edit instructional and enablement video for clarity and pace.',summary:'I work from the script and learning context through the final edit, including screen capture or footage sequencing, text overlays, pacing, captions, audio cleanup, and integration into the course.',plan:'Script, storyboard, screen or shot plan, visual hierarchy, and delivery context.',produce:'Edit footage or screen capture, add graphics and text, clean audio, and control pacing.',qa:'Check captions, readability, audio levels, timing, export quality, and course playback.'},motion:{label:'Motion + Graphics',title:'Build motion that explains sequence, hierarchy, or change.',summary:'I use motion and graphics for callouts, transitions, diagrams, visual comparisons, and short explainers when movement makes the information easier to follow.',plan:'Storyboard the sequence, visual hierarchy, transitions, and reusable graphic elements.',produce:'Build and animate graphics in After Effects or Illustrator and prepare them for the learning environment.',qa:'Check legibility, timing, contrast, export quality, and whether the motion still makes sense without audio.'},audio:{label:'Audio',title:'Clean and finish narration so the learner can focus on the message.',summary:'I edit narration for clarity, remove distracting noise, balance levels, tighten pauses, and align the final track with captions and visual timing.',plan:'Script for spoken delivery, mark emphasis, and identify pauses or timing cues.',produce:'Edit takes, remove noise, balance levels, tighten pacing, and export for the final asset.',qa:'Listen for clipped words, level changes, abrupt edits, background noise, and caption alignment.'},ai:{label:'AI-Presenter Media',title:'Produce short presenter segments when spoken delivery adds value.',summary:'I use Colossyan for concise presenter-led explanations inside larger learning experiences rather than as a replacement for the course itself.',plan:'Write a short script, choose the presenter treatment, and define where the segment belongs in the lesson.',produce:'Generate the segment, correct pronunciation or pacing issues, and integrate it with the surrounding content.',qa:'Check script accuracy, pronunciation, pacing, visual fit, captions, and whether the presenter segment is still useful.'}};
-        const workbenchButtons=[...document.querySelectorAll('[data-workbench]')];
-        workbenchButtons.forEach((button)=>button.addEventListener('click',()=>{workbenchButtons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});const data=workbenchData[button.dataset.workbench];document.getElementById('workbenchLabel').textContent=data.label;document.getElementById('workbenchTitle').textContent=data.title;document.getElementById('workbenchSummary').textContent=data.summary;document.getElementById('workbenchPlan').textContent=data.plan;document.getElementById('workbenchProduce').textContent=data.produce;document.getElementById('workbenchQa').textContent=data.qa;}));
-    </script>
+      <div class="media-toolbox" aria-label="Motion graphic showing multimedia production tools grouped inside a toolbox">
+        <div class="toolbox-handle" aria-hidden="true"></div>
+        <div class="toolbox-lid" aria-hidden="true">
+          <span class="toolbox-lid-label">Multimedia Production Toolkit</span>
+          <span class="toolbox-lid-status">Plan · Build · Refine · Deliver</span>
+        </div>
+
+        <div class="toolbox-body">
+          <article class="toolbox-compartment toolbox-video">
+            <span class="toolbox-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
+            <div><small>Video Editing</small><strong>Premiere Pro</strong><strong>Camtasia</strong></div>
+          </article>
+
+          <article class="toolbox-compartment toolbox-motion">
+            <span class="toolbox-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
+            <div><small>Motion + Graphics</small><strong>After Effects</strong><strong>Illustrator</strong></div>
+          </article>
+
+          <article class="toolbox-compartment toolbox-audio">
+            <span class="toolbox-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span>
+            <div><small>Audio</small><strong>Adobe Audition</strong></div>
+          </article>
+
+          <article class="toolbox-compartment toolbox-ai">
+            <span class="toolbox-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span>
+            <div><small>AI Media</small><strong>Colossyan</strong><strong>AI image generation</strong></div>
+          </article>
+
+          <article class="toolbox-compartment toolbox-learning">
+            <span class="toolbox-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span>
+            <div><small>Learning Integration</small><strong>Rise 360</strong><strong>Storyline 360</strong></div>
+          </article>
+
+          <span class="toolbox-signal signal-one" aria-hidden="true"></span>
+          <span class="toolbox-signal signal-two" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <p class="media-public-note"><strong>Public-safe evidence:</strong> the production interfaces shown above are representative reconstructions built to demonstrate workflow and tool use without publishing proprietary source files.</p>
+    </div>
+  </section>
+
+  <section class="section section-soft media-related-section">
+    <div class="container">
+      <div class="section-heading refresh-section-intro">
+        <p class="eyebrow">Keep Exploring</p>
+        <h2>More instructional design work</h2>
+      </div>
+      <div class="refresh-card-grid">
+        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><p class="eyebrow">Practice</p><h3>Interactive Learning</h3></div><div class="refresh-link-card-body"><p>Decision practice, simulations, scoring, and feedback.</p><a class="project-family-link" href="../interactive-learning/index.html">Explore Interactive Learning →</a></div></article>
+        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><p class="eyebrow">Short Form</p><h3>Microlearning &amp; Performance Support</h3></div><div class="refresh-link-card-body"><p>Product-launch and vertical-positioning learning experiences.</p><a class="project-family-link" href="../microlearning-performance-support/index.html">Explore Microlearning →</a></div></article>
+        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Curriculum</p><h3>Complete eLearning Pathways</h3></div><div class="refresh-link-card-body"><p>Courses and certifications with media, practice, assessment, LMS delivery, and reporting.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Learning Pathways →</a></div></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <p>© Haley Reeder</p>
+    <div class="footer-links">
+      <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
