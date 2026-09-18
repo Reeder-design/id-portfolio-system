@@ -439,8 +439,12 @@ nav[aria-label="Project sections"] a.active{
 .snapshot-band{
   position:relative;
   overflow:hidden;
-  border-block:1px solid rgba(80,132,132,.14);
-  background:linear-gradient(180deg,#f8faf8,#edf4ef);
+  padding-block:12px;
+  border-block:1px solid rgba(121,201,158,.18);
+  background:
+    radial-gradient(circle at 12% 24%,rgba(151,219,79,.08),transparent 18rem),
+    linear-gradient(90deg,rgba(39,72,75,.99),rgba(54,95,90,.99))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
 }
 .snapshot-band::before{
   content:"";
@@ -449,16 +453,16 @@ nav[aria-label="Project sections"] a.active{
   right:0;
   top:0;
   height:2px;
-  background:linear-gradient(90deg,transparent,var(--mint-leaf),var(--yellow-green),transparent);
+  background:linear-gradient(90deg,transparent,var(--mint-leaf),var(--yellow-green),var(--fs-sun),transparent);
   background-size:220% 100%;
   animation:fsSnapshotSweep 8s linear infinite;
 }
 .snapshot-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:1px;
+  gap:10px;
   padding-block:0!important;
-  background:rgba(80,132,132,.12);
+  background:transparent!important;
 }
 .snapshot-item{
   position:relative;
