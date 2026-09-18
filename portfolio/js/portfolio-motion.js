@@ -267,10 +267,24 @@
     const main = document.querySelector('main');
     if (!main) return;
 
+    const generatedStoryShell = main.querySelector(':scope > .generated-project-story-shell');
+    if (document.body.dataset.generatedProject === 'true' && generatedStoryShell) {
+      const storySections = [...generatedStoryShell.querySelectorAll('.project-story > .project-story-section')]
+        .filter((section) => !section.hidden);
+
+      let storyDark = false;
+      storySections.forEach((section) => {
+        section.classList.remove('fs-surface-light', 'fs-surface-dark');
+        section.classList.add(storyDark ? 'fs-surface-dark' : 'fs-surface-light');
+        storyDark = !storyDark;
+      });
+    }
+
     const hero = main.querySelector(':scope > section:first-of-type');
     const sections = [...main.children].filter((element) => {
       if (element.tagName !== 'SECTION' || element === hero || element.hidden) return false;
       if (element.classList.contains('snapshot-band')) return false;
+      if (element.classList.contains('generated-project-story-shell')) return false;
       return true;
     });
 
@@ -286,7 +300,7 @@
       dark = !dark;
     });
 
-    // Always land on a light section before the light footer.
+    // Always land on a light section before the dark shared footer.
     const lastSection = sections[sections.length - 1];
     lastSection.classList.remove('fs-surface-dark');
     lastSection.classList.add('fs-surface-light');
