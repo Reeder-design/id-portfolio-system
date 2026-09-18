@@ -4,6 +4,7 @@
   const iconSprite = new URL('assets/icons/portfolio-icons.svg', portfolioRoot).href;
   const supportStylesHref = new URL('css/hiring-support.css', portfolioRoot).href;
   const experienceStylesHref = new URL('css/experience-polish.css', portfolioRoot).href;
+  const finalStretchStylesHref = new URL('css/final-stretch-system.css', portfolioRoot).href;
 
   const loadSharedStyles = () => {
     if (!document.querySelector('link[data-hiring-support-styles]')) {
@@ -20,6 +21,14 @@
       experienceStyles.href = experienceStylesHref;
       experienceStyles.dataset.experiencePolishStyles = 'true';
       document.head.appendChild(experienceStyles);
+    }
+
+    if (!document.querySelector('link[data-final-stretch-styles]')) {
+      const finalStretchStyles = document.createElement('link');
+      finalStretchStyles.rel = 'stylesheet';
+      finalStretchStyles.href = finalStretchStylesHref;
+      finalStretchStyles.dataset.finalStretchStyles = 'true';
+      document.head.appendChild(finalStretchStyles);
     }
   };
 
@@ -60,6 +69,122 @@
     .replace(/^\/+/, '')
     .replace(/index\.html$/i, '')
     .replace(/\/+$/, '');
+
+  const currentRelativePath = () => {
+    const currentUrl = new URL(window.location.href);
+    const rootPath = new URL('.', portfolioRoot).pathname;
+    let relativePath = currentUrl.pathname;
+    if (relativePath.startsWith(rootPath)) relativePath = relativePath.slice(rootPath.length);
+    return normalizePath(decodeURIComponent(relativePath));
+  };
+
+  const initPageFamily = () => {
+    const path = currentRelativePath();
+    const primary = new Set(['', 'about', 'projects', 'contact', 'expertise']);
+    const disciplines = new Set([
+      'projects/instructional-design',
+      'projects/ai-training-and-evaluation',
+      'projects/lms-administration',
+      'projects/workflows'
+    ]);
+    const categories = new Set([
+      'projects/instructional-design/complete-learning-paths',
+      'projects/instructional-design/interactive-learning',
+      'projects/instructional-design/live-training',
+      'projects/instructional-design/microlearning-performance-support',
+      'projects/instructional-design/multimedia'
+    ]);
+    const demos = new Set([
+      'projects/instructional-design/interactive-learning/meddpicc-practice',
+      'projects/instructional-design/interactive-learning/pursuit-positioning',
+      'projects/ai-training-and-evaluation/ai-training-and-evaluation-demo',
+      'projects/ai-training-and-evaluation/rubric-demo',
+      'projects/ai-training-and-evaluation/workflow-demo'
+    ]);
+
+    let family = 'case';
+    if (primary.has(path)) family = 'primary';
+    else if (path === 'hiring-manager') family = 'hiring';
+    else if (disciplines.has(path)) family = 'discipline';
+    else if (categories.has(path)) family = 'category';
+    else if (demos.has(path)) family = 'demo';
+    else if (!path.startsWith('projects/')) family = 'primary';
+    document.body.dataset.pageFamily = family;
+  };
+
+  const initHiringGuideNav = () => {
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    let link = [...nav.querySelectorAll('a[href]')].find((item) => /hiring-manager/i.test(item.getAttribute('href') || ''));
+    if (!link) {
+      link = document.createElement('a');
+      link.href = new URL('hiring-manager/', portfolioRoot).href;
+      link.textContent = 'Hiring Guide';
+      nav.appendChild(link);
+    }
+    link.classList.add('nav-hiring-guide');
+    const path = currentRelativePath();
+    link.classList.toggle('active', path === 'hiring-manager');
+  };
+
+  const initFooterLinks = () => {
+    document.querySelectorAll('.site-footer .footer-links').forEach((links) => {
+      links.innerHTML = `
+        <a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="${new URL('assets/documents/Haley-Reeder-Resume.pdf', portfolioRoot).href}" target="_blank" rel="noopener noreferrer">Résumé</a>
+        <a href="${new URL('expertise/', portfolioRoot).href}">Expertise</a>`;
+    });
+  };
+
+  const initHeroCleanup = () => {
+    const hero = document.querySelector('main > section:first-of-type');
+    const h1 = hero?.querySelector('h1');
+    if (!hero || !h1) return;
+
+    const ordered = [...hero.querySelectorAll('.eyebrow, h1')];
+    const h1Index = ordered.indexOf(h1);
+    const eyebrow = ordered.slice(0, h1Index).find((node) => node.classList.contains('eyebrow'));
+    if (eyebrow) {
+      let label = eyebrow.textContent.trim().replace(/^Projects\s*\/\s*/i, '').trim();
+      const headingText = h1.textContent.trim();
+      eyebrow.remove();
+      if (label && normalize(label) !== normalize(headingText)) {
+        const copy = h1.closest('.refresh-hero-copy, .hero-copy, .project-hero-content, .parent-page-hero-content') || h1.parentElement;
+        let row = copy.querySelector('.hero-context-row');
+        if (!row) {
+          row = document.createElement('div');
+          row.className = 'hero-context-row';
+          copy.appendChild(row);
+        }
+        const chip = document.createElement('span');
+        chip.className = 'hero-context-chip';
+        chip.textContent = label;
+        row.appendChild(chip);
+      }
+    }
+
+    const currentUrl = new URL(window.location.href);
+    const normalizedCurrent = normalizePath(currentUrl.pathname);
+    const currentParts = normalizedCurrent.split('/').filter(Boolean);
+    const parentPath = currentParts.slice(0, -1).join('/');
+
+    hero.querySelectorAll('.button-row a[href], a.btn[href]').forEach((link) => {
+      const raw = (link.getAttribute('href') || '').trim();
+      if (!raw) return;
+      let remove = raw.startsWith('#');
+      if (!remove && !raw.startsWith('http') && !raw.startsWith('mailto:')) {
+        const target = new URL(raw, currentUrl);
+        const normalizedTarget = normalizePath(target.pathname);
+        remove = normalizedTarget === parentPath;
+      }
+      if (remove) link.remove();
+    });
+
+    hero.querySelectorAll('.button-row').forEach((row) => {
+      if (!row.querySelector('a,button')) row.remove();
+    });
+  };
 
   const BREADCRUMB_ROUTES = [
     ['about', 'About Me'],
@@ -122,17 +247,17 @@
 
   const initExploreFooters = () => {
     const eyebrowNodes = [...document.querySelectorAll('.eyebrow')]
-      .filter((node) => /^keep exploring$/i.test((node.textContent || '').trim()));
+      .filter((node) => /^(keep exploring|related work|other work)$/i.test((node.textContent || '').trim()));
 
     eyebrowNodes.forEach((eyebrow) => {
-      const cta = eyebrow.closest('.cta');
-      const section = eyebrow.closest('section') || cta?.parentElement || cta;
+      const section = eyebrow.closest('section') || eyebrow.closest('.cta') || eyebrow.parentElement;
       if (!section || section.dataset.keepExploringStandardized === 'true') return;
 
+      const sectionLabel = eyebrow.textContent.trim();
       const heading = section.querySelector('h2');
-      const headingText = heading?.textContent.trim() || 'More work to explore';
+      const headingText = heading?.textContent.trim() || (sectionLabel === 'Related Work' ? 'Related work' : 'More work to explore');
       const introCandidates = [...section.querySelectorAll('p')]
-        .filter((p) => !p.classList.contains('eyebrow') && p !== heading);
+        .filter((p) => !p.classList.contains('eyebrow'));
       const introText = introCandidates.find((p) => {
         const card = p.closest('article, a, .refresh-link-card, .explore-card, .live-explore-card, .micro-explore-card');
         return !card;
@@ -153,52 +278,62 @@
         const useHref = existingUse?.getAttribute('href') || existingUse?.getAttribute('xlink:href') || '';
         const existingIcon = useHref.includes('#') ? useHref.split('#').pop() : '';
         const title = titleNode?.textContent.trim() || cleanLinkLabel(link.textContent) || 'Explore more work';
-        const category = existingEyebrow && !/^keep exploring$/i.test(existingEyebrow.textContent.trim())
+        const category = existingEyebrow && !/^(keep exploring|related work|other work)$/i.test(existingEyebrow.textContent.trim())
           ? existingEyebrow.textContent.trim()
           : 'Explore';
         const description = descriptionNode?.textContent.trim() || `Continue to ${title}.`;
         const icon = existingIcon || iconForLink(link);
-        let action = cleanLinkLabel(link.textContent);
-        if (!action || normalize(action) === normalize(title)) action = `Explore ${title}`;
-        return { href: rawHref, title, category, description, icon, action };
+        return { href: rawHref, title, category, description, icon };
       }).filter(Boolean);
 
       if (!cards.length) return;
+
       section.dataset.keepExploringStandardized = 'true';
-      section.className = 'section section-soft';
+      section.className = 'section portfolio-explore-section';
       section.removeAttribute('aria-labelledby');
       section.innerHTML = `
         <div class="container">
           <div class="section-heading refresh-section-intro">
-            <p class="eyebrow">Keep Exploring</p>
+            <p class="eyebrow">${escapeHtml(sectionLabel)}</p>
             <h2>${escapeHtml(headingText)}</h2>
             <p>${escapeHtml(introText)}</p>
           </div>
-          <div class="refresh-card-grid">
+          <div class="portfolio-explore-grid">
             ${cards.map((card) => `
-              <article class="refresh-link-card">
-                <div class="refresh-link-card-header">
-                  <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
-                  <p class="eyebrow">${escapeHtml(card.category)}</p>
+              <a class="portfolio-explore-card" href="${escapeHtml(card.href)}">
+                <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
+                <span>
+                  <span class="portfolio-explore-category">${escapeHtml(card.category)}</span>
                   <h3>${escapeHtml(card.title)}</h3>
-                </div>
-                <div class="refresh-link-card-body">
                   <p>${escapeHtml(card.description)}</p>
-                  <a class="project-family-link" href="${escapeHtml(card.href)}">${escapeHtml(card.action)} →</a>
-                </div>
-              </article>`).join('')}
+                </span>
+              </a>`).join('')}
           </div>
         </div>`;
     });
   };
 
-  const initCompactProjectNote = () => {
-    document.querySelectorAll('.project-template-note .feature-callout').forEach((note) => {
-      if (note.classList.contains('portfolio-citation-note')) return;
-      note.classList.add('portfolio-citation-note');
-      note.innerHTML = `
-        <svg class="portfolio-icon" aria-hidden="true"><use href="${iconSprite}#icon-feedback"></use></svg>
-        <p><strong>Public-safe case study.</strong> Sanitized, fictionalized, or generalized details protect proprietary information.</p>`;
+  const initPortfolioSafetyNotes = () => {
+    const candidates = [...document.querySelectorAll('p')].filter((node) => {
+      const text = (node.textContent || '').trim();
+      return /public-safe case study/i.test(text)
+        || /course identifiers, report names, learner data, account details, and internal file structures are intentionally omitted/i.test(text)
+        || /internal file structures are intentionally omitted/i.test(text);
+    });
+
+    candidates.forEach((paragraph) => {
+      if (paragraph.closest('.portfolio-safety-note')) return;
+      const original = (paragraph.textContent || '').trim();
+      const boundaryNote = /intentionally omitted/i.test(original);
+      paragraph.innerHTML = boundaryNote
+        ? '<strong>Portfolio boundary.</strong> Internal identifiers, learner data, file structures, report names, and proprietary implementation details are intentionally excluded.'
+        : '<strong>Portfolio-safe reconstruction.</strong> The work and responsibilities are real. Customer details, solution language, learner data, and internal identifiers are sanitized or fictionalized where needed.';
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'portfolio-safety-note';
+      wrapper.innerHTML = `<span class="portfolio-safety-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#icon-feedback"></use></svg></span>`;
+      paragraph.parentNode.insertBefore(wrapper, paragraph);
+      wrapper.appendChild(paragraph);
     });
   };
 
@@ -603,9 +738,13 @@
     });
   };
 
+  initPageFamily();
+  initHiringGuideNav();
+  initFooterLinks();
   initCanonicalBreadcrumbs();
+  initHeroCleanup();
   initExploreFooters();
-  initCompactProjectNote();
+  initPortfolioSafetyNotes();
   initCertificationCaseCopy();
   initProjectDetailExplorer();
   initHiringAssistant();
@@ -620,7 +759,7 @@
   document.documentElement.classList.add('motion-ready');
 
   const revealTargets = document.querySelectorAll(
-    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer'
+    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer, .portfolio-explore-card, .portfolio-safety-note, .snapshot-band'
   );
   revealTargets.forEach((element) => element.classList.add('reveal-on-scroll'));
 
