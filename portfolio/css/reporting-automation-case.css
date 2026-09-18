@@ -333,37 +333,6 @@
 .reporting-output-section .short-copy{color:#cad8d1}
 .reporting-output-section .eyebrow{color:#dff0e6}
 .reporting-output-section .section-kicker .icon-badge{background:#10242b;color:var(--mint-leaf)}
-.workbook-demo{
-  margin-top:24px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;
-  background:#f8faf8;
-  color:#26383f;
-  box-shadow:0 20px 44px rgba(0,0,0,.16);
-}
-.workbook-bar{
-  display:flex;align-items:center;gap:9px;min-height:48px;padding:0 14px;border-bottom:1px solid #dbe5df;background:#edf3ef;
-  color:#41504b;font:700 .64rem/1 var(--font-heading);
-}
-.workbook-bar span:last-child{margin-left:auto;color:#687770}
-.workbook-file-icon{width:15px;height:19px;border:1px solid #5f817d;border-radius:3px;background:#fff}
-.workbook-tabs{display:flex;gap:5px;padding:10px 12px 0;background:#f8faf8}
-.workbook-tab{
-  min-width:110px;padding:9px 12px;border:1px solid #d7e2dc;border-bottom:0;border-radius:9px 9px 0 0;background:#eef3ef;color:#40514b;font:800 .64rem/1 var(--font-heading);cursor:pointer;
-}
-.workbook-tab.active{background:#203f3f;color:#fff;border-color:#203f3f}
-.workbook-table-wrap{overflow-x:auto;padding:0 12px 12px}
-.workbook-table{width:100%;border-collapse:collapse;background:#fff;font-size:.74rem}
-.workbook-table th,.workbook-table td{padding:11px 12px;border:1px solid #dfe7e2;text-align:left;white-space:nowrap}
-.workbook-table th{background:#edf3ef;color:#3b4d47;font:800 .61rem/1.2 var(--font-heading);text-transform:uppercase;letter-spacing:.04em}
-.workbook-table td{color:#53615d}
-.status-pill{display:inline-flex;padding:5px 7px;border-radius:999px;font:800 .56rem/1 var(--font-heading)}
-.status-pill.complete{background:#e1f2e6;color:#285846}
-.status-pill.incomplete{background:#edf0eb;color:#59665f}
-.workbook-footer{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-top:1px solid #dbe5df;background:#edf3ef;color:#53615d;font-size:.65rem}
-.workbook-footer strong{color:#2d4a43}
-
 /* Light outcome */
 .reporting-outcome-section{background:#fafbf9}
 .reporting-outcome-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
@@ -401,7 +370,6 @@
   .stage-file{top:20px}
   .stage-track{left:20px;right:20px;top:82px}
   .stage-terminal{left:18px;right:18px;top:100px;width:auto}
-  .workbook-footer{display:grid}
 }
 @media(prefers-reduced-motion:reduce){
   .reporting-pipeline-line i,.report-input,.report-output,.stage-track i{animation:none!important}
@@ -411,14 +379,16 @@
 /* Reporting and analytics asset viewer */
 .reporting-evidence-viewer{
   display:grid;
-  grid-template-columns:minmax(190px,.38fr) minmax(0,1.62fr);
-  gap:14px;
-  margin-top:24px;
+  grid-template-columns:170px minmax(0,640px);
+  justify-content:center;
+  gap:12px;
+  width:min(100%,860px);
+  margin:24px auto 0;
 }
 .reporting-evidence-tabs{display:grid;gap:8px;align-self:start}
 .reporting-evidence-tab{
   width:100%;
-  padding:12px 13px;
+  padding:10px 11px;
   border:1px solid rgba(255,255,255,.1);
   border-radius:13px;
   background:#102229;
@@ -459,13 +429,23 @@
   text-transform:uppercase;
 }
 .reporting-evidence-frame figcaption strong{color:#42635d;font-size:.55rem}
-.reporting-evidence-screen{background:#fff}
-.reporting-evidence-screen img{display:block;width:100%;height:auto}
+.reporting-evidence-screen{
+  display:grid;
+  place-items:center;
+  min-height:0;
+  background:#fff;
+}
+.reporting-evidence-screen img{
+  display:block;
+  width:100%;
+  max-height:410px;
+  object-fit:contain;
+}
 .reporting-evidence-frame>p{margin:0;padding:12px 14px;color:#53615d;font-size:.72rem;line-height:1.45}
-.workbook-demo{margin-top:14px}
 @media(max-width:860px){
-  .reporting-evidence-viewer{grid-template-columns:1fr}
+  .reporting-evidence-viewer{grid-template-columns:1fr;width:min(100%,680px)}
   .reporting-evidence-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reporting-evidence-screen img{max-height:380px}
 }
 @media(max-width:560px){
   .reporting-evidence-tabs{grid-template-columns:1fr}
