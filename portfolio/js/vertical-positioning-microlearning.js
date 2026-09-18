@@ -36,6 +36,7 @@
     const item = data.industries?.[industry];
     const stageItem = item?.stages?.[stage];
     if (!item || !stageItem) return;
+    const sample = stage === 'practice' ? data.samples?.practice : data.samples?.[industry];
     const set = (id, value) => {
       const el = document.getElementById(id);
       if (el) el.textContent = value;
@@ -47,6 +48,13 @@
     set('verticalStageText', stageItem.text);
     set('verticalStageProof', stageItem.proof);
     set('verticalStageNote', stageItem.note);
+    const sampleImage = document.getElementById('verticalSampleImage');
+    const sampleCaption = document.getElementById('verticalSampleCaption');
+    if (sample && sampleImage) {
+      sampleImage.src = sample.src;
+      sampleImage.alt = sample.alt;
+    }
+    if (sample && sampleCaption) sampleCaption.textContent = sample.caption;
   };
 
   setupTabs('[data-vertical-industry]', 'verticalIndustry', (key) => {
