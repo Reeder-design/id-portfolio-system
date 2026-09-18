@@ -414,6 +414,14 @@
       section.dataset.keepExploringStandardized = 'true';
       section.className = 'section section-soft';
       section.classList.add('portfolio-explore-section');
+
+      const relativePath = currentRelativePath();
+      const aiDemoPaths = new Set([
+        'projects/ai-training-and-evaluation/ai-training-and-evaluation-demo',
+        'projects/ai-training-and-evaluation/rubric-demo',
+        'projects/ai-training-and-evaluation/workflow-demo'
+      ]);
+      if (aiDemoPaths.has(relativePath)) section.classList.add('ai-demo-explore');
       section.removeAttribute('aria-labelledby');
       section.innerHTML = `
         <div class="container">
@@ -445,6 +453,7 @@
     const candidates = [...document.querySelectorAll('p')].filter((node) => {
       const text = (node.textContent || '').trim();
       return /public-safe case study/i.test(text)
+        || /^scope note:/i.test(text)
         || /course identifiers, report names, learner data, account details, and internal file structures are intentionally omitted/i.test(text)
         || /internal file structures are intentionally omitted/i.test(text);
     });
@@ -452,14 +461,23 @@
     candidates.forEach((paragraph) => {
       if (paragraph.closest('.portfolio-safety-note')) return;
       const original = (paragraph.textContent || '').trim();
+      const scopeNote = /^scope note:/i.test(original);
       const boundaryNote = /intentionally omitted/i.test(original);
-      paragraph.innerHTML = boundaryNote
-        ? '<strong>Portfolio boundary.</strong> Internal identifiers, learner data, file structures, report names, and proprietary implementation details are intentionally excluded.'
-        : '<strong>Portfolio-safe reconstruction.</strong> The work and responsibilities are real. Customer details, solution language, learner data, and internal identifiers are sanitized or fictionalized where needed.';
+
+      if (scopeNote) {
+        const noteBody = original.replace(/^scope note:\s*/i, '').trim();
+        paragraph.innerHTML = `<strong>Scope note.</strong> ${escapeHtml(noteBody)}`;
+      } else {
+        paragraph.innerHTML = boundaryNote
+          ? '<strong>Portfolio boundary.</strong> Internal identifiers, learner data, file structures, report names, and proprietary implementation details are intentionally excluded.'
+          : '<strong>Portfolio-safe reconstruction.</strong> The work and responsibilities are real. Customer details, solution language, learner data, and internal identifiers are sanitized or fictionalized where needed.';
+      }
 
       const wrapper = document.createElement('div');
-      wrapper.className = 'portfolio-safety-note';
-      wrapper.innerHTML = `<span class="portfolio-safety-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#icon-feedback"></use></svg></span>`;
+      wrapper.className = scopeNote ? 'portfolio-safety-note is-scope-note' : 'portfolio-safety-note';
+      wrapper.innerHTML = scopeNote
+        ? `<img class="portfolio-safety-pixel" src="${new URL('assets/icons/pixel/portfolio-general/case-studies.webp', portfolioRoot).href}" alt="" aria-hidden="true">`
+        : `<span class="portfolio-safety-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#icon-feedback"></use></svg></span>`;
       paragraph.parentNode.insertBefore(wrapper, paragraph);
       wrapper.appendChild(paragraph);
     });
