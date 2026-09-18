@@ -204,6 +204,19 @@ Ownership is:
 
 Runtime compatibility behavior is not permission to create another parallel markup pattern.
 
+## Supported Categories
+
+Category IDs, labels, subcategories, and public paths come from `portfolio-data/taxonomy.json`.
+
+The current top-level portfolio areas are:
+
+- Instructional Design
+- AI Training and Evaluation
+- LMS Administration & System Operations
+- System Integrations and Workflows
+
+Renderer behavior should read taxonomy data rather than creating a second hard-coded category system. The labels above are documented here for architecture clarity, not as an alternate source of truth.
+
 ## Rendering a Project
 
 Preview generated HTML:
