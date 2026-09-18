@@ -183,8 +183,8 @@ def main() -> int:
     for marker in [
         '<p class="eyebrow">Keep Exploring</p>',
         'class="section-heading refresh-section-intro"',
-        'class="refresh-card-grid"',
-        'class="refresh-link-card"',
+        'class="refresh-card-grid portfolio-explore-grid"',
+        'class="refresh-link-card portfolio-explore-card"',
         'class="refresh-link-card-header"',
         'class="refresh-link-card-body"',
         'class="project-family-link"',
