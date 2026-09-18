@@ -328,12 +328,14 @@
     if (!exact && currentLabel) items.push({ label: currentLabel, href: null });
 
     let breadcrumbs = document.querySelector('.breadcrumbs');
+    const heroCopy = h1?.closest('.refresh-hero-copy, .hero-copy, .project-hero-content, .parent-page-hero-content, .projects-intro') || h1?.parentElement;
     if (!breadcrumbs) {
-      const heroContainer = document.querySelector('.page-hero .container, .refresh-hero .container, main .container');
-      if (!heroContainer) return;
+      if (!heroCopy || !h1) return;
       breadcrumbs = document.createElement('nav');
       breadcrumbs.className = 'breadcrumbs';
-      heroContainer.prepend(breadcrumbs);
+      heroCopy.insertBefore(breadcrumbs, h1);
+    } else if (heroCopy && h1 && breadcrumbs.parentElement !== heroCopy) {
+      heroCopy.insertBefore(breadcrumbs, h1);
     }
 
     breadcrumbs.setAttribute('aria-label', 'Breadcrumb');
