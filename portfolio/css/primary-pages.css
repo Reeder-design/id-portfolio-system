@@ -319,6 +319,8 @@ body.about-primary .about-tool-tags span{
   font-weight:750;
 }
 body.about-primary .about-connect-section{padding-block:clamp(58px,7vw,82px)}
+body.about-primary .about-connect-grid,
+body.projects-primary .projects-connect-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 
 /* PROJECTS */
 body.projects-primary .projects-landing-hero{padding-block:clamp(44px,5vw,62px)!important}
@@ -487,7 +489,9 @@ body.contact-primary .contact-quick-link span{display:block;margin-top:3px;color
 
 /* Responsive */
 @media(max-width:980px){
-  body.primary-page .primary-link-grid{grid-template-columns:1fr}
+  body.primary-page .primary-link-grid,
+  body.about-primary .about-connect-grid,
+  body.projects-primary .projects-connect-grid{grid-template-columns:1fr}
   body.home-primary .home-hiring-card,
   body.about-primary .about-experience-panel,
   body.about-primary .adapt-content-grid,
