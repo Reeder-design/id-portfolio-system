@@ -186,6 +186,38 @@
     });
   };
 
+  const initSectionRhythm = () => {
+    const family = document.body.dataset.pageFamily;
+    if (!family || family === 'demo' || family === 'hiring') return;
+
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    const hero = main.querySelector(':scope > section:first-of-type');
+    const sections = [...main.children].filter((element) => {
+      if (element.tagName !== 'SECTION' || element === hero || element.hidden) return false;
+      if (element.classList.contains('snapshot-band')) return false;
+      return true;
+    });
+
+    if (!sections.length) return;
+
+    // Primary-page heroes are light, so their first content section turns dark.
+    // Discipline/category/case heroes are dark, so their first content section turns light.
+    let dark = family === 'primary';
+
+    sections.forEach((section) => {
+      section.classList.remove('fs-surface-light', 'fs-surface-dark');
+      section.classList.add(dark ? 'fs-surface-dark' : 'fs-surface-light');
+      dark = !dark;
+    });
+
+    // Always land on a light section before the light footer.
+    const lastSection = sections[sections.length - 1];
+    lastSection.classList.remove('fs-surface-dark');
+    lastSection.classList.add('fs-surface-light');
+  };
+
   const BREADCRUMB_ROUTES = [
     ['about', 'About Me'],
     ['contact', 'Contact'],
@@ -749,6 +781,7 @@
   initHeroCleanup();
   initExploreFooters();
   initPortfolioSafetyNotes();
+  initSectionRhythm();
   initCertificationCaseCopy();
   initProjectDetailExplorer();
   initHiringAssistant();
