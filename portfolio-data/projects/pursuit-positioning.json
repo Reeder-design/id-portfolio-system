@@ -43,10 +43,18 @@
     "CSS",
     "JavaScript"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/interactive-learning/pursuit-sales-scenario.webp",
+      "alt": "Public-safe sales scenario asking the learner to choose the best next action.",
+      "caption": "General sales-practice context supporting the fictional Pursuit Determination lab.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Public project uses fictional companies, products, customers, and opportunity data.",
   "dates": {
     "created": null,
-    "updated": "2026-09-14"
+    "updated": "2026-09-18"
   }
 }
