@@ -26,6 +26,11 @@
       }
     };
     window.verticalCaseData={
+      samples:{
+        seaport:{src:'../../../../assets/project-images/vertical-positioning/smarter-seaports.webp',alt:'Sanitized learner screen introducing smarter seaport connectivity, equipment, operations, and safety priorities.',caption:'Seaport learner sample'},
+        airport:{src:'../../../../assets/project-images/vertical-positioning/airports-connected.webp',alt:'Sanitized learner screen showing an airport connectivity use case with connected operations, traveler experience, and critical systems.',caption:'Airport learner sample'},
+        practice:{src:'../../../../assets/project-images/vertical-positioning/vertical-use-case-knowledge-check.webp',alt:'Sanitized learner knowledge check comparing connectivity use cases across airports and seaports.',caption:'Use-case practice sample'}
+      },
       industries:{
         seaport:{
           label:'Seaport component',
@@ -138,9 +143,17 @@
       </div>
 
       <div class="vertical-lab-shell">
-        <div class="vertical-industry-tabs" role="tablist" aria-label="Choose industry component">
+        <div class="vertical-sample-column">
+          <figure class="vertical-sample-device">
+            <figcaption><span id="verticalSampleCaption">Seaport learner sample</span><strong>Sanitized learner evidence</strong></figcaption>
+            <div class="vertical-sample-screen">
+              <img id="verticalSampleImage" src="../../../../assets/project-images/vertical-positioning/smarter-seaports.webp" alt="Sanitized learner screen introducing smarter seaport connectivity, equipment, operations, and safety priorities.">
+            </div>
+          </figure>
+          <div class="vertical-industry-tabs" role="tablist" aria-label="Choose industry component">
           <button class="vertical-industry-tab active" type="button" role="tab" aria-selected="true" data-vertical-industry="seaport"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ship"></use></svg><span><strong>Seaport</strong><small>Distributed operations + customer-fit context</small></span></button>
           <button class="vertical-industry-tab" type="button" role="tab" aria-selected="false" data-vertical-industry="airport"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-plane"></use></svg><span><strong>Airport</strong><small>Different priorities + seller judgment</small></span></button>
+          </div>
         </div>
 
         <div class="vertical-learning-panel" role="tabpanel" aria-live="polite">
