@@ -84,6 +84,24 @@ portfolio-data/projects/sales-discovery-lab.json
 portfolio/projects/instructional-design/interactive-learning/sales-discovery-lab/index.html
 ```
 
+## Generated Visual Contract
+
+A newly generated standard project should already use the approved public system without manual restyling.
+
+The generated page includes:
+
+- the current case-study hero family
+- breadcrumb directly above the H1
+- dark snapshot bridge with light metadata items
+- flush-top dark sticky project navigation
+- explicit `final-stretch-system.css` loading
+- current shared Related Work and Keep Exploring components
+- portfolio-safe callout treatment for sanitized work
+- Hiring Guide in the main navigation
+- GitHub, LinkedIn, Résumé, and Expertise in the shared footer
+
+`portfolio-motion.js` may still normalize older hand-built pages for compatibility. New generated pages should not depend on that runtime repair for their basic architecture.
+
 ## Safety Behavior
 
 The generator refuses to continue if:
