@@ -467,9 +467,9 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
 .network-drop{
   position:absolute;
   top:0;
-  right:16.666%;
+  right:16.666666%;
   width:3px;
-  height:42px;
+  height:40px;
   background:rgba(133,174,156,.68);
 }
 .network-drop::after{
@@ -486,9 +486,12 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   animation:packageDrop 6s infinite;
 }
 .network-spine{
-  position:relative;
+  position:absolute;
+  top:37px;
+  left:16.666666%;
+  right:16.666666%;
   height:3px;
-  margin:0 16.666%;
+  margin:0;
   border-radius:999px;
   background:rgba(133,174,156,.68);
 }
@@ -509,6 +512,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
 .route-customer{animation:routeCustomer 6s infinite}
 
 .group-grid{
+  position:relative;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
@@ -519,7 +523,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   display:grid;
   justify-items:center;
   gap:8px;
-  padding-top:25px;
+  padding-top:28px;
   text-align:center;
 }
 .group-node::before{
@@ -528,7 +532,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   top:0;
   left:50%;
   width:3px;
-  height:20px;
+  height:28px;
   transform:translateX(-50%);
   background:rgba(133,174,156,.68);
 }
@@ -661,7 +665,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   }
   .lms-system-card{min-height:0}
   .lms-transfer-zone{width:70%;margin-inline:auto}
-  .network-drop{right:16.666%}
+  .network-drop{right:16.666666%}
 }
 @media(max-width:440px){
   .group-grid{gap:6px}
