@@ -69,10 +69,24 @@
     },
     {
       "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/analytics-course-completion.webp",
+      "publish": true,
+      "alt": "Public-safe fictional course completion analytics dashboard.",
+      "caption": "Course completion analytics sample."
+    },
+    {
+      "type": "image",
       "path": "portfolio/assets/project-images/reporting-automation/analytics-certification-status.webp",
       "publish": true,
       "alt": "Public-safe fictional certification analytics dashboard.",
       "caption": "Certification analytics sample."
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/reporting-automation/analytics-detailed-export.webp",
+      "publish": true,
+      "alt": "Public-safe fictional detailed learner data export.",
+      "caption": "Detailed reporting export sample."
     }
   ],
   "source_material_notes": "Generalized from a recurring certification-reporting workflow. Course identifiers, report names, account data, learner data, and internal file structures are intentionally omitted.",
