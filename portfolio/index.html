@@ -55,9 +55,29 @@
         @media(max-width:900px){ .home-hiring-card{grid-template-columns:1fr}.home-hiring-visual{min-height:340px}.home-hiring-copy{max-width:none} }
         @media(max-width:560px){ .home-hiring-card{padding:24px 18px;border-radius:24px}.home-hiring-visual{min-height:300px}.home-hiring-orbit{width:260px;height:260px}.home-chat-demo{width:100%;padding:14px;transform:none}.home-hiring-signal{display:none} }
         @media(prefers-reduced-motion:reduce){ .home-hiring-orbit,.home-chat-demo,.home-demo-question,.home-demo-answer,.home-demo-evidence,.home-hiring-signal{animation:none!important} }
+    
+        /* Hero portfolio screen stack: real work used as composition, not content cards. */
+        .home-work-stack{position:relative;min-height:470px;isolation:isolate;perspective:1200px}
+        .home-work-orbit{position:absolute;inset:54px 32px 44px 44px;border:1px dashed rgba(80,132,132,.18);border-radius:50%;transform:rotate(-9deg);pointer-events:none}
+        .home-work-screen{position:absolute;display:block;overflow:hidden;border:1px solid rgba(80,132,132,.23);border-radius:20px;background:#fff;box-shadow:0 24px 58px rgba(38,63,62,.18);transition:transform .28s ease,box-shadow .28s ease,filter .28s ease;outline:none}
+        .home-work-screen img{display:block;width:100%;height:100%;object-fit:cover}
+        .home-work-label{position:absolute;z-index:3;left:12px;top:12px;padding:7px 9px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(18,37,43,.86);color:#fff;font:800 .58rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase;backdrop-filter:blur(7px)}
+        .home-work-screen::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);pointer-events:none}
+        .home-work-screen--id{z-index:5;left:14%;top:88px;width:72%;height:300px;transform:rotate(-1.5deg)}
+        .home-work-screen--ai{z-index:2;right:1%;top:18px;width:47%;height:185px;transform:rotate(7deg)}
+        .home-work-screen--lms{z-index:3;left:0;top:20px;width:46%;height:178px;transform:rotate(-7deg)}
+        .home-work-screen--workflow{z-index:4;right:2%;bottom:8px;width:48%;height:175px;transform:rotate(5deg)}
+        .home-work-screen:hover,.home-work-screen:focus-visible{z-index:9;transform:translateY(-12px) rotate(0) scale(1.025);box-shadow:0 30px 70px rgba(38,63,62,.24);filter:saturate(1.05)}
+        .home-work-screen:focus-visible{box-shadow:0 0 0 4px rgba(121,201,158,.34),0 30px 70px rgba(38,63,62,.24)}
+        .home-work-caption{position:absolute;z-index:10;left:50%;bottom:28px;transform:translateX(-50%);display:grid;justify-items:center;gap:2px;width:max-content;padding:9px 13px;border:1px solid rgba(80,132,132,.16);border-radius:13px;background:rgba(248,250,248,.9);box-shadow:0 10px 25px rgba(52,74,66,.08);backdrop-filter:blur(8px)}
+        .home-work-caption strong{color:var(--charcoal);font:800 .63rem/1.2 var(--font-heading)}
+        .home-work-caption span{color:#68736e;font-size:.58rem}
+        @media(max-width:980px){.home-work-stack{min-height:430px;max-width:650px;width:100%;margin:0 auto}.home-work-screen--id{left:13%;width:74%;height:280px}}
+        @media(max-width:620px){.home-work-stack{min-height:360px}.home-work-orbit{inset:42px 14px 35px}.home-work-screen--id{left:8%;top:82px;width:84%;height:230px}.home-work-screen--ai,.home-work-screen--lms{width:47%;height:135px}.home-work-screen--workflow{width:48%;height:128px}.home-work-label{font-size:.5rem;padding:6px 8px}.home-work-caption{bottom:8px}}
+        @media(prefers-reduced-motion:reduce){.home-work-screen{transition:none}.home-work-screen:hover,.home-work-screen:focus-visible{transform:none}}
+
     </style>
     <script defer src="./js/portfolio-motion.js"></script>
-  <link rel="stylesheet" href="./css/sitewide-asset-previews.css">
 </head>
 <body>
     <header class="site-header">
@@ -89,37 +109,38 @@
                     </div>
                 </div>
 
-                <div class="home-constellation" data-parallax-soft aria-label="Visual map of connected learning design capabilities">
-                    <div class="constellation-core" aria-hidden="true">
-                        <svg class="portfolio-icon icon-xl"><use href="./assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg>
+                <div class="home-work-stack" aria-label="Interactive preview of portfolio work">
+                    <span class="home-work-orbit" aria-hidden="true"></span>
+
+                    <a class="home-work-screen home-work-screen--ai" href="./projects/ai-training-and-evaluation/index.html">
+                        <span class="home-work-label">AI Evaluation</span>
+                        <img src="./assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp" alt="Public-safe AI response evaluation interface">
+                    </a>
+
+                    <a class="home-work-screen home-work-screen--lms" href="./projects/lms-administration/index.html">
+                        <span class="home-work-label">LMS Operations</span>
+                        <img src="./assets/project-images/lms-migration/learner-home.webp" alt="Public-safe LMS learner home interface">
+                    </a>
+
+                    <a class="home-work-screen home-work-screen--workflow" href="./projects/workflows/index.html">
+                        <span class="home-work-label">Systems + Workflows</span>
+                        <img src="./assets/project-images/salesforce-lms-integration/salesforce-lms-connected-workflow.webp" alt="Public-safe connected Salesforce and LMS workflow">
+                    </a>
+
+                    <a class="home-work-screen home-work-screen--id" href="./projects/instructional-design/index.html">
+                        <span class="home-work-label">Instructional Design</span>
+                        <img src="./assets/project-images/product-launch/product-launch-introduction.webp" alt="Public-safe Rise-style product launch microlearning screen">
+                    </a>
+
+                    <div class="home-work-caption" aria-hidden="true">
+                        <strong>Real work patterns</strong>
+                        <span>Learning · AI · LMS · Systems</span>
                     </div>
-                    <span class="constellation-node node-elearning" tabindex="0" data-label="eLearning &amp; content" aria-label="eLearning and content">
-                        <svg class="portfolio-icon icon-med" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
-                    </span>
-                    <span class="constellation-node node-ai" tabindex="0" data-label="AI evaluation" aria-label="AI training and evaluation">
-                        <svg class="portfolio-icon icon-med" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg>
-                    </span>
-                    <span class="constellation-node node-lms" tabindex="0" data-label="LMS &amp; systems" aria-label="LMS administration and systems">
-                        <svg class="portfolio-icon icon-med" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#icon-lms"></use></svg>
-                    </span>
-                    <span class="constellation-node node-workflow" tabindex="0" data-label="Integrations &amp; automation" aria-label="System integrations and workflow automation">
-                        <svg class="portfolio-icon icon-med" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>
-                    </span>
                 </div>
             </div>
         </section>
 
-<section class="asset-preview-band" aria-label="Portfolio visual preview">
-  <div class="container">
-    <div class="asset-preview-heading"><div><p class="eyebrow">A Look at the Work</p><h2>Learning, systems, and evaluation work in one portfolio.</h2></div><p>Representative public-safe visuals from the kinds of learning experiences, evaluation interfaces, LMS work, and operational systems I build.</p></div>
-    <div class="asset-preview-grid asset-preview-grid-4">
-      <figure class="asset-preview-card"><img src="./assets/project-images/sitewide/cert-rise-introduction.webp" alt="Public-safe Rise-style sales enablement course introduction." loading="lazy"><figcaption><strong>Instructional Design</strong><span>Rise and Storyline learning for sales enablement.</span></figcaption></figure>
-      <figure class="asset-preview-card"><img src="./assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp" alt="Public-safe AI response evaluation interface." loading="lazy"><figcaption><strong>AI Evaluation</strong><span>Structured review, critique, and quality decisions.</span></figcaption></figure>
-      <figure class="asset-preview-card"><img src="./assets/project-images/lms-migration/learner-home.webp" alt="Public-safe LMS learner home reconstruction." loading="lazy"><figcaption><strong>LMS Operations</strong><span>Learner experience, migration, testing, and support.</span></figcaption></figure>
-      <figure class="asset-preview-card"><img src="./assets/project-images/salesforce-lms-integration/salesforce-lms-connected-workflow.webp" alt="Public-safe Salesforce and LMS connected workflow." loading="lazy"><figcaption><strong>Systems + Workflows</strong><span>Automation, integrations, reporting, and QA.</span></figcaption></figure>
-    </div>
-  </div>
-</section>
+
 
         <section class="home-hiring-section" aria-labelledby="homeHiringTitle">
             <div class="container">
