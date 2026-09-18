@@ -275,7 +275,7 @@ nav[aria-label="Case sections"],
 nav[aria-label="Case study sections"],
 nav[aria-label="Page sections"]{
   position:sticky;
-  top:72px;
+  top:0;
   z-index:55;
   margin:0;
   border-top:1px solid rgba(255,255,255,.08);
@@ -529,6 +529,23 @@ nav[aria-label="Project sections"] a.active{
   color:#a9e5c1;
 }
 .portfolio-safety-note .portfolio-icon{width:19px;height:19px}
+.portfolio-safety-note.is-scope-note{
+  grid-template-columns:58px minmax(0,1fr);
+  align-items:center;
+  border-color:rgba(242,211,106,.28)!important;
+  background:
+    radial-gradient(circle at 92% 18%,rgba(242,211,106,.12),transparent 26%),
+    linear-gradient(145deg,#27484c,#3c665f)!important;
+}
+.portfolio-safety-note.is-scope-note .portfolio-safety-icon{display:none}
+.portfolio-safety-note .portfolio-safety-pixel{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(20,48,41,.14));
+}
+.portfolio-safety-note.is-scope-note strong{color:#fff7cf!important}
+
 .portfolio-safety-note p{margin:0!important;color:#dce8e2!important;font-size:.82rem;line-height:1.5}
 .portfolio-safety-note strong{color:#fff!important}
 
@@ -1041,6 +1058,41 @@ nav[aria-label="Project sections"] a.active{
   box-shadow:none!important;
   padding:0!important;
 }
+
+/* ---------- AI demo ending treatment ---------- */
+.ai-demo-explore{
+  background:
+    radial-gradient(circle at 8% 18%,rgba(151,219,79,.11),transparent 18rem),
+    radial-gradient(circle at 88% 80%,rgba(121,201,158,.1),transparent 22rem),
+    linear-gradient(145deg,#fbfaf4,#edf6f0)!important;
+  color:#33483f!important;
+}
+.ai-demo-explore .eyebrow{color:#3f776b!important}
+.ai-demo-explore h2{color:#263a34!important}
+.ai-demo-explore .refresh-section-intro>p:not(.eyebrow){color:#5f7069!important}
+.ai-demo-explore .portfolio-explore-card{
+  border:2px solid rgba(80,132,132,.22)!important;
+  background:rgba(255,255,255,.9)!important;
+  color:#30443d!important;
+  box-shadow:0 16px 36px rgba(48,74,66,.09)!important;
+}
+.ai-demo-explore .portfolio-explore-card:hover,
+.ai-demo-explore .portfolio-explore-card:focus-visible{
+  border-color:rgba(121,201,158,.66)!important;
+  background:#fff!important;
+  box-shadow:0 22px 44px rgba(48,74,66,.14)!important;
+}
+.ai-demo-explore .portfolio-explore-card h3{color:#263a34!important}
+.ai-demo-explore .portfolio-explore-card p{color:#61716b!important}
+.ai-demo-explore .portfolio-explore-category{color:#3f776b!important}
+.ai-demo-explore .portfolio-explore-card .project-family-link{
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#315f57!important;
+  box-shadow:none!important;
+}
+.ai-demo-explore .portfolio-explore-card::after{color:#3f776b!important}
 
 [role="tabpanel"]{min-width:0}
 .refresh-detail,
