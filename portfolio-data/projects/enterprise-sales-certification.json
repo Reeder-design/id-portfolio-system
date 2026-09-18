@@ -154,7 +154,36 @@
     "Docebo LMS",
     "PowerPoint"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/cert-rise-introduction.webp",
+      "alt": "Public-safe Rise-style sales enablement course introduction.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/cert-storyline-product-explorer.webp",
+      "alt": "Public-safe Storyline-style interactive solution explorer.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/cert-storyline-scenario.webp",
+      "alt": "Public-safe Storyline-style customer recommendation scenario.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/cert-rise-knowledge-check.webp",
+      "alt": "Public-safe Rise-style sales knowledge check.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "The employer, project type, responsibilities, and instructional-design approach are real. Customer details, internal course names, product names, proprietary source material, Ericsson positioning language, learner records, screenshots, links, reviewer material, and internal metrics are intentionally omitted. The public sample learning scenario uses fictional customer and solution language created for the portfolio.",
   "dates": {
     "created": "2026-09-15",
