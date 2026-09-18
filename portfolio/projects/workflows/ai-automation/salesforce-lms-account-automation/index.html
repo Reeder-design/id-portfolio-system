@@ -33,14 +33,39 @@
           <div class="button-row"><a class="btn btn-primary" href="#workflow">Explore the Workflow</a></div>
         </div>
 
-        <aside class="sflms-flow-visual" aria-label="Animated flow from learner spreadsheet through Salesforce lookup and data mapping into LMS placement">
-          <div class="sflms-node source-node" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg><span>Spreadsheet</span><small>Learner email</small></div>
-          <div class="sflms-line line-one" aria-hidden="true"><i></i></div>
-          <div class="sflms-node salesforce-node" aria-hidden="true"><span class="cloud-mark">SF</span><span>Salesforce</span><small>Account lookup</small></div>
-          <div class="sflms-line line-two" aria-hidden="true"><i></i></div>
-          <div class="sflms-map-engine" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg><strong>Map</strong><small>name · region · ID</small></div>
-          <div class="sflms-line line-three" aria-hidden="true"><i></i></div>
-          <div class="sflms-node lms-node" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg><span>Absorb LMS</span><small>Department + user</small></div>
+                <aside class="sf-lms-flow-hero" aria-label="Workflow showing learner input moving from Salesforce lookup to Absorb placement">
+          <div class="sf-lms-flow-stage" aria-hidden="true">
+            <article class="sf-flow-node">
+              <span class="sf-flow-icon"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span>
+              <strong>Input</strong>
+              <small>Learner list</small>
+            </article>
+
+            <div class="sf-flow-connector"><span class="sf-flow-dot dot-1"></span></div>
+
+            <article class="sf-flow-node">
+              <span class="sf-flow-icon"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
+              <strong>Lookup</strong>
+              <small>Salesforce account</small>
+            </article>
+
+            <div class="sf-flow-connector"><span class="sf-flow-dot dot-2"></span></div>
+
+            <article class="sf-flow-node">
+              <span class="sf-flow-icon"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span>
+              <strong>Map</strong>
+              <small>Department rules</small>
+            </article>
+
+            <div class="sf-flow-connector"><span class="sf-flow-dot dot-3"></span></div>
+
+            <article class="sf-flow-node node-final">
+              <span class="sf-flow-icon"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span>
+              <strong>Place</strong>
+              <small>Absorb learner placement</small>
+            </article>
+          </div>
+          <p class="sf-lms-flow-caption">From account data to learner placement.</p>
         </aside>
       </div>
     </div>
