@@ -25,6 +25,13 @@ CATEGORY_ICONS = {
     "lms-administration": "icon-lms",
 }
 
+CATEGORY_PIXEL_ASSETS = {
+    "instructional-design": "portfolio/assets/icons/pixel/portfolio-general/learning.webp",
+    "ai-training-and-evaluation": "portfolio/assets/icons/pixel/ai-training-evaluation/training-hero.webp",
+    "workflows": "portfolio/assets/icons/pixel/hiring-guide/workflow-tree.webp",
+    "lms-administration": "portfolio/assets/icons/pixel/lms/goal-mountain.webp",
+}
+
 
 def load_json(path: Path) -> dict:
     try:
@@ -260,18 +267,29 @@ def render_related_work(project: dict, output_path: Path, taxonomy: dict, number
             raise ValueError(
                 f"Project '{project.get('id')}' references missing related project '{project_id}'."
             )
+
         target = load_json(target_path)
         target_category, _ = find_taxonomy_item(taxonomy, target)
         href = relative_href(output_path, target["page_path"])
         relationship = reference.get("relationship", "").strip()
+        pixel_asset = CATEGORY_PIXEL_ASSETS.get(
+            target.get("category"),
+            "portfolio/assets/icons/pixel/portfolio-general/portfolio.webp",
+        )
+        pixel_href = relative_href(output_path, pixel_asset)
 
         cards.append(
-            '<a class="related-work-card" href="' + esc(href) + '">'
-            f'<span class="related-work-category">{esc(target_category["label"])}</span>'
+            '<a class="refresh-link-card portfolio-explore-card" href="' + esc(href) + '">'
+            '<div class="refresh-link-card-header">'
+            f'<img class="portfolio-explore-pixel" src="{esc(pixel_href)}" alt="" aria-hidden="true" loading="lazy">'
+            f'<span class="portfolio-explore-category">{esc(target_category["label"])}</span>'
             f'<h3>{esc(target["title"])}</h3>'
-            f'<p class="related-work-relationship">{esc(relationship)}</p>'
-            f'<p>{esc(target["summary"])}</p>'
-            '<span class="related-work-link">Explore project →</span>'
+            '</div>'
+            '<div class="refresh-link-card-body">'
+            + (f'<p><strong>{esc(relationship)}</strong></p>' if relationship else "")
+            + f'<p>{esc(target["summary"])}</p>'
+            '<span class="project-family-link">Explore related work →</span>'
+            '</div>'
             '</a>'
         )
 
@@ -283,10 +301,11 @@ def render_related_work(project: dict, output_path: Path, taxonomy: dict, number
         f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
         '<div><p class="eyebrow">Related Work</p><h2>See how this work connects across the portfolio.</h2></div></div>'
         '<p>These projects show adjacent parts of the same learning ecosystem without duplicating the full story here.</p>'
-        f'<div class="related-work-grid">{"".join(cards)}</div>'
+        f'<div class="portfolio-explore-grid">{"".join(cards)}</div>'
         '</section>'
     )
     return section, '<a href="#related-work">Related Work</a>'
+
 
 
 def render_breadcrumbs(
@@ -330,7 +349,7 @@ def render_primary_action(project: dict, output_path: Path, *, cta: bool = False
     )
 
 
-def render_confidentiality_note(project: dict) -> str:
+def render_confidentiality_note(project: dict, output_path: Path) -> str:
     confidentiality = project.get("confidentiality")
     if confidentiality == "needs-sanitization":
         raise ValueError(
@@ -339,14 +358,21 @@ def render_confidentiality_note(project: dict) -> str:
     if confidentiality != "sanitized":
         return ""
 
-    return (
-        '<section class="project-template-note"><div class="feature-callout">'
-        '<p class="eyebrow">Portfolio Note</p>'
-        '<h2>Public-safe project example.</h2>'
-        '<p>This example uses sanitized, fictionalized, or generalized content to demonstrate the '
-        'design approach without exposing proprietary information.</p>'
-        '</div></section>'
+    pixel_href = relative_href(
+        output_path,
+        "portfolio/assets/icons/pixel/portfolio-general/case-studies.webp",
     )
+    return (
+        '<section class="project-template-note">'
+        '<div class="portfolio-safety-note is-scope-note">'
+        f'<img class="portfolio-safety-pixel" src="{esc(pixel_href)}" alt="" aria-hidden="true">'
+        '<p><strong>Portfolio-safe reconstruction.</strong> '
+        'The work and responsibilities are real. Customer details, solution language, learner data, '
+        'internal identifiers, and proprietary implementation details are sanitized or omitted where needed.</p>'
+        '</div>'
+        '</section>'
+    )
+
 
 
 def render_project_text(project_path: Path, output_path: Path | None = None) -> tuple[str, Path]:
@@ -399,12 +425,18 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "REFRESH_CSS_PATH": esc(relative_href(final_output, "portfolio/css/portfolio-refresh.css")),
         "THEME_CSS_PATH": esc(relative_href(final_output, "portfolio/css/phase1-theme.css")),
         "FRAME_CSS_PATH": esc(relative_href(final_output, "portfolio/css/phase1-frame.css")),
+        "FINAL_STRETCH_CSS_PATH": esc(relative_href(final_output, "portfolio/css/final-stretch-system.css")),
         "MOTION_JS_PATH": esc(relative_href(final_output, "portfolio/js/portfolio-motion.js")),
         "HOME_PATH": esc(relative_href(final_output, "portfolio/index.html")),
         "ABOUT_PATH": esc(relative_href(final_output, "portfolio/about/index.html")),
         "PROJECTS_PATH": esc(relative_href(final_output, "portfolio/projects/index.html")),
         "CONTACT_PATH": esc(relative_href(final_output, "portfolio/contact/index.html")),
+        "HIRING_GUIDE_PATH": esc(relative_href(final_output, "portfolio/hiring-manager/index.html")),
+        "EXPERTISE_PATH": esc(relative_href(final_output, "portfolio/expertise/index.html")),
         "RESUME_PATH": esc(relative_href(final_output, "portfolio/assets/documents/Haley-Reeder-Resume.pdf")),
+        "LEARNING_PIXEL_PATH": esc(relative_href(final_output, "portfolio/assets/icons/pixel/portfolio-general/learning.webp")),
+        "CASE_STUDIES_PIXEL_PATH": esc(relative_href(final_output, "portfolio/assets/icons/pixel/portfolio-general/case-studies.webp")),
+        "PORTFOLIO_PIXEL_PATH": esc(relative_href(final_output, "portfolio/assets/icons/pixel/portfolio-general/portfolio.webp")),
         "BREADCRUMBS": render_breadcrumbs(final_output, project, category, subcategory),
         "CATEGORY_LABEL": esc(category["label"]),
         "CATEGORY_ICON_HREF": esc(f"{icon_sprite}#{icon_id}"),
@@ -433,7 +465,7 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "OUTCOMES": render_list(content.get("outcomes", [])),
         "RELATED_WORK_SECTION": related_work_section,
         "RELATED_WORK_NAV": related_work_nav,
-        "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
+        "CONFIDENTIALITY_NOTE": render_confidentiality_note(project, final_output),
         "STATUS_CLASS": esc(status),
         "STATUS_LABEL": esc(statuses.get(status, status.title())),
         "CTA_HEADING": esc("Explore the finished project." if project.get("links", {}).get("live_project") else "Explore more of my work."),
