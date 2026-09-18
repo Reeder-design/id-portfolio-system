@@ -86,7 +86,36 @@
   ],
   "skills": ["LMS Administration", "User Acceptance Testing", "LMS Migration", "Learning Plan Configuration", "Content Governance", "Learner Experience", "Certification Workflows", "Learner Support", "Documentation", "Reporting", "Launch Readiness"],
   "tools": ["Absorb LMS", "Docebo LMS", "Articulate Rise 360", "xAPI / SCORM", "Microsoft 365"],
-  "assets": [],
-  "source_material_notes": "Generalized from completed LMS migration and launch-support work moving learning operations from Absorb LMS into Docebo LMS. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted.",
-  "dates": {"created": "2026-09-15", "updated": "2026-09-16"}
+  "assets": [
+      {
+          "type": "image",
+          "path": "portfolio/assets/project-images/lms-migration/learner-home.webp",
+          "alt": "Fictional LMS learner home with assignments, progress, and support.",
+          "caption": "Representative reconstruction; all names, numbers, and interface details are illustrative.",
+          "publish": true
+      },
+      {
+          "type": "image",
+          "path": "portfolio/assets/project-images/lms-migration/course-player.webp",
+          "alt": "Fictional LMS course player with a knowledge check.",
+          "caption": "Representative reconstruction; all names, numbers, and interface details are illustrative.",
+          "publish": true
+      },
+      {
+          "type": "image",
+          "path": "portfolio/assets/project-images/lms-migration/admin-dashboard.webp",
+          "alt": "Fictional LMS admin dashboard with illustrative activity and enrollment data.",
+          "caption": "Representative reconstruction; all names, numbers, and interface details are illustrative.",
+          "publish": true
+      },
+      {
+          "type": "image",
+          "path": "portfolio/assets/project-images/lms-migration/learning-pathway.webp",
+          "alt": "Illustrative learning pathway with required modules, optional practice, and assessment.",
+          "caption": "Representative reconstruction; all names, numbers, and interface details are illustrative.",
+          "publish": true
+      }
+  ],
+  "source_material_notes": "Generalized from completed LMS migration and launch-support work moving learning operations from Absorb LMS into Docebo LMS. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted. Public interface visuals and the learner-route simulator are representative reconstructions. Sample names, numbers, and UAT scenarios are illustrative, not production screenshots, actual results, or historical issue records.",
+  "dates": {"created": "2026-09-15", "updated": "2026-09-17"}
 }

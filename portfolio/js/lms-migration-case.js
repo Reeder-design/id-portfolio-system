@@ -1,36 +1,13 @@
 (() => {
-  const transitionData = {
-    absorb: {
-      label: 'Existing Absorb Environment',
-      title: 'I started with the courses, paths, and support patterns learners already used.',
-      text: 'Knowing the existing Absorb setup helped me identify what had to be recreated, what could change, and what learner behavior needed to stay intact in Docebo.',
-      cards: [
-        ['Learning setup', 'Courses, learning plans, certifications, catalogs, audiences, and learner history.'],
-        ['Support setup', 'Common learner questions, navigation patterns, existing guidance, and admin processes.'],
-        ['What I compared', 'What learners needed to see and do before and after the move.']
-      ]
-    },
-    docebo: {
-      label: 'Docebo Setup',
-      title: 'I configured the learning structures learners would use in the new platform.',
-      text: 'My work included learning plans, content relationships, catalogs, certifications, audience visibility, and learner-facing assets, followed by testing for each audience type.',
-      cards: [
-        ['Learning plans', 'Plan structure, sequencing, content relationships, and audience access.'],
-        ['Content + catalogs', 'Migrated content, learner-facing assets, catalogs, navigation, and visibility.'],
-        ['Certifications', 'Certification paths, renewal behavior, and completion logic.']
-      ]
-    },
-    role: {
-      label: 'My Role',
-      title: 'I handled the learning-content and learner-experience side of the move.',
-      text: 'I worked across setup, UAT, issue retesting, learner support, documentation, and reporting as part of the broader migration team.',
-      cards: [
-        ['Configure', 'Set up learning plans, content, catalogs, certifications, and learner-facing relationships.'],
-        ['Test', 'Check learner journeys, document issues, and retest fixes across employee, partner, and customer experiences.'],
-        ['Support', 'Help with the inbox, support documentation, reusable email templates, reporting, and follow-up actions.']
-      ]
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  const resetInitialScroll = () => {
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
   };
+
+  window.addEventListener('pageshow', resetInitialScroll, { once: true });
 
   const validationData = {
     visibility: {
@@ -148,6 +125,13 @@
   const setupTabs = (selector, dataKey, handler) => {
     const buttons = [...document.querySelectorAll(selector)];
     buttons.forEach((button, index) => {
+      const panel = button.closest('[role="tablist"]').parentElement.querySelector('[role="tabpanel"]');
+      if (panel) {
+        if (!button.id) button.id = `${dataKey}-${button.dataset[dataKey]}`;
+        if (!panel.id) panel.id = `${dataKey}Panel`;
+        button.setAttribute('aria-controls', panel.id);
+        if (button.getAttribute('aria-selected') === 'true') panel.setAttribute('aria-labelledby', button.id);
+      }
       const activate = () => {
         buttons.forEach((item) => {
           const active = item === button;
@@ -174,15 +158,141 @@
     });
   };
 
-  const renderTransition = (key) => {
-    const data = transitionData[key];
-    document.getElementById('transitionLabel').textContent = data.label;
-    document.getElementById('transitionTitle').textContent = data.title;
-    document.getElementById('transitionText').textContent = data.text;
-    document.getElementById('transitionCards').innerHTML = data.cards.map(([label, body]) => `<article class="transition-lens-card"><span>${label}</span><p>${body}</p></article>`).join('');
+  const assetBase = '../../../assets/project-images/lms-migration/';
+  const assetData = {
+    home: {file:'learner-home',width:513,height:530,label:'Access + discovery',title:'The right learning, for the right audience.',intro:'A learner home connects audience access, assigned learning, progress, and support. Each connection needed checking after the move.',baseline:'Review the catalogs, learning plans, and navigation learners already relied on.',configuration:'Help configure audience visibility, content relationships, catalogs, and learner-facing assets.',check:'Check employee, partner, and customer views for missing content, incorrect visibility, and broken navigation.',alt:'Fictional learner home showing assigned courses, progress, transcript, certifications, and help.'},
+    course: {file:'course-player',width:487,height:530,label:'Content + completion',title:'A migrated course has to work when it opens.',intro:'Content setup and learning-plan relationships meet inside the course experience. I checked migrated content and learner-facing behavior against the intended path.',baseline:'Review the existing course content, order, links, and learner guidance in Absorb.',configuration:'Configure migrated content, learning-plan sequencing, content relationships, and learner-facing assets in Docebo.',check:'Launch the content, check navigation and prerequisites, and validate completion behavior from the learner view.',alt:'Fictional LMS course player showing a sales lesson, navigation, progress, and a knowledge check.'},
+    admin: {file:'admin-dashboard',width:513,height:473,label:'Administration + follow-up',title:'Connect learner issues to operational follow-up.',intro:'I worked at the content-administration and learner-support layer within the broader migration team. Reporting helped keep exceptions and follow-up work visible.',baseline:'Review learning structures, certifications, and the support patterns around the existing environment.',configuration:'Help set up catalogs, learning plans, certifications, and related learner-facing relationships.',check:'Document issues, retest fixes, support learner questions, and contribute to immediate post-launch reporting and action planning.',alt:'Fictional admin dashboard showing illustrative activity, enrollments, completion counts, and alerts.'}
   };
-  setupTabs('[data-transition]', 'transition', renderTransition);
-  renderTransition('absorb');
+  setupTabs('[data-lmsasset]', 'lmsasset', (key) => {
+    const data = assetData[key];
+    const img = document.getElementById('lmsAssetImage');
+    img.src = assetBase + data.file + '.webp';
+    img.alt = data.alt;
+    img.width = data.width;
+    img.height = data.height;
+    const link = document.getElementById('lmsAssetLink');
+    link.href = img.src;
+    link.setAttribute('aria-label', `Open ${key === 'home' ? 'learner home' : key === 'course' ? 'course player' : 'admin dashboard'} image at full size in a new tab`);
+    ['label','title','intro','baseline','configuration','check'].forEach((field) => {
+      document.getElementById('asset' + field[0].toUpperCase() + field.slice(1)).textContent = data[field];
+    });
+  });
+
+  // Reconstructed examples illustrate the documented UAT scope, not historical incidents.
+  const routeData = {
+    employee: {
+      label:'Access + assignment', title:'Can an employee find their assigned learning?',
+      steps:['Sign in','Open catalog','Launch course','Record completion'], fail:1,
+      expected:'The employee can open the assigned catalog, launch the course, and record completion.',
+      observed:'Sign-in works, but the assigned catalog is not visible. Course launch and completion cannot be tested yet.',
+      issue:'Employee catalog is missing from the learner view.',
+      choices:['Replace the course thumbnail','Review audience membership and catalog visibility','Mark the course complete manually'], correct:1,
+      guidance:['A thumbnail affects presentation. It does not establish catalog access.','Audience membership and visibility determine whether the learner can reach the catalog.','Manual completion would bypass the access issue and leave the learner without the course.'],
+      fix:'Sample fix: correct the audience-to-catalog visibility configuration.',
+      passed:'The intended catalog is visible; the employee launches the course and reaches a recorded completion.',
+      start:'Start with the learner view. A visible assignment alone does not confirm access.'
+    },
+    partner: {
+      label:'Sequence + prerequisites', title:'Does a partner reach the next required module?',
+      steps:['Open partner plan','Complete foundation','Unlock next module','Record completion'], fail:2,
+      expected:'Completing the foundation module unlocks the next required module in the partner plan.',
+      observed:'The foundation module is complete, but the next required module stays locked. The route cannot continue.',
+      issue:'Next partner module stays locked after the prerequisite is complete.',
+      choices:['Review prerequisite and content relationships','Remove all required modules','Resend the welcome email'], correct:0,
+      guidance:['The completed prerequisite must connect to the intended next module.','Removing requirements changes the intended learning path instead of repairing it.','A reminder cannot repair the relationship controlling the locked module.'],
+      fix:'Sample fix: correct the prerequisite relationship to the completed foundation module.',
+      passed:'The foundation completion unlocks the next module, and the partner can finish the intended route.',
+      start:'Follow the sequence as a learner. Check what becomes available after each prerequisite.'
+    },
+    customer: {
+      label:'Certification + renewal', title:'Can a returning customer enter a renewal path?',
+      steps:['Sign in','Open certification','Enter renewal','Record renewal'], fail:2,
+      expected:'An eligible returning learner can enter the renewal path while prior completion remains visible.',
+      observed:'The earlier certification is visible, but the eligible learner cannot enter the renewal path.',
+      issue:'Eligible returning customer cannot access the renewal path.',
+      choices:['Delete the prior completion','Assign unrelated training','Review renewal eligibility and path configuration'], correct:2,
+      guidance:['Deleting history would hide useful evidence and does not repair renewal eligibility.','Unrelated training does not validate the intended renewal experience.','Compare the learner state with the renewal eligibility and learning-path configuration.'],
+      fix:'Sample fix: align the renewal eligibility and path assignment for the returning learner.',
+      passed:'Prior completion remains visible; the customer enters the renewal path and records the renewed completion.',
+      start:'Test returning learners separately. A first-time certification route does not prove renewal works.'
+    }
+  };
+  let audience = 'employee';
+  let testState = 'ready';
+  const byId = (id) => document.getElementById(id);
+  const renderRoute = () => {
+    const data = routeData[audience];
+    byId('routeLabel').textContent = data.label;
+    byId('routeTitle').textContent = data.title;
+    byId('uatExpected').textContent = data.expected;
+    byId('uatStatus').textContent = {ready:'Ready to test',issue:'Issue found',fixed:'Ready to retest',passed:'Retest passed'}[testState];
+    byId('uatStatus').dataset.state = testState;
+    byId('uatRoute').innerHTML = data.steps.map((step, index) => {
+      let state = 'pending', label = 'Not tested';
+      if (testState === 'passed') {state='passed';label='Pass';}
+      else if (testState !== 'ready') {
+        if (index < data.fail) {state='passed';label='Pass';}
+        else if (index === data.fail) {state=testState === 'fixed' ? 'pending' : 'issue';label=testState === 'fixed' ? 'Retest needed' : 'Issue';}
+        else {state='blocked';label='Not reached';}
+      }
+      return `<li data-state="${state}"><span>${step}</span><strong>${label}</strong></li>`;
+    }).join('');
+    byId('uatObserved').textContent = testState === 'ready' ? 'Run the sample route to compare the learner experience with the expected behavior.' : testState === 'passed' ? data.passed : data.observed;
+    byId('uatFixes').hidden = testState !== 'issue';
+    const action = byId('uatRun');
+    action.textContent = {ready:'Run learner test',issue:'Choose a check above',fixed:'Retest learner route',passed:'Run again'}[testState];
+    action.disabled = testState === 'issue';
+    const record = testState === 'ready' ? 'No test recorded for this audience.' : `${data.issue} Initial test: issue reproduced. ${testState === 'issue' ? 'Status: investigate the configuration.' : data.fix + (testState === 'fixed' ? ' Status: configuration updated; learner retest pending.' : ' Retest: route passed, including downstream completion. Status: sample issue closed.')}`;
+    byId('uatLog').textContent = record;
+  };
+  const resetRoute = () => {
+    testState = 'ready';
+    byId('uatRecord').open = false;
+    byId('uatFeedback').textContent = routeData[audience].start;
+    byId('uatChoices').replaceChildren();
+    renderRoute();
+  };
+  const showChoices = () => {
+    const data = routeData[audience];
+    byId('uatChoices').replaceChildren();
+    data.choices.forEach((label,index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'lms-fix-choice';
+      button.textContent = label;
+      button.addEventListener('click', () => {
+        if (testState !== 'issue') return;
+        if (index !== data.correct) {
+          byId('uatFeedback').textContent = data.guidance[index] + ' Try another check.';
+          return;
+        }
+        testState = 'fixed';
+        renderRoute();
+        byId('uatFeedback').textContent = data.guidance[index] + ' ' + data.fix + ' Retest before closing the issue.';
+        byId('uatRun').focus();
+      });
+      byId('uatChoices').append(button);
+    });
+  };
+  setupTabs('[data-route]', 'route', (key) => {audience=key;resetRoute();});
+  byId('uatRun').addEventListener('click', () => {
+    if (testState === 'passed') {resetRoute();return;}
+    if (testState === 'ready') {
+      testState = 'issue';
+      showChoices();
+      renderRoute();
+      byId('uatFeedback').textContent = 'Issue reproduced. Choose the configuration check that addresses the blocked step.';
+      byId('uatChoices').querySelector('button').focus();
+    } else if (testState === 'fixed') {
+      testState = 'passed';
+      renderRoute();
+      byId('uatFeedback').textContent = 'Retest passed. The corrected step and the rest of the route now work in this sample. The issue record is ready to close.';
+    }
+  });
+  byId('uatReset').addEventListener('click', resetRoute);
+  resetRoute();
+
 
   const renderValidation = (key) => {
     const data = validationData[key];
