@@ -402,3 +402,31 @@
   .vertical-stage-tab,
   .vertical-outcome-tab{transition:none!important}
 }
+
+
+/* Shared visual rule applied here: light surfaces always use dark copy. */
+.vertical-need-card,
+.vertical-need-card h3,
+.vertical-need-card p,
+.vertical-outcome-panel,
+.vertical-outcome-panel h3,
+.vertical-outcome-panel p,
+.vertical-outcome-proof,
+.vertical-outcome-proof strong,
+.vertical-related .related-card,
+.vertical-related .related-card h3,
+.vertical-related .related-card p,
+.vertical-workflow-section .micro-flow-card,
+.vertical-workflow-section .micro-flow-card span,
+.vertical-workflow-section .micro-flow-card p{
+  color:#26383f;
+}
+.vertical-need-card p,
+.vertical-outcome-panel p,
+.vertical-related .related-card p{
+  color:#53645f;
+}
+.vertical-workflow-section .micro-flow-card span,
+.vertical-outcome-proof span{
+  color:#42635d;
+}
