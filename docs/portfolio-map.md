@@ -19,7 +19,7 @@ Current portfolio version: **1.0.0**
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
   - **Microlearning & Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/index.html`
     - Product Launch Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` (live)
-    - Vertical-Positioning Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` (live)
+    - Vertical Positioning Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` (live)
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
     - Virtual Sales Workshop Facilitation — `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` (live)
