@@ -43,10 +43,18 @@
     "CSS",
     "JavaScript"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/interactive-learning/meddpicc-sales-use-case.webp",
+      "alt": "Public-safe sales enablement use-case exploration interface.",
+      "caption": "General sales-practice context supporting the fictional MEDDPICC classification lab.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Public project uses fictional companies, products, customers, and opportunity data.",
   "dates": {
     "created": null,
-    "updated": "2026-09-08"
+    "updated": "2026-09-18"
   }
 }
