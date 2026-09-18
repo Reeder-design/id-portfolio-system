@@ -351,6 +351,114 @@
   deliveryButtons.forEach((button, index) => { button.tabIndex = index === 0 ? 0 : -1; });
   renderDelivery('build');
 
+  const authoringData = {
+    rise: {
+      label: 'Rise 360 / Reinforcement',
+      title: 'Keep reinforcement inside the course flow.',
+      summary: 'I used lightweight checks to reinforce customer fit and solution context without breaking the learner out of the main experience.',
+      focus: ['Structured content','Quick reinforcement','Responsive delivery'],
+      image: '../../../../assets/project-images/enterprise-certification/cert-rise-knowledge-check.webp',
+      alt: 'Public-safe Rise-style cellular sales knowledge check.'
+    },
+    storyline: {
+      label: 'Storyline 360 / Applied Practice',
+      title: 'Use richer interaction when the seller needs to explore or decide.',
+      summary: 'Storyline supported comparison, exploration, and scenario practice when a static content block would not give the learner enough room to test judgment.',
+      focus: ['Interactive exploration','Scenario decisions','Coaching feedback']
+    }
+  };
+
+  const storylineData = {
+    explorer: {
+      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-product-explorer.webp',
+      alt: 'Public-safe Storyline-style interactive cellular solution explorer.'
+    },
+    scenario: {
+      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-scenario.webp',
+      alt: 'Public-safe Storyline-style customer recommendation scenario.'
+    }
+  };
+
+  const authoringButtons = [...document.querySelectorAll('[data-authoring]')];
+  const storylineButtons = [...document.querySelectorAll('[data-storyline-example]')];
+  const authoringImage = document.getElementById('authoringImage');
+  const authoringLabel = document.getElementById('authoringLabel');
+  const authoringTitle = document.getElementById('authoringTitle');
+  const authoringSummary = document.getElementById('authoringSummary');
+  const authoringFocus = document.getElementById('authoringFocus');
+  const storylineExampleTabs = document.getElementById('storylineExampleTabs');
+
+  const renderStorylineExample = (key) => {
+    const data = storylineData[key];
+    if (!data || !authoringImage) return;
+    authoringImage.src = data.image;
+    authoringImage.alt = data.alt;
+    storylineButtons.forEach((button) => {
+      const active = button.dataset.storylineExample === key;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+    });
+  };
+
+  const renderAuthoring = (key) => {
+    const data = authoringData[key];
+    if (!data || !authoringImage) return;
+    authoringLabel.textContent = data.label;
+    authoringTitle.textContent = data.title;
+    authoringSummary.textContent = data.summary;
+    authoringFocus.replaceChildren(...data.focus.map((item) => {
+      const chip = document.createElement('span');
+      chip.textContent = item;
+      return chip;
+    }));
+    const isStoryline = key === 'storyline';
+    storylineExampleTabs.hidden = !isStoryline;
+    if (isStoryline) renderStorylineExample('explorer');
+    else {
+      authoringImage.src = data.image;
+      authoringImage.alt = data.alt;
+    }
+    authoringButtons.forEach((button) => {
+      const active = button.dataset.authoring === key;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+    });
+  };
+
+  authoringButtons.forEach((button, index) => {
+    button.addEventListener('click', () => renderAuthoring(button.dataset.authoring));
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = authoringButtons.length - 1;
+      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % authoringButtons.length;
+      else next = (index - 1 + authoringButtons.length) % authoringButtons.length;
+      authoringButtons[next].focus();
+      renderAuthoring(authoringButtons[next].dataset.authoring);
+    });
+  });
+
+  storylineButtons.forEach((button, index) => {
+    button.addEventListener('click', () => renderStorylineExample(button.dataset.storylineExample));
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = storylineButtons.length - 1;
+      else if (event.key === 'ArrowRight') next = (index + 1) % storylineButtons.length;
+      else next = (index - 1 + storylineButtons.length) % storylineButtons.length;
+      storylineButtons[next].focus();
+      renderStorylineExample(storylineButtons[next].dataset.storylineExample);
+    });
+  });
+
+  renderAuthoring('rise');
+
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
