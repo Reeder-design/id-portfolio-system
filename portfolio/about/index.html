@@ -70,8 +70,9 @@
         @media(prefers-reduced-motion:reduce){.about-work-shot,.adapt-evidence-frame img{transition:none}.about-work-shot:hover{transform:none}.live-signal b i{animation:none}}
 </style>
     <script defer src="../js/portfolio-motion.js"></script>
+    <script defer src="../js/primary-pages.js"></script>
 </head>
-<body>
+<body class="primary-page about-primary">
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a class="active" href="./index.html">About Me</a><a href="../projects/index.html">Projects</a><a href="../contact/index.html">Contact</a></nav></div></header>
 <main>
     <!-- PROFESSIONAL INTRO -->
@@ -79,12 +80,16 @@
       <div class="container">
         <div class="about-experience-panel">
           <div class="about-experience-copy">
-            <p class="eyebrow">Experience</p>
-            <h1>From classroom teaching to enterprise enablement</h1>
-            <p class="body-large">I started as a high-school history and English teacher and now design enterprise learning for sales and partner audiences. My projects range from product launches and microlearning to certification paths and live workshops, with additional hands-on work in LMS administration, AI evaluation, reporting automation, and multimedia production.</p>
+            <p class="eyebrow">Background</p>
+            <h1>About Me</h1>
+            <p class="body-large">I started in high-school classrooms and K-12 curriculum, where Universal Design, the Zone of Proximal Development, and problem-posing education shaped how I think about access, challenge, and learner agency. I now design enterprise learning for adult audiences across eLearning, interactive enablement, facilitation, LMS operations, AI quality evaluation, web and coding work, AI chat experiences, and automated workflows.</p>
+            <div class="about-focus-row" aria-label="About page focus areas">
+              <span>Background</span>
+              <span>Skills</span>
+              <span>Tools</span>
+            </div>
             <div class="button-row about-experience-actions">
               <a class="btn btn-primary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
-              <a class="btn btn-secondary" href="../projects/index.html">View Projects</a>
             </div>
           </div>
 
@@ -111,17 +116,17 @@
     </section>
 
     <!-- COMMON THREAD -->
-    <section class="section">
+    <section class="section about-role-section">
       <div class="container">
         <div class="section-heading refresh-section-intro">
           <h2>How my role changes across the work</h2>
-          <p class="body-large reading-width">Instructional design is the center of my work, but the project can extend into evaluation, platform operations, automation, or facilitation depending on what has to be delivered.</p>
+          <p class="body-large reading-width">The center stays the same: understand the need, choose the right response, build it, and make it usable. What changes is the role I need to play.</p>
         </div>
 
         <div class="adapt-lab">
           <div class="adapt-tabs" role="tablist" aria-label="Choose a type of learning work">
             <button class="adapt-tab active" type="button" role="tab" aria-selected="true" data-adapt="elearning"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span>eLearning</span></button>
-            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="ai"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>AI Evaluation</span></button>
+            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="ai"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>AI Quality Evaluation</span></button>
             <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="lms"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg><span>LMS &amp; Learning Ops</span></button>
             <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="live"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><span>Live Learning</span></button>
           </div>
@@ -184,11 +189,71 @@
         </div>
       </div>
     </section>
+
+    <section class="section about-toolbox-section" id="toolbox">
+      <div class="container">
+        <div class="toolbox-intro-grid">
+          <div>
+            <p class="eyebrow">Haley's Toolbox</p>
+            <h2>The tools change with the job.</h2>
+            <p class="body-large reading-width">I use authoring, platform, production, coding, data, and collaboration tools as parts of a learning system, not as a checklist of software.</p>
+          </div>
+          <img class="toolbox-hero-art" src="../assets/icons/pixel/portfolio-general/tools.webp" alt="Pixel-art toolbox representing Haley's working tools.">
+        </div>
+
+        <div class="about-tool-grid">
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><h3>Instructional Design + eLearning</h3></div>
+            <div class="about-tool-tags"><span>Articulate 360</span><span>Rise 360</span><span>Storyline 360</span><span>Review 360</span></div>
+          </article>
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span><h3>LMS + Learning Technology</h3></div>
+            <div class="about-tool-tags"><span>Absorb</span><span>Docebo</span><span>xAPI</span><span>Credly</span></div>
+          </article>
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><h3>Multimedia + Content Production</h3></div>
+            <div class="about-tool-tags"><span>Premiere Pro</span><span>After Effects</span><span>Audition</span><span>Illustrator</span><span>Camtasia</span><span>Colossyan</span><span>Canva</span></div>
+          </article>
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-code"></use></svg></span><h3>Coding + Web Development</h3></div>
+            <div class="about-tool-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span><span>GitHub</span><span>VS Code</span></div>
+          </article>
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><h3>Systems + Data + Automation</h3></div>
+            <div class="about-tool-tags"><span>Salesforce</span><span>Selenium</span><span>pandas</span><span>openpyxl</span><span>Excel</span></div>
+          </article>
+          <article class="about-tool-group">
+            <div class="about-tool-group-head"><span class="icon-badge"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><h3>Collaboration + Workflow</h3></div>
+            <div class="about-tool-tags"><span>Asana</span><span>Microsoft Teams</span><span>OneDrive</span><span>PowerPoint</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft about-connect-section">
+      <div class="container">
+        <div class="section-heading refresh-section-intro">
+          <p class="eyebrow">Keep in touch</p>
+          <h2>Want to talk about the work?</h2>
+          <p class="body-large reading-width">LinkedIn is the fastest route, and the contact page gives you the rest of the ways to navigate or reach me.</p>
+        </div>
+        <div class="primary-link-grid about-connect-grid">
+          <a class="primary-link-card" href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">
+            <span class="primary-link-visual"><img src="../assets/project-images/portfolio-general/cta-linkedin.webp" alt=""></span>
+            <span class="primary-link-copy"><span class="eyebrow">LinkedIn</span><h3>Connect professionally</h3><p>For roles, collaboration, or a quick conversation about my work.</p><strong>Open LinkedIn →</strong></span>
+          </a>
+          <a class="primary-link-card" href="../contact/index.html">
+            <span class="primary-link-visual"><img src="../assets/project-images/portfolio-general/cta-contact.webp" alt=""></span>
+            <span class="primary-link-copy"><span class="eyebrow">Contact</span><h3>Choose the best route</h3><p>Go to the dedicated contact page for the fastest ways to connect or keep exploring.</p><strong>Contact me →</strong></span>
+          </a>
+        </div>
+      </div>
+    </section>
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 <script>
 const sprite='../assets/icons/portfolio-icons.svg';
-const adaptData={elearning:{label:'eLearning',title:'Turn source material into seller-ready learning.',summary:'I translate product, technical, and sales content into courses, microlearning, scenarios, assessments, and certifications for internal sellers and partners.',icon:'icon-elearning',evidence:'../assets/project-images/about/elearning-module-example.webp',evidenceAlt:'Public-safe customer discovery eLearning scenario with coaching feedback.',evidenceLabel:'eLearning evidence',evidenceTitle:'Scenario practice with coaching feedback',evidenceNote:'Public-safe eLearning example showing a customer discovery scenario, learner choice, coaching feedback, and key takeaways.',priorities:['Sales relevance','Practice','Clear scope','Updates'],quality:'The finished learning should help the seller explain, recognize, decide, or act differently.',steps:[['icon-learning-design','Scope','Identify the seller task, audience, source material, and what does not belong in the learning.'],['icon-workflow','Architect','Choose the format, sequence, scenarios, assessments, and supporting resources.'],['icon-code','Build','Develop in tools such as Rise and Storyline, then coordinate SME review and QA.'],['icon-feedback','Launch','Test delivery in the LMS, resolve issues, and keep source files ready for future updates.']]},ai:{label:'AI Evaluation',title:'Evaluate the output against the task and evidence.',summary:'I review AI-generated work for instruction following, source grounding, logic, writing quality, audience fit, and severity of errors.',icon:'icon-ai-evaluation',evidence:'../assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp',evidenceAlt:'Public-safe AI response evaluation interface.',evidenceLabel:'AI evaluation evidence',evidenceTitle:'Structured review against task and quality criteria',evidenceNote:'Public-safe evaluation interface showing the kind of focused review and feedback workflow used in AI training work.',priorities:['Evidence','Error severity','Consistency','Actionable feedback'],quality:'The score and feedback should be traceable to the task, approved source, and model output.',steps:[['icon-learning-design','Frame','Read the task, source, audience, and required output before judging quality.'],['icon-assessment','Evaluate','Identify material errors and apply the scoring or severity standard.'],['icon-feedback','Explain','Write specific feedback that names the problem, impact, and needed change.'],['icon-analytics','Calibrate','Compare judgments and resolve inconsistencies across reviewers or examples.']]},lms:{label:'LMS & Learning Ops',title:'Operate the platform around the learning.',summary:'My LMS work includes content administration, learner paths, certifications, enrollment logic, support, reporting, and migration testing across Absorb and Docebo.',icon:'icon-lms',evidence:'../assets/project-images/lms-migration/admin-dashboard.webp',evidenceAlt:'Public-safe LMS administration dashboard.',evidenceLabel:'LMS operations evidence',evidenceTitle:'Configuration, activity, support, and platform QA',evidenceNote:'Public-safe admin reconstruction representing the operational side of learner access, migration, reporting, and support.',priorities:['Content access','Learning paths','Support','Reporting'],quality:'Learners should see the right content, follow the right path, and have a clear support route when something goes wrong.',steps:[['icon-workflow','Map','Trace courses, learning plans, certifications, audiences, and support dependencies.'],['icon-lms','Administer','Publish content, manage structures and access, and maintain learner-facing information.'],['icon-feedback','Test','Validate visibility, navigation, completions, renewals, and migrated experiences.'],['icon-analytics','Support','Document issues, reporting needs, and operational handoffs for ongoing administration.']]},live:{label:'Live Learning',title:'Build and facilitate sessions for sellers and partners.',summary:'I develop facilitator-led materials and have facilitated virtual sales workshops for internal teams and external partners.',icon:'icon-live-instruction',evidence:null,evidenceAlt:'',evidenceLabel:'Live learning evidence',evidenceTitle:'Facilitation changes with the room',evidenceNote:'The live-session visual represents the same discussion, polling, learner-response, and adaptation pattern shown in the workshop case.',priorities:['Discussion','Practice','Pacing','Audience response'],quality:'Live time should give learners room to ask questions, apply the framework, and work through examples.',steps:[['icon-learning-design','Prepare','Review the objective, facilitator materials, participant content, timing, and likely learner questions.'],['icon-multimedia','Structure','Plan explanations, prompts, polls, examples, activities, and transitions.'],['icon-live-instruction','Facilitate','Guide discussion and adjust pacing or explanation based on learner response.'],['icon-feedback','Feed Back','Bring recurring questions and misconceptions into future learning updates.']]}};
+const adaptData={elearning:{label:'eLearning',title:'Turn source material into seller-ready learning.',summary:'I translate product, technical, and sales content into courses, microlearning, scenarios, assessments, and certifications for internal sellers and partners.',icon:'icon-elearning',evidence:'../assets/project-images/about/elearning-module-example.webp',evidenceAlt:'Public-safe customer discovery eLearning scenario with coaching feedback.',evidenceLabel:'eLearning evidence',evidenceTitle:'Scenario practice with coaching feedback',evidenceNote:'Public-safe eLearning example showing a customer discovery scenario, learner choice, coaching feedback, and key takeaways.',priorities:['Sales relevance','Practice','Clear scope','Updates'],quality:'The finished learning should help the seller explain, recognize, decide, or act differently.',steps:[['icon-learning-design','Scope','Identify the seller task, audience, source material, and what does not belong in the learning.'],['icon-workflow','Architect','Choose the format, sequence, scenarios, assessments, and supporting resources.'],['icon-code','Build','Develop in tools such as Rise and Storyline, then coordinate SME review and QA.'],['icon-feedback','Launch','Test delivery in the LMS, resolve issues, and keep source files ready for future updates.']]},ai:{label:'AI Quality Evaluation',title:'Evaluate the output against the task and evidence.',summary:'I review AI-generated work for instruction following, source grounding, logic, writing quality, audience fit, and severity of errors.',icon:'icon-ai-evaluation',evidence:'../assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp',evidenceAlt:'Public-safe AI response evaluation interface.',evidenceLabel:'AI evaluation evidence',evidenceTitle:'Structured review against task and quality criteria',evidenceNote:'Public-safe evaluation interface showing the kind of focused review and feedback workflow used in AI training work.',priorities:['Evidence','Error severity','Consistency','Actionable feedback'],quality:'The score and feedback should be traceable to the task, approved source, and model output.',steps:[['icon-learning-design','Frame','Read the task, source, audience, and required output before judging quality.'],['icon-assessment','Evaluate','Identify material errors and apply the scoring or severity standard.'],['icon-feedback','Explain','Write specific feedback that names the problem, impact, and needed change.'],['icon-analytics','Calibrate','Compare judgments and resolve inconsistencies across reviewers or examples.']]},lms:{label:'LMS & Learning Ops',title:'Operate the platform around the learning.',summary:'My LMS work includes content administration, learner paths, certifications, enrollment logic, support, reporting, and migration testing across Absorb and Docebo.',icon:'icon-lms',evidence:'../assets/project-images/lms-migration/admin-dashboard.webp',evidenceAlt:'Public-safe LMS administration dashboard.',evidenceLabel:'LMS operations evidence',evidenceTitle:'Configuration, activity, support, and platform QA',evidenceNote:'Public-safe admin reconstruction representing the operational side of learner access, migration, reporting, and support.',priorities:['Content access','Learning paths','Support','Reporting'],quality:'Learners should see the right content, follow the right path, and have a clear support route when something goes wrong.',steps:[['icon-workflow','Map','Trace courses, learning plans, certifications, audiences, and support dependencies.'],['icon-lms','Administer','Publish content, manage structures and access, and maintain learner-facing information.'],['icon-feedback','Test','Validate visibility, navigation, completions, renewals, and migrated experiences.'],['icon-analytics','Support','Document issues, reporting needs, and operational handoffs for ongoing administration.']]},live:{label:'Live Learning',title:'Build and facilitate sessions for sellers and partners.',summary:'I develop facilitator-led materials and have facilitated virtual sales workshops for internal teams and external partners.',icon:'icon-live-instruction',evidence:null,evidenceAlt:'',evidenceLabel:'Live learning evidence',evidenceTitle:'Facilitation changes with the room',evidenceNote:'The live-session visual represents the same discussion, polling, learner-response, and adaptation pattern shown in the workshop case.',priorities:['Discussion','Practice','Pacing','Audience response'],quality:'Live time should give learners room to ask questions, apply the framework, and work through examples.',steps:[['icon-learning-design','Prepare','Review the objective, facilitator materials, participant content, timing, and likely learner questions.'],['icon-multimedia','Structure','Plan explanations, prompts, polls, examples, activities, and transitions.'],['icon-live-instruction','Facilitate','Guide discussion and adjust pacing or explanation based on learner response.'],['icon-feedback','Feed Back','Bring recurring questions and misconceptions into future learning updates.']]}};
 const adaptButtons=[...document.querySelectorAll('[data-adapt]')];const steps=document.getElementById('adaptSteps');const priorities=document.getElementById('adaptPriorities');function selectAdapt(button){const data=adaptData[button.dataset.adapt];adaptButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));});document.getElementById('adaptLabel').textContent=data.label;document.getElementById('adaptTitle').textContent=data.title;document.getElementById('adaptSummary').textContent=data.summary;document.getElementById('adaptIcon').setAttribute('href',`${sprite}#${data.icon}`);document.getElementById('adaptQuality').textContent=data.quality;
 const evidenceImage=document.getElementById('adaptEvidenceImage');
 const liveVisual=document.getElementById('adaptLiveVisual');
