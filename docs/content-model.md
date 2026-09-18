@@ -102,6 +102,21 @@ The system distinguishes between private/reference source material and public po
 
 Only publishable assets should live under public/tracked portfolio paths. Structured asset records use publication state so rendering and validation can enforce the boundary.
 
+## Shared Presentation Contract
+
+Structured content and shared presentation are separate concerns.
+
+For standard generated case studies:
+
+- `templates/project-page/index.html` owns the canonical case-study markup
+- `scripts/render-project.py` owns deterministic content-to-markup rendering
+- `portfolio/css/final-stretch-system.css` owns the approved shared visual components and light/dark surfaces
+- `portfolio/js/portfolio-motion.js` owns shared motion and compatibility normalization for older hand-built pages
+
+New generated pages should emit current component markup directly. Runtime normalization exists for legacy/custom compatibility and should not be treated as the primary source of layout.
+
+When a component changes portfolio-wide, update the shared source and its validation contract rather than cloning the component into individual project pages.
+
 ## Editing and Rendering Rules
 
 Portfolio Manager is the normal human-facing editing layer for supported structured content. Lower-level scripts remain available for deterministic development and maintenance.
