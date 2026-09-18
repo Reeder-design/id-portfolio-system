@@ -79,6 +79,33 @@
     }
   };
 
+  const evidenceData = {
+    course: {
+      src: '../../../../assets/project-images/reporting-automation/report-course-completion.webp',
+      alt: 'Public-safe fictional course completion report with learner, department, course, status, completion date, and time-spent columns.',
+      label: 'Course completion report',
+      caption: 'A spreadsheet-style reporting view showing the kind of completion evidence the workflow consolidates for review.'
+    },
+    certification: {
+      src: '../../../../assets/project-images/reporting-automation/report-certification.webp',
+      alt: 'Public-safe fictional certification report with learner, certification, status, completion date, and expiration date columns.',
+      label: 'Certification report',
+      caption: 'A certification-focused export showing the second evidence source used when reviewing learner completion status.'
+    },
+    progress: {
+      src: '../../../../assets/project-images/reporting-automation/report-learner-progress.webp',
+      alt: 'Public-safe fictional learner progress export with enrolled, completed, in-progress, not-started, and completion percentage fields.',
+      label: 'Learner progress export',
+      caption: 'A consolidated progress view demonstrating how multiple learning states can be made easier to scan after data cleanup.'
+    },
+    analytics: {
+      src: '../../../../assets/project-images/reporting-automation/analytics-certification-status.webp',
+      alt: 'Public-safe fictional certification analytics dashboard with certified, in-progress, and not-started learner status summaries.',
+      label: 'Certification analytics view',
+      caption: 'An analytics layer built from the same type of learning data, showing how reporting outputs can support faster interpretation.'
+    }
+  };
+
   const workbookData = {
     complete: {
       summary: 'Matched activity + certificate evidence',
@@ -148,6 +175,17 @@
     setText('exceptionTitle', d.title);
     setText('exceptionAutomation', d.automation);
     setText('exceptionHuman', d.human);
+  });
+
+  setupTabs('[data-report-evidence]', 'reportEvidence', (key) => {
+    const d = evidenceData[key];
+    const image = document.getElementById('reportEvidenceImage');
+    if (image) {
+      image.src = d.src;
+      image.alt = d.alt;
+    }
+    setText('reportEvidenceLabel', d.label);
+    setText('reportEvidenceCaption', d.caption);
   });
 
   setupTabs('[data-workbook-sheet]', 'workbookSheet', (key) => {
