@@ -59,10 +59,26 @@
       "summary": "Participation gave me evidence about what needed more explanation, less explanation, or a different example.",
       "layout": "cards",
       "items": [
-        {"title": "Ask before telling", "body": "I used questions to surface the learner's current interpretation before adding more explanation.", "tag": "Diagnose"},
-        {"title": "Poll with a purpose", "body": "I used quick polls to check confidence or interpretation, then changed the debrief based on the response.", "tag": "Check"},
-        {"title": "Use seller examples", "body": "I invited relevant examples from internal sellers and partners so abstract concepts stayed connected to actual sales work.", "tag": "Apply"},
-        {"title": "Reframe when needed", "body": "I changed the explanation, example, or pacing when the first version did not land cleanly.", "tag": "Adapt"}
+        {
+          "title": "Ask before telling",
+          "body": "I used questions to surface the learner's current interpretation before adding more explanation.",
+          "tag": "Diagnose"
+        },
+        {
+          "title": "Poll with a purpose",
+          "body": "I used quick polls to check confidence or interpretation, then changed the debrief based on the response.",
+          "tag": "Check"
+        },
+        {
+          "title": "Use seller examples",
+          "body": "I invited relevant examples from internal sellers and partners so abstract concepts stayed connected to actual sales work.",
+          "tag": "Apply"
+        },
+        {
+          "title": "Reframe when needed",
+          "body": "I changed the explanation, example, or pacing when the first version did not land cleanly.",
+          "tag": "Adapt"
+        }
       ]
     },
     {
@@ -71,12 +87,32 @@
       "title": "How I decided what to expand, compress, repeat, or change.",
       "summary": "I used learner signals rather than following the deck mechanically.",
       "layout": "table",
-      "columns": ["Signal", "What I read from it", "What I did next"],
+      "columns": [
+        "Signal",
+        "What I read from it",
+        "What I did next"
+      ],
       "rows": [
-        ["Low confidence in a poll", "The concept or distinction was not stable yet.", "I slowed down, reframed, and tested again with an example."],
-        ["The same question kept returning", "The current explanation was not resolving the friction.", "I changed the explanation or connected it to a more concrete seller situation."],
-        ["Learners offered strong relevant examples", "The group already had usable experience to build from.", "I used peer examples and compressed lower-value background."],
-        ["Time was tightening", "The agenda required a deliberate tradeoff.", "I protected application and debrief time and shortened lower-value narration."]
+        [
+          "Low confidence in a poll",
+          "The concept or distinction was not stable yet.",
+          "I slowed down, reframed, and tested again with an example."
+        ],
+        [
+          "The same question kept returning",
+          "The current explanation was not resolving the friction.",
+          "I changed the explanation or connected it to a more concrete seller situation."
+        ],
+        [
+          "Learners offered strong relevant examples",
+          "The group already had usable experience to build from.",
+          "I used peer examples and compressed lower-value background."
+        ],
+        [
+          "Time was tightening",
+          "The agenda required a deliberate tradeoff.",
+          "I protected application and debrief time and shortened lower-value narration."
+        ]
       ]
     },
     {
@@ -86,10 +122,26 @@
       "summary": "Live questions showed me where future self-paced or facilitator-led learning needed better support.",
       "layout": "cards",
       "items": [
-        {"title": "Recurring questions", "body": "I used repeated questions as a signal that future content needed clearer explanation, examples, or reference support.", "tag": "Clarify"},
-        {"title": "Common misconceptions", "body": "I treated recurring misunderstandings as candidates for scenario distractors, feedback, and formative checks.", "tag": "Practice"},
-        {"title": "Strong learner examples", "body": "I noted the realistic situations that made the framework feel more credible across audiences.", "tag": "Ground"},
-        {"title": "Timing friction", "body": "I identified explanations or activities that should be simplified before another delivery.", "tag": "Refine"}
+        {
+          "title": "Recurring questions",
+          "body": "I used repeated questions as a signal that future content needed clearer explanation, examples, or reference support.",
+          "tag": "Clarify"
+        },
+        {
+          "title": "Common misconceptions",
+          "body": "I treated recurring misunderstandings as candidates for scenario distractors, feedback, and formative checks.",
+          "tag": "Practice"
+        },
+        {
+          "title": "Strong learner examples",
+          "body": "I noted the realistic situations that made the framework feel more credible across audiences.",
+          "tag": "Ground"
+        },
+        {
+          "title": "Timing friction",
+          "body": "I identified explanations or activities that should be simplified before another delivery.",
+          "tag": "Refine"
+        }
       ]
     },
     {
@@ -99,19 +151,54 @@
       "summary": "This case reflects real delivery work while keeping proprietary material and unsupported performance claims out of the portfolio.",
       "layout": "cards",
       "items": [
-        {"title": "Completed", "body": "I facilitated assigned MEDDPICC modules for internal sales teams and external partners in U.S. and international sessions.", "tag": "Delivered"},
-        {"title": "Completed", "body": "I used discussion, polls, seller examples, and real-time pacing or explanation adjustments during delivery.", "tag": "Observed"},
-        {"title": "Not claimed", "body": "I do not claim sole ownership of the full workshop curriculum, learner-score improvement, sales-performance lift, revenue impact, or satisfaction metrics without approved evidence.", "tag": "Boundary"}
+        {
+          "title": "Completed",
+          "body": "I facilitated assigned MEDDPICC modules for internal sales teams and external partners in U.S. and international sessions.",
+          "tag": "Delivered"
+        },
+        {
+          "title": "Completed",
+          "body": "I used discussion, polls, seller examples, and real-time pacing or explanation adjustments during delivery.",
+          "tag": "Observed"
+        },
+        {
+          "title": "Not claimed",
+          "body": "I do not claim sole ownership of the full workshop curriculum, learner-score improvement, sales-performance lift, revenue impact, or satisfaction metrics without approved evidence.",
+          "tag": "Boundary"
+        }
       ]
     }
   ],
   "related_work": [
-    {"project_id": "meddpicc-practice", "relationship": "Interactive qualification practice that applies the same MEDDPICC skill family in a self-paced format"},
-    {"project_id": "enterprise-sales-certification", "relationship": "Broader sales-enablement curriculum design, assessment, review, and learning-path architecture"}
+    {
+      "project_id": "meddpicc-practice",
+      "relationship": "Interactive qualification practice that applies the same MEDDPICC skill family in a self-paced format"
+    },
+    {
+      "project_id": "enterprise-sales-certification",
+      "relationship": "Broader sales-enablement curriculum design, assessment, review, and learning-path architecture"
+    }
   ],
-  "skills": ["Virtual Facilitation", "Adult Learning", "Sales Enablement", "Instructor-Led Training", "Learner Engagement", "Formative Assessment", "Adaptive Facilitation", "Instructional Design"],
-  "tools": ["Virtual Meeting Platform", "Facilitator Materials", "Participant Materials", "Live Polling"],
+  "skills": [
+    "Virtual Facilitation",
+    "Adult Learning",
+    "Sales Enablement",
+    "Instructor-Led Training",
+    "Learner Engagement",
+    "Formative Assessment",
+    "Adaptive Facilitation",
+    "Instructional Design"
+  ],
+  "tools": [
+    "Virtual Meeting Platform",
+    "Facilitator Materials",
+    "Participant Materials",
+    "Live Polling"
+  ],
   "assets": [],
   "source_material_notes": "Generalized from completed facilitation work in a virtual MEDDPICC sales workshop. Employer names, participant details, internal slides, facilitator materials, learner comments, session links, dates, recordings, and performance metrics are intentionally omitted.",
-  "dates": {"created": "2026-09-16", "updated": "2026-09-16"}
+  "dates": {
+    "created": "2026-09-16",
+    "updated": "2026-09-17"
+  }
 }
