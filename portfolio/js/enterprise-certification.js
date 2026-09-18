@@ -3,55 +3,64 @@
     pathway: {
       title: 'Sequence the seller journey from context to application.',
       text: 'The required path stayed focused on the decisions most sellers shared. Market-specific requirements and deeper technical foundations were separated so they did not inflate the core certification.',
-      html: `
+      html: \`
         <div class="blueprint-flow" aria-label="Core certification sequence">
-          ${['Cellular context','Customer use cases','Solution fit','Discovery + value','Scenario practice','Ordering readiness','Certification'].map((item) => `<span class="blueprint-step">${item}</span>`).join('')}
+          \${['Cellular context','Customer use cases','Solution fit','Discovery + value','Scenario practice','Ordering readiness','Certification'].map((item) => \`<span class="blueprint-step">\${item}</span>\`).join('')}
         </div>
-        <div class="blueprint-mini-grid" style="margin-top:10px">
+        <div class="blueprint-mini-grid" style="margin-top:12px">
           <article class="blueprint-mini-card"><strong>Core seller path</strong><p>Required concepts and decisions shared across the main audience.</p></article>
           <article class="blueprint-mini-card"><strong>Regional extension</strong><p>Market-specific requirements stayed in a separate route and assessment.</p></article>
           <article class="blueprint-mini-card"><strong>Optional foundations</strong><p>Deeper technical background remained available without becoming required sales training.</p></article>
           <article class="blueprint-mini-card"><strong>Role boundary</strong><p>Engineering detail stayed out unless it supported discovery, risk, ordering, or specialist handoff.</p></article>
-        </div>`
+        </div>\`
     },
     alignment: {
       title: 'Map each objective to a seller task and observable evidence.',
       text: 'I used backward design so practice and assessment checked the decisions the certification was meant to support, rather than isolated product recall.',
-      html: `
+      html: \`
         <div class="blueprint-table" aria-label="Objective alignment examples">
-          ${[
+          \${[
             ['Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
             ['Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
             ['Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
-          ].map(([objective, task, practice, evidence]) => `
+          ].map(([objective, task, practice, evidence]) => \`
             <div class="blueprint-row">
-              <div class="blueprint-cell"><strong>Objective</strong>${objective}</div>
-              <div class="blueprint-cell"><strong>Seller task</strong>${task}</div>
-              <div class="blueprint-cell"><strong>Practice</strong>${practice}</div>
-              <div class="blueprint-cell"><strong>Assessment evidence</strong>${evidence}</div>
-            </div>`).join('')}
-        </div>`
+              <div class="blueprint-cell"><strong>Objective</strong>\${objective}</div>
+              <div class="blueprint-cell"><strong>Seller task</strong>\${task}</div>
+              <div class="blueprint-cell"><strong>Practice</strong>\${practice}</div>
+              <div class="blueprint-cell"><strong>Assessment evidence</strong>\${evidence}</div>
+            </div>\`).join('')}
+        </div>\`
     },
     release: {
       title: 'Treat release, platform behavior, and maintenance as part of the learning design.',
       text: 'The certification had to work after authoring was finished. I planned review, LMS testing, reporting logic, and source updates as part of the same system.',
-      html: `
+      html: \`
         <div class="blueprint-mini-grid">
           <article class="blueprint-mini-card"><strong>1. Design QA</strong><p>Editorial, visual, interaction, accessibility, and learner-flow checks before broader review.</p></article>
           <article class="blueprint-mini-card"><strong>2. SME + assessment review</strong><p>Resolve accuracy and messaging feedback while protecting the seller-focused scope.</p></article>
           <article class="blueprint-mini-card"><strong>3. LMS UAT</strong><p>Validate visibility, launch, routes, renewal behavior, imported history, and regional requirements.</p></article>
           <article class="blueprint-mini-card"><strong>4. Maintain + report</strong><p>Track source changes and support workarounds when platform reporting does not match the certification logic.</p></article>
-        </div>`
+        </div>\`
     }
   };
 
   const blueprintPanel = document.getElementById('blueprintPanel');
   const blueprintButtons = [...document.querySelectorAll('[data-blueprint]')];
 
-  const renderBlueprint = (key) => {
+  const renderBlueprint = (key, animate = false) => {
     const data = blueprintData[key];
     if (!data || !blueprintPanel) return;
-    blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
+    const update = () => {
+      blueprintPanel.innerHTML = \`<h3>\${data.title}</h3><p>\${data.text}</p>\${data.html}\`;
+      blueprintPanel.classList.remove('is-switching');
+    };
+    if (!animate) {
+      update();
+      return;
+    }
+    blueprintPanel.classList.add('is-switching');
+    window.setTimeout(update, 120);
   };
 
   blueprintButtons.forEach((button, index) => {
@@ -60,28 +69,32 @@
         const active = item === button;
         item.classList.toggle('active', active);
         item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
       });
-      renderBlueprint(button.dataset.blueprint);
+      renderBlueprint(button.dataset.blueprint, true);
     };
+
     button.addEventListener('click', activate);
     button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
       let next = index;
       if (event.key === 'Home') next = 0;
       else if (event.key === 'End') next = blueprintButtons.length - 1;
-      else if (event.key === 'ArrowRight') next = (index + 1) % blueprintButtons.length;
+      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % blueprintButtons.length;
       else next = (index - 1 + blueprintButtons.length) % blueprintButtons.length;
       blueprintButtons[next].focus();
       blueprintButtons[next].click();
     });
   });
+  blueprintButtons.forEach((button, index) => { button.tabIndex = index === 0 ? 0 : -1; });
   renderBlueprint('pathway');
 
   const scenarioSteps = [
     {
       prompt: 'What is the strongest first discovery question?',
       guidance: 'Start with the workflow and business impact before jumping to a solution.',
+      correct: 1,
       options: [
         {
           text: 'What budget has already been approved for the project?',
@@ -100,6 +113,7 @@
     {
       prompt: 'What should the seller clarify before recommending a direction?',
       guidance: 'A cellular networking conversation can include different needs. The seller should separate them before mapping a solution approach.',
+      correct: 0,
       options: [
         {
           text: 'Whether the primary need is reliable connectivity for on-site operational devices, improved public mobile coverage for people, or a combination of both.',
@@ -118,6 +132,7 @@
     {
       prompt: 'What is the strongest next step after the need is qualified?',
       guidance: 'The seller should advance the opportunity without pretending to be the deployment engineer.',
+      correct: 0,
       options: [
         {
           text: 'Summarize the customer requirement, confirm success criteria, and involve the appropriate technical specialist when architecture or validation becomes necessary.',
@@ -137,33 +152,58 @@
 
   const stage = document.getElementById('scenarioStage');
   const progress = document.getElementById('scenarioProgress');
+  const progressBar = document.getElementById('scenarioProgressBar');
   const reset = document.getElementById('scenarioReset');
   let scenarioIndex = 0;
-  let selectedOption = null;
+
+  const animateStage = () => {
+    if (!stage) return;
+    stage.classList.remove('is-entering');
+    void stage.offsetWidth;
+    stage.classList.add('is-entering');
+  };
+
+  const updateProgress = (complete = false) => {
+    if (!progressBar) return;
+    const percent = complete ? 100 : ((scenarioIndex + 1) / scenarioSteps.length) * 100;
+    progressBar.style.width = \`\${percent}%\`;
+  };
 
   const renderScenario = () => {
     if (!stage || !progress) return;
-    selectedOption = null;
     const step = scenarioSteps[scenarioIndex];
-    progress.textContent = `Step ${scenarioIndex + 1} of ${scenarioSteps.length}`;
-    stage.innerHTML = `
-      <h3>${step.prompt}</h3>
-      <p>${step.guidance}</p>
+    progress.textContent = \`Step \${scenarioIndex + 1} of \${scenarioSteps.length}\`;
+    updateProgress();
+    stage.innerHTML = \`
+      <h3>\${step.prompt}</h3>
+      <p>\${step.guidance}</p>
       <div class="scenario-options">
-        ${step.options.map((option, optionIndex) => `<button class="scenario-option" type="button" data-scenario-option="${optionIndex}">${option.text}</button>`).join('')}
+        \${step.options.map((option, optionIndex) =>
+          \`<button class="scenario-option" type="button" data-scenario-option="\${optionIndex}" data-option-label="\${String.fromCharCode(65 + optionIndex)}">\${option.text}</button>\`
+        ).join('')}
       </div>
-      <div id="scenarioFeedback" aria-live="polite"></div>`;
+      <div id="scenarioFeedback" aria-live="polite"></div>\`;
+    animateStage();
 
     stage.querySelectorAll('[data-scenario-option]').forEach((button) => {
       button.addEventListener('click', () => {
         const optionIndex = Number(button.dataset.scenarioOption);
-        selectedOption = optionIndex;
-        stage.querySelectorAll('[data-scenario-option]').forEach((item) => item.classList.toggle('is-selected', item === button));
+        const strong = optionIndex === step.correct;
+        stage.querySelectorAll('[data-scenario-option]').forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle('is-selected', selected);
+          item.classList.toggle('is-strong', selected && strong);
+          item.setAttribute('aria-pressed', String(selected));
+        });
+
         const feedback = document.getElementById('scenarioFeedback');
         const isLast = scenarioIndex === scenarioSteps.length - 1;
-        feedback.innerHTML = `
-          <div class="scenario-feedback"><strong>Coaching feedback</strong><p>${step.options[optionIndex].feedback}</p></div>
-          <button class="scenario-next" type="button">${isLast ? 'Finish scenario' : 'Continue'}</button>`;
+        feedback.innerHTML = \`
+          <div class="scenario-feedback" data-tone="\${strong ? 'strong' : 'coach'}">
+            <strong>\${strong ? 'Strong seller move' : 'Coaching feedback'}</strong>
+            <p>\${step.options[optionIndex].feedback}</p>
+          </div>
+          <button class="scenario-next" type="button">\${isLast ? 'Finish scenario' : 'Continue →'}</button>\`;
         feedback.querySelector('.scenario-next').addEventListener('click', () => {
           if (isLast) renderScenarioSummary();
           else {
@@ -178,7 +218,8 @@
   const renderScenarioSummary = () => {
     if (!stage || !progress) return;
     progress.textContent = 'Scenario complete';
-    stage.innerHTML = `
+    updateProgress(true);
+    stage.innerHTML = \`
       <h3>The learning goal is judgment, not memorized product language.</h3>
       <p>This pattern lets sellers practice the sequence used in real customer conversations while feedback explains why a decision is stronger or weaker.</p>
       <div class="scenario-summary">
@@ -186,7 +227,8 @@
         <div><span>2. Distinguish</span><strong>Clarify the type of connectivity need before mapping a solution direction.</strong></div>
         <div><span>3. Advance</span><strong>Choose the next sales step and bring in technical depth at the right time.</strong></div>
       </div>
-      <button class="scenario-next" type="button" id="scenarioReplay">Try again</button>`;
+      <button class="scenario-next" type="button" id="scenarioReplay">Replay sample ↻</button>\`;
+    animateStage();
     document.getElementById('scenarioReplay').addEventListener('click', () => {
       scenarioIndex = 0;
       renderScenario();
@@ -199,13 +241,30 @@
   });
   renderScenario();
 
+  const revealSections = [...document.querySelectorAll('.flagship-section')];
+  revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealSections.forEach((section) => revealObserver.observe(section));
+  } else {
+    revealSections.forEach((section) => section.classList.add('is-visible'));
+  }
+
   const navLinks = [...document.querySelectorAll('.case-nav a')];
   const navSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (!visible) return;
-      navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${visible.target.id}`));
+      navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === \`#\${visible.target.id}\`));
     }, { rootMargin: '-28% 0px -58% 0px', threshold: [0.1, 0.35, 0.6] });
     navSections.forEach((section) => observer.observe(section));
   }
