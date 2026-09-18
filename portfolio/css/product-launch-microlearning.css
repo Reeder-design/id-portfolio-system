@@ -779,3 +779,109 @@
     width:100%;
   }
 }
+
+
+/* Sample Learning Experience — full dark contrast pass */
+.launch-demo-section{
+  background:
+    radial-gradient(circle at 14% 18%,rgba(151,219,79,.10),transparent 27%),
+    radial-gradient(circle at 90% 82%,rgba(80,132,132,.22),transparent 34%),
+    linear-gradient(145deg,#101d23 0%,#172a31 48%,#20373b 100%) !important;
+  color:#f4f8f5 !important;
+}
+.launch-demo-section .container,
+.launch-demo-section .launch-demo-heading,
+.launch-demo-section .launch-sim-layout,
+.launch-demo-section .launch-sim-panel{
+  background:transparent !important;
+}
+.launch-demo-section h2,
+.launch-demo-section h3,
+.launch-demo-section p,
+.launch-demo-section strong,
+.launch-demo-section .short-copy{
+  color:#f4f8f5;
+}
+.launch-demo-section .short-copy,
+.launch-demo-section .launch-demo-note,
+.launch-demo-section .launch-demo-context p,
+.launch-demo-section .launch-demo-purpose span,
+.launch-demo-section .launch-practice-feedback{
+  color:#d4e2da;
+}
+.launch-demo-section .launch-demo-note,
+.launch-demo-section .launch-demo-context,
+.launch-demo-section .launch-practice{
+  border-color:rgba(121,201,158,.20);
+  background:#17282f !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
+}
+.launch-demo-section .launch-demo-purpose article,
+.launch-demo-section .launch-practice-option{
+  border-color:rgba(121,201,158,.16);
+  background:#102128 !important;
+  color:#f1f7f3;
+}
+.launch-demo-section .launch-demo-purpose strong,
+.launch-demo-section .launch-practice-head h3,
+.launch-demo-section .launch-practice-feedback strong{
+  color:#fff;
+}
+.launch-demo-section .launch-demo-tab{
+  border-color:rgba(121,201,158,.16);
+  background:#13252c !important;
+  color:#e5efe9;
+}
+.launch-demo-section .launch-demo-tab strong{
+  color:#fff;
+}
+.launch-demo-section .launch-demo-tab small{
+  color:#c7d6ce;
+}
+.launch-demo-section .launch-demo-tab .launch-demo-number{
+  background:#203b3c;
+  color:#dff6e8;
+}
+.launch-demo-section .launch-demo-tab:hover,
+.launch-demo-section .launch-demo-tab:focus-visible{
+  border-color:rgba(151,219,79,.5);
+  background:#1a3137 !important;
+}
+.launch-demo-section .launch-demo-tab.active{
+  border-color:rgba(151,219,79,.62);
+  background:linear-gradient(145deg,#21413f,#2d5550) !important;
+  color:#fff;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+.launch-demo-section .launch-demo-tab.active .launch-demo-number{
+  background:#0f2026;
+  color:#e6f7eb;
+}
+.launch-demo-section .launch-demo-tab.active strong{
+  color:#fff;
+}
+.launch-demo-section .launch-demo-tab.active small{
+  color:#d7e7de;
+}
+.launch-demo-section .launch-practice-option:hover,
+.launch-demo-section .launch-practice-option:focus-visible{
+  border-color:rgba(151,219,79,.5);
+  background:#193139 !important;
+}
+.launch-demo-section .launch-practice-option.selected{
+  border-color:rgba(151,219,79,.65);
+  background:#21413f !important;
+  color:#fff;
+}
+.launch-demo-section .launch-practice-option.selected>span{
+  background:#0f2026;
+  color:#e6f7eb;
+}
+.launch-demo-section .launch-practice-feedback{
+  background:#0d1c22 !important;
+  border:1px solid rgba(121,201,158,.14);
+}
+.launch-demo-section .launch-practice-badge{
+  background:#24453f;
+  color:#e3f6e9;
+}
