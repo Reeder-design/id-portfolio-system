@@ -5,75 +5,207 @@
       "label": "Home",
       "page_path": "portfolio/index.html",
       "fields": {
-        "hero_title_lead": {"label": "Hero title lead", "type": "short", "value": "Simple designs for"},
-        "hero_title_accent": {"label": "Hero title accent", "type": "short", "value": "complex products."},
-        "hero_copy": {"label": "Hero introduction", "type": "long", "value": "I'm Haley Reeder, an instructional designer focused on sales and partner enablement for complex products. I build product-launch learning, microlearning, interactive practice, certifications, and live training, and I also support the LMS, reporting, automation, and AI-evaluation work around those programs."},
-        "featured_heading": {"label": "Featured work heading", "type": "short", "value": "Explore my work"},
-        "featured_intro": {"label": "Featured work introduction", "type": "long", "value": "Browse projects across instructional design, AI evaluation, LMS administration, and workflow automation."}
+        "hero_title_lead": {
+          "label": "Hero title lead",
+          "type": "short",
+          "value": "Simple designs for"
+        },
+        "hero_title_accent": {
+          "label": "Hero title accent",
+          "type": "short",
+          "value": "complex products."
+        },
+        "hero_copy": {
+          "label": "Hero introduction",
+          "type": "long",
+          "value": "I'm Haley Reeder, an instructional designer focused on sales and partner enablement for complex products. I build product-launch learning, microlearning, interactive practice, certifications, and live training, and I also support the LMS, reporting, automation, and AI-evaluation work around those programs."
+        },
+        "featured_heading": {
+          "label": "Featured work heading",
+          "type": "short",
+          "value": "Explore my work"
+        },
+        "featured_intro": {
+          "label": "Featured work introduction",
+          "type": "long",
+          "value": "Browse projects across instructional design, AI evaluation, LMS administration, and workflow automation."
+        }
       }
     },
     "about": {
       "label": "About Me",
       "page_path": "portfolio/about/index.html",
       "fields": {
-        "hero_title": {"label": "Experience heading", "type": "short", "value": "From classroom teaching to enterprise enablement"},
-        "hero_intro_primary": {"label": "Experience summary", "type": "long", "value": "I started as a high-school history and English teacher and now design enterprise learning for sales and partner audiences. My projects range from product launches and microlearning to certification paths and live workshops, with additional hands-on work in LMS administration, AI evaluation, reporting automation, and multimedia production."},
-        "thread_heading": {"label": "Workflow comparison heading", "type": "short", "value": "How my role changes across the work"}
+        "hero_title": {
+          "label": "Experience heading",
+          "type": "short",
+          "value": "From classroom teaching to enterprise enablement"
+        },
+        "hero_intro_primary": {
+          "label": "Experience summary",
+          "type": "long",
+          "value": "I started as a high-school history and English teacher and now design enterprise learning for sales and partner audiences. My projects range from product launches and microlearning to certification paths and live workshops, with additional hands-on work in LMS administration, AI evaluation, reporting automation, and multimedia production."
+        },
+        "thread_heading": {
+          "label": "Workflow comparison heading",
+          "type": "short",
+          "value": "How my role changes across the work"
+        }
       }
     },
     "projects": {
       "label": "Projects Landing Page",
       "page_path": "portfolio/projects/index.html",
       "fields": {
-        "hero_title": {"label": "Projects hero title", "type": "short", "value": "Projects"},
-        "hero_intro": {"label": "Projects hero introduction", "type": "long", "value": "My work centers on enterprise learning for sellers and partners, with additional projects in AI evaluation, LMS operations, reporting, and automation."},
-        "family_heading": {"label": "Project types heading", "type": "short", "value": "Browse by area"},
-        "family_intro": {"label": "Project types introduction", "type": "long", "value": "Start with the kind of work you want to see, then open the deeper case studies and interactive examples."}
+        "hero_title": {
+          "label": "Projects hero title",
+          "type": "short",
+          "value": "Projects"
+        },
+        "hero_intro": {
+          "label": "Projects hero introduction",
+          "type": "long",
+          "value": "My work centers on enterprise learning for sellers and partners, with additional projects in AI evaluation, LMS operations, reporting, and automation."
+        },
+        "family_heading": {
+          "label": "Project types heading",
+          "type": "short",
+          "value": "Browse by area"
+        },
+        "family_intro": {
+          "label": "Project types introduction",
+          "type": "long",
+          "value": "Start with the kind of work you want to see, then open the deeper case studies and interactive examples."
+        }
       }
     },
     "instructional-design": {
       "label": "Instructional Design Category",
       "page_path": "portfolio/projects/instructional-design/index.html",
       "fields": {
-        "hero_title": {"label": "Hero title", "type": "short", "value": "Instructional Design"},
-        "hero_intro": {"label": "Hero introduction", "type": "long", "value": "I design sales and partner learning for complex products, from short product-launch assets and scenario practice to live workshops and multi-course certification paths."},
-        "overview_heading": {"label": "Overview heading", "type": "short", "value": "The deliverable changes the work."},
-        "overview_body_one": {"label": "Overview paragraph", "type": "long", "value": "A product launch, certification, live workshop, and performance tool need different levels of content, practice, development, review, and maintenance. Choose a work type to see what I handle in each one."},
-        "examples_heading": {"label": "Examples heading", "type": "short", "value": "Explore instructional design work"},
-        "examples_intro": {"label": "Examples introduction", "type": "long", "value": "Browse by deliverable and open the examples to see the actual design and development decisions."}
+        "hero_title": {
+          "label": "Hero title",
+          "type": "short",
+          "value": "Instructional Design"
+        },
+        "hero_intro": {
+          "label": "Hero introduction",
+          "type": "long",
+          "value": "I design sales and partner learning for complex products, from short product-launch assets and scenario practice to live workshops and multi-course certification paths."
+        },
+        "overview_heading": {
+          "label": "Overview heading",
+          "type": "short",
+          "value": "The deliverable changes the work."
+        },
+        "overview_body_one": {
+          "label": "Overview paragraph",
+          "type": "long",
+          "value": "A product launch, certification, live workshop, and performance tool need different levels of content, practice, development, review, and maintenance. Choose a work type to see what I handle in each one."
+        },
+        "examples_heading": {
+          "label": "Examples heading",
+          "type": "short",
+          "value": "Explore instructional design work"
+        },
+        "examples_intro": {
+          "label": "Examples introduction",
+          "type": "long",
+          "value": "Browse by deliverable and open the examples to see the actual design and development decisions."
+        }
       }
     },
     "ai-training-and-evaluation": {
       "label": "AI Training and Evaluation Category",
       "page_path": "portfolio/projects/ai-training-and-evaluation/index.html",
       "fields": {
-        "hero_title": {"label": "Hero title", "type": "short", "value": "AI Training and Evaluation"},
-        "hero_intro_primary": {"label": "Hero introduction", "type": "long", "value": "I evaluate AI-generated work against the task, approved evidence, scoring criteria, and intended user. My work includes error detection, rubric scoring, calibration, QA, and actionable feedback."},
-        "overview_heading": {"label": "Overview heading", "type": "short", "value": "Find the issue that changes the quality of the answer."},
-        "overview_body_one": {"label": "Overview paragraph 1", "type": "long", "value": "I separate material errors from personal preference, trace claims to evidence, and weigh how each issue affects correctness or user action."},
-        "overview_body_two": {"label": "Overview paragraph 2", "type": "long", "value": "Select a failure signal to see what I look for."}
+        "hero_title": {
+          "label": "Hero title",
+          "type": "short",
+          "value": "AI Training and Evaluation"
+        },
+        "hero_intro_primary": {
+          "label": "Hero introduction",
+          "type": "long",
+          "value": "I evaluate AI-generated work against the task, approved evidence, scoring criteria, and intended user. My work includes error detection, rubric scoring, calibration, QA, and actionable feedback."
+        },
+        "overview_heading": {
+          "label": "Overview heading",
+          "type": "short",
+          "value": "Find the issue that changes the quality of the answer."
+        },
+        "overview_body_one": {
+          "label": "Overview paragraph 1",
+          "type": "long",
+          "value": "I separate material errors from personal preference, trace claims to evidence, and weigh how each issue affects correctness or user action."
+        },
+        "overview_body_two": {
+          "label": "Overview paragraph 2",
+          "type": "long",
+          "value": "Select a failure signal to see what I look for."
+        }
       }
     },
     "workflows": {
       "label": "Workflows Category",
       "page_path": "portfolio/projects/workflows/index.html",
       "fields": {
-        "hero_title": {"label": "Hero title", "type": "short", "value": "System Integrations and Workflows"},
-        "hero_intro": {"label": "Hero introduction", "type": "long", "value": "I connect systems and automate repetitive learning-operations work with Python, Selenium, pandas, and openpyxl. My projects include Salesforce-to-LMS account setup, recurring LMS report downloads, certification analysis, and migration support."},
-        "areas_heading": {"label": "Workflow areas heading", "type": "short", "value": "Four examples from learning operations and reporting"},
-        "areas_intro": {"label": "Workflow areas introduction", "type": "long", "value": "Choose an example to see the systems involved, what I automated, what I still checked manually, and the output I created."}
+        "hero_title": {
+          "label": "Hero title",
+          "type": "short",
+          "value": "System Integrations and Workflows"
+        },
+        "hero_intro": {
+          "label": "Hero introduction",
+          "type": "long",
+          "value": "I connect systems and automate repetitive learning-operations work with Python, Selenium, pandas, and openpyxl. My projects include Salesforce-to-LMS account setup, recurring LMS report downloads, certification analysis, and migration support."
+        },
+        "areas_heading": {
+          "label": "Workflow areas heading",
+          "type": "short",
+          "value": "Four examples from learning operations and reporting"
+        },
+        "areas_intro": {
+          "label": "Workflow areas introduction",
+          "type": "long",
+          "value": "Choose an example to see the systems involved, what I automated, what I still checked manually, and the output I created."
+        }
       }
     },
     "contact": {
       "label": "Contact",
       "page_path": "portfolio/contact/index.html",
       "fields": {
-        "hero_title": {"label": "Contact hero title", "type": "short", "value": "Contact"},
-        "hero_intro": {"label": "Contact hero introduction", "type": "long", "value": "LinkedIn is the easiest way to reach me. A protected portfolio contact form is also in development."},
-        "connect_heading": {"label": "Connect card heading", "type": "short", "value": "Connect online"},
-        "connect_intro": {"label": "Connect card introduction", "type": "long", "value": "I'm interested in instructional design, learning technology, AI, enablement, and learning systems work."},
-        "form_heading": {"label": "Contact form heading", "type": "short", "value": "Send a message"},
-        "form_intro": {"label": "Contact form introduction", "type": "long", "value": "This form will connect to a secure form service so my email address does not need to be published."}
+        "hero_title": {
+          "label": "Contact hero title",
+          "type": "short",
+          "value": "Contact"
+        },
+        "hero_intro": {
+          "label": "Contact hero introduction",
+          "type": "long",
+          "value": "LinkedIn is the easiest way to reach me. I’m always interested in thoughtful conversations about instructional design, learning technology, AI, enablement, and learning systems work."
+        },
+        "connect_heading": {
+          "label": "Connect card heading",
+          "type": "short",
+          "value": "Connect online"
+        },
+        "connect_intro": {
+          "label": "Connect card introduction",
+          "type": "long",
+          "value": "I'm interested in instructional design, learning technology, AI, enablement, and learning systems work."
+        },
+        "form_heading": {
+          "label": "Contact form heading",
+          "type": "short",
+          "value": "Send a message"
+        },
+        "form_intro": {
+          "label": "Contact form introduction",
+          "type": "long",
+          "value": "This form will connect to a secure form service so my email address does not need to be published."
+        }
       }
     }
   }
