@@ -43,7 +43,22 @@
     "CSS",
     "JavaScript"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/sales-use-case-module.webp",
+      "alt": "Public-safe sales use-case learning module.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/sitewide/cert-storyline-scenario.webp",
+      "alt": "Public-safe Storyline-style customer recommendation scenario.",
+      "caption": "Representative public-safe reconstruction created for the portfolio.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Public project uses fictional companies, products, customers, and opportunity data.",
   "dates": {
     "created": null,
