@@ -7,7 +7,7 @@
       title: 'What is it and why should a seller care?',
       text: 'At launch, sellers need an accurate, repeatable way to describe the offer without diving into implementation detail.',
       image: '../../../../assets/project-images/product-launch/product-launch-introduction.webp',
-      alt: 'Fictional TaskMate AI product-launch introduction screen.',
+      alt: 'Sanitized replacement TaskMate AI product-launch introduction screen.',
       facts: [
         ['icon-feedback', 'Seller task', 'Explain the offer in plain language.'],
         ['icon-elearning', 'Enablement priority', 'Lead with business value.'],
@@ -19,7 +19,7 @@
       title: 'Move from capability lists to customer relevance.',
       text: 'The feature view keeps the scope intentionally small so sellers can connect a capability to an outcome they can discuss during discovery.',
       image: '../../../../assets/project-images/product-launch/product-launch-key-features.webp',
-      alt: 'Fictional TaskMate AI feature-exploration screen.',
+      alt: 'Sanitized replacement TaskMate AI feature-exploration screen.',
       facts: [
         ['icon-ai-evaluation', 'Seller task', 'Match a capability to a customer need.'],
         ['icon-feedback', 'Enablement priority', 'Talk outcomes, not feature dumps.'],
@@ -31,7 +31,7 @@
       title: 'Practice product fit before the live conversation.',
       text: 'The learner distinguishes an appropriate use case from work that belongs in another tool, then receives feedback on the reasoning.',
       image: '../../../../assets/project-images/product-launch/product-launch-use-case-practice.webp',
-      alt: 'Fictional TaskMate AI applied use-case practice screen.',
+      alt: 'Sanitized replacement TaskMate AI applied use-case practice screen.',
       facts: [
         ['icon-interaction', 'Seller task', 'Recognize a credible use case.'],
         ['icon-assessment', 'Enablement priority', 'Make a decision, not recall a fact.'],
