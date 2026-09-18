@@ -17,7 +17,7 @@
   <script defer src="../../../../js/portfolio-motion.js"></script>
   <script defer src="../../../../js/enterprise-certification.js"></script>
 </head>
-<body>
+<body class="cert-case-page">
   <header class="site-header">
     <div class="container nav-container">
       <a class="site-brand" href="../../../../index.html">Haley <span>Reeder</span></a>
@@ -50,10 +50,22 @@
             </div>
           </div>
           <aside class="hero-map" aria-label="Certification learning flow">
-            <div class="hero-map-center" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></div>
-            <div class="hero-map-nodes" aria-hidden="true">
-              <div class="hero-map-node">Discover</div><div class="hero-map-node">Position</div><div class="hero-map-node">Practice</div><div class="hero-map-node">Certify</div>
+            <div class="hero-signal-field" aria-hidden="true">
+              <span class="hero-orbit hero-orbit-one"></span>
+              <span class="hero-orbit hero-orbit-two"></span>
+              <span class="hero-signal-dot"></span>
             </div>
+            <div class="hero-map-center" aria-hidden="true">
+              <span class="hero-map-core-label">Seller decision</span>
+              <svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
+            </div>
+            <div class="hero-map-nodes" aria-hidden="true">
+              <div class="hero-map-node"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg><span>Discover</span></div>
+              <div class="hero-map-node"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Position</span></div>
+              <div class="hero-map-node"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Practice</span></div>
+              <div class="hero-map-node"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg><span>Certify</span></div>
+            </div>
+            <div class="hero-map-caption" aria-hidden="true"><span></span> Technical context translated into seller action</div>
           </aside>
         </div>
       </div>
@@ -80,9 +92,9 @@
         <h2>Turn a complex cellular networking portfolio into usable sales decisions.</h2>
         <p class="body-large short-copy">The source material was technically dense and changed over time. Sellers needed enough technical context to recognize a customer need and have a credible conversation, but they did not need engineering or deployment training. I built the curriculum around the decisions sellers actually make.</p>
         <div class="overview-grid">
-          <article class="overview-card"><span>Problem</span><h3>Too much source detail, not enough seller structure.</h3><p>I translated approved technical, product, and sales inputs into one pathway with clear role boundaries.</p></article>
-          <article class="overview-card"><span>What I owned</span><h3>Curriculum, build, assessment, review, LMS testing, and maintenance.</h3><p>I worked from objective writing through Storyline/Rise development, SME review, learner-path validation, and updates.</p></article>
-          <article class="overview-card"><span>Public boundary</span><h3>The real design approach, without confidential content.</h3><p>Customer details, internal course names, product names, source documents, and Ericsson positioning language are not reproduced here.</p></article>
+          <article class="overview-card"><div class="card-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div><span>Problem</span><h3>Too much source detail, not enough seller structure.</h3><p>I translated approved technical, product, and sales inputs into one pathway with clear role boundaries.</p></article>
+          <article class="overview-card"><div class="card-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></div><span>What I owned</span><h3>Curriculum, build, assessment, review, LMS testing, and maintenance.</h3><p>I worked from objective writing through Storyline/Rise development, SME review, learner-path validation, and updates.</p></article>
+          <article class="overview-card"><div class="card-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div><span>Public boundary</span><h3>The real design approach, without confidential content.</h3><p>Customer details, internal course names, product names, source documents, and Ericsson positioning language are not reproduced here.</p></article>
         </div>
       </div>
     </section>
@@ -115,7 +127,17 @@
         </div>
 
         <div class="scenario-shell" aria-labelledby="scenarioTitle">
-          <div class="scenario-topbar"><span id="scenarioProgress">Step 1 of 3</span><button class="scenario-reset" id="scenarioReset" type="button">Restart</button></div>
+          <div class="scenario-module-chrome" aria-hidden="true">
+            <div class="scenario-module-brand"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Seller Practice Lab</span></div>
+            <div class="scenario-module-status"><span class="module-status-dot"></span> Interactive sample</div>
+          </div>
+          <div class="scenario-topbar">
+            <div class="scenario-progress-wrap">
+              <span id="scenarioProgress">Step 1 of 3</span>
+              <div class="scenario-progress-track" aria-hidden="true"><span id="scenarioProgressBar"></span></div>
+            </div>
+            <button class="scenario-reset" id="scenarioReset" type="button">Restart</button>
+          </div>
           <div class="scenario-customer">
             <p class="eyebrow">Customer Snapshot</p>
             <h3 id="scenarioTitle">Meridian Manufacturing</h3>
@@ -131,10 +153,10 @@
         <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Delivery + Results</p></div>
         <h2>I carried the work beyond course development into release, LMS behavior, reporting, and maintenance.</h2>
         <div class="delivery-grid">
-          <article><strong>Build</strong><p>Rise lessons, Storyline practice, diagrams, comparisons, knowledge checks, and certification assessment.</p></article>
-          <article><strong>Review</strong><p>Editorial QA, interaction/accessibility checks, SME review, assessment review, and revision tracking.</p></article>
-          <article><strong>LMS + UAT</strong><p>Tested visibility, enrollment, launch behavior, learner routes, renewal behavior, imported history, and regional requirements.</p></article>
-          <article><strong>Maintain</strong><p>Tracked affected content as approved source information changed and supported a reporting workaround when LMS status logic did not fully match the design.</p></article>
+          <article><div class="delivery-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></div><strong>Build</strong><p>Rise lessons, Storyline practice, diagrams, comparisons, knowledge checks, and certification assessment.</p></article>
+          <article><div class="delivery-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div><strong>Review</strong><p>Editorial QA, interaction/accessibility checks, SME review, assessment review, and revision tracking.</p></article>
+          <article><div class="delivery-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div><strong>LMS + UAT</strong><p>Tested visibility, enrollment, launch behavior, learner routes, renewal behavior, imported history, and regional requirements.</p></article>
+          <article><div class="delivery-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></div><strong>Maintain</strong><p>Tracked affected content as approved source information changed and supported a reporting workaround when LMS status logic did not fully match the design.</p></article>
         </div>
         <div class="result-grid">
           <article><span>Delivered</span><strong>Multi-course cellular networking sales certification</strong><p>Role-focused learning, scenario practice, assessment, and LMS implementation support.</p></article>
