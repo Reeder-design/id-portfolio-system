@@ -515,7 +515,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   position:relative;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
+  gap:0;
   margin-top:0;
 }
 .group-node{
@@ -523,7 +523,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   display:grid;
   justify-items:center;
   gap:8px;
-  padding-top:28px;
+  padding:28px 6px 0;
   text-align:center;
 }
 .group-node::before{
@@ -668,7 +668,6 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   .network-drop{right:16.666666%}
 }
 @media(max-width:440px){
-  .group-grid{gap:6px}
   .group-node strong{font-size:.56rem}
   .group-icon{width:42px;height:42px}
 }
