@@ -24,7 +24,7 @@ Current portfolio version: **1.0.0**
   - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
     - Virtual Sales Workshop Facilitation — `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` (live)
   - **Complete eLearning Pathways** — `portfolio/projects/instructional-design/complete-learning-paths/index.html`
-    - Enterprise Sales Certification Pathway — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
+    - Ericsson Cellular Networking Sales Certification — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
 - **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
