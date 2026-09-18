@@ -4,7 +4,7 @@
   const stageData = {
     introduce: {
       label: '01 · Recognize the promise',
-      title: 'What is it—and why should a seller care?',
+      title: 'What is it and why should a seller care?',
       text: 'At launch, sellers need an accurate, repeatable way to describe the offer without diving into implementation detail.',
       image: '../../../../assets/project-images/product-launch/product-launch-introduction.webp',
       alt: 'Fictional TaskMate AI product-launch introduction screen.',
