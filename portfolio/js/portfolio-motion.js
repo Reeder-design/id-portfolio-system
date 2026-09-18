@@ -177,6 +177,40 @@
     });
   };
 
+  const initFeaturedCaseVisuals = () => {
+    const visualMap = [
+      {
+        match: 'enterprise-sales-certification',
+        image: 'assets/icons/pixel/portfolio-general/learning.webp',
+        alt: 'Learning pathway pixel illustration.'
+      },
+      {
+        match: 'learning-platform-operations-migration-readiness',
+        image: 'assets/icons/pixel/lms/forward-arrows.webp',
+        alt: 'Learning platform migration pixel illustration.'
+      },
+      {
+        match: 'certification-reporting-automation',
+        image: 'assets/icons/pixel/portfolio-general/growth.webp',
+        alt: 'Reporting and growth pixel illustration.'
+      }
+    ];
+
+    document.querySelectorAll('.featured-case-card').forEach((card) => {
+      if (card.querySelector('.featured-case-visual')) return;
+      const link = card.querySelector('a[href]');
+      if (!link) return;
+      const href = (link.getAttribute('href') || '').toLowerCase();
+      const visual = visualMap.find((item) => href.includes(item.match));
+      if (!visual) return;
+
+      const figure = document.createElement('div');
+      figure.className = 'featured-case-visual';
+      figure.innerHTML = `<img src="${new URL(visual.image, portfolioRoot).href}" alt="${escapeHtml(visual.alt)}" loading="lazy">`;
+      card.prepend(figure);
+    });
+  };
+
   const initHeroCleanup = () => {
     const hero = document.querySelector('main > section:first-of-type');
     const h1 = hero?.querySelector('h1');
@@ -317,6 +351,20 @@
     .replace(/^open\s+/i, '')
     .trim();
 
+  const pixelAssetForLink = (link) => {
+    const haystack = `${link.textContent || ''} ${link.getAttribute('href') || ''}`.toLowerCase();
+    if (haystack.includes('ai') || haystack.includes('evaluation')) return 'assets/icons/pixel/ai-training-evaluation/training-hero.webp';
+    if (haystack.includes('lms') || haystack.includes('learning platform') || haystack.includes('migration')) return 'assets/icons/pixel/lms/goal-mountain.webp';
+    if (haystack.includes('workflow') || haystack.includes('automation') || haystack.includes('system')) return 'assets/icons/pixel/hiring-guide/workflow-tree.webp';
+    if (haystack.includes('meddpicc')) return 'assets/icons/pixel/meddpicc/qualified-opportunity.webp';
+    if (haystack.includes('pursuit')) return 'assets/icons/pixel/pursuit-determination/pursue-confidence.webp';
+    if (haystack.includes('microlearning') || haystack.includes('performance support')) return 'assets/icons/pixel/microlearning-performance-support/microlearning.webp';
+    if (haystack.includes('live training') || haystack.includes('facilitation')) return 'assets/icons/pixel/portfolio-general/collaboration.webp';
+    if (haystack.includes('multimedia') || haystack.includes('video')) return 'assets/icons/pixel/portfolio-general/ideas.webp';
+    if (haystack.includes('certification') || haystack.includes('elearning') || haystack.includes('learning path')) return 'assets/icons/pixel/portfolio-general/learning.webp';
+    return 'assets/icons/pixel/portfolio-general/portfolio.webp';
+  };
+
   const initExploreFooters = () => {
     const eyebrowNodes = [...document.querySelectorAll('.eyebrow')]
       .filter((node) => /^(keep exploring|related work|other work)$/i.test((node.textContent || '').trim()));
@@ -355,7 +403,8 @@
           : 'Explore';
         const description = descriptionNode?.textContent.trim() || `Continue to ${title}.`;
         const icon = existingIcon || iconForLink(link);
-        return { href: rawHref, title, category, description, icon };
+        const pixel = pixelAssetForLink(link);
+        return { href: rawHref, title, category, description, icon, pixel };
       }).filter(Boolean);
 
       if (!cards.length) return;
@@ -375,7 +424,8 @@
             ${cards.map((card) => `
               <a class="refresh-link-card portfolio-explore-card" href="${escapeHtml(card.href)}">
                 <div class="refresh-link-card-header">
-                  <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
+                  <span class="icon-badge has-pixel" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
+                  <img class="portfolio-explore-pixel" src="${new URL(card.pixel, portfolioRoot).href}" alt="" aria-hidden="true" loading="lazy">
                   <span class="portfolio-explore-category">${escapeHtml(card.category)}</span>
                   <h3>${escapeHtml(card.title)}</h3>
                 </div>
@@ -819,6 +869,7 @@
   initFooterLinks();
   initCanonicalBreadcrumbs();
   initProjectFamilyVisuals();
+  initFeaturedCaseVisuals();
   initHeroCleanup();
   initExploreFooters();
   initPortfolioSafetyNotes();
