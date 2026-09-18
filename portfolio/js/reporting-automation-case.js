@@ -118,25 +118,6 @@
     }
   };
 
-  const workbookData = {
-    complete: {
-      summary: 'Matched activity + certificate evidence',
-      rows: [
-        ['user-0142','Employee','Matched','Matched','Complete'],
-        ['user-0287','Partner','Matched','Matched','Complete'],
-        ['user-0314','Employee','Matched','Matched','Complete']
-      ]
-    },
-    incomplete: {
-      summary: 'Records that still need review or missing evidence',
-      rows: [
-        ['user-0419','Partner','Matched','Not found','Incomplete'],
-        ['user-0526','Employee','Not found','Matched','Incomplete'],
-        ['user-0638','Partner','Review','Matched','Incomplete']
-      ]
-    }
-  };
-
   const setText = (id, value) => {
     const el = document.getElementById(id);
     if (el) el.textContent = value;
@@ -198,17 +179,6 @@
     }
     setText('reportEvidenceLabel', d.label);
     setText('reportEvidenceCaption', d.caption);
-  });
-
-  setupTabs('[data-workbook-sheet]', 'workbookSheet', (key) => {
-    const data = workbookData[key];
-    const body = document.getElementById('workbookRows');
-    if (!body) return;
-    body.innerHTML = data.rows.map(([learner,type,activity,certificate,status]) => {
-      const cls = status.toLowerCase();
-      return `<tr><td>${learner}</td><td>${type}</td><td>${activity}</td><td>${certificate}</td><td><span class="status-pill ${cls}">${status}</span></td></tr>`;
-    }).join('');
-    setText('workbookSummary', data.summary);
   });
 
   const navLinks = [...document.querySelectorAll('.case-nav a')];
