@@ -147,6 +147,20 @@
       <h2>A simpler review surface instead of four separate exports.</h2>
       <p class="short-copy">This public-safe workbook preview shows the structure of the final output. The rows are fictional and only demonstrate how the review view works.</p>
 
+      <div class="reporting-evidence-viewer">
+        <div class="reporting-evidence-tabs" role="tablist" aria-label="Reporting and analytics samples">
+          <button class="reporting-evidence-tab active" type="button" role="tab" aria-selected="true" data-report-evidence="course"><strong>Course Report</strong><small>Spreadsheet output</small></button>
+          <button class="reporting-evidence-tab" type="button" role="tab" aria-selected="false" data-report-evidence="certification"><strong>Certification Report</strong><small>Status output</small></button>
+          <button class="reporting-evidence-tab" type="button" role="tab" aria-selected="false" data-report-evidence="progress"><strong>Learner Progress</strong><small>Review export</small></button>
+          <button class="reporting-evidence-tab" type="button" role="tab" aria-selected="false" data-report-evidence="analytics"><strong>Analytics View</strong><small>Dashboard layer</small></button>
+        </div>
+        <figure class="reporting-evidence-frame">
+          <figcaption><span id="reportEvidenceLabel">Course completion report</span><strong>Public-safe sample asset</strong></figcaption>
+          <div class="reporting-evidence-screen"><img id="reportEvidenceImage" src="../../../../assets/project-images/reporting-automation/report-course-completion.webp" alt="Public-safe fictional course completion report with learner, department, course, status, completion date, and time-spent columns."></div>
+          <p id="reportEvidenceCaption">A spreadsheet-style reporting view showing the kind of completion evidence the workflow consolidates for review.</p>
+        </figure>
+      </div>
+
       <div class="workbook-demo">
         <div class="workbook-bar"><span class="workbook-file-icon"></span><strong>Certification_Review.xlsx</strong><span>Sanitized demo</span></div>
         <div class="workbook-tabs" role="tablist" aria-label="Workbook worksheets">
