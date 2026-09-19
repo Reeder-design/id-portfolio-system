@@ -885,3 +885,87 @@
   background:#24453f;
   color:#e3f6e9;
 }
+
+
+/* Recovered visual interaction treatment for the two microlearning case studies */
+.micro-asset-kicker{display:flex;align-items:center;gap:12px}
+.micro-pixel-badge{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  flex:0 0 58px;
+  border:1px solid rgba(80,132,132,.18);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(44,68,64,.08);
+}
+.micro-pixel-badge img{width:46px;height:46px;object-fit:contain;image-rendering:auto}
+.micro-interaction-cue{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:max-content;
+  max-width:100%;
+  margin:22px 0 14px;
+  padding:9px 12px;
+  border:1px solid rgba(80,132,132,.2);
+  border-radius:999px;
+  background:rgba(255,255,255,.78);
+  color:#3e5753;
+  box-shadow:0 8px 20px rgba(44,68,64,.06);
+}
+.micro-interaction-cue span{
+  flex:0 0 auto;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#e6f2eb;
+  color:#3d716a;
+  font:800 .61rem/1 var(--font-heading);
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+.micro-interaction-cue strong{
+  font:700 .72rem/1.35 var(--font-heading);
+}
+.micro-interaction-cue.on-dark{
+  border-color:rgba(255,255,255,.13);
+  background:rgba(255,255,255,.065);
+  color:#eaf4ef;
+  box-shadow:none;
+}
+.micro-interaction-cue.on-dark span{
+  background:rgba(121,201,158,.14);
+  color:#bfe8cf;
+}
+.micro-case-page .micro-flow-step,
+.product-launch-case-page .launch-outcome-tab,
+.vertical-case-page .vertical-industry-tab,
+.vertical-case-page .vertical-stage-tab,
+.vertical-case-page .vertical-outcome-tab{
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.micro-case-page .micro-flow-step:hover,
+.micro-case-page .micro-flow-step:focus-visible,
+.product-launch-case-page .launch-outcome-tab:hover,
+.product-launch-case-page .launch-outcome-tab:focus-visible,
+.vertical-case-page .vertical-industry-tab:hover,
+.vertical-case-page .vertical-industry-tab:focus-visible,
+.vertical-case-page .vertical-stage-tab:hover,
+.vertical-case-page .vertical-stage-tab:focus-visible,
+.vertical-case-page .vertical-outcome-tab:hover,
+.vertical-case-page .vertical-outcome-tab:focus-visible{
+  transform:translateY(-2px);
+}
+.micro-case-page .micro-flow-step.active,
+.product-launch-case-page .launch-outcome-tab.active,
+.vertical-case-page .vertical-industry-tab.active,
+.vertical-case-page .vertical-stage-tab.active,
+.vertical-case-page .vertical-outcome-tab.active{
+  box-shadow:0 10px 24px rgba(48,84,77,.12);
+}
+@media(max-width:680px){
+  .micro-pixel-badge{width:52px;height:52px;flex-basis:52px;border-radius:14px}
+  .micro-pixel-badge img{width:41px;height:41px}
+  .micro-interaction-cue{width:100%;align-items:flex-start;border-radius:16px}
+}
