@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Sync Preview | Hiring Guide Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiring-guide-manager.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header hiring-sync-header">
+        <div>
+            <p class="eyebrow">Hiring Guide Library → Ask Haley</p>
+            <h1>Public Sync Preview</h1>
+            <p class="hero-copy">Compile the rich private library into the stripped public Ask Haley format, inspect every change, test question routing, then apply it only to your local public files.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Back to Private Library</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-stack">
+        {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    <main class="hiring-sync-layout">
+        <section class="dashboard-card hiring-sync-intro">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Step 1 · Compile privately</p>
+                    <h2>Generate a fresh public-safe proposal</h2>
+                    <p class="section-copy">The compiler preserves unmatched legacy questions, updates confidently matched public questions, adds new canonical records, strips editorial-only fields, resolves only public evidence links, and never publishes anything.</p>
+                </div>
+                <form method="post" action="{{ url_for('hiring_guide.generate_public_sync') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-primary" type="submit">{% if proposal %}Regenerate Preview{% else %}Generate Public Sync Preview{% endif %}</button>
+                </form>
+            </div>
+            <div class="private-boundary">
+                <strong>Still local-only</strong>
+                <span>Generating this preview writes only a private proposal under <code>.portfolio-manager/hiring-guide/public-sync/</code>. It does not change <code>portfolio/</code>.</span>
+            </div>
+        </section>
+
+        {% if proposal %}
+        <section class="hiring-summary-grid hiring-sync-summary" aria-label="Public sync summary">
+            <article><span>Private canonical Q&amp;As</span><strong>{{ proposal.summary.private_canonical }}</strong></article>
+            <article><span>Matched existing</span><strong>{{ proposal.summary.matched_existing }}</strong></article>
+            <article><span>Changed public</span><strong>{{ proposal.summary.changed_public_questions }}</strong></article>
+            <article><span>New public</span><strong>{{ proposal.summary.new_public_questions }}</strong></article>
+            <article><span>Legacy preserved</span><strong>{{ proposal.summary.preserved_legacy_questions }}</strong></article>
+            <article class="{% if proposal.summary.removed_public_questions %}sync-danger{% endif %}"><span>Removed</span><strong>{{ proposal.summary.removed_public_questions }}</strong></article>
+            <article class="{% if proposal.summary.warnings %}sync-warning{% endif %}"><span>Review warnings</span><strong>{{ proposal.summary.warnings }}</strong></article>
+        </section>
+
+        {% if proposal.warnings %}
+        <section class="dashboard-card sync-warning-card">
+            <p class="eyebrow">Review required</p>
+            <h2>Evidence / editorial warnings</h2>
+            <p class="section-copy">Warnings do not automatically mean the answer is wrong. They mean the public wording deserves human review before local apply.</p>
+            <ul class="sync-warning-list">
+                {% for warning in proposal.warnings %}<li>{{ warning }}</li>{% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <section class="dashboard-card">
+            <p class="eyebrow">Step 2 · Matching audit</p>
+            <h2>How private records map to the current public guide</h2>
+            <p class="section-copy">High-confidence matches keep the current public ID/tier so existing starter buttons and follow-up links remain stable. Unmatched private records get a new stable ID and enter the expanded library.</p>
+            <div class="sync-table-wrap">
+                <table class="sync-table">
+                    <thead><tr><th>Private ID</th><th>Question</th><th>Public ID</th><th>Result</th><th>Score</th><th>Tier</th></tr></thead>
+                    <tbody>
+                    {% for item in proposal.matches %}
+                    <tr>
+                        <td><code>{{ item.private_id }}</code></td>
+                        <td>{{ item.question }}</td>
+                        <td><code>{{ item.public_id }}</code></td>
+                        <td><span class="sync-result-pill {% if item.matched_existing %}matched{% else %}new{% endif %}">{{ "Matched existing" if item.matched_existing else "New public" }}</span></td>
+                        <td>{{ item.match_score }}</td>
+                        <td>{{ item.tier }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="dashboard-card">
+            <p class="eyebrow">Step 3 · Diff review</p>
+            <h2>Exactly what would change</h2>
+
+            {% if proposal.diff.added %}
+            <div class="sync-diff-section">
+                <h3>New public questions · {{ proposal.diff.added|length }}</h3>
+                <div class="sync-compact-list">
+                    {% for item in proposal.diff.added %}
+                    <article><strong>{{ item.question }}</strong><span><code>{{ item.id }}</code> · {{ item.category }}</span></article>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if proposal.diff.changed %}
+            <div class="sync-diff-section">
+                <h3>Changed public questions · {{ proposal.diff.changed|length }}</h3>
+                <div class="sync-change-list">
+                    {% for item in proposal.diff.changed %}
+                    <details>
+                        <summary><span><strong>{{ item.question }}</strong><small><code>{{ item.id }}</code> · changed: {{ item.fields|join(", ") }}</small></span><span>Review →</span></summary>
+                        <div class="sync-before-after">
+                            <div>
+                                <p class="eyebrow">Current public</p>
+                                <p>{{ item.before.answer }}</p>
+                                <small>{{ item.before.category }} · {{ item.before.short_label }}</small>
+                            </div>
+                            <div>
+                                <p class="eyebrow">Proposed public</p>
+                                <p>{{ item.after.answer }}</p>
+                                <small>{{ item.after.category }} · {{ item.after.short_label }}</small>
+                            </div>
+                        </div>
+                    </details>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if not proposal.diff.added and not proposal.diff.changed %}
+            <div class="empty-state hiring-empty">This proposal produces no public content changes.</div>
+            {% endif %}
+
+            {% if proposal.diff.removed %}
+            <div class="private-boundary sync-removal-warning">
+                <strong>Apply blocked</strong>
+                <span>This proposal would remove {{ proposal.diff.removed|length }} public question(s): {{ proposal.diff.removed|join(", ") }}. The local apply service refuses destructive sync proposals.</span>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="dashboard-card">
+            <p class="eyebrow">Step 4 · Routing simulator</p>
+            <h2>Ask the proposed public library a hiring-manager question</h2>
+            <p class="section-copy">This runs the same deterministic question-scoring logic used by the live Ask Haley experience so you can catch weak routing before changing public files.</p>
+            <form method="post" action="{{ url_for('hiring_guide.test_public_routing') }}" class="sync-routing-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label>Hiring-manager question
+                    <input type="text" name="query" value="{{ routing_query }}" placeholder="Example: How do you approach technical training for sales teams?" required>
+                </label>
+                <button class="btn btn-primary" type="submit">Test Routing</button>
+            </form>
+
+            {% if routing_query %}
+            <div class="sync-routing-results">
+                <div class="sync-query"><span>Query</span><strong>{{ routing_query }}</strong></div>
+                {% for item in routing_results %}
+                <article class="{% if loop.first %}top-match{% endif %}">
+                    <div><span class="sync-score">{{ item.score }}</span><div><strong>{{ item.label }}</strong><small>{{ item.id }} · {{ item.category }}</small></div></div>
+                    <p>{{ item.prompt }}</p>
+                    {% if loop.first %}<div class="sync-answer-preview">{{ item.answer }}</div>{% endif %}
+                </article>
+                {% else %}
+                <div class="empty-state hiring-empty">No proposed public question scored above zero for this query.</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="dashboard-card sync-apply-card">
+            <p class="eyebrow">Step 5 · Apply locally</p>
+            <h2>Replace only the local public FAQ data after review</h2>
+            <p class="section-copy">Apply writes the proposed <code>hiring-faq.json</code> and <code>hiring-faq-expanded.json</code> into your local working copy, creates a private recovery backup first, then runs Full Validation. If validation fails, the old public files are automatically restored.</p>
+            <div class="private-boundary">
+                <strong>This still does not publish.</strong>
+                <span>No Git commit or push happens here. After a successful local apply, you can preview Ask Haley in the normal public-site preview and decide separately whether to keep/publish those public changes.</span>
+            </div>
+            <form method="post" action="{{ url_for('hiring_guide.apply_public_sync') }}" class="sync-apply-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label>Type <code>{{ apply_confirmation }}</code> exactly
+                    <input type="text" name="confirm_text" autocomplete="off" required>
+                </label>
+                <button class="btn btn-primary" type="submit" {% if proposal.diff.removed %}disabled{% endif %}>Apply Public Sync Locally + Validate</button>
+            </form>
+            {% if proposal.status == "applied-local" %}
+            <div class="sync-applied-state"><strong>Last proposal applied locally</strong><span>{{ proposal.applied_at }}</span>{% if proposal.backup_path %}<small>Recovery backup: {{ proposal.backup_path }}</small>{% endif %}</div>
+            {% endif %}
+        </section>
+        {% endif %}
+    </main>
+</div>
+</body>
+</html>
