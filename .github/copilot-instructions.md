@@ -19,7 +19,7 @@ Use this order:
 2. Structured records under `portfolio-data/` for fields they own.
 3. `templates/` plus deterministic renderers for standard generated pages.
 4. Bespoke HTML/CSS/JS for intentionally custom interactive pages.
-5. Portfolio Manager code for Manager behavior.
+5. Portfolio Manager code for Manager behavior. The private Hiring Guide editorial source lives at runtime under Git-ignored `.portfolio-manager/hiring-guide/`.
 6. Documentation describes the current implementation and must not override live code/data.
 
 Before adding a new shared stylesheet, script, helper, controller, renderer, or template variation, inspect the existing implementation and extend the current owner when practical.
@@ -69,6 +69,7 @@ Prefer one clear implementation over layered competing fixes. For sitewide behav
 
 ## Content Rules
 Never expose confidential employer, customer, partner, or unreleased product information.
+The rich Hiring Guide Library is private editorial state. Do not commit its confidence/source/implementation-note layer into public Git history; the existing public Ask Haley data is a separate public-safe representation.
 Use fictionalized, sanitized, or generalized examples when needed.
 Do not invent professional claims, metrics, clients, tools, credentials, responsibilities, or results.
 
