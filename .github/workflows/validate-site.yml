@@ -111,6 +111,8 @@ jobs:
           python scripts/check-manage-ai-review.py
           python scripts/check-manage-assets.py
           python scripts/check-related-references.py
+          python scripts/check-relationship-graph.py
+          python scripts/check-component-registry.py
           python scripts/check-create-content.py
           python scripts/check-create-content-sources.py
           python scripts/check-create-content-build.py

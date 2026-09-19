@@ -13,6 +13,7 @@ Structured data is not a future placeholder. It is part of the current system an
 Use the narrowest authoritative source for the thing being changed:
 
 - `portfolio-data/taxonomy.json` — canonical category IDs, labels, subcategories, and public paths
+- `portfolio-data/component-registry.json` — canonical reusable component IDs and implementation ownership
 - `portfolio-data/projects/*.json` — structured project records
 - `portfolio-data/site-content.json` — supported structured general-page content
 - `portfolio-data/schema/` — structured-record requirements
@@ -26,6 +27,7 @@ Documentation describes these sources; it does not replace them.
 ```text
 portfolio-data/
 ├── taxonomy.json
+├── component-registry.json
 ├── site-content.json
 ├── version.json
 ├── schema/
@@ -47,6 +49,8 @@ Structured project records include fields for:
 - assets
 - source/sanitization notes
 - supported links
+- optional project relationships in `related_work`
+- optional reusable-design metadata in `component_refs`
 
 The schema and validation scripts are authoritative for exact required/optional fields.
 
@@ -121,6 +125,18 @@ public index.html
 For intentionally bespoke interactive pages, custom HTML/CSS/JavaScript may remain the presentation source of truth while structured records provide metadata or case-study content where supported.
 
 Do not assume every existing HTML page is generated, and do not assume every structured record may be edited independently of its rendered output. Inspect the page type and current ownership before changing it.
+
+### Project Relationships
+
+`related_work` is the structured source for meaningful project-to-project connections. Portfolio Manager Related References exposes outgoing connections, incoming references, and deterministic suggestions based only on existing structured metadata. Suggestions require human approval and never auto-add links.
+
+Generated pages can render approved `related_work` through the standard template after regeneration. Bespoke pages do not receive injected Related Work markup merely because metadata exists.
+
+### Reusable Components
+
+`component_refs` records intentional association with entries in `portfolio-data/component-registry.json`. The registry is documentation and ownership metadata first: it identifies established patterns, their implementation files, and whether the standard template supports them.
+
+Some component usage is inferred directly from structured data or generated-page architecture and therefore does not need to be redundantly stored. A component reference never grants Portfolio Manager permission to inject code into a custom experience.
 
 ## Portfolio Manager Relationship
 

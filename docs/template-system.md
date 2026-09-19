@@ -13,6 +13,7 @@ The standard template is a strong default, not a requirement that every project 
 Use these files for their specific responsibilities:
 
 - `portfolio-data/taxonomy.json` — canonical category IDs, labels, subcategories, and public paths
+- `portfolio-data/component-registry.json` — canonical reusable component IDs, ownership, support level, and intended use
 - `portfolio-data/schema/project.schema.json` — structured project requirements
 - `portfolio-data/projects/*.json` — project-specific structured content
 - `templates/project-page/index.html` — standard generated case-study markup
@@ -111,6 +112,35 @@ Generated pages end with routes to the parent portfolio area, Projects, and the 
 The canonical presentation uses the same shared component pattern as the broader portfolio. Do not create a competing category-specific closing component unless the public design system is intentionally being changed.
 
 `portfolio/js/portfolio-motion.js` still normalizes some older hand-built page structures at runtime. Treat that as compatibility behavior, not permission to add another parallel markup pattern.
+
+### Related Work and Related References
+
+Structured project-to-project connections use the optional `related_work` field on project records. The standard renderer turns those relationships into the conditional Related Work section.
+
+Portfolio Manager **Related References** has two responsibilities:
+
+- manage the structured relationship graph: outgoing connections, incoming references, and deterministic suggestions based on existing category/subcategory, skills, tools, and graph metadata
+- preserve rename/reference integrity when a managed title changes by reviewing visible linked labels/cards that may need updating
+
+Suggestions never auto-add a project connection. Relationship metadata on a bespoke project does not inject a public Related Work block into that custom page. Generated pages surface approved `related_work` changes only after the normal regenerate step.
+
+### Reusable Component Registry
+
+`portfolio-data/component-registry.json` is the canonical registry for reusable interaction and presentation patterns.
+
+Each registry entry documents:
+
+- component ID and label
+- category and support status
+- intended use and when to avoid the pattern
+- implementation-owner files
+- stable DOM/architecture markers where useful
+
+The registry distinguishes **template-supported** components from **custom-pattern** components. Template-supported patterns are already owned by the standard renderer/template system. Custom patterns document an established reusable approach without implying that Portfolio Manager can inject that implementation into a bespoke page.
+
+Projects may record optional `component_refs` metadata for intentional component use. Portfolio Manager also infers some usage directly from structured project data and generated-page architecture. Inferred usage is not duplicated into project records automatically.
+
+Create Content AI planning receives this registry as an approved design-system menu. It should prefer an existing component when it fits and return only a valid registry ID; when no registered component fits, the plan may recommend a custom pattern without inventing an ID. Approved registry IDs flow into controlled local builds as metadata only.
 
 ## Breadcrumb and Page Path Standard
 

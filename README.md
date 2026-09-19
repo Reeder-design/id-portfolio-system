@@ -70,7 +70,8 @@ Use this for work that already exists in the portfolio. It supports:
 - page-aware AI edit proposals
 - deterministic **Approve & Apply Locally** with validation and recovery backup
 - proposal history
-- Related References
+- Related References project graph and rename/reference integrity review
+- Reusable Component Registry
 - AI Portfolio Review
 
 Saving or applying locally does **not** publish anything.
@@ -180,7 +181,7 @@ Portfolio Manager **Run Full Validation** and pull-request CI exercise the same 
 - generated documentation/versioning
 - Git publishing safety
 - AI privacy and proposal/apply boundaries
-- assets and Related References
+- assets, Related References relationship graph/reference integrity, and Component Registry
 - Create Content and Reference Library workflows
 - private Hiring Guide Library import/edit/evidence/backups
 - deterministic Hiring Guide public-sync proposal, routing, stale-state, rollback, and local-apply boundaries
@@ -214,7 +215,7 @@ If that terminal is already running after a Git pull, you can normally just refr
 ## Repository Structure
 
 - `portfolio/` — deployed public website
-- `portfolio-data/` — structured public-content source data
+- `portfolio-data/` — structured public-content source data, including the canonical reusable `component-registry.json`
 - `portfolio-manager/` — local-only Flask management application
 - `templates/` — reusable standard project templates
 - `design-system/` — design-system/development resources

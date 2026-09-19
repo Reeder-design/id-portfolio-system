@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Registry | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='relationship-components.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header component-registry-header">
+        <div>
+            <p class="eyebrow">Portfolio system · Reuse library</p>
+            <h1>Reusable Component Registry</h1>
+            <p class="hero-copy">See which interaction and presentation patterns already exist before building another version. Template-supported components are reusable by the standard project system; custom patterns remain intentional bespoke implementations.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Manage Content</a>
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="component-summary-grid">
+        <article><span>Registered patterns</span><strong>{{ counts.total }}</strong></article>
+        <article><span>Template-supported</span><strong>{{ counts.template_supported }}</strong></article>
+        <article><span>Custom patterns</span><strong>{{ counts.custom_pattern }}</strong></article>
+        <article><span>Currently used</span><strong>{{ counts.used }}</strong></article>
+    </section>
+
+    <section class="dashboard-card full-width">
+        <div class="compact-section-head">
+            <div>
+                <p class="eyebrow">How to use this</p>
+                <h2>Reuse the pattern, not a copied page</h2>
+            </div>
+        </div>
+        <p class="section-copy">A component record tells you what problem the pattern solves and which files own the implementation. Recording a component on a project documents the design system; it does not inject markup into a custom page. Standard renderer components are clearly labeled when the shared project template already knows how to build them.</p>
+    </section>
+
+    <main class="component-registry-grid">
+        {% for component in components %}
+        <article class="dashboard-card component-registry-card" id="component-{{ component.id }}">
+            <div class="component-card-topline">
+                <div>
+                    <p class="eyebrow">{{ component.category|replace('-', ' ')|title }}</p>
+                    <h2>{{ component.label }}</h2>
+                </div>
+                <span class="component-support {{ component.support }}">{{ component.support|replace('-', ' ')|title }}</span>
+            </div>
+            <p>{{ component.summary }}</p>
+            <div class="component-guidance-grid">
+                <div><span>Best for</span><p>{{ component.best_for }}</p></div>
+                <div><span>Avoid when</span><p>{{ component.avoid_when }}</p></div>
+            </div>
+            <details class="component-details">
+                <summary><span>Implementation ownership</span><span>{{ component.implementation_files|length }} file{% if component.implementation_files|length != 1 %}s{% endif %} →</span></summary>
+                <ul>{% for path in component.implementation_files %}<li><code>{{ path }}</code></li>{% endfor %}</ul>
+            </details>
+            <div class="component-usage">
+                <div class="component-usage-head"><strong>Portfolio usage</strong><span>{{ component.usage_count }} project{% if component.usage_count != 1 %}s{% endif %}</span></div>
+                {% if component.used_by %}
+                <div class="component-usage-list">
+                    {% for project in component.used_by %}
+                    <a href="{{ url_for('content.project_editor', project_id=project.id) }}">
+                        <span>{{ project.title }}</span>
+                        <small>{{ project.basis|title }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="muted-inline">Not currently recorded or inferred on a structured project.</p>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ from ai_service import (
     load_taxonomy,
     preflight_source,
 )
+from component_registry_service import ComponentRegistryError, load_registry
 from create_content_sources import ContentSourceError, approved_source_context
 
 
@@ -186,6 +187,13 @@ def brief_preflight(record: dict[str, Any]) -> dict[str, list[str]]:
     return checks
 
 
+def _planning_component_registry() -> dict[str, Any]:
+    try:
+        return load_registry()
+    except ComponentRegistryError as exc:
+        raise CreateContentError(str(exc)) from exc
+
+
 CREATE_PLAN_INSTRUCTIONS = """You are a planning assistant inside a private instructional-design portfolio creation workspace.
 Your job is to help turn a human-authored Content Brief and any explicitly attached approved sanitized sources into a concrete portfolio project plan before any public page is created.
 
@@ -197,6 +205,9 @@ Rules:
 - Preserve the user's stated purpose, audience, tone, design direction, and safety constraints.
 - Prefer specific, portfolio-useful recommendations over generic advice.
 - Use the supplied portfolio taxonomy for placement suggestions.
+- Prefer an existing supplied reusable component when it fits the interaction/presentation need instead of inventing a parallel pattern.
+- For each interaction, return component_id only when it exactly matches an id in the supplied component registry; otherwise return null.
+- A component recommendation is design metadata only. Do not imply that selecting it injects code into a bespoke page.
 - Keep public-safety concerns separate from creative recommendations.
 - Do not write files, code, Git commands, or publishing instructions.
 - This is a planning proposal only. Do not claim anything has been built.
@@ -228,6 +239,7 @@ def _plan_prompt(record: dict[str, Any]) -> str:
         "interactions": [
             {
                 "name": "interaction or static presentation pattern",
+                "component_id": "existing component registry id or null",
                 "purpose": "why it helps",
                 "visitor_action": "what the visitor does",
             }
@@ -249,6 +261,8 @@ def _plan_prompt(record: dict[str, Any]) -> str:
         + "\nAPPROVED SANITIZED SOURCE CONTEXT END\n\n"
         + "PORTFOLIO TAXONOMY:\n"
         + json.dumps(load_taxonomy(), ensure_ascii=False, indent=2)
+        + "\n\nREUSABLE COMPONENT REGISTRY:\n"
+        + json.dumps(_planning_component_registry(), ensure_ascii=False, indent=2)
         + "\n\nREQUIRED JSON SHAPE:\n"
         + json.dumps(expected, ensure_ascii=False, indent=2)
     )
@@ -303,14 +317,28 @@ def _normalize_plan(value: Any) -> dict[str, Any]:
                 "evidence_needed": _string_list(item.get("evidence_needed"), 12),
             })
 
+    try:
+        registry_components = {
+            str(item.get("id")): item
+            for item in _planning_component_registry().get("components", [])
+            if isinstance(item, dict) and item.get("id")
+        }
+    except ComponentRegistryError as exc:
+        raise CreateContentError(str(exc)) from exc
+
     interactions = []
     raw_interactions = value.get("interactions", [])
     if isinstance(raw_interactions, list):
         for item in raw_interactions[:12]:
             if not isinstance(item, dict):
                 continue
+            component_id = str(item.get("component_id") or "").strip()
+            component = registry_components.get(component_id) if component_id else None
             interactions.append({
                 "name": str(item.get("name", "Presentation pattern")).strip()[:180] or "Presentation pattern",
+                "component_id": component_id if component else None,
+                "component_label": str(component.get("label")) if component else None,
+                "component_support": str(component.get("support")) if component else None,
                 "purpose": str(item.get("purpose", "")).strip()[:1600],
                 "visitor_action": str(item.get("visitor_action", "")).strip()[:1600],
             })

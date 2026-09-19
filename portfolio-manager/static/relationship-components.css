@@ -1,0 +1,360 @@
+.component-registry-header {
+    background:
+        radial-gradient(circle at 82% 18%, rgba(151, 219, 79, .12), transparent 28%),
+        radial-gradient(circle at 14% 82%, rgba(121, 201, 158, .12), transparent 32%),
+        linear-gradient(135deg, rgba(72, 87, 81, .98), rgba(42, 54, 50, .98));
+}
+
+.component-summary-grid,
+.relationship-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.component-summary-grid article,
+.relationship-summary-grid article {
+    display: grid;
+    gap: 5px;
+    padding: 16px 18px;
+    border: 1px solid rgba(232, 221, 199, .14);
+    border-radius: 14px;
+    background: rgba(62, 74, 70, .94);
+}
+
+.component-summary-grid span,
+.relationship-summary-grid span {
+    color: var(--muted-text);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.component-summary-grid strong,
+.relationship-summary-grid strong {
+    color: var(--cream);
+    font: 700 1.3rem/1 var(--font-heading);
+}
+
+.component-registry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.component-registry-card {
+    display: grid;
+    gap: 16px;
+}
+
+.component-card-topline,
+.component-usage-head,
+.relationship-card-head,
+.compact-section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.component-card-topline h2,
+.relationship-card-head h3 {
+    margin-top: 4px;
+}
+
+.component-support {
+    display: inline-flex;
+    padding: 6px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.component-support.template-supported {
+    color: #dff5e5;
+    background: rgba(121, 201, 158, .13);
+}
+
+.component-support.custom-pattern {
+    color: #ece5f2;
+    background: rgba(184, 170, 195, .14);
+}
+
+.component-guidance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.component-guidance-grid > div {
+    padding: 12px 13px;
+    border-radius: 12px;
+    background: rgba(243, 240, 232, .05);
+}
+
+.component-guidance-grid span {
+    color: var(--dusty-mint);
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.component-guidance-grid p {
+    margin: 5px 0 0;
+    color: var(--text-soft);
+    font-size: .84rem;
+}
+
+.component-details {
+    border: 1px solid rgba(232, 221, 199, .12);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.component-details summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 13px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.component-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.component-details ul {
+    margin: 0;
+    padding: 0 28px 14px;
+    color: var(--text-soft);
+}
+
+.component-usage {
+    display: grid;
+    gap: 9px;
+}
+
+.component-usage-head span {
+    color: var(--muted-text);
+    font-size: .74rem;
+}
+
+.component-usage-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.component-usage-list a {
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    padding: 7px 9px;
+    border-radius: 999px;
+    color: var(--text-light);
+    text-decoration: none;
+    background: rgba(243, 240, 232, .06);
+}
+
+.component-usage-list small {
+    color: var(--muted-text);
+}
+
+.project-component-panel {
+    display: grid;
+    gap: 12px;
+}
+
+.project-component-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.project-component-option {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px;
+    align-items: start;
+    padding: 11px 12px;
+    border: 1px solid rgba(80, 132, 132, .16);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .55);
+}
+
+.project-component-option input {
+    margin-top: 3px;
+}
+
+.project-component-option span {
+    display: grid;
+    gap: 3px;
+}
+
+.project-component-option small {
+    color: #68716e;
+    line-height: 1.4;
+}
+
+.project-component-option.inferred {
+    border-style: dashed;
+}
+
+.relationship-list,
+.relationship-suggestion-list {
+    display: grid;
+    gap: 10px;
+}
+
+.relationship-card {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid rgba(232, 221, 199, .13);
+    border-radius: 13px;
+    background: rgba(243, 240, 232, .05);
+}
+
+.relationship-card p {
+    margin: 0;
+    color: var(--text-soft);
+}
+
+.relationship-score {
+    display: grid;
+    place-items: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 8px;
+    border-radius: 999px;
+    color: var(--taupe);
+    background: var(--yellow-green);
+    font-weight: 800;
+}
+
+.relationship-form {
+    display: grid;
+    gap: 10px;
+}
+
+.relationship-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relationship-empty {
+    padding: 16px;
+    border: 1px dashed rgba(232, 221, 199, .17);
+    border-radius: 12px;
+    color: var(--muted-text);
+}
+
+@media (max-width: 900px) {
+    .component-registry-grid,
+    .project-component-grid,
+    .component-guidance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .component-summary-grid,
+    .relationship-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .component-summary-grid,
+    .relationship-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .component-card-topline,
+    .component-usage-head,
+    .relationship-card-head,
+    .compact-section-head {
+        flex-direction: column;
+    }
+}
+
+.relationship-workspace-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.relationship-workspace-grid > .full-width {
+    grid-column: 1 / -1;
+}
+
+.relationship-project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.relationship-project-card {
+    display: grid;
+    gap: 13px;
+    padding: 16px;
+    border: 1px solid rgba(232, 221, 199, .13);
+    border-radius: 14px;
+    background: rgba(243, 240, 232, .05);
+}
+
+.relationship-project-card.unconnected {
+    border-style: dashed;
+}
+
+.relationship-project-card h3 {
+    margin: 4px 0 6px;
+}
+
+.relationship-project-card p {
+    margin: 0;
+    color: var(--muted-text);
+}
+
+.relationship-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relationship-counts span,
+.relationship-reason {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    color: var(--text-soft);
+    background: rgba(243, 240, 232, .06);
+    font-size: .72rem;
+}
+
+.relationship-reason {
+    color: var(--text-light);
+}
+
+.relationship-card small {
+    color: var(--muted-text);
+}
+
+.manual-relationship-form {
+    padding: 14px;
+    border-top: 1px solid rgba(232, 221, 199, .1);
+}
+
+@media (max-width: 900px) {
+    .relationship-workspace-grid,
+    .relationship-project-grid {
+        grid-template-columns: 1fr;
+    }
+}

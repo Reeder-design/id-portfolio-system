@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = ROOT / "portfolio-data"
 PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
+COMPONENT_REGISTRY_PATH = DATA_ROOT / "component-registry.json"
 
 REQUIRED_FIELDS = {
     "schema_version",
@@ -111,10 +112,29 @@ def main() -> int:
     warnings: list[str] = []
 
     taxonomy = load_json(TAXONOMY_PATH, errors)
-    if taxonomy is None:
+    component_registry = load_json(COMPONENT_REGISTRY_PATH, errors)
+    if taxonomy is None or component_registry is None:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
+
+    components = component_registry.get("components", [])
+    if not isinstance(components, list):
+        errors.append("portfolio-data/component-registry.json: components must be a list")
+        component_ids: set[str] = set()
+    else:
+        component_ids = set()
+        for index, component in enumerate(components, start=1):
+            if not isinstance(component, dict):
+                errors.append(f"portfolio-data/component-registry.json: component {index} must be an object")
+                continue
+            component_id = str(component.get("id", "")).strip()
+            if not component_id:
+                errors.append(f"portfolio-data/component-registry.json: component {index} requires an id")
+            elif component_id in component_ids:
+                errors.append(f"portfolio-data/component-registry.json: duplicate component id '{component_id}'")
+            else:
+                component_ids.add(component_id)
 
     categories = {item["id"]: item for item in taxonomy.get("categories", [])}
     statuses = {item["id"] for item in taxonomy.get("statuses", [])}
@@ -212,6 +232,22 @@ def main() -> int:
                     errors.append(f"{label}: published asset {index} requires a path")
 
         validate_detail_sections(project, label, errors)
+
+        component_refs = project.get("component_refs", [])
+        if not isinstance(component_refs, list):
+            errors.append(f"{label}: component_refs must be a list")
+        else:
+            seen_components: set[str] = set()
+            for component_id in component_refs:
+                component_id = str(component_id).strip()
+                if not component_id:
+                    errors.append(f"{label}: component_refs cannot contain blank ids")
+                    continue
+                if component_id in seen_components:
+                    errors.append(f"{label}: duplicate component reference '{component_id}'")
+                seen_components.add(component_id)
+                if component_id not in component_ids:
+                    errors.append(f"{label}: unknown component reference '{component_id}'")
 
         related_work = project.get("related_work", [])
         if not isinstance(related_work, list):

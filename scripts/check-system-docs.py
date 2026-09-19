@@ -14,6 +14,7 @@ CONTENT_MODEL = ROOT / "docs" / "content-model.md"
 TEMPLATE_SYSTEM = ROOT / "docs" / "template-system.md"
 NEW_PROJECT_GUIDE = ROOT / "docs" / "new-project-guide.md"
 TAXONOMY = ROOT / "portfolio-data" / "taxonomy.json"
+COMPONENT_REGISTRY = ROOT / "portfolio-data" / "component-registry.json"
 APP = ROOT / "portfolio-manager" / "app.py"
 VALIDATION = ROOT / "portfolio-manager" / "validation_service.py"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate-site.yml"
@@ -37,6 +38,7 @@ def main() -> int:
         (TEMPLATE_SYSTEM, "template system guide"),
         (NEW_PROJECT_GUIDE, "new project guide"),
         (TAXONOMY, "portfolio taxonomy"),
+        (COMPONENT_REGISTRY, "reusable component registry"),
         (APP, "Portfolio Manager app"),
         (VALIDATION, "Full Validation service"),
         (WORKFLOW, "pull-request validation workflow"),
@@ -74,6 +76,8 @@ def main() -> int:
         ".portfolio-manager/",
         "Commit Identity Privacy",
         "feature branch → PR → UAT",
+        "Reusable Component Registry",
+        "Related References project graph",
     ]:
         require(phrase in readme, f"README is missing current architecture/workflow language: {phrase!r}.", errors)
 
@@ -91,6 +95,7 @@ def main() -> int:
         "system documentation/architecture freshness",
         "Source-of-Truth Order",
         "portfolio-data/taxonomy.json",
+        "portfolio-data/component-registry.json",
         "Do not revive retired experiments",
     ]:
         require(phrase in agents, f"AGENTS.md is missing current operating guidance: {phrase!r}.", errors)
@@ -157,6 +162,8 @@ def main() -> int:
         "Portfolio Manager **Create Content**",
         "System Integrations and Workflows",
         "compatibility behavior",
+        "Reusable Component Registry",
+        "Related Work and Related References",
     ]:
         require(phrase in template_system, f"Template system guide is missing current architecture language: {phrase!r}.", errors)
 
@@ -209,6 +216,8 @@ def main() -> int:
         ("Hiring Manager UX", "scripts/check-hiring-mobile-ux.py"),
         ("Hiring Guide Manager", "scripts/check-hiring-guide-manager.py"),
         ("Hiring Guide public sync", "scripts/check-hiring-guide-public-sync.py"),
+        ("Relationship graph", "scripts/check-relationship-graph.py"),
+        ("Component Registry", "scripts/check-component-registry.py"),
     ]:
         require(
             f'("{label}", [sys.executable, "{script}"]' in validation,
@@ -222,6 +231,8 @@ def main() -> int:
         "python scripts/check-hiring-mobile-ux.py",
         "python scripts/check-hiring-guide-manager.py",
         "python scripts/check-hiring-guide-public-sync.py",
+        "python scripts/check-relationship-graph.py",
+        "python scripts/check-component-registry.py",
     ]:
         require(script in workflow, f"Pull-request CI must run {script}.", errors)
 

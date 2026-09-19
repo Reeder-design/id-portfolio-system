@@ -11,6 +11,14 @@ from content_routes import (
 )
 from page_copy_service import extract_visible_fields, page_info
 from site_content_routes import v2_save_page as save_page_view
+from relationship_graph_service import (
+    RelationshipGraphError,
+    add_relationship,
+    graph_overview,
+    project_relationship_workspace,
+    remove_relationship,
+    update_relationship,
+)
 from related_references_service import (
     RelatedReferenceError,
     apply_related_reference_decisions,
@@ -161,6 +169,63 @@ def save_page_with_references(page_id: str):
 def install_related_reference_save_adapters(state):
     state.app.view_functions["content.save_project"] = save_project_with_references
     state.app.view_functions["site_content.v2_save_page"] = save_page_with_references
+
+
+@related_references_bp.get("/")
+def relationship_workspace():
+    try:
+        graph = graph_overview()
+    except RelationshipGraphError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("content.content_manager"))
+    return render_template("related-reference-workspace.html", graph=graph)
+
+
+@related_references_bp.get("/projects/<project_id>")
+def project_relationships(project_id: str):
+    try:
+        workspace = project_relationship_workspace(project_id)
+    except RelationshipGraphError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("related_references.relationship_workspace"))
+    return render_template("project-related-references.html", workspace=workspace)
+
+
+@related_references_bp.post("/projects/<project_id>/add")
+def add_project_relationship(project_id: str):
+    try:
+        add_relationship(
+            project_id,
+            request.form.get("target_id", ""),
+            request.form.get("relationship", ""),
+        )
+    except RelationshipGraphError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Related project saved to structured metadata. Nothing was published.", "success")
+    return redirect(url_for("related_references.project_relationships", project_id=project_id), code=303)
+
+
+@related_references_bp.post("/projects/<project_id>/<target_id>/update")
+def update_project_relationship(project_id: str, target_id: str):
+    try:
+        update_relationship(project_id, target_id, request.form.get("relationship", ""))
+    except RelationshipGraphError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Relationship text updated locally. Nothing was published.", "success")
+    return redirect(url_for("related_references.project_relationships", project_id=project_id), code=303)
+
+
+@related_references_bp.post("/projects/<project_id>/<target_id>/remove")
+def remove_project_relationship(project_id: str, target_id: str):
+    try:
+        remove_relationship(project_id, target_id)
+    except RelationshipGraphError as exc:
+        flash(str(exc), "error")
+    else:
+        flash("Project connection removed from structured metadata. Nothing was published.", "success")
+    return redirect(url_for("related_references.project_relationships", project_id=project_id), code=303)
 
 
 @related_references_bp.get("/<review_id>")

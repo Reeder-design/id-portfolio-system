@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='asset-manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='relationship-components.css') }}">
 </head>
 <body>
     <div class="manager-shell">
@@ -21,9 +22,10 @@
                 <p class="hero-copy">Edit the project identity, visible content, and connected assets in one place, then preview the real local project before publishing.</p>
             </div>
             <div class="header-actions">
+                <a class="btn btn-primary" href="{{ url_for('related_references.project_relationships', project_id=project.id) }}">Related References</a>
+                <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Component Registry</a>
                 <a class="btn btn-secondary" href="{{ url_for('help_page') }}">User Guide</a>
                 <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Portfolio</a>
-                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
             </div>
         </header>
 
@@ -108,6 +110,40 @@
                     </section>
                     {% endif %}
                     {% endif %}
+
+                    <section class="full-span project-component-panel">
+                        <input type="hidden" name="component_refs_present" value="1">
+                        <div class="action-title-row">
+                            <div>
+                                <p class="eyebrow">Reusable design system</p>
+                                <h3>Components used by this project</h3>
+                            </div>
+                            <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Browse Registry</a>
+                        </div>
+                        <p class="field-help">Detected components reflect the actual standard template structure. Optional selections document intentional custom/reusable patterns; recording one does not inject markup into a bespoke page.</p>
+                        <div class="project-component-grid">
+                            {% for component in component_context.components %}
+                            {% if component.inferred %}
+                            <div class="project-component-option inferred">
+                                <input type="checkbox" checked disabled aria-label="{{ component.label }} detected automatically">
+                                {% if component.selected %}<input type="hidden" name="component_refs" value="{{ component.id }}">{% endif %}
+                                <span>
+                                    <strong>{{ component.label }}</strong>
+                                    <small>Detected automatically{% if component.selected %} · also recorded{% endif %} · {{ component.support|replace('-', ' ')|title }}</small>
+                                </span>
+                            </div>
+                            {% else %}
+                            <label class="project-component-option">
+                                <input type="checkbox" name="component_refs" value="{{ component.id }}" {% if component.selected %}checked{% endif %}>
+                                <span>
+                                    <strong>{{ component.label }}</strong>
+                                    <small>{{ component.support|replace('-', ' ')|title }} · {{ component.summary }}</small>
+                                </span>
+                            </label>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
 
                     {% if project._generated_page %}
                     <section class="full-span v2-notes-preview">

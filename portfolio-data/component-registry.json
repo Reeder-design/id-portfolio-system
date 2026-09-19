@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "components": [
+    {
+      "id": "project-snapshot",
+      "label": "Project Snapshot",
+      "category": "structure",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Compact role, audience, project type, and tool summary used near the top of standard case-study pages.",
+      "best_for": "Giving hiring managers fast context before they enter the full project story.",
+      "avoid_when": "A custom experience already has a stronger purpose-built overview.",
+      "implementation_files": [
+        "templates/project-page/index.html",
+        "scripts/render-project.py"
+      ],
+      "markers": [
+        "project-snapshot-grid"
+      ]
+    },
+    {
+      "id": "tabs-switcher",
+      "label": "Tabbed / Switcher Interaction",
+      "category": "interaction",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Keyboard-accessible tabs that let visitors switch between tightly related views without lengthening the page.",
+      "best_for": "Approach vs. capabilities, process vs. tools, scenario states, or other paired/multi-view content.",
+      "avoid_when": "The content should be read sequentially or each option needs its own URL/state.",
+      "implementation_files": [
+        "templates/project-page/index.html",
+        "scripts/render-project.py"
+      ],
+      "markers": [
+        "data-generic-switcher",
+        "role=\"tab\""
+      ]
+    },
+    {
+      "id": "detail-cards",
+      "label": "Detail Card Grid",
+      "category": "content",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Reusable card-based detail section for concise parallel ideas, decisions, or deliverables.",
+      "best_for": "Three-to-six items that benefit from quick scanning and equal visual weight.",
+      "avoid_when": "The items form a sequence or require row/column comparison.",
+      "implementation_files": [
+        "scripts/render-project.py",
+        "templates/project-page/index.html"
+      ],
+      "markers": [
+        "project-detail-card-grid"
+      ]
+    },
+    {
+      "id": "process-flow",
+      "label": "Process / Flow",
+      "category": "content",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Grouped step flow for showing a process, workflow, handoff, or development sequence.",
+      "best_for": "Ordered work where sequence and grouping matter.",
+      "avoid_when": "The items are independent rather than sequential.",
+      "implementation_files": [
+        "scripts/render-project.py",
+        "templates/project-page/index.html"
+      ],
+      "markers": [
+        "project-detail-flow-groups"
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "label": "Comparison Table",
+      "category": "content",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Structured table treatment for true side-by-side comparison or matrix-style evidence.",
+      "best_for": "Content that is clearer when values are compared across consistent columns.",
+      "avoid_when": "The page would become easier to read as cards or prose, especially on mobile.",
+      "implementation_files": [
+        "scripts/render-project.py",
+        "templates/project-page/index.html"
+      ],
+      "markers": [
+        "project-detail-table"
+      ]
+    },
+    {
+      "id": "evidence-grid",
+      "label": "Evidence / Artifact Grid",
+      "category": "evidence",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Conditional artifact area for screenshots, video, documents, downloads, embeds, code, or other public-safe evidence.",
+      "best_for": "Showing real outputs without turning the case study into an asset dump.",
+      "avoid_when": "No public-safe artifact materially strengthens the story.",
+      "implementation_files": [
+        "scripts/render-project.py",
+        "templates/project-page/index.html"
+      ],
+      "markers": [
+        "project-asset-grid"
+      ]
+    },
+    {
+      "id": "related-work-cards",
+      "label": "Related Work Cards",
+      "category": "navigation",
+      "status": "stable",
+      "support": "template-supported",
+      "summary": "Contextual project-to-project cards generated from structured related_work relationships.",
+      "best_for": "Showing a meaningful adjacent capability, workflow, or companion project.",
+      "avoid_when": "The connection is weak, repetitive, or only exists to create more links.",
+      "implementation_files": [
+        "scripts/render-project.py",
+        "templates/project-page/index.html"
+      ],
+      "markers": [
+        "related-work-grid",
+        "related-work-card"
+      ]
+    },
+    {
+      "id": "accordion-disclosure",
+      "label": "Accordion / Disclosure",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Progressive disclosure pattern for optional detail that should not dominate the initial scan.",
+      "best_for": "Warnings, supporting detail, grouped examples, FAQs, or long secondary explanations.",
+      "avoid_when": "The hidden content is essential to understanding the primary story.",
+      "implementation_files": [
+        "portfolio-manager/templates/hiring-guide-public-sync.html"
+      ],
+      "markers": [
+        "<details",
+        "<summary"
+      ]
+    },
+    {
+      "id": "decision-scenario",
+      "label": "Decision / Scenario Practice",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Interactive decision practice where a visitor evaluates information, makes a choice, and sees feedback or consequences.",
+      "best_for": "Demonstrating scenario-based learning, sales judgment, qualification, or branching practice.",
+      "avoid_when": "A static explanation would communicate the work just as well.",
+      "implementation_files": [
+        "portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html",
+        "portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html"
+      ],
+      "markers": [
+        "scenario",
+        "decision"
+      ]
+    },
+    {
+      "id": "motion-graphic",
+      "label": "Motion Graphic / Animated Visual",
+      "category": "media",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Purpose-built motion or animated visual used to explain a concept, product position, workflow, or transition.",
+      "best_for": "Concepts where movement clarifies sequence, relationship, positioning, or transformation.",
+      "avoid_when": "Animation is decorative and does not improve comprehension.",
+      "implementation_files": [
+        "portfolio/js/portfolio-motion.js"
+      ],
+      "markers": [
+        "motion",
+        "animation"
+      ]
+    }
+  ]
+}

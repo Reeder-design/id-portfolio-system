@@ -9,6 +9,11 @@ import sys
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
+from component_registry_service import (
+    ComponentRegistryError,
+    project_component_context,
+    validate_component_refs,
+)
 from custom_title_sync import sync_custom_page_title
 
 
@@ -258,6 +263,19 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
     project["skills"] = split_csv(form.get("skills", ""))
     project["tools"] = split_csv(form.get("tools", ""))
 
+    if form.get("component_refs_present") == "1":
+        try:
+            component_refs = validate_component_refs(
+                project,
+                form.getlist("component_refs"),
+            )
+        except ComponentRegistryError as exc:
+            return False, str(exc)
+        if component_refs:
+            project["component_refs"] = component_refs
+        else:
+            project.pop("component_refs", None)
+
     links = dict(project.get("links", {}))
     live_project = form.get("live_project", "").strip()
 
@@ -435,10 +453,16 @@ def project_editor(project_id: str):
 
     project["_generated_page"] = is_generated_page(project)
     content = project.get("content", {})
+    try:
+        component_context = project_component_context(project)
+    except ComponentRegistryError as exc:
+        flash(str(exc), "error")
+        component_context = {"components": [], "explicit_ids": [], "inferred_ids": [], "active_ids": []}
 
     return render_template(
         "project-editor.html",
         project=project,
+        component_context=component_context,
         learning_objectives="\n".join(
             content.get("learning_objectives", [])
         ),

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Related References | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='relationship-components.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Manage Content · Portfolio graph</p>
+            <h1>Related References</h1>
+            <p class="hero-copy">Manage meaningful project-to-project connections and see where work is already referenced. Title-change reference checks still run automatically when you rename managed content.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Component Registry</a>
+            <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Manage Content</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="relationship-summary-grid">
+        <article><span>Structured projects</span><strong>{{ graph.summary.projects }}</strong></article>
+        <article><span>Directed connections</span><strong>{{ graph.summary.connections }}</strong></article>
+        <article><span>Connected projects</span><strong>{{ graph.summary.connected_projects }}</strong></article>
+        <article><span>Unconnected projects</span><strong>{{ graph.summary.unconnected_projects }}</strong></article>
+    </section>
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Two related jobs</p>
+        <h2>Connections + reference integrity</h2>
+        <div class="v2-general-grid">
+            <article class="v2-small-card">
+                <h3>Project relationships</h3>
+                <p>Structured <code>related_work</code> connections power the Related Work section on generated case-study pages and document meaningful adjacency for custom projects.</p>
+            </article>
+            <article class="v2-small-card">
+                <h3>Rename safety</h3>
+                <p>When you rename a managed project or page, the existing Related References scan still checks linked labels/cards so old visible titles are not left behind.</p>
+            </article>
+        </div>
+    </section>
+
+    <main class="dashboard-card full-width">
+        <div class="compact-section-head">
+            <div><p class="eyebrow">Portfolio relationship map</p><h2>Choose a project</h2></div>
+        </div>
+        <div class="relationship-project-grid">
+            {% for project in graph.projects %}
+            <article class="relationship-project-card {% if not project.connected %}unconnected{% endif %}">
+                <div>
+                    <span class="v2-level-label">{{ project.category|replace('-', ' ')|title }}</span>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ 'Generated project page' if project.generated else 'Custom project experience' }}</p>
+                </div>
+                <div class="relationship-counts">
+                    <span><strong>{{ project.outgoing_count }}</strong> outgoing</span>
+                    <span><strong>{{ project.incoming_count }}</strong> incoming</span>
+                </div>
+                <div class="button-row">
+                    <a class="btn btn-primary" href="{{ url_for('related_references.project_relationships', project_id=project.id) }}">Review Connections</a>
+                    <a class="btn btn-secondary" href="{{ project.preview_url }}" target="_blank" rel="noopener">Preview</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

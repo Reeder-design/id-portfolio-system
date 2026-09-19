@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash
 from ai_apply_routes import ai_apply_bp
 from ai_routes import ai_bp
 from asset_routes import asset_bp
+from component_registry_routes import component_registry_bp
 from content_routes import content_bp
 from create_content_routes import create_content_bp
 from git_routes import git_bp
@@ -44,6 +45,7 @@ app.config.update(
     TRUSTED_HOSTS=["127.0.0.1", "localhost"],
 )
 app.register_blueprint(content_bp)
+app.register_blueprint(component_registry_bp)
 app.register_blueprint(asset_bp)
 app.register_blueprint(site_content_bp)
 app.register_blueprint(git_bp)

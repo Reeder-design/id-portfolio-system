@@ -11,6 +11,7 @@ import os
 import re
 
 from ai_service import OPENAI_RESPONSES_URL, get_ai_settings, load_taxonomy
+from component_registry_service import ComponentRegistryError, component_map
 from create_content_service import CreateContentError, brief_as_text, brief_preflight, load_brief
 from create_content_sources import ContentSourceError, approved_source_context
 from validation_service import run_full_validation
@@ -216,6 +217,25 @@ def _slugify(value: str) -> str:
     return value
 
 
+def _approved_plan_component_refs(record: dict[str, Any]) -> list[str]:
+    plan = record.get("plan")
+    if not isinstance(plan, dict):
+        return []
+    try:
+        known = component_map()
+    except ComponentRegistryError as exc:
+        raise CreateBuildError(str(exc)) from exc
+
+    result: list[str] = []
+    for interaction in plan.get("interactions", []):
+        if not isinstance(interaction, dict):
+            continue
+        component_id = str(interaction.get("component_id") or "").strip()
+        if component_id and component_id in known and component_id not in result:
+            result.append(component_id)
+    return result
+
+
 BUILD_PROPOSAL_INSTRUCTIONS = """You are preparing a structured portfolio case-study build proposal from an already approved Content Plan.
 The proposal will be reviewed and editable by the user before any files are created.
 
@@ -302,6 +322,7 @@ def _normalize_build_proposal(raw: dict[str, Any], record: dict[str, Any]) -> di
         "outcomes": _list(raw.get("outcomes")),
         "skills": _list(raw.get("skills")),
         "tools": _list(raw.get("tools")),
+        "component_refs": _approved_plan_component_refs(record),
         "source_material_notes": _string(raw.get("source_material_notes")),
     }
     required = {
@@ -480,6 +501,8 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
         assets=[],
         source_material_notes=proposal.get("source_material_notes", ""),
     )
+    if proposal.get("component_refs"):
+        project_record["component_refs"] = list(proposal["component_refs"])
 
     record_path: Path | None = None
     page_path: Path | None = None
