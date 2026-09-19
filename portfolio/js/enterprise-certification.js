@@ -24,7 +24,11 @@
     const data = overviewData[button.dataset.overview];
     const detail = document.getElementById('overviewDetail');
     if (!data || !detail) return;
-    overviewButtons.forEach((item) => item.classList.toggle('active', item === button));
+    overviewButtons.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
     detail.classList.add('is-switching');
     window.setTimeout(() => {
       overviewLabel.textContent = data.label;
@@ -38,33 +42,39 @@
   const blueprintData = {
     pathway: {
       title: 'Sequence the seller journey from context to application.',
-      text: 'The required path stayed focused on the decisions most sellers shared. Market-specific requirements and deeper technical foundations were separated so they did not inflate the core certification.',
+      text: 'The core path keeps shared seller decisions together while deeper or market-specific content branches only when it is useful.',
       html: `
-        <div class="blueprint-flow" aria-label="Core certification sequence">
-          ${['Cellular context','Customer use cases','Solution fit','Discovery + value','Scenario practice','Ordering readiness','Certification'].map((item) => `<span class="blueprint-step">${item}</span>`).join('')}
+        <div class="blueprint-motion curriculum-motion" aria-label="Animated curriculum path">
+          <div class="curriculum-track" aria-hidden="true"><i></i></div>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Context</small><strong>Recognize the need</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt=""><small>Fit</small><strong>Connect customer + solution</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""><small>Practice</small><strong>Make the decision</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""><small>Evidence</small><strong>Certify the judgment</strong></span>
         </div>
-        <div class="blueprint-mini-grid" style="margin-top:12px">
-          <article class="blueprint-mini-card"><strong>Core seller path</strong><p>Required concepts and decisions shared across the main audience.</p></article>
-          <article class="blueprint-mini-card"><strong>Regional extension</strong><p>Market-specific requirements stayed in a separate route and assessment.</p></article>
-          <article class="blueprint-mini-card"><strong>Optional foundations</strong><p>Deeper technical background remained available without becoming required sales training.</p></article>
-          <article class="blueprint-mini-card"><strong>Role boundary</strong><p>Engineering detail stayed out unless it supported discovery, risk, ordering, or specialist handoff.</p></article>
+        <div class="blueprint-caption-grid">
+          <span><strong>Core path</strong> Shared seller decisions stay required.</span>
+          <span><strong>Optional depth</strong> Extra technical context stays available without inflating the main experience.</span>
         </div>`
     },
     alignment: {
       title: 'Make the relationship between objective, content, practice, and assessment visible.',
-      text: 'Choose an objective and replay the sequence. Each step appears only when it has a clear job in supporting the same seller behavior.',
+      text: 'Choose an objective and replay the sequence. Every layer supports the same seller behavior.',
       html: '<div class="alignment-reveal" id="alignmentReveal"></div>'
     },
     launch: {
-      title: 'Plan launch, platform behavior, and maintenance as part of the learning design.',
-      text: 'The certification had to work after authoring was finished. I treated review, LMS testing, reporting logic, and source updates as part of the same launch system.',
+      title: 'Design the release system before the learning is finished.',
+      text: 'QA, review, LMS behavior, reporting, and maintenance are part of the learning system, not cleanup after authoring.',
       html: `
-        <div class="blueprint-mini-grid">
-          <article class="blueprint-mini-card"><strong>1. Design QA</strong><p>Editorial, visual, interaction, accessibility, and learner-flow checks before broader review.</p></article>
-          <article class="blueprint-mini-card"><strong>2. SME + assessment review</strong><p>Resolve accuracy and messaging feedback while protecting the seller-focused scope.</p></article>
-          <article class="blueprint-mini-card"><strong>3. LMS UAT</strong><p>Validate visibility, launch, routes, renewal behavior, imported history, and regional requirements.</p></article>
-          <article class="blueprint-mini-card"><strong>4. Maintain + report</strong><p>Track source changes and support workarounds when platform reporting does not match the certification logic.</p></article>
-        </div>`
+        <div class="blueprint-motion launch-motion" aria-label="Animated launch pipeline">
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""><small>QA</small><strong>Check learning + interactions</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""><small>Review</small><strong>Resolve SME feedback</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""><small>LMS + UAT</small><strong>Validate the learner path</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><small>Maintain</small><strong>Update + report</strong></span>
+        </div>
+        <div class="launch-note"><img src="../../../../assets/icons/pixel/lms/mini-verified.webp" alt="" aria-hidden="true"><span>Launch is complete when the learning, platform behavior, and ownership model work together.</span></div>`
     }
   };
 
@@ -111,10 +121,10 @@
     });
 
     const stages = [
-      ['Objective', example.objective, 'icon-learning-design'],
-      ['Content', example.content, 'icon-elearning'],
-      ['Practice', example.practice, 'icon-interaction'],
-      ['Assessment', example.assessment, 'icon-assessment']
+      ['Objective', example.objective, 'lms/mini-document-list.webp'],
+      ['Content', example.content, 'portfolio-general/learning.webp'],
+      ['Practice', example.practice, 'microlearning-performance-support/pointer-interaction.webp'],
+      ['Assessment', example.assessment, 'lms/mini-certificate.webp']
     ];
 
     const track = reveal.querySelector('.alignment-progressive-track');
@@ -122,7 +132,7 @@
       const node = document.createElement('div');
       node.className = 'alignment-progressive-node';
       node.innerHTML = `
-        <span class="alignment-progressive-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#${icon}"></use></svg></span>
+        <span class="alignment-progressive-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/${icon}" alt=""></span>
         <small>${label}</small>
         <strong>${text}</strong>
         ${stageIndex < stages.length - 1 ? '<i class="alignment-progressive-link" aria-hidden="true"></i>' : ''}`;
@@ -162,6 +172,7 @@
     const data = blueprintData[key];
     if (!data || !blueprintPanel) return;
     const update = () => {
+      blueprintPanel.dataset.mode = key;
       blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
       if (key === 'alignment') initAlignmentReveal();
       blueprintPanel.classList.remove('is-switching');
@@ -357,33 +368,33 @@
       label: 'Build',
       icon: 'icon-elearning',
       title: 'Turn the architecture into usable seller learning.',
-      action: 'I built Rise lessons, Storyline practice, diagrams, comparisons, knowledge checks, and the certification assessment around the seller decisions defined in the blueprint.',
+      action: 'I built the course flow, practice, knowledge checks, and certification assessment around the seller decisions defined in the blueprint.',
       resultLabel: 'Delivered',
-      result: 'A multi-course cellular networking sales certification with role-focused learning, scenario practice, assessment, and LMS implementation support.'
+      result: 'A connected multi-course certification with scenario practice, assessment, and LMS support.'
     },
     review: {
       label: 'Review',
       icon: 'icon-feedback',
       title: 'Protect accuracy without letting the course drift back into source-document language.',
-      action: 'I coordinated editorial QA, interaction and accessibility checks, SME review, assessment review, and revision tracking across the certification.',
+      action: 'I coordinated QA, accessibility checks, SME review, assessment review, and revision tracking.'
       resultLabel: 'Protected',
-      result: 'A seller-focused scope where accuracy and approved messaging could be reviewed without turning the experience into engineering or product-document training.'
+      result: 'Accuracy stayed reviewable without letting the pathway drift back into source-document training.'
     },
     lms: {
       label: 'LMS + UAT',
       icon: 'icon-lms',
       title: 'Validate the learner journey, not just the course files.',
-      action: 'I tested visibility, enrollment, launch behavior, learner routes, renewal behavior, imported history, and regional requirements in the LMS.',
+      action: 'I tested visibility, enrollment, launch behavior, learner routes, completion logic, and regional requirements in the LMS.'
       resultLabel: 'Improved',
-      result: 'Core and regional routes stayed separate so sellers could complete the requirements relevant to their role and market instead of taking unnecessary content.'
+      result: 'Learners could follow the requirements relevant to their role and market without unnecessary content.'
     },
     maintain: {
       label: 'Maintain',
       icon: 'icon-automation',
       title: 'Keep the certification usable after launch.',
-      action: 'I tracked affected content as approved sources changed and supported a reporting workaround when LMS status logic did not fully match the certification design.',
+      action: 'I tracked affected content as sources changed and supported reporting when platform status logic did not fully match the certification design.'
       resultLabel: 'Learned',
-      result: 'Routing, assessment, reporting, governance, and platform behavior need to be designed as one system before the learning screens are finished.'
+      result: 'Routing, assessment, reporting, governance, and platform behavior work best when designed as one system.'
     }
   };
 
@@ -449,7 +460,7 @@
     explain: {
       label: 'Content Architecture / Explain',
       title: 'Sequence the information around the seller decision.',
-      summary: 'I introduced only the context sellers needed to recognize the opportunity, connect customer need to value, and prepare for the next decision.',
+      summary: 'Introduce only the context sellers need to recognize the opportunity and prepare for the next decision.',
       focus: ['Customer context','Need-to-value logic','Seller relevance'],
       image: '../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',
       alt: 'Public-safe cellular networking market opportunity learning screen.'
@@ -457,7 +468,7 @@
     reinforce: {
       label: 'Content Architecture / Reinforce',
       title: 'Use short checks to strengthen the distinctions that matter.',
-      summary: 'Reinforcement stayed close to the explanation so sellers could test customer fit, use-case distinctions, and value logic before moving into more complex practice.',
+      summary: 'Use short checks to test customer fit and key distinctions before moving into applied practice.',
       focus: ['Knowledge checks','Retrieval practice','Immediate feedback'],
       image: '../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',
       alt: 'Public-safe cellular networking sales knowledge check.'
@@ -465,7 +476,7 @@
     practice: {
       label: 'Content Architecture / Practice',
       title: 'Move from knowing the idea to making the seller decision.',
-      summary: 'Scenario practice asked learners to interpret a customer situation, choose a direction, and use coaching feedback before the formal assessment measured the same judgment.',
+      summary: 'Ask learners to interpret a customer situation, choose a direction, and use coaching feedback before assessment.',
       focus: ['Scenario decisions','Coaching feedback','Assessment alignment'],
       image: '../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',
       alt: 'Public-safe cellular networking customer scenario interaction.'
