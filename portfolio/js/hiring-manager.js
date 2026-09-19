@@ -1,26 +1,61 @@
 (() => {
   const root = new URL('../', window.location.href);
-  const faqUrl = new URL('data/hiring-faq.json', root);
-  const expandedFaqUrl = new URL('data/hiring-faq-expanded.json', root);
-  const toolsUrl = new URL('data/hiring-tools.json', root);
-  const searchUrl = new URL('data/hiring-search.json', root);
-  const iconSprite = new URL('assets/icons/portfolio-icons.svg', root).href;
+  const urls = {
+    faq: new URL('data/hiring-faq.json', root),
+    expanded: new URL('data/hiring-faq-expanded.json', root),
+    specialist: new URL('data/hiring-faq-specialist.json', root),
+    capabilities: new URL('data/hiring-capabilities.json', root),
+    tools: new URL('data/hiring-tools.json', root),
+    search: new URL('data/hiring-search.json', root)
+  };
+
+  const pixelRoot = new URL('assets/icons/pixel/hiring-guide/', root);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const state = {
     questions: [],
     searchEntries: [],
+    capabilities: [],
     tools: [],
     learningStatement: '',
-    activeCategory: 'All',
+    activeTopic: 'Featured',
+    activeCapability: null,
     activeTool: null,
-    lastQuestionId: null,
-    isReplying: false
+    replying: false
   };
 
   const STOP_WORDS = new Set([
     'a','an','and','are','about','can','do','does','did','for','from','have','has','how','i','in','is','me','my','of','on','or','show','tell','the','to','what','where','with','you','your'
   ]);
+
+  const STARTER_IDS = [
+    'why-hire-me',
+    'end-to-end-project',
+    'sales-enablement',
+    'ai-evaluation',
+    'lms-migration'
+  ];
+
+  const CAPABILITY_ICONS = {
+    'learning-architecture': 'target.webp',
+    'enterprise-tech': 'workflow-tree.webp',
+    'accessible-ux': 'checklist-document.webp',
+    'ai-automation': 'idea-bulb.webp',
+    'performance-consulting': 'goal-mountain.webp',
+    'delivery-leadership': 'team.webp'
+  };
+
+  const TOOL_ICONS = [
+    'browser-conversation.webp',
+    'document-star.webp',
+    'checklist-clipboard.webp',
+    'workflow-tree.webp',
+    'analytics-growth.webp',
+    'chat-bubbles.webp',
+    'reference-search.webp',
+    'idea-bulb.webp',
+    'team.webp'
+  ];
 
   const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -42,23 +77,24 @@
   const scoreQuestion = (query, question) => {
     const clean = normalize(query);
     if (!clean) return 0;
-
     const prompt = normalize(question.prompt);
     const label = normalize(question.short_label);
     const category = normalize(question.category);
     const keywords = normalize((question.keywords || []).join(' '));
+    const variants = normalize((question.variants || []).join(' '));
     const answer = normalize(question.answer);
-    const queryTokens = tokensFor(query);
     let score = 0;
 
-    if (prompt.includes(clean) || clean.includes(prompt)) score += 14;
-    if (label.includes(clean) || clean.includes(label)) score += 10;
-    if (keywords.includes(clean)) score += 8;
+    if (prompt.includes(clean) || clean.includes(prompt)) score += 16;
+    if (label.includes(clean) || clean.includes(label)) score += 12;
+    if (keywords.includes(clean)) score += 9;
+    if (variants.includes(clean)) score += 8;
 
-    queryTokens.forEach((token) => {
+    tokensFor(query).forEach((token) => {
       if (label.includes(token)) score += 5;
       if (prompt.includes(token)) score += 4;
-      if (keywords.includes(token)) score += 3;
+      if (keywords.includes(token)) score += 4;
+      if (variants.includes(token)) score += 3;
       if (category.includes(token)) score += 2;
       if (answer.includes(token)) score += 1;
     });
@@ -68,15 +104,14 @@
 
   const scoreSearchEntry = (query, entry) => {
     const clean = normalize(query);
-    const tokens = tokensFor(query);
-    if (!clean) return 0;
     const title = normalize(entry.title);
     const summary = normalize(entry.summary);
     const keywords = normalize((entry.keywords || []).join(' '));
     let score = 0;
+    if (!clean) return score;
     if (title.includes(clean) || clean.includes(title)) score += 12;
     if (keywords.includes(clean)) score += 7;
-    tokens.forEach((token) => {
+    tokensFor(query).forEach((token) => {
       if (title.includes(token)) score += 5;
       if (keywords.includes(token)) score += 3;
       if (summary.includes(token)) score += 1;
@@ -84,48 +119,63 @@
     return score;
   };
 
-  const chatLog = document.querySelector('[data-hm-chat-log]');
-  const form = document.querySelector('[data-hm-form]');
-  const input = document.querySelector('[data-hm-input]');
-  const questionList = document.querySelector('[data-hm-question-list]');
-  const categoryList = document.querySelector('[data-hm-categories]');
-  const starterList = document.querySelector('[data-hm-starters]');
-  const clearButton = document.querySelector('[data-hm-clear]');
-  const toolTabs = document.querySelector('[data-hm-tool-tabs]');
-  const toolPanel = document.querySelector('[data-hm-tool-panel]');
-  const learningStatement = document.querySelector('[data-hm-learning-statement] p');
-
-  if (!chatLog || !form || !input || !questionList || !categoryList || !starterList) return;
-
-  const animateMessage = (article) => {
-    article.classList.add('is-entering');
+  const elements = {
+    count: document.querySelector('[data-hm-question-count]'),
+    libraryToggle: document.querySelector('[data-hm-library-toggle]'),
+    library: document.querySelector('[data-hm-library]'),
+    libraryClose: document.querySelector('[data-hm-library-close]'),
+    librarySummary: document.querySelector('[data-hm-library-summary]'),
+    topicList: document.querySelector('[data-hm-topic-list]'),
+    promptPanel: document.querySelector('[data-hm-prompt-panel]'),
+    starters: document.querySelector('[data-hm-starters]'),
+    chatLog: document.querySelector('[data-hm-chat-log]'),
+    form: document.querySelector('[data-hm-form]'),
+    input: document.querySelector('[data-hm-input]'),
+    clear: document.querySelector('[data-hm-clear]'),
+    scanButtons: [...document.querySelectorAll('[data-hm-scan-view]')],
+    scanPanels: [...document.querySelectorAll('[data-hm-scan-panel]')],
+    capabilityTabs: document.querySelector('[data-hm-capability-tabs]'),
+    capabilityDetail: document.querySelector('[data-hm-capability-detail]'),
+    toolTabs: document.querySelector('[data-hm-tool-tabs]'),
+    toolDetail: document.querySelector('[data-hm-tool-detail]'),
+    learningStatement: document.querySelector('[data-hm-learning-statement] p')
   };
+
+  if (!elements.chatLog || !elements.form || !elements.input || !elements.starters) return;
+
+  const pixelUrl = (name) => new URL(name, pixelRoot).href;
 
   const scrollChat = () => {
     requestAnimationFrame(() => {
-      chatLog.scrollTop = chatLog.scrollHeight;
+      elements.chatLog.scrollTop = elements.chatLog.scrollHeight;
     });
   };
 
-  const appendUserMessage = (text) => {
+  const setLibraryOpen = (open) => {
+    const isOpen = Boolean(open);
+    if (elements.library) elements.library.hidden = !isOpen;
+    if (elements.libraryToggle) elements.libraryToggle.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const appendUser = (text) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-user';
     article.innerHTML = `
       <div class="hm-message-label">Hiring manager</div>
       <div class="hm-message-bubble">${escapeHtml(text)}</div>`;
-    chatLog.appendChild(article);
-    animateMessage(article);
+    elements.chatLog.appendChild(article);
     scrollChat();
   };
 
-  const evidenceMarkup = (evidence = []) => {
-    if (!evidence.length) return '';
+  const evidenceMarkup = (items = []) => {
+    if (!items.length) return '';
     return `
       <div class="hm-evidence">
         <p class="hm-evidence-label">Portfolio evidence</p>
         <div class="hm-evidence-grid">
-          ${evidence.map((item) => `
+          ${items.map((item) => `
             <a class="hm-evidence-card" href="${new URL(item.path, root).href}">
+              <img src="${pixelUrl('document-star.webp')}" alt="">
               <strong>${escapeHtml(item.title)}</strong>
               <span>${escapeHtml(item.note)}</span>
               <em>Open evidence →</em>
@@ -134,263 +184,369 @@
       </div>`;
   };
 
-  const followupMarkup = (ids = []) => {
-    const related = ids
-      .map((id) => state.questions.find((question) => question.id === id))
-      .filter(Boolean)
-      .slice(0, 3);
+  const followupMarkup = (question) => {
+    let related = (question.followups || [])
+      .map((id) => state.questions.find((item) => item.id === id))
+      .filter(Boolean);
+
+    if (!related.length) {
+      related = state.questions
+        .filter((item) => item.id !== question.id && item.category === question.category)
+        .slice(0, 3);
+    } else {
+      related = related.slice(0, 3);
+    }
+
     if (!related.length) return '';
     return `
       <div class="hm-followups">
-        <span>Go one level deeper</span>
+        <span>Keep the interview going</span>
         <div>
-          ${related.map((question) => `<button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('')}
+          ${related.map((item) => `<button type="button" data-hm-question-id="${escapeHtml(item.id)}">${escapeHtml(item.short_label)}</button>`).join('')}
         </div>
       </div>`;
   };
 
-  const createTypingMessage = () => {
+  const typingMessage = () => {
     const article = document.createElement('article');
-    article.className = 'hm-message hm-message-haley is-entering hm-typing-message';
+    article.className = 'hm-message hm-message-haley hm-typing-message';
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley</div>
-      <div class="hm-message-bubble"><span class="hm-typing" aria-label="Preparing answer"><span></span><span></span><span></span></span></div>`;
-    chatLog.appendChild(article);
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble"><span class="hm-typing" aria-label="Preparing answer"><i></i><i></i><i></i></span></div>`;
+    elements.chatLog.appendChild(article);
     scrollChat();
     return article;
   };
 
-  const appendHaleyAnswerNow = (question, typingNode = null) => {
-    state.lastQuestionId = question.id;
+  const bindQuestionButtons = (rootNode) => {
+    rootNode.querySelectorAll('[data-hm-question-id]').forEach((button) => {
+      button.addEventListener('click', () => askById(button.dataset.hmQuestionId));
+    });
+  };
+
+  const answerNow = (question, typing) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-haley';
+    const tag = question.specialist ? 'Deep Dive' : question.category;
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley · ${escapeHtml(question.category)}</div>
+      <div class="hm-message-label">Haley</div>
       <div class="hm-message-bubble">
+        <span class="hm-answer-tag">${escapeHtml(tag)}</span>
         <p>${escapeHtml(question.answer)}</p>
         ${evidenceMarkup(question.evidence)}
-        ${followupMarkup(question.followups)}
+        ${followupMarkup(question)}
       </div>`;
-    if (typingNode) typingNode.replaceWith(article);
-    else chatLog.appendChild(article);
-    article.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
-    });
-    animateMessage(article);
-    state.isReplying = false;
+    typing.replaceWith(article);
+    bindQuestionButtons(article);
+    state.replying = false;
     scrollChat();
   };
 
-  const appendHaleyAnswer = (question) => {
-    if (state.isReplying) return;
-    state.isReplying = true;
-    const typingNode = createTypingMessage();
-    const delay = reducedMotion ? 0 : 360;
-    window.setTimeout(() => appendHaleyAnswerNow(question, typingNode), delay);
-  };
-
-  const appendFallbackNow = (query, matches, typingNode = null) => {
-    const article = document.createElement('article');
-    article.className = 'hm-message hm-message-haley';
-    article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley · Evidence check</div>
-      <div class="hm-message-bubble">
-        <p>I do not have a supported interview answer for that exact question, so I would rather point you to the closest published work than make something up.</p>
-        ${matches.length ? `
-          <div class="hm-evidence">
-            <p class="hm-evidence-label">Closest portfolio matches</p>
-            <div class="hm-evidence-grid">
-              ${matches.map((entry) => `
-                <a class="hm-evidence-card" href="${new URL(entry.path, root).href}">
-                  <strong>${escapeHtml(entry.title)}</strong>
-                  <span>${escapeHtml(entry.summary)}</span>
-                  <em>Open evidence →</em>
-                </a>`).join('')}
-            </div>
-          </div>` : '<p class="hm-chat-note">Try asking about instructional design, technical sales training, tools, LMS work, AI evaluation, facilitation, reporting, collaboration, or automation.</p>'}
-      </div>`;
-    if (typingNode) typingNode.replaceWith(article);
-    else chatLog.appendChild(article);
-    animateMessage(article);
-    state.isReplying = false;
-    scrollChat();
-  };
-
-  const appendFallback = (query) => {
-    if (state.isReplying) return;
-    state.isReplying = true;
+  const fallbackNow = (query, typing) => {
     const matches = state.searchEntries
       .map((entry) => ({ entry, score: scoreSearchEntry(query, entry) }))
       .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((item) => item.entry);
-    const typingNode = createTypingMessage();
-    const delay = reducedMotion ? 0 : 280;
-    window.setTimeout(() => appendFallbackNow(query, matches, typingNode), delay);
+
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Evidence check</span>
+        <p>I do not have a supported interview answer for that exact question, so I would rather point you toward the closest published work than make something up.</p>
+        ${matches.length ? `
+          <div class="hm-evidence">
+            <p class="hm-evidence-label">Closest portfolio matches</p>
+            <div class="hm-evidence-grid">
+              ${matches.map((entry) => `
+                <a class="hm-evidence-card" href="${new URL(entry.path, root).href}">
+                  <img src="${pixelUrl('reference-search.webp')}" alt="">
+                  <strong>${escapeHtml(entry.title)}</strong>
+                  <span>${escapeHtml(entry.summary)}</span>
+                  <em>Open evidence →</em>
+                </a>`).join('')}
+            </div>
+          </div>` : '<p>Try asking about instructional design, sales enablement, LMS work, AI evaluation, facilitation, reporting, collaboration, tools, or automation.</p>'}
+      </div>`;
+    typing.replaceWith(article);
+    state.replying = false;
+    scrollChat();
   };
 
-  const askQuestion = (query, options = {}) => {
+  const ask = (query, options = {}) => {
     const clean = String(query || '').trim();
-    if (!clean || state.isReplying) return;
-    if (!options.skipUserMessage) appendUserMessage(clean);
+    if (!clean || state.replying) return;
+    setLibraryOpen(false);
+    if (!options.skipUser) appendUser(clean);
 
     const ranked = state.questions
       .map((question) => ({ question, score: scoreQuestion(clean, question) }))
       .sort((a, b) => b.score - a.score);
 
-    if (ranked[0] && ranked[0].score >= 6) appendHaleyAnswer(ranked[0].question);
-    else appendFallback(clean);
+    state.replying = true;
+    const typing = typingMessage();
+    const delay = reducedMotion ? 0 : 300;
+    window.setTimeout(() => {
+      if (ranked[0] && ranked[0].score >= 6) answerNow(ranked[0].question, typing);
+      else fallbackNow(clean, typing);
+    }, delay);
   };
 
   const askById = (id) => {
-    if (state.isReplying) return;
+    if (state.replying) return;
     const question = state.questions.find((item) => item.id === id);
     if (!question) return;
-    appendUserMessage(question.prompt);
-    appendHaleyAnswer(question);
+    appendUser(question.prompt);
+    state.replying = true;
+    setLibraryOpen(false);
+    const typing = typingMessage();
+    window.setTimeout(() => answerNow(question, typing), reducedMotion ? 0 : 260);
   };
 
-  const renderQuestionLibrary = () => {
-    const visible = state.questions.filter((question) => state.activeCategory === 'All' || question.category === state.activeCategory);
-    questionList.innerHTML = visible.map((question) => `
-      <button class="hm-question-card" type="button" data-question-id="${escapeHtml(question.id)}">
-        <span>${escapeHtml(question.category)}</span>
-        <strong>${escapeHtml(question.short_label)}</strong>
-      </button>`).join('');
-    questionList.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
+  const resetChat = () => {
+    state.replying = false;
+    elements.chatLog.innerHTML = '';
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Start anywhere</span>
+        <p>Ask me the question you would normally save for the interview. I can answer from the curated library and link you to the portfolio work behind the answer.</p>
+      </div>`;
+    elements.chatLog.appendChild(article);
+  };
+
+  const topicGroups = () => {
+    const groups = new Map();
+    const featured = state.questions.filter((question) => question.featured && !question.specialist);
+    if (featured.length) groups.set('Featured', featured);
+
+    state.questions.filter((question) => !question.specialist).forEach((question) => {
+      if (!groups.has(question.category)) groups.set(question.category, []);
+      groups.get(question.category).push(question);
+    });
+
+    const deepDive = state.questions.filter((question) => question.specialist);
+    if (deepDive.length) groups.set('Deep Dive', deepDive);
+    return [...groups.entries()].map(([label, questions]) => ({ label, questions }));
+  };
+
+  const renderPromptPanel = () => {
+    if (!elements.promptPanel) return;
+    const groups = topicGroups();
+    const group = groups.find((item) => item.label === state.activeTopic) || groups[0];
+    if (!group) return;
+
+    elements.promptPanel.innerHTML = `
+      <div class="hm-prompt-heading">
+        <p class="eyebrow">${escapeHtml(group.label)}</p>
+        <h4>${group.label === 'Featured' ? 'Good questions to start with' : `${escapeHtml(group.label)} questions`}</h4>
+      </div>
+      <div class="hm-prompt-list">
+        ${group.questions.map((question) => `
+          <button type="button" class="hm-library-prompt" data-hm-library-question="${escapeHtml(question.id)}">${escapeHtml(question.prompt)}</button>
+        `).join('')}
+      </div>`;
+
+    elements.promptPanel.querySelectorAll('[data-hm-library-question]').forEach((button) => {
+      button.addEventListener('click', () => askById(button.dataset.hmLibraryQuestion));
     });
   };
 
-  const renderCategories = () => {
-    const categories = ['All', ...new Set(state.questions.map((question) => question.category))];
-    categoryList.innerHTML = categories.map((category) => `
-      <button type="button" class="${category === state.activeCategory ? 'active' : ''}" data-category="${escapeHtml(category)}" aria-pressed="${String(category === state.activeCategory)}">${escapeHtml(category)}</button>`).join('');
-    categoryList.querySelectorAll('[data-category]').forEach((button) => {
+  const renderLibrary = () => {
+    const groups = topicGroups();
+    if (!groups.length || !elements.topicList) return;
+    if (!groups.some((item) => item.label === state.activeTopic)) state.activeTopic = groups[0].label;
+
+    elements.topicList.innerHTML = groups.map((group) => `
+      <button type="button" class="hm-topic-button ${group.label === state.activeTopic ? 'active' : ''}" data-hm-topic="${escapeHtml(group.label)}">
+        <span>${escapeHtml(group.label)}</span><span>${group.questions.length}</span>
+      </button>
+    `).join('');
+
+    elements.topicList.querySelectorAll('[data-hm-topic]').forEach((button) => {
       button.addEventListener('click', () => {
-        state.activeCategory = button.dataset.category;
-        renderCategories();
-        renderQuestionLibrary();
+        state.activeTopic = button.dataset.hmTopic;
+        renderLibrary();
       });
     });
+
+    renderPromptPanel();
+    if (elements.librarySummary) {
+      const totalTopics = groups.length;
+      elements.librarySummary.textContent = `${state.questions.length} curated prompts across ${totalTopics} topics`;
+    }
   };
 
   const renderStarters = () => {
-    const priorityIds = ['why-hire-me','end-to-end-project','technical-training','tool-choice','sme-pushback','learn-new-tools','self-critique','coding-automation'];
-    const starters = priorityIds
-      .map((id) => state.questions.find((question) => question.id === id))
+    const preferred = STARTER_IDS
+      .map((id) => state.questions.find((item) => item.id === id))
       .filter(Boolean);
-    starterList.innerHTML = starters.map((question) => `
-      <button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('');
-    starterList.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
+
+    const fill = state.questions
+      .filter((item) => item.featured && !preferred.some((chosen) => chosen.id === item.id))
+      .slice(0, Math.max(0, 5 - preferred.length));
+
+    const starters = [...preferred, ...fill].slice(0, 5);
+    elements.starters.innerHTML = starters.map((question) => `
+      <button type="button" class="hm-starter" data-hm-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>
+    `).join('');
+    bindQuestionButtons(elements.starters);
+  };
+
+  const renderCapability = (id) => {
+    const item = state.capabilities.find((capability) => capability.id === id) || state.capabilities[0];
+    if (!item || !elements.capabilityDetail) return;
+    state.activeCapability = item.id;
+    const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
+
+    elements.capabilityDetail.innerHTML = `
+      <img class="hm-detail-icon" src="${pixelUrl(icon)}" alt="">
+      <p class="eyebrow">${escapeHtml(item.label)}</p>
+      <h3>${escapeHtml(item.headline)}</h3>
+      <p>${escapeHtml(item.proof)}</p>
+      <div class="hm-skill-cloud">${(item.skills || []).map((skill) => `<span>${escapeHtml(skill)}</span>`).join('')}</div>`;
+
+    elements.capabilityTabs?.querySelectorAll('[data-hm-capability]').forEach((button) => {
+      const active = button.dataset.hmCapability === item.id;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
     });
   };
 
-  const renderToolPanel = (group) => {
-    if (!toolPanel || !group) return;
-    state.activeTool = group.id;
-    const familiarity = Array.isArray(group.familiarity) && group.familiarity.length
-      ? `<div class="hm-tool-familiarity"><strong>Additional platform familiarity:</strong> ${group.familiarity.map(escapeHtml).join(' · ')}</div>`
-      : '';
-    toolPanel.innerHTML = `
-      <div class="hm-tool-panel-head">
-        <span class="hm-tool-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg></span>
-        <div><p class="eyebrow">Capability Area</p><h3>${escapeHtml(group.label)}</h3><p>${escapeHtml(group.summary)}</p></div>
-      </div>
-      <div class="hm-tool-columns">
-        <div class="hm-tool-column"><h4>Hands-on tools</h4><div class="hm-tool-chip-row">${(group.hands_on || []).map((item) => `<span class="hm-tool-chip">${escapeHtml(item)}</span>`).join('')}</div></div>
-        <div class="hm-tool-column"><h4>What transfers across tools</h4><div class="hm-tool-chip-row">${(group.capabilities || []).map((item) => `<span class="hm-tool-chip capability">${escapeHtml(item)}</span>`).join('')}</div></div>
-      </div>
-      ${familiarity}`;
-    toolTabs?.querySelectorAll('[data-tool-id]').forEach((button) => {
-      const active = button.dataset.toolId === group.id;
+  const renderCapabilities = () => {
+    if (!elements.capabilityTabs || !state.capabilities.length) return;
+    elements.capabilityTabs.innerHTML = state.capabilities.map((item) => {
+      const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
+      return `
+        <button type="button" role="tab" aria-selected="false" class="hm-capability-tab" data-hm-capability="${escapeHtml(item.id)}">
+          <img src="${pixelUrl(icon)}" alt=""><span>${escapeHtml(item.label)}</span>
+        </button>`;
+    }).join('');
+
+    elements.capabilityTabs.querySelectorAll('[data-hm-capability]').forEach((button) => {
+      button.addEventListener('click', () => renderCapability(button.dataset.hmCapability));
+    });
+
+    renderCapability(state.activeCapability || state.capabilities[0].id);
+  };
+
+  const renderTool = (id) => {
+    const item = state.tools.find((tool) => tool.id === id) || state.tools[0];
+    if (!item || !elements.toolDetail) return;
+    state.activeTool = item.id;
+    const index = Math.max(0, state.tools.findIndex((tool) => tool.id === item.id));
+    const icon = TOOL_ICONS[index % TOOL_ICONS.length];
+
+    const groups = [];
+    if ((item.hands_on || []).length) groups.push(['Hands-on', item.hands_on]);
+    if ((item.familiarity || []).length) groups.push(['Familiarity', item.familiarity]);
+    if ((item.capabilities || []).length) groups.push(['Can use it for', item.capabilities]);
+
+    elements.toolDetail.innerHTML = `
+      <img class="hm-detail-icon" src="${pixelUrl(icon)}" alt="">
+      <p class="eyebrow">${escapeHtml(item.label)}</p>
+      <h3>${escapeHtml(item.summary)}</h3>
+      <div class="hm-tool-groups">
+        ${groups.map(([label, values]) => `
+          <div class="hm-tool-section-label">${escapeHtml(label)}</div>
+          ${values.map((value) => `<span>${escapeHtml(value)}</span>`).join('')}
+        `).join('')}
+      </div>`;
+
+    elements.toolTabs?.querySelectorAll('[data-hm-tool]').forEach((button) => {
+      const active = button.dataset.hmTool === item.id;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', String(active));
     });
   };
 
   const renderTools = () => {
-    if (!toolTabs || !toolPanel || !state.tools.length) return;
-    toolTabs.innerHTML = state.tools.map((group, index) => `
-      <button class="hm-tool-tab ${index === 0 ? 'active' : ''}" type="button" role="tab" aria-selected="${String(index === 0)}" data-tool-id="${escapeHtml(group.id)}">
-        <svg class="portfolio-icon" aria-hidden="true"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg>
-        <span>${escapeHtml(group.label)}</span>
-      </button>`).join('');
-    toolTabs.querySelectorAll('[data-tool-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const group = state.tools.find((item) => item.id === button.dataset.toolId);
-        renderToolPanel(group);
-      });
+    if (!elements.toolTabs || !state.tools.length) return;
+    elements.toolTabs.innerHTML = state.tools.map((item, index) => `
+      <button type="button" role="tab" aria-selected="false" class="hm-tool-tab" data-hm-tool="${escapeHtml(item.id)}">
+        <img src="${pixelUrl(TOOL_ICONS[index % TOOL_ICONS.length])}" alt=""><span>${escapeHtml(item.label)}</span>
+      </button>
+    `).join('');
+
+    elements.toolTabs.querySelectorAll('[data-hm-tool]').forEach((button) => {
+      button.addEventListener('click', () => renderTool(button.dataset.hmTool));
     });
-    renderToolPanel(state.tools[0]);
-    if (learningStatement) learningStatement.textContent = state.learningStatement;
+
+    renderTool(state.activeTool || state.tools[0].id);
+    if (elements.learningStatement) elements.learningStatement.textContent = state.learningStatement;
   };
 
-  const resetConversation = () => {
-    state.lastQuestionId = null;
-    state.isReplying = false;
-    chatLog.innerHTML = `
-      <article class="hm-message hm-message-haley is-entering">
-        <div class="hm-message-label">Portfolio Haley</div>
-        <div class="hm-message-bubble">
-          <p>Hi — use this like the part of an interview where you get past the résumé bullets. Ask what I actually owned, how I make tradeoffs, how I work with technical content and SMEs, what tools I use, what I would improve, or where I add value beyond building the course.</p>
-          <p class="hm-chat-note"><strong>Try a stronger first question:</strong> “Why would I hire you?” or “What do you do when an SME wants everything in the course?”</p>
-        </div>
-      </article>`;
-    scrollChat();
+  const setScanView = (view) => {
+    elements.scanButtons.forEach((button) => {
+      const active = button.dataset.hmScanView === view;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+    elements.scanPanels.forEach((panel) => {
+      const active = panel.dataset.hmScanPanel === view;
+      panel.hidden = !active;
+      panel.classList.toggle('active', active);
+    });
   };
 
-  form.addEventListener('submit', (event) => {
+  elements.form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const value = input.value.trim();
-    if (!value || state.isReplying) return;
-    askQuestion(value);
-    input.value = '';
-    input.focus();
+    const value = elements.input.value.trim();
+    if (!value) return;
+    elements.input.value = '';
+    ask(value);
   });
 
-  clearButton?.addEventListener('click', resetConversation);
+  elements.clear?.addEventListener('click', resetChat);
+  elements.libraryToggle?.addEventListener('click', () => {
+    const open = elements.library?.hidden !== false;
+    setLibraryOpen(open);
+  });
+  elements.libraryClose?.addEventListener('click', () => setLibraryOpen(false));
+  elements.scanButtons.forEach((button) => {
+    button.addEventListener('click', () => setScanView(button.dataset.hmScanView));
+  });
 
-  Promise.all([
-    fetch(faqUrl).then((response) => {
-      if (!response.ok) throw new Error('Hiring FAQ unavailable');
-      return response.json();
-    }),
-    fetch(expandedFaqUrl).then((response) => {
-      if (!response.ok) throw new Error('Advanced hiring FAQ unavailable');
-      return response.json();
-    }),
-    fetch(searchUrl).then((response) => {
-      if (!response.ok) throw new Error('Portfolio search unavailable');
-      return response.json();
-    }),
-    fetch(toolsUrl).then((response) => {
-      if (!response.ok) throw new Error('Hiring tools unavailable');
-      return response.json();
-    })
-  ])
-    .then(([faqData, expandedData, searchData, toolsData]) => {
-      const baseQuestions = Array.isArray(faqData.questions) ? faqData.questions : [];
-      const advancedQuestions = Array.isArray(expandedData.questions) ? expandedData.questions : [];
-      state.questions = [...baseQuestions, ...advancedQuestions];
-      state.searchEntries = Array.isArray(searchData.entries) ? searchData.entries : [];
-      state.tools = Array.isArray(toolsData.groups) ? toolsData.groups : [];
-      state.learningStatement = toolsData.learning_statement || '';
-      renderCategories();
-      renderQuestionLibrary();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && elements.library?.hidden === false) setLibraryOpen(false);
+  });
+
+  const load = async () => {
+    try {
+      const [faq, expanded, specialist, capabilities, tools, search] = await Promise.all(
+        Object.values(urls).map((url) => fetch(url).then((response) => {
+          if (!response.ok) throw new Error(`Could not load ${url.pathname}`);
+          return response.json();
+        }))
+      );
+
+      state.questions = [
+        ...(faq.questions || []).map((item) => ({ ...item, specialist: false })),
+        ...(expanded.questions || []).map((item) => ({ ...item, specialist: false })),
+        ...(specialist.questions || []).map((item) => ({ ...item, specialist: true }))
+      ];
+      state.searchEntries = search.entries || [];
+      state.capabilities = capabilities.pillars || [];
+      state.tools = tools.groups || [];
+      state.learningStatement = tools.learning_statement || '';
+
+      if (elements.count) elements.count.textContent = state.questions.length;
+      renderLibrary();
       renderStarters();
+      renderCapabilities();
       renderTools();
-      resetConversation();
-    })
-    .catch(() => {
-      chatLog.innerHTML = `
-        <article class="hm-message hm-message-haley is-entering">
-          <div class="hm-message-label">Portfolio guide</div>
-          <div class="hm-message-bubble"><p>The interview guide could not load its public data. You can still browse the Projects page or open the résumé.</p></div>
-        </article>`;
-      form.querySelector('button[type="submit"]').disabled = true;
-      input.disabled = true;
-    });
+      resetChat();
+      setScanView('capabilities');
+    } catch (error) {
+      console.error(error);
+      elements.chatLog.innerHTML = '<article class="hm-message hm-message-haley"><div class="hm-message-label">Guide unavailable</div><div class="hm-message-bubble"><p>The interview library could not load. Please use the project pages or résumé links instead.</p></div></article>';
+    }
+  };
+
+  load();
 })();
