@@ -41,6 +41,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Breadcrumb consistency", [sys.executable, "scripts/check-breadcrumb-consistency.py"]),
         ("Hiring Manager UX", [sys.executable, "scripts/check-hiring-mobile-ux.py"]),
         ("Hiring Guide Manager", [sys.executable, "scripts/check-hiring-guide-manager.py"]),
+        ("Hiring Guide public sync", [sys.executable, "scripts/check-hiring-guide-public-sync.py"]),
         ("Public privacy/leakage", [sys.executable, "scripts/check-public-privacy.py"]),
         ("Project renderer", [sys.executable, "scripts/check-renderer.py"]),
         ("Project generator", [sys.executable, "scripts/check-new-project.py"]),

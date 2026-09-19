@@ -66,6 +66,7 @@ def main() -> int:
         "Create Content",
         "Reference Library",
         "Hiring Guide Library",
+        "Preview Public Sync",
         "Save & Publish",
         "Approve & Apply Locally",
         "Publish to GitHub",
@@ -80,6 +81,7 @@ def main() -> int:
         "Manage Content",
         "Reference Library",
         "Hiring Guide Library",
+        "Hiring Guide public sync",
         "Create Content",
         "Save & Publish",
         "Generic AI Drafting Helper",
@@ -111,6 +113,7 @@ def main() -> int:
         "adversarial security/misuse regression",
         "workflow state-safety/chaos regression",
         "Hiring Guide Library Maintenance",
+        "Preview Public Sync",
         "Commit Identity Privacy",
     ]:
         require(phrase in maintenance, f"Maintenance guide is missing current workflow guidance: {phrase!r}.", errors)
@@ -205,6 +208,7 @@ def main() -> int:
         ("Breadcrumb consistency", "scripts/check-breadcrumb-consistency.py"),
         ("Hiring Manager UX", "scripts/check-hiring-mobile-ux.py"),
         ("Hiring Guide Manager", "scripts/check-hiring-guide-manager.py"),
+        ("Hiring Guide public sync", "scripts/check-hiring-guide-public-sync.py"),
     ]:
         require(
             f'("{label}", [sys.executable, "{script}"]' in validation,
@@ -217,6 +221,7 @@ def main() -> int:
         "python scripts/check-breadcrumb-consistency.py",
         "python scripts/check-hiring-mobile-ux.py",
         "python scripts/check-hiring-guide-manager.py",
+        "python scripts/check-hiring-guide-public-sync.py",
     ]:
         require(script in workflow, f"Pull-request CI must run {script}.", errors)
 
