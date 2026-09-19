@@ -1,4 +1,35 @@
 (() => {
+  const overviewData = {
+    problem: {
+      label: 'Problem',
+      title: 'Translate technical source material into seller decisions.',
+      text: 'The curriculum needed enough technical context to support credible discovery and solution-fit conversations without turning the pathway into engineering training.'
+    },
+    ownership: {
+      label: 'What I owned',
+      title: 'Connect curriculum, practice, assessment, delivery, and maintenance.',
+      text: 'I carried the work from objectives and content architecture through development, SME review, learner-path validation, LMS testing, reporting support, and future updates.'
+    },
+    boundary: {
+      label: 'Public boundary',
+      title: 'Show the design logic without reproducing proprietary material.',
+      text: 'The public case study keeps the real instructional decisions and workflow while replacing customer details, internal naming, product language, and source content.'
+    }
+  };
+  const overviewButtons = [...document.querySelectorAll('[data-overview]')];
+  const overviewLabel = document.getElementById('overviewDetailLabel');
+  const overviewTitle = document.getElementById('overviewDetailTitle');
+  const overviewText = document.getElementById('overviewDetailText');
+  const selectOverview = (button) => {
+    const data = overviewData[button.dataset.overview];
+    if (!data) return;
+    overviewButtons.forEach((item) => item.classList.toggle('active', item === button));
+    overviewLabel.textContent = data.label;
+    overviewTitle.textContent = data.title;
+    overviewText.textContent = data.text;
+  };
+  overviewButtons.forEach((button) => button.addEventListener('click', () => selectOverview(button)));
+
   const blueprintData = {
     pathway: {
       title: 'Sequence the seller journey from context to application.',
@@ -15,39 +46,9 @@
         </div>`
     },
     alignment: {
-      title: 'Trace each objective through the exact evidence used to assess it.',
-      text: 'Each lane below follows one objective from the seller behavior I wanted to support through practice and into the evidence used to judge performance.',
-      html: `
-        <div class="alignment-lanes" aria-label="Objective alignment examples">
-          ${[
-            ['01','Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
-            ['02','Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
-            ['03','Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
-          ].map(([number, objective, task, practice, evidence]) => `
-            <article class="alignment-lane">
-              <div class="alignment-objective">
-                <span class="alignment-number">${number}</span>
-                <small>Objective</small>
-                <strong>${objective}</strong>
-              </div>
-              <div class="alignment-route">
-                <div class="alignment-stage">
-                  <span>Seller task</span>
-                  <strong>${task}</strong>
-                </div>
-                <span class="alignment-arrow" aria-hidden="true">→</span>
-                <div class="alignment-stage">
-                  <span>Practice</span>
-                  <strong>${practice}</strong>
-                </div>
-                <span class="alignment-arrow" aria-hidden="true">→</span>
-                <div class="alignment-stage alignment-stage-evidence">
-                  <span>Assessment evidence</span>
-                  <strong>${evidence}</strong>
-                </div>
-              </div>
-            </article>`).join('')}
-        </div>`
+      title: 'Make the relationship between objective, content, practice, and assessment visible.',
+      text: 'Choose an objective and replay the sequence. Each step appears only when it has a clear job in supporting the same seller behavior.',
+      html: '<div class="alignment-reveal" id="alignmentReveal"></div>'
     },
     launch: {
       title: 'Plan launch, platform behavior, and maintenance as part of the learning design.',
@@ -62,6 +63,93 @@
     }
   };
 
+  const alignmentExamples = [
+    {
+      label:'01',
+      objective:'Recognize opportunity fit',
+      content:'Customer signals, use cases, and qualification cues',
+      practice:'Classify a customer situation and choose the next discovery move',
+      assessment:'Select the strongest evidence-based discovery path'
+    },
+    {
+      label:'02',
+      objective:'Distinguish solution approaches',
+      content:'Needs, constraints, and the boundaries between solution categories',
+      practice:'Compare two customer situations and map each to the right direction',
+      assessment:'Match the situation to the appropriate solution category'
+    },
+    {
+      label:'03',
+      objective:'Prepare the next sales step',
+      content:'Role boundaries, handoff triggers, and success criteria',
+      practice:'Work through a guided customer conversation',
+      assessment:'Choose and justify the next seller action'
+    }
+  ];
+  let alignmentTimers = [];
+
+  const clearAlignmentTimers = () => {
+    alignmentTimers.forEach((timer) => window.clearTimeout(timer));
+    alignmentTimers = [];
+  };
+
+  const playAlignment = (index = 0) => {
+    clearAlignmentTimers();
+    const example = alignmentExamples[index];
+    const reveal = document.getElementById('alignmentReveal');
+    if (!reveal || !example) return;
+
+    reveal.querySelectorAll('[data-alignment-objective]').forEach((button) => {
+      const active = Number(button.dataset.alignmentObjective) === index;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+
+    const stages = [
+      ['Objective', example.objective, 'icon-learning-design'],
+      ['Content', example.content, 'icon-elearning'],
+      ['Practice', example.practice, 'icon-interaction'],
+      ['Assessment', example.assessment, 'icon-assessment']
+    ];
+
+    const track = reveal.querySelector('.alignment-progressive-track');
+    track.replaceChildren(...stages.map(([label, text, icon], stageIndex) => {
+      const node = document.createElement('div');
+      node.className = 'alignment-progressive-node';
+      node.innerHTML = `
+        <span class="alignment-progressive-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#${icon}"></use></svg></span>
+        <small>${label}</small>
+        <strong>${text}</strong>
+        ${stageIndex < stages.length - 1 ? '<i class="alignment-progressive-link" aria-hidden="true"></i>' : ''}`;
+      return node;
+    }));
+
+    const nodes = [...track.querySelectorAll('.alignment-progressive-node')];
+    nodes.forEach((node, stageIndex) => {
+      alignmentTimers.push(window.setTimeout(() => {
+        node.classList.add('is-visible');
+        if (stageIndex > 0) nodes[stageIndex - 1].classList.add('is-linked');
+      }, stageIndex * 430));
+    });
+  };
+
+  const initAlignmentReveal = () => {
+    const reveal = document.getElementById('alignmentReveal');
+    if (!reveal) return;
+    reveal.innerHTML = `
+      <div class="alignment-objective-picker" role="tablist" aria-label="Objective alignment examples">
+        ${alignmentExamples.map((item,index)=>`<button type="button" role="tab" aria-selected="${index===0}" class="alignment-objective-choice${index===0?' active':''}" data-alignment-objective="${index}"><span>${item.label}</span><strong>${item.objective}</strong></button>`).join('')}
+      </div>
+      <div class="alignment-progressive-track" aria-live="polite"></div>
+      <div class="alignment-replay-row"><span>One objective, one evidence chain.</span><button type="button" class="alignment-replay">Replay alignment ↻</button></div>`;
+    reveal.querySelectorAll('[data-alignment-objective]').forEach((button) => button.addEventListener('click', () => playAlignment(Number(button.dataset.alignmentObjective))));
+    reveal.querySelector('.alignment-replay').addEventListener('click', () => {
+      const active = reveal.querySelector('[data-alignment-objective].active');
+      playAlignment(active ? Number(active.dataset.alignmentObjective) : 0);
+    });
+    playAlignment(0);
+  };
+
   const blueprintPanel = document.getElementById('blueprintPanel');
   const blueprintButtons = [...document.querySelectorAll('[data-blueprint]')];
 
@@ -70,6 +158,7 @@
     if (!data || !blueprintPanel) return;
     const update = () => {
       blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
+      if (key === 'alignment') initAlignmentReveal();
       blueprintPanel.classList.remove('is-switching');
     };
     if (!animate) {
@@ -352,54 +441,38 @@
   renderDelivery('build');
 
   const authoringData = {
-    rise: {
-      label: 'Rise 360 / Reinforcement',
-      title: 'Keep reinforcement inside the course flow.',
-      summary: 'I used lightweight checks to reinforce customer fit and solution context without breaking the learner out of the main experience.',
-      focus: ['Structured content','Quick reinforcement','Responsive delivery'],
-      image: '../../../../assets/project-images/enterprise-certification/cert-rise-knowledge-check.webp',
-      alt: 'Public-safe Rise-style cellular sales knowledge check.'
+    explain: {
+      label: 'Content Architecture / Explain',
+      title: 'Sequence the information around the seller decision.',
+      summary: 'I introduced only the context sellers needed to recognize the opportunity, connect customer need to value, and prepare for the next decision.',
+      focus: ['Customer context','Need-to-value logic','Seller relevance'],
+      image: '../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',
+      alt: 'Public-safe cellular networking market opportunity learning screen.'
     },
-    storyline: {
-      label: 'Storyline 360 / Applied Practice',
-      title: 'Use richer interaction when the seller needs to explore or decide.',
-      summary: 'Storyline supported comparison, exploration, and scenario practice when a static content block would not give the learner enough room to test judgment.',
-      focus: ['Interactive exploration','Scenario decisions','Coaching feedback']
-    }
-  };
-
-  const storylineData = {
-    explorer: {
-      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-product-explorer.webp',
-      alt: 'Public-safe Storyline-style interactive cellular solution explorer.'
+    reinforce: {
+      label: 'Content Architecture / Reinforce',
+      title: 'Use short checks to strengthen the distinctions that matter.',
+      summary: 'Reinforcement stayed close to the explanation so sellers could test customer fit, use-case distinctions, and value logic before moving into more complex practice.',
+      focus: ['Knowledge checks','Retrieval practice','Immediate feedback'],
+      image: '../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',
+      alt: 'Public-safe cellular networking sales knowledge check.'
     },
-    scenario: {
-      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-scenario.webp',
-      alt: 'Public-safe Storyline-style customer recommendation scenario.'
+    practice: {
+      label: 'Content Architecture / Practice',
+      title: 'Move from knowing the idea to making the seller decision.',
+      summary: 'Scenario practice asked learners to interpret a customer situation, choose a direction, and use coaching feedback before the formal assessment measured the same judgment.',
+      focus: ['Scenario decisions','Coaching feedback','Assessment alignment'],
+      image: '../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',
+      alt: 'Public-safe cellular networking customer scenario interaction.'
     }
   };
 
   const authoringButtons = [...document.querySelectorAll('[data-authoring]')];
-  const storylineButtons = [...document.querySelectorAll('[data-storyline-example]')];
   const authoringImage = document.getElementById('authoringImage');
   const authoringLabel = document.getElementById('authoringLabel');
   const authoringTitle = document.getElementById('authoringTitle');
   const authoringSummary = document.getElementById('authoringSummary');
   const authoringFocus = document.getElementById('authoringFocus');
-  const storylineExampleTabs = document.getElementById('storylineExampleTabs');
-
-  const renderStorylineExample = (key) => {
-    const data = storylineData[key];
-    if (!data || !authoringImage) return;
-    authoringImage.src = data.image;
-    authoringImage.alt = data.alt;
-    storylineButtons.forEach((button) => {
-      const active = button.dataset.storylineExample === key;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
-  };
 
   const renderAuthoring = (key) => {
     const data = authoringData[key];
@@ -412,13 +485,12 @@
       chip.textContent = item;
       return chip;
     }));
-    const isStoryline = key === 'storyline';
-    storylineExampleTabs.hidden = !isStoryline;
-    if (isStoryline) renderStorylineExample('explorer');
-    else {
+    authoringImage.classList.add('is-switching');
+    window.setTimeout(() => {
       authoringImage.src = data.image;
       authoringImage.alt = data.alt;
-    }
+      authoringImage.classList.remove('is-switching');
+    }, 110);
     authoringButtons.forEach((button) => {
       const active = button.dataset.authoring === key;
       button.classList.toggle('active', active);
@@ -432,32 +504,17 @@
     button.addEventListener('keydown', (event) => {
       if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
       event.preventDefault();
-      let next = index;
-      if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = authoringButtons.length - 1;
-      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % authoringButtons.length;
-      else next = (index - 1 + authoringButtons.length) % authoringButtons.length;
+      let next=index;
+      if(event.key==='Home') next=0;
+      else if(event.key==='End') next=authoringButtons.length-1;
+      else if(event.key==='ArrowRight'||event.key==='ArrowDown') next=(index+1)%authoringButtons.length;
+      else next=(index-1+authoringButtons.length)%authoringButtons.length;
       authoringButtons[next].focus();
       renderAuthoring(authoringButtons[next].dataset.authoring);
     });
   });
-
-  storylineButtons.forEach((button, index) => {
-    button.addEventListener('click', () => renderStorylineExample(button.dataset.storylineExample));
-    button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-      event.preventDefault();
-      let next = index;
-      if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = storylineButtons.length - 1;
-      else if (event.key === 'ArrowRight') next = (index + 1) % storylineButtons.length;
-      else next = (index - 1 + storylineButtons.length) % storylineButtons.length;
-      storylineButtons[next].focus();
-      renderStorylineExample(storylineButtons[next].dataset.storylineExample);
-    });
-  });
-
-  renderAuthoring('rise');
+  authoringButtons.forEach((button,index)=>{button.tabIndex=index===0?0:-1;});
+  renderAuthoring('explain');
 
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
