@@ -158,6 +158,8 @@ def main() -> int:
         require(marker in template_text, f"Public sync UI missing {marker!r}.", errors)
 
     require("Preview Public Sync" in library_template_text, "Private library must link to Public Sync Preview.", errors)
+    require('group.items' not in template_text, "Jinja grouped sync data must use bracket access; group.items resolves to dict.items and breaks rendering.", errors)
+    require('group["items"]' in template_text, "Grouped sync template must render list values with bracket access.", errors)
 
     if errors:
         print("Hiring Guide public sync static contract failed:")
