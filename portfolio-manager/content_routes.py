@@ -263,7 +263,7 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
     project["skills"] = split_csv(form.get("skills", ""))
     project["tools"] = split_csv(form.get("tools", ""))
 
-    if "component_refs" in form:
+    if form.get("component_refs_present") == "1":
         try:
             component_refs = validate_component_refs(
                 project,
