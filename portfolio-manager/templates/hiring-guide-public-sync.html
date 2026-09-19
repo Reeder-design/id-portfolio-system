@@ -89,7 +89,7 @@
                 {% for group in proposal.warning_groups %}
                 <details>
                     <summary><span><strong>{{ group.label }}</strong><small>{{ group.count }} item{% if group.count != 1 %}s{% endif %}</small></span><span>Review →</span></summary>
-                    <ul>{% for warning in group.items %}<li>{{ warning }}</li>{% endfor %}</ul>
+                    <ul>{% for warning in group["items"] %}<li>{{ warning }}</li>{% endfor %}</ul>
                 </details>
                 {% endfor %}
             </div>
@@ -188,7 +188,7 @@
                     <details>
                         <summary><span><strong>{{ group.category }}</strong><small>{{ group.count }} question{% if group.count != 1 %}s{% endif %}</small></span><span>View →</span></summary>
                         <div class="sync-compact-list">
-                            {% for item in group.items %}
+                            {% for item in group["items"] %}
                             <article><strong>{{ item.question }}</strong><span><code>{{ item.id }}</code></span></article>
                             {% endfor %}
                         </div>
