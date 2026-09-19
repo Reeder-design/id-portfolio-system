@@ -1,65 +1,193 @@
 (() => {
+  const overviewData = {
+    problem: {
+      label: 'Problem',
+      title: 'Translate technical source material into seller decisions.',
+      text: 'The curriculum needed enough technical context to support credible discovery and solution-fit conversations without turning the pathway into engineering training.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-document.webp" alt=""><small>Source</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""><small>Scope</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Seller decision</small></span>`
+    },
+    ownership: {
+      label: 'What I owned',
+      title: 'Connect curriculum, practice, assessment, delivery, and maintenance.',
+      text: 'I carried the work from objectives and content architecture through development, SME review, learner-path validation, LMS testing, reporting support, and future updates.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><small>Architecture</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""><small>Build</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""><small>LMS</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><small>Maintain</small></span>`
+    },
+    boundary: {
+      label: 'Public boundary',
+      title: 'Show the design logic without reproducing proprietary material.',
+      text: 'The public case study keeps the real instructional decisions and workflow while replacing customer details, internal naming, product language, and source content.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""><small>Internal source</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><small>Sanitize</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Public example</small></span>`
+    }
+  };
+  const overviewButtons = [...document.querySelectorAll('[data-overview]')];
+  const overviewLabel = document.getElementById('overviewDetailLabel');
+  const overviewTitle = document.getElementById('overviewDetailTitle');
+  const overviewText = document.getElementById('overviewDetailText');
+  const overviewMotion = document.getElementById('overviewMotion');
+  const selectOverview = (button) => {
+    const data = overviewData[button.dataset.overview];
+    const detail = document.getElementById('overviewDetail');
+    if (!data || !detail) return;
+    overviewButtons.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+    detail.classList.add('is-switching');
+    window.setTimeout(() => {
+      overviewLabel.textContent = data.label;
+      overviewTitle.textContent = data.title;
+      overviewText.textContent = data.text;
+      if (overviewMotion) {
+        overviewMotion.className = `overview-motion overview-motion-${button.dataset.overview}`;
+        overviewMotion.innerHTML = data.motion;
+      }
+      detail.classList.remove('is-switching');
+    }, 110);
+  };
+  overviewButtons.forEach((button) => button.addEventListener('click', () => selectOverview(button)));
+
   const blueprintData = {
     pathway: {
       title: 'Sequence the seller journey from context to application.',
-      text: 'The required path stayed focused on the decisions most sellers shared. Market-specific requirements and deeper technical foundations were separated so they did not inflate the core certification.',
+      text: 'The core path keeps shared seller decisions together while deeper or market-specific content branches only when it is useful.',
       html: `
-        <div class="blueprint-flow" aria-label="Core certification sequence">
-          ${['Cellular context','Customer use cases','Solution fit','Discovery + value','Scenario practice','Ordering readiness','Certification'].map((item) => `<span class="blueprint-step">${item}</span>`).join('')}
+        <div class="blueprint-motion curriculum-motion" aria-label="Animated curriculum path">
+          <div class="curriculum-track" aria-hidden="true"><i></i></div>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Context</small><strong>Recognize the need</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt=""><small>Fit</small><strong>Connect customer + solution</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""><small>Practice</small><strong>Make the decision</strong></span>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""><small>Evidence</small><strong>Certify the judgment</strong></span>
         </div>
-        <div class="blueprint-mini-grid" style="margin-top:12px">
-          <article class="blueprint-mini-card"><strong>Core seller path</strong><p>Required concepts and decisions shared across the main audience.</p></article>
-          <article class="blueprint-mini-card"><strong>Regional extension</strong><p>Market-specific requirements stayed in a separate route and assessment.</p></article>
-          <article class="blueprint-mini-card"><strong>Optional foundations</strong><p>Deeper technical background remained available without becoming required sales training.</p></article>
-          <article class="blueprint-mini-card"><strong>Role boundary</strong><p>Engineering detail stayed out unless it supported discovery, risk, ordering, or specialist handoff.</p></article>
+        <div class="blueprint-caption-grid">
+          <span><strong>Core path</strong> Shared seller decisions stay required.</span>
+          <span><strong>Optional depth</strong> Extra technical context stays available without inflating the main experience.</span>
         </div>`
     },
     alignment: {
-      title: 'Trace each objective through the exact evidence used to assess it.',
-      text: 'Each lane below follows one objective from the seller behavior I wanted to support through practice and into the evidence used to judge performance.',
-      html: `
-        <div class="alignment-lanes" aria-label="Objective alignment examples">
-          ${[
-            ['01','Recognize opportunity fit','Identify a customer need worth pursuing','Qualification scenario','Select the strongest next discovery path'],
-            ['02','Distinguish solution approaches','Compare needs and constraints','Side-by-side decision practice','Match the situation to the appropriate solution category'],
-            ['03','Prepare the next sales step','Decide whether to continue discovery or involve a specialist','Guided customer conversation','Choose and justify the next action']
-          ].map(([number, objective, task, practice, evidence]) => `
-            <article class="alignment-lane">
-              <div class="alignment-objective">
-                <span class="alignment-number">${number}</span>
-                <small>Objective</small>
-                <strong>${objective}</strong>
-              </div>
-              <div class="alignment-route">
-                <div class="alignment-stage">
-                  <span>Seller task</span>
-                  <strong>${task}</strong>
-                </div>
-                <span class="alignment-arrow" aria-hidden="true">→</span>
-                <div class="alignment-stage">
-                  <span>Practice</span>
-                  <strong>${practice}</strong>
-                </div>
-                <span class="alignment-arrow" aria-hidden="true">→</span>
-                <div class="alignment-stage alignment-stage-evidence">
-                  <span>Assessment evidence</span>
-                  <strong>${evidence}</strong>
-                </div>
-              </div>
-            </article>`).join('')}
-        </div>`
+      title: 'Make the relationship between objective, content, practice, and assessment visible.',
+      text: 'Choose an objective and replay the sequence. Every layer supports the same seller behavior.',
+      html: '<div class="alignment-reveal" id="alignmentReveal"></div>'
     },
     launch: {
-      title: 'Plan launch, platform behavior, and maintenance as part of the learning design.',
-      text: 'The certification had to work after authoring was finished. I treated review, LMS testing, reporting logic, and source updates as part of the same launch system.',
+      title: 'Design the release system before the learning is finished.',
+      text: 'QA, review, LMS behavior, reporting, and maintenance are part of the learning system, not cleanup after authoring.',
       html: `
-        <div class="blueprint-mini-grid">
-          <article class="blueprint-mini-card"><strong>1. Design QA</strong><p>Editorial, visual, interaction, accessibility, and learner-flow checks before broader review.</p></article>
-          <article class="blueprint-mini-card"><strong>2. SME + assessment review</strong><p>Resolve accuracy and messaging feedback while protecting the seller-focused scope.</p></article>
-          <article class="blueprint-mini-card"><strong>3. LMS UAT</strong><p>Validate visibility, launch, routes, renewal behavior, imported history, and regional requirements.</p></article>
-          <article class="blueprint-mini-card"><strong>4. Maintain + report</strong><p>Track source changes and support workarounds when platform reporting does not match the certification logic.</p></article>
-        </div>`
+        <div class="blueprint-motion launch-motion" aria-label="Animated launch pipeline">
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""><small>QA</small><strong>Check learning + interactions</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""><small>Review</small><strong>Resolve SME feedback</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""><small>LMS + UAT</small><strong>Validate the learner path</strong></span>
+          <i class="launch-link"></i>
+          <span class="blueprint-motion-node"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><small>Maintain</small><strong>Update + report</strong></span>
+        </div>
+        <div class="launch-note"><img src="../../../../assets/icons/pixel/lms/mini-verified.webp" alt="" aria-hidden="true"><span>Launch is complete when the learning, platform behavior, and ownership model work together.</span></div>`
     }
+  };
+
+  const alignmentExamples = [
+    {
+      label:'01',
+      objective:'Recognize opportunity fit',
+      content:'Customer signals, use cases, and qualification cues',
+      practice:'Classify a customer situation and choose the next discovery move',
+      assessment:'Select the strongest evidence-based discovery path'
+    },
+    {
+      label:'02',
+      objective:'Distinguish solution approaches',
+      content:'Needs, constraints, and the boundaries between solution categories',
+      practice:'Compare two customer situations and map each to the right direction',
+      assessment:'Match the situation to the appropriate solution category'
+    },
+    {
+      label:'03',
+      objective:'Prepare the next sales step',
+      content:'Role boundaries, handoff triggers, and success criteria',
+      practice:'Work through a guided customer conversation',
+      assessment:'Choose and justify the next seller action'
+    }
+  ];
+  let alignmentTimers = [];
+
+  const clearAlignmentTimers = () => {
+    alignmentTimers.forEach((timer) => window.clearTimeout(timer));
+    alignmentTimers = [];
+  };
+
+  const playAlignment = (index = 0) => {
+    clearAlignmentTimers();
+    const example = alignmentExamples[index];
+    const reveal = document.getElementById('alignmentReveal');
+    if (!reveal || !example) return;
+
+    reveal.querySelectorAll('[data-alignment-objective]').forEach((button) => {
+      const active = Number(button.dataset.alignmentObjective) === index;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+
+    const stages = [
+      ['Objective', example.objective, 'lms/mini-document-list.webp'],
+      ['Content', example.content, 'portfolio-general/learning.webp'],
+      ['Practice', example.practice, 'microlearning-performance-support/pointer-interaction.webp'],
+      ['Assessment', example.assessment, 'lms/mini-certificate.webp']
+    ];
+
+    const track = reveal.querySelector('.alignment-progressive-track');
+    track.replaceChildren(...stages.map(([label, text, icon], stageIndex) => {
+      const node = document.createElement('div');
+      node.className = 'alignment-progressive-node';
+      node.innerHTML = `
+        <span class="alignment-progressive-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/${icon}" alt=""></span>
+        <small>${label}</small>
+        <strong>${text}</strong>
+        ${stageIndex < stages.length - 1 ? '<i class="alignment-progressive-link" aria-hidden="true"></i>' : ''}`;
+      return node;
+    }));
+
+    const nodes = [...track.querySelectorAll('.alignment-progressive-node')];
+    nodes.forEach((node, stageIndex) => {
+      alignmentTimers.push(window.setTimeout(() => {
+        node.classList.add('is-visible');
+        if (stageIndex > 0) nodes[stageIndex - 1].classList.add('is-linked');
+      }, stageIndex * 430));
+    });
+  };
+
+  const initAlignmentReveal = () => {
+    const reveal = document.getElementById('alignmentReveal');
+    if (!reveal) return;
+    reveal.innerHTML = `
+      <div class="alignment-objective-picker" role="tablist" aria-label="Objective alignment examples">
+        ${alignmentExamples.map((item,index)=>`<button type="button" role="tab" aria-selected="${index===0}" class="alignment-objective-choice${index===0?' active':''}" data-alignment-objective="${index}"><span>${item.label}</span><strong>${item.objective}</strong></button>`).join('')}
+      </div>
+      <div class="alignment-progressive-track" aria-live="polite"></div>
+      <div class="alignment-replay-row"><span>One objective, one evidence chain.</span><button type="button" class="alignment-replay">Replay alignment ↻</button></div>`;
+    reveal.querySelectorAll('[data-alignment-objective]').forEach((button) => button.addEventListener('click', () => playAlignment(Number(button.dataset.alignmentObjective))));
+    reveal.querySelector('.alignment-replay').addEventListener('click', () => {
+      const active = reveal.querySelector('[data-alignment-objective].active');
+      playAlignment(active ? Number(active.dataset.alignmentObjective) : 0);
+    });
+    playAlignment(0);
   };
 
   const blueprintPanel = document.getElementById('blueprintPanel');
@@ -69,7 +197,9 @@
     const data = blueprintData[key];
     if (!data || !blueprintPanel) return;
     const update = () => {
+      blueprintPanel.dataset.mode = key;
       blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
+      if (key === 'alignment') initAlignmentReveal();
       blueprintPanel.classList.remove('is-switching');
     };
     if (!animate) {
@@ -263,33 +393,33 @@
       label: 'Build',
       icon: 'icon-elearning',
       title: 'Turn the architecture into usable seller learning.',
-      action: 'I built Rise lessons, Storyline practice, diagrams, comparisons, knowledge checks, and the certification assessment around the seller decisions defined in the blueprint.',
+      action: 'I built the course flow, practice, knowledge checks, and certification assessment around the seller decisions defined in the blueprint.',
       resultLabel: 'Delivered',
-      result: 'A multi-course cellular networking sales certification with role-focused learning, scenario practice, assessment, and LMS implementation support.'
+      result: 'A connected multi-course certification with scenario practice, assessment, and LMS support.'
     },
     review: {
       label: 'Review',
       icon: 'icon-feedback',
       title: 'Protect accuracy without letting the course drift back into source-document language.',
-      action: 'I coordinated editorial QA, interaction and accessibility checks, SME review, assessment review, and revision tracking across the certification.',
+      action: 'I coordinated QA, accessibility checks, SME review, assessment review, and revision tracking.',
       resultLabel: 'Protected',
-      result: 'A seller-focused scope where accuracy and approved messaging could be reviewed without turning the experience into engineering or product-document training.'
+      result: 'Accuracy stayed reviewable without letting the pathway drift back into source-document training.'
     },
     lms: {
       label: 'LMS + UAT',
       icon: 'icon-lms',
       title: 'Validate the learner journey, not just the course files.',
-      action: 'I tested visibility, enrollment, launch behavior, learner routes, renewal behavior, imported history, and regional requirements in the LMS.',
+      action: 'I tested visibility, enrollment, launch behavior, learner routes, completion logic, and regional requirements in the LMS.',
       resultLabel: 'Improved',
-      result: 'Core and regional routes stayed separate so sellers could complete the requirements relevant to their role and market instead of taking unnecessary content.'
+      result: 'Learners could follow the requirements relevant to their role and market without unnecessary content.'
     },
     maintain: {
       label: 'Maintain',
       icon: 'icon-automation',
       title: 'Keep the certification usable after launch.',
-      action: 'I tracked affected content as approved sources changed and supported a reporting workaround when LMS status logic did not fully match the certification design.',
+      action: 'I tracked affected content as sources changed and supported reporting when platform status logic did not fully match the certification design.',
       resultLabel: 'Learned',
-      result: 'Routing, assessment, reporting, governance, and platform behavior need to be designed as one system before the learning screens are finished.'
+      result: 'Routing, assessment, reporting, governance, and platform behavior work best when designed as one system.'
     }
   };
 
@@ -352,54 +482,38 @@
   renderDelivery('build');
 
   const authoringData = {
-    rise: {
-      label: 'Rise 360 / Reinforcement',
-      title: 'Keep reinforcement inside the course flow.',
-      summary: 'I used lightweight checks to reinforce customer fit and solution context without breaking the learner out of the main experience.',
-      focus: ['Structured content','Quick reinforcement','Responsive delivery'],
-      image: '../../../../assets/project-images/enterprise-certification/cert-rise-knowledge-check.webp',
-      alt: 'Public-safe Rise-style cellular sales knowledge check.'
+    explain: {
+      label: 'Content Architecture / Explain',
+      title: 'Sequence the information around the seller decision.',
+      summary: 'Introduce only the context sellers need to recognize the opportunity and prepare for the next decision.',
+      focus: ['Customer context','Need-to-value logic','Seller relevance'],
+      image: '../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',
+      alt: 'Public-safe cellular networking market opportunity learning screen.'
     },
-    storyline: {
-      label: 'Storyline 360 / Applied Practice',
-      title: 'Use richer interaction when the seller needs to explore or decide.',
-      summary: 'Storyline supported comparison, exploration, and scenario practice when a static content block would not give the learner enough room to test judgment.',
-      focus: ['Interactive exploration','Scenario decisions','Coaching feedback']
-    }
-  };
-
-  const storylineData = {
-    explorer: {
-      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-product-explorer.webp',
-      alt: 'Public-safe Storyline-style interactive cellular solution explorer.'
+    reinforce: {
+      label: 'Content Architecture / Reinforce',
+      title: 'Use short checks to strengthen the distinctions that matter.',
+      summary: 'Use short checks to test customer fit and key distinctions before moving into applied practice.',
+      focus: ['Knowledge checks','Retrieval practice','Immediate feedback'],
+      image: '../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',
+      alt: 'Public-safe cellular networking sales knowledge check.'
     },
-    scenario: {
-      image: '../../../../assets/project-images/enterprise-certification/cert-storyline-scenario.webp',
-      alt: 'Public-safe Storyline-style customer recommendation scenario.'
+    practice: {
+      label: 'Content Architecture / Practice',
+      title: 'Move from knowing the idea to making the seller decision.',
+      summary: 'Ask learners to interpret a customer situation, choose a direction, and use coaching feedback before assessment.',
+      focus: ['Scenario decisions','Coaching feedback','Assessment alignment'],
+      image: '../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',
+      alt: 'Public-safe cellular networking customer scenario interaction.'
     }
   };
 
   const authoringButtons = [...document.querySelectorAll('[data-authoring]')];
-  const storylineButtons = [...document.querySelectorAll('[data-storyline-example]')];
   const authoringImage = document.getElementById('authoringImage');
   const authoringLabel = document.getElementById('authoringLabel');
   const authoringTitle = document.getElementById('authoringTitle');
   const authoringSummary = document.getElementById('authoringSummary');
   const authoringFocus = document.getElementById('authoringFocus');
-  const storylineExampleTabs = document.getElementById('storylineExampleTabs');
-
-  const renderStorylineExample = (key) => {
-    const data = storylineData[key];
-    if (!data || !authoringImage) return;
-    authoringImage.src = data.image;
-    authoringImage.alt = data.alt;
-    storylineButtons.forEach((button) => {
-      const active = button.dataset.storylineExample === key;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
-  };
 
   const renderAuthoring = (key) => {
     const data = authoringData[key];
@@ -412,13 +526,12 @@
       chip.textContent = item;
       return chip;
     }));
-    const isStoryline = key === 'storyline';
-    storylineExampleTabs.hidden = !isStoryline;
-    if (isStoryline) renderStorylineExample('explorer');
-    else {
+    authoringImage.classList.add('is-switching');
+    window.setTimeout(() => {
       authoringImage.src = data.image;
       authoringImage.alt = data.alt;
-    }
+      authoringImage.classList.remove('is-switching');
+    }, 110);
     authoringButtons.forEach((button) => {
       const active = button.dataset.authoring === key;
       button.classList.toggle('active', active);
@@ -432,32 +545,17 @@
     button.addEventListener('keydown', (event) => {
       if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
       event.preventDefault();
-      let next = index;
-      if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = authoringButtons.length - 1;
-      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % authoringButtons.length;
-      else next = (index - 1 + authoringButtons.length) % authoringButtons.length;
+      let next=index;
+      if(event.key==='Home') next=0;
+      else if(event.key==='End') next=authoringButtons.length-1;
+      else if(event.key==='ArrowRight'||event.key==='ArrowDown') next=(index+1)%authoringButtons.length;
+      else next=(index-1+authoringButtons.length)%authoringButtons.length;
       authoringButtons[next].focus();
       renderAuthoring(authoringButtons[next].dataset.authoring);
     });
   });
-
-  storylineButtons.forEach((button, index) => {
-    button.addEventListener('click', () => renderStorylineExample(button.dataset.storylineExample));
-    button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-      event.preventDefault();
-      let next = index;
-      if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = storylineButtons.length - 1;
-      else if (event.key === 'ArrowRight') next = (index + 1) % storylineButtons.length;
-      else next = (index - 1 + storylineButtons.length) % storylineButtons.length;
-      storylineButtons[next].focus();
-      renderStorylineExample(storylineButtons[next].dataset.storylineExample);
-    });
-  });
-
-  renderAuthoring('rise');
+  authoringButtons.forEach((button,index)=>{button.tabIndex=index===0?0:-1;});
+  renderAuthoring('explain');
 
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
