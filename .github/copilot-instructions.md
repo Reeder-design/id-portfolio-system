@@ -84,6 +84,12 @@ feature branch → PR → CI → UAT → explicit user approval → merge
 
 Never merge a development PR without explicit user approval.
 
+### Concurrent branches
+Assume other chats/agents may be working in parallel. Before editing, inspect current `main`, the active PR's ahead/behind state, and all other open PRs for changed-file overlap. If the active branch is behind `main`, sync it before continuing.
+
+Before a merge, require: 0 commits behind current `main`, mergeable status, green CI on the exact current head SHA, and a fresh overlap review against every other open PR. After any merge to `main`, immediately re-check all remaining open PRs and sync/revalidate any that became stale. Never rely on remembered Git state from an earlier chat.
+
+
 ## Before Completing Changes
 - Run the full validation suite for substantial work; do not rely on one convenient check.
 - Check navigation, relative links, responsive behavior, and privacy boundaries.
