@@ -885,3 +885,59 @@
   background:#24453f;
   color:#e3f6e9;
 }
+
+
+/* Product Launch Design Outcome — explicit contrast lock */
+.product-launch-outcome{
+  background:
+    radial-gradient(circle at 85% 20%,rgba(121,201,158,.13),transparent 28%),
+    linear-gradient(145deg,#17262d,#2a4145) !important;
+  color:#edf4ef !important;
+}
+.product-launch-outcome h2,
+.product-launch-outcome h3,
+.product-launch-outcome #launchOutcomeTitle{
+  color:#fff !important;
+}
+.product-launch-outcome .short-copy,
+.product-launch-outcome #launchOutcomeText{
+  color:rgba(237,244,239,.78) !important;
+}
+.product-launch-outcome .launch-demo-note{
+  border-color:rgba(255,255,255,.12) !important;
+  background:rgba(255,255,255,.055) !important;
+  color:rgba(237,244,239,.76) !important;
+}
+.product-launch-outcome .launch-demo-note strong{
+  color:#fff !important;
+}
+.product-launch-outcome .launch-outcome-tab{
+  border-color:rgba(255,255,255,.1) !important;
+  background:rgba(255,255,255,.05) !important;
+  color:#eef5f0 !important;
+}
+.product-launch-outcome .launch-outcome-tab.active{
+  border-color:rgba(121,201,158,.55) !important;
+  background:rgba(121,201,158,.13) !important;
+  color:#fff !important;
+}
+.product-launch-outcome .launch-outcome-panel{
+  border-color:rgba(255,255,255,.11) !important;
+  background:rgba(255,255,255,.055) !important;
+}
+.product-launch-outcome .launch-outcome-panel p{
+  color:rgba(237,244,239,.74) !important;
+}
+.product-launch-outcome .launch-outcome-proof{
+  background:rgba(10,25,31,.42) !important;
+}
+.product-launch-outcome .launch-outcome-proof strong{
+  color:#fff !important;
+}
+.product-launch-outcome .micro-boundary{
+  border-color:rgba(255,255,255,.12) !important;
+  background:rgba(255,255,255,.055) !important;
+}
+.product-launch-outcome .micro-boundary p{
+  color:rgba(237,244,239,.74) !important;
+}
