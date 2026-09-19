@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Live training work by instructional designer Haley Reeder, including facilitator-led content development and facilitation for adult sales audiences and classroom learners.">
+  <meta name="description" content="Live training work by instructional designer Haley Reeder, including facilitator-led content development and virtual sales workshop facilitation for internal sellers and external partners.">
   <title>Live Training | Haley Reeder</title>
   <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,111 +14,577 @@
   <link rel="stylesheet" href="../../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../../css/phase1-frame.css">
   <style>
-    .live-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.78fr);gap:38px;align-items:center}
-    .live-preview{padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(238,245,241,.8));box-shadow:0 16px 40px rgba(52,74,66,.08);text-align:center}
-    .live-preview .icon-badge{margin:0 auto 13px}.live-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}.live-preview-grid span{display:grid;place-items:center;min-height:58px;padding:10px;border:1px solid rgba(80,132,132,.16);border-radius:14px;background:rgba(255,255,255,.82);font:700 .73rem/1.3 var(--font-heading);text-align:center}
-    .live-mode-shell{display:grid;grid-template-columns:minmax(190px,.52fr) minmax(0,1.48fr);gap:18px;align-items:start}.live-mode-tabs{display:grid;gap:10px}.live-mode-tab{display:flex;align-items:center;gap:11px;min-height:64px;padding:13px 15px;border:1px solid rgba(80,132,132,.18);border-radius:17px;background:rgba(255,255,255,.88);color:var(--charcoal);font:700 .8rem/1.3 var(--font-heading);text-align:left;cursor:pointer;transition:transform 160ms ease,border-color 160ms ease,background 160ms ease}.live-mode-tab .portfolio-icon{width:27px;height:27px;flex:0 0 auto;color:var(--pine-blue)}.live-mode-tab:hover,.live-mode-tab:focus-visible,.live-mode-tab.active{transform:translateY(-2px);border-color:rgba(121,201,158,.65);background:rgba(238,245,241,.95);color:var(--pine-blue);outline:none}
-    .live-mode-panel{min-height:350px;padding:28px;border:1px solid rgba(80,132,132,.18);border-radius:24px;background:radial-gradient(circle at 94% 7%,rgba(151,219,79,.09),transparent 27%),linear-gradient(145deg,rgba(255,255,255,.97),rgba(248,250,248,.9));box-shadow:0 15px 38px rgba(52,74,66,.075)}.live-mode-panel h2{margin:4px 0 9px}.live-mode-panel>p{max-width:820px}.live-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}.live-detail-card{padding:18px;border:1px solid rgba(80,132,132,.15);border-radius:17px;background:rgba(255,255,255,.82)}.live-detail-card .portfolio-icon{width:25px;height:25px;margin-bottom:10px;color:var(--pine-blue)}.live-detail-card h3{margin-bottom:7px;color:var(--pine-blue);font-size:.98rem}.live-detail-card p{margin:0;font-size:.88rem;line-height:1.55}
-    .live-example-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.live-example{display:flex;flex-direction:column;min-width:0;padding:22px;border:1px solid rgba(80,132,132,.17);border-radius:20px;background:rgba(255,255,255,.9);box-shadow:0 12px 30px rgba(52,74,66,.06)}.live-example.featured{position:relative;border-color:rgba(80,132,132,.35);background:radial-gradient(circle at 92% 8%,rgba(151,219,79,.1),transparent 24%),linear-gradient(155deg,rgba(255,255,255,.98),rgba(238,245,241,.78));box-shadow:0 18px 42px rgba(52,74,66,.09)}.live-example .icon-badge{margin-bottom:14px}.live-example h3{color:var(--pine-blue)}.live-example ul{padding-left:20px}.live-example li+li{margin-top:7px}.live-case-label{display:inline-flex;align-items:center;width:max-content;margin:0 0 12px;padding:6px 9px;border-radius:999px;background:rgba(80,132,132,.09);color:var(--pine-blue);font:800 .66rem/1.2 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}.live-case-action{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding:15px 16px;border:1px solid rgba(80,132,132,.2);border-radius:16px;background:var(--pine-blue);color:#fff;text-decoration:none;font:700 .8rem/1.3 var(--font-heading);transition:transform 180ms ease,box-shadow 180ms ease}.live-case-action:hover,.live-case-action:focus-visible{transform:translateY(-2px);box-shadow:0 12px 26px rgba(52,74,66,.16);outline:none}.live-case-action span:last-child{font-size:1rem}
-    .live-explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.live-explore-card{display:flex;flex-direction:column;padding:20px;border:1px solid rgba(80,132,132,.17);border-radius:20px;background:linear-gradient(150deg,rgba(255,255,255,.96),rgba(238,245,241,.68));box-shadow:0 12px 30px rgba(52,74,66,.06)}.live-explore-card .icon-badge{margin-bottom:13px}.live-explore-card h3{margin-bottom:7px;color:var(--pine-blue);font-size:1rem}.live-explore-card p{margin:0;color:#5f6965;font-size:.88rem;line-height:1.55}.live-explore-card .project-family-link{margin-top:auto}
-    @media(max-width:900px){.live-hero-grid,.live-mode-shell{grid-template-columns:1fr}.live-example-grid,.live-explore-grid{grid-template-columns:1fr}}@media(max-width:620px){.live-detail-grid,.live-preview-grid{grid-template-columns:1fr}.live-mode-panel{padding:22px}}
-
-    /* Phase 25 alternating live-training visual system */
+    body.live-training-page{background:#fbfaf4}
+    body.live-training-page .section{padding-block:clamp(30px,4vw,44px)}
     .live-landing-hero{
-      position:relative;overflow:hidden;color:#eef6f2;
-      background:radial-gradient(circle at 82% 14%,rgba(151,219,79,.13),transparent 27%),linear-gradient(145deg,#14252c,#294447);
+      position:relative;
+      overflow:hidden;
+      color:#eef6f2;
+      background:
+        radial-gradient(circle at 82% 14%,rgba(151,219,79,.13),transparent 27%),
+        linear-gradient(145deg,#14252c,#294447);
     }
     .live-landing-hero::before{
-      content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;
-      background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.10;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
       background-size:34px 34px;
     }
     .live-landing-hero .container{position:relative;z-index:1}
     .live-landing-hero h1{color:#fff}
-    .live-landing-hero .body-large,.live-landing-hero .eyebrow,.live-landing-hero .breadcrumbs,.live-landing-hero .breadcrumbs a{color:#dce9e2}
+    .live-landing-hero .body-large{color:#dce9e2}
+    .live-landing-hero .breadcrumbs,
+    .live-landing-hero .breadcrumbs a,
+    .live-landing-hero .breadcrumbs span{color:rgba(248,252,249,.82)!important;font-weight:500}
+    .live-landing-hero .breadcrumbs a:hover,
+    .live-landing-hero .breadcrumbs a:focus-visible{color:#fff!important}
     .live-landing-hero .btn-secondary{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff}
-    .live-training-hero-art{position:relative;min-height:430px;display:grid;place-items:center}
-    .live-training-photo{position:relative;width:min(100%,620px);isolation:isolate}
+    .live-hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(300px,.82fr);
+      gap:34px;
+      align-items:center;
+    }
+    .live-training-hero-art{position:relative;min-height:360px;display:grid;place-items:center}
+    .live-training-photo{position:relative;width:min(100%,560px);isolation:isolate}
     .live-training-photo::before{
-      content:"";position:absolute;z-index:-1;inset:8% -5% -7% 7%;
+      content:"";
+      position:absolute;
+      z-index:-1;
+      inset:8% -5% -7% 7%;
       border-radius:42% 58% 46% 54% / 54% 42% 58% 46%;
       background:radial-gradient(circle at 70% 20%,rgba(151,219,79,.2),transparent 26%),rgba(121,201,158,.08);
-      filter:blur(1px);
     }
     .live-training-photo img{
-      display:block;width:100%;height:auto;border:0;border-radius:0;background:transparent;
-      box-shadow:0 28px 68px rgba(0,0,0,.24);
+      display:block;
+      width:100%;
+      height:auto;
+      box-shadow:0 24px 58px rgba(0,0,0,.23);
       clip-path:polygon(6% 0,100% 0,100% 92%,94% 100%,0 100%,0 8%);
     }
     .live-training-cue{
-      position:absolute;z-index:3;padding:8px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
-      background:rgba(12,31,37,.88);color:#eef6f2;
-      font:800 .58rem/1 var(--font-heading);letter-spacing:.045em;text-transform:uppercase;
-      box-shadow:0 10px 24px rgba(0,0,0,.18);backdrop-filter:blur(8px);
+      position:absolute;
+      z-index:3;
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:999px;
+      background:rgba(12,31,37,.88);
+      color:#eef6f2;
+      font:800 .55rem/1 var(--font-heading);
+      letter-spacing:.045em;
+      text-transform:uppercase;
+      box-shadow:0 9px 20px rgba(0,0,0,.16);
+      backdrop-filter:blur(8px);
     }
     .live-training-cue--design{left:-3%;top:15%}
     .live-training-cue--facilitate{right:-2%;top:42%}
     .live-training-cue--adapt{left:7%;bottom:7%}
     .live-training-flow{
-      position:absolute;z-index:2;right:7%;bottom:8%;display:flex;gap:5px;align-items:center;
-      padding:8px 10px;border-radius:999px;background:rgba(12,31,37,.68);backdrop-filter:blur(8px);
+      position:absolute;
+      z-index:2;
+      right:7%;
+      bottom:8%;
+      display:flex;
+      gap:5px;
+      align-items:center;
+      padding:7px 9px;
+      border-radius:999px;
+      background:rgba(12,31,37,.68);
     }
-    .live-training-flow i{display:block;width:7px;height:7px;border-radius:50%;background:var(--mint-leaf);animation:liveTrainingCue 2.2s ease-in-out infinite}
-    .live-training-flow i:nth-child(2){animation-delay:.25s}.live-training-flow i:nth-child(3){animation-delay:.5s}
+    .live-training-flow i{
+      display:block;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--mint-leaf);
+      animation:liveTrainingCue 2.2s ease-in-out infinite;
+    }
+    .live-training-flow i:nth-child(2){animation-delay:.25s}
+    .live-training-flow i:nth-child(3){animation-delay:.5s}
     @keyframes liveTrainingCue{0%,100%{opacity:.35;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
 
-    #live-work{background:#f8faf8}
-    #live-work .live-mode-tab,#live-work .live-detail-card,#live-work .live-mode-panel{color:#26383f}
-    #live-work .live-mode-tab strong,#live-work .live-detail-card h3,#live-work .live-mode-panel h2{color:#26383f}
-
-    .live-examples-section{
-      color:#edf5f1;
-      background:radial-gradient(circle at 12% 18%,rgba(80,132,132,.22),transparent 30%),linear-gradient(145deg,#17272e,#294246);
+    /* Facilitation foundation, contextual rather than a case study */
+    .live-foundation-band{
+      padding:18px 0;
+      border-bottom:1px solid rgba(80,132,132,.1);
+      background:#eef4f0;
     }
-    .live-examples-section h2,.live-examples-section h3{color:#fff}.live-examples-section .body-large,.live-examples-section .eyebrow{color:#cfddd6}
-    .live-examples-section .live-example{border-color:rgba(255,255,255,.1);background:#11242b;color:#dce8e2;box-shadow:none}
-    .live-examples-section .live-example.featured{border-color:rgba(151,219,79,.3);background:linear-gradient(145deg,#163039,#244744);box-shadow:0 18px 40px rgba(0,0,0,.14)}
-    .live-examples-section .live-example h3{color:#fff}.live-examples-section .live-example p,.live-examples-section .live-example li{color:#cad8d1}
-    .live-examples-section .live-case-label{background:rgba(151,219,79,.12);color:#dff2e6}
-    .live-examples-section .icon-badge{background:#0f2229;color:var(--mint-leaf)}
-    .live-examples-section .live-case-action{background:linear-gradient(135deg,var(--mint-leaf),var(--yellow-green));color:#173028}
+    .live-foundation-shell{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(330px,.85fr);
+      gap:28px;
+      align-items:center;
+    }
+    .live-foundation-copy .eyebrow{margin-bottom:4px;color:#4a796e!important}
+    .live-foundation-copy h2{margin:0 0 6px;color:#263d37;font-size:clamp(1.05rem,1.8vw,1.3rem)}
+    .live-foundation-copy p{margin:0;max-width:720px;color:#5b6a64;font-size:.78rem;line-height:1.5}
+    .live-foundation-motion{
+      position:relative;
+      display:grid;
+      grid-template-columns:1fr 28px 1fr 28px 1fr;
+      gap:5px;
+      align-items:center;
+      padding:12px;
+      overflow:hidden;
+      border:1px solid rgba(80,132,132,.14);
+      border-radius:16px;
+      background:#fff;
+    }
+    .foundation-node{
+      display:grid;
+      place-items:center;
+      min-height:58px;
+      padding:8px;
+      border-radius:11px;
+      background:#f4f8f5;
+      color:#315755;
+      font:800 .56rem/1.2 var(--font-heading);
+      text-align:center;
+    }
+    .foundation-node small{display:block;margin-top:4px;color:#74817c;font:.49rem/1.2 var(--font-body)}
+    .foundation-line{position:relative;height:2px;background:linear-gradient(90deg,#508484,#79c99e,#97db4f)}
+    .foundation-line i{
+      position:absolute;
+      left:0;
+      top:50%;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      transform:translateY(-50%);
+      background:#97db4f;
+      box-shadow:0 0 11px rgba(151,219,79,.5);
+      animation:foundationFlow 2.6s linear infinite;
+    }
+    .foundation-line:nth-of-type(2) i{animation-delay:1.1s}
+    @keyframes foundationFlow{0%{left:0;opacity:0}18%{opacity:1}82%{opacity:1}100%{left:calc(100% - 7px);opacity:0}}
 
-    .live-explore-section{background:#f4f7f4}
-    .live-explore-section .live-explore-card{background:#fff;color:#26383f}
-    .live-explore-section .live-explore-card h3{color:#26383f}.live-explore-section .live-explore-card p{color:#596862}
+    /* Two-role interaction */
+    #live-work{
+      position:relative;
+      overflow:hidden;
+      color:#edf5f1;
+      background:
+        radial-gradient(circle at 10% 18%,rgba(80,132,132,.22),transparent 28%),
+        radial-gradient(circle at 88% 70%,rgba(151,219,79,.08),transparent 24%),
+        linear-gradient(145deg,#14262d,#233f43)!important;
+    }
+    #live-work::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.08;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+    #live-work .container{position:relative;z-index:1}
+    #live-work .section-heading .eyebrow{color:#bfe6ce!important}
+    #live-work .section-heading h2{color:#fff!important}
+    #live-work .section-heading .body-large{color:#d2ded8!important}
+    .live-mode-shell{
+      display:grid;
+      grid-template-columns:minmax(190px,.46fr) minmax(0,1.54fr);
+      gap:14px;
+      align-items:start;
+    }
+    .live-mode-tabs{display:grid;gap:8px}
+    .live-mode-tab{
+      display:grid;
+      grid-template-columns:48px 1fr;
+      gap:10px;
+      align-items:center;
+      min-height:68px;
+      padding:9px 11px;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:15px;
+      background:rgba(8,25,31,.72);
+      color:#d7e4dd;
+      font:700 .76rem/1.3 var(--font-heading);
+      text-align:left;
+      cursor:pointer;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+      transition:transform .16s ease,border-color .16s ease,background .16s ease;
+    }
+    .live-mode-pixel{
+      display:block;
+      width:46px;
+      height:46px;
+      object-fit:contain;
+      padding:5px;
+      border-radius:11px;
+      background:#edf5f0;
+      filter:drop-shadow(0 7px 12px rgba(0,0,0,.16));
+    }
+    .live-mode-tab:hover,.live-mode-tab:focus-visible,.live-mode-tab.active{
+      transform:translateY(-2px);
+      border-color:rgba(151,219,79,.52);
+      background:#244642;
+      color:#fff;
+      outline:none;
+    }
+    .live-mode-panel{
+      min-height:0;
+      padding:16px;
+      border:1px solid rgba(121,201,158,.17);
+      border-radius:20px;
+      background:
+        radial-gradient(circle at 92% 8%,rgba(151,219,79,.07),transparent 22%),
+        #10262d;
+      box-shadow:0 16px 34px rgba(0,0,0,.13);
+    }
+    .live-mode-head{
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(230px,.85fr);
+      gap:16px;
+      align-items:center;
+    }
+    .live-mode-copy .eyebrow{margin-bottom:3px;color:#bfe6ce!important}
+    .live-mode-copy h2{margin:4px 0 7px;color:#fff;font-size:clamp(1.15rem,2vw,1.45rem)}
+    .live-mode-copy>p{margin:0;max-width:760px;color:#c8d7cf;font-size:.79rem;line-height:1.5}
+    .live-mode-visual{
+      display:grid;
+      grid-template-columns:76px minmax(0,1fr);
+      gap:12px;
+      align-items:center;
+      min-height:112px;
+      padding:11px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:15px;
+      background:#0b2027;
+    }
+    .live-mode-art-frame{
+      display:grid;
+      place-items:center;
+      width:76px;
+      height:76px;
+      border-radius:16px;
+      background:linear-gradient(145deg,#f4f8f5,#e3efe7);
+      box-shadow:0 10px 22px rgba(0,0,0,.16);
+    }
+    .live-mode-art-frame img{display:block;width:62px;height:62px;object-fit:contain}
+    .live-mode-flow{
+      display:grid;
+      grid-template-columns:1fr 18px 1fr 18px 1fr;
+      gap:4px;
+      align-items:center;
+    }
+    .live-mode-flow span{
+      display:grid;
+      place-items:center;
+      min-height:42px;
+      padding:6px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:9px;
+      background:#16343a;
+      color:#dce9e2;
+      font:800 .5rem/1.15 var(--font-heading);
+      text-align:center;
+    }
+    .live-mode-flow i{
+      position:relative;
+      height:2px;
+      background:linear-gradient(90deg,#508484,#97db4f);
+    }
+    .live-mode-flow i::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      transform:translateY(-50%);
+      background:#97db4f;
+      box-shadow:0 0 10px rgba(151,219,79,.55);
+      animation:modeFlowDot 2.3s linear infinite;
+    }
+    .live-mode-flow i:nth-of-type(2)::after{animation-delay:1s}
+    @keyframes modeFlowDot{0%{left:0;opacity:0}18%{opacity:1}82%{opacity:1}100%{left:calc(100% - 6px);opacity:0}}
+    .live-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
+    .live-detail-card{
+      padding:10px;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:12px;
+      background:#0e2229;
+    }
+    .live-detail-card .portfolio-icon{width:21px;height:21px;margin-bottom:6px;color:var(--mint-leaf)}
+    .live-detail-card h3{margin:0 0 4px;color:#fff;font-size:.75rem}
+    .live-detail-card p{margin:0;color:#c4d2cb;font-size:.64rem;line-height:1.4}
 
-    @media(max-width:700px){.live-training-hero-art{min-height:360px}.live-training-photo{width:94%}.live-training-cue{font-size:.5rem}.live-training-cue--design{left:-2%;top:10%}.live-training-cue--facilitate{right:-2%;top:45%}.live-training-cue--adapt{left:3%;bottom:5%}}
-    @media(prefers-reduced-motion:reduce){.live-training-flow i{animation:none!important}}
+    /* One current featured case */
+    .live-examples-section{
+      color:#26383f;
+      background:
+        radial-gradient(circle at 88% 16%,rgba(121,201,158,.08),transparent 22rem),
+        #f8faf8!important;
+    }
+    .live-examples-section .section-heading .eyebrow{color:#4a796e!important}
+    .live-examples-section .section-heading h2{color:#26383f!important}
+    .live-examples-section .section-heading .body-large{color:#5a6964!important}
+    .live-case-feature{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);
+      gap:24px;
+      align-items:center;
+      padding:20px;
+      border:1px solid rgba(151,219,79,.25);
+      border-radius:20px;
+      background:linear-gradient(145deg,#163039,#244744);
+      box-shadow:0 16px 36px rgba(0,0,0,.13);
+    }
+    .live-case-feature h3{margin:5px 0 7px;color:#fff;font-size:1.12rem}
+    .live-case-feature p{margin:0;color:#cad8d1;font-size:.8rem;line-height:1.5}
+    .live-case-label{
+      display:inline-flex;
+      width:max-content;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(151,219,79,.12);
+      color:#dff2e6;
+      font:800 .56rem/1.2 var(--font-heading);
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    .live-case-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px}
+    .live-case-points span{
+      padding:8px 9px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;
+      background:#10272e;
+      color:#cbd9d2;
+      font-size:.63rem;
+      line-height:1.3;
+    }
+    .live-case-motion{
+      position:relative;
+      min-height:170px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background:#10242b;
+    }
+    .case-room{
+      position:absolute;
+      inset:16px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+    .case-facilitator,.case-audience{
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      color:#dceae3;
+      font:800 .55rem/1.2 var(--font-heading);
+    }
+    .case-facilitator{background:#1b3c3e}
+    .case-audience{background:#122d34}
+    .case-room-signal{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#97db4f;
+      box-shadow:0 0 15px rgba(151,219,79,.6);
+      animation:caseSignal 2.5s ease-in-out infinite;
+    }
+    @keyframes caseSignal{0%,100%{transform:translate(-55px,-4px);opacity:.25}50%{transform:translate(44px,-4px);opacity:1}}
+    .live-case-action{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      margin-top:13px;
+      padding:9px 12px;
+      border-radius:11px;
+      background:linear-gradient(135deg,var(--mint-leaf),var(--yellow-green));
+      color:#173028;
+      text-decoration:none;
+      font:800 .68rem/1.2 var(--font-heading);
+    }
+
+    @media(max-width:900px){
+      .live-hero-grid,.live-foundation-shell,.live-mode-shell,.live-case-feature{grid-template-columns:1fr}
+      .live-mode-head{grid-template-columns:1fr}
+      .live-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:650px){
+      .live-training-hero-art{min-height:310px}
+      .live-training-photo{width:94%}
+      .live-training-cue{font-size:.48rem}
+      .live-foundation-motion{grid-template-columns:1fr}
+      .foundation-line{width:2px;height:22px;margin:auto;background:linear-gradient(180deg,#508484,#79c99e,#97db4f)}
+      .foundation-line i{display:none}
+      .live-detail-grid,.live-case-points{grid-template-columns:1fr}
+      .live-mode-visual{grid-template-columns:64px minmax(0,1fr)}
+      .live-mode-art-frame{width:64px;height:64px}
+      .live-mode-art-frame img{width:52px;height:52px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .live-training-flow i,.foundation-line i,.case-room-signal,.live-mode-flow i::after{animation:none!important}
+      .live-mode-tab{transition:none}
+    }
   </style>
   <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
-<body>
+<body class="live-training-page">
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
 <main>
-  <section class="page-hero refresh-hero live-landing-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Live Training</span></nav><div class="live-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Live Learning</p><h1>Live Training</h1><p class="body-large">I develop facilitator-led content and facilitate virtual sales workshops for internal sellers and external partners.</p><div class="button-row"><a class="btn btn-primary" href="#live-work">Explore the Work</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div></div><aside class="live-training-hero-art" aria-label="Virtual sales workshop facilitation visual">
-  <div class="live-training-photo">
-    <img src="../../../assets/project-images/live-training/virtual-training-facilitation.webp" alt="Illustrated virtual training session with a facilitator, participant grid, and shared learning content." loading="eager">
-    <span class="live-training-cue live-training-cue--design">Design the session</span>
-    <span class="live-training-cue live-training-cue--facilitate">Facilitate live</span>
-    <span class="live-training-cue live-training-cue--adapt">Adapt to the room</span>
-    <div class="live-training-flow" aria-hidden="true"><i></i><i></i><i></i></div>
-  </div>
-</aside></div></div></section>
+  <section class="page-hero refresh-hero live-landing-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Live Training</span></nav>
+      <div class="live-hero-grid">
+        <div class="refresh-hero-copy">
+          <p class="eyebrow">Instructional Design / Live Learning</p>
+          <h1>Live Training</h1>
+          <p class="body-large">I develop facilitator-led content and facilitate virtual sales workshops for internal sellers and external partners.</p>
+          <div class="button-row"><a class="btn btn-primary" href="#live-work">Explore the Work</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div>
+        </div>
+        <aside class="live-training-hero-art" aria-label="Virtual sales workshop facilitation visual">
+          <div class="live-training-photo">
+            <img src="../../../assets/project-images/live-training/virtual-training-facilitation.webp" alt="Illustrated virtual training session with a facilitator, participant grid, and shared learning content." loading="eager">
+            <span class="live-training-cue live-training-cue--design">Design the session</span>
+            <span class="live-training-cue live-training-cue--facilitate">Facilitate live</span>
+            <span class="live-training-cue live-training-cue--adapt">Adapt to the room</span>
+            <div class="live-training-flow" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-  <section class="section" id="live-work"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Live Training Work</p><h2>Two parts of my role</h2><p class="body-large reading-width">I either build the session and facilitator materials, facilitate the session, or contribute to both parts of the work.</p></div><div class="live-mode-shell"><div class="live-mode-tabs" role="tablist" aria-label="Live training perspectives"><button class="live-mode-tab active" type="button" role="tab" aria-selected="true" data-mode="content"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg><span>Content Development</span></button><button class="live-mode-tab" type="button" role="tab" aria-selected="false" data-mode="facilitation"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><span>Facilitation</span></button></div><div class="live-mode-panel" role="tabpanel" aria-live="polite"><p class="eyebrow" id="modeLabel">Content Development</p><h2 id="modeTitle">Build the session, materials, and facilitator guidance.</h2><p id="modeSummary">I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.</p><div class="live-detail-grid" id="modeDetails"><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><h3>Structure the session</h3><p>Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><h3>Build the materials</h3><p>Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Add practice</h3><p>Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.</p></article><article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Prepare for delivery</h3><p>Document timing, instructions, transitions, resources, and backup plans for the facilitator.</p></article></div></div></div></div></section>
+  <aside class="live-foundation-band" aria-label="Facilitation foundation">
+    <div class="container live-foundation-shell">
+      <div class="live-foundation-copy">
+        <p class="eyebrow">Facilitation Foundation</p>
+        <h2>Live adaptation started before corporate L&amp;D.</h2>
+        <p>Before moving into instructional design, I spent three years teaching high-school history and English. That experience built the habits I still use in live learning: explain clearly, check understanding, and change the approach when the room needs something different.</p>
+      </div>
+      <div class="live-foundation-motion" aria-hidden="true">
+        <span class="foundation-node">Explain<small>Make the idea clear</small></span>
+        <span class="foundation-line"><i></i></span>
+        <span class="foundation-node">Check<small>Listen for the signal</small></span>
+        <span class="foundation-line"><i></i></span>
+        <span class="foundation-node">Adapt<small>Change the route</small></span>
+      </div>
+    </div>
+  </aside>
 
-  <section class="section live-examples-section" id="facilitation-examples"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Facilitation Experience</p><h2>Sales workshops are the primary example.</h2><p class="body-large reading-width">My corporate facilitation experience builds on an earlier background teaching high-school history and English.</p></div><div class="live-example-grid"><article class="live-example featured"><span class="live-case-label">Featured case study</span><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><p class="eyebrow">Sales Enablement / Virtual</p><h3>Virtual MEDDPICC Sales Workshop</h3><p>I facilitated assigned MEDDPICC modules in multi-session virtual workshops for internal sellers and external partners across U.S. and international audiences.</p><ul><li>Prepared from facilitator and participant materials.</li><li>Used questions, discussion, polls, and seller examples.</li><li>Adjusted explanations and pacing based on learner response.</li><li>Captured recurring questions as input for future learning design.</li></ul><a class="live-case-action" href="virtual-sales-workshop-facilitation/index.html"><span>View the Facilitation Case Study</span><span aria-hidden="true">→</span></a></article><article class="live-example"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><p class="eyebrow">Earlier Experience</p><h3>High-School History &amp; English</h3><p>Before moving into corporate learning, I spent three years teaching history and English.</p><ul><li>Planned lessons and activities for varied learner needs.</li><li>Used discussion, writing, examples, and formative checks.</li><li>Adjusted pacing and explanations during class.</li></ul></article></div></div></section>
+  <section class="section" id="live-work">
+    <div class="container">
+      <div class="section-heading refresh-section-intro">
+        <p class="eyebrow">Live Training Work</p>
+        <h2>Two parts of my role</h2>
+        <p class="body-large reading-width">I either build the session and facilitator materials, facilitate the session, or contribute to both parts of the work.</p>
+      </div>
+      <div class="live-mode-shell">
+        <div class="live-mode-tabs" role="tablist" aria-label="Live training perspectives">
+          <button class="live-mode-tab active" type="button" role="tab" aria-selected="true" data-mode="content"><img class="live-mode-pixel" src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt="" aria-hidden="true"><span>Content Development</span></button>
+          <button class="live-mode-tab" type="button" role="tab" aria-selected="false" data-mode="facilitation"><img class="live-mode-pixel" src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt="" aria-hidden="true"><span>Facilitation</span></button>
+        </div>
+        <div class="live-mode-panel" role="tabpanel" aria-live="polite">
+          <div class="live-mode-head">
+            <div class="live-mode-copy">
+              <p class="eyebrow" id="modeLabel">Content Development</p>
+              <h2 id="modeTitle">Build the session, materials, and facilitator guidance.</h2>
+              <p id="modeSummary">I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.</p>
+            </div>
+            <div class="live-mode-visual" aria-hidden="true">
+              <span class="live-mode-art-frame"><img id="modeArt" src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""></span>
+              <div class="live-mode-flow">
+                <span id="modeFlowOne">Plan</span><i></i><span id="modeFlowTwo">Build</span><i></i><span id="modeFlowThree">Deliver</span>
+              </div>
+            </div>
+          </div>
+          <div class="live-detail-grid" id="modeDetails">
+            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><h3>Structure the session</h3><p>Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.</p></article>
+            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><h3>Build the materials</h3><p>Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.</p></article>
+            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Add practice</h3><p>Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.</p></article>
+            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Prepare for delivery</h3><p>Document timing, instructions, transitions, resources, and backup plans for the facilitator.</p></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section class="section section-soft live-explore-section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>Explore more instructional design work.</h2></div><div class="live-explore-grid"><article class="live-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><h3>Microlearning</h3><p>Product-launch and industry-positioning learning for sellers.</p><a class="project-family-link" href="../microlearning-performance-support/index.html">Explore Microlearning</a></article><article class="live-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><h3>Interactive Learning</h3><p>Browser-based sales practice, scoring, and feedback.</p><a class="project-family-link" href="../interactive-learning/index.html">Explore Interactive Learning</a></article><article class="live-explore-card"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><h3>Instructional Design</h3><p>Return to the full instructional design portfolio.</p><a class="project-family-link" href="../index.html">Explore Instructional Design</a></article></div></div></section>
+  <section class="section live-examples-section" id="facilitation-examples">
+    <div class="container">
+      <div class="section-heading refresh-section-intro">
+        <p class="eyebrow">Facilitation Case Study</p>
+        <h2>Virtual MEDDPICC Sales Workshop</h2>
+        <p class="body-large reading-width">A current corporate example of facilitating assigned sales-learning modules for internal sellers and external partners across U.S. and international audiences.</p>
+      </div>
+      <article class="live-case-feature">
+        <div>
+          <span class="live-case-label">Featured case study</span>
+          <h3>Facilitate, diagnose, and adapt in real time.</h3>
+          <p>I prepared from facilitator and participant materials, used questions and polling to check understanding, brought seller examples into the discussion, and changed pacing or framing when the room needed a different route.</p>
+          <div class="live-case-points"><span>Questions + polling</span><span>Seller examples</span><span>Live reframing</span><span>Internal + partner audiences</span></div>
+          <a class="live-case-action" href="virtual-sales-workshop-facilitation/index.html"><span>View the Facilitation Case Study</span><span aria-hidden="true">→</span></a>
+        </div>
+        <div class="live-case-motion" aria-hidden="true">
+          <div class="case-room"><span class="case-facilitator">Facilitator</span><span class="case-audience">Room signal</span></div>
+          <span class="case-room-signal"></span>
+        </div>
+      </article>
+    </div>
+  </section>
+
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 <script>
 const sprite='../../../assets/icons/portfolio-icons.svg';
 const modeData={
-  content:{label:'Content Development',title:'Build the session, materials, and facilitator guidance.',summary:'I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.',details:[['icon-workflow','Structure the session','Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.'],['icon-multimedia','Build the materials','Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.'],['icon-interaction','Add practice','Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.'],['icon-feedback','Prepare for delivery','Document timing, instructions, transitions, resources, and backup plans for the facilitator.']]},
-  facilitation:{label:'Facilitation',title:'Adjust the delivery based on learner response.',summary:'When I facilitate, I use questions, polling, discussion, and examples to check understanding and decide when to reframe an explanation or change the pace.',details:[['icon-live-instruction','Explain','Break down the content and change the explanation when learners need another angle.'],['icon-interaction','Engage','Use questions, discussion, practice, polls, and learner examples throughout the session.'],['icon-feedback','Adapt','Watch questions, confidence, examples, and timing to decide what needs more or less attention.'],['icon-analytics','Bring it back','Use recurring questions and misconceptions as input for future content, scenarios, or facilitator notes.']]}
+  content:{label:'Content Development',title:'Build the session, materials, and facilitator guidance.',summary:'I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.',art:'../../../assets/icons/pixel/hiring-guide/workflow-tree.webp',flow:['Plan','Build','Deliver'],details:[['icon-workflow','Structure the session','Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.'],['icon-multimedia','Build the materials','Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.'],['icon-interaction','Add practice','Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.'],['icon-feedback','Prepare for delivery','Document timing, instructions, transitions, resources, and backup plans for the facilitator.']]},
+  facilitation:{label:'Facilitation',title:'Adjust the delivery based on learner response.',summary:'When I facilitate, I use questions, polling, discussion, and examples to check understanding and decide when to reframe an explanation or change the pace.',art:'../../../assets/icons/pixel/hiring-guide/video-call.webp',flow:['Listen','Adapt','Guide'],details:[['icon-live-instruction','Explain','Break down the content and change the explanation when learners need another angle.'],['icon-interaction','Engage','Use questions, discussion, practice, polls, and learner examples throughout the session.'],['icon-feedback','Adapt','Watch questions, confidence, examples, and timing to decide what needs more or less attention.'],['icon-analytics','Bring it back','Use recurring questions and misconceptions as input for future content, scenarios, or facilitator notes.']]}
 };
-const modeButtons=[...document.querySelectorAll('[data-mode]')];const details=document.getElementById('modeDetails');function selectMode(button){const data=modeData[button.dataset.mode];modeButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));});document.getElementById('modeLabel').textContent=data.label;document.getElementById('modeTitle').textContent=data.title;document.getElementById('modeSummary').textContent=data.summary;details.innerHTML=data.details.map(([icon,title,text])=>`<article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="${sprite}#${icon}"></use></svg><h3>${title}</h3><p>${text}</p></article>`).join('');}modeButtons.forEach((button)=>button.addEventListener('click',()=>selectMode(button)));
+const modeButtons=[...document.querySelectorAll('[data-mode]')];
+const details=document.getElementById('modeDetails');
+function selectMode(button){
+  const data=modeData[button.dataset.mode];
+  modeButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));item.tabIndex=selected?0:-1;});
+  document.getElementById('modeLabel').textContent=data.label;
+  document.getElementById('modeTitle').textContent=data.title;
+  document.getElementById('modeSummary').textContent=data.summary;
+  document.getElementById('modeArt').src=data.art;
+  document.getElementById('modeFlowOne').textContent=data.flow[0];
+  document.getElementById('modeFlowTwo').textContent=data.flow[1];
+  document.getElementById('modeFlowThree').textContent=data.flow[2];
+  const flow=document.querySelector('.live-mode-flow');
+  flow.classList.remove('is-switching');
+  void flow.offsetWidth;
+  flow.classList.add('is-switching');
+  details.replaceChildren(...data.details.map(([icon,title,text])=>{
+    const card=document.createElement('article');
+    card.className='live-detail-card';
+    card.innerHTML='<svg class="portfolio-icon" aria-hidden="true"><use href="'+sprite+'#'+icon+'"></use></svg><h3>'+title+'</h3><p>'+text+'</p>';
+    return card;
+  }));
+}
+modeButtons.forEach((button,index)=>{
+  button.tabIndex=button.getAttribute('aria-selected')==='true'?0:-1;
+  button.addEventListener('click',()=>selectMode(button));
+  button.addEventListener('keydown',(event)=>{
+    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    let next=index;
+    if(event.key==='Home') next=0;
+    else if(event.key==='End') next=modeButtons.length-1;
+    else if(event.key==='ArrowRight'||event.key==='ArrowDown') next=(index+1)%modeButtons.length;
+    else next=(index-1+modeButtons.length)%modeButtons.length;
+    modeButtons[next].focus();
+    selectMode(modeButtons[next]);
+  });
+});
 </script>
 </body>
 </html>
