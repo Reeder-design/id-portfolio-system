@@ -162,3 +162,69 @@
 @media(prefers-reduced-motion:reduce){
   .ai-learning-core,.ai-learning-node,.ai-learning-orbit,.ai-learning-pulse{animation:none!important}
 }
+
+
+/* Light learner-facing AI scenario treatment */
+.ai-scenario-section{
+  background:
+    radial-gradient(circle at 88% 16%,rgba(121,201,158,.10),transparent 22rem),
+    linear-gradient(145deg,#fbfcf9,#edf5f0)!important;
+  color:#2e403a!important;
+}
+.ai-scenario-section h2,
+.ai-scenario-section h3{color:#26383f!important}
+.ai-scenario-section .eyebrow{color:#4a796e!important}
+.ai-scenario-section .ai-intro p:not(.eyebrow){color:#586862!important}
+.ai-scenario-section .ai-scenario-tab{
+  border-color:rgba(80,132,132,.18)!important;
+  background:#fff!important;
+  color:#334640!important;
+  box-shadow:0 7px 17px rgba(52,74,66,.05);
+}
+.ai-scenario-section .ai-scenario-tab span{
+  background:#edf4f0!important;
+  color:#315755!important;
+}
+.ai-scenario-section .ai-scenario-tab strong{color:#334640!important}
+.ai-scenario-section .ai-scenario-tab.active{
+  border-color:#508484!important;
+  background:linear-gradient(135deg,#e7f2eb,#f5f8f5)!important;
+  color:#26383f!important;
+  box-shadow:0 9px 20px rgba(52,74,66,.07)!important;
+}
+.ai-scenario-section .ai-scenario-tab.active span{
+  background:#97db4f!important;
+  color:#173028!important;
+}
+.ai-scenario-section .ai-scenario-panel{
+  border-color:rgba(80,132,132,.18)!important;
+  background:
+    radial-gradient(circle at 90% 14%,rgba(151,219,79,.09),transparent 23%),
+    #fff!important;
+  box-shadow:0 14px 30px rgba(52,74,66,.07)!important;
+}
+.ai-scenario-section .ai-scenario-panel::before{border-color:rgba(80,132,132,.12)!important}
+.ai-scenario-section .ai-customer-header{border-bottom-color:rgba(80,132,132,.12)!important}
+.ai-scenario-section .ai-customer-header p{color:#4a796e!important}
+.ai-scenario-section .ai-customer-header h3{color:#26383f!important}
+.ai-scenario-section .ai-customer-live{
+  border-color:rgba(80,132,132,.2)!important;
+  background:#eef4f0!important;
+  color:#315755!important;
+}
+.ai-scenario-section .ai-customer-message{
+  border-color:rgba(80,132,132,.14)!important;
+  background:#f1f5f2!important;
+}
+.ai-scenario-section .ai-customer-message p{color:#42554e!important}
+.ai-scenario-section .ai-learner-message{
+  border-color:rgba(121,201,158,.34)!important;
+  background:#e5f2e9!important;
+  color:#285544!important;
+}
+.ai-scenario-section .ai-discovery-map>div{
+  border-color:rgba(80,132,132,.13)!important;
+  background:#f5f8f6!important;
+}
+.ai-scenario-section .ai-discovery-map strong{color:#42665c!important}
+.ai-scenario-section .ai-discovery-map span{color:#52635d!important}
