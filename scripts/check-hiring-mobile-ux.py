@@ -54,6 +54,7 @@ def main() -> int:
     require('href="../css/hiring-manager.css"' in page, "Hiring Manager page must load the single canonical Hiring Manager stylesheet.", errors)
     require('src="../js/hiring-manager.js"' in page, "Hiring Manager page must load the single canonical Hiring Manager controller.", errors)
     require("hiring-manager-v" not in page, "Hiring Manager page must not load version-stacked CSS or JavaScript.", errors)
+    require("\\`" not in controller and "\\${" not in controller, "Hiring Manager controller contains escaped template-literal syntax that will break in the browser.", errors)
 
     page_markers = [
         "Interactive portfolio chat",
@@ -61,14 +62,16 @@ def main() -> int:
         '<span aria-current="page">Ask Haley</span>',
         "hm-transfer-scene",
         "hm-transfer-track",
+        "hm-transfer-return",
+        "Answer + proof",
         "person-man.webp",
         "person-woman.webp",
         "Question → curated answer → portfolio evidence.",
         "What this chat helps you evaluate",
-        "This is not a chatbot demo.",
+        "This is a chatbot demo, but there is no AI model behind it.",
         'id="ask-haley"',
         "Ask your own question, use a quick starter, or browse the Question Library.",
-        "Not live AI generation",
+        "Not AI, just pre-built me",
         "data-hm-library",
         "data-hm-topic-list",
         "data-hm-prompt-panel",
@@ -79,6 +82,7 @@ def main() -> int:
         "data-hm-capability-tabs",
         "data-hm-tool-tabs",
         "Want the work behind the answers?",
+        "handshake.webp",
     ]
     for marker in page_markers:
         require(marker in page, f"Hiring Manager page is missing required marker {marker!r}.", errors)

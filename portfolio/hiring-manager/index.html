@@ -58,14 +58,17 @@
           </div>
 
           <div class="hm-transfer-lane" aria-hidden="true">
-            <span class="hm-transfer-label hm-transfer-label-left">Question</span>
-            <div class="hm-transfer-track">
+            <div class="hm-transfer-direction hm-direction-question"><span>Question</span><i>→</i></div>
+            <div class="hm-transfer-track hm-transfer-question">
               <span class="hm-transfer-line"></span>
-              <span class="hm-transfer-packet hm-packet-one"><img src="../assets/icons/pixel/hiring-guide/qa-bubbles.webp" alt=""></span>
-              <span class="hm-transfer-packet hm-packet-two"><img src="../assets/icons/pixel/hiring-guide/reference-search.webp" alt=""></span>
-              <span class="hm-transfer-packet hm-packet-three"><img src="../assets/icons/pixel/hiring-guide/document-star.webp" alt=""></span>
+              <span class="hm-transfer-packet hm-question-packet"><img src="../assets/icons/pixel/hiring-guide/qa-bubbles.webp" alt=""></span>
             </div>
-            <span class="hm-transfer-label hm-transfer-label-right">Answer + proof</span>
+            <div class="hm-transfer-track hm-transfer-return">
+              <span class="hm-transfer-line"></span>
+              <span class="hm-transfer-packet hm-answer-packet"><img src="../assets/icons/pixel/hiring-guide/checklist-document.webp" alt=""></span>
+              <span class="hm-transfer-packet hm-proof-packet"><img src="../assets/icons/pixel/hiring-guide/document-star.webp" alt=""></span>
+            </div>
+            <div class="hm-transfer-direction hm-direction-return"><i>←</i><span>Answer + proof</span></div>
           </div>
 
           <div class="hm-participant-card hm-participant-haley">
@@ -88,7 +91,7 @@
             <p class="eyebrow">What this chat helps you evaluate</p>
             <h2 id="hmEvaluateTitle">A faster read on how I would actually work on your team.</h2>
           </div>
-          <p>This is not a chatbot demo. It is a structured way to inspect my decisions, ownership range, and the portfolio evidence behind what I say.</p>
+          <p>This is a chatbot demo, but there is no AI model behind it. It routes questions to a prebuilt answer library I wrote and continuously update, with portfolio evidence attached.</p>
         </div>
 
         <div class="hm-evaluate-track">
@@ -126,8 +129,8 @@
             </div>
 
             <div class="hm-chat-explainer">
-              <p><strong>Ask your own question, use a quick starter, or browse the Question Library.</strong> Every path searches the same reviewed answer set I created.</p>
-              <span class="hm-not-ai"><i aria-hidden="true"></i> Not live AI generation</span>
+              <p><strong>Ask your own question, use a quick starter, or browse the Question Library.</strong> Every path searches the same prebuilt answer library I wrote and continuously update.</p>
+              <span class="hm-not-ai"><i aria-hidden="true"></i> Not AI, just pre-built me</span>
             </div>
 
             <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
@@ -139,10 +142,6 @@
               <span><strong>Browse Question Library</strong><small data-hm-library-summary>Loading interview topics…</small></span>
               <span class="hm-chevron" aria-hidden="true">⌄</span>
             </button>
-            <div class="hm-library-side-note">
-              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/reference-search.webp" alt=""></span>
-              <p>Browse when you want ideas. Type directly when you already know what you want to ask.</p>
-            </div>
           </div>
 
           <div class="hm-library-drawer" id="hmQuestionLibrary" data-hm-library hidden>
@@ -240,7 +239,7 @@
               <i aria-hidden="true">→</i>
             </a>
             <a class="hm-next-card" href="../contact/index.html">
-              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/heart-chat.webp" alt=""></span>
+              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/handshake.webp" alt=""></span>
               <span><strong>Contact Haley</strong><small>Continue the conversation</small></span>
               <i aria-hidden="true">→</i>
             </a>

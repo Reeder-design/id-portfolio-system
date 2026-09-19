@@ -1563,3 +1563,66 @@
   .hm-evaluate-card,
   .hm-next-card { transition: none !important; }
 }
+
+/* UAT pass: explicit two-way hero transfer + repaired single-control chat tools. */
+.hm-chat-tools {
+  grid-template-columns: minmax(0, 560px);
+}
+
+.hm-transfer-lane {
+  grid-template-rows: auto 54px 54px auto;
+  gap: 2px;
+}
+
+.hm-transfer-direction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #74817b;
+  font: 800 .59rem/1.2 var(--font-heading);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.hm-transfer-direction i {
+  color: var(--pine-blue);
+  font-style: normal;
+  font-size: .85rem;
+}
+
+.hm-transfer-track { height: 54px; }
+
+.hm-transfer-track .hm-transfer-packet {
+  width: 38px;
+  height: 38px;
+  margin-top: -19px;
+}
+
+.hm-transfer-question .hm-transfer-line::after {
+  animation: hm-signal-sweep 2.9s linear infinite;
+}
+
+.hm-transfer-return .hm-transfer-line::after {
+  animation: hm-signal-sweep-return 2.9s linear infinite;
+}
+
+.hm-question-packet { animation: hm-packet-route 4.2s ease-in-out infinite; }
+.hm-answer-packet { animation: hm-packet-return 4.8s ease-in-out infinite; }
+.hm-proof-packet { animation: hm-packet-return 4.8s 1.5s ease-in-out infinite; }
+
+@keyframes hm-signal-sweep-return {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes hm-packet-return {
+  0%, 13% { left: calc(100% - 38px); opacity: 0; transform: scale(.82); }
+  22% { opacity: 1; }
+  68% { opacity: 1; transform: scale(1); }
+  82%, 100% { left: 0; opacity: 0; transform: scale(.82); }
+}
+
+@media (max-width: 700px) {
+  .hm-transfer-lane { grid-template-rows: auto 48px 48px auto; }
+  .hm-transfer-track { height: 48px; }
+}
