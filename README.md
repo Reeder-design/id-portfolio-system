@@ -15,7 +15,7 @@ PRIVATE / LOCAL
         │
         ▼
 Portfolio Manager
-Manage / Reference Library / Create / AI
+Manage / Reference Library / Create / Hiring Guide / AI
         │
         ▼
 PUBLIC-CANDIDATE WORK
@@ -36,7 +36,7 @@ The public website and the local Manager are intentionally separate:
 - `portfolio/` is the static website GitHub Pages deploys.
 - `portfolio-data/` is structured, Git-tracked source data for public portfolio content.
 - `portfolio-manager/` is the local Flask application used to work with the portfolio safely.
-- `.portfolio-manager/` is private, Git-ignored local state for proposals, references, backups, temporary uploads, and other working data.
+- `.portfolio-manager/` is private, Git-ignored local state for proposals, references, Hiring Guide editorial libraries, backups, temporary uploads, and other working data.
 - `.env` stores local secrets such as the Manager password hash, Flask secret, and optional AI API key. It is Git-ignored.
 
 The repository itself is public. Anything committed to it should be treated as publicly visible even if GitHub Pages does not render it.
@@ -57,7 +57,7 @@ Then open:
 http://127.0.0.1:5055
 ```
 
-The Manager has two primary content workflows:
+The Manager has three primary work areas:
 
 ### Manage Content
 
@@ -98,6 +98,19 @@ Save & Publish
 ```
 
 The **Reference Library** sits inside this workflow for private professional source material. Originals remain unchanged and private. A separate sanitized derivative can move through review and become **Approved for Portfolio Use** before it is attached to a Content Brief.
+
+### Hiring Guide Library
+
+Use this private editorial workspace to maintain the source-of-truth Q&A library behind the public Ask Haley experience.
+
+- import the canonical JSON library and optional Markdown editorial copy
+- search/filter canonical answers
+- edit answers, categories, confidence, source basis, tags, variants, follow-ups, and implementation notes
+- maintain evidence records and demonstrated/emerging/inferred/audited status
+- create private backups automatically before edits
+- export the updated private JSON/Markdown
+
+The rich Hiring Guide library lives only under `.portfolio-manager/hiring-guide/`. Manager v1 does **not** write to the public `portfolio/data/hiring-faq*.json` files or publish anything. A future public-sync bridge must be explicit, deterministic, and separately validated.
 
 ## AI Assistance
 
@@ -169,6 +182,7 @@ Portfolio Manager **Run Full Validation** and pull-request CI exercise the same 
 - AI privacy and proposal/apply boundaries
 - assets and Related References
 - Create Content and Reference Library workflows
+- private Hiring Guide Library import/edit/evidence/backups and public-write boundary
 - adversarial security/misuse regression
 - workflow state-safety/chaos regression
 - end-to-end release smoke tests

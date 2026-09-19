@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if mode == 'new' %}New Q&A{% else %}{{ record.id }}{% endif %} | Hiring Guide Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiring-guide-manager.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Hiring Guide Library</p>
+            <h1>{% if mode == 'new' %}Add a canonical Q&amp;A{% else %}Edit {{ record.id }}{% endif %}</h1>
+            <p class="hero-copy">Keep the answer in Haley's voice while preserving source basis, confidence, evidence links, variants, follow-ups, tags, and editorial notes.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Back to Library</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-stack">
+        {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    <main class="hiring-editor-layout">
+        <form method="post" action="{% if mode == 'new' %}{{ url_for('hiring_guide.create_qa_record') }}{% else %}{{ url_for('hiring_guide.save_qa', qa_id=record.id) }}{% endif %}" class="dashboard-card hiring-editor-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="editor-heading">
+                <div>
+                    <p class="eyebrow">Canonical response</p>
+                    <h2>Learner-facing answer content</h2>
+                </div>
+                {% if record %}<span class="status-pill">{{ record.id }}</span>{% endif %}
+            </div>
+
+            <div class="form-grid">
+                <label>Category
+                    <input type="text" name="category" value="{{ record.category if record else '' }}" required>
+                </label>
+                <label>Confidence
+                    <input type="text" name="confidence" value="{{ record.confidence if record else 'high' }}" placeholder="high, medium-high, medium">
+                </label>
+                <label class="full-span">Question
+                    <textarea name="question" rows="3" required>{{ record.question if record else '' }}</textarea>
+                </label>
+                <label class="full-span">Canonical answer
+                    <textarea name="answer" rows="10" required>{{ record.answer if record else '' }}</textarea>
+                </label>
+                <label>Source basis
+                    <input type="text" name="source" value="{{ record.source if record else '' }}" placeholder="voice interview, portfolio, audit...">
+                </label>
+                <label>Review status
+                    <input type="text" name="review_status" value="{{ record.review_status if record and record.review_status else ('draft' if mode == 'new' else 'canonical') }}" placeholder="canonical, draft, needs-validation">
+                </label>
+                <label class="full-span">Evidence IDs <span class="muted-inline">comma-separated</span>
+                    <input type="text" name="evidence_ids" value="{{ record.evidence_ids|join(', ') if record else '' }}" placeholder="EV-01, EV-16">
+                </label>
+                <label class="full-span">Tags <span class="muted-inline">comma-separated</span>
+                    <input type="text" name="tags" value="{{ record.tags|join(', ') if record else '' }}">
+                </label>
+                <label class="full-span">Question variants <span class="muted-inline">one per line</span>
+                    <textarea name="variants" rows="5">{{ record.variants|join('\n') if record else '' }}</textarea>
+                </label>
+                <label class="full-span">Suggested follow-ups <span class="muted-inline">one per line</span>
+                    <textarea name="followups" rows="5">{{ record.followups|join('\n') if record else '' }}</textarea>
+                </label>
+                <label class="full-span">Editorial / implementation notes
+                    <textarea name="notes" rows="5">{{ record.notes if record else '' }}</textarea>
+                </label>
+            </div>
+
+            <div class="button-row editor-save-row">
+                <button class="btn btn-primary" type="submit">{% if mode == 'new' %}Create Private Q&amp;A{% else %}Save Private Q&amp;A{% endif %}</button>
+                <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Cancel</a>
+            </div>
+        </form>
+
+        <aside class="editor-side-stack">
+            <section class="dashboard-card">
+                <p class="eyebrow">Evidence selector</p>
+                <h2>Available evidence IDs</h2>
+                <p class="section-copy">Only use evidence the answer actually relies on. Status is a guardrail, not a public label.</p>
+                <div class="hiring-evidence-list compact">
+                    {% for item in evidence %}
+                    <a href="{{ url_for('hiring_guide.edit_evidence', evidence_id=item.id) }}">
+                        <span><strong>{{ item.id }}</strong><small>{{ item.status }}</small></span>
+                        <b>{{ item.title }}</b>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% if linked_evidence %}
+            <section class="dashboard-card">
+                <p class="eyebrow">Currently linked</p>
+                <div class="linked-evidence-stack">
+                    {% for item in linked_evidence %}
+                    <article>
+                        <div><strong>{{ item.id }}</strong><span class="evidence-chip {{ item.status }}">{{ item.status }}</span></div>
+                        <h3>{{ item.title }}</h3>
+                        {% if item.proves %}<p>{{ item.proves|join(' · ') }}</p>{% endif %}
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if mode == 'edit' %}
+            <section class="dashboard-card danger-zone">
+                <p class="eyebrow">Private library maintenance</p>
+                <h2>Delete this Q&amp;A</h2>
+                <p>Deletion creates a private backup first. Type <strong>{{ record.id }}</strong> to confirm.</p>
+                <form method="post" action="{{ url_for('hiring_guide.remove_qa', qa_id=record.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="text" name="confirm_id" autocomplete="off" placeholder="{{ record.id }}" required>
+                    <button class="btn btn-danger" type="submit">Delete Q&amp;A</button>
+                </form>
+            </section>
+            {% endif %}
+        </aside>
+    </main>
+</div>
+</body>
+</html>

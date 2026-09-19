@@ -59,6 +59,9 @@ jobs:
       - name: Validate Hiring Manager mobile UX
         run: python scripts/check-hiring-mobile-ux.py
 
+      - name: Validate private Hiring Guide Manager
+        run: python scripts/check-hiring-guide-manager.py
+
       - name: Validate public privacy and leakage boundaries
         run: python scripts/check-public-privacy.py
 

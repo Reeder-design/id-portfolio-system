@@ -52,6 +52,7 @@ The suite covers:
 - AI privacy/proposal/apply boundaries
 - asset management and Related References
 - Create Content and Reference Library workflows
+- private Hiring Guide Library import/edit/evidence/backups and public-write boundaries
 - adversarial security/misuse regression
 - workflow state-safety/chaos regression
 - authenticated end-to-end release smoke testing
@@ -90,11 +91,26 @@ If the static preview server is already running after a Git pull, refreshing the
 Treat these as different trust zones:
 
 - `.env` — private local secrets; Git-ignored
-- `.portfolio-manager/` — private local working state; Git-ignored
+- `.portfolio-manager/` — private local working state; Git-ignored, including the Hiring Guide editorial library and its backups
 - `portfolio-data/` — tracked public-candidate structured content
 - `portfolio/` — deployed public website
 
 The repository is public, so anything committed outside `portfolio/` is still visible through GitHub even if Pages does not render it.
+
+## Hiring Guide Library Maintenance
+
+The rich Hiring Guide Q&A/evidence library belongs in `.portfolio-manager/hiring-guide/`, not in tracked Git files.
+
+Normal maintenance:
+
+```text
+import canonical JSON (+ optional Markdown)
+  → search/filter/edit Q&A and evidence
+  → automatic private backups
+  → export updated private library
+```
+
+Hiring Guide Manager v1 does not synchronize the private editorial library into the public `portfolio/data/hiring-faq*.json` files. Treat public synchronization as a separate future publishing transformation with its own review and validation.
 
 ## Commit Identity Privacy
 

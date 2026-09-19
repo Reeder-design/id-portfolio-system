@@ -1,0 +1,437 @@
+.hiring-guide-header {
+    background:
+        radial-gradient(circle at 86% 14%, rgba(151, 219, 79, 0.12), transparent 28%),
+        radial-gradient(circle at 12% 84%, rgba(184, 170, 195, 0.14), transparent 30%),
+        linear-gradient(135deg, rgba(72, 87, 81, 0.98), rgba(48, 59, 56, 0.98));
+}
+
+.hiring-import-card {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.hiring-import-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.muted-inline {
+    color: var(--muted-text);
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.private-boundary {
+    display: grid;
+    gap: 4px;
+    margin-top: 18px;
+    padding: 15px 17px;
+    border: 1px solid rgba(121, 201, 158, 0.28);
+    border-left: 5px solid var(--mint-leaf);
+    border-radius: 13px;
+    color: var(--text-soft);
+    background: rgba(121, 201, 158, 0.08);
+}
+
+.private-boundary strong {
+    color: var(--cream);
+    font-family: var(--font-heading);
+}
+
+.hiring-library-layout {
+    display: grid;
+    gap: 22px;
+}
+
+.hiring-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.hiring-summary-grid article {
+    display: grid;
+    gap: 5px;
+    padding: 18px;
+    border: 1px solid rgba(232, 221, 199, 0.16);
+    border-radius: 16px;
+    background: rgba(243, 240, 232, 0.07);
+}
+
+.hiring-summary-grid span {
+    color: var(--muted-text);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.hiring-summary-grid strong {
+    color: var(--cream);
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+}
+
+.hiring-library-controls .action-title-row {
+    align-items: start;
+}
+
+.hiring-filter-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) repeat(3, minmax(160px, .7fr)) auto;
+    gap: 12px;
+    align-items: end;
+    margin-top: 18px;
+}
+
+.hiring-filter-grid label {
+    margin: 0;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.hiring-manager-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(300px, .7fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.hiring-record-list {
+    display: grid;
+    gap: 14px;
+}
+
+.hiring-record-card {
+    padding: 20px;
+    border: 1px solid rgba(232, 221, 199, 0.16);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at top right, rgba(169, 216, 193, 0.06), transparent 34%),
+        rgba(62, 74, 70, 0.95);
+    box-shadow: 0 10px 26px rgba(23, 31, 29, 0.15);
+}
+
+.hiring-record-card h3 {
+    margin: 12px 0 8px;
+    color: var(--cream);
+    font-size: 1.1rem;
+}
+
+.hiring-record-card > p {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-soft);
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.hiring-record-topline,
+.hiring-record-meta,
+.hiring-evidence-row,
+.hiring-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    align-items: center;
+}
+
+.hiring-record-topline {
+    justify-content: space-between;
+}
+
+.confidence-pill,
+.hiring-tag-row span,
+.evidence-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.confidence-pill {
+    color: #27483A;
+    background: var(--light-sage);
+}
+
+.hiring-record-meta {
+    margin-top: 12px;
+    color: var(--muted-text);
+    font-size: 0.76rem;
+}
+
+.hiring-tag-row {
+    margin-top: 12px;
+}
+
+.hiring-tag-row span {
+    color: var(--moonstone);
+    background: rgba(184, 170, 195, 0.13);
+}
+
+.hiring-evidence-row {
+    margin-top: 12px;
+}
+
+.evidence-chip {
+    color: var(--cream);
+    border: 1px solid rgba(232, 221, 199, 0.2);
+    background: rgba(243, 240, 232, 0.08);
+}
+
+.evidence-chip.demonstrated {
+    color: #dff5e5;
+    border-color: rgba(121, 201, 158, 0.38);
+    background: rgba(121, 201, 158, 0.12);
+}
+
+.evidence-chip.emerging {
+    color: #f5edcf;
+    border-color: rgba(232, 221, 199, 0.38);
+    background: rgba(232, 221, 199, 0.10);
+}
+
+.evidence-chip.inferred,
+.evidence-chip.audited {
+    color: #ece5f2;
+    border-color: rgba(184, 170, 195, 0.42);
+    background: rgba(184, 170, 195, 0.12);
+}
+
+.sticky-library-panel {
+    position: sticky;
+    top: 20px;
+}
+
+.hiring-evidence-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+    max-height: 720px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.hiring-evidence-list.compact {
+    max-height: 620px;
+}
+
+.hiring-evidence-list a {
+    display: grid;
+    gap: 6px;
+    padding: 11px 12px;
+    border: 1px solid rgba(232, 221, 199, 0.13);
+    border-radius: 11px;
+    color: var(--text-light);
+    text-decoration: none;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.hiring-evidence-list a:hover {
+    border-color: rgba(121, 201, 158, 0.38);
+    background: rgba(121, 201, 158, 0.08);
+}
+
+.hiring-evidence-list a > span {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--dusty-mint);
+    font-size: 0.72rem;
+}
+
+.hiring-evidence-list a b {
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.hiring-library-rules {
+    padding: 0;
+    overflow: hidden;
+}
+
+.hiring-library-rules summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.hiring-library-rules summary::-webkit-details-marker {
+    display: none;
+}
+
+.hiring-library-rules summary strong {
+    display: block;
+    color: var(--cream);
+    font-family: var(--font-heading);
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    padding: 20px 24px 24px;
+    border-top: 1px solid rgba(232, 221, 199, 0.12);
+}
+
+.rules-grid li {
+    color: var(--text-soft);
+    margin-bottom: 7px;
+}
+
+.rules-grid pre {
+    max-height: 420px;
+    overflow: auto;
+    padding: 14px;
+    white-space: pre-wrap;
+    border-radius: 12px;
+    color: var(--taupe);
+    background: var(--cream);
+}
+
+.hiring-editor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, .65fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.editor-side-stack {
+    display: grid;
+    gap: 18px;
+}
+
+.editor-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 18px;
+}
+
+.editor-save-row {
+    margin-top: 22px;
+}
+
+.linked-evidence-stack,
+.used-by-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.linked-evidence-stack article,
+.used-by-list a {
+    padding: 12px;
+    border: 1px solid rgba(232, 221, 199, 0.14);
+    border-radius: 12px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.linked-evidence-stack article > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.linked-evidence-stack h3 {
+    margin: 9px 0 5px;
+    font-size: 0.9rem;
+}
+
+.linked-evidence-stack p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 0.76rem;
+}
+
+.used-by-list a {
+    display: grid;
+    gap: 4px;
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.used-by-list a span {
+    color: var(--muted-text);
+    font-size: 0.75rem;
+}
+
+.danger-zone {
+    border-color: rgba(205, 138, 153, 0.35);
+    background: rgba(105, 62, 71, 0.18);
+}
+
+.danger-zone form {
+    display: grid;
+    gap: 10px;
+}
+
+.btn-danger {
+    color: #fff4f4;
+    background: #7c4954;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.hiring-empty {
+    padding: 30px;
+    border: 1px dashed rgba(232, 221, 199, 0.3);
+    border-radius: 16px;
+}
+
+@media (max-width: 1150px) {
+    .hiring-filter-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hiring-filter-grid .full-search,
+    .filter-actions {
+        grid-column: 1 / -1;
+    }
+
+    .hiring-manager-columns,
+    .hiring-editor-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sticky-library-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 760px) {
+    .hiring-summary-grid,
+    .rules-grid,
+    .hiring-filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hiring-filter-grid .full-search,
+    .filter-actions {
+        grid-column: auto;
+    }
+
+    .filter-actions,
+    .editor-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hiring-record-topline {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

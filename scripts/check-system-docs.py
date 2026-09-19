@@ -65,6 +65,7 @@ def main() -> int:
         "Manage Content",
         "Create Content",
         "Reference Library",
+        "Hiring Guide Library",
         "Save & Publish",
         "Approve & Apply Locally",
         "Publish to GitHub",
@@ -78,6 +79,7 @@ def main() -> int:
     for phrase in [
         "Manage Content",
         "Reference Library",
+        "Hiring Guide Library",
         "Create Content",
         "Save & Publish",
         "Generic AI Drafting Helper",
@@ -97,6 +99,7 @@ def main() -> int:
         "portfolio-data/taxonomy.json",
         "System Integrations and Workflows",
         "LMS Administration & System Operations",
+        "Hiring Guide editorial source",
         "Do not resurrect retired experiments",
     ]:
         require(phrase in copilot, f"Copilot instructions are missing current operating guidance: {phrase!r}.", errors)
@@ -107,6 +110,7 @@ def main() -> int:
         "Publish to GitHub",
         "adversarial security/misuse regression",
         "workflow state-safety/chaos regression",
+        "Hiring Guide Library Maintenance",
         "Commit Identity Privacy",
     ]:
         require(phrase in maintenance, f"Maintenance guide is missing current workflow guidance: {phrase!r}.", errors)
@@ -200,6 +204,7 @@ def main() -> int:
         ("System docs/architecture freshness", "scripts/check-system-docs.py"),
         ("Breadcrumb consistency", "scripts/check-breadcrumb-consistency.py"),
         ("Hiring Manager UX", "scripts/check-hiring-mobile-ux.py"),
+        ("Hiring Guide Manager", "scripts/check-hiring-guide-manager.py"),
     ]:
         require(
             f'("{label}", [sys.executable, "{script}"]' in validation,
@@ -211,6 +216,7 @@ def main() -> int:
         "python scripts/check-system-docs.py",
         "python scripts/check-breadcrumb-consistency.py",
         "python scripts/check-hiring-mobile-ux.py",
+        "python scripts/check-hiring-guide-manager.py",
     ]:
         require(script in workflow, f"Pull-request CI must run {script}.", errors)
 
