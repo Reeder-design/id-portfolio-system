@@ -44,6 +44,16 @@
                         <p>Review page-specific AI proposals created from AI Request inside a page editor, including proposal-only, applied-local, and reverted states.</p>
                         <a class="btn btn-secondary" href="{{ url_for('ai_apply.history') }}">Open Proposal History</a>
                     </article>
+                    <article class="v2-small-card">
+                        <h3>Related References</h3>
+                        <p>Review project-to-project connections, incoming references, and deterministic suggestions without auto-adding anything.</p>
+                        <a class="btn btn-secondary" href="{{ url_for('related_references.relationship_workspace') }}">Open Related References</a>
+                    </article>
+                    <article class="v2-small-card">
+                        <h3>Component Registry</h3>
+                        <p>Browse reusable interaction and presentation patterns, see implementation ownership, and check where each pattern is already used.</p>
+                        <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Open Component Registry</a>
+                    </article>
                     <article class="v2-small-card upcoming">
                         <h3>Change Theme</h3>
                         <p>Update approved site-wide colors and theme choices without exposing raw CSS controls.</p>
