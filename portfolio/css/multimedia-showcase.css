@@ -545,52 +545,195 @@
 .media-project-tags span{padding:5px 7px;border-radius:999px;background:#edf3ef;color:#42635d;font:800 .52rem/1 var(--font-heading)}
 .media-project-flow{
   position:relative;
-  display:grid;
-  grid-template-columns:1fr 24px 88px 24px 1fr;
-  gap:5px;
-  align-items:center;
-  min-height:128px;
-  padding:12px;
+  min-height:148px;
   overflow:hidden;
   border-radius:16px;
   background:
-    radial-gradient(circle at 50% 50%,rgba(121,201,158,.15),transparent 42%),
+    radial-gradient(circle at 50% 45%,rgba(121,201,158,.12),transparent 46%),
     #173038;
 }
-.project-flow-node{
-  display:grid;
-  place-items:center;
-  min-height:56px;
-  padding:7px;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:11px;
-  color:#dceae3;
-  font:800 .55rem/1.2 var(--font-heading);
+.project-motion-scene{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:none;
+  align-content:center;
+  justify-items:center;
+  padding:14px 16px;
+}
+.media-project-flow[data-project="vertical"] .project-motion-vertical,
+.media-project-flow[data-project="certification"] .project-motion-certification,
+.media-project-flow[data-project="launch"] .project-motion-launch{display:grid}
+.project-motion-scene>small{
+  margin-top:10px;
+  color:#a9c3b7;
+  font:.56rem/1.3 var(--font-body);
   text-align:center;
 }
-.project-flow-media{
-  min-height:86px;
-  background:#eaf3ee;
-  color:#315755;
+
+/* Vertical Positioning: presenter -> message -> scenario */
+.project-motion-vertical{
+  grid-template-columns:70px minmax(70px,.7fr) minmax(110px,1fr);
+  gap:10px;
+  align-items:center;
 }
-.project-flow-media .portfolio-icon{width:27px;height:27px}
-.project-flow-media b{margin-top:5px;font-size:.54rem}
-.media-project-flow>i{position:relative;height:2px;background:linear-gradient(90deg,#508484,#97db4f)}
-.media-project-flow>i::after{
-  content:"";
+.project-motion-vertical>small{grid-column:1 / -1}
+.vertical-presenter{
+  position:relative;
+  width:58px;
+  height:78px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  background:#10262d;
+}
+.presenter-head{
   position:absolute;
-  top:50%;
-  left:0;
+  top:11px;
+  left:50%;
+  width:24px;
+  height:24px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:#dceae3;
+}
+.presenter-body{
+  position:absolute;
+  left:50%;
+  bottom:10px;
+  width:38px;
+  height:29px;
+  transform:translateX(-50%);
+  border-radius:16px 16px 8px 8px;
+  background:#79c99e;
+}
+.presenter-pulse{
+  position:absolute;
+  top:13px;
+  right:8px;
   width:7px;
   height:7px;
   border-radius:50%;
-  transform:translateY(-50%);
   background:#97db4f;
-  box-shadow:0 0 12px rgba(151,219,79,.55);
-  animation:projectFlowDot 2.5s linear infinite;
+  box-shadow:0 0 0 4px rgba(151,219,79,.08);
 }
-.media-project-flow>i:nth-of-type(2)::after{animation-delay:1.15s}
-@keyframes projectFlowDot{0%{left:0;opacity:0}18%{opacity:1}82%{opacity:1}100%{left:calc(100% - 7px);opacity:0}}
+.media-project-flow.is-switching[data-project="vertical"] .presenter-pulse{animation:presenterPulse 1.7s ease-in-out infinite}
+.vertical-message{display:grid;gap:7px;width:100%}
+.vertical-message span{height:7px;border-radius:999px;background:#7ea49a}
+.vertical-message span:nth-child(2){width:78%}
+.vertical-message span:nth-child(3){width:58%}
+.media-project-flow.is-switching[data-project="vertical"] .vertical-message span{animation:messageReveal .5s ease both}
+.media-project-flow.is-switching[data-project="vertical"] .vertical-message span:nth-child(2){animation-delay:.12s}
+.media-project-flow.is-switching[data-project="vertical"] .vertical-message span:nth-child(3){animation-delay:.24s}
+.vertical-scenario{
+  display:grid;
+  gap:6px;
+  width:100%;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:11px;
+  background:#10262d;
+}
+.vertical-scenario strong{color:#dceae3;font:800 .53rem/1.2 var(--font-heading)}
+.scenario-option{height:14px;border-radius:6px;background:rgba(121,201,158,.15)}
+.scenario-option.option-two{width:86%}
+.media-project-flow.is-switching[data-project="vertical"] .scenario-option.option-two{animation:scenarioChoice 2.2s ease-in-out infinite}
+
+/* Certification: pathway with media touchpoint */
+.project-motion-certification{grid-template-rows:auto auto auto;gap:9px}
+.cert-path{
+  display:grid;
+  grid-template-columns:58px 20px 58px 20px 58px 20px 58px;
+  gap:4px;
+  align-items:center;
+}
+.cert-module{
+  display:grid;
+  place-items:center;
+  min-height:58px;
+  padding:6px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;
+  background:#10262d;
+  color:#dceae3;
+}
+.cert-module b{font:900 .72rem/1 var(--font-heading)}
+.cert-module small{margin-top:5px;color:#abc5b9;font:.48rem/1.1 var(--font-body)}
+.cert-module.cert-media{background:#eaf3ee;color:#315755}
+.cert-module.cert-media .portfolio-icon{width:23px;height:23px}
+.cert-module.cert-check{border-color:rgba(151,219,79,.28)}
+.cert-path>i{height:2px;background:linear-gradient(90deg,#508484,#97db4f)}
+.cert-progress{display:block;width:88%;height:5px;overflow:hidden;border-radius:999px;background:rgba(220,239,229,.12)}
+.cert-progress i{display:block;width:25%;height:100%;border-radius:inherit;background:#97db4f}
+.media-project-flow.is-switching[data-project="certification"] .cert-progress i{animation:certProgress 3s ease-in-out infinite}
+
+/* Product Launch: product -> benefit -> seller decision */
+.project-motion-launch{
+  grid-template-columns:78px minmax(70px,.65fr) minmax(130px,1fr);
+  gap:11px;
+  align-items:center;
+}
+.project-motion-launch>small{grid-column:1 / -1}
+.launch-product{
+  position:relative;
+  width:70px;
+  height:82px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;
+  background:#10262d;
+}
+.product-device{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:32px;
+  height:50px;
+  transform:translate(-50%,-50%);
+  border:2px solid #79c99e;
+  border-radius:7px;
+}
+.product-signal{
+  position:absolute;
+  left:50%;
+  top:15px;
+  width:46px;
+  height:46px;
+  transform:translateX(-50%);
+  border:1px solid rgba(151,219,79,.28);
+  border-radius:50%;
+}
+.product-signal.signal-b{top:7px;width:62px;height:62px;opacity:.6}
+.media-project-flow.is-switching[data-project="launch"] .product-signal{animation:productSignal 2s ease-out infinite}
+.media-project-flow.is-switching[data-project="launch"] .signal-b{animation-delay:.45s}
+.launch-benefit{display:grid;gap:8px;width:100%}
+.benefit-line{height:8px;border-radius:999px;background:#79c99e}
+.benefit-line.short{width:66%;background:#508484}
+.launch-decision{
+  display:grid;
+  grid-template-columns:1fr 18px 1fr;
+  gap:5px;
+  align-items:center;
+  width:100%;
+}
+.launch-decision span{
+  display:grid;
+  place-items:center;
+  min-height:48px;
+  padding:6px;
+  border-radius:9px;
+  font:800 .49rem/1.15 var(--font-heading);
+  text-align:center;
+}
+.decision-customer{background:#10262d;color:#dceae3;border:1px solid rgba(255,255,255,.09)}
+.decision-choice{background:#eaf3ee;color:#315755}
+.launch-decision i{height:2px;background:linear-gradient(90deg,#508484,#97db4f)}
+.media-project-flow.is-switching[data-project="launch"] .decision-choice{animation:decisionFocus 2.3s ease-in-out infinite}
+
+@keyframes presenterPulse{50%{transform:scale(1.35);box-shadow:0 0 0 8px rgba(151,219,79,.12)}}
+@keyframes messageReveal{from{opacity:.25;transform:scaleX(.5);transform-origin:left}to{opacity:1;transform:scaleX(1)}}
+@keyframes scenarioChoice{50%{background:rgba(151,219,79,.48);transform:translateX(3px)}}
+@keyframes certProgress{0%{width:25%}50%{width:100%}100%{width:25%}}
+@keyframes productSignal{0%{transform:translateX(-50%) scale(.7);opacity:.7}100%{transform:translateX(-50%) scale(1.16);opacity:0}}
+@keyframes decisionFocus{50%{transform:translateY(-3px);box-shadow:0 8px 16px rgba(0,0,0,.18)}}
 
 /* Responsive */
 @media(max-width:1040px){
@@ -631,9 +774,13 @@
   .media-flow-output{grid-template-columns:repeat(2,minmax(0,1fr))}
   .media-workflow-tabs,.media-project-tabs,.media-evidence-tabs{grid-template-columns:1fr}
   .media-evidence-screen img{height:210px;max-height:210px}
-  .media-project-flow{grid-template-columns:1fr;gap:7px}
-  .media-project-flow>i{width:2px;height:22px;margin:auto;background:linear-gradient(180deg,#508484,#97db4f)}
-  .media-project-flow>i::after{display:none}
+  .media-project-flow{min-height:220px}
+  .project-motion-vertical,.project-motion-launch{grid-template-columns:1fr;gap:7px}
+  .project-motion-vertical>small,.project-motion-launch>small{grid-column:1}
+  .vertical-presenter,.launch-product{display:none}
+  .vertical-message,.vertical-scenario,.launch-benefit,.launch-decision{max-width:280px}
+  .cert-path{grid-template-columns:48px 12px 48px 12px 48px 12px 48px}
+  .cert-module{min-height:52px}
   .motion-course{grid-template-columns:1fr;gap:8px}
   .integration-pulse{display:none}
 }
@@ -653,7 +800,12 @@
   .motion-refine-controls b,
   .motion-caption-line i,
   .integration-pulse,
-  .media-project-flow>i::after{animation:none!important}
+  .presenter-pulse,
+  .vertical-message span,
+  .scenario-option,
+  .cert-progress i,
+  .product-signal,
+  .decision-choice{animation:none!important}
   .media-evidence-tab,
   .media-workflow-tab,
   .media-project-tab{transition:none}
