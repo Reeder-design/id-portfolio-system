@@ -85,6 +85,91 @@
     collaboration: { caption: 'Align → review → deliver', nodes: [['team.webp','Align'],['chat-bubbles.webp','Review'],['calendar.webp','Deliver']] }
   };
 
+
+  const EVIDENCE_PREVIEWS = {
+    'projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html': {
+      image: 'assets/project-images/cellular-certification/cert-introduction.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/complete-learning-paths/index.html': {
+      image: 'assets/project-images/complete-learning-pathways/path-program-overview.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html': {
+      image: 'assets/project-images/microlearning/micro-marketing-hero.webp',
+      type: 'Microlearning'
+    },
+    'projects/instructional-design/index.html': {
+      image: 'assets/project-images/main-pages/instructional-design.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html': {
+      image: 'assets/project-images/live-training/virtual-training-facilitation.webp',
+      type: 'Live Training'
+    },
+    'projects/instructional-design/microlearning-performance-support/index.html': {
+      image: 'assets/project-images/microlearning-performance-support/micro-ps-hero.webp',
+      type: 'Microlearning + Performance Support'
+    },
+    'projects/instructional-design/interactive-learning/index.html': {
+      image: 'assets/project-images/interactive-learning/interactive-sales-overview.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/instructional-design/interactive-learning/meddpicc-practice/index.html': {
+      image: 'assets/project-images/interactive-learning/meddpicc-sales-use-case.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/instructional-design/interactive-learning/pursuit-positioning/index.html': {
+      image: 'assets/project-images/interactive-learning/pursuit-sales-scenario.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/lms-administration/index.html': {
+      image: 'assets/project-images/main-pages/lms-administration.webp',
+      type: 'LMS + Learning Operations'
+    },
+    'projects/lms-administration/learning-platform-operations-migration-readiness/index.html': {
+      image: 'assets/project-images/lms-migration/learning-pathway.webp',
+      type: 'LMS + Learning Operations'
+    },
+    'projects/workflows/data-reporting/certification-reporting-automation/index.html': {
+      image: 'assets/project-images/reporting-automation/report-certification.webp',
+      type: 'Systems + Workflow'
+    },
+    'projects/workflows/index.html': {
+      image: 'assets/project-images/main-pages/system-integrations-workflows.webp',
+      type: 'Systems + Workflow'
+    },
+    'projects/ai-training-and-evaluation/index.html': {
+      image: 'assets/project-images/main-pages/ai-training-evaluation.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/ai-training-and-evaluation/rubric-demo/index.html': {
+      image: 'assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/ai-training-and-evaluation/workflow-demo/index.html': {
+      image: 'assets/project-images/ai-training-and-evaluation/nexusai-compare-responses.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/instructional-design/live-training/index.html': {
+      image: 'assets/project-images/instructional-design/id-live-training.webp',
+      type: 'Live Training'
+    },
+    'projects/instructional-design/multimedia/index.html': {
+      image: 'assets/project-images/multimedia/multimedia-after-effects-motion.webp',
+      type: 'Multimedia'
+    },
+    'projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html': {
+      image: 'assets/project-images/vertical-positioning/airports-connected.webp',
+      type: 'Microlearning'
+    }
+  };
+
+  const normalizeEvidencePath = (path) => String(path || '')
+    .replace(/^\.\//, '')
+    .replace(/^\/+/, '')
+    .replace(/^portfolio\//, '');
+
   const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
@@ -166,7 +251,6 @@
     capabilityDetail: document.querySelector('[data-hm-capability-detail]'),
     toolTabs: document.querySelector('[data-hm-tool-tabs]'),
     toolDetail: document.querySelector('[data-hm-tool-detail]'),
-    learningStatement: document.querySelector('[data-hm-learning-statement] p'),
     evidenceDrawer: document.querySelector('[data-hm-evidence-drawer]'),
     evidenceOverlay: document.querySelector('[data-hm-evidence-overlay]'),
     evidenceClose: document.querySelector('[data-hm-evidence-close]'),
@@ -277,15 +361,28 @@
 
   const hydrateEvidencePreview = async (item) => {
     const target = new URL(item.path, root);
+    const normalizedPath = normalizeEvidencePath(item.path);
+    const curated = EVIDENCE_PREVIEWS[normalizedPath] || null;
     elements.evidenceTitle.textContent = item.title || 'Portfolio project';
-    elements.evidenceType.textContent = categoryFromPath(item.path);
+    elements.evidenceType.textContent = curated?.type || categoryFromPath(item.path);
     elements.evidenceNote.textContent = item.note || 'This public project supports the answer you were reviewing.';
     elements.evidenceSummary.textContent = 'Loading the public project summary…';
-    elements.evidenceVisual.innerHTML = `<div class="hm-evidence-preview-placeholder"><span class="hm-icon-bubble"><img src="${pixelUrl('reference-search.webp')}" alt=""></span><span>Loading project preview…</span></div>`;
     const fullUrl = new URL(target.href);
     fullUrl.searchParams.set('from', 'ask-haley');
     elements.evidenceOpen.href = fullUrl.href;
     elements.evidenceChat.textContent = state.chatStarted ? 'Back to chat' : 'Start chat';
+
+    if (curated?.image) {
+      const resolved = new URL(curated.image, root).href;
+      elements.evidenceVisual.innerHTML = `<img src="${escapeHtml(resolved)}" alt="Preview of ${escapeHtml(item.title || 'portfolio project')}">`;
+    } else {
+      elements.evidenceVisual.innerHTML = `
+        <div class="hm-evidence-preview-placeholder hm-evidence-preview-fallback">
+          <span class="hm-icon-bubble"><img src="${pixelUrl(categoryFromPath(item.path).includes('AI') ? 'idea-bulb.webp' : categoryFromPath(item.path).includes('LMS') ? 'workflow-tree.webp' : categoryFromPath(item.path).includes('Workflow') ? 'analytics-growth.webp' : 'document-star.webp')}" alt=""></span>
+          <strong>${escapeHtml(item.title || 'Portfolio project')}</strong>
+          <span>${escapeHtml(categoryFromPath(item.path))}</span>
+        </div>`;
+    }
 
     try {
       const response = await fetch(target.href);
@@ -293,20 +390,9 @@
       const markup = await response.text();
       const doc = new DOMParser().parseFromString(markup, 'text/html');
       const description = doc.querySelector('meta[name="description"]')?.content || doc.querySelector('main p')?.textContent?.trim();
-      const metaImage = doc.querySelector('meta[property="og:image"]')?.content;
-      const imageNode = doc.querySelector('main img[src*="project-images"], .page-hero img[src], .flagship-hero img[src], main img[src]');
-      const imageSrc = metaImage || imageNode?.getAttribute('src');
-      if (description) elements.evidenceSummary.textContent = description;
-      else elements.evidenceSummary.textContent = 'Open the full project for the complete public case study and interaction details.';
-      if (imageSrc) {
-        const resolved = new URL(imageSrc, target.href).href;
-        elements.evidenceVisual.innerHTML = `<img src="${escapeHtml(resolved)}" alt="Preview of ${escapeHtml(item.title || 'portfolio project')}">`;
-      } else {
-        elements.evidenceVisual.innerHTML = `<div class="hm-evidence-preview-placeholder"><span class="hm-icon-bubble"><img src="${pixelUrl('document-star.webp')}" alt=""></span><span>Public case study preview</span></div>`;
-      }
+      elements.evidenceSummary.textContent = description || 'Open the full project for the complete public case study and interaction details.';
     } catch (error) {
       elements.evidenceSummary.textContent = 'Open the full project for the complete public case study and interaction details.';
-      elements.evidenceVisual.innerHTML = `<div class="hm-evidence-preview-placeholder"><span class="hm-icon-bubble"><img src="${pixelUrl('document-star.webp')}" alt=""></span><span>Public case study preview</span></div>`;
     }
   };
 
@@ -678,7 +764,6 @@
       button.addEventListener('click', () => renderTool(button.dataset.hmTool));
     });
     renderTool(state.activeTool || state.tools[0].id);
-    if (elements.learningStatement) elements.learningStatement.textContent = state.learningStatement;
   };
   const setScanView = (view) => {
     state.activeScanView = view;

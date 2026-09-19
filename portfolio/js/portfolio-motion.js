@@ -927,15 +927,15 @@
       const style = document.createElement('style');
       style.id = 'ask-haley-return-style';
       style.textContent = `
-        .ask-haley-return-dock{position:fixed;right:18px;bottom:18px;z-index:1200;display:grid;grid-template-columns:42px auto auto;gap:9px;align-items:center;min-width:178px;padding:9px 11px;border:1px solid rgba(80,132,132,.22);border-radius:16px;background:rgba(255,255,255,.96);box-shadow:0 16px 42px rgba(34,52,47,.2);color:#34413d;text-decoration:none;backdrop-filter:blur(10px)}
-        .ask-haley-return-dock:hover,.ask-haley-return-dock:focus-visible{transform:translateY(-2px);border-color:rgba(121,201,158,.8);outline:none}
+        .ask-haley-return-dock{position:fixed;left:18px;right:auto;bottom:18px;z-index:1200;display:grid;grid-template-columns:46px auto auto;gap:10px;align-items:center;min-width:196px;padding:10px 13px;border:2px solid rgba(121,201,158,.62);border-radius:18px;background:rgba(255,255,255,.98);box-shadow:0 18px 48px rgba(34,52,47,.24),0 0 0 6px rgba(121,201,158,.08);color:#34413d;text-decoration:none;backdrop-filter:blur(10px)}
+        .ask-haley-return-dock:hover,.ask-haley-return-dock:focus-visible{transform:translateY(-3px);border-color:#79C99E;box-shadow:0 22px 54px rgba(34,52,47,.28),0 0 0 7px rgba(121,201,158,.12);outline:none}
         .ask-haley-return-icon{display:grid;place-items:center;width:42px;height:42px;padding:3px;border-radius:12px;background:#fff;border:1px solid rgba(80,132,132,.14)}
         .ask-haley-return-icon img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
         .ask-haley-return-dock>span:nth-child(2){display:grid;gap:1px}
         .ask-haley-return-dock strong{font:800 .7rem/1.2 Montserrat,sans-serif}
         .ask-haley-return-dock small{color:#74817b;font:.62rem/1.2 'Open Sans',sans-serif}
         .ask-haley-return-dock i{color:#508484;font-style:normal;font-weight:800}
-        @media(max-width:640px){.ask-haley-return-dock{right:12px;bottom:12px;min-width:0}.ask-haley-return-dock small{display:none}}
+        @media(max-width:640px){.ask-haley-return-dock{left:12px;right:auto;bottom:12px;min-width:0}.ask-haley-return-dock small{display:none}}
       `;
       document.head.appendChild(style);
     }
