@@ -19,17 +19,23 @@
   <script>
     window.microCaseData={
       choice:{
-        overview:{
-          label:'Launch asset 1',
-          title:'Rise for fast product orientation.',
-          summary:'Sellers needed a concise reference they could use before customer conversations: what the offer is, the customer problem it addresses, where it fits, and where to find approved resources.',
-          cards:[['Seller need','Explain the offer clearly'],['Content focus','Problem, value, fit, resources'],['Design choice','Short, modular, easy to update']]
+        position:{
+          label:'Seller task 1 · Position',
+          title:'Connect the product to a clear customer value story.',
+          summary:'The launch strategy started with the conversation sellers needed to have: explain what the offer solves, who it is for, and why the customer should care without drifting into implementation detail.',
+          cards:[['Seller question','What problem does this solve?'],['Positioning focus','Customer value + approved messaging'],['Learning move','Build a concise launch-readiness foundation']]
         },
-        practice:{
-          label:'Launch asset 2',
-          title:'Storyline for customer-facing judgment.',
-          summary:'The practice asset asked sellers to read customer cues, recognize a plausible fit, and choose a next step instead of simply recalling product facts.',
-          cards:[['Seller need','Recognize customer fit'],['Practice','Scenario choice + coaching'],['Design choice','Apply before the live conversation']]
+        fit:{
+          label:'Seller task 2 · Recognize fit',
+          title:'Help sellers spot the customer cues that make the offer relevant.',
+          summary:'Instead of memorizing features, sellers needed to connect customer pain, operating context, and fit signals to the strongest value points for the conversation.',
+          cards:[['Seller question','Is this a plausible fit?'],['Decision focus','Need + context + fit signals'],['Learning move','Connect product value to customer situations']]
+        },
+        action:{
+          label:'Seller task 3 · Act',
+          title:'Practice the next-best action in the customer conversation.',
+          summary:'The final strategy layer moved from recognition into judgment: choose an appropriate recommendation or next step, then use feedback to connect the choice back to customer need and value.',
+          cards:[['Seller question','What should I do next?'],['Practice focus','Recommendation + next-best action'],['Learning move','Scenario choice with explanatory coaching']]
         }
       },
       flow:{
@@ -100,26 +106,27 @@
           <h2>Give sellers enough product fluency to move the conversation forward.</h2>
           <p class="short-copy">This was sales enablement, not technical certification. The learning had to help sellers describe the offer accurately, recognize customer-fit signals, and take an appropriate next step without overloading them with implementation detail.</p>
         </div>
-        <div class="launch-priority-strip" aria-label="Sales enablement priorities">
-          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Position</span><p>Explain the value clearly.</p></article>
-          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>Match</span><p>Recognize a plausible fit.</p></article>
-          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Act</span><p>Choose the next seller action.</p></article>
+        <div class="launch-priority-strip" aria-label="Seller launch-readiness strategy">
+          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span>Position</span><p>Connect the offer to customer value.</p></article>
+          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>Recognize Fit</span><p>Read customer cues and fit signals.</p></article>
+          <article><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span>Act</span><p>Choose the next-best seller action.</p></article>
         </div>
       </div>
 
       <div class="micro-choice-shell launch-choice-shell">
-        <div class="micro-choice-nav launch-choice-nav" role="tablist" aria-label="Launch deliverables">
-          <button class="micro-choice-btn active" type="button" role="tab" aria-selected="true" data-micro-choice="overview"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span><strong>Rise overview</strong><small>Fast product orientation</small></span></button>
-          <button class="micro-choice-btn" type="button" role="tab" aria-selected="false" data-micro-choice="practice"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span><strong>Storyline practice</strong><small>Customer-fit decisions</small></span></button>
+        <div class="micro-choice-nav launch-choice-nav" role="tablist" aria-label="Seller launch strategy">
+          <button class="micro-choice-btn active" type="button" role="tab" aria-selected="true" data-micro-choice="position"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><strong>Position value</strong><small>Explain why it matters</small></span></button>
+          <button class="micro-choice-btn" type="button" role="tab" aria-selected="false" data-micro-choice="fit"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span><strong>Recognize fit</strong><small>Read customer cues</small></span></button>
+          <button class="micro-choice-btn" type="button" role="tab" aria-selected="false" data-micro-choice="action"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><span><strong>Choose next action</strong><small>Apply the positioning</small></span></button>
         </div>
         <div class="micro-choice-panel launch-choice-panel" role="tabpanel" aria-live="polite">
-          <p class="eyebrow" id="choiceLabel">Launch asset 1</p>
-          <h3 id="choiceTitle">Rise for fast product orientation.</h3>
-          <p id="choiceSummary">Sellers needed a concise reference they could use before customer conversations: what the offer is, the customer problem it addresses, where it fits, and where to find approved resources.</p>
+          <p class="eyebrow" id="choiceLabel">Seller task 1 · Position</p>
+          <h3 id="choiceTitle">Connect the product to a clear customer value story.</h3>
+          <p id="choiceSummary">The launch strategy started with the conversation sellers needed to have: explain what the offer solves, who it is for, and why the customer should care without drifting into implementation detail.</p>
           <div class="micro-panel-grid" id="choiceCards">
-            <article class="micro-panel-card"><span>Seller need</span><p>Explain the offer clearly</p></article>
-            <article class="micro-panel-card"><span>Content focus</span><p>Problem, value, fit, resources</p></article>
-            <article class="micro-panel-card"><span>Design choice</span><p>Short, modular, easy to update</p></article>
+            <article class="micro-panel-card"><span>Seller question</span><p>What problem does this solve?</p></article>
+            <article class="micro-panel-card"><span>Positioning focus</span><p>Customer value + approved messaging</p></article>
+            <article class="micro-panel-card"><span>Learning move</span><p>Build a concise launch-readiness foundation</p></article>
           </div>
         </div>
       </div>
@@ -224,7 +231,7 @@
   <section class="section flagship-section product-launch-outcome" id="outcome">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span><p class="eyebrow">Design Outcome</p></div>
-      <div class="launch-demo-heading">
+      <div class="launch-outcome-heading">
         <div>
           <h2>A compact launch package, not a product encyclopedia.</h2>
           <p class="short-copy">The design concentrated on the decisions sellers needed to make and kept the learning modular enough to review and maintain as launch guidance changed.</p>
@@ -253,27 +260,6 @@
     </div>
   </section>
 
-  <section class="section flagship-section product-launch-related" id="related">
-    <div class="container">
-      <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Related Work</p></div>
-      <h2>Related sales-enablement projects</h2>
-      <div class="related-grid">
-        <a class="related-card" href="../vertical-positioning-microlearning/index.html"><span class="related-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><div><h3>Vertical-Positioning Microlearning</h3><p>One learning architecture adapted to different industry contexts, with scenario practice and selective multimedia.</p></div></a>
-        <a class="related-card" href="../../complete-learning-paths/enterprise-sales-certification/index.html"><span class="related-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><div><h3>Ericsson Cellular Networking Sales Certification</h3><p>A larger certification system with curriculum, assessment, LMS delivery, reporting support, and maintenance.</p></div></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="explore-strip">
-    <div class="container">
-      <div class="explore-strip-head"><div><p class="eyebrow">Keep Exploring</p><h2>More instructional design work</h2></div></div>
-      <div class="explore-grid">
-        <a class="explore-card" href="../index.html"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><span>Microlearning &amp; Performance Support</span></a>
-        <a class="explore-card" href="../../interactive-learning/index.html"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><span>Interactive Learning</span></a>
-        <a class="explore-card" href="../../index.html"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><span>Instructional Design</span></a>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
