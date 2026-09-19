@@ -2349,3 +2349,18 @@
 @media(prefers-reduced-motion:reduce){
   .overview-motion-boundary span:nth-of-type(2){animation:none!important}
 }
+
+
+/* Final light Content tab contrast */
+.cert-authoring-section .authoring-tool-tab small{
+  color:#5d7e72!important;
+}
+.cert-authoring-section .authoring-tool-tab strong{
+  color:#29453d!important;
+}
+.cert-authoring-section .authoring-tool-tab.active small{
+  color:#4d806f!important;
+}
+.cert-authoring-section .authoring-tool-tab.active strong{
+  color:#213b34!important;
+}
