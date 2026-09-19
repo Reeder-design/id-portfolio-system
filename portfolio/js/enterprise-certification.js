@@ -7,7 +7,7 @@
       motion: `
         <span><img src="../../../../assets/icons/pixel/lms/mini-document.webp" alt=""><small>Source</small></span>
         <i></i>
-        <span><img src="../../../../assets/icons/pixel/lms/mini-filter.webp" alt=""><small>Scope</small></span>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""><small>Scope</small></span>
         <i></i>
         <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Seller decision</small></span>`
     },
