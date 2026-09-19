@@ -45,8 +45,11 @@
         .id-project-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
         .id-project-card{position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid rgba(80,132,132,.17);border-radius:20px;background:#fff;color:#30473f;text-decoration:none;box-shadow:0 12px 30px rgba(43,72,64,.07);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
         .id-project-card:hover,.id-project-card:focus-visible{transform:translateY(-5px);border-color:rgba(121,201,158,.62);box-shadow:0 20px 42px rgba(43,72,64,.12);outline:none}
-        .id-project-visual{height:128px;display:grid;place-items:center;padding:11px;background:radial-gradient(circle at 78% 16%,rgba(151,219,79,.13),transparent 27%),linear-gradient(145deg,#eaf4ee,#f8faf7);border-bottom:1px solid rgba(80,132,132,.1)}
-        .id-project-visual img{display:block;width:100%;height:100%;margin:auto;object-fit:contain;object-position:center center;transition:transform .2s ease}
+        .id-project-visual{height:136px;display:flex;align-items:center;justify-content:center;padding:14px;background:radial-gradient(circle at 78% 16%,rgba(151,219,79,.13),transparent 27%),linear-gradient(145deg,#eaf4ee,#f8faf7);border-bottom:1px solid rgba(80,132,132,.1)}
+        .id-project-visual img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;margin:auto;object-fit:contain;object-position:50% 50%;transform-origin:center;transition:transform .2s ease}
+        .id-project-card[href*="complete-learning-paths"] .id-project-visual img,
+        .id-project-card[href*="live-training"] .id-project-visual img,
+        .id-project-card[href*="multimedia"] .id-project-visual img{max-width:92%;max-height:92%}
         .id-project-card:hover .id-project-visual img{transform:translateY(-3px) scale(1.025)}
         .id-project-copy{display:flex;flex-direction:column;flex:1;padding:14px 15px 15px}
         .id-project-copy .eyebrow{margin-bottom:4px;color:#4a796e!important;font-size:.57rem}
@@ -122,28 +125,26 @@
         .id-ecosystem-section h2{color:#fff}
         .id-ecosystem-section .refresh-section-intro>p:last-child{color:#cfddd6;max-width:780px}
         .id-ecosystem-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-        .id-ecosystem-card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:430px;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:#10262d;color:#fff;text-decoration:none;box-shadow:0 16px 38px rgba(4,18,20,.16);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+        .id-ecosystem-card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:410px;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:#10262d;color:#fff;text-decoration:none;box-shadow:0 16px 38px rgba(4,18,20,.16);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
         .id-ecosystem-card:hover,.id-ecosystem-card:focus-visible{transform:translateY(-6px);border-color:rgba(151,219,79,.4);box-shadow:0 24px 50px rgba(4,18,20,.24);outline:none}
-        .id-ecosystem-visual{position:relative;display:grid;place-items:center;height:270px;padding:18px;background:radial-gradient(circle at 78% 18%,rgba(151,219,79,.13),transparent 30%),linear-gradient(145deg,#e8f2ec,#f9fbf7);border-bottom:1px solid rgba(255,255,255,.08)}
+        .id-ecosystem-visual{position:relative;display:grid;place-items:center;height:285px;padding:16px;background:radial-gradient(circle at 78% 18%,rgba(151,219,79,.13),transparent 30%),linear-gradient(145deg,#e8f2ec,#f9fbf7);border-bottom:1px solid rgba(255,255,255,.08)}
         .id-ecosystem-visual::after{content:"";position:absolute;inset:auto 18px 14px;height:2px;border-radius:999px;background:linear-gradient(90deg,#508484,#79c99e,#97db4f);opacity:.55}
         .id-ecosystem-visual img{display:block;width:94%;height:94%;margin:auto;object-fit:contain;object-position:center;filter:drop-shadow(0 14px 22px rgba(25,54,48,.14));transition:transform .2s ease}
         .id-ecosystem-card:hover .id-ecosystem-visual img{transform:translateY(-4px) scale(1.025)}
-        .id-ecosystem-copy{display:flex;flex-direction:column;flex:1;padding:15px 17px 17px}
+        .id-ecosystem-copy{display:flex;flex-direction:column;flex:1;padding:13px 15px 15px}
         .id-ecosystem-copy .eyebrow{margin-bottom:3px;font-size:.56rem}
         .id-ecosystem-copy h3{margin:0 0 5px;color:#fff;font-size:1rem}
         .id-ecosystem-copy p{margin:0 0 10px;color:#cbd9d2;font-size:.71rem;line-height:1.45}
         .id-ecosystem-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
         .id-ecosystem-tags span{padding:4px 7px;border:1px solid rgba(121,201,158,.18);border-radius:999px;background:rgba(121,201,158,.07);color:#d9eee1;font-size:.55rem;font-weight:800}
-        .id-ecosystem-copy strong{margin-top:auto;color:#bff0cf;font:800 .67rem/1.3 var(--font-heading)}
-        .id-ecosystem-track{display:flex;align-items:center;gap:9px;margin:0 0 14px;color:#b8e9c9;font:800 .64rem/1.2 var(--font-heading);letter-spacing:.03em}
-        .id-ecosystem-track span{width:7px;height:7px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.06)}
-        .id-ecosystem-track i{flex:0 1 72px;height:1px;background:linear-gradient(90deg,#79c99e,rgba(121,201,158,.1))}
+        .id-ecosystem-copy strong{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;padding:7px 10px;border:1px solid rgba(121,201,158,.2);border-radius:999px;background:rgba(121,201,158,.08);color:#c9f1d6;font:800 .64rem/1.2 var(--font-heading);transition:background .18s ease,border-color .18s ease}
+        .id-ecosystem-card:hover .id-ecosystem-copy strong{background:rgba(151,219,79,.13);border-color:rgba(151,219,79,.34)}
 
         @media(max-width:1050px){.id-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
         @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-grid{grid-template-columns:1fr 1fr}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
         @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-ecosystem-grid{grid-template-columns:1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}}
         @media(max-width:520px){body.id-landing .section{padding-block:30px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
-        @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process::after{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}}
+        @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
     </style>
     <script defer src="../../js/portfolio-motion.js"></script>
 </head>
@@ -272,7 +273,6 @@
           <h2>Instructional design is one part of the learning system.</h2>
           <p>These portfolio sections show the platform, quality, and systems work I do around the learning itself. Each section is a complete view of that capability, not a side note to the course work.</p>
         </div>
-        <div class="id-ecosystem-track" aria-hidden="true"><span></span><b>Design</b><i></i><span></span><b>Deliver + Operate</b><i></i><span></span><b>Evaluate + Improve</b></div>
         <div class="id-ecosystem-grid">
           <a class="id-ecosystem-card" href="../ai-training-and-evaluation/index.html">
             <div class="id-ecosystem-visual"><img src="../../assets/project-images/main-pages/ai-training-evaluation.webp" alt="Pixel-art illustration representing AI training and evaluation."></div>
