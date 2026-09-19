@@ -8,6 +8,7 @@ from hiring_guide_public_sync import (
     apply_proposal,
     build_proposal,
     load_proposal,
+    save_mapping_override,
     test_routing,
 )
 from hiring_guide_service import (
@@ -270,6 +271,27 @@ def generate_public_sync():
         "success",
     )
     return redirect(url_for("hiring_guide.public_sync"), code=303)
+
+
+@hiring_guide_bp.post("/public-sync/mapping")
+def save_public_mapping():
+    private_id = request.form.get("private_id", "").strip()
+    mode = request.form.get("mode", "").strip()
+    public_id = request.form.get("public_id", "").strip()
+    try:
+        save_mapping_override(private_id, mode, public_id)
+        proposal = build_proposal()
+    except (HiringGuideLibraryError, HiringGuidePublicSyncError) as exc:
+        flash(str(exc), "error")
+    else:
+        remaining = proposal["summary"]["mapping_review_required"]
+        if mode == "match":
+            flash(f"Saved mapping for {private_id} → {public_id}. {remaining} mapping review(s) remain.", "success")
+        elif mode == "new":
+            flash(f"Confirmed {private_id} as a separate new public question. {remaining} mapping review(s) remain.", "success")
+        else:
+            flash(f"Returned {private_id} to automatic matching. {remaining} mapping review(s) remain.", "success")
+    return redirect(url_for("hiring_guide.public_sync", focus=private_id), code=303)
 
 
 @hiring_guide_bp.post("/public-sync/test-routing")
