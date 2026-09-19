@@ -161,6 +161,11 @@ def main() -> int:
         require(marker not in controller, f"Canonical Hiring Manager controller still contains legacy layered behavior {marker!r}.", errors)
 
     require("['hiring-manager', 'Ask Haley']" in motion, "Canonical breadcrumbs must label the Hiring Manager route as Ask Haley.", errors)
+    require("data-hm-evidence-drawer" in page, "Hiring Manager page must include the evidence preview drawer.", errors)
+    require("sessionStorage" in controller, "Hiring Manager controller must preserve chat state in sessionStorage.", errors)
+    require("data-hm-expand-key" in controller, "Quick Scan chips must support expand/collapse behavior.", errors)
+    require("openEvidencePreview" in controller and "bindEvidenceCards" in controller, "Evidence cards must open the preview drawer before navigation.", errors)
+    require("ask-haley-session-v1" in motion and "ask-haley-return-dock" in motion, "Project pages must provide the Ask Haley return dock for evidence navigation.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
