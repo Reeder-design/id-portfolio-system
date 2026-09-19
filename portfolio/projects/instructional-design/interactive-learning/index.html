@@ -601,7 +601,12 @@
       .interaction-flow-link i,.learning-flow-step i,.learner-ai-feature-node i{animation:none!important}
       .interactive-example,.example-art img,.example-arrow,.learning-flow-step,.learning-flow-icon,.learner-ai-feature-link{transition:none}
     }
-  </style>
+  
+    .interaction-method-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
+    .interaction-method-map span{display:grid;gap:3px;padding:10px 12px;border:1px solid rgba(80,132,132,.13);border-radius:13px;background:#f7faf8}
+    .interaction-method-map b{color:#315755;font:800 .7rem/1.15 var(--font-heading)}.interaction-method-map small{color:#66766f;font:.62rem/1.25 var(--font-body)}
+    @media(max-width:700px){.interaction-method-map{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
   <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
 <body class="interactive-landing">
@@ -650,10 +655,16 @@
       <div class="interaction-approach-shell">
         <div class="interaction-approach-copy">
           <div>
-            <p class="eyebrow">Interaction Design Approach</p>
-            <h2>I use interactions to make learning active, clearer, and more memorable.</h2>
+            <p class="eyebrow">Interaction Design Methodology</p>
+            <h2>The interaction type follows the learning need.</h2>
           </div>
-          <p>The goal is not to add clicks. I use interactions when learner action can increase engagement, create useful practice, reinforce feedback, and help important decisions stick beyond the screen.</p>
+          <p>I start with the behavior the learner needs to practice. Recognition may call for sorting or classification. Comparison may need side-by-side evidence. Judgment may need a scenario. A complex response may need custom state, scoring, or model-backed feedback. The method comes before the mechanic.</p>
+        </div>
+        <div class="interaction-method-map" aria-label="Learning needs mapped to interaction approaches">
+          <span><b>Recognize</b><small>Sort + classify</small></span>
+          <span><b>Compare</b><small>Reveal + inspect</small></span>
+          <span><b>Decide</b><small>Scenario + consequence</small></span>
+          <span><b>Practice</b><small>Respond + feedback</small></span>
         </div>
 
         <div class="interaction-learning-flow" role="tablist" aria-label="Interactive learning design flow">
@@ -722,23 +733,6 @@
           <span class="example-arrow" aria-hidden="true">→</span>
         </a>
 
-      </div>
-    </div>
-  </section>
-
-  <section class="section learner-ai-feature">
-    <div class="container learner-ai-feature-grid">
-      <div class="learner-ai-feature-copy">
-        <p class="eyebrow">Spotlight / Emerging Learning Technology</p>
-        <h2>Learner-facing AI is becoming another interaction layer in my work.</h2>
-        <p>I am exploring how guided AI conversations, responsive assessment feedback, and adaptive learner interactions can extend practice without turning the experience into an unbounded chatbot. The design still starts with the learner task, useful constraints, and a clear human role.</p>
-        <div class="learner-ai-feature-tags"><span>Guided Chat</span><span>AI-assisted Feedback</span><span>Adaptive Practice</span><span>Human Review</span></div>
-        <a class="learner-ai-feature-link" href="./ai-integrations-in-learning/index.html">Explore Learner-facing AI <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="learner-ai-feature-visual" aria-label="Animated learner-facing AI integration visual">
-        <span class="learner-ai-feature-node"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="" aria-hidden="true"><i aria-hidden="true"></i></span>
-        <span class="learner-ai-feature-node"><img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true"><i aria-hidden="true"></i></span>
-        <span class="learner-ai-feature-node"><img src="../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="" aria-hidden="true"><i aria-hidden="true"></i></span>
       </div>
     </div>
   </section>

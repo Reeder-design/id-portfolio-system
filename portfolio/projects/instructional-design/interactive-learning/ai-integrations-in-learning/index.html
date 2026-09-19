@@ -16,18 +16,27 @@
   <link rel="stylesheet" href="../../../../css/ai-learning-integrations.css">
   <script defer src="../../../../js/portfolio-motion.js"></script>
   <script defer src="../../../../js/ai-learning-integrations.js"></script>
+
+  <style>
+    .ai-growth-section{background:linear-gradient(145deg,#f8faf7,#edf5f0)!important;border-bottom:1px solid rgba(80,132,132,.09)}
+    .ai-growth-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+    .ai-growth-grid article{display:grid;justify-items:center;align-content:start;min-height:190px;padding:14px;border:1px solid rgba(80,132,132,.14);border-radius:17px;background:#fff;text-align:center;box-shadow:0 10px 24px rgba(44,72,65,.06)}
+    .ai-growth-grid img{width:78px;height:78px;object-fit:contain;image-rendering:pixelated}.ai-growth-grid strong{margin-top:7px;color:#315755;font:800 .74rem/1.2 var(--font-heading)}
+    .ai-growth-grid span{margin-top:5px;color:#63736c;font-size:.67rem;line-height:1.42}
+    @media(max-width:820px){.ai-growth-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.ai-growth-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body class="ai-learning-page">
   <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../../index.html">Home</a><a href="../../../../about/index.html">About Me</a><a class="active" href="../../../index.html">Projects</a><a href="../../../../contact/index.html">Contact</a></nav></div></header>
   <main>
     <section class="page-hero ai-learning-hero">
       <div class="container">
-        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><a href="../index.html">Interactive Learning</a><span class="breadcrumb-separator">/</span><span>Learner-facing AI</span></nav>
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Learner-facing AI</span></nav>
         <div class="ai-learning-hero-grid">
           <div class="ai-learning-hero-copy">
             <h1>Learner-facing AI</h1>
-            <p class="body-large">I design learner-facing AI features that make content more responsive: guided conversations, assessment feedback, and adaptive practice that reacts to a learner’s choices. The experience is built around the task the learner is trying to perform, not the novelty of the technology.</p>
-            <div class="ai-chip-row"><span class="ai-chip">AI Chatbots</span><span class="ai-chip">Assisted Assessment</span><span class="ai-chip">Adaptive Practice</span><span class="ai-chip">Human Review</span></div>
+            <p class="body-large">I have grown my L&amp;D practice by learning AI beyond surface-level prompting. I design and maintain model-backed learning experiences, structure the instructions and context they rely on, test their behavior, and build QA and evaluation workflows around the outputs so the technology stays useful, bounded, and accountable to the learner task.</p>
+            <div class="ai-chip-row"><span class="ai-chip">Model-backed Learning</span><span class="ai-chip">System Instructions</span><span class="ai-chip">QA Workflows</span><span class="ai-chip">Expert Evaluation</span></div>
           </div>
           <aside class="ai-learning-hero-visual" aria-label="Animated learner-facing AI capability visual">
             <span class="ai-learning-core"><img src="../../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="Pixel-art human and AI learning visual."></span>
@@ -42,6 +51,8 @@
         </div>
       </div>
     </section>
+
+    <section class="section ai-growth-section"><div class="container"><div class="ai-intro"><p class="eyebrow">How my AI practice has grown</p><h2>From asking a model for help to designing the system around the model.</h2><p>I use AI as part of an instructional system: define the learner job, constrain behavior, provide context, test edge cases, evaluate outputs, and maintain the experience as the content or model changes.</p></div><div class="ai-growth-grid"><article><img src="../../../../assets/icons/pixel/ai-integrations/ideate.webp" alt=""><strong>Use deliberately</strong><span>Choose AI only when responsiveness adds instructional value.</span></article><article><img src="../../../../assets/icons/pixel/ai-integrations/build.webp" alt=""><strong>Build the behavior</strong><span>Design instructions, context, states, constraints, and fallbacks.</span></article><article><img src="../../../../assets/icons/pixel/ai-integrations/evaluate.webp" alt=""><strong>Evaluate deeply</strong><span>Test correctness, relevance, reasoning, safety, and learner impact.</span></article><article><img src="../../../../assets/icons/pixel/ai-integrations/iterate.webp" alt=""><strong>Maintain + refine</strong><span>Update context, test cases, evaluation rules, and human review paths.</span></article></div></div></section>
 
     <section class="section ai-scenario-section"><div class="container"><div class="ai-intro"><p class="eyebrow">Design the learning</p><h2>Use an AI customer to make discovery practice responsive.</h2><p>The learner is not choosing a branch; they are having a conversation. A well-designed AI customer can reveal a pain point, respond to a useful question, and help the learner see which next move earns better discovery.</p></div><div class="ai-scenario-lab"><div class="ai-scenario-tabs" role="tablist" aria-label="AI customer discovery practice"><button class="ai-scenario-tab active" type="button" data-ai-scenario="signal" role="tab" aria-selected="true"><span>01</span><strong>Hear the signal</strong></button><button class="ai-scenario-tab" type="button" data-ai-scenario="probe" role="tab" aria-selected="false"><span>02</span><strong>Probe for pain</strong></button><button class="ai-scenario-tab" type="button" data-ai-scenario="coach" role="tab" aria-selected="false"><span>03</span><strong>Coach the next move</strong></button></div><div class="ai-scenario-panel" data-ai-scenario-panel><div class="ai-customer-header"><div class="ai-customer-avatar">AC</div><div><p>AI customer</p><h3>Jordan · Operations lead</h3></div><span class="ai-customer-live">In conversation</span></div><div class="ai-customer-chat"><div class="ai-customer-message"><p>“We have tried to reduce handoffs, but the team still loses time every day.”</p></div><div class="ai-learner-message"><span>What is the biggest source of delay?</span></div></div><div class="ai-discovery-map"><div><i></i><strong>Customer cue</strong><span>Repeated handoffs</span></div><div><i></i><strong>What to uncover</strong><span>Where work slows</span></div><div><i></i><strong>Why it matters</strong><span>Impact on the team</span></div></div></div></div></div></section>
 
