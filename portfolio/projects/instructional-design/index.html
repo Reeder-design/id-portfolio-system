@@ -51,18 +51,29 @@
         .id-project-card[href*="live-training"] .id-project-visual img,
         .id-project-card[href*="multimedia"] .id-project-visual img{max-width:92%;max-height:92%}
         .id-project-visual img.id-project-icon{
-          width:88px;
-          height:88px;
-          max-width:88px!important;
-          max-height:88px!important;
+          width:104px;
+          height:104px;
+          max-width:104px!important;
+          max-height:104px!important;
           object-fit:contain;
           filter:drop-shadow(0 9px 16px rgba(43,72,64,.12));
         }
-        .id-project-card[href*="interactive-learning"] .id-project-visual img.id-project-icon{
-          width:108px;
-          height:108px;
-          max-width:108px!important;
-          max-height:108px!important;
+        .id-project-card[href="./interactive-learning/index.html"] .id-project-visual{
+          overflow:hidden;
+        }
+        .id-project-card[href="./interactive-learning/index.html"] .id-project-visual img.id-project-icon{
+          width:146px;
+          height:104px;
+          max-width:146px!important;
+          max-height:104px!important;
+          object-fit:cover;
+          object-position:22% center;
+        }
+        .id-project-card[href*="ai-integrations-in-learning"] .id-project-visual img.id-project-icon{
+          width:112px;
+          height:112px;
+          max-width:112px!important;
+          max-height:112px!important;
         }
         .id-project-card:hover .id-project-visual img{transform:translateY(-3px) scale(1.025)}
         .id-project-copy{display:flex;flex-direction:column;flex:1;padding:14px 15px 15px}

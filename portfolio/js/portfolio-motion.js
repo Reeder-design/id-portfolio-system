@@ -92,6 +92,9 @@
       'projects/instructional-design/interactive-learning',
       'projects/instructional-design/live-training',
       'projects/instructional-design/microlearning-performance-support',
+      'projects/instructional-design/microlearning-performance-support/microlearning',
+      'projects/instructional-design/microlearning-performance-support/performance-support',
+      'projects/instructional-design/interactive-learning/ai-integrations-in-learning',
       'projects/instructional-design/multimedia'
     ]);
     const demos = new Set([
@@ -302,6 +305,9 @@
     ['projects/instructional-design/interactive-learning', 'Interactive Learning'],
     ['projects/instructional-design/live-training', 'Live Training'],
     ['projects/instructional-design/microlearning-performance-support', 'Microlearning & Performance Support'],
+    ['projects/instructional-design/microlearning-performance-support/microlearning', 'Microlearning'],
+    ['projects/instructional-design/microlearning-performance-support/performance-support', 'Performance Support'],
+    ['projects/instructional-design/interactive-learning/ai-integrations-in-learning', 'Learner-facing AI'],
     ['projects/instructional-design/multimedia', 'Multimedia'],
     ['projects/ai-training-and-evaluation', 'AI Training & Evaluation'],
     ['projects/lms-administration', 'LMS Administration & System Operations'],
@@ -318,7 +324,16 @@
 
     const h1 = document.querySelector('main h1, .page-hero h1, h1');
     const currentLabel = h1 ? h1.textContent.trim() : document.title.split('|')[0].trim();
-    const ancestors = BREADCRUMB_ROUTES.filter(([route]) => relativePath === route || relativePath.startsWith(`${route}/`));
+    let ancestors = BREADCRUMB_ROUTES.filter(([route]) => relativePath === route || relativePath.startsWith(`${route}/`));
+    const breadcrumbParentSkips = new Set();
+    if (relativePath === 'projects/instructional-design/microlearning-performance-support/microlearning' ||
+        relativePath === 'projects/instructional-design/microlearning-performance-support/performance-support') {
+      breadcrumbParentSkips.add('projects/instructional-design/microlearning-performance-support');
+    }
+    if (relativePath === 'projects/instructional-design/interactive-learning/ai-integrations-in-learning') {
+      breadcrumbParentSkips.add('projects/instructional-design/interactive-learning');
+    }
+    ancestors = ancestors.filter(([route]) => !breadcrumbParentSkips.has(route));
     const exact = ancestors.find(([route]) => route === relativePath);
 
     const items = [{ label: 'Home', href: new URL('index.html', portfolioRoot).href }];

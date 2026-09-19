@@ -251,8 +251,8 @@
     .learning-flow-icon{
       display:grid;
       place-items:center;
-      width:98px;
-      height:98px;
+      width:112px;
+      height:112px;
       border:1px solid rgba(80,132,132,.1);
       border-radius:18px;
       background:#f5f9f6;
@@ -261,9 +261,12 @@
     }
     .learning-flow-icon img{
       display:block;
-      width:82px;
-      height:82px;
+      width:96px;
+      height:96px;
+      max-width:96px;
+      max-height:96px;
       object-fit:contain;
+      object-position:center;
     }
     .learning-flow-step strong{
       display:block;
@@ -606,6 +609,13 @@
     .interaction-method-map span{display:grid;gap:3px;padding:10px 12px;border:1px solid rgba(80,132,132,.13);border-radius:13px;background:#f7faf8}
     .interaction-method-map b{color:#315755;font:800 .7rem/1.15 var(--font-heading)}.interaction-method-map small{color:#66766f;font:.62rem/1.25 var(--font-body)}
     @media(max-width:700px){.interaction-method-map{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+    .interactive-examples .interactive-example .example-arrow,
+    .interactive-examples .example-pursuit .example-arrow{
+      background:#315755!important;
+      color:#fff!important;
+      box-shadow:0 0 0 5px rgba(49,87,85,.08)!important;
+    }
 </style>
   <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
@@ -634,12 +644,12 @@
             <small>Give the learner a useful problem.</small>
           </div>
           <div class="interaction-flow-card action">
-            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="" aria-hidden="true"></span>
+            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/performance-support/decide.webp" alt="" aria-hidden="true"></span>
             <strong>Learner action</strong>
             <small>Choose, match, score, or respond.</small>
           </div>
           <div class="interaction-flow-card feedback">
-            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true"></span>
+            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt="" aria-hidden="true"></span>
             <strong>Feedback</strong>
             <small>Reinforce the reasoning and next move.</small>
           </div>
@@ -687,7 +697,7 @@
             <i aria-hidden="true"></i>
           </button>
           <button class="learning-flow-step" type="button" role="tab" aria-selected="false" data-learning-step="apply">
-            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/pursuit-determination/action-plan.webp" alt="" aria-hidden="true"></span>
+            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/microlearning-performance-support/real-world-application.webp" alt="" aria-hidden="true"></span>
             <strong>Apply</strong>
             <small>Carry the judgment into the next scenario or real task.</small>
             <i aria-hidden="true"></i>

@@ -65,3 +65,19 @@
 @keyframes micro-method-outline-travel{to{stroke-dashoffset:-100}}
 
 .micro-overview-page .breadcrumbs{grid-column:1/-1;margin-bottom:-8px}.micro-overview-page .breadcrumbs,.micro-overview-page .breadcrumbs a{color:#91a09a}.micro-back-section{padding:28px 0;background:#edf4ef;text-align:center}.micro-back-section .btn{background:#173b3e;color:#fff}
+
+/* Closeout: keep Microlearning as a Strategy stable while tabs change. */
+@media (min-width: 861px){
+  .micro-structure-screen{
+    box-sizing:border-box!important;
+    min-height:315px!important;
+    padding:29px 132px 27px 29px!important;
+  }
+}
+@media (max-width: 860px){
+  .micro-structure-screen{
+    box-sizing:border-box!important;
+    min-height:355px!important;
+    padding:24px 24px 165px!important;
+  }
+}
