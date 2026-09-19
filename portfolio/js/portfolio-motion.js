@@ -293,6 +293,7 @@
   };
 
   const BREADCRUMB_ROUTES = [
+    ['hiring-manager', 'Ask Haley'],
     ['about', 'About Me'],
     ['contact', 'Contact'],
     ['projects', 'Projects'],

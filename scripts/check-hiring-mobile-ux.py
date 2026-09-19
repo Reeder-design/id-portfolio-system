@@ -7,6 +7,7 @@ PAGE = ROOT / "portfolio" / "hiring-manager" / "index.html"
 HOME = ROOT / "portfolio" / "index.html"
 CSS = ROOT / "portfolio" / "css" / "hiring-manager.css"
 CONTROLLER = ROOT / "portfolio" / "js" / "hiring-manager.js"
+MOTION = ROOT / "portfolio" / "js" / "portfolio-motion.js"
 SHARED_CSS = ROOT / "portfolio" / "css" / "phase21-visual-consistency.css"
 SEO_BUILDER = ROOT / "scripts" / "build-seo.py"
 
@@ -31,7 +32,7 @@ def require(condition: bool, message: str, errors: list[str]) -> None:
 def main() -> int:
     errors: list[str] = []
 
-    for path in [PAGE, HOME, CSS, CONTROLLER, SHARED_CSS, SEO_BUILDER]:
+    for path in [PAGE, HOME, CSS, CONTROLLER, MOTION, SHARED_CSS, SEO_BUILDER]:
         require(path.exists(), f"Missing required Hiring Manager UX file: {path.relative_to(ROOT)}", errors)
 
     for path in LEGACY_RUNTIME:
@@ -45,6 +46,7 @@ def main() -> int:
     page = PAGE.read_text(encoding="utf-8")
     css = CSS.read_text(encoding="utf-8")
     controller = CONTROLLER.read_text(encoding="utf-8")
+    motion = MOTION.read_text(encoding="utf-8")
     home = HOME.read_text(encoding="utf-8")
     shared_css = SHARED_CSS.read_text(encoding="utf-8")
     seo_builder = SEO_BUILDER.read_text(encoding="utf-8")
@@ -52,53 +54,69 @@ def main() -> int:
     require('href="../css/hiring-manager.css"' in page, "Hiring Manager page must load the single canonical Hiring Manager stylesheet.", errors)
     require('src="../js/hiring-manager.js"' in page, "Hiring Manager page must load the single canonical Hiring Manager controller.", errors)
     require("hiring-manager-v" not in page, "Hiring Manager page must not load version-stacked CSS or JavaScript.", errors)
-    require("hiring-manager-nav.css" not in page, "Hiring Manager page must not load the retired navigation override.", errors)
 
     page_markers = [
-        "Hiring manager guide",
+        "Interactive portfolio chat",
         "Ask me what you would ask in the interview.",
-        "hm-interview-scene",
-        "conversation-man-laptop.webp",
-        "conversation-woman-laptop.webp",
+        '<span aria-current="page">Ask Haley</span>',
+        "hm-transfer-scene",
+        "hm-transfer-track",
+        "person-man.webp",
+        "person-woman.webp",
+        "Question → curated answer → portfolio evidence.",
+        "What this chat helps you evaluate",
+        "This is not a chatbot demo.",
         'id="ask-haley"',
-        "Browse Question Library",
+        "Ask your own question, use a quick starter, or browse the Question Library.",
+        "Not live AI generation",
         "data-hm-library",
         "data-hm-topic-list",
         "data-hm-prompt-panel",
-        "data-hm-chat-log",
-        "data-hm-form",
-        "this is not live generative AI",
+        "I wrote and reviewed the answer library myself.",
         'id="quick-scan"',
+        "Hiring manager quick scan",
+        "What I bring",
         "data-hm-capability-tabs",
         "data-hm-tool-tabs",
-        "Answers are useful. Proof is better.",
+        "Want the work behind the answers?",
     ]
     for marker in page_markers:
         require(marker in page, f"Hiring Manager page is missing required marker {marker!r}.", errors)
 
-    obsolete_markers = [
+    obsolete_page_markers = [
+        "Hiring manager guide",
+        "Start with the conversation, not the navigation.",
+        "What the guide is designed to show",
         "hm-signal-board",
         "hm-helper",
         "hm-mobile-chat-dock",
         "hm-specialist-drawer",
         "Portfolio Haley",
         "Interview mode",
+        "conversation-man-laptop.webp",
+        "conversation-woman-laptop.webp",
+        "dual-chat.webp",
     ]
-    for marker in obsolete_markers:
-        require(marker not in page, f"Hiring Manager page still contains retired interaction marker {marker!r}.", errors)
+    for marker in obsolete_page_markers:
+        require(marker not in page, f"Hiring Manager page still contains retired marker {marker!r}.", errors)
 
     css_markers = [
-        ".hm-hero-layout",
-        ".hm-interview-scene",
-        "image-rendering: pixelated;",
-        ".hm-chat-shell",
-        ".hm-library-drawer",
+        ".hm-hero .breadcrumbs",
+        "line-height: 1.01;",
+        ".hm-transfer-scene",
+        ".hm-transfer-line::after",
+        "hm-packet-route",
+        ".hm-evaluate-track",
+        ".hm-chat-explainer",
+        ".hm-not-ai",
         ".hm-library-workspace",
-        ".hm-topic-list",
-        ".hm-chat-log",
-        "overscroll-behavior: contain;",
-        ".hm-capability-layout",
-        ".hm-tool-layout",
+        "height: min(48vh, 390px);",
+        "min-height: 0;",
+        "overflow-y: auto;",
+        "-webkit-overflow-scrolling: touch;",
+        ".hm-tab-icon-bubble",
+        ".hm-scan-flow",
+        ".hm-next-grid",
         "@media (max-width: 700px)",
         "@media (max-width: 480px)",
         "@media (prefers-reduced-motion: reduce)",
@@ -120,7 +138,9 @@ def main() -> int:
         "const renderCapabilities =",
         "const renderTools =",
         "const setScanView =",
-        "this is not live generative AI" if False else "state.questions = [",
+        "visibleSkills",
+        "hm-tab-icon-bubble",
+        "hm-scan-flow",
         "question.specialist",
     ]
     for marker in controller_markers:
@@ -135,6 +155,8 @@ def main() -> int:
     ]
     for marker in forbidden_controller_markers:
         require(marker not in controller, f"Canonical Hiring Manager controller still contains legacy layered behavior {marker!r}.", errors)
+
+    require("['hiring-manager', 'Ask Haley']" in motion, "Canonical breadcrumbs must label the Hiring Manager route as Ask Haley.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
@@ -158,8 +180,10 @@ def main() -> int:
         return 1
 
     print(
-        "Hiring Manager UX validation passed: Ask Haley is the primary experience, the Question Library is integrated into the chat, "
-        "pixel interview assets are used throughout, Capabilities and Tools share one quick-scan workspace, and the page has one CSS owner plus one JavaScript owner."
+        "Hiring Manager UX validation passed: Ask Haley uses a short canonical breadcrumb, compact spacing, "
+        "animated question-to-evidence visual routing, a pre-chat evaluation section, explicit curated-not-live-AI framing, "
+        "a scrollable integrated Question Library, compact hiring-manager-focused Quick Scan, white icon bubbles, "
+        "and one CSS owner plus one JavaScript owner."
     )
     return 0
 

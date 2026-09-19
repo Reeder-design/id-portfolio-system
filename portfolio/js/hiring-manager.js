@@ -403,13 +403,27 @@
     if (!item || !elements.capabilityDetail) return;
     state.activeCapability = item.id;
     const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
+    const visibleSkills = (item.skills || []).slice(0, 5);
+    const remaining = Math.max(0, (item.skills || []).length - visibleSkills.length);
 
-    elements.capabilityDetail.innerHTML = `
-      <img class="hm-detail-icon" src="${pixelUrl(icon)}" alt="">
-      <p class="eyebrow">${escapeHtml(item.label)}</p>
-      <h3>${escapeHtml(item.headline)}</h3>
-      <p>${escapeHtml(item.proof)}</p>
-      <div class="hm-skill-cloud">${(item.skills || []).map((skill) => `<span>${escapeHtml(skill)}</span>`).join('')}</div>`;
+    elements.capabilityDetail.innerHTML = \`
+      <div class="hm-detail-top">
+        <span class="hm-icon-bubble"><img src="\${pixelUrl(icon)}" alt=""></span>
+        <div class="hm-detail-title">
+          <p class="eyebrow">\${escapeHtml(item.label)}</p>
+          <h3>\${escapeHtml(item.headline)}</h3>
+        </div>
+        <div class="hm-scan-flow" aria-hidden="true">
+          <span><img src="\${pixelUrl('target.webp')}" alt=""></span>
+          <span><img src="\${pixelUrl('checklist-document.webp')}" alt=""></span>
+          <span><img src="\${pixelUrl('workflow-tree.webp')}" alt=""></span>
+        </div>
+      </div>
+      <p>\${escapeHtml(item.proof)}</p>
+      <div class="hm-skill-cloud">
+        \${visibleSkills.map((skill) => \`<span>\${escapeHtml(skill)}</span>\`).join('')}
+        \${remaining ? \`<span class="hm-more-signal">+\${remaining} more in this area</span>\` : ''}
+      </div>\`;
 
     elements.capabilityTabs?.querySelectorAll('[data-hm-capability]').forEach((button) => {
       const active = button.dataset.hmCapability === item.id;
@@ -422,10 +436,10 @@
     if (!elements.capabilityTabs || !state.capabilities.length) return;
     elements.capabilityTabs.innerHTML = state.capabilities.map((item) => {
       const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
-      return `
-        <button type="button" role="tab" aria-selected="false" class="hm-capability-tab" data-hm-capability="${escapeHtml(item.id)}">
-          <img src="${pixelUrl(icon)}" alt=""><span>${escapeHtml(item.label)}</span>
-        </button>`;
+      return \`
+        <button type="button" role="tab" aria-selected="false" class="hm-capability-tab" data-hm-capability="\${escapeHtml(item.id)}">
+          <span class="hm-tab-icon-bubble"><img src="\${pixelUrl(icon)}" alt=""></span><span>\${escapeHtml(item.label)}</span>
+        </button>\`;
     }).join('');
 
     elements.capabilityTabs.querySelectorAll('[data-hm-capability]').forEach((button) => {
@@ -441,22 +455,26 @@
     state.activeTool = item.id;
     const index = Math.max(0, state.tools.findIndex((tool) => tool.id === item.id));
     const icon = TOOL_ICONS[index % TOOL_ICONS.length];
+    const handsOn = (item.hands_on || []).slice(0, 7);
+    const capabilities = (item.capabilities || []).slice(0, 6);
 
-    const groups = [];
-    if ((item.hands_on || []).length) groups.push(['Hands-on', item.hands_on]);
-    if ((item.familiarity || []).length) groups.push(['Familiarity', item.familiarity]);
-    if ((item.capabilities || []).length) groups.push(['Can use it for', item.capabilities]);
-
-    elements.toolDetail.innerHTML = `
-      <img class="hm-detail-icon" src="${pixelUrl(icon)}" alt="">
-      <p class="eyebrow">${escapeHtml(item.label)}</p>
-      <h3>${escapeHtml(item.summary)}</h3>
+    elements.toolDetail.innerHTML = \`
+      <div class="hm-detail-top">
+        <span class="hm-icon-bubble"><img src="\${pixelUrl(icon)}" alt=""></span>
+        <div class="hm-detail-title">
+          <p class="eyebrow">\${escapeHtml(item.label)}</p>
+          <h3>\${escapeHtml(item.summary)}</h3>
+        </div>
+        <div class="hm-scan-flow" aria-hidden="true">
+          <span><img src="\${pixelUrl('browser-conversation.webp')}" alt=""></span>
+          <span><img src="\${pixelUrl('analytics-growth.webp')}" alt=""></span>
+          <span><img src="\${pixelUrl('workflow-tree.webp')}" alt=""></span>
+        </div>
+      </div>
       <div class="hm-tool-groups">
-        ${groups.map(([label, values]) => `
-          <div class="hm-tool-section-label">${escapeHtml(label)}</div>
-          ${values.map((value) => `<span>${escapeHtml(value)}</span>`).join('')}
-        `).join('')}
-      </div>`;
+        \${handsOn.length ? \`<div class="hm-tool-section-label">Hands-on</div>\${handsOn.map((value) => \`<span>\${escapeHtml(value)}</span>\`).join('')}\` : ''}
+        \${capabilities.length ? \`<div class="hm-tool-section-label">What I use it for</div>\${capabilities.map((value) => \`<span>\${escapeHtml(value)}</span>\`).join('')}\` : ''}
+      </div>\`;
 
     elements.toolTabs?.querySelectorAll('[data-hm-tool]').forEach((button) => {
       const active = button.dataset.hmTool === item.id;
