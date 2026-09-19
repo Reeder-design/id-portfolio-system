@@ -435,3 +435,295 @@
         flex-direction: column;
     }
 }
+
+.hiring-sync-header {
+    background:
+        radial-gradient(circle at 84% 18%, rgba(151, 219, 79, 0.12), transparent 26%),
+        radial-gradient(circle at 14% 82%, rgba(121, 201, 158, 0.12), transparent 30%),
+        linear-gradient(135deg, rgba(72, 87, 81, 0.98), rgba(42, 54, 50, 0.98));
+}
+
+.hiring-sync-layout {
+    display: grid;
+    gap: 22px;
+}
+
+.hiring-sync-summary {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.hiring-sync-summary .sync-warning {
+    border-color: rgba(232, 197, 111, 0.35);
+    background: rgba(232, 197, 111, 0.08);
+}
+
+.hiring-sync-summary .sync-danger {
+    border-color: rgba(205, 138, 153, 0.42);
+    background: rgba(124, 73, 84, 0.18);
+}
+
+.sync-warning-card {
+    border-color: rgba(232, 197, 111, 0.3);
+    background:
+        radial-gradient(circle at top right, rgba(232, 197, 111, 0.08), transparent 36%),
+        rgba(62, 74, 70, 0.96);
+}
+
+.sync-warning-list {
+    display: grid;
+    gap: 8px;
+    max-height: 360px;
+    overflow: auto;
+    margin: 16px 0 0;
+    padding: 0 0 0 20px;
+    color: var(--text-soft);
+}
+
+.sync-table-wrap {
+    margin-top: 18px;
+    overflow-x: auto;
+    border: 1px solid rgba(232, 221, 199, 0.14);
+    border-radius: 14px;
+}
+
+.sync-table {
+    width: 100%;
+    min-width: 920px;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.sync-table th,
+.sync-table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(232, 221, 199, 0.1);
+    text-align: left;
+    vertical-align: top;
+}
+
+.sync-table th {
+    color: var(--dusty-mint);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.sync-result-pill {
+    display: inline-flex;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.sync-result-pill.matched {
+    color: #dff5e5;
+    background: rgba(121, 201, 158, 0.13);
+}
+
+.sync-result-pill.new {
+    color: #ece5f2;
+    background: rgba(184, 170, 195, 0.14);
+}
+
+.sync-diff-section + .sync-diff-section {
+    margin-top: 22px;
+}
+
+.sync-compact-list,
+.sync-change-list,
+.sync-routing-results {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.sync-compact-list article {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border: 1px solid rgba(232, 221, 199, 0.13);
+    border-radius: 12px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.sync-compact-list span,
+.sync-change-list small,
+.sync-routing-results small {
+    color: var(--muted-text);
+    font-size: 0.76rem;
+}
+
+.sync-change-list details {
+    border: 1px solid rgba(232, 221, 199, 0.14);
+    border-radius: 13px;
+    background: rgba(243, 240, 232, 0.05);
+    overflow: hidden;
+}
+
+.sync-change-list summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.sync-change-list summary::-webkit-details-marker {
+    display: none;
+}
+
+.sync-change-list summary > span:first-child {
+    display: grid;
+    gap: 4px;
+}
+
+.sync-before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 14px 16px 16px;
+    border-top: 1px solid rgba(232, 221, 199, 0.12);
+}
+
+.sync-before-after > div {
+    padding: 13px;
+    border-radius: 11px;
+    background: rgba(37, 47, 44, 0.36);
+}
+
+.sync-before-after p:not(.eyebrow) {
+    color: var(--text-soft);
+    line-height: 1.58;
+}
+
+.sync-removal-warning {
+    border-left-color: #cd8a99;
+}
+
+.sync-routing-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: end;
+    margin-top: 18px;
+}
+
+.sync-routing-form label {
+    margin: 0;
+}
+
+.sync-query {
+    display: grid;
+    gap: 4px;
+    padding: 11px 13px;
+    border-left: 4px solid var(--mint-leaf);
+    border-radius: 10px;
+    background: rgba(121, 201, 158, 0.07);
+}
+
+.sync-query span {
+    color: var(--muted-text);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.sync-routing-results article {
+    padding: 14px;
+    border: 1px solid rgba(232, 221, 199, 0.13);
+    border-radius: 13px;
+    background: rgba(243, 240, 232, 0.05);
+}
+
+.sync-routing-results article.top-match {
+    border-color: rgba(121, 201, 158, 0.42);
+    background: rgba(121, 201, 158, 0.07);
+}
+
+.sync-routing-results article > div:first-child {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.sync-score {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: var(--taupe);
+    background: var(--yellow-green);
+    font-weight: 800;
+}
+
+.sync-routing-results article p {
+    margin: 10px 0 0;
+    color: var(--text-soft);
+}
+
+.sync-answer-preview {
+    margin-top: 12px;
+    padding: 12px 13px;
+    border-radius: 10px;
+    color: var(--text-light);
+    background: rgba(37, 47, 44, 0.38);
+    line-height: 1.58;
+}
+
+.sync-apply-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: end;
+    margin-top: 18px;
+}
+
+.sync-apply-form label {
+    margin: 0;
+}
+
+.sync-applied-state {
+    display: grid;
+    gap: 3px;
+    margin-top: 16px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    color: #dff5e5;
+    background: rgba(121, 201, 158, 0.11);
+}
+
+.sync-applied-state span,
+.sync-applied-state small {
+    color: var(--text-soft);
+}
+
+@media (max-width: 1200px) {
+    .hiring-sync-summary {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 780px) {
+    .hiring-sync-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sync-before-after,
+    .sync-routing-form,
+    .sync-apply-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .hiring-sync-summary {
+        grid-template-columns: 1fr;
+    }
+}
