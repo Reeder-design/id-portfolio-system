@@ -93,7 +93,13 @@ def main() -> int:
         if certification:
             inferred = set(module.inferred_component_ids(certification))
             require("related-work-cards" in inferred, "Existing related_work should infer Related Work Cards.", errors)
-            require("project-snapshot" in inferred, "Generated project should infer Project Snapshot.", errors)
+            require("project-snapshot" not in inferred, "Custom/recovered pages must not be misclassified as standard generated pages.", errors)
+        try:
+            module.validate_component_refs({}, ["not-a-real-component"])
+        except module.ComponentRegistryError:
+            pass
+        else:
+            errors.append("Unknown component references must be rejected.")
     except Exception as exc:
         errors.append(f"Component Registry service smoke test failed: {exc}")
 
