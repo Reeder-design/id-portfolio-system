@@ -26,6 +26,7 @@ PUBLIC_SEARCH_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-search.json"
 SYNC_ROOT = HIRING_ROOT / "public-sync"
 PROPOSAL_PATH = SYNC_ROOT / "proposal.json"
 BACKUP_ROOT = SYNC_ROOT / "backups"
+MAPPING_OVERRIDES_PATH = SYNC_ROOT / "mapping-overrides.json"
 
 APPLY_CONFIRMATION = "APPLY PUBLIC HIRING GUIDE"
 
@@ -183,6 +184,15 @@ def _public_evidence(private_record: dict[str, Any]) -> tuple[dict[str, str] | N
     return None, f"{evidence_id} · {title} has no public evidence mapping."
 
 
+def _token_overlap(left: Any, right: Any) -> float:
+    left_tokens = set(_tokens(left))
+    right_tokens = set(_tokens(right))
+    if not left_tokens or not right_tokens:
+        return 0.0
+    overlap = len(left_tokens & right_tokens)
+    return overlap / min(len(left_tokens), len(right_tokens))
+
+
 def _match_score(private_qa: dict[str, Any], public_question: dict[str, Any]) -> int:
     private_phrases = [
         private_qa.get("question", ""),
@@ -199,35 +209,145 @@ def _match_score(private_qa: dict[str, Any], public_question: dict[str, Any]) ->
         for right in normalized_public:
             if left == right:
                 return 100
-            if len(left) >= 18 and len(right) >= 18 and (left in right or right in left):
-                return 88
+            if len(left) >= 16 and len(right) >= 16 and (left in right or right in left):
+                return 92
 
-    private_tokens = set(_tokens(" ".join(str(item) for item in private_phrases)))
-    public_tokens = set(_tokens(" ".join(str(item) for item in public_phrases)))
-    if not private_tokens or not public_tokens:
-        return 0
-    overlap = len(private_tokens & public_tokens)
-    union = len(private_tokens | public_tokens)
-    jaccard = overlap / union if union else 0
+    phrase_score = 0.0
+    for left in private_phrases:
+        for right in public_phrases:
+            phrase_score = max(phrase_score, _token_overlap(left, right))
 
-    private_tags = {_normalize(item) for item in private_qa.get("tags", []) if _normalize(item)}
-    public_keywords = {_normalize(item) for item in public_question.get("keywords", []) if _normalize(item)}
-    tag_overlap = len(private_tags & public_keywords)
+    private_tags = " ".join(str(item) for item in private_qa.get("tags", []))
+    public_keywords = " ".join(str(item) for item in public_question.get("keywords", []))
+    tag_score = _token_overlap(private_tags, public_keywords)
 
-    return round(jaccard * 80 + min(tag_overlap * 6, 18))
+    category_score = _token_overlap(
+        private_qa.get("category", ""),
+        public_question.get("category", ""),
+    )
+    answer_score = _token_overlap(
+        private_qa.get("answer", ""),
+        public_question.get("answer", ""),
+    )
+
+    # Question/variant wording remains the primary signal. Tags, category, and
+    # existing answer language help find likely conceptual duplicates without
+    # being strong enough to auto-match on their own.
+    score = (
+        phrase_score * 62
+        + tag_score * 14
+        + category_score * 8
+        + min(answer_score, 0.65) * 16
+    )
+    return min(99, round(score))
 
 
-def _best_match(private_qa: dict[str, Any], candidates: list[dict[str, Any]]) -> tuple[dict[str, Any] | None, int]:
-    ranked = sorted(
+def _rank_matches(private_qa: dict[str, Any], candidates: list[dict[str, Any]]) -> list[tuple[dict[str, Any], int]]:
+    return sorted(
         ((item, _match_score(private_qa, item)) for item in candidates),
         key=lambda pair: pair[1],
         reverse=True,
     )
-    if not ranked or ranked[0][1] < 70:
+
+
+def _best_match(private_qa: dict[str, Any], candidates: list[dict[str, Any]]) -> tuple[dict[str, Any] | None, int]:
+    ranked = _rank_matches(private_qa, candidates)
+    if not ranked or ranked[0][1] < 78:
         return None, ranked[0][1] if ranked else 0
-    if len(ranked) > 1 and ranked[0][1] - ranked[1][1] < 8 and ranked[0][1] < 95:
+    if len(ranked) > 1 and ranked[0][1] - ranked[1][1] < 10 and ranked[0][1] < 96:
         return None, ranked[0][1]
     return ranked[0]
+
+
+def load_mapping_overrides() -> dict[str, dict[str, str]]:
+    if not MAPPING_OVERRIDES_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(MAPPING_OVERRIDES_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    overrides: dict[str, dict[str, str]] = {}
+    for private_id, value in payload.items():
+        if not isinstance(value, dict):
+            continue
+        mode = str(value.get("mode") or "")
+        public_id = str(value.get("public_id") or "")
+        if mode in {"match", "new"}:
+            overrides[str(private_id)] = {"mode": mode, "public_id": public_id}
+    return overrides
+
+
+def save_mapping_override(private_id: str, mode: str, public_id: str = "") -> dict[str, dict[str, str]]:
+    private_id = str(private_id or "").strip()
+    mode = str(mode or "").strip()
+    public_id = str(public_id or "").strip()
+    if not private_id:
+        raise HiringGuidePublicSyncError("Choose a private Hiring Guide record first.")
+    if mode not in {"auto", "match", "new"}:
+        raise HiringGuidePublicSyncError("Unsupported mapping choice.")
+
+    library = load_library()
+    canonical_ids = {
+        str(item.get("id"))
+        for item in library.get("qa", [])
+        if str(item.get("review_status") or "canonical") == "canonical"
+    }
+    if private_id not in canonical_ids:
+        raise HiringGuidePublicSyncError("That private Q&A is not a canonical Hiring Guide record.")
+
+    overrides = load_mapping_overrides()
+    if mode == "auto":
+        overrides.pop(private_id, None)
+    elif mode == "new":
+        overrides[private_id] = {"mode": "new", "public_id": ""}
+    else:
+        current_core, current_expanded = _load_public_questions()
+        public_ids = {
+            str(item.get("id"))
+            for item in [*current_core, *current_expanded]
+            if item.get("id")
+        }
+        if public_id not in public_ids:
+            raise HiringGuidePublicSyncError("Choose a valid existing public question.")
+        for other_private_id, value in overrides.items():
+            if (
+                other_private_id != private_id
+                and value.get("mode") == "match"
+                and value.get("public_id") == public_id
+            ):
+                raise HiringGuidePublicSyncError(
+                    f"{public_id} is already manually mapped to {other_private_id}."
+                )
+        overrides[private_id] = {"mode": "match", "public_id": public_id}
+
+    SYNC_ROOT.mkdir(parents=True, exist_ok=True)
+    MAPPING_OVERRIDES_PATH.write_text(
+        json.dumps(overrides, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return overrides
+
+
+def _candidate_rows(
+    private_qa: dict[str, Any],
+    candidates: list[dict[str, Any]],
+    current_by_id: dict[str, tuple[str, dict[str, Any]]],
+    limit: int = 4,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for item, score in _rank_matches(private_qa, candidates)[:limit]:
+        public_id = str(item.get("id") or "")
+        rows.append({
+            "public_id": public_id,
+            "label": str(item.get("short_label") or item.get("prompt") or public_id),
+            "prompt": str(item.get("prompt") or ""),
+            "category": str(item.get("category") or ""),
+            "tier": current_by_id.get(public_id, ("expanded", {}))[0],
+            "score": score,
+        })
+    return rows
 
 
 def _keyword_list(private_qa: dict[str, Any], existing: dict[str, Any] | None) -> list[str]:
@@ -348,10 +468,49 @@ def _changed_fields(before: dict[str, Any], after: dict[str, Any]) -> list[str]:
     return fields
 
 
+def _warning_groups(warnings: list[str]) -> list[dict[str, Any]]:
+    groups = {
+        "emerging": {"label": "Non-demonstrated evidence", "items": []},
+        "notes": {"label": "Editorial notes", "items": []},
+        "mapping": {"label": "Missing public evidence mapping", "items": []},
+        "confidence": {"label": "Confidence review", "items": []},
+        "other": {"label": "Other review items", "items": []},
+    }
+    for warning in dict.fromkeys(warnings):
+        lowered = warning.lower()
+        if " emerging evidence" in lowered or " inferred evidence" in lowered or " audited evidence" in lowered:
+            groups["emerging"]["items"].append(warning)
+        elif "editorial notes" in lowered:
+            groups["notes"]["items"].append(warning)
+        elif "no public evidence mapping" in lowered:
+            groups["mapping"]["items"].append(warning)
+        elif " confidence" in lowered:
+            groups["confidence"]["items"].append(warning)
+        else:
+            groups["other"]["items"].append(warning)
+    return [
+        {"key": key, "label": value["label"], "count": len(value["items"]), "items": value["items"]}
+        for key, value in groups.items()
+        if value["items"]
+    ]
+
+
+def _group_added(added: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for item in added:
+        grouped.setdefault(str(item.get("category") or "Other"), []).append(item)
+    return [
+        {"category": category, "count": len(items), "items": items}
+        for category, items in sorted(grouped.items())
+    ]
+
+
 def build_proposal() -> dict[str, Any]:
     library = load_library()
     current_core, current_expanded = _load_public_questions()
     current_questions = [*current_core, *current_expanded]
+    current_by_id = _question_map(current_core, current_expanded)
+    overrides = load_mapping_overrides()
 
     canonical_private = [
         deepcopy(item)
@@ -364,24 +523,58 @@ def build_proposal() -> dict[str, Any]:
         if isinstance(item, dict) and item.get("id")
     }
 
-    matches: dict[str, tuple[dict[str, Any] | None, str, int]] = {}
+    matches: dict[str, tuple[dict[str, Any] | None, str, int, str, list[dict[str, Any]]]] = {}
     used_public_ids: set[str] = set()
-    current_by_id = _question_map(current_core, current_expanded)
+
+    # Manual matches always win and reserve their public record before automatic matching.
+    for private_qa in canonical_private:
+        private_id = str(private_qa.get("id"))
+        override = overrides.get(private_id, {})
+        if override.get("mode") != "match":
+            continue
+        public_id = str(override.get("public_id") or "")
+        if public_id in used_public_ids:
+            raise HiringGuidePublicSyncError(f"More than one private Q&A maps to {public_id}.")
+        current = current_by_id.get(public_id)
+        if not current:
+            raise HiringGuidePublicSyncError(
+                f"Saved mapping for {private_id} points to missing public question {public_id}."
+            )
+        tier, public_question = current
+        candidates = _candidate_rows(private_qa, current_questions, current_by_id)
+        matches[private_id] = (public_question, tier, 100, "manual-match", candidates)
+        used_public_ids.add(public_id)
 
     for private_qa in canonical_private:
-        available = [item for item in current_questions if str(item.get("id") or "") not in used_public_ids]
+        private_id = str(private_qa.get("id"))
+        if private_id in matches:
+            continue
+        override = overrides.get(private_id, {})
+        available = [
+            item
+            for item in current_questions
+            if str(item.get("id") or "") not in used_public_ids
+        ]
+        candidates = _candidate_rows(private_qa, available, current_by_id)
+        if override.get("mode") == "new":
+            top_score = candidates[0]["score"] if candidates else 0
+            matches[private_id] = (None, "expanded", top_score, "manual-new", candidates)
+            continue
+
         match, score = _best_match(private_qa, available)
         if match:
             public_id = str(match.get("id"))
             used_public_ids.add(public_id)
             tier = current_by_id.get(public_id, ("expanded", {}))[0]
-            matches[str(private_qa.get("id"))] = (match, tier, score)
+            matches[private_id] = (match, tier, score, "auto-match", candidates)
         else:
-            matches[str(private_qa.get("id"))] = (None, "expanded", score)
+            review_required = score >= 32
+            decision = "review" if review_required else "auto-new"
+            matches[private_id] = (None, "expanded", score, decision, candidates)
 
     private_to_public_id = {
         private_id: str(match.get("id")) if match else _slug(private_id)
-        for private_id, (match, _tier, _score) in matches.items()
+        for private_id, (match, _tier, _score, _decision, _candidates) in matches.items()
     }
     private_lookup = _private_lookup(canonical_private)
 
@@ -391,7 +584,7 @@ def build_proposal() -> dict[str, Any]:
 
     for private_qa in canonical_private:
         private_id = str(private_qa.get("id"))
-        existing, tier, score = matches[private_id]
+        existing, tier, score, decision, candidates = matches[private_id]
         compiled, question_warnings = _compile_question(
             private_qa,
             existing=existing,
@@ -404,11 +597,16 @@ def build_proposal() -> dict[str, Any]:
         warnings.extend(question_warnings)
         match_log.append({
             "private_id": private_id,
+            "category": str(private_qa.get("category") or ""),
             "question": str(private_qa.get("question") or ""),
             "public_id": str(compiled["id"]),
             "matched_existing": bool(existing),
             "match_score": score,
             "tier": tier,
+            "decision": decision,
+            "requires_review": decision == "review",
+            "manual": decision.startswith("manual-"),
+            "candidates": candidates,
         })
 
     proposed_core: list[dict[str, Any]] = []
@@ -421,23 +619,34 @@ def build_proposal() -> dict[str, Any]:
             output = _strip_internal(replacement) if replacement else deepcopy(existing)
             (proposed_core if tier == "core" else proposed_expanded).append(output)
 
-    for compiled in sorted(compiled_by_id.values(), key=lambda item: (str(item.get("category")), str(item.get("prompt")))):
+    for compiled in sorted(
+        compiled_by_id.values(),
+        key=lambda item: (str(item.get("category")), str(item.get("prompt"))),
+    ):
         proposed_expanded.append(_strip_internal(compiled))
 
-    current_map = {str(item.get("id")): item for item in current_questions if item.get("id")}
+    current_map = {
+        str(item.get("id")): item
+        for item in current_questions
+        if item.get("id")
+    }
     proposed_map = {
         str(item.get("id")): item
         for item in [*proposed_core, *proposed_expanded]
         if item.get("id")
     }
 
-    added = []
-    changed = []
-    preserved = []
+    added: list[dict[str, Any]] = []
+    changed: list[dict[str, Any]] = []
+    preserved: list[str] = []
     for public_id, after in proposed_map.items():
         before = current_map.get(public_id)
         if before is None:
-            added.append({"id": public_id, "question": after.get("prompt"), "category": after.get("category")})
+            added.append({
+                "id": public_id,
+                "question": after.get("prompt"),
+                "category": after.get("category"),
+            })
         else:
             fields = _changed_fields(before, after)
             if fields:
@@ -453,29 +662,56 @@ def build_proposal() -> dict[str, Any]:
                 preserved.append(public_id)
 
     removed = [public_id for public_id in current_map if public_id not in proposed_map]
+    unresolved = [item for item in match_log if item["requires_review"]]
+    manual_count = sum(1 for item in match_log if item["manual"])
+    confirmed_matches = sum(1 for item in match_log if item["matched_existing"])
+    safe_new = sum(
+        1
+        for item in match_log
+        if item["decision"] in {"auto-new", "manual-new"}
+    )
 
     source_hashes = {
         PUBLIC_FAQ_PATH.name: _hash(PUBLIC_FAQ_PATH),
         PUBLIC_EXPANDED_PATH.name: _hash(PUBLIC_EXPANDED_PATH),
     }
+    unique_warnings = list(dict.fromkeys(warnings))
+    apply_ready = not unresolved and not removed
 
     proposal = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "created_at": _now(),
         "source_hashes": source_hashes,
         "summary": {
             "private_canonical": len(canonical_private),
-            "matched_existing": sum(1 for item in match_log if item["matched_existing"]),
+            "matched_existing": confirmed_matches,
             "new_public_questions": len(added),
             "changed_public_questions": len(changed),
             "preserved_legacy_questions": len(preserved),
             "removed_public_questions": len(removed),
-            "warnings": len(dict.fromkeys(warnings)),
+            "warnings": len(unique_warnings),
+            "mapping_review_required": len(unresolved),
+            "manual_decisions": manual_count,
+            "safe_new": safe_new,
+            "apply_ready": apply_ready,
         },
-        "warnings": list(dict.fromkeys(warnings)),
+        "warnings": unique_warnings,
+        "warning_groups": _warning_groups(unique_warnings),
         "matches": match_log,
+        "public_questions": [
+            {
+                "id": str(item.get("id") or ""),
+                "label": str(item.get("short_label") or item.get("prompt") or item.get("id") or ""),
+                "prompt": str(item.get("prompt") or ""),
+                "category": str(item.get("category") or ""),
+                "tier": current_by_id.get(str(item.get("id") or ""), ("expanded", {}))[0],
+            }
+            for item in current_questions
+            if item.get("id")
+        ],
         "diff": {
             "added": added,
+            "added_by_category": _group_added(added),
             "changed": changed,
             "removed": removed,
         },
@@ -487,9 +723,11 @@ def build_proposal() -> dict[str, Any]:
     }
 
     SYNC_ROOT.mkdir(parents=True, exist_ok=True)
-    PROPOSAL_PATH.write_text(json.dumps(proposal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    PROPOSAL_PATH.write_text(
+        json.dumps(proposal, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     return proposal
-
 
 def load_proposal() -> dict[str, Any] | None:
     if not PROPOSAL_PATH.exists():
@@ -590,6 +828,10 @@ def apply_proposal(confirm_text: str) -> tuple[bool, str, dict[str, Any]]:
     if not _proposal_is_fresh(proposal):
         raise HiringGuidePublicSyncError(
             "The public Hiring Guide changed after this preview was generated. Generate a fresh preview before applying."
+        )
+    if proposal.get("summary", {}).get("mapping_review_required"):
+        raise HiringGuidePublicSyncError(
+            "Resolve the remaining likely-duplicate mapping reviews before applying."
         )
     if proposal.get("diff", {}).get("removed"):
         raise HiringGuidePublicSyncError("This proposal would remove public questions. Regenerate or review before applying.")
