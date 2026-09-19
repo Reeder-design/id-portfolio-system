@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="../css/phase1-theme.css">
     <link rel="stylesheet" href="../css/phase1-frame.css">
     <script defer src="../js/portfolio-motion.js"></script>
+    <script defer src="../js/primary-pages.js"></script>
 </head>
-<body>
+<body class="primary-page contact-primary">
     <header class="site-header">
         <div class="container nav-container">
             <a class="site-brand" href="../index.html">Haley <span>Reeder</span></a>
@@ -33,7 +34,7 @@
             <div class="container refresh-hero-grid">
                 <div class="refresh-hero-copy">
                     <h1>Contact</h1>
-                    <p class="body-large reading-width">LinkedIn is the easiest way to reach me. I’m always interested in thoughtful conversations about instructional design, learning technology, AI, enablement, and learning systems work.</p>
+                    <p class="body-large reading-width">GitHub or LinkedIn are the easiest ways to reach me. I’m always interested in thoughtful conversations about instructional design, learning technology, AI, enablement, and learning systems work.</p>
                     <div class="hero-context-row" aria-label="Ways to connect">
                         <span class="hero-context-chip">Opportunities</span>
                         <span class="hero-context-chip">Collaboration</span>
@@ -42,41 +43,55 @@
                 </div>
                 <div class="contact-hero-stage" data-parallax-soft aria-label="Contact and collaboration illustration">
                     <img class="contact-hero-art" src="../assets/project-images/main-pages/contact.webp" alt="Pixel-art illustration representing professional connection and collaboration.">
+                    <span class="contact-float one" aria-hidden="true"><img src="../assets/icons/pixel/portfolio-general/lets-chat.webp" alt=""></span>
+                    <span class="contact-float two" aria-hidden="true"><img src="../assets/project-images/portfolio-general/paper-plane.webp" alt=""></span>
                 </div>
             </div>
         </section>
 
-        <section class="section">
-            <div class="container refresh-card-grid">
-                <div class="contact-card refresh-link-card">
-                    <div class="refresh-link-card-header">
-                        <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span>
-                        <p class="eyebrow">LinkedIn</p>
-                        <h2>Connect online</h2>
-                        <p>I'm interested in instructional design, learning technology, AI, enablement, and learning systems work.</p>
-                    </div>
-                    <div class="refresh-link-card-body">
-                        <p>LinkedIn is currently the best place to contact me about professional opportunities, collaboration, or portfolio questions.</p>
-                        <a class="btn btn-primary" href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">Open LinkedIn</a>
-                    </div>
+        <section class="section contact-destination-section">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">Start here</p>
+                    <h2>Choose the conversation you need.</h2>
+                    <p class="body-large reading-width">I keep the public portfolio focused and my direct contact information private, so LinkedIn is the cleanest route for professional conversations.</p>
                 </div>
 
-                <div class="contact-form refresh-link-card" style="grid-column:span 2;">
-                    <div class="refresh-link-card-header">
-                        <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-code"></use></svg></span>
-                        <p class="eyebrow">Portfolio Form</p>
-                        <h2>Send a message</h2>
-                        <p class="text-muted">This form will connect to a secure form service so my email address does not need to be published.</p>
-                    </div>
-                    <div class="refresh-link-card-body">
-                        <form aria-label="Contact form preview">
-                            <div class="form-grid">
-                                <div><label for="contact-name">Name</label><input id="contact-name" type="text" disabled placeholder="Coming soon"></div>
-                                <div><label for="contact-email">Email</label><input id="contact-email" type="email" disabled placeholder="Coming soon"></div>
-                                <div class="full-span"><label for="contact-message">Message</label><textarea id="contact-message" rows="5" disabled placeholder="Secure submission will be added here."></textarea></div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="contact-destination-grid">
+                    <article class="contact-primary-card">
+                        <p class="eyebrow">Best way to reach me</p>
+                        <img class="contact-card-art" src="../assets/project-images/portfolio-general/cta-linkedin.webp" alt="Pixel-art LinkedIn connection illustration.">
+                        <h2>Connect on LinkedIn</h2>
+                        <p>Reach out about instructional design roles, learning technology, enablement, AI evaluation, LMS work, collaboration, or anything in the portfolio you want to discuss.</p>
+                        <div class="button-row"><a class="btn btn-highlight" href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">Open LinkedIn</a></div>
+                    </article>
+
+                    <article class="contact-secondary-card">
+                        <img src="../assets/project-images/portfolio-general/cta-contact.webp" alt="Pixel-art conversation and contact illustration.">
+                        <p class="eyebrow">Reviewing my work?</p>
+                        <h2>Use the Hiring Guide first.</h2>
+                        <p>If you are evaluating me for a role, the interactive guide can answer common questions about ownership, process, tools, strengths, and project evidence before you reach out.</p>
+                        <div class="button-row"><a class="btn btn-primary" href="../hiring-manager/index.html">Open Hiring Guide</a></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft contact-quick-section">
+            <div class="container">
+                <div class="section-heading refresh-section-intro">
+                    <p class="eyebrow">Need something specific?</p>
+                    <h2>Two quick routes.</h2>
+                </div>
+                <div class="contact-quick-grid">
+                    <a class="contact-quick-link" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">
+                        <img src="../assets/project-images/portfolio-general/cta-resume.webp" alt="">
+                        <span><strong>View my résumé</strong><span>Experience, capabilities, and tools in a traditional format.</span></span>
+                    </a>
+                    <a class="contact-quick-link" href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">
+                        <img src="../assets/icons/pixel/portfolio-general/portfolio.webp" alt="">
+                        <span><strong>Open GitHub</strong><span>See the public portfolio repository and coding work behind the site.</span></span>
+                    </a>
                 </div>
             </div>
         </section>
