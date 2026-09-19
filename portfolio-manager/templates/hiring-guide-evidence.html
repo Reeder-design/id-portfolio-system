@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ record.id }} | Hiring Guide Evidence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiring-guide-manager.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Hiring Guide Evidence</p>
+            <h1>{{ record.id }} · {{ record.title }}</h1>
+            <p class="hero-copy">Evidence records calibrate what the hiring assistant is allowed to present as demonstrated, emerging, inferred, or audited positioning.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Back to Library</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-stack">
+        {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    <main class="hiring-editor-layout">
+        <form method="post" action="{{ url_for('hiring_guide.save_evidence', evidence_id=record.id) }}" class="dashboard-card hiring-editor-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="editor-heading">
+                <div><p class="eyebrow">Evidence record</p><h2>What this evidence supports</h2></div>
+                <span class="status-pill">{{ record.id }}</span>
+            </div>
+            <div class="form-grid">
+                <label class="full-span">Evidence title
+                    <input type="text" name="title" value="{{ record.title }}" required>
+                </label>
+                <label>Status
+                    <select name="status">
+                        {% for value in statuses %}
+                        <option value="{{ value }}" {% if record.status == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <div></div>
+                <label class="full-span">Capabilities / claims supported <span class="muted-inline">one per line</span>
+                    <textarea name="proves" rows="12">{{ record.proves|join('\n') }}</textarea>
+                </label>
+            </div>
+            <div class="button-row editor-save-row">
+                <button class="btn btn-primary" type="submit">Save Evidence Record</button>
+                <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Cancel</a>
+            </div>
+        </form>
+
+        <aside class="editor-side-stack">
+            <section class="dashboard-card">
+                <p class="eyebrow">Used by</p>
+                <h2>{{ used_by|length }} Q&amp;A record{% if used_by|length != 1 %}s{% endif %}</h2>
+                <div class="used-by-list">
+                    {% for item in used_by %}
+                    <a href="{{ url_for('hiring_guide.edit_qa', qa_id=item.id) }}"><strong>{{ item.question }}</strong><span>{{ item.id }} · {{ item.category }}</span></a>
+                    {% else %}
+                    <p class="empty-note">No Q&amp;A records currently reference this evidence.</p>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="private-boundary">
+                <strong>Status rule</strong>
+                <span>Changing an evidence status never rewrites answers automatically. It changes the editorial truth layer that future public-assistant generation/sync must honor.</span>
+            </section>
+        </aside>
+    </main>
+</div>
+</body>
+</html>
