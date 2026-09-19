@@ -46,5 +46,6 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 - `portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html`
 - `portfolio/projects/instructional-design/microlearning-performance-support/microlearning/index.html`
+- `portfolio/projects/instructional-design/microlearning-performance-support/performance-support/index.html`
 
-Total public HTML pages: **29**
+Total public HTML pages: **30**
