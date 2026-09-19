@@ -27,7 +27,7 @@ ELEMENT_PATTERN = re.compile(
 )
 ANCHOR_PATTERN = re.compile(
     r"(?is)<a\b(?P<attrs>[^>]*)\bhref=(?P<quote>[\"'])(?P<href>[^\"']+)(?P=quote)(?P<rest>[^>]*)>"
-    r"(?P<text>[^<>]*)</a>"
+    r"(?P<text>.*?)</a>"
 )
 HEADING_PATTERN = re.compile(
     r"(?is)<(?P<tag>h2|h3|h4)\b(?P<attrs>[^>]*)>(?P<text>[^<>]*)</(?P=tag)>"
@@ -214,30 +214,42 @@ def scan_related_references(
             if resolved != target:
                 continue
 
-            current_link = _normalized(anchor.group("text"))
-            suggested_link = _suggest_link_label(current_link, old_title, new_title)
-            if suggested_link:
-                add_candidate(
-                    path,
-                    html_text,
-                    anchor,
-                    current_link,
-                    suggested_link,
-                    "linked-label",
-                    "This link points directly to the edited page and uses a page/project-specific label.",
-                )
+            anchor_inner = anchor.group("text")
+            if "<" not in anchor_inner:
+                current_link = _normalized(anchor_inner)
+                suggested_link = _suggest_link_label(current_link, old_title, new_title)
+                if suggested_link:
+                    add_candidate(
+                        path,
+                        html_text,
+                        anchor,
+                        current_link,
+                        suggested_link,
+                        "linked-label",
+                        "This link points directly to the edited page and uses a page/project-specific label.",
+                    )
 
+            # Linked project cards may be either an <article> containing a simple
+            # link or a whole-card <a> containing nested headings. Support both
+            # shapes so reference detection remains tied to the resolved href,
+            # not to a particular presentation template.
+            heading_region_start: Optional[int] = None
+            heading_region_html = ""
             bounds = _article_bounds(html_text, anchor.start())
-            if not bounds:
-                continue
-            article_start, article_end = bounds
-            article_html = html_text[article_start:article_end]
-            heading_matches = list(HEADING_PATTERN.finditer(article_html))
-            if not heading_matches:
+            if bounds:
+                article_start, article_end = bounds
+                heading_region_start = article_start
+                heading_region_html = html_text[article_start:article_end]
+            else:
+                heading_region_start = anchor.start("text")
+                heading_region_html = anchor_inner
+
+            heading_matches = list(HEADING_PATTERN.finditer(heading_region_html))
+            if not heading_matches or heading_region_start is None:
                 continue
             heading = heading_matches[-1]
-            absolute_start = article_start + heading.start()
-            absolute_end = article_start + heading.end()
+            absolute_start = heading_region_start + heading.start()
+            absolute_end = heading_region_start + heading.end()
             absolute_match = ELEMENT_PATTERN.search(html_text, absolute_start, absolute_end)
             if absolute_match is None:
                 continue
