@@ -62,6 +62,9 @@ jobs:
       - name: Validate private Hiring Guide Manager
         run: python scripts/check-hiring-guide-manager.py
 
+      - name: Validate Hiring Guide public sync
+        run: python scripts/check-hiring-guide-public-sync.py
+
       - name: Validate public privacy and leakage boundaries
         run: python scripts/check-public-privacy.py
 
