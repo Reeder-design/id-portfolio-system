@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-from io import BytesIO
 from pathlib import Path
 import importlib.util
 import json
 import sys
 import tempfile
-
-from werkzeug.datastructures import FileStorage
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +22,17 @@ GITIGNORE = ROOT / ".gitignore"
 def require(condition: bool, message: str, errors: list[str]) -> None:
     if not condition:
         errors.append(message)
+
+
+class MemoryUpload:
+    def __init__(self, filename: str, data: bytes):
+        self.filename = filename
+        self._data = data
+
+    def read(self, size: int = -1) -> bytes:
+        if size is None or size < 0:
+            return self._data
+        return self._data[:size]
 
 
 def load_service():
@@ -168,16 +176,8 @@ def main() -> int:
         require(len(normalized["qa"]) == 1, "Sample library should preserve Q&A.", errors)
         require(len(normalized["evidence"]) == 2, "Sample library should preserve evidence.", errors)
 
-        upload = FileStorage(
-            stream=BytesIO(json.dumps(payload).encode("utf-8")),
-            filename="hiring-guide.json",
-            content_type="application/json",
-        )
-        markdown = FileStorage(
-            stream=BytesIO(b"# Hiring Guide\n"),
-            filename="hiring-guide.md",
-            content_type="text/markdown",
-        )
+        upload = MemoryUpload("hiring-guide.json", json.dumps(payload).encode("utf-8"))
+        markdown = MemoryUpload("hiring-guide.md", b"# Hiring Guide\n")
         imported = service.import_library(upload, markdown)
         require(service.LIBRARY_PATH.exists(), "Import must store canonical JSON in private Hiring Guide root.", errors)
         require(service.SOURCE_MARKDOWN_PATH.exists(), "Import should preserve optional Markdown source privately.", errors)
