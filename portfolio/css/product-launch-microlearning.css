@@ -885,59 +885,98 @@
   background:#24453f;
   color:#e3f6e9;
 }
-
-
-/* Product Launch Design Outcome — explicit contrast lock */
+/* Product Launch Design Outcome — stable light theme */
 .product-launch-outcome{
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(circle at 85% 20%,rgba(121,201,158,.13),transparent 28%),
-    linear-gradient(145deg,#17262d,#2a4145) !important;
-  color:#edf4ef !important;
+    radial-gradient(circle at 88% 18%,rgba(121,201,158,.12),transparent 30%),
+    radial-gradient(circle at 12% 88%,rgba(80,132,132,.08),transparent 34%),
+    linear-gradient(180deg,#f6f8f4 0%,#edf3ef 100%) !important;
+  color:#334247 !important;
+}
+.launch-outcome-heading{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);
+  gap:28px;
+  align-items:end;
 }
 .product-launch-outcome h2,
 .product-launch-outcome h3,
 .product-launch-outcome #launchOutcomeTitle{
-  color:#fff !important;
+  color:#374248 !important;
+}
+.product-launch-outcome .section-kicker .eyebrow,
+.product-launch-outcome .launch-outcome-panel .eyebrow,
+.product-launch-outcome #launchOutcomeLabel{
+  color:#4d8f78 !important;
 }
 .product-launch-outcome .short-copy,
 .product-launch-outcome #launchOutcomeText{
-  color:rgba(237,244,239,.78) !important;
+  color:#5e6b68 !important;
 }
 .product-launch-outcome .launch-demo-note{
-  border-color:rgba(255,255,255,.12) !important;
-  background:rgba(255,255,255,.055) !important;
-  color:rgba(237,244,239,.76) !important;
+  border:1px solid rgba(80,132,132,.17) !important;
+  background:rgba(255,255,255,.76) !important;
+  color:#5e6b68 !important;
+  box-shadow:0 10px 26px rgba(52,74,66,.05);
 }
 .product-launch-outcome .launch-demo-note strong{
-  color:#fff !important;
+  color:#374248 !important;
 }
 .product-launch-outcome .launch-outcome-tab{
-  border-color:rgba(255,255,255,.1) !important;
-  background:rgba(255,255,255,.05) !important;
-  color:#eef5f0 !important;
+  border:1px solid rgba(80,132,132,.16) !important;
+  background:rgba(255,255,255,.78) !important;
+  color:#4a565a !important;
+  box-shadow:0 8px 20px rgba(52,74,66,.035);
+}
+.product-launch-outcome .launch-outcome-tab .portfolio-icon{
+  color:#5eb98f !important;
+}
+.product-launch-outcome .launch-outcome-tab:hover,
+.product-launch-outcome .launch-outcome-tab:focus-visible{
+  border-color:rgba(121,201,158,.55) !important;
+  background:#f8fbf8 !important;
 }
 .product-launch-outcome .launch-outcome-tab.active{
-  border-color:rgba(121,201,158,.55) !important;
-  background:rgba(121,201,158,.13) !important;
+  border-color:#4f857e !important;
+  background:linear-gradient(145deg,#203c3f,#315555) !important;
   color:#fff !important;
+  box-shadow:0 12px 26px rgba(37,64,62,.14);
+}
+.product-launch-outcome .launch-outcome-tab.active .portfolio-icon{
+  color:var(--mint-leaf) !important;
 }
 .product-launch-outcome .launch-outcome-panel{
-  border-color:rgba(255,255,255,.11) !important;
-  background:rgba(255,255,255,.055) !important;
+  border:1px solid rgba(80,132,132,.14) !important;
+  background:rgba(255,255,255,.84) !important;
+  box-shadow:0 16px 34px rgba(52,74,66,.06);
+}
+.product-launch-outcome .launch-outcome-icon{
+  background:#e5f1ea !important;
 }
 .product-launch-outcome .launch-outcome-panel p{
-  color:rgba(237,244,239,.74) !important;
+  color:#5e6b68 !important;
 }
 .product-launch-outcome .launch-outcome-proof{
-  background:rgba(10,25,31,.42) !important;
+  background:#6f7c7e !important;
+}
+.product-launch-outcome .launch-outcome-proof span{
+  color:#9ee0b8 !important;
 }
 .product-launch-outcome .launch-outcome-proof strong{
   color:#fff !important;
 }
 .product-launch-outcome .micro-boundary{
-  border-color:rgba(255,255,255,.12) !important;
-  background:rgba(255,255,255,.055) !important;
+  border-color:#356b61 !important;
+  background:linear-gradient(135deg,#15343a,#24584e) !important;
 }
 .product-launch-outcome .micro-boundary p{
-  color:rgba(237,244,239,.74) !important;
+  color:#edf6f1 !important;
+}
+.product-launch-outcome .micro-boundary strong{
+  color:#fff !important;
+}
+@media(max-width:760px){
+  .launch-outcome-heading{grid-template-columns:1fr}
 }
