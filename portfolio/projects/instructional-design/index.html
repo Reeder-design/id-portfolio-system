@@ -160,83 +160,89 @@
         .id-ecosystem-grid{
           display:grid;
           grid-template-columns:repeat(3,minmax(0,1fr));
-          gap:14px;
+          gap:16px;
+          padding-top:30px;
         }
         .id-ecosystem-card{
           position:relative;
-          overflow:hidden;
+          overflow:visible;
           display:flex;
           flex-direction:column;
-          min-height:250px;
-          border:1px solid rgba(121,201,158,.24);
+          min-height:220px;
+          border:1px solid rgba(121,201,158,.28);
           border-radius:20px;
           background:
-            radial-gradient(circle at 82% 14%,rgba(151,219,79,.11),transparent 9rem),
+            radial-gradient(circle at 88% 12%,rgba(151,219,79,.10),transparent 8rem),
             linear-gradient(150deg,#1a3036,#244b49);
           color:#fff;
           text-decoration:none;
           box-shadow:
-            0 15px 32px rgba(45,72,65,.13),
-            inset 0 1px 0 rgba(255,255,255,.04);
+            0 16px 34px rgba(45,72,65,.14),
+            0 0 0 1px rgba(255,255,255,.02) inset;
           transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
         }
         .id-ecosystem-card::before{
           content:"";
           position:absolute;
           z-index:0;
-          width:120px;
-          height:120px;
-          right:-42px;
-          top:-46px;
-          border:1px dashed rgba(184,233,201,.14);
-          border-radius:50%;
+          inset:10px;
+          border:1px solid rgba(184,233,201,.07);
+          border-radius:14px;
+          pointer-events:none;
         }
         .id-ecosystem-card::after{
           content:"";
           position:absolute;
-          z-index:4;
-          left:14px;
+          z-index:1;
           right:14px;
-          top:109px;
-          height:2px;
-          border-radius:999px;
-          background:linear-gradient(90deg,rgba(80,132,132,.2),#79c99e,#97db4f,rgba(80,132,132,.2));
-          opacity:.65;
+          top:16px;
+          width:34px;
+          height:34px;
+          border-top:2px solid rgba(151,219,79,.35);
+          border-right:2px solid rgba(151,219,79,.35);
+          border-radius:0 10px 0 0;
+          pointer-events:none;
         }
         .id-ecosystem-card:hover,.id-ecosystem-card:focus-visible{
           transform:translateY(-5px);
-          border-color:rgba(151,219,79,.52);
+          border-color:rgba(151,219,79,.58);
           box-shadow:
-            0 22px 44px rgba(45,72,65,.19),
-            0 0 0 1px rgba(151,219,79,.09);
+            0 22px 44px rgba(45,72,65,.20),
+            0 0 0 1px rgba(151,219,79,.08);
           outline:none;
         }
-        .id-ecosystem-visual{
-          position:relative;
-          z-index:2;
+        .id-ecosystem-float-icon{
+          position:absolute;
+          z-index:5;
+          top:-31px;
+          left:18px;
           display:grid;
           place-items:center;
-          height:110px;
-          min-height:110px;
-          padding:10px 14px 8px;
-          background:transparent;
+          width:70px;
+          height:70px;
+          border:1px solid rgba(80,132,132,.22);
+          border-radius:19px;
+          background:linear-gradient(145deg,#f8fbf8,#e8f3ed);
+          box-shadow:0 12px 26px rgba(42,72,64,.18);
+          transition:transform .2s ease,box-shadow .2s ease;
         }
-        .id-ecosystem-icon{
+        .id-ecosystem-float-icon img{
           display:block;
-          width:88px;
-          height:88px;
+          width:52px;
+          height:52px;
           object-fit:contain;
-          filter:drop-shadow(0 10px 18px rgba(4,18,20,.18));
-          transition:transform .2s ease;
         }
-        .id-ecosystem-card:hover .id-ecosystem-icon{transform:translateY(-4px) scale(1.05)}
+        .id-ecosystem-card:hover .id-ecosystem-float-icon{
+          transform:translateY(-5px) rotate(-1deg);
+          box-shadow:0 18px 30px rgba(42,72,64,.22);
+        }
         .id-ecosystem-copy{
           position:relative;
           z-index:3;
           display:flex;
           flex-direction:column;
           flex:1;
-          padding:12px 15px 15px;
+          padding:50px 16px 16px;
           border:0;
           background:transparent;
         }
@@ -275,7 +281,7 @@
 
         @media(max-width:1050px){.id-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
         @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
-        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-grid{grid-template-columns:1fr}.id-ecosystem-card{min-height:0}.id-ecosystem-visual{height:104px;min-height:104px}.id-ecosystem-card::after{top:103px}}
+        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-grid{grid-template-columns:1fr;gap:42px}.id-ecosystem-card{min-height:0}}
         @media(max-width:520px){body.id-landing .section{padding-block:30px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
         @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
     </style>
@@ -411,15 +417,15 @@
         </div>
         <div class="id-ecosystem-grid">
           <a class="id-ecosystem-card" href="../ai-training-and-evaluation/index.html">
-            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/ai-training-evaluation/quality-evaluate.webp" alt="Pixel-art AI quality evaluation icon."></div>
+            <span class="id-ecosystem-float-icon" aria-hidden="true"><img src="../../assets/icons/pixel/ai-training-evaluation/quality-review.webp" alt=""></span>
             <div class="id-ecosystem-copy"><span class="eyebrow">AI Quality</span><h3>AI Training and Evaluation</h3><p>Output evaluation, source grounding, rubric scoring, calibration, and actionable feedback across AI training work.</p><span class="id-ecosystem-tags"><span>Evaluation</span><span>Rubrics</span><span>QA</span></span><strong>Explore the complete AI portfolio →</strong></div>
           </a>
           <a class="id-ecosystem-card" href="../lms-administration/index.html">
-            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/lms/mini-org-chart.webp" alt="Pixel-art learning platform organization icon."></div>
+            <span class="id-ecosystem-float-icon" aria-hidden="true"><img src="../../assets/icons/pixel/lms/mini-settings.webp" alt=""></span>
             <div class="id-ecosystem-copy"><span class="eyebrow">Learning Platforms</span><h3>LMS Administration &amp; System Operations</h3><p>Absorb and Docebo work across content, learning paths, certifications, access, migration, learner support, and reporting.</p><span class="id-ecosystem-tags"><span>Absorb</span><span>Docebo</span><span>UAT + Support</span></span><strong>Explore the complete LMS portfolio →</strong></div>
           </a>
           <a class="id-ecosystem-card" href="../workflows/index.html">
-            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt="Pixel-art connected workflow icon."></div>
+            <span class="id-ecosystem-float-icon" aria-hidden="true"><img src="../../assets/icons/pixel/lms/mini-sync.webp" alt=""></span>
             <div class="id-ecosystem-copy"><span class="eyebrow">Systems + Automation</span><h3>System Integrations and Workflows</h3><p>Python, Selenium, data analysis, browser automation, and reporting workflows that support learning and enablement operations.</p><span class="id-ecosystem-tags"><span>Python</span><span>Automation</span><span>Reporting</span></span><strong>Explore the complete systems portfolio →</strong></div>
           </a>
         </div>
