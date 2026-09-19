@@ -132,8 +132,8 @@
     }
     .interaction-flow-link{
       position:absolute;
-      z-index:3;
-      top:50%;
+      z-index:1;
+      top:62%;
       width:calc(33.333% - 44px);
       height:2px;
       background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
@@ -217,18 +217,19 @@
       align-items:end;
       margin-bottom:14px;
     }
-    .interaction-approach-copy .eyebrow{margin-bottom:4px;color:#4a796e!important}
+    .interaction-approach-copy .eyebrow{margin-bottom:5px;color:#4a796e!important;font-size:.66rem}
     .interaction-approach-copy h2{
       margin:0;
-      max-width:600px;
+      max-width:640px;
       color:#263d37;
-      font-size:clamp(1.2rem,2vw,1.55rem);
+      font-size:clamp(1.38rem,2.25vw,1.78rem);
+      line-height:1.16;
     }
     .interaction-approach-copy p{
       margin:0;
-      color:#5b6a64;
-      font-size:.79rem;
-      line-height:1.55;
+      color:#52635c;
+      font-size:.9rem;
+      line-height:1.58;
     }
     .interaction-learning-flow{
       position:relative;
@@ -262,8 +263,8 @@
       display:grid;
       justify-items:center;
       align-content:center;
-      min-height:170px;
-      padding:12px 10px 14px;
+      min-height:184px;
+      padding:13px 11px 15px;
       border:1px solid rgba(80,132,132,.13);
       border-radius:16px;
       background:#fff;
@@ -283,8 +284,8 @@
     .learning-flow-icon{
       display:grid;
       place-items:center;
-      width:92px;
-      height:92px;
+      width:98px;
+      height:98px;
       border:1px solid rgba(80,132,132,.1);
       border-radius:18px;
       background:#f5f9f6;
@@ -293,22 +294,22 @@
     }
     .learning-flow-icon img{
       display:block;
-      width:76px;
-      height:76px;
+      width:82px;
+      height:82px;
       object-fit:contain;
     }
     .learning-flow-step strong{
       display:block;
       margin-top:9px;
       color:#315755;
-      font:800 .68rem/1.15 var(--font-heading);
+      font:800 .82rem/1.18 var(--font-heading);
     }
     .learning-flow-step small{
       display:block;
       margin-top:4px;
-      max-width:170px;
-      color:#6b7973;
-      font:.56rem/1.32 var(--font-body);
+      max-width:190px;
+      color:#596a63;
+      font:.68rem/1.4 var(--font-body);
     }
     .learning-flow-step::after{
       content:"";
@@ -336,20 +337,20 @@
       gap:10px;
       align-items:center;
       margin-top:10px;
-      padding:10px 12px;
+      padding:12px 14px;
       border:1px solid rgba(80,132,132,.12);
       border-radius:13px;
       background:#f4f8f5;
     }
     .interaction-step-detail strong{
       color:#315755;
-      font:800 .65rem/1.2 var(--font-heading);
+      font:800 .78rem/1.2 var(--font-heading);
     }
     .interaction-step-detail p{
       margin:0;
       color:#596862;
-      font-size:.66rem;
-      line-height:1.4;
+      font-size:.77rem;
+      line-height:1.46;
     }
     @keyframes learningStepFill{
       0%{width:0;opacity:.35}
