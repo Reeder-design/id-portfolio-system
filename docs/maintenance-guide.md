@@ -38,6 +38,34 @@ main → feature branch → implementation → CI → UAT → explicit “merge 
 
 Agents should never merge a development PR without explicit user approval.
 
+### Concurrent branch coordination
+
+Several chats or agents may work on this repository at once. Treat GitHub—not conversational memory—as the current state.
+
+Use this preflight whenever repository work starts or resumes:
+
+```text
+read current main
+  → list open PRs
+  → compare active branch with main
+  → check file overlap with other PRs
+  → sync if behind
+  → implement / validate
+```
+
+Before merging a development PR, require all of the following:
+- the branch is **0 commits behind current `main`**
+- GitHub reports it mergeable
+- the latest full CI run passed on the exact current head SHA
+- changed-file overlap with every other open PR has been reviewed
+- any shared-file resolution intentionally preserves both workstreams
+- the user explicitly approved that exact PR
+
+After every merge to `main`, re-check every remaining open PR immediately. Sync and revalidate anything that became stale before more work continues on that branch.
+
+The pull-request validation workflow also rejects a PR branch that does not contain the latest `main`, providing an automated guard against accidentally validating a stale branch.
+
+
 ## Full Validation
 
 Portfolio Manager **Run Full Validation** and pull-request CI are intentionally kept aligned.
