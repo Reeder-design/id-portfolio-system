@@ -8,13 +8,13 @@ Maintain a professional, reliable, reusable portfolio system that is easy to upd
 ## Repository Structure
 - `portfolio/` — public website deployed to GitHub Pages
 - `portfolio-data/` — structured public-content source data, taxonomy, schemas, and version data
-- `portfolio-manager/` — authenticated local-only Flask application for Manage/Create/Reference/AI/publishing workflows
+- `portfolio-manager/` — authenticated local-only Flask application for Manage/Create/Reference/Hiring Guide/AI/publishing workflows
 - `templates/` — reusable HTML templates for standard generated pages
 - `design-system/` — supporting design-system and reusable development resources
 - `.github/workflows/` — CI and GitHub Pages deployment
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
 - `scripts/` — creation, rendering, maintenance, regression, and validation scripts
-- `.portfolio-manager/` — Git-ignored local-only proposals, references, uploads, backups, and workflow state
+- `.portfolio-manager/` — Git-ignored local-only proposals, references, Hiring Guide editorial libraries, uploads, backups, and workflow state
 - `.env` — Git-ignored local secrets
 
 The repository is public. Treat all tracked content and Git metadata as publicly visible.
@@ -71,9 +71,12 @@ The main user workflows are:
 - **Manage Content** — edit existing pages/projects, assets, related references, private notes, page-aware AI proposals, and portfolio review.
 - **Reference Library** — store private originals, review/sanitize separate derivatives, and approve public-safe derivatives for later use.
 - **Create Content** — Content Brief → optional AI plan → human refinement → controlled local build → validation/preview → Keep or Revert → publishing handoff.
+- **Hiring Guide Library** — maintain the private evidence-grounded Q&A/editorial source behind Ask Haley. Store canonical JSON, optional Markdown source, edits, and backups under `.portfolio-manager/hiring-guide/`; do not put the rich editorial library in tracked public data.
 - **Save & Publish** — routine portfolio-content commit/publish flow on `main` with explicit validation and private-path safeguards.
 
 Do not reintroduce the retired v1 generic request-intake routes or forms.
+
+The existing public Ask Haley experience currently reads tracked public FAQ/search files under `portfolio/data/`. Hiring Guide Manager v1 is intentionally private-only and must not write those files. Any future private-library → public-guide synchronization must be an explicit human-reviewed transformation that strips editorial-only fields and respects evidence status/claim rules.
 
 ## AI Assistance Rules
 AI is a controlled assistant, not an autonomous publisher.
