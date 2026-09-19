@@ -1,36 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive learning examples by Haley Reeder, including sales practice, framework identification, and custom scenario development.">
-    <title>Interactive Learning | Haley Reeder</title>
-    <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
-    <link rel="stylesheet" href="../../../css/phase1-theme.css">
-    <link rel="stylesheet" href="../../../css/phase1-frame.css">
-    <style>
-        .scenario-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.scenario-card{display:flex;flex-direction:column;min-height:440px;overflow:hidden;border:1px solid rgba(80,132,132,.2);border-radius:26px;background:linear-gradient(155deg,rgba(255,255,255,.97),rgba(248,250,248,.86));box-shadow:0 17px 42px rgba(52,74,66,.1);transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease}.scenario-card:hover{transform:translateY(-4px);border-color:rgba(121,201,158,.55);box-shadow:0 24px 56px rgba(52,74,66,.14)}.scenario-card-top{position:relative;min-height:230px;padding:26px;background:radial-gradient(circle at 88% 12%,rgba(151,219,79,.2),transparent 28%),linear-gradient(135deg,rgba(80,132,132,.16),rgba(121,201,158,.09));overflow:hidden}.scenario-card-top::after{content:"";position:absolute;width:220px;height:220px;right:-90px;bottom:-120px;border:1px dashed rgba(80,132,132,.2);border-radius:50%}.scenario-heading-row{display:flex;align-items:center;gap:14px;margin-bottom:17px}.scenario-heading-row .icon-badge{flex:0 0 auto}.scenario-card-top h2{margin:3px 0 5px}.scenario-card-top p{max-width:480px;margin-bottom:0}.scenario-visual{position:relative;z-index:1;margin-top:22px}.meddpicc-strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}.meddpicc-strip span{display:grid;place-items:center;min-height:44px;border:1px solid rgba(80,132,132,.18);border-radius:12px;background:rgba(255,255,255,.82);color:var(--pine-blue);font:800 .8rem/1 var(--font-heading);box-shadow:0 8px 18px rgba(52,74,66,.05)}.card-mini-matrix{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;overflow:hidden;max-width:300px;border:2px solid rgba(74,66,56,.55);border-radius:14px}.card-mini-matrix span{display:grid;place-items:center;min-height:48px;padding:6px;font:800 .66rem/1.15 var(--font-heading);text-align:center}.card-mini-matrix span:nth-child(1){background:rgba(121,201,158,.14);border-right:1px solid rgba(74,66,56,.18);border-bottom:1px solid rgba(74,66,56,.18)}.card-mini-matrix span:nth-child(2){background:rgba(121,201,158,.28);border-bottom:1px solid rgba(74,66,56,.18)}.card-mini-matrix span:nth-child(3){background:rgba(74,66,56,.06);border-right:1px solid rgba(74,66,56,.18)}.card-mini-matrix span:nth-child(4){background:rgba(80,132,132,.13)}.scenario-card-body{display:flex;flex:1;flex-direction:column;padding:24px 26px 28px}.scenario-card-body>p{margin-bottom:16px}.scenario-focus{display:flex;flex-wrap:wrap;gap:8px;margin:0}.scenario-focus span{padding:8px 10px;border-radius:999px;background:rgba(243,240,232,.85);border:1px solid rgba(80,132,132,.15);color:var(--charcoal);font-size:.75rem;font-weight:700}.scenario-card-body .button-row{margin-top:auto;padding-top:28px}.scenario-card-body .btn{width:100%;justify-content:center}@media(max-width:800px){.scenario-grid{grid-template-columns:1fr}}@media(max-width:560px){.meddpicc-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.scenario-card-top,.scenario-card-body{padding-left:20px;padding-right:20px}}
-    </style>
-    <script defer src="../../../js/portfolio-motion.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive learning work by Haley Reeder, including custom assessments, gamified practice, scoring logic, accessible interactions, and learner-facing AI.">
+  <title>Interactive Learning | Haley Reeder</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
+  <link rel="stylesheet" href="../../../css/phase1-theme.css">
+  <link rel="stylesheet" href="../../../css/phase1-frame.css">
+  <style>
+    body.interactive-landing{background:#fbfaf4}
+    body.interactive-landing .section{padding-block:clamp(26px,3.4vw,38px)!important}
+    body.interactive-landing .refresh-section-intro{margin-bottom:14px}
+
+    .interactive-hero{
+      position:relative;
+      overflow:hidden;
+      padding:25px 0 31px!important;
+      color:#edf5f1;
+      background:
+        radial-gradient(circle at 86% 18%,rgba(151,219,79,.12),transparent 26rem),
+        radial-gradient(circle at 12% 88%,rgba(80,132,132,.22),transparent 28rem),
+        linear-gradient(145deg,#14272e,#28474a);
+    }
+    .interactive-hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.09;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+      background-size:30px 30px;
+    }
+    .interactive-hero .container{position:relative;z-index:1}
+    .interactive-hero .breadcrumbs,
+    .interactive-hero .breadcrumbs a,
+    .interactive-hero .breadcrumbs span{color:rgba(246,250,247,.78)!important;font-weight:500}
+    .interactive-hero .breadcrumbs a:hover,
+    .interactive-hero .breadcrumbs a:focus-visible{color:#fff!important}
+    .interactive-hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.06fr) minmax(330px,.94fr);
+      gap:34px;
+      align-items:center;
+    }
+    .interactive-hero h1{margin-bottom:8px;color:#fff}
+    .interactive-hero .body-large{max-width:700px;margin-bottom:0;color:#d8e5de}
+    .interactive-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+    .interactive-tags span{
+      padding:6px 9px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      background:rgba(255,255,255,.055);
+      color:#eef7f2;
+      font:800 .61rem/1 var(--font-heading);
+    }
+
+    .interaction-orbit{
+      position:relative;
+      min-height:310px;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+    }
+    .interaction-orbit::before,
+    .interaction-orbit::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+    }
+    .interaction-orbit::before{
+      width:250px;
+      height:250px;
+      border:1px dashed rgba(121,201,158,.34);
+      animation:interactionOrbit 11s linear infinite;
+    }
+    .interaction-orbit::after{
+      width:185px;
+      height:185px;
+      border:1px solid rgba(151,219,79,.18);
+      animation:interactionOrbit 8s linear infinite reverse;
+    }
+    .interaction-core{
+      position:relative;
+      z-index:4;
+      display:grid;
+      place-items:center;
+      width:126px;
+      height:126px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:30px;
+      background:linear-gradient(145deg,#eef6f0,#dcebe2);
+      box-shadow:0 22px 48px rgba(0,0,0,.22);
+      animation:interactionFloat 4.8s ease-in-out infinite;
+    }
+    .interaction-core img{width:100px;height:100px;object-fit:contain}
+    .interaction-satellite{
+      position:absolute;
+      z-index:5;
+      display:grid;
+      place-items:center;
+      width:70px;
+      height:70px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      background:#eef5f0;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+    }
+    .interaction-satellite img{width:55px;height:55px;object-fit:contain}
+    .sat-med{left:8%;top:12%;animation:satelliteFloat 5s ease-in-out infinite}
+    .sat-pursuit{right:7%;top:22%;animation:satelliteFloat 5s .9s ease-in-out infinite}
+    .sat-ai{right:18%;bottom:4%;animation:satelliteFloat 5s 1.8s ease-in-out infinite}
+    .interaction-pulse{
+      position:absolute;
+      z-index:3;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#97db4f;
+      box-shadow:0 0 0 5px rgba(151,219,79,.08),0 0 16px rgba(151,219,79,.5);
+    }
+    .pulse-a{left:27%;top:42%;animation:pulseTravelA 3.2s ease-in-out infinite}
+    .pulse-b{right:27%;top:48%;animation:pulseTravelB 3.5s .8s ease-in-out infinite}
+    @keyframes interactionOrbit{to{transform:rotate(360deg)}}
+    @keyframes interactionFloat{50%{transform:translateY(-7px)}}
+    @keyframes satelliteFloat{50%{transform:translateY(-6px) rotate(2deg)}}
+    @keyframes pulseTravelA{0%,100%{transform:translate(-22px,-24px);opacity:.25}50%{transform:translate(36px,15px);opacity:1}}
+    @keyframes pulseTravelB{0%,100%{transform:translate(26px,-20px);opacity:.25}50%{transform:translate(-34px,18px);opacity:1}}
+
+    .interactive-examples{background:#f7faf8!important}
+    .interactive-example-list{display:grid;gap:11px;width:min(100%,1040px);margin:16px auto 0}
+    .interactive-example{
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:180px minmax(0,1fr) auto;
+      gap:18px;
+      align-items:center;
+      min-height:150px;
+      padding:14px;
+      border:1px solid rgba(80,132,132,.15);
+      border-radius:20px;
+      text-decoration:none;
+      box-shadow:0 12px 28px rgba(44,72,65,.07);
+      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+    }
+    .interactive-example:hover,.interactive-example:focus-visible{
+      transform:translateY(-3px);
+      border-color:rgba(121,201,158,.55);
+      box-shadow:0 17px 34px rgba(44,72,65,.11);
+      outline:none;
+    }
+    .example-med{
+      background:
+        radial-gradient(circle at 10% 10%,rgba(151,219,79,.13),transparent 14rem),
+        linear-gradient(145deg,#f8fbf7,#e8f2ec);
+      color:#30473f;
+    }
+    .example-pursuit{
+      border-color:rgba(121,201,158,.24);
+      background:
+        radial-gradient(circle at 88% 18%,rgba(151,219,79,.09),transparent 15rem),
+        linear-gradient(145deg,#172c33,#264948);
+      color:#edf5f1;
+    }
+    .example-ai{
+      background:
+        radial-gradient(circle at 88% 20%,rgba(80,132,132,.12),transparent 16rem),
+        linear-gradient(145deg,#f5f5ed,#eef7f1);
+      color:#30473f;
+    }
+    .example-art{
+      display:grid;
+      place-items:center;
+      min-height:118px;
+      border-radius:15px;
+      background:rgba(255,255,255,.68);
+      overflow:hidden;
+    }
+    .example-pursuit .example-art{background:rgba(9,27,32,.5)}
+    .example-art img{display:block;width:108px;height:108px;object-fit:contain;transition:transform .18s ease}
+    .interactive-example:hover .example-art img{transform:translateY(-4px) scale(1.035)}
+    .example-copy .eyebrow{margin-bottom:3px;color:#4d7d71!important;font-size:.54rem}
+    .example-pursuit .example-copy .eyebrow{color:#bce6cc!important}
+    .example-copy h3{margin:0 0 5px;color:#263d37;font-size:1.02rem}
+    .example-pursuit .example-copy h3{color:#fff}
+    .example-copy p{margin:0;color:#5a6a64;font-size:.72rem;line-height:1.45}
+    .example-pursuit .example-copy p{color:#ccd9d2}
+    .example-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+    .example-tags span{
+      padding:4px 7px;
+      border-radius:999px;
+      background:rgba(80,132,132,.09);
+      color:#42635b;
+      font:800 .5rem/1 var(--font-heading);
+    }
+    .example-pursuit .example-tags span{background:rgba(121,201,158,.09);color:#d5eadc}
+    .example-arrow{
+      display:grid;
+      place-items:center;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      background:#315755;
+      color:#fff;
+      font:800 1rem/1 var(--font-heading);
+      transition:transform .18s ease;
+    }
+    .example-pursuit .example-arrow{background:#97db4f;color:#173028}
+    .interactive-example:hover .example-arrow{transform:translateX(4px)}
+
+    .interactive-back{
+      padding:18px 0 22px!important;
+      background:#edf4f0!important;
+    }
+    .interactive-back a{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:#315755;
+      text-decoration:none;
+      font:800 .67rem/1.2 var(--font-heading);
+    }
+    .interactive-back a:hover,.interactive-back a:focus-visible{text-decoration:underline;outline:none}
+
+    @media(max-width:850px){
+      .interactive-hero-grid{grid-template-columns:1fr}
+      .interaction-orbit{min-height:275px;max-width:600px;width:100%;margin:auto}
+      .interactive-example{grid-template-columns:145px minmax(0,1fr) auto}
+    }
+    @media(max-width:620px){
+      body.interactive-landing .section{padding-block:24px!important}
+      .interaction-orbit{min-height:245px}
+      .interaction-core{width:105px;height:105px}
+      .interaction-core img{width:84px;height:84px}
+      .interaction-satellite{width:58px;height:58px}
+      .interaction-satellite img{width:45px;height:45px}
+      .interactive-example{grid-template-columns:86px minmax(0,1fr);gap:11px}
+      .example-art{min-height:92px}
+      .example-art img{width:74px;height:74px}
+      .example-arrow{grid-column:2;width:auto;height:auto;justify-self:start;background:transparent!important;color:inherit!important}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .interaction-orbit::before,.interaction-orbit::after,.interaction-core,.interaction-satellite,.interaction-pulse{animation:none!important}
+      .interactive-example,.example-art img,.example-arrow{transition:none}
+    }
+  </style>
+  <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
-<body>
-    <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
-    <main>
-        <section class="page-hero refresh-hero"><div class="container refresh-hero-grid"><div class="refresh-hero-copy"><p class="eyebrow">Instructional Design / Interactive Learning</p><h1>Interactive Learning</h1><p class="body-large">I built these browser-based sales-practice experiences to make the learner's decision visible: one classifies MEDDPICC evidence, and the other scores solution fit and pursuit strength as opportunity evidence changes.</p><div class="refresh-chip-row"><span class="refresh-chip">Scenario Design</span><span class="refresh-chip">Scoring Logic</span><span class="refresh-chip">Feedback</span><span class="refresh-chip">HTML + CSS + JavaScript</span></div></div><div class="visual-flourish" data-parallax-soft aria-label="Visual map of interactive learning capabilities"><div class="visual-flourish-core" aria-hidden="true"><svg class="portfolio-icon icon-xl"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></div><div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></div><div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></div><div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-code"></use></svg></div><div class="visual-flourish-node" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div></div></div></section>
+<body class="interactive-landing">
+<header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
+<main>
+  <section class="page-hero interactive-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Interactive Learning</span></nav>
+      <div class="interactive-hero-grid">
+        <div>
+          <h1>Interactive Learning</h1>
+          <p class="body-large">I design interactions around the decision, judgment, or behavior a learner needs to practice. Depending on the task, that can mean a custom assessment, a matching exercise, a scored decision tool, gamified practice, or an AI-supported conversation. The interaction earns its place by making the learner do something useful, not by adding clicks.</p>
+          <div class="interactive-tags" aria-label="Interactive learning capabilities">
+            <span>Assessments</span>
+            <span>Customized</span>
+            <span>Accessible</span>
+            <span>Engagement</span>
+            <span>Gamification</span>
+          </div>
+        </div>
+        <aside class="interaction-orbit" aria-label="Animated interactive learning capability visual">
+          <span class="interaction-core"><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="Pixel-art pointer interaction icon."></span>
+          <span class="interaction-satellite sat-med"><img src="../../../assets/icons/pixel/meddpicc/qualified-opportunity.webp" alt="" aria-hidden="true"></span>
+          <span class="interaction-satellite sat-pursuit"><img src="../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"></span>
+          <span class="interaction-satellite sat-ai"><img src="../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="" aria-hidden="true"></span>
+          <i class="interaction-pulse pulse-a" aria-hidden="true"></i>
+          <i class="interaction-pulse pulse-b" aria-hidden="true"></i>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-        <section class="section"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Examples</p><h2>Two browser-based practice experiences</h2><p class="body-large reading-width">Both examples are fictional and public-safe; the interaction design, logic, scoring, and feedback are the portfolio evidence.</p></div><div class="scenario-grid">
-            <article class="scenario-card meddpicc-card"><div class="scenario-card-top"><div class="scenario-heading-row"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><div><p class="eyebrow">Framework Identification</p><h2>MEDDPICC Qualification Lab</h2></div></div><p>Match discovery evidence to the MEDDPICC category it most directly supports.</p><div class="scenario-visual meddpicc-strip" aria-label="MEDDPICC framework letters"><span>M</span><span>E</span><span>D</span><span>D</span><span>P</span><span>I</span><span>C</span><span>C</span></div></div><div class="scenario-card-body"><p>I designed the exercise around evidence classification rather than memorizing framework definitions in isolation.</p><div class="scenario-focus"><span>Classification</span><span>Discovery Evidence</span><span>Immediate Feedback</span></div><div class="button-row"><a class="btn btn-primary" href="./meddpicc-practice/index.html">Open MEDDPICC Qualification Lab</a></div></div></article>
-            <article class="scenario-card pursuit-card"><div class="scenario-card-top"><div class="scenario-heading-row"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><div><p class="eyebrow">Opportunity Strategy</p><h2>Pursuit Determination Lab</h2></div></div><p>Score solution fit and pursuit strength, then watch the opportunity move across the matrix.</p><div class="scenario-visual card-mini-matrix" aria-label="Pursuit determination matrix preview"><span>Develop Fit</span><span>Prioritize</span><span>Deprioritize</span><span>Nurture</span></div></div><div class="scenario-card-body"><p>I built the experience with progressive evidence, criterion scoring, a live matrix, and benchmark calibration.</p><div class="scenario-focus"><span>Decision Making</span><span>Live Matrix</span><span>Calibration</span></div><div class="button-row"><a class="btn btn-primary" href="./pursuit-positioning/index.html">Open Pursuit Determination Lab</a></div></div></article>
-            <article class="scenario-card ai-learning-card"><div class="scenario-card-top"><div class="scenario-heading-row"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><div><p class="eyebrow">AI-Enabled Learning</p><h2>Learner-facing AI</h2></div></div><p>See how AI can support learner practice, formative feedback, and adaptive interactions without losing the learning objective.</p><div class="scenario-visual meddpicc-strip" aria-label="AI learning interaction steps"><span>Goal</span><span>Context</span><span>Move</span><span>Guide</span></div></div><div class="scenario-card-body"><p>I use AI where it can make practice more responsive while content boundaries, criteria, and appropriate human review stay visible.</p><div class="scenario-focus"><span>AI Chatbots</span><span>Assisted Assessment</span><span>Adaptive Practice</span></div><div class="button-row"><a class="btn btn-primary" href="./ai-integrations-in-learning/index.html">Explore Learner-facing AI</a></div></div></article>
-        </div></div></section>
+  <section class="section interactive-examples">
+    <div class="container">
+      <div class="section-heading refresh-section-intro">
+        <p class="eyebrow">Examples</p>
+        <h2>Three different interaction patterns for three different learner jobs.</h2>
+        <p class="body-large reading-width">The interface changes with the skill being practiced: classify evidence, weigh an opportunity, or respond inside a guided AI-supported experience.</p>
+      </div>
 
-        <section class="section section-soft"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>More instructional design work</h2></div><div class="refresh-card-grid"><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><p class="eyebrow">Multimedia</p><h3>Multimedia Training</h3></div><div class="refresh-link-card-body"><p>Video, motion, audio, AI-presenter media, and interactive production inside learning projects.</p><a class="project-family-link" href="../multimedia/index.html">Explore Multimedia →</a></div></article><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Curriculum</p><h3>Complete eLearning Pathways</h3></div><div class="refresh-link-card-body"><p>Courses and certifications with practice, assessment, LMS delivery, and reporting.</p><a class="project-family-link" href="../complete-learning-paths/index.html">Explore Complete eLearning Pathways →</a></div></article><article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><p class="eyebrow">Category</p><h3>Instructional Design</h3></div><div class="refresh-link-card-body"><p>Return to the instructional design overview and project categories.</p><a class="project-family-link" href="../index.html">Back to Instructional Design →</a></div></article></div></div></section>
-    </main>
-    <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
+      <div class="interactive-example-list">
+        <a class="interactive-example example-med" href="./meddpicc-practice/index.html">
+          <span class="example-art"><img src="../../../assets/icons/pixel/meddpicc/qualified-opportunity.webp" alt="Pixel-art MEDDPICC qualification visual."></span>
+          <span class="example-copy">
+            <span class="eyebrow">Matching + Classification</span>
+            <h3>MEDDPICC Qualification Lab</h3>
+            <p>Connect detailed discovery evidence to the MEDDPICC component it most directly supports, with immediate feedback and visible progress.</p>
+            <span class="example-tags"><span>Matching</span><span>Qualification</span><span>Feedback</span></span>
+          </span>
+          <span class="example-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a class="interactive-example example-pursuit" href="./pursuit-positioning/index.html">
+          <span class="example-art"><img src="../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="Pixel-art pursuit decision visual."></span>
+          <span class="example-copy">
+            <span class="eyebrow">Scoring + Decision Support</span>
+            <h3>Pursuit Determination Lab</h3>
+            <p>Move from opportunity evidence to criterion scores, then watch solution fit and pursuit strength change the recommended pursuit posture.</p>
+            <span class="example-tags"><span>Scoring</span><span>Live Matrix</span><span>Calibration</span></span>
+          </span>
+          <span class="example-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a class="interactive-example example-ai" href="./ai-integrations-in-learning/index.html">
+          <span class="example-art"><img src="../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="Pixel-art human and AI learning visual."></span>
+          <span class="example-copy">
+            <span class="eyebrow">Responsive + AI-Supported</span>
+            <h3>Learner-facing AI</h3>
+            <p>Design guided conversations, AI-assisted feedback, and adaptive practice around a defined learner task while keeping boundaries and human review visible.</p>
+            <span class="example-tags"><span>Chatbots</span><span>Assessment</span><span>Adaptive Practice</span></span>
+          </span>
+          <span class="example-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section interactive-back">
+    <div class="container"><a href="../index.html"><span aria-hidden="true">←</span> Back to Instructional Design projects</a></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 </body>
 </html>
