@@ -53,7 +53,7 @@
             {% if record.plan.placement.rationale %}<p>{{ record.plan.placement.rationale }}</p>{% endif %}
             <div class="v2-general-grid">
                 <article class="v2-small-card"><h3>Sections</h3><ul>{% for item in record.plan.sections %}<li>{{ item.title }}</li>{% else %}<li>No sections proposed.</li>{% endfor %}</ul></article>
-                <article class="v2-small-card"><h3>Interactions</h3><ul>{% for item in record.plan.interactions %}<li>{{ item.name }}</li>{% else %}<li>No interactions proposed.</li>{% endfor %}</ul></article>
+                <article class="v2-small-card"><h3>Interactions</h3><ul>{% for item in record.plan.interactions %}<li>{{ item.name }}{% if item.component_id %} · <a href="{{ url_for('component_registry.workspace') }}#component-{{ item.component_id }}">{{ item.component_label or item.component_id }}</a>{% endif %}</li>{% else %}<li>No interactions proposed.</li>{% endfor %}</ul></article>
                 <article class="v2-small-card"><h3>Safety Notes</h3><ul>{% for item in record.plan.safety_notes %}<li>{{ item }}</li>{% else %}<li>No additional safety notes.</li>{% endfor %}</ul></article>
             </div>
             {% if not plan_approved %}
@@ -143,6 +143,13 @@
                 <div class="full-span"><label for="outcomes">Results / outcomes / deliverables</label><textarea id="outcomes" name="outcomes" rows="5" maxlength="12000" required>{{ proposal.outcomes|join('&#10;')|safe }}</textarea><p class="field-help">One supported item per line. Do not add unsupported metrics.</p></div>
                 <div class="full-span"><label for="skills">Skills demonstrated</label><input id="skills" name="skills" value="{{ proposal.skills|join(', ') }}"><p class="field-help">Comma-separated.</p></div>
                 <div class="full-span"><label for="tools">Tools used</label><input id="tools" name="tools" value="{{ proposal.tools|join(', ') }}"><p class="field-help">Comma-separated. Keep only tools actually supported by the brief/source material.</p></div>
+                {% if proposal.component_refs %}
+                <div class="full-span v2-connected-note">
+                    <strong>Approved reusable components:</strong>
+                    {% for component_id in proposal.component_refs %}<a href="{{ url_for('component_registry.workspace') }}#component-{{ component_id }}">{{ component_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+                    <br><small>These came from the approved Content Plan and will be stored as project metadata. They do not inject custom code.</small>
+                </div>
+                {% endif %}
                 <div class="full-span"><label for="source_material_notes">Public-safe source / sanitization note</label><textarea id="source_material_notes" name="source_material_notes" rows="3" maxlength="6000">{{ proposal.source_material_notes }}</textarea></div>
                 <div class="full-span button-row"><button class="btn btn-secondary" type="submit">Save Build Proposal</button></div>
             </form>
