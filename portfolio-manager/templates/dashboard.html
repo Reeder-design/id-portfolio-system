@@ -54,7 +54,7 @@
                     </div>
                     <button class="inline-help" type="button" data-help-key="maintenance" data-help-label="Portfolio Manager Workflow">?</button>
                 </div>
-                <p class="section-copy">Start with the goal. Existing portfolio work lives under Manage Content; planning and development for new portfolio work lives under Create Content.</p>
+                <p class="section-copy">Start with the goal. Existing portfolio work lives under Manage Content; new public work lives under Create Content; the Hiring Guide Library maintains the private editorial source behind Ask Haley.</p>
 
                 <div class="v2-workspace-grid">
                     <article class="v2-workspace-card ready">
@@ -69,6 +69,13 @@
                         <h3>Create Content</h3>
                         <p>Turn an idea into a detailed Content Brief, generate a reviewable AI project plan, and prepare new portfolio work before any public files are created.</p>
                         <a class="btn btn-primary" href="{{ url_for('create_content.workspace') }}">Create Content</a>
+                    </article>
+
+                    <article class="v2-workspace-card ready">
+                        <span class="v2-status">Private editorial workspace</span>
+                        <h3>Hiring Guide Library</h3>
+                        <p>Maintain the evidence-grounded Q&A source behind Ask Haley, including confidence, source basis, variants, follow-ups, and demonstrated/emerging evidence status.</p>
+                        <a class="btn btn-primary" href="{{ url_for('hiring_guide.workspace') }}">Open Hiring Guide Library</a>
                     </article>
                 </div>
             </section>
