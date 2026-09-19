@@ -57,6 +57,7 @@
                     <a class="guide-task-card" href="#manage"><strong>Change something already on my portfolio</strong>Go to Manage Content.</a>
                     <a class="guide-task-card" href="#create"><strong>Make a new portfolio project</strong>Go to Create Content and start a Content Brief.</a>
                     <a class="guide-task-card" href="#private-source"><strong>I have work/source material that may be confidential</strong>Put it in Reference Library first.</a>
+                    <a class="guide-task-card" href="#hiring-guide"><strong>I want to update the answers behind Ask Haley</strong>Use Hiring Guide Library.</a>
                     <a class="guide-task-card" href="#ai-tools"><strong>I want AI help</strong>Choose the AI workflow based on the job, not just “use AI.”</a>
                     <a class="guide-task-card" href="#publishing"><strong>I think I am ready to make changes live</strong>Preview, validate, then use Save &amp; Publish.</a>
                     <a class="guide-task-card" href="#development"><strong>We are changing Portfolio Manager itself</strong>Use the feature branch / PR / UAT workflow instead.</a>
@@ -102,7 +103,7 @@
                 <h2>Where information lives: private vs. public</h2>
                 <div class="guide-definition-grid">
                     <div><strong><code>.env</code></strong><br>Local secrets: password hash, Flask secret, optional AI API key. Git-ignored.</div>
-                    <div><strong><code>.portfolio-manager/</code></strong><br>Private working data: notes, AI proposals/reviews, backups, Content Briefs, Reference Library files, temporary uploads. Git-ignored.</div>
+                    <div><strong><code>.portfolio-manager/</code></strong><br>Private working data: notes, AI proposals/reviews, backups, Content Briefs, Reference Library files, Hiring Guide editorial libraries, temporary uploads. Git-ignored.</div>
                     <div><strong><code>portfolio-data/</code></strong><br>Git-tracked structured content. Treat it as publishable repository content.</div>
                     <div><strong><code>portfolio/</code></strong><br>Public-candidate website files and managed assets. Anything here may become reachable after publishing.</div>
                 </div>
@@ -196,6 +197,19 @@
                     <li><strong>Create Something New:</strong> prefill an unsaved Content Brief.</li>
                     <li><strong>Save for Later:</strong> update private proposal status only.</li>
                 </ul>
+            </section>
+
+            <section class="guide-section" id="hiring-guide" data-guide-section data-guide-tags="hiring guide ask haley question library interview answers evidence confidence variants followups private editorial json markdown">
+                <h2>Hiring Guide Library: maintain the answers behind Ask Haley</h2>
+                <p>Use this private workspace when you want to add, revise, audit, or organize canonical hiring-manager answers. Import the canonical JSON library once; optionally import the Markdown editorial copy beside it.</p>
+                <ul>
+                    <li><strong>Browse/search/filter:</strong> find Q&A by text, category, confidence, or evidence status.</li>
+                    <li><strong>Edit Q&A:</strong> maintain the canonical answer, evidence IDs, tags, source basis, confidence, question variants, follow-ups, and implementation notes.</li>
+                    <li><strong>Edit evidence:</strong> maintain what each evidence record supports and whether it is demonstrated, emerging, inferred, or audited.</li>
+                    <li><strong>Backups:</strong> each edit creates a private previous-version copy under <code>.portfolio-manager/hiring-guide/backups/</code>.</li>
+                    <li><strong>Export:</strong> download the current private JSON or preserved Markdown source.</li>
+                </ul>
+                <p class="guide-callout"><strong>Important:</strong> Hiring Guide Manager v1 does not rewrite the public Ask Haley FAQ files and does not publish anything. Public synchronization is a separate future workflow.</p>
             </section>
 
             <section class="guide-section" id="publishing" data-guide-section data-guide-tags="publish save publish git commit push main origin live github pages changed files diff validation stage public">
