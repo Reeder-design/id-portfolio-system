@@ -22,11 +22,16 @@
   const overviewText = document.getElementById('overviewDetailText');
   const selectOverview = (button) => {
     const data = overviewData[button.dataset.overview];
-    if (!data) return;
+    const detail = document.getElementById('overviewDetail');
+    if (!data || !detail) return;
     overviewButtons.forEach((item) => item.classList.toggle('active', item === button));
-    overviewLabel.textContent = data.label;
-    overviewTitle.textContent = data.title;
-    overviewText.textContent = data.text;
+    detail.classList.add('is-switching');
+    window.setTimeout(() => {
+      overviewLabel.textContent = data.label;
+      overviewTitle.textContent = data.title;
+      overviewText.textContent = data.text;
+      detail.classList.remove('is-switching');
+    }, 110);
   };
   overviewButtons.forEach((button) => button.addEventListener('click', () => selectOverview(button)));
 
