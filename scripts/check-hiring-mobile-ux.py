@@ -142,9 +142,9 @@ def main() -> int:
         "const renderCapabilities =",
         "const renderTools =",
         "const setScanView =",
-        "visibleSkills",
+        "chipGroupMarkup",
         "hm-tab-icon-bubble",
-        "hm-scan-flow",
+        "hm-scan-visual",
         "question.specialist",
     ]
     for marker in controller_markers:
