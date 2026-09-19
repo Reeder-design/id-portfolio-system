@@ -63,3 +63,5 @@
 .micro-method-outline{position:absolute;z-index:2;inset:-5px;width:calc(100% + 10px);height:calc(100% + 10px);overflow:visible;pointer-events:none}
 .micro-method-outline rect{fill:none;stroke:var(--yellow-green);stroke-width:.7;stroke-linecap:round;stroke-dasharray:14 86;stroke-dashoffset:0;animation:micro-method-outline-travel 4.8s linear infinite}
 @keyframes micro-method-outline-travel{to{stroke-dashoffset:-100}}
+
+.micro-overview-page .breadcrumbs{grid-column:1/-1;margin-bottom:-8px}.micro-overview-page .breadcrumbs,.micro-overview-page .breadcrumbs a{color:#91a09a}.micro-back-section{padding:28px 0;background:#edf4ef;text-align:center}.micro-back-section .btn{background:#173b3e;color:#fff}
