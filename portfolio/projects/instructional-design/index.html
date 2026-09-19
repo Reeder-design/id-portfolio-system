@@ -58,11 +58,15 @@
         .id-project-copy strong{margin-top:auto;color:#315f57;font:800 .68rem/1.3 var(--font-heading)}
 
         /* Capabilities: selector + evidence + development flow. */
-        .id-capabilities-section{background:linear-gradient(180deg,#eef4f0,#f8faf7)}
-        .id-capabilities-section .refresh-section-intro .eyebrow{color:#9aaca6!important;font-weight:700}
-        .id-capabilities-section .refresh-section-intro h2{color:#6f817a!important;font-weight:600!important}
-        .id-capabilities-section .refresh-section-intro>p:last-child{color:#87958f!important}
-        .id-workbench{display:grid;gap:12px}
+        .id-capabilities-section{
+          background:
+            radial-gradient(circle at 88% 12%,rgba(151,219,79,.09),transparent 22rem),
+            linear-gradient(145deg,#1b3036,#2d5150);
+        }
+        .id-capabilities-section .refresh-section-intro .eyebrow{color:#f4f8f5!important;font-weight:700}
+        .id-capabilities-section .refresh-section-intro h2{color:#fff!important;font-weight:600!important}
+        .id-capabilities-section .refresh-section-intro>p:last-child{color:#edf4f0!important}
+        .id-workbench{display:grid;gap:12px;padding:12px;border-radius:26px;background:rgba(244,248,245,.06);border:1px solid rgba(255,255,255,.08)}
         .id-work-selector{display:flex;gap:8px;overflow-x:auto;padding:3px 2px 8px;scrollbar-width:thin;scroll-snap-type:x proximity}
         .id-work-button{flex:0 0 auto;display:flex;align-items:center;gap:8px;min-height:45px;padding:9px 11px;border:1px solid rgba(80,132,132,.18);border-radius:14px;background:#fff;color:#29463e;font:800 .68rem/1.25 var(--font-heading);text-align:left;cursor:pointer;scroll-snap-align:start;transition:transform .16s ease,border-color .16s ease,background .16s ease,color .16s ease}
         .id-work-button .portfolio-icon{width:21px;height:21px;flex:0 0 auto;color:#508484}
@@ -129,8 +133,8 @@
           position:relative;
           overflow:hidden;
           display:grid;
-          grid-template-columns:minmax(0,1.75fr) minmax(280px,.8fr);
-          min-height:300px;
+          grid-template-columns:minmax(0,1.9fr) minmax(250px,.72fr);
+          min-height:320px;
           border:1px solid rgba(255,255,255,.11);
           border-radius:22px;
           background:#10262d;
@@ -139,7 +143,7 @@
           box-shadow:0 16px 38px rgba(4,18,20,.16);
           transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
         }
-        .id-ecosystem-card:nth-child(even){grid-template-columns:minmax(280px,.8fr) minmax(0,1.75fr)}
+        .id-ecosystem-card:nth-child(even){grid-template-columns:minmax(250px,.72fr) minmax(0,1.9fr)}
         .id-ecosystem-card:nth-child(even) .id-ecosystem-visual{order:2;border-right:0;border-left:1px solid rgba(255,255,255,.08)}
         .id-ecosystem-card:nth-child(even) .id-ecosystem-copy{order:1}
         .id-ecosystem-card:hover,.id-ecosystem-card:focus-visible{
@@ -152,8 +156,8 @@
           position:relative;
           display:grid;
           place-items:center;
-          min-height:300px;
-          padding:18px;
+          min-height:320px;
+          padding:14px;
           border-right:1px solid rgba(255,255,255,.08);
           background:
             radial-gradient(circle at 78% 18%,rgba(151,219,79,.16),transparent 28%),
@@ -172,9 +176,9 @@
         }
         .id-ecosystem-visual img{
           display:block;
-          width:96%;
-          height:92%;
-          max-height:270px;
+          width:98%;
+          height:96%;
+          max-height:292px;
           margin:auto;
           object-fit:contain;
           object-position:center;
@@ -214,8 +218,8 @@
         }
 
         @media(max-width:1050px){.id-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-        @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-card,.id-ecosystem-card:nth-child(even){grid-template-columns:1fr}.id-ecosystem-card:nth-child(even) .id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-copy{order:initial}.id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-visual{min-height:250px;border-left:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
-        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-visual{min-height:220px}.id-ecosystem-copy{padding:18px}}
+        @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-card{grid-template-columns:minmax(0,1.55fr) minmax(220px,.8fr)}.id-ecosystem-card:nth-child(even){grid-template-columns:minmax(220px,.8fr) minmax(0,1.55fr)}.id-ecosystem-visual{min-height:280px}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
+        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-card,.id-ecosystem-card:nth-child(even){grid-template-columns:1fr}.id-ecosystem-card:nth-child(even) .id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-copy{order:initial}.id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-visual{min-height:245px;border-left:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}.id-ecosystem-copy{padding:18px}}
         @media(max-width:520px){body.id-landing .section{padding-block:30px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
         @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
     </style>
