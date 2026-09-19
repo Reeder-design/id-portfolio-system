@@ -614,6 +614,6 @@ def apply_proposal(confirm_text: str) -> tuple[bool, str, dict[str, Any]]:
 
     proposal["status"] = "applied-local"
     proposal["applied_at"] = _now()
-    proposal["backup_path"] = str(backup.relative_to(REPO_ROOT))
+    proposal["backup_path"] = str(Path("public-sync") / "backups" / backup.name)
     PROPOSAL_PATH.write_text(json.dumps(proposal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return True, "Public Hiring Guide sync applied locally and Full Validation passed. Nothing has been committed or published.", proposal
