@@ -3,23 +3,44 @@
     problem: {
       label: 'Problem',
       title: 'Translate technical source material into seller decisions.',
-      text: 'The curriculum needed enough technical context to support credible discovery and solution-fit conversations without turning the pathway into engineering training.'
+      text: 'The curriculum needed enough technical context to support credible discovery and solution-fit conversations without turning the pathway into engineering training.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-document.webp" alt=""><small>Source</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-filter.webp" alt=""><small>Scope</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Seller decision</small></span>`
     },
     ownership: {
       label: 'What I owned',
       title: 'Connect curriculum, practice, assessment, delivery, and maintenance.',
-      text: 'I carried the work from objectives and content architecture through development, SME review, learner-path validation, LMS testing, reporting support, and future updates.'
+      text: 'I carried the work from objectives and content architecture through development, SME review, learner-path validation, LMS testing, reporting support, and future updates.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><small>Architecture</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""><small>Build</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""><small>LMS</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><small>Maintain</small></span>`
     },
     boundary: {
       label: 'Public boundary',
       title: 'Show the design logic without reproducing proprietary material.',
-      text: 'The public case study keeps the real instructional decisions and workflow while replacing customer details, internal naming, product language, and source content.'
+      text: 'The public case study keeps the real instructional decisions and workflow while replacing customer details, internal naming, product language, and source content.',
+      motion: `
+        <span><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""><small>Internal source</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><small>Sanitize</small></span>
+        <i></i>
+        <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Public example</small></span>`
     }
   };
   const overviewButtons = [...document.querySelectorAll('[data-overview]')];
   const overviewLabel = document.getElementById('overviewDetailLabel');
   const overviewTitle = document.getElementById('overviewDetailTitle');
   const overviewText = document.getElementById('overviewDetailText');
+  const overviewMotion = document.getElementById('overviewMotion');
   const selectOverview = (button) => {
     const data = overviewData[button.dataset.overview];
     const detail = document.getElementById('overviewDetail');
@@ -34,6 +55,10 @@
       overviewLabel.textContent = data.label;
       overviewTitle.textContent = data.title;
       overviewText.textContent = data.text;
+      if (overviewMotion) {
+        overviewMotion.className = `overview-motion overview-motion-${button.dataset.overview}`;
+        overviewMotion.innerHTML = data.motion;
+      }
       detail.classList.remove('is-switching');
     }, 110);
   };
