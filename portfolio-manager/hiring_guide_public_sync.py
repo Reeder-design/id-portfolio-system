@@ -455,8 +455,8 @@ def build_proposal() -> dict[str, Any]:
     removed = [public_id for public_id in current_map if public_id not in proposed_map]
 
     source_hashes = {
-        str(PUBLIC_FAQ_PATH.relative_to(REPO_ROOT)): _hash(PUBLIC_FAQ_PATH),
-        str(PUBLIC_EXPANDED_PATH.relative_to(REPO_ROOT)): _hash(PUBLIC_EXPANDED_PATH),
+        PUBLIC_FAQ_PATH.name: _hash(PUBLIC_FAQ_PATH),
+        PUBLIC_EXPANDED_PATH.name: _hash(PUBLIC_EXPANDED_PATH),
     }
 
     proposal = {
@@ -504,8 +504,7 @@ def load_proposal() -> dict[str, Any] | None:
 def _proposal_is_fresh(proposal: dict[str, Any]) -> bool:
     expected = proposal.get("source_hashes", {})
     for path in [PUBLIC_FAQ_PATH, PUBLIC_EXPANDED_PATH]:
-        relative = str(path.relative_to(REPO_ROOT))
-        if expected.get(relative) != _hash(path):
+        if expected.get(path.name) != _hash(path):
             return False
     return True
 
