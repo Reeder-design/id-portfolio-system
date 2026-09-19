@@ -25,3 +25,206 @@
 /* The sanitized evaluation screen is a decorative layer inside the demo, not a separate asset card. */
 .ai-demo-shell{position:relative;display:block;min-height:430px;isolation:isolate}.ai-demo-backdrop{position:absolute;z-index:0;top:26px;right:0;bottom:18px;width:47%;overflow:hidden;border:1px solid rgba(80,132,132,.22);border-radius:0 24px 24px 0;background:#18393d;box-shadow:0 18px 38px rgba(52,74,66,.1)}.ai-demo-backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#18393d 0%,rgba(24,57,61,.74) 23%,rgba(24,57,61,.07) 84%)}.ai-demo-backdrop img{width:100%;height:100%;object-fit:cover;object-position:top right;filter:saturate(.82) contrast(1.04)}.ai-demo-card{position:relative;z-index:1;width:min(77%,760px);min-height:382px;margin-top:28px;background:rgba(255,255,255,.97);backdrop-filter:blur(8px)}
 @media(max-width:720px){.ai-demo-shell{min-height:0}.ai-demo-backdrop{top:20px;right:0;bottom:0;width:58%;height:250px;border-radius:18px;opacity:.58}.ai-demo-card{width:94%;min-height:0;margin-top:22px}.ai-demo-backdrop::after{background:linear-gradient(90deg,#18393d 0%,rgba(24,57,61,.38) 70%,rgba(24,57,61,.08))}}
+
+
+/* Final portfolio-shell alignment */
+.ai-learning-page{background:#fbfaf4}
+.ai-learning-page .section{padding-block:clamp(26px,3.4vw,38px)!important}
+.ai-learning-hero{
+  position:relative;
+  overflow:hidden;
+  padding:24px 0 30px!important;
+  color:#edf5f1;
+  background:
+    radial-gradient(circle at 86% 18%,rgba(151,219,79,.12),transparent 25rem),
+    radial-gradient(circle at 14% 88%,rgba(80,132,132,.22),transparent 27rem),
+    linear-gradient(145deg,#14272e,#28474a)!important;
+}
+.ai-learning-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.085;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.ai-learning-hero .container{position:relative;z-index:1}
+.ai-learning-hero .breadcrumbs,
+.ai-learning-hero .breadcrumbs a,
+.ai-learning-hero .breadcrumbs span{color:rgba(246,250,247,.78)!important;font-weight:500}
+.ai-learning-hero .breadcrumbs a:hover,
+.ai-learning-hero .breadcrumbs a:focus-visible{color:#fff!important}
+.ai-learning-hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.04fr) minmax(330px,.96fr);
+  gap:34px;
+  align-items:center;
+}
+.ai-learning-hero h1{margin-bottom:8px;color:#fff}
+.ai-learning-hero .body-large{max-width:690px;margin-bottom:0;color:#d8e5de}
+.ai-learning-hero .ai-chip-row{gap:6px;margin-top:16px}
+.ai-learning-hero .ai-chip{
+  padding:6px 9px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.055);
+  color:#eef7f2;
+  font-size:.61rem;
+}
+
+.ai-learning-hero-visual{
+  position:relative;
+  min-height:300px;
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+}
+.ai-learning-core{
+  position:relative;
+  z-index:5;
+  display:grid;
+  place-items:center;
+  width:126px;
+  height:126px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:30px;
+  background:linear-gradient(145deg,#eef6f0,#dcebe2);
+  box-shadow:0 22px 48px rgba(0,0,0,.22);
+  animation:aiLearningFloat 4.8s ease-in-out infinite;
+}
+.ai-learning-core img{width:102px;height:102px;object-fit:contain}
+.ai-learning-node{
+  position:absolute;
+  z-index:6;
+  display:grid;
+  place-items:center;
+  width:68px;
+  height:68px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  background:#eef5f0;
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+}
+.ai-learning-node img{width:54px;height:54px;object-fit:contain}
+.ai-learning-chat{left:8%;top:14%;animation:aiLearningNode 5s ease-in-out infinite}
+.ai-learning-assessment{right:7%;top:23%;animation:aiLearningNode 5s .9s ease-in-out infinite}
+.ai-learning-custom{right:18%;bottom:4%;animation:aiLearningNode 5s 1.8s ease-in-out infinite}
+.ai-learning-orbit{
+  position:absolute;
+  z-index:1;
+  border-radius:50%;
+  pointer-events:none;
+}
+.ai-learning-orbit.orbit-one{
+  width:248px;
+  height:248px;
+  border:1px dashed rgba(121,201,158,.34);
+  animation:aiLearningOrbit 11s linear infinite;
+}
+.ai-learning-orbit.orbit-two{
+  width:182px;
+  height:182px;
+  border:1px solid rgba(151,219,79,.18);
+  animation:aiLearningOrbit 8s linear infinite reverse;
+}
+.ai-learning-pulse{
+  position:absolute;
+  z-index:4;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#97db4f;
+  box-shadow:0 0 0 5px rgba(151,219,79,.08),0 0 16px rgba(151,219,79,.5);
+}
+.ai-learning-pulse.pulse-one{left:28%;top:43%;animation:aiLearningPulseA 3.2s ease-in-out infinite}
+.ai-learning-pulse.pulse-two{right:28%;top:50%;animation:aiLearningPulseB 3.5s .8s ease-in-out infinite}
+
+@keyframes aiLearningOrbit{to{transform:rotate(360deg)}}
+@keyframes aiLearningFloat{50%{transform:translateY(-7px)}}
+@keyframes aiLearningNode{50%{transform:translateY(-6px) rotate(2deg)}}
+@keyframes aiLearningPulseA{0%,100%{transform:translate(-20px,-22px);opacity:.25}50%{transform:translate(34px,14px);opacity:1}}
+@keyframes aiLearningPulseB{0%,100%{transform:translate(24px,-18px);opacity:.25}50%{transform:translate(-32px,18px);opacity:1}}
+
+@media(max-width:860px){
+  .ai-learning-hero-grid{grid-template-columns:1fr}
+  .ai-learning-hero-visual{min-height:270px;max-width:600px;width:100%;margin:auto}
+}
+@media(max-width:620px){
+  .ai-learning-page .section{padding-block:24px!important}
+  .ai-learning-hero-visual{min-height:235px}
+  .ai-learning-core{width:104px;height:104px}
+  .ai-learning-core img{width:83px;height:83px}
+  .ai-learning-node{width:56px;height:56px}
+  .ai-learning-node img{width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ai-learning-core,.ai-learning-node,.ai-learning-orbit,.ai-learning-pulse{animation:none!important}
+}
+
+
+/* Light learner-facing AI scenario treatment */
+.ai-scenario-section{
+  background:
+    radial-gradient(circle at 88% 16%,rgba(121,201,158,.10),transparent 22rem),
+    linear-gradient(145deg,#fbfcf9,#edf5f0)!important;
+  color:#2e403a!important;
+}
+.ai-scenario-section h2,
+.ai-scenario-section h3{color:#26383f!important}
+.ai-scenario-section .eyebrow{color:#4a796e!important}
+.ai-scenario-section .ai-intro p:not(.eyebrow){color:#586862!important}
+.ai-scenario-section .ai-scenario-tab{
+  border-color:rgba(80,132,132,.18)!important;
+  background:#fff!important;
+  color:#334640!important;
+  box-shadow:0 7px 17px rgba(52,74,66,.05);
+}
+.ai-scenario-section .ai-scenario-tab span{
+  background:#edf4f0!important;
+  color:#315755!important;
+}
+.ai-scenario-section .ai-scenario-tab strong{color:#334640!important}
+.ai-scenario-section .ai-scenario-tab.active{
+  border-color:#508484!important;
+  background:linear-gradient(135deg,#e7f2eb,#f5f8f5)!important;
+  color:#26383f!important;
+  box-shadow:0 9px 20px rgba(52,74,66,.07)!important;
+}
+.ai-scenario-section .ai-scenario-tab.active span{
+  background:#97db4f!important;
+  color:#173028!important;
+}
+.ai-scenario-section .ai-scenario-panel{
+  border-color:rgba(80,132,132,.18)!important;
+  background:
+    radial-gradient(circle at 90% 14%,rgba(151,219,79,.09),transparent 23%),
+    #fff!important;
+  box-shadow:0 14px 30px rgba(52,74,66,.07)!important;
+}
+.ai-scenario-section .ai-scenario-panel::before{border-color:rgba(80,132,132,.12)!important}
+.ai-scenario-section .ai-customer-header{border-bottom-color:rgba(80,132,132,.12)!important}
+.ai-scenario-section .ai-customer-header p{color:#4a796e!important}
+.ai-scenario-section .ai-customer-header h3{color:#26383f!important}
+.ai-scenario-section .ai-customer-live{
+  border-color:rgba(80,132,132,.2)!important;
+  background:#eef4f0!important;
+  color:#315755!important;
+}
+.ai-scenario-section .ai-customer-message{
+  border-color:rgba(80,132,132,.14)!important;
+  background:#f1f5f2!important;
+}
+.ai-scenario-section .ai-customer-message p{color:#42554e!important}
+.ai-scenario-section .ai-learner-message{
+  border-color:rgba(121,201,158,.34)!important;
+  background:#e5f2e9!important;
+  color:#285544!important;
+}
+.ai-scenario-section .ai-discovery-map>div{
+  border-color:rgba(80,132,132,.13)!important;
+  background:#f5f8f6!important;
+}
+.ai-scenario-section .ai-discovery-map strong{color:#42665c!important}
+.ai-scenario-section .ai-discovery-map span{color:#52635d!important}

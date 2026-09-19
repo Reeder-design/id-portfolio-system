@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="../../css/phase1-frame.css">
     <style>
         body.id-landing{background:#fbfaf4}
-        body.id-landing .section{padding-block:clamp(34px,4.4vw,50px)}
-        body.id-landing .refresh-section-intro{margin-bottom:clamp(16px,2vw,22px)}
+        body.id-landing .section{padding-block:clamp(26px,3.4vw,38px)}
+        body.id-landing .refresh-section-intro{margin-bottom:clamp(12px,1.6vw,17px)}
         body.id-landing .refresh-section-intro h2{margin-bottom:8px}
         body.id-landing .page-hero{padding:clamp(22px,3vw,34px) 0 clamp(26px,3.4vw,38px)!important}
         body.id-landing .refresh-hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(330px,.98fr);gap:clamp(30px,5vw,64px);align-items:center}
-        body.id-landing .parent-page-hero-content .eyebrow{margin:0 0 1px!important;color:#9cafaa!important;font-weight:700}
+        body.id-landing .parent-page-hero-content .eyebrow{margin:0 0 1px!important;color:rgba(74,98,89,.68)!important;font-weight:600}
         body.id-landing .parent-page-hero-content h1{margin:0 0 8px!important;line-height:1.02}
         body.id-landing .id-hero-copy{max-width:720px;margin:0;color:#3f514b;font-size:clamp(1.08rem,1.7vw,1.3rem);line-height:1.55;font-weight:600}
         body.id-landing .refresh-chip-row{gap:7px;margin-top:18px}
@@ -100,7 +100,6 @@
         .id-evidence-stage{min-width:0}
         .id-evidence-frame{display:grid;place-items:center;height:210px;padding:10px;overflow:hidden;border:2px solid #315755;border-radius:16px;background:#fff;box-shadow:0 10px 24px rgba(43,72,64,.08)}
         .id-evidence-frame img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#fff;transition:opacity .12s ease}
-        #idWorkEvidenceNote{margin:7px 2px 0;color:#66766f;font-size:.66rem;line-height:1.4}
         .id-process{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:18px;padding-top:26px}
         .id-process-track{position:absolute;left:12.5%;right:12.5%;top:8px;height:12px;pointer-events:none}
         .id-process-track::before{content:"";position:absolute;left:0;right:0;top:5px;height:2px;border-radius:999px;background:rgba(80,132,132,.16)}
@@ -296,7 +295,7 @@
         @media(max-width:1050px){.id-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
         @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
         @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-grid{grid-template-columns:1fr;gap:42px}.id-ecosystem-card{min-height:0}}
-        @media(max-width:520px){body.id-landing .section{padding-block:30px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
+        @media(max-width:520px){body.id-landing .section{padding-block:24px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
         @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
     </style>
     <script defer src="../../js/portfolio-motion.js"></script>
@@ -406,7 +405,6 @@
                 <div class="id-evidence-frame">
                   <img id="idWorkEvidenceImage" src="../../assets/project-images/instructional-design/id-elearning-module.webp" alt="Public-safe standalone learning module interface." loading="lazy">
                 </div>
-                <p id="idWorkEvidenceNote">A contained module view showing objectives, resources, and a clear learner action inside the experience.</p>
               </aside>
             </div>
 
@@ -502,7 +500,6 @@ function selectIdWork(button){
   window.setTimeout(function(){
     evidenceImage.src=evidence.image;
     evidenceImage.alt=evidence.alt;
-    document.getElementById('idWorkEvidenceNote').textContent=evidence.note;
     evidenceImage.style.opacity='1';
   },90);
   idLoopPanel.classList.remove('is-switching');
