@@ -376,7 +376,7 @@
       label: 'Review',
       icon: 'icon-feedback',
       title: 'Protect accuracy without letting the course drift back into source-document language.',
-      action: 'I coordinated QA, accessibility checks, SME review, assessment review, and revision tracking.'
+      action: 'I coordinated QA, accessibility checks, SME review, assessment review, and revision tracking.',
       resultLabel: 'Protected',
       result: 'Accuracy stayed reviewable without letting the pathway drift back into source-document training.'
     },
@@ -384,7 +384,7 @@
       label: 'LMS + UAT',
       icon: 'icon-lms',
       title: 'Validate the learner journey, not just the course files.',
-      action: 'I tested visibility, enrollment, launch behavior, learner routes, completion logic, and regional requirements in the LMS.'
+      action: 'I tested visibility, enrollment, launch behavior, learner routes, completion logic, and regional requirements in the LMS.',
       resultLabel: 'Improved',
       result: 'Learners could follow the requirements relevant to their role and market without unnecessary content.'
     },
@@ -392,7 +392,7 @@
       label: 'Maintain',
       icon: 'icon-automation',
       title: 'Keep the certification usable after launch.',
-      action: 'I tracked affected content as sources changed and supported reporting when platform status logic did not fully match the certification design.'
+      action: 'I tracked affected content as sources changed and supported reporting when platform status logic did not fully match the certification design.',
       resultLabel: 'Learned',
       result: 'Routing, assessment, reporting, governance, and platform behavior work best when designed as one system.'
     }
