@@ -1458,3 +1458,45 @@ body.contact-primary .contact-hiring-guide-art{
   background:#fff;
   box-shadow:0 12px 24px rgba(43,72,64,.08);
 }
+
+
+/* Contact final alignment: CTA artwork stands alone beneath the copy. */
+body.contact-primary .contact-primary-card{
+  display:flex;
+  flex-direction:column;
+}
+body.contact-primary .contact-card-art-link{
+  width:min(100%,340px)!important;
+  min-height:0!important;
+  margin:18px auto 0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+body.contact-primary .contact-card-art-link:hover,
+body.contact-primary .contact-card-art-link:focus-visible{
+  transform:translateY(-3px)!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  outline:none;
+}
+body.contact-primary .contact-card-art-link:focus-visible{
+  outline:3px solid rgba(151,219,79,.72)!important;
+  outline-offset:5px;
+  border-radius:12px!important;
+}
+body.contact-primary .contact-card-art-link .contact-card-art{
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  object-fit:contain!important;
+}
