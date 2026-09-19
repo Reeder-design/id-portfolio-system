@@ -117,6 +117,9 @@ def main() -> int:
         "removed_public_questions",
         "run_full_validation",
         "APPLY PUBLIC HIRING GUIDE",
+        "MAPPING_OVERRIDES_PATH",
+        "save_mapping_override",
+        "mapping_review_required",
         "_restore_backup",
         "_proposal_is_fresh",
     ]:
@@ -135,6 +138,7 @@ def main() -> int:
     for marker in [
         '@hiring_guide_bp.get("/public-sync")',
         '@hiring_guide_bp.post("/public-sync/preview")',
+        '@hiring_guide_bp.post("/public-sync/mapping")',
         '@hiring_guide_bp.post("/public-sync/test-routing")',
         '@hiring_guide_bp.post("/public-sync/apply")',
     ]:
@@ -143,8 +147,10 @@ def main() -> int:
     for marker in [
         "Public Sync Preview",
         "Generate Public Sync Preview",
-        "Matching audit",
-        "Exactly what would change",
+        "Mapping health",
+        "Resolve likely duplicates",
+        "Keep as Separate New Question",
+        "New public questions by category",
         "Routing simulator",
         "Apply Public Sync Locally + Validate",
         "This still does not publish",
@@ -201,6 +207,17 @@ def main() -> int:
                     "evidence": [],
                     "followups": [],
                 },
+                {
+                    "id": "ai-learning-old",
+                    "category": "AI",
+                    "short_label": "AI in learning design",
+                    "prompt": "Are you using AI in learning design?",
+                    "featured": False,
+                    "keywords": ["AI", "learning design"],
+                    "answer": "Older public AI answer.",
+                    "evidence": [],
+                    "followups": [],
+                },
             ],
         })
         write_json(expanded, {"version": "1.0.0", "questions": []})
@@ -230,14 +247,35 @@ def main() -> int:
         sync.SYNC_ROOT = sync_root
         sync.PROPOSAL_PATH = sync_root / "proposal.json"
         sync.BACKUP_ROOT = sync_root / "backups"
+        sync.MAPPING_OVERRIDES_PATH = sync_root / "mapping-overrides.json"
         sync.load_library = lambda: deepcopy(sample_private_library())
 
         proposal = sync.build_proposal()
         summary = proposal["summary"]
         require(summary["private_canonical"] == 2, "Draft private Q&A must be excluded from public sync.", errors)
         require(summary["matched_existing"] == 1, "About Q&A should confidently match the legacy public record.", errors)
-        require(summary["new_public_questions"] == 1, "One unmatched canonical private Q&A should be added.", errors)
+        require(summary["mapping_review_required"] == 1, "Likely conceptual overlap should require mapping review.", errors)
+        require(summary["new_public_questions"] == 1, "Unresolved overlap should remain staged as new until reviewed.", errors)
         require(summary["removed_public_questions"] == 0, "Public sync must preserve unmatched legacy records.", errors)
+        require(not summary["apply_ready"], "Unresolved mapping review must block apply readiness.", errors)
+
+        try:
+            sync.apply_proposal(sync.APPLY_CONFIRMATION)
+        except sync.HiringGuidePublicSyncError as exc:
+            require("mapping" in str(exc).lower(), "Blocked apply should explain unresolved mapping review.", errors)
+        else:
+            errors.append("Unresolved mapping review must block applying the proposal.")
+
+        # Manual mapping resolves the likely duplicate and persists privately.
+        sync.save_mapping_override("HG-AI-03", "match", "ai-learning-old")
+        require(sync.MAPPING_OVERRIDES_PATH.exists(), "Manual mapping should persist in private sync state.", errors)
+        proposal = sync.build_proposal()
+        summary = proposal["summary"]
+        require(summary["mapping_review_required"] == 0, "Manual mapping should resolve mapping review.", errors)
+        require(summary["matched_existing"] == 2, "Manual mapping should count as an existing public match.", errors)
+        require(summary["manual_decisions"] == 1, "Manual mapping decision should be reported.", errors)
+        require(summary["new_public_questions"] == 0, "Manual mapping should prevent duplicate new public question.", errors)
+        require(summary["apply_ready"], "Resolved non-destructive proposal should be ready for routing/apply.", errors)
 
         core_questions = proposal["outputs"]["hiring-faq.json"]["questions"]
         expanded_questions = proposal["outputs"]["hiring-faq-expanded.json"]["questions"]
@@ -246,8 +284,8 @@ def main() -> int:
 
         require(by_id["about-me"]["answer"] == "New private canonical answer.", "Matched public answer was not updated.", errors)
         require(by_id["legacy-only"]["answer"] == "Keep me.", "Unmatched legacy public question was not preserved.", errors)
-        require("hg-ai-03" in by_id, "New canonical private Q&A did not receive a stable public ID.", errors)
-        require(by_id["about-me"]["followups"] == ["hg-ai-03"], "Natural-language private follow-up was not resolved to a public ID.", errors)
+        require(by_id["ai-learning-old"]["answer"] == "I am actively developing that capability.", "Manual mapping did not update selected public record.", errors)
+        require(by_id["about-me"]["followups"] == ["ai-learning-old"], "Natural-language private follow-up was not resolved to the manually mapped public ID.", errors)
 
         serialized = json.dumps(proposal["outputs"])
         for private_field in ["source", "confidence", "variants", "notes", "review_status", "evidence_ids", "_private_id"]:
@@ -258,6 +296,14 @@ def main() -> int:
 
         routing = sync.test_routing("tell me about your background", proposal)
         require(bool(routing) and routing[0]["id"] == "about-me", "Routing simulator did not rank the expected public question first.", errors)
+
+        # A manual "new" choice is also remembered and can return to automatic mode.
+        sync.save_mapping_override("HG-AI-03", "new")
+        proposal_new = sync.build_proposal()
+        require(proposal_new["summary"]["mapping_review_required"] == 0, "Confirmed separate/new should resolve review.", errors)
+        require(proposal_new["summary"]["new_public_questions"] == 1, "Confirmed separate/new should stage a new public record.", errors)
+        sync.save_mapping_override("HG-AI-03", "match", "ai-learning-old")
+        proposal = sync.build_proposal()
 
         # Successful local apply writes only the two FAQ files and marks the proposal applied.
         sync.run_full_validation = lambda: (True, "PASS")
