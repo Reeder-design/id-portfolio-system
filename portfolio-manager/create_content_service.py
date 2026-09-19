@@ -187,6 +187,13 @@ def brief_preflight(record: dict[str, Any]) -> dict[str, list[str]]:
     return checks
 
 
+def _planning_component_registry() -> dict[str, Any]:
+    try:
+        return load_registry()
+    except ComponentRegistryError as exc:
+        raise CreateContentError(str(exc)) from exc
+
+
 CREATE_PLAN_INSTRUCTIONS = """You are a planning assistant inside a private instructional-design portfolio creation workspace.
 Your job is to help turn a human-authored Content Brief and any explicitly attached approved sanitized sources into a concrete portfolio project plan before any public page is created.
 
@@ -255,7 +262,7 @@ def _plan_prompt(record: dict[str, Any]) -> str:
         + "PORTFOLIO TAXONOMY:\n"
         + json.dumps(load_taxonomy(), ensure_ascii=False, indent=2)
         + "\n\nREUSABLE COMPONENT REGISTRY:\n"
-        + json.dumps(load_registry(), ensure_ascii=False, indent=2)
+        + json.dumps(_planning_component_registry(), ensure_ascii=False, indent=2)
         + "\n\nREQUIRED JSON SHAPE:\n"
         + json.dumps(expected, ensure_ascii=False, indent=2)
     )
@@ -313,7 +320,7 @@ def _normalize_plan(value: Any) -> dict[str, Any]:
     try:
         registry_components = {
             str(item.get("id")): item
-            for item in load_registry().get("components", [])
+            for item in _planning_component_registry().get("components", [])
             if isinstance(item, dict) and item.get("id")
         }
     except ComponentRegistryError as exc:
