@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiring Guide Library | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiring-guide-manager.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header hiring-guide-header">
+        <div>
+            <p class="eyebrow">Private Manager workspace</p>
+            <h1>Hiring Guide Library</h1>
+            <p class="hero-copy">Maintain the evidence-grounded answers behind Ask Haley without editing JSON by hand. The rich editorial library stays local and Git-ignored.</p>
+        </div>
+        <div class="header-actions">
+            {% if library %}
+            <a class="btn btn-secondary" href="{{ url_for('hiring_guide.export_json') }}">Export JSON</a>
+            {% if source_markdown %}<a class="btn btn-secondary" href="{{ url_for('hiring_guide.export_markdown') }}">Editorial Markdown</a>{% endif %}
+            {% endif %}
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-stack">
+        {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    {% if not library %}
+    <main>
+        <section class="dashboard-card hiring-import-card">
+            <p class="eyebrow">First-time import</p>
+            <h2>Bring in the source-of-truth library</h2>
+            <p class="section-copy">Import the JSON as the canonical machine-readable library. Add the Markdown too if you want the human-readable editorial copy preserved beside it. Both files remain under <code>.portfolio-manager/</code> on this Mac.</p>
+            <form method="post" action="{{ url_for('hiring_guide.import_source') }}" enctype="multipart/form-data" class="hiring-import-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label>Canonical Q&amp;A JSON
+                    <input type="file" name="json_file" accept=".json,application/json" required>
+                </label>
+                <label>Editorial Markdown <span class="muted-inline">optional but recommended</span>
+                    <input type="file" name="markdown_file" accept=".md,.markdown,text/markdown">
+                </label>
+                <button class="btn btn-primary" type="submit">Import Private Library</button>
+            </form>
+            <div class="private-boundary">
+                <strong>Private boundary</strong>
+                <span>This import does not update the public Hiring Manager page, public FAQ JSON, Git, or GitHub Pages.</span>
+            </div>
+        </section>
+    </main>
+    {% else %}
+    <main class="hiring-library-layout">
+        <section class="hiring-summary-grid" aria-label="Hiring Guide library summary">
+            <article><span>Canonical Q&amp;As</span><strong>{{ summary.qa_count }}</strong></article>
+            <article><span>Evidence records</span><strong>{{ summary.evidence_count }}</strong></article>
+            <article><span>Categories</span><strong>{{ summary.categories|length }}</strong></article>
+            <article><span>Private backups</span><strong>{{ backups }}</strong></article>
+        </section>
+
+        <section class="dashboard-card hiring-library-controls">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Browse + maintain</p>
+                    <h2>Find the answer you want to work on</h2>
+                    <p class="section-copy">{{ records|length }} record{% if records|length != 1 %}s{% endif %} shown. Filters affect only this Manager view.</p>
+                </div>
+                <a class="btn btn-primary" href="{{ url_for('hiring_guide.new_qa') }}">+ Add Q&amp;A</a>
+            </div>
+            <form method="get" class="hiring-filter-grid">
+                <label class="full-search">Search
+                    <input type="search" name="q" value="{{ filters.q or '' }}" placeholder="Question, answer, tag, category, source, or ID">
+                </label>
+                <label>Category
+                    <select name="category">
+                        <option value="">All categories</option>
+                        {% for value in summary.categories %}
+                        <option value="{{ value }}" {% if filters.category == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>Confidence
+                    <select name="confidence">
+                        <option value="">All confidence levels</option>
+                        {% for value in summary.confidences %}
+                        <option value="{{ value }}" {% if filters.confidence == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>Evidence status
+                    <select name="evidence_status">
+                        <option value="">Any evidence status</option>
+                        {% for value in evidence_statuses %}
+                        <option value="{{ value }}" {% if filters.evidence_status == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" type="submit">Apply Filters</button>
+                    <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Clear</a>
+                </div>
+            </form>
+        </section>
+
+        <div class="hiring-manager-columns">
+            <section class="hiring-record-column">
+                <div class="hiring-record-list">
+                    {% for item in records %}
+                    <article class="hiring-record-card">
+                        <div class="hiring-record-topline">
+                            <span class="status-pill">{{ item.category }}</span>
+                            <span class="confidence-pill">{{ item.confidence }}</span>
+                        </div>
+                        <h3>{{ item.question }}</h3>
+                        <p>{{ item.answer }}</p>
+                        <div class="hiring-record-meta">
+                            <span><strong>{{ item.id }}</strong></span>
+                            {% if item.source %}<span>{{ item.source }}</span>{% endif %}
+                        </div>
+                        {% if item.tags %}
+                        <div class="hiring-tag-row">{% for tag in item.tags[:8] %}<span>{{ tag }}</span>{% endfor %}</div>
+                        {% endif %}
+                        {% if item._evidence %}
+                        <div class="hiring-evidence-row">
+                            {% for evidence in item._evidence %}
+                            <a href="{{ url_for('hiring_guide.edit_evidence', evidence_id=evidence.id) }}" class="evidence-chip {{ evidence.status }}">{{ evidence.id }} · {{ evidence.status }}</a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="button-row">
+                            <a class="btn btn-primary" href="{{ url_for('hiring_guide.edit_qa', qa_id=item.id) }}">Edit Q&amp;A</a>
+                        </div>
+                    </article>
+                    {% else %}
+                    <div class="empty-state hiring-empty">No Q&amp;A records match these filters.</div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <aside class="hiring-evidence-column">
+                <section class="dashboard-card sticky-library-panel">
+                    <p class="eyebrow">Evidence index</p>
+                    <h2>What the answers can claim</h2>
+                    <p class="section-copy">Evidence status stays separate from the polished answer. Use it to keep demonstrated work, emerging work, and inferred/audited positioning calibrated.</p>
+                    <div class="hiring-evidence-list">
+                        {% for evidence in library.evidence %}
+                        <a href="{{ url_for('hiring_guide.edit_evidence', evidence_id=evidence.id) }}">
+                            <span><strong>{{ evidence.id }}</strong><small>{{ evidence.status }}</small></span>
+                            <b>{{ evidence.title }}</b>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <section class="dashboard-card hiring-library-rules">
+            <details>
+                <summary><span><span class="eyebrow">Assistant contract</span><strong>Voice + conversation rules</strong></span><span>View source rules</span></summary>
+                <div class="rules-grid">
+                    <div>
+                        <h3>Voice rules</h3>
+                        <ul>{% for rule in library.voice_rules %}<li>{{ rule }}</li>{% endfor %}</ul>
+                    </div>
+                    <div>
+                        <h3>Conversation behavior</h3>
+                        <pre>{{ library.conversation_rules | tojson(indent=2) }}</pre>
+                    </div>
+                </div>
+            </details>
+        </section>
+    </main>
+    {% endif %}
+</div>
+</body>
+</html>
