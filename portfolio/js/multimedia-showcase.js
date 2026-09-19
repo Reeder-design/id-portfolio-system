@@ -91,15 +91,50 @@
     }
   };
 
+  const projects = {
+    vertical: {
+      label: 'AI-presenter video',
+      title: 'Vertical Positioning Microlearning',
+      text: 'I combined Rise content, industry visuals, scenario practice, and a short Colossyan presenter segment to orient sellers before they moved into the learning.',
+      tags: ['Rise 360','Colossyan','Scenario'],
+      href: '../microlearning-performance-support/vertical-positioning-microlearning/index.html',
+      link: 'Explore the project →'
+    },
+    certification: {
+      label: 'Mixed media curriculum',
+      title: 'Enterprise Sales Certification',
+      text: 'I used graphics, multimedia, comparisons, Storyline interactions, knowledge checks, and assessments across a larger certification experience.',
+      tags: ['Rise 360','Storyline','Media'],
+      href: '../complete-learning-paths/enterprise-sales-certification/index.html',
+      link: 'Explore the project →'
+    },
+    launch: {
+      label: 'Visual + interactive support',
+      title: 'Product Launch Microlearning',
+      text: 'I paired a concise product overview with an interactive customer-facing scenario so visual explanation led directly into seller practice.',
+      tags: ['Rise 360','Storyline','Feedback'],
+      href: '../microlearning-performance-support/product-launch-microlearning/index.html',
+      link: 'Explore the project →'
+    }
+  };
+
   const setText = (id, value) => {
     const el = document.getElementById(id);
     if (el) el.textContent = value;
+  };
+
+  const restartAnimation = (element, className = 'is-switching') => {
+    if (!element) return;
+    element.classList.remove(className);
+    void element.offsetWidth;
+    element.classList.add(className);
   };
 
   const setupTabs = (selector, dataKey, render) => {
     const buttons = [...document.querySelectorAll(selector)];
     buttons.forEach((button, index) => {
       button.tabIndex = button.getAttribute('aria-selected') === 'true' ? 0 : -1;
+
       const activate = () => {
         buttons.forEach((item) => {
           const active = item === button;
@@ -128,33 +163,89 @@
   setupTabs('[data-media-sample]', 'mediaSample', (key) => {
     const data = samples[key];
     const image = document.getElementById('mediaEvidenceImage');
-    image.src = '../../../assets/project-images/multimedia/' + data.file;
-    image.alt = data.alt;
-    setText('mediaEvidenceLabel', data.label);
-    setText('mediaEvidenceTool', data.tool);
-    setText('mediaEvidenceText', data.text);
-    setText('mediaEvidenceRole', data.role);
-    setText('mediaEvidenceQa', data.qa);
+    const frame = image?.closest('.media-evidence-frame');
+    if (!data || !image) return;
+
+    image.style.opacity = '0';
+    window.setTimeout(() => {
+      image.src = '../../../assets/project-images/multimedia/' + data.file;
+      image.alt = data.alt;
+      setText('mediaEvidenceLabel', data.label);
+      setText('mediaEvidenceTool', data.tool);
+      setText('mediaEvidenceText', data.text);
+      setText('mediaEvidenceRole', data.role);
+      setText('mediaEvidenceQa', data.qa);
+      image.style.opacity = '1';
+      restartAnimation(frame);
+    }, 80);
   });
 
   setupTabs('[data-media-workflow]', 'mediaWorkflow', (key) => {
     const data = workflow[key];
+    const motion = document.getElementById('mediaWorkflowMotion');
+    if (!data) return;
+
     setText('mediaWorkflowLabel', data.label);
     setText('mediaWorkflowTitle', data.title);
     setText('mediaWorkflowText', data.text);
     setText('mediaWorkflowDecision', data.decision);
     setText('mediaWorkflowOutput', data.output);
     setText('mediaWorkflowQa', data.qa);
+
+    if (motion) {
+      motion.dataset.phase = key;
+      motion.setAttribute('aria-label', 'Animated demonstration of ' + data.label.toLowerCase());
+      restartAnimation(motion);
+    }
+  });
+
+  setupTabs('[data-media-project]', 'mediaProject', (key) => {
+    const data = projects[key];
+    const tags = document.getElementById('mediaProjectTags');
+    const link = document.getElementById('mediaProjectLink');
+    const flow = document.querySelector('.media-project-flow');
+    if (!data) return;
+
+    setText('mediaProjectLabel', data.label);
+    setText('mediaProjectTitle', data.title);
+    setText('mediaProjectText', data.text);
+
+    if (tags) {
+      tags.replaceChildren(...data.tags.map((tag) => {
+        const chip = document.createElement('span');
+        chip.textContent = tag;
+        return chip;
+      }));
+    }
+
+    if (link) {
+      link.href = data.href;
+      link.textContent = data.link;
+    }
+
+    if (flow) {
+      flow.dataset.project = key;
+      flow.setAttribute('aria-label', 'Animated media integration for ' + data.title);
+      restartAnimation(flow);
+    }
   });
 
   const navLinks = [...document.querySelectorAll('.case-nav a')];
-  const sections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  const sections = navLinks
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (!visible) return;
-      navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === '#' + visible.target.id));
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + visible.target.id);
+      });
     }, {rootMargin:'-28% 0px -58% 0px', threshold:[0.1,.35,.6]});
+
     sections.forEach((section) => observer.observe(section));
   }
 })();
