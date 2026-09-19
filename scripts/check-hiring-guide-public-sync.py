@@ -119,6 +119,7 @@ def main() -> int:
         "APPLY PUBLIC HIRING GUIDE",
         "MAPPING_OVERRIDES_PATH",
         "save_mapping_override",
+        "_proposal_is_renderable",
         "mapping_review_required",
         "_restore_backup",
         "_proposal_is_fresh",
@@ -251,6 +252,17 @@ def main() -> int:
         sync.BACKUP_ROOT = sync_root / "backups"
         sync.MAPPING_OVERRIDES_PATH = sync_root / "mapping-overrides.json"
         sync.load_library = lambda: deepcopy(sample_private_library())
+
+        # Older preview schemas are disposable and must never crash the newer review UI.
+        sync.SYNC_ROOT.mkdir(parents=True, exist_ok=True)
+        sync.PROPOSAL_PATH.write_text(json.dumps({
+            "schema_version": "1.0",
+            "summary": {"matched_existing": 1},
+            "matches": [],
+            "diff": {"added": [], "changed": [], "removed": []},
+            "outputs": {},
+        }), encoding="utf-8")
+        require(sync.load_proposal() is None, "Old public-sync proposal schema must be ignored instead of rendered.", errors)
 
         proposal = sync.build_proposal()
         summary = proposal["summary"]
