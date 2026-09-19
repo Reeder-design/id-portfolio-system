@@ -155,202 +155,11 @@
       animation:interactionSignal 2.6s linear infinite;
     }
     .interaction-flow-link.two i{animation-delay:1.2s}
-    .interaction-choice{
-      position:absolute;
-      right:10px;
-      top:10px;
-      display:grid;
-      place-items:center;
-      width:25px;
-      height:25px;
-      border-radius:50%;
-      background:#eef6f0;
-      color:#315755;
-      font:900 .55rem/1 var(--font-heading);
-      box-shadow:0 4px 10px rgba(0,0,0,.14);
-      opacity:.35;
-      animation:interactionChoice 2.6s ease-in-out infinite;
-    }
-    .interaction-feedback-check{
-      position:absolute;
-      right:10px;
-      top:10px;
-      display:grid;
-      place-items:center;
-      width:25px;
-      height:25px;
-      border-radius:50%;
-      background:#97db4f;
-      color:#173028;
-      font:900 .65rem/1 var(--font-heading);
-      box-shadow:0 0 0 5px rgba(151,219,79,.07);
-      opacity:.35;
-      animation:feedbackConfirm 2.6s 1.2s ease-in-out infinite;
-    }
     @keyframes interactionSignal{
       0%{left:0;opacity:0}
       14%{opacity:1}
       86%{opacity:1}
       100%{left:calc(100% - 8px);opacity:0}
-    }
-    @keyframes interactionChoice{
-      0%,38%,100%{opacity:.3;transform:scale(.82)}
-      48%,72%{opacity:1;transform:scale(1.08)}
-    }
-    @keyframes feedbackConfirm{
-      0%,38%,100%{opacity:.3;transform:scale(.82)}
-      48%,72%{opacity:1;transform:scale(1.08)}
-    }
-
-    .interaction-approach{
-      background:#fff!important;
-      border-bottom:1px solid rgba(80,132,132,.08);
-    }
-    .interaction-approach-shell{
-      width:min(100%,1060px);
-      margin:0 auto;
-    }
-    .interaction-approach-copy{
-      display:grid;
-      grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
-      gap:24px;
-      align-items:end;
-      margin-bottom:14px;
-    }
-    .interaction-approach-copy .eyebrow{margin-bottom:5px;color:#4a796e!important;font-size:.66rem}
-    .interaction-approach-copy h2{
-      margin:0;
-      max-width:640px;
-      color:#263d37;
-      font-size:clamp(1.38rem,2.25vw,1.78rem);
-      line-height:1.16;
-    }
-    .interaction-approach-copy p{
-      margin:0;
-      color:#52635c;
-      font-size:.9rem;
-      line-height:1.58;
-    }
-    .interaction-learning-flow{
-      position:relative;
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px;
-      padding:14px;
-      border:1px solid rgba(80,132,132,.13);
-      border-radius:20px;
-      background:
-        radial-gradient(circle at 92% 10%,rgba(151,219,79,.08),transparent 15rem),
-        linear-gradient(145deg,#f8faf8,#edf5f0);
-      box-shadow:0 12px 28px rgba(44,72,65,.06);
-      overflow:hidden;
-    }
-    .interaction-learning-flow::before{
-      content:"";
-      position:absolute;
-      left:8%;
-      right:8%;
-      top:50%;
-      height:3px;
-      transform:translateY(-50%);
-      border-radius:999px;
-      background:linear-gradient(90deg,rgba(80,132,132,.2),rgba(121,201,158,.34),rgba(151,219,79,.28));
-      pointer-events:none;
-    }
-    .learning-flow-step{
-      position:relative;
-      z-index:2;
-      display:grid;
-      justify-items:center;
-      align-content:center;
-      min-height:184px;
-      padding:13px 11px 15px;
-      border:1px solid rgba(80,132,132,.13);
-      border-radius:16px;
-      background:#fff;
-      text-align:center;
-      cursor:pointer;
-      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;
-    }
-    .learning-flow-step:hover,
-    .learning-flow-step:focus-visible,
-    .learning-flow-step.active{
-      transform:translateY(-4px);
-      border-color:rgba(121,201,158,.55);
-      background:#f8fbf8;
-      box-shadow:0 12px 24px rgba(44,72,65,.09);
-      outline:none;
-    }
-    .learning-flow-icon{
-      display:grid;
-      place-items:center;
-      width:98px;
-      height:98px;
-      border:1px solid rgba(80,132,132,.1);
-      border-radius:18px;
-      background:#f5f9f6;
-      box-shadow:0 8px 18px rgba(44,72,65,.08);
-      transition:transform .18s ease;
-    }
-    .learning-flow-icon img{
-      display:block;
-      width:82px;
-      height:82px;
-      object-fit:contain;
-    }
-    .learning-flow-step strong{
-      display:block;
-      margin-top:9px;
-      color:#315755;
-      font:800 .82rem/1.18 var(--font-heading);
-    }
-    .learning-flow-step small{
-      display:block;
-      margin-top:4px;
-      max-width:190px;
-      color:#596a63;
-      font:.68rem/1.4 var(--font-body);
-    }
-    .learning-flow-step::after{
-      content:"";
-      position:absolute;
-      left:12px;
-      right:12px;
-      bottom:9px;
-      height:4px;
-      border-radius:999px;
-      background:rgba(80,132,132,.08);
-    }
-    .learning-flow-step i{
-      position:absolute;
-      left:12px;
-      bottom:9px;
-      width:0;
-      height:4px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
-    }
-    .learning-flow-step.active i{animation:learningStepFill 3.8s ease-in-out infinite}
-    .interaction-step-detail{
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr);
-      gap:10px;
-      align-items:center;
-      margin-top:10px;
-      padding:12px 14px;
-      border:1px solid rgba(80,132,132,.12);
-      border-radius:13px;
-      background:#f4f8f5;
-    }
-    .interaction-step-detail strong{
-      color:#315755;
-      font:800 .78rem/1.2 var(--font-heading);
-    }
-    .interaction-step-detail p{
-      margin:0;
-      color:#596862;
-      font-size:.77rem;
-      line-height:1.46;
     }
     @keyframes learningStepFill{
       0%{width:0;opacity:.35}
@@ -630,7 +439,7 @@
       .example-arrow{grid-column:2;width:auto;height:auto;justify-self:start;background:transparent!important;color:inherit!important}
     }
     @media(prefers-reduced-motion:reduce){
-      .interaction-flow-link i,.interaction-choice,.interaction-feedback-check,.learning-flow-step i,.learner-ai-feature-node i{animation:none!important}
+      .interaction-flow-link i,.learning-flow-step i,.learner-ai-feature-node i{animation:none!important}
       .interactive-example,.example-art img,.example-arrow,.learning-flow-step,.learning-flow-icon,.learner-ai-feature-link{transition:none}
     }
   </style>
@@ -662,13 +471,11 @@
           </div>
           <div class="interaction-flow-card action">
             <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="" aria-hidden="true"></span>
-            <span class="interaction-choice" aria-hidden="true">1</span>
             <strong>Learner action</strong>
             <small>Choose, match, score, or respond.</small>
           </div>
           <div class="interaction-flow-card feedback">
             <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true"></span>
-            <span class="interaction-feedback-check" aria-hidden="true">✓</span>
             <strong>Feedback</strong>
             <small>Reinforce the reasoning and next move.</small>
           </div>
