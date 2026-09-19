@@ -204,9 +204,9 @@ body.home-primary .home-next-step-section .primary-link-grid{
 }
 body.home-primary .home-next-step-section .primary-link-card{
   display:grid;
-  grid-template-columns:78px minmax(0,1fr);
+  grid-template-columns:104px minmax(0,1fr);
   align-items:stretch;
-  min-height:118px;
+  min-height:138px;
   border-radius:16px;
   border-color:rgba(255,255,255,.12);
   background:rgba(255,255,255,.96);
@@ -214,17 +214,19 @@ body.home-primary .home-next-step-section .primary-link-card{
 }
 body.home-primary .home-next-step-section .primary-link-visual{
   min-height:0;
-  padding:9px;
+  padding:12px;
   border-right:1px solid rgba(80,132,132,.12);
   border-bottom:0;
   background:linear-gradient(145deg,#eaf4ee,#fbfaf4);
 }
 body.home-primary .home-next-step-section .primary-link-visual img{
-  width:58px;
-  height:58px;
+  width:86px;
+  height:86px;
+  max-width:100%;
+  object-fit:contain;
 }
 body.home-primary .home-next-step-section .primary-link-copy{
-  padding:12px 13px;
+  padding:14px 14px;
 }
 body.home-primary .home-next-step-section .primary-link-copy .eyebrow{
   margin-bottom:2px;
