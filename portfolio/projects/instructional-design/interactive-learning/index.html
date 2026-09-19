@@ -63,78 +63,232 @@
       font:800 .61rem/1 var(--font-heading);
     }
 
-    .interaction-orbit{
+    .interaction-flow{
       position:relative;
-      min-height:310px;
+      min-height:295px;
       display:grid;
-      place-items:center;
-      isolation:isolate;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      align-items:center;
+      padding:16px;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at 82% 12%,rgba(151,219,79,.08),transparent 12rem),
+        rgba(8,24,29,.42);
+      box-shadow:0 22px 46px rgba(0,0,0,.16);
+      backdrop-filter:blur(8px);
     }
-    .interaction-orbit::before,
-    .interaction-orbit::after{
-      content:"";
-      position:absolute;
-      border-radius:50%;
-      pointer-events:none;
-    }
-    .interaction-orbit::before{
-      width:250px;
-      height:250px;
-      border:1px dashed rgba(121,201,158,.34);
-      animation:interactionOrbit 11s linear infinite;
-    }
-    .interaction-orbit::after{
-      width:185px;
-      height:185px;
-      border:1px solid rgba(151,219,79,.18);
-      animation:interactionOrbit 8s linear infinite reverse;
-    }
-    .interaction-core{
+    .interaction-flow-card{
       position:relative;
-      z-index:4;
+      z-index:2;
       display:grid;
-      place-items:center;
-      width:126px;
-      height:126px;
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:30px;
-      background:linear-gradient(145deg,#eef6f0,#dcebe2);
-      box-shadow:0 22px 48px rgba(0,0,0,.22);
-      animation:interactionFloat 4.8s ease-in-out infinite;
-    }
-    .interaction-core img{width:100px;height:100px;object-fit:contain}
-    .interaction-satellite{
-      position:absolute;
-      z-index:5;
-      display:grid;
-      place-items:center;
-      width:70px;
-      height:70px;
-      border:1px solid rgba(255,255,255,.12);
+      justify-items:center;
+      align-content:center;
+      min-width:0;
+      min-height:185px;
+      padding:14px 10px 12px;
+      border:1px solid rgba(255,255,255,.09);
       border-radius:18px;
-      background:#eef5f0;
-      box-shadow:0 12px 26px rgba(0,0,0,.18);
+      background:#10272e;
+      text-align:center;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
     }
-    .interaction-satellite img{width:55px;height:55px;object-fit:contain}
-    .sat-med{left:8%;top:12%;animation:satelliteFloat 5s ease-in-out infinite}
-    .sat-pursuit{right:7%;top:22%;animation:satelliteFloat 5s .9s ease-in-out infinite}
-    .sat-ai{right:18%;bottom:4%;animation:satelliteFloat 5s 1.8s ease-in-out infinite}
-    .interaction-pulse{
+    .interaction-flow-card img{
+      display:block;
+      width:96px;
+      height:96px;
+      object-fit:contain;
+      filter:drop-shadow(0 8px 14px rgba(0,0,0,.16));
+    }
+    .interaction-flow-card strong{
+      display:block;
+      margin-top:9px;
+      color:#fff;
+      font:800 .68rem/1.2 var(--font-heading);
+    }
+    .interaction-flow-card small{
+      display:block;
+      margin-top:3px;
+      color:#bcd0c6;
+      font:.53rem/1.3 var(--font-body);
+    }
+    .interaction-flow-card.action{
+      border-color:rgba(121,201,158,.3);
+      background:linear-gradient(145deg,#16353a,#214a46);
+    }
+    .interaction-flow-card.feedback{
+      border-color:rgba(151,219,79,.24);
+    }
+    .interaction-flow-link{
       position:absolute;
       z-index:3;
+      top:50%;
+      width:calc(33.333% - 44px);
+      height:2px;
+      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
+      transform:translateY(-50%);
+      pointer-events:none;
+    }
+    .interaction-flow-link.one{left:calc(33.333% - 11px)}
+    .interaction-flow-link.two{left:calc(66.666% - 11px)}
+    .interaction-flow-link i{
+      position:absolute;
+      left:0;
+      top:50%;
       width:8px;
       height:8px;
       border-radius:50%;
+      transform:translateY(-50%);
       background:#97db4f;
-      box-shadow:0 0 0 5px rgba(151,219,79,.08),0 0 16px rgba(151,219,79,.5);
+      box-shadow:0 0 13px rgba(151,219,79,.58);
+      animation:interactionSignal 2.6s linear infinite;
     }
-    .pulse-a{left:27%;top:42%;animation:pulseTravelA 3.2s ease-in-out infinite}
-    .pulse-b{right:27%;top:48%;animation:pulseTravelB 3.5s .8s ease-in-out infinite}
-    @keyframes interactionOrbit{to{transform:rotate(360deg)}}
-    @keyframes interactionFloat{50%{transform:translateY(-7px)}}
-    @keyframes satelliteFloat{50%{transform:translateY(-6px) rotate(2deg)}}
-    @keyframes pulseTravelA{0%,100%{transform:translate(-22px,-24px);opacity:.25}50%{transform:translate(36px,15px);opacity:1}}
-    @keyframes pulseTravelB{0%,100%{transform:translate(26px,-20px);opacity:.25}50%{transform:translate(-34px,18px);opacity:1}}
+    .interaction-flow-link.two i{animation-delay:1.2s}
+    .interaction-choice{
+      position:absolute;
+      right:10px;
+      top:10px;
+      display:grid;
+      place-items:center;
+      width:25px;
+      height:25px;
+      border-radius:50%;
+      background:#eef6f0;
+      color:#315755;
+      font:900 .55rem/1 var(--font-heading);
+      box-shadow:0 4px 10px rgba(0,0,0,.14);
+      opacity:.35;
+      animation:interactionChoice 2.6s ease-in-out infinite;
+    }
+    .interaction-feedback-check{
+      position:absolute;
+      right:10px;
+      top:10px;
+      display:grid;
+      place-items:center;
+      width:25px;
+      height:25px;
+      border-radius:50%;
+      background:#97db4f;
+      color:#173028;
+      font:900 .65rem/1 var(--font-heading);
+      box-shadow:0 0 0 5px rgba(151,219,79,.07);
+      opacity:.35;
+      animation:feedbackConfirm 2.6s 1.2s ease-in-out infinite;
+    }
+    @keyframes interactionSignal{
+      0%{left:0;opacity:0}
+      14%{opacity:1}
+      86%{opacity:1}
+      100%{left:calc(100% - 8px);opacity:0}
+    }
+    @keyframes interactionChoice{
+      0%,38%,100%{opacity:.3;transform:scale(.82)}
+      48%,72%{opacity:1;transform:scale(1.08)}
+    }
+    @keyframes feedbackConfirm{
+      0%,38%,100%{opacity:.3;transform:scale(.82)}
+      48%,72%{opacity:1;transform:scale(1.08)}
+    }
+
+    .interaction-approach{
+      background:#fff!important;
+      border-bottom:1px solid rgba(80,132,132,.08);
+    }
+    .interaction-approach-grid{
+      display:grid;
+      grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+      gap:26px;
+      align-items:center;
+    }
+    .interaction-approach-copy .eyebrow{margin-bottom:4px;color:#4a796e!important}
+    .interaction-approach-copy h2{
+      margin:0 0 7px;
+      max-width:560px;
+      color:#263d37;
+      font-size:clamp(1.18rem,2vw,1.55rem);
+    }
+    .interaction-approach-copy p{
+      margin:0;
+      max-width:620px;
+      color:#5b6a64;
+      font-size:.78rem;
+      line-height:1.52;
+    }
+    .interaction-learning-flow{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+      align-items:stretch;
+    }
+    .learning-flow-step{
+      position:relative;
+      display:grid;
+      justify-items:center;
+      align-content:center;
+      min-height:128px;
+      padding:10px 8px;
+      border:1px solid rgba(80,132,132,.13);
+      border-radius:15px;
+      background:#f6f9f7;
+      text-align:center;
+      overflow:hidden;
+    }
+    .learning-flow-step img{
+      display:block;
+      width:55px;
+      height:55px;
+      object-fit:contain;
+      transition:transform .2s ease;
+    }
+    .learning-flow-step strong{
+      display:block;
+      margin-top:6px;
+      color:#315755;
+      font:800 .58rem/1.15 var(--font-heading);
+    }
+    .learning-flow-step small{
+      display:block;
+      margin-top:3px;
+      color:#718078;
+      font:.49rem/1.25 var(--font-body);
+    }
+    .learning-flow-step::after{
+      content:"";
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:8px;
+      height:3px;
+      border-radius:999px;
+      background:rgba(80,132,132,.09);
+    }
+    .learning-flow-step i{
+      position:absolute;
+      left:10px;
+      bottom:8px;
+      width:32%;
+      height:3px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
+      animation:learningStepProgress 4.8s ease-in-out infinite;
+    }
+    .learning-flow-step:nth-child(2) i{animation-delay:.55s}
+    .learning-flow-step:nth-child(3) i{animation-delay:1.1s}
+    .learning-flow-step:nth-child(4) i{animation-delay:1.65s}
+    .learning-flow-step:nth-child(2) img{animation:learningChoicePulse 4.8s .55s ease-in-out infinite}
+    .learning-flow-step:nth-child(3) img{animation:learningFeedbackPulse 4.8s 1.1s ease-in-out infinite}
+    .learning-flow-step:nth-child(4) img{animation:learningApplyPulse 4.8s 1.65s ease-in-out infinite}
+    @keyframes learningStepProgress{
+      0%,12%{width:0;opacity:.3}
+      34%,70%{width:calc(100% - 20px);opacity:1}
+      88%,100%{width:calc(100% - 20px);opacity:.18}
+    }
+    @keyframes learningChoicePulse{42%,62%{transform:translateY(-4px) scale(1.04)}}
+    @keyframes learningFeedbackPulse{42%,62%{transform:scale(1.08)}}
+    @keyframes learningApplyPulse{42%,62%{transform:translateX(4px)}}
 
     .interactive-examples{background:#f7faf8!important}
     .interactive-example-list{display:grid;gap:11px;width:min(100%,1040px);margin:16px auto 0}
@@ -218,40 +372,26 @@
     .example-pursuit .example-arrow{background:#97db4f;color:#173028}
     .interactive-example:hover .example-arrow{transform:translateX(4px)}
 
-    .interactive-back{
-      padding:18px 0 22px!important;
-      background:#edf4f0!important;
-    }
-    .interactive-back a{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      color:#315755;
-      text-decoration:none;
-      font:800 .67rem/1.2 var(--font-heading);
-    }
-    .interactive-back a:hover,.interactive-back a:focus-visible{text-decoration:underline;outline:none}
-
     @media(max-width:850px){
-      .interactive-hero-grid{grid-template-columns:1fr}
-      .interaction-orbit{min-height:275px;max-width:600px;width:100%;margin:auto}
+      .interactive-hero-grid,.interaction-approach-grid{grid-template-columns:1fr}
+      .interaction-flow{max-width:680px;width:100%;margin:auto}
       .interactive-example{grid-template-columns:145px minmax(0,1fr) auto}
     }
     @media(max-width:620px){
       body.interactive-landing .section{padding-block:24px!important}
-      .interaction-orbit{min-height:245px}
-      .interaction-core{width:105px;height:105px}
-      .interaction-core img{width:84px;height:84px}
-      .interaction-satellite{width:58px;height:58px}
-      .interaction-satellite img{width:45px;height:45px}
+      .interaction-flow{grid-template-columns:1fr;min-height:0;padding:12px}
+      .interaction-flow-card{min-height:128px}
+      .interaction-flow-card img{width:76px;height:76px}
+      .interaction-flow-link{display:none}
+      .interaction-learning-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
       .interactive-example{grid-template-columns:86px minmax(0,1fr);gap:11px}
       .example-art{min-height:92px}
       .example-art img{width:74px;height:74px}
       .example-arrow{grid-column:2;width:auto;height:auto;justify-self:start;background:transparent!important;color:inherit!important}
     }
     @media(prefers-reduced-motion:reduce){
-      .interaction-orbit::before,.interaction-orbit::after,.interaction-core,.interaction-satellite,.interaction-pulse{animation:none!important}
-      .interactive-example,.example-art img,.example-arrow{transition:none}
+      .interaction-flow-link i,.interaction-choice,.interaction-feedback-check,.learning-flow-step i,.learning-flow-step img{animation:none!important}
+      .interactive-example,.example-art img,.example-arrow,.learning-flow-step img{transition:none}
     }
   </style>
   <script defer src="../../../js/portfolio-motion.js"></script>
@@ -274,14 +414,63 @@
             <span>Gamification</span>
           </div>
         </div>
-        <aside class="interaction-orbit" aria-label="Animated interactive learning capability visual">
-          <span class="interaction-core"><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="Pixel-art pointer interaction icon."></span>
-          <span class="interaction-satellite sat-med"><img src="../../../assets/icons/pixel/meddpicc/qualified-opportunity.webp" alt="" aria-hidden="true"></span>
-          <span class="interaction-satellite sat-pursuit"><img src="../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"></span>
-          <span class="interaction-satellite sat-ai"><img src="../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="" aria-hidden="true"></span>
-          <i class="interaction-pulse pulse-a" aria-hidden="true"></i>
-          <i class="interaction-pulse pulse-b" aria-hidden="true"></i>
+        <aside class="interaction-flow" aria-label="Animated learning interaction flow from prompt to learner action to feedback">
+          <div class="interaction-flow-card prompt">
+            <img src="../../../assets/icons/pixel/meddpicc/discover.webp" alt="" aria-hidden="true">
+            <strong>Prompt</strong>
+            <small>Give the learner a useful problem.</small>
+          </div>
+          <div class="interaction-flow-card action">
+            <img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="" aria-hidden="true">
+            <span class="interaction-choice" aria-hidden="true">1</span>
+            <strong>Learner action</strong>
+            <small>Choose, match, score, or respond.</small>
+          </div>
+          <div class="interaction-flow-card feedback">
+            <img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true">
+            <span class="interaction-feedback-check" aria-hidden="true">✓</span>
+            <strong>Feedback</strong>
+            <small>Reinforce the reasoning and next move.</small>
+          </div>
+          <span class="interaction-flow-link one" aria-hidden="true"><i></i></span>
+          <span class="interaction-flow-link two" aria-hidden="true"><i></i></span>
         </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section interaction-approach">
+    <div class="container interaction-approach-grid">
+      <div class="interaction-approach-copy">
+        <p class="eyebrow">Interaction Design Approach</p>
+        <h2>I use interactions to make learning active, clearer, and more memorable.</h2>
+        <p>The goal is not to add clicks. I use interactions when learner action can increase engagement, create useful practice, reinforce feedback, and help important decisions stick beyond the screen.</p>
+      </div>
+      <div class="interaction-learning-flow" aria-label="Animated learning flow from noticing through application">
+        <div class="learning-flow-step">
+          <img src="../../../assets/icons/pixel/meddpicc/discover.webp" alt="" aria-hidden="true">
+          <strong>Notice</strong>
+          <small>Focus attention on what matters.</small>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="learning-flow-step">
+          <img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="" aria-hidden="true">
+          <strong>Decide</strong>
+          <small>Make the learner act on the idea.</small>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="learning-flow-step">
+          <img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true">
+          <strong>Get feedback</strong>
+          <small>Explain the reasoning, not just the answer.</small>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="learning-flow-step">
+          <img src="../../../assets/icons/pixel/pursuit-determination/action-plan.webp" alt="" aria-hidden="true">
+          <strong>Apply</strong>
+          <small>Carry the judgment into the next task.</small>
+          <i aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   </section>
@@ -331,9 +520,6 @@
     </div>
   </section>
 
-  <section class="section interactive-back">
-    <div class="container"><a href="../index.html"><span aria-hidden="true">←</span> Back to Instructional Design projects</a></div>
-  </section>
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 </body>
