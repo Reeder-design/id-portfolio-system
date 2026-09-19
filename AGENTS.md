@@ -206,6 +206,29 @@ At minimum, the automated suite must continue to cover:
 Keep `.github/workflows/validate-site.yml` aligned with `portfolio-manager/validation_service.py`.
 
 ## Workflow Rules for Agents
+
+### Concurrent work / branch coordination
+Multiple chats or agents may work on this repository at the same time. GitHub is the source of truth for current repository state; never rely on branch/PR state remembered from an earlier conversation.
+
+At the start of every repository work session, and again when resuming a long-running branch:
+1. Read the current `main` SHA.
+2. List all open pull requests and their head branches.
+3. Compare the active branch with `main` and record ahead/behind status.
+4. Check changed-file overlap with other open PRs before editing shared files.
+5. If the active branch is behind `main`, sync `main` into it before new implementation work and rerun CI.
+
+Immediately before merging any development PR:
+1. Re-fetch current `main`.
+2. Require the PR to be **0 commits behind `main`**.
+3. Require GitHub to report the PR mergeable.
+4. Require the latest full CI run to be green on the exact current head SHA.
+5. Re-check changed-file overlap with every other open PR and verify intentional shared-file resolutions preserve both workstreams.
+6. Merge only after explicit user approval for that exact PR.
+
+Immediately after any PR merges to `main`, inspect every remaining open PR. Any PR that became stale must be synced with the new `main` and revalidated before additional development or merge approval.
+
+Do not solve divergence by force-moving branches, discarding another workstream, or silently choosing one side of an overlapping edit. Use an explicit merge/sync and preserve both intentional changes.
+
 For substantial repository changes:
 1. Work on a separate branch.
 2. Keep the change focused.
