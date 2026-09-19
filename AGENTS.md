@@ -42,11 +42,12 @@ When files disagree, resolve the conflict before editing instead of choosing the
 
 Use this authority order:
 1. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
-2. Structured records under `portfolio-data/` for content fields they explicitly own.
-3. `templates/` + deterministic renderers for standard generated pages.
-4. Bespoke public HTML/CSS/JavaScript for custom interactive experiences that are intentionally not template-generated.
-5. Portfolio Manager code for Manager workflow/state behavior.
-6. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override live code/data.
+2. `portfolio-data/component-registry.json` for canonical reusable component IDs, ownership, support level, and intended use.
+3. Structured records under `portfolio-data/` for content fields they explicitly own.
+4. `templates/` + deterministic renderers for standard generated pages.
+5. Bespoke public HTML/CSS/JavaScript for custom interactive experiences that are intentionally not template-generated.
+6. Portfolio Manager code for Manager workflow/state behavior.
+7. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override live code/data.
 
 Generated documentation produced by `scripts/update-docs.py` is output, not an editing source.
 
@@ -62,6 +63,10 @@ Use `python scripts/render-project.py <project-json>` when intentionally re-rend
 Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study template.
 
 Before adding another shared stylesheet, script, renderer, helper, or interaction controller, inspect the current stack and extend an existing owner when practical. Avoid multiple implementations competing for the same DOM behavior.
+
+Use `portfolio-data/component-registry.json` to describe reusable interaction/presentation patterns. A recorded `component_refs` value documents intentional design-system usage; it does not imply that Portfolio Manager may inject markup into a bespoke page. Template-supported components may be rendered only by the established deterministic renderer.
+
+Structured project-to-project connections belong in `related_work`. Manage them through Related References when practical. Deterministic suggestions may use existing taxonomy/skills/tools/graph metadata, but suggestions must remain human-reviewed and must never auto-add a relationship.
 
 ## Portfolio Manager Product Boundaries
 Portfolio Manager must remain local-only on `127.0.0.1:5055`.
