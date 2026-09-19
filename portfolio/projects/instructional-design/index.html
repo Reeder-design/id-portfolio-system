@@ -123,200 +123,161 @@
         }
         @keyframes idProcessStep{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-        /* Other work: screenshot-first portfolio spotlights. */
+        /* Other work: compact dark footer cards on a light landing. */
         .id-ecosystem-section{
           position:relative;
           overflow:hidden;
-          color:#e8f2ed;
           background:
-            radial-gradient(circle at 8% 12%,rgba(121,201,158,.14),transparent 24rem),
-            linear-gradient(145deg,#182b31,#29494a);
+            radial-gradient(circle at 10% 18%,rgba(151,219,79,.09),transparent 18rem),
+            radial-gradient(circle at 88% 72%,rgba(121,201,158,.09),transparent 20rem),
+            linear-gradient(145deg,#fbfaf4,#edf6f0)!important;
+          color:#46554f!important;
         }
-        .id-ecosystem-section .eyebrow{color:#b8e9c9!important}
-        .id-ecosystem-section h2{color:#fff!important}
-        .id-ecosystem-section .refresh-section-intro>p:last-child{color:#cfddd6!important;max-width:800px}
+        .id-ecosystem-section::after{
+          content:"";
+          position:absolute;
+          width:180px;
+          height:180px;
+          right:-88px;
+          top:-84px;
+          border:1px dashed rgba(80,132,132,.12);
+          border-radius:50%;
+          pointer-events:none;
+        }
+        .id-ecosystem-section .eyebrow{color:#447d71!important}
+        .id-ecosystem-section h2{color:#263a34!important}
+        .id-ecosystem-section .refresh-section-intro>p:last-child{color:#5e6f68!important;max-width:800px}
         body.id-landing .id-ecosystem-section.fs-surface-light{
           background:
-            radial-gradient(circle at 8% 12%,rgba(121,201,158,.14),transparent 24rem),
-            linear-gradient(145deg,#182b31,#29494a)!important;
-          color:#e8f2ed!important;
+            radial-gradient(circle at 10% 18%,rgba(151,219,79,.09),transparent 18rem),
+            radial-gradient(circle at 88% 72%,rgba(121,201,158,.09),transparent 20rem),
+            linear-gradient(145deg,#fbfaf4,#edf6f0)!important;
+          color:#46554f!important;
         }
-        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading .eyebrow{color:#b8e9c9!important}
-        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading h2{color:#fff!important}
-        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading>p:not(.eyebrow){color:#cfddd6!important}
-        body.id-landing .id-ecosystem-section.fs-surface-light::after{display:none!important}
-        .id-ecosystem-grid{display:grid;grid-template-columns:1fr;gap:18px}
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading .eyebrow{color:#447d71!important}
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading h2{color:#263a34!important}
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading>p:not(.eyebrow){color:#5e6f68!important}
+        .id-ecosystem-grid{
+          display:grid;
+          grid-template-columns:repeat(3,minmax(0,1fr));
+          gap:14px;
+        }
         .id-ecosystem-card{
           position:relative;
           overflow:hidden;
-          display:grid;
-          grid-template-columns:minmax(0,2.2fr) minmax(260px,.8fr);
-          min-height:350px;
-          border:1px solid rgba(255,255,255,.12);
-          border-radius:26px;
-          background:#10262d;
+          display:flex;
+          flex-direction:column;
+          min-height:250px;
+          border:1px solid rgba(121,201,158,.24);
+          border-radius:20px;
+          background:
+            radial-gradient(circle at 82% 14%,rgba(151,219,79,.11),transparent 9rem),
+            linear-gradient(150deg,#1a3036,#244b49);
           color:#fff;
           text-decoration:none;
-          box-shadow:0 18px 44px rgba(4,18,20,.18);
-          transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+          box-shadow:
+            0 15px 32px rgba(45,72,65,.13),
+            inset 0 1px 0 rgba(255,255,255,.04);
+          transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
         }
-        .id-ecosystem-card:nth-child(even){grid-template-columns:minmax(260px,.8fr) minmax(0,2.2fr)}
-        .id-ecosystem-card:nth-child(even) .id-ecosystem-visual{order:2}
-        .id-ecosystem-card:nth-child(even) .id-ecosystem-copy{order:1;border-left:0;border-right:1px solid rgba(255,255,255,.08)}
+        .id-ecosystem-card::before{
+          content:"";
+          position:absolute;
+          z-index:0;
+          width:120px;
+          height:120px;
+          right:-42px;
+          top:-46px;
+          border:1px dashed rgba(184,233,201,.14);
+          border-radius:50%;
+        }
+        .id-ecosystem-card::after{
+          content:"";
+          position:absolute;
+          z-index:4;
+          left:14px;
+          right:14px;
+          top:109px;
+          height:2px;
+          border-radius:999px;
+          background:linear-gradient(90deg,rgba(80,132,132,.2),#79c99e,#97db4f,rgba(80,132,132,.2));
+          opacity:.65;
+        }
         .id-ecosystem-card:hover,.id-ecosystem-card:focus-visible{
-          transform:translateY(-6px);
-          border-color:rgba(151,219,79,.46);
-          box-shadow:0 28px 58px rgba(4,18,20,.26);
+          transform:translateY(-5px);
+          border-color:rgba(151,219,79,.52);
+          box-shadow:
+            0 22px 44px rgba(45,72,65,.19),
+            0 0 0 1px rgba(151,219,79,.09);
           outline:none;
         }
         .id-ecosystem-visual{
           position:relative;
-          min-width:0;
-          min-height:350px;
-          overflow:hidden;
-          isolation:isolate;
-          padding:18px;
-          background:
-            radial-gradient(circle at 84% 12%,rgba(151,219,79,.16),transparent 24%),
-            linear-gradient(145deg,#dceae4,#eef5f0);
-        }
-        .id-ecosystem-shot{
-          position:absolute;
-          inset:22px 24px 26px;
           z-index:2;
-          overflow:hidden;
-          border:2px solid #315755;
-          border-radius:20px;
-          background:#fff;
-          box-shadow:0 20px 38px rgba(28,59,52,.18);
-          transform:rotate(-1deg);
-          transition:transform .22s ease,box-shadow .22s ease;
+          display:grid;
+          place-items:center;
+          height:110px;
+          min-height:110px;
+          padding:10px 14px 8px;
+          background:transparent;
         }
-        .id-ecosystem-card:nth-child(even) .id-ecosystem-shot{transform:rotate(1deg)}
-        .id-ecosystem-card:hover .id-ecosystem-shot{
-          transform:translateY(-4px) rotate(0deg) scale(1.015);
-          box-shadow:0 26px 46px rgba(28,59,52,.23);
-        }
-        .id-ecosystem-shot::before{
-          content:"";
-          position:absolute;
-          z-index:3;
-          left:0;
-          right:0;
-          top:0;
-          height:26px;
-          border-bottom:1px solid rgba(80,132,132,.14);
-          background:linear-gradient(180deg,#edf4f0,#e4ede8);
-        }
-        .id-ecosystem-shot::after{
-          content:"•••";
-          position:absolute;
-          z-index:4;
-          top:2px;
-          left:12px;
-          color:#6f9187;
-          font:900 14px/1 var(--font-heading);
-          letter-spacing:3px;
-        }
-        .id-ecosystem-main-art{
+        .id-ecosystem-icon{
           display:block;
-          width:100%;
-          height:100%;
-          object-fit:cover;
-          object-position:center top;
-          background:#fff;
-        }
-        .id-ecosystem-card:nth-child(1) .id-ecosystem-main-art{object-position:center 12%}
-        .id-ecosystem-card:nth-child(2) .id-ecosystem-main-art{object-position:center 8%}
-        .id-ecosystem-card:nth-child(3) .id-ecosystem-main-art{object-position:center 10%}
-        .id-ecosystem-accent{
-          position:absolute;
-          z-index:6;
-          width:76px;
-          height:76px;
-          padding:7px;
+          width:88px;
+          height:88px;
           object-fit:contain;
-          border:1px solid rgba(49,87,85,.18);
-          border-radius:19px;
-          background:rgba(248,251,248,.96);
-          box-shadow:0 14px 28px rgba(36,67,59,.16);
-          animation:idEcoAccent 5s ease-in-out infinite;
+          filter:drop-shadow(0 10px 18px rgba(4,18,20,.18));
+          transition:transform .2s ease;
         }
-        .id-ecosystem-card:nth-child(1) .id-ecosystem-accent{right:12px;bottom:18px}
-        .id-ecosystem-card:nth-child(2) .id-ecosystem-accent{left:12px;top:18px;animation-delay:.8s}
-        .id-ecosystem-card:nth-child(3) .id-ecosystem-accent{right:12px;top:18px;animation-delay:1.6s}
-        .id-ecosystem-rail{
-          position:absolute;
-          z-index:1;
-          width:170px;
-          height:170px;
-          border:1px dashed rgba(80,132,132,.22);
-          border-radius:50%;
-          right:-44px;
-          top:-52px;
-        }
+        .id-ecosystem-card:hover .id-ecosystem-icon{transform:translateY(-4px) scale(1.05)}
         .id-ecosystem-copy{
           position:relative;
           z-index:3;
           display:flex;
           flex-direction:column;
-          justify-content:center;
-          padding:24px 22px;
-          border-left:1px solid rgba(255,255,255,.08);
-          background:
-            radial-gradient(circle at 88% 10%,rgba(151,219,79,.09),transparent 12rem),
-            linear-gradient(155deg,#10262d,#17363b);
+          flex:1;
+          padding:12px 15px 15px;
+          border:0;
+          background:transparent;
         }
-        .id-ecosystem-copy::before{
-          content:"";
-          position:absolute;
-          top:22px;
-          bottom:22px;
-          left:0;
-          width:3px;
-          background:linear-gradient(#79c99e,#97db4f);
-          opacity:.7;
-        }
-        .id-ecosystem-card:nth-child(even) .id-ecosystem-copy::before{left:auto;right:0}
-        .id-ecosystem-copy .eyebrow{margin-bottom:4px;font-size:.56rem}
-        .id-ecosystem-copy h3{margin:0 0 7px;color:#fff;font-size:clamp(1.06rem,1.8vw,1.34rem)}
-        .id-ecosystem-copy p{margin:0 0 13px;color:#cbd9d2;font-size:.75rem;line-height:1.5}
-        .id-ecosystem-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+        .id-ecosystem-copy::before{display:none}
+        .id-ecosystem-copy .eyebrow{margin-bottom:3px;color:#b8e9c9!important;font-size:.55rem}
+        .id-ecosystem-copy h3{margin:0 0 5px;color:#fff!important;font-size:.98rem;line-height:1.2}
+        .id-ecosystem-copy p{margin:0 0 9px;color:#d0ddd7!important;font-size:.69rem;line-height:1.43}
+        .id-ecosystem-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
         .id-ecosystem-tags span{
-          padding:5px 8px;
-          border:1px solid rgba(121,201,158,.2);
+          padding:4px 7px;
+          border:1px solid rgba(121,201,158,.17);
           border-radius:999px;
-          background:rgba(121,201,158,.07);
-          color:#d9eee1;
-          font-size:.56rem;
+          background:rgba(121,201,158,.065);
+          color:#dcefe4;
+          font-size:.53rem;
           font-weight:800;
         }
         .id-ecosystem-copy strong{
           display:inline-flex;
           align-items:center;
-          justify-content:center;
           align-self:flex-start;
-          margin-top:4px;
-          padding:8px 11px;
-          border:1px solid rgba(121,201,158,.28);
-          border-radius:999px;
-          background:rgba(121,201,158,.09);
-          color:#d0f3dc;
-          font:800 .65rem/1.2 var(--font-heading);
-          transition:background .18s ease,border-color .18s ease,transform .18s ease;
+          margin-top:auto;
+          padding:0;
+          border:0;
+          background:transparent;
+          color:#c9f1d6;
+          font:800 .64rem/1.2 var(--font-heading);
+          transition:transform .18s ease,color .18s ease;
         }
         .id-ecosystem-card:hover .id-ecosystem-copy strong{
           transform:translateX(4px);
-          background:rgba(151,219,79,.15);
-          border-color:rgba(151,219,79,.42);
+          color:#e2f8e9;
+          background:transparent;
+          border-color:transparent;
         }
-        @keyframes idEcoAccent{50%{transform:translateY(-6px) rotate(2deg)}}
 
         @media(max-width:1050px){.id-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-        @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-card{grid-template-columns:minmax(0,1.75fr) minmax(220px,.78fr);min-height:330px}.id-ecosystem-card:nth-child(even){grid-template-columns:minmax(220px,.78fr) minmax(0,1.75fr)}.id-ecosystem-visual{min-height:330px}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
-        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-card,.id-ecosystem-card:nth-child(even){grid-template-columns:1fr}.id-ecosystem-card:nth-child(even) .id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-copy{order:initial}.id-ecosystem-visual,.id-ecosystem-card:nth-child(even) .id-ecosystem-visual{min-height:300px;border-bottom:1px solid rgba(255,255,255,.08)}.id-ecosystem-copy,.id-ecosystem-card:nth-child(even) .id-ecosystem-copy{padding:18px;border-left:0;border-right:0}.id-ecosystem-copy::before,.id-ecosystem-card:nth-child(even) .id-ecosystem-copy::before{top:0;bottom:auto;left:18px;right:18px;width:auto;height:3px}.id-ecosystem-shot{inset:18px 18px 24px}.id-ecosystem-accent{width:62px;height:62px}}
+        @media(max-width:900px){body.id-landing .refresh-hero-grid,.id-detail-grid{grid-template-columns:1fr}.id-hero-visual{min-height:320px;max-width:620px;width:100%;margin:auto}.id-evidence-frame{height:260px}.id-ecosystem-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.id-process{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:0}.id-process-track{display:none}}
+        @media(max-width:680px){.id-project-grid{grid-template-columns:1fr 1fr}.id-project-visual{height:118px}.id-hero-accent{width:58px;height:58px}.id-ecosystem-grid{grid-template-columns:1fr}.id-ecosystem-card{min-height:0}.id-ecosystem-visual{height:104px;min-height:104px}.id-ecosystem-card::after{top:103px}}
         @media(max-width:520px){body.id-landing .section{padding-block:30px}.id-project-grid,.id-process{grid-template-columns:1fr}.id-loop-heading{grid-template-columns:1fr}.id-evidence-frame{height:220px}.id-hero-visual{min-height:280px}.id-hero-main-art{width:min(68%,240px)}}
-        @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot,.id-ecosystem-accent{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
+        @media(prefers-reduced-motion:reduce){.id-hero-main-art,.id-hero-accent,.id-hero-orbit,.id-hero-spark,.id-process-progress-line,.id-process-progress-dot{animation:none!important}.id-project-card,.id-ecosystem-card{transition:none}.id-process-progress-line{width:100%}.id-process-progress-dot{left:100%}}
     </style>
     <script defer src="../../js/portfolio-motion.js"></script>
 </head>
@@ -450,15 +411,15 @@
         </div>
         <div class="id-ecosystem-grid">
           <a class="id-ecosystem-card" href="../ai-training-and-evaluation/index.html">
-            <div class="id-ecosystem-visual"><span class="id-ecosystem-rail" aria-hidden="true"></span><div class="id-ecosystem-shot"><img class="id-ecosystem-main-art" src="../../assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp" alt="Public-safe AI response evaluation interface."></div><img class="id-ecosystem-accent" src="../../assets/icons/pixel/portfolio-general/ideas.webp" alt="" aria-hidden="true"></div>
+            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/ai-training-evaluation/quality-evaluate.webp" alt="Pixel-art AI quality evaluation icon."></div>
             <div class="id-ecosystem-copy"><span class="eyebrow">AI Quality</span><h3>AI Training and Evaluation</h3><p>Output evaluation, source grounding, rubric scoring, calibration, and actionable feedback across AI training work.</p><span class="id-ecosystem-tags"><span>Evaluation</span><span>Rubrics</span><span>QA</span></span><strong>Explore the complete AI portfolio →</strong></div>
           </a>
           <a class="id-ecosystem-card" href="../lms-administration/index.html">
-            <div class="id-ecosystem-visual"><span class="id-ecosystem-rail" aria-hidden="true"></span><div class="id-ecosystem-shot"><img class="id-ecosystem-main-art" src="../../assets/project-images/lms-landing/lms-admin-dashboard.webp" alt="Public-safe LMS administration dashboard."></div><img class="id-ecosystem-accent" src="../../assets/icons/pixel/portfolio-general/tools.webp" alt="" aria-hidden="true"></div>
+            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/lms/mini-org-chart.webp" alt="Pixel-art learning platform organization icon."></div>
             <div class="id-ecosystem-copy"><span class="eyebrow">Learning Platforms</span><h3>LMS Administration &amp; System Operations</h3><p>Absorb and Docebo work across content, learning paths, certifications, access, migration, learner support, and reporting.</p><span class="id-ecosystem-tags"><span>Absorb</span><span>Docebo</span><span>UAT + Support</span></span><strong>Explore the complete LMS portfolio →</strong></div>
           </a>
           <a class="id-ecosystem-card" href="../workflows/index.html">
-            <div class="id-ecosystem-visual"><span class="id-ecosystem-rail" aria-hidden="true"></span><div class="id-ecosystem-shot"><img class="id-ecosystem-main-art" src="../../assets/project-images/workflows/workflow-automation-overview.webp" alt="Public-safe workflow automation overview."></div><img class="id-ecosystem-accent" src="../../assets/icons/pixel/portfolio-general/collaboration.webp" alt="" aria-hidden="true"></div>
+            <div class="id-ecosystem-visual"><img class="id-ecosystem-icon" src="../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt="Pixel-art connected workflow icon."></div>
             <div class="id-ecosystem-copy"><span class="eyebrow">Systems + Automation</span><h3>System Integrations and Workflows</h3><p>Python, Selenium, data analysis, browser automation, and reporting workflows that support learning and enablement operations.</p><span class="id-ecosystem-tags"><span>Python</span><span>Automation</span><span>Reporting</span></span><strong>Explore the complete systems portfolio →</strong></div>
           </a>
         </div>
