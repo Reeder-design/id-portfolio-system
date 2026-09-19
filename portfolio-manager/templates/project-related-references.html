@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ workspace.project.title }} Relationships | Portfolio Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='relationship-components.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header">
+        <div>
+            <p class="eyebrow">Related References · Project connections</p>
+            <h1>{{ workspace.project.title }}</h1>
+            <p class="hero-copy">Review the connections this project makes, the projects that point back to it, and deterministic suggestions based on portfolio placement plus shared skills/tools.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=workspace.project.id) }}">Back to Project</a>
+            <a class="btn btn-secondary" href="{{ url_for('related_references.relationship_workspace') }}">All Relationships</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack">{% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}</section>{% endif %}
+    {% endwith %}
+
+    <section class="relationship-summary-grid">
+        <article><span>Outgoing</span><strong>{{ workspace.outgoing|length }}</strong></article>
+        <article><span>Incoming</span><strong>{{ workspace.incoming|length }}</strong></article>
+        <article><span>Suggestions</span><strong>{{ workspace.suggestions|length }}</strong></article>
+        <article><span>Public rendering</span><strong>{{ 'Template' if workspace.generated else 'Custom' }}</strong></article>
+    </section>
+
+    <section class="dashboard-card full-width">
+        <p class="eyebrow">Behavior boundary</p>
+        {% if workspace.generated %}
+        <h2>Relationship metadata can render through the standard template</h2>
+        <p class="section-copy">Saving a relationship updates the structured project record only. Use <strong>Regenerate Page</strong> in the project editor when you want the generated Related Work section to reflect the new metadata.</p>
+        {% else %}
+        <h2>Custom project pages stay custom</h2>
+        <p class="section-copy">Saving a relationship documents the portfolio graph, but it does not inject a Related Work block into this bespoke page. Public presentation remains intentionally hand-controlled.</p>
+        {% endif %}
+    </section>
+
+    <main class="relationship-workspace-grid">
+        <section class="dashboard-card">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">Current outgoing references</p><h2>This project points to</h2></div>
+            </div>
+            <div class="relationship-list">
+                {% for item in workspace.outgoing %}
+                <article class="relationship-card">
+                    <div class="relationship-card-head">
+                        <div><h3>{{ item.title }}</h3><small><code>{{ item.project_id }}</code>{% if item.missing %} · missing target{% endif %}</small></div>
+                    </div>
+                    <form class="relationship-form" method="post" action="{{ url_for('related_references.update_project_relationship', project_id=workspace.project.id, target_id=item.project_id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label>Why these projects connect
+                            <textarea name="relationship" rows="2" maxlength="500" required>{{ item.relationship }}</textarea>
+                        </label>
+                        <div class="relationship-form-actions">
+                            <button class="btn btn-primary" type="submit">Save Relationship</button>
+                            {% if item.preview_url %}<a class="btn btn-secondary" href="{{ item.preview_url }}" target="_blank" rel="noopener">Preview Target</a>{% endif %}
+                        </div>
+                    </form>
+                    <form method="post" action="{{ url_for('related_references.remove_project_relationship', project_id=workspace.project.id, target_id=item.project_id) }}" data-confirm-action="remove-relationship">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-secondary" type="submit">Remove Connection</button>
+                    </form>
+                </article>
+                {% else %}
+                <div class="relationship-empty">No outgoing project relationships are recorded yet.</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="dashboard-card">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">Incoming references</p><h2>Projects that point here</h2></div>
+            </div>
+            <div class="relationship-list">
+                {% for item in workspace.incoming %}
+                <article class="relationship-card">
+                    <div class="relationship-card-head"><div><h3>{{ item.title }}</h3><small><code>{{ item.project_id }}</code></small></div></div>
+                    <p>{{ item.relationship }}</p>
+                    <div class="button-row">
+                        <a class="btn btn-secondary" href="{{ url_for('related_references.project_relationships', project_id=item.project_id) }}">Open Source Relationship</a>
+                        <a class="btn btn-secondary" href="{{ item.preview_url }}" target="_blank" rel="noopener">Preview Source</a>
+                    </div>
+                </article>
+                {% else %}
+                <div class="relationship-empty">No other structured project currently points to this project.</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="dashboard-card full-width">
+            <div class="compact-section-head">
+                <div>
+                    <p class="eyebrow">Deterministic suggestions</p>
+                    <h2>Possible connections worth reviewing</h2>
+                    <p class="section-copy">Scores use only existing structured metadata: same category/subcategory, shared skills, shared tools, and whether the other project already points back. Nothing is added automatically.</p>
+                </div>
+            </div>
+            <div class="relationship-suggestion-list">
+                {% for item in workspace.suggestions %}
+                <article class="relationship-card">
+                    <div class="relationship-card-head">
+                        <div>
+                            <h3>{{ item.title }}</h3>
+                            <p>{{ item.summary }}</p>
+                        </div>
+                        <span class="relationship-score">{{ item.score }}</span>
+                    </div>
+                    <div class="component-usage-list">
+                        {% for reason in item.reasons %}<span class="relationship-reason">{{ reason }}</span>{% endfor %}
+                    </div>
+                    <form class="relationship-form" method="post" action="{{ url_for('related_references.add_project_relationship', project_id=workspace.project.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="target_id" value="{{ item.project_id }}">
+                        <label>Relationship text
+                            <textarea name="relationship" rows="2" maxlength="500" required>{{ item.suggested_relationship }}</textarea>
+                        </label>
+                        <div class="relationship-form-actions">
+                            <button class="btn btn-primary" type="submit">Add Connection</button>
+                            <a class="btn btn-secondary" href="{{ item.preview_url }}" target="_blank" rel="noopener">Preview Candidate</a>
+                        </div>
+                    </form>
+                </article>
+                {% else %}
+                <div class="relationship-empty">No additional structured projects scored strongly enough to suggest.</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% if workspace.available_projects %}
+        <section class="dashboard-card full-width">
+            <details class="component-details">
+                <summary><span><strong>Add a different project manually</strong></span><span>Open →</span></summary>
+                <form class="relationship-form manual-relationship-form" method="post" action="{{ url_for('related_references.add_project_relationship', project_id=workspace.project.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label>Project
+                        <select name="target_id" required>
+                            <option value="">Choose a project…</option>
+                            {% for item in workspace.available_projects %}<option value="{{ item.id }}">{{ item.title }}</option>{% endfor %}
+                        </select>
+                    </label>
+                    <label>Why these projects connect
+                        <textarea name="relationship" rows="2" maxlength="500" required></textarea>
+                    </label>
+                    <button class="btn btn-primary" type="submit">Add Connection</button>
+                </form>
+            </details>
+        </section>
+        {% endif %}
+    </main>
+</div>
+
+{% include '_help_drawer.html' %}
+<script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>
