@@ -684,3 +684,49 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
   .route-packet,.group-node::after{display:none}
 }
 /* LMS HERO MOTION GRAPHIC END */
+
+/* Compact launch-support workspace and single return action. */
+.lms-launch-support{padding-block:54px;background:radial-gradient(circle at 88% 12%,rgba(190,229,216,.35),transparent 29%),#f6f9f7}
+.lms-support-heading{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.7fr);gap:28px;align-items:end}
+.lms-support-heading h2{margin-bottom:0}.lms-support-heading>p{margin:0;color:#63736d;line-height:1.55}
+.lms-support-workspace{grid-template-columns:minmax(210px,.42fr) minmax(0,1.58fr);margin-top:22px}
+.lms-support-workspace .transition-lens-nav{top:116px}
+.lms-support-workspace .transition-lens-btn{min-height:62px;padding:8px 12px}
+.lms-support-workspace .transition-lens-btn img{width:42px;height:42px;flex:0 0 auto;object-fit:contain;border-radius:10px;background:#fff}
+.lms-support-workspace .transition-lens-panel{display:grid;grid-template-columns:minmax(270px,.8fr) minmax(0,1.2fr);gap:18px;min-height:330px;padding:22px;background:linear-gradient(145deg,#17343b,#24484a);color:#dce8e2}
+.lms-support-workspace .transition-lens-panel .eyebrow{color:#bceccf}
+.lms-support-workspace .transition-lens-panel h3{color:#fff;font-size:clamp(1.35rem,2.2vw,2rem)}
+.lms-case-page .lms-support-workspace .transition-lens-panel p{color:#cedbd5}
+.lms-support-workspace .transition-lens-grid{grid-template-columns:1fr;margin-top:0}
+.lms-support-workspace .transition-lens-card{padding:13px 15px;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.06)}
+.lms-case-page .lms-support-workspace .transition-lens-card span{color:#bceccf}
+.lms-case-back{padding:28px 0 34px;background:#17343b;text-align:center}
+.lms-case-back .btn{background:var(--yellow-green);color:#17343b}
+@media(max-width:900px){.lms-support-heading,.lms-support-workspace .transition-lens-panel{grid-template-columns:1fr}.lms-support-workspace{grid-template-columns:1fr}.lms-support-workspace .transition-lens-nav{position:static;grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.lms-support-workspace .transition-lens-nav{grid-template-columns:1fr}.lms-support-workspace .transition-lens-panel{min-height:0}}
+
+/* Scope and migration-stage visual refresh. */
+.lms-scope-section{background:linear-gradient(145deg,#fbfaf4,#edf6f0)!important;color:#33463f!important}
+.lms-scope-section h2{color:#263a34!important}.lms-scope-section>.container>.eyebrow{color:#447d71!important}
+.lms-scope-grid{gap:16px;margin-top:28px}
+.lms-scope-grid .support-card{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;min-height:225px;padding:23px;overflow:hidden;border:1px solid rgba(80,132,132,.17);border-radius:24px;background:#fff!important;box-shadow:0 16px 36px rgba(47,75,67,.08)}
+.lms-scope-grid .support-card::after{content:"";position:absolute;right:-36px;bottom:-48px;width:130px;height:130px;border:1px solid rgba(121,201,158,.2);border-radius:50%}
+.lms-scope-icon{position:relative;z-index:1;display:grid;width:76px;height:76px;place-items:center;border:1px solid rgba(80,132,132,.16);border-radius:19px;background:linear-gradient(145deg,#fff,#edf5f1);box-shadow:0 10px 24px rgba(47,75,67,.08)}
+.lms-scope-icon img{width:58px;height:58px;object-fit:contain}.lms-scope-number{display:block;margin-bottom:7px;color:#4c7a74;font:800 .66rem/1 var(--font-heading);letter-spacing:.08em}.lms-scope-grid .support-card h3{margin-bottom:7px;color:#23483e}.lms-case-page .lms-scope-grid .support-card p{margin:0;color:#586962}
+.lms-case-page .migration-step{display:grid;grid-template-columns:50px 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:12px;text-align:left}
+.lms-case-page .migration-step img{grid-row:1/3;width:50px;height:50px;object-fit:contain;border-radius:12px;background:#fff}
+.lms-case-page .migration-step span,.lms-case-page .migration-step strong{margin:0}.lms-case-page .migration-step strong{align-self:start}
+.lms-support-heading{grid-template-columns:1fr}
+@media(max-width:850px){.lms-scope-grid .support-card{grid-template-columns:64px minmax(0,1fr);min-height:0}.lms-scope-icon{width:64px;height:64px}.lms-scope-icon img{width:50px;height:50px}}
+@media(max-width:620px){.lms-scope-grid .support-card{grid-template-columns:1fr}.lms-case-page .migration-step{grid-template-columns:46px 1fr}.lms-case-page .migration-step img{width:46px;height:46px}}
+
+/* Keep the completion evidence dark while the evidence cards and role boundary remain readable. */
+body.lms-case-page #evidence{background:radial-gradient(circle at 88% 12%,rgba(151,219,79,.12),transparent 22rem),linear-gradient(145deg,#14252c,#20383d)!important;color:#e6efe9!important}
+body.lms-case-page #evidence>.container>.eyebrow{color:#b5dfc8!important}
+body.lms-case-page #evidence h2{color:#fff!important}
+body.lms-case-page #evidence .evidence-card{background:#f1f7f3!important;color:#233940!important}
+body.lms-case-page #evidence .evidence-card strong{color:#23483e!important}
+body.lms-case-page #evidence .evidence-card p{color:#4c6462!important}
+body.lms-case-page #evidence .role-boundary{align-items:center;border-color:#d5e4dc;background:#f7faf8!important;box-shadow:0 12px 28px rgba(0,0,0,.16)}
+body.lms-case-page #evidence .role-boundary img{width:52px;height:52px;flex:0 0 auto;object-fit:contain;border-radius:12px;background:#fff}
+body.lms-case-page #evidence .role-boundary p{color:#3f524b!important}
