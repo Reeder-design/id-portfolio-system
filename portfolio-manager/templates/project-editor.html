@@ -126,9 +126,10 @@
                             {% if component.inferred %}
                             <div class="project-component-option inferred">
                                 <input type="checkbox" checked disabled aria-label="{{ component.label }} detected automatically">
+                                {% if component.selected %}<input type="hidden" name="component_refs" value="{{ component.id }}">{% endif %}
                                 <span>
                                     <strong>{{ component.label }}</strong>
-                                    <small>Detected automatically · {{ component.support|replace('-', ' ')|title }}</small>
+                                    <small>Detected automatically{% if component.selected %} · also recorded{% endif %} · {{ component.support|replace('-', ' ')|title }}</small>
                                 </span>
                             </div>
                             {% else %}
