@@ -15,6 +15,10 @@ TEMPLATE = MANAGER / "templates" / "component-registry.html"
 EDITOR = MANAGER / "templates" / "project-editor.html"
 SCHEMA = ROOT / "portfolio-data" / "schema" / "project.schema.json"
 CONTENT_CHECK = ROOT / "scripts" / "check-content.py"
+CREATE_SERVICE = MANAGER / "create_content_service.py"
+CREATE_BUILD = MANAGER / "create_content_build_service.py"
+CREATE_BRIEF = MANAGER / "templates" / "create-content-brief.html"
+CREATE_BUILD_TEMPLATE = MANAGER / "templates" / "create-content-build.html"
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -34,7 +38,7 @@ def load_module(path: Path, name: str):
 
 def main() -> int:
     errors: list[str] = []
-    for path in [REGISTRY, SERVICE, ROUTES, TEMPLATE, EDITOR, SCHEMA, CONTENT_CHECK]:
+    for path in [REGISTRY, SERVICE, ROUTES, TEMPLATE, EDITOR, SCHEMA, CONTENT_CHECK, CREATE_SERVICE, CREATE_BUILD, CREATE_BRIEF, CREATE_BUILD_TEMPLATE]:
         require(path.exists(), f"Missing component-registry file: {path.relative_to(ROOT)}", errors)
     if errors:
         for error in errors:
@@ -71,6 +75,10 @@ def main() -> int:
     editor_text = EDITOR.read_text(encoding="utf-8")
     schema_text = SCHEMA.read_text(encoding="utf-8")
     content_text = CONTENT_CHECK.read_text(encoding="utf-8")
+    create_service_text = CREATE_SERVICE.read_text(encoding="utf-8")
+    create_build_text = CREATE_BUILD.read_text(encoding="utf-8")
+    create_brief_text = CREATE_BRIEF.read_text(encoding="utf-8")
+    create_build_template_text = CREATE_BUILD_TEMPLATE.read_text(encoding="utf-8")
 
     require("inferred_component_ids" in service_text, "Registry service must infer components from structured/template data.", errors)
     require("explicit_component_ids" in service_text, "Registry service must distinguish recorded component refs.", errors)
@@ -82,6 +90,12 @@ def main() -> int:
     require("Detected automatically" in editor_text, "Project editor must distinguish inferred component usage.", errors)
     require('"component_refs"' in schema_text, "Project schema must allow component_refs.", errors)
     require("COMPONENT_REGISTRY_PATH" in content_text and "unknown component reference" in content_text, "Structured-content validation must reject unknown component refs.", errors)
+    require("REUSABLE COMPONENT REGISTRY" in create_service_text, "Create Content planning prompt must include the reusable component registry.", errors)
+    require('"component_id": "existing component registry id or null"' in create_service_text, "Create Content plans must request registry-backed component IDs.", errors)
+    require("_approved_plan_component_refs" in create_build_text, "Controlled builds must derive component refs from the approved plan.", errors)
+    require('project_record["component_refs"]' in create_build_text, "Approved component refs must flow into new structured project metadata.", errors)
+    require("Reuse:" in create_brief_text, "Content Plan UI must identify reusable-component recommendations.", errors)
+    require("Approved reusable components" in create_build_template_text, "Controlled Build UI must show approved component metadata.", errors)
 
     try:
         module = load_module(SERVICE, "component_registry_check")
