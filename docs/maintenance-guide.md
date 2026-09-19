@@ -52,7 +52,8 @@ The suite covers:
 - AI privacy/proposal/apply boundaries
 - asset management and Related References
 - Create Content and Reference Library workflows
-- private Hiring Guide Library import/edit/evidence/backups and public-write boundaries
+- private Hiring Guide Library import/edit/evidence/backups
+- Hiring Guide public-sync compilation, routing parity, stale-state protection, validation, and rollback
 - adversarial security/misuse regression
 - workflow state-safety/chaos regression
 - authenticated end-to-end release smoke testing
@@ -110,7 +111,21 @@ import canonical JSON (+ optional Markdown)
   → export updated private library
 ```
 
-Hiring Guide Manager v1 does not synchronize the private editorial library into the public `portfolio/data/hiring-faq*.json` files. Treat public synchronization as a separate future publishing transformation with its own review and validation.
+Public synchronization is a separate controlled step inside Hiring Guide Library:
+
+```text
+private canonical library
+  → Preview Public Sync
+  → review matches + changed fields + evidence warnings
+  → test proposed routing
+  → exact apply confirmation
+  → private recovery backup
+  → local FAQ write
+  → Full Validation
+  → auto-restore on failure
+```
+
+The compiler preserves unmatched legacy public questions and strips private editorial fields before generating the proposal. A stale proposal cannot be applied after the public FAQ files change. **Apply Public Sync Locally + Validate** changes only the local working copy; normal Save & Publish remains the separate Git/publishing workflow.
 
 ## Commit Identity Privacy
 

@@ -212,7 +212,11 @@
                     <li><strong>Backups:</strong> each edit creates a private previous-version copy under <code>.portfolio-manager/hiring-guide/backups/</code>.</li>
                     <li><strong>Export:</strong> download the current private JSON or preserved Markdown source.</li>
                 </ul>
-                <p class="guide-callout"><strong>Important:</strong> Hiring Guide Manager v1 does not rewrite the public Ask Haley FAQ files and does not publish anything. Public synchronization is a separate future workflow.</p>
+                <h3>Preview Public Sync</h3>
+                <p>When the private answers are ready, use <strong>Preview Public Sync</strong>. It creates a private proposal first and shows which private Q&amp;As matched existing public questions, which would be added, which fields would change, and any evidence/editorial warnings.</p>
+                <p>Use the <strong>Routing simulator</strong> to ask a hiring-manager question against the proposed public library before writing anything. The simulator mirrors the live deterministic scoring logic.</p>
+                <p><strong>Apply Public Sync Locally + Validate</strong> requires an exact confirmation phrase. It creates a private recovery backup, refuses stale/destructive proposals, writes only the two local public FAQ data files, and runs Full Validation. If validation fails, the old files are restored automatically.</p>
+                <p class="guide-callout"><strong>Important:</strong> Public sync apply is still not publishing. It creates local public-candidate changes that you should preview in the real Ask Haley page before using the normal Save &amp; Publish workflow.</p>
             </section>
 
             <section class="guide-section" id="publishing" data-guide-section data-guide-tags="publish save publish git commit push main origin live github pages changed files diff validation stage public">

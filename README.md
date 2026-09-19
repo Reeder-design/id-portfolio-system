@@ -111,7 +111,7 @@ Use this private editorial workspace to maintain the source-of-truth Q&A library
 - create private backups automatically before edits
 - export the updated private JSON/Markdown
 
-The rich Hiring Guide library lives only under `.portfolio-manager/hiring-guide/`. Manager v1 does **not** write to the public `portfolio/data/hiring-faq*.json` files or publish anything. A future public-sync bridge must be explicit, deterministic, and separately validated.
+The rich Hiring Guide library lives only under `.portfolio-manager/hiring-guide/`. **Preview Public Sync** compiles that private source into a stripped public proposal without exposing confidence/source/editorial-note fields. The proposal preserves unmatched legacy public questions, audits matched/new records, flags non-demonstrated evidence, and includes a routing simulator. **Apply Public Sync Locally + Validate** writes only the local `portfolio/data/hiring-faq.json` and `hiring-faq-expanded.json` files after an exact confirmation, creates a private recovery backup, verifies the proposal is not stale, runs Full Validation, and automatically restores the old files if validation fails. It never commits or publishes.
 
 ## AI Assistance
 
@@ -183,7 +183,8 @@ Portfolio Manager **Run Full Validation** and pull-request CI exercise the same 
 - AI privacy and proposal/apply boundaries
 - assets, Related References relationship graph/reference integrity, and Component Registry
 - Create Content and Reference Library workflows
-- private Hiring Guide Library import/edit/evidence/backups and public-write boundary
+- private Hiring Guide Library import/edit/evidence/backups
+- deterministic Hiring Guide public-sync proposal, routing, stale-state, rollback, and local-apply boundaries
 - adversarial security/misuse regression
 - workflow state-safety/chaos regression
 - end-to-end release smoke tests

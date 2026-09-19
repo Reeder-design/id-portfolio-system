@@ -81,7 +81,19 @@ The main user workflows are:
 
 Do not reintroduce the retired v1 generic request-intake routes or forms.
 
-The existing public Ask Haley experience currently reads tracked public FAQ/search files under `portfolio/data/`. Hiring Guide Manager v1 is intentionally private-only and must not write those files. Any future private-library → public-guide synchronization must be an explicit human-reviewed transformation that strips editorial-only fields and respects evidence status/claim rules.
+The existing public Ask Haley experience reads tracked public FAQ/search files under `portfolio/data/`. Hiring Guide public sync is now a deterministic, human-reviewed bridge from the private editorial library to `hiring-faq.json` and `hiring-faq-expanded.json`.
+
+Public sync rules:
+- Generate a private proposal first; proposal generation must not write public files.
+- Strip editorial-only fields such as source basis, confidence, variants, notes, review status, and evidence IDs from public output.
+- Preserve unmatched legacy public questions by default; destructive removals must fail closed.
+- Reuse stable public IDs/tiering only on confident matches; new private records receive stable generated public IDs.
+- Flag emerging/inferred/audited evidence for human wording review rather than silently treating it as demonstrated.
+- Use the deterministic routing simulator before local apply when routing quality matters.
+- Apply only after exact human confirmation.
+- Reject stale proposals if the public FAQ files changed after preview generation.
+- Create a private recovery backup, run Full Validation, and restore automatically on validation failure.
+- Apply is local only. It must not commit, push, or publish.
 
 ## AI Assistance Rules
 AI is a controlled assistant, not an autonomous publisher.
