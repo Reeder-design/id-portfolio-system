@@ -189,6 +189,21 @@
           .maintenance-signals{grid-template-columns:1fr}
         }
         @media(prefers-reduced-motion:reduce){.maintenance-loop i::after{animation:none!important}}
+
+        /* Final Solution Scale consistency */
+        .scale-options{align-items:stretch!important}
+        .scale-option,
+        .scale-option.active,
+        .scale-option:hover,
+        .scale-option:focus-visible{
+          box-sizing:border-box!important;
+          min-height:70px!important;
+          height:70px!important;
+          padding:8px!important;
+        }
+        .scale-option.active{transform:none!important}
+        .scale-option:hover,.scale-option:focus-visible{transform:translateY(-2px)}
+        .scale-option img{display:block;width:40px!important;height:40px!important;object-fit:contain}
 </style>
     <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
