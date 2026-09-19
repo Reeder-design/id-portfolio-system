@@ -729,6 +729,42 @@ def build_proposal() -> dict[str, Any]:
     )
     return proposal
 
+def _proposal_is_renderable(payload: Any) -> bool:
+    if not isinstance(payload, dict) or str(payload.get("schema_version") or "") != "1.1":
+        return False
+    summary = payload.get("summary")
+    diff = payload.get("diff")
+    if not isinstance(summary, dict) or not isinstance(diff, dict):
+        return False
+    required_summary = {
+        "private_canonical",
+        "matched_existing",
+        "new_public_questions",
+        "changed_public_questions",
+        "preserved_legacy_questions",
+        "removed_public_questions",
+        "warnings",
+        "mapping_review_required",
+        "manual_decisions",
+        "safe_new",
+        "apply_ready",
+    }
+    required_diff = {"added", "added_by_category", "changed", "removed"}
+    if not required_summary.issubset(summary):
+        return False
+    if not required_diff.issubset(diff):
+        return False
+    if not isinstance(payload.get("matches"), list):
+        return False
+    if not isinstance(payload.get("public_questions"), list):
+        return False
+    if not isinstance(payload.get("warning_groups"), list):
+        return False
+    if not isinstance(payload.get("outputs"), dict):
+        return False
+    return True
+
+
 def load_proposal() -> dict[str, Any] | None:
     if not PROPOSAL_PATH.exists():
         return None
@@ -736,7 +772,10 @@ def load_proposal() -> dict[str, Any] | None:
         payload = json.loads(PROPOSAL_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return None
-    return payload if isinstance(payload, dict) else None
+    # Preview files are disposable private state. Older/incomplete proposals
+    # should never be allowed to crash a newer review UI; simply require a
+    # fresh preview while leaving the source Hiring Guide untouched.
+    return payload if _proposal_is_renderable(payload) else None
 
 
 def _proposal_is_fresh(proposal: dict[str, Any]) -> bool:
