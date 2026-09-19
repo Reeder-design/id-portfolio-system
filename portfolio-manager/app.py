@@ -14,6 +14,7 @@ from asset_routes import asset_bp
 from content_routes import content_bp
 from create_content_routes import create_content_bp
 from git_routes import git_bp
+from hiring_guide_routes import hiring_guide_bp
 from portfolio_review_routes import portfolio_review_bp
 from reference_library_routes import reference_library_bp
 from related_references_routes import related_references_bp
@@ -46,6 +47,7 @@ app.register_blueprint(content_bp)
 app.register_blueprint(asset_bp)
 app.register_blueprint(site_content_bp)
 app.register_blueprint(git_bp)
+app.register_blueprint(hiring_guide_bp)
 app.register_blueprint(ai_bp)
 app.register_blueprint(ai_apply_bp)
 app.register_blueprint(portfolio_review_bp)
