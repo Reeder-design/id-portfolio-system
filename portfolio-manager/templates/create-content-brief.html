@@ -202,7 +202,20 @@
         <section class="dashboard-card full-width">
             <p class="eyebrow">Experience design</p>
             <h2>Interactions / presentation patterns</h2>
-            {% for item in record.plan.interactions %}<article class="v2-project-row"><div><h3>{{ item.name }}</h3><p>{{ item.purpose }}</p>{% if item.visitor_action %}<p><strong>Visitor action:</strong> {{ item.visitor_action }}</p>{% endif %}</div></article>{% else %}<p class="empty-note">No interaction recommendation returned.</p>{% endfor %}
+            {% for item in record.plan.interactions %}
+            <article class="v2-project-row">
+                <div>
+                    <h3>{{ item.name }}</h3>
+                    {% if item.component_id %}
+                    <p><strong>Reuse:</strong> <a href="{{ url_for('component_registry.workspace') }}#component-{{ item.component_id }}">{{ item.component_label or item.component_id }}</a> · {{ item.component_support|replace('-', ' ')|title }}</p>
+                    {% else %}
+                    <p><strong>Pattern:</strong> Custom / no registered component fit</p>
+                    {% endif %}
+                    <p>{{ item.purpose }}</p>
+                    {% if item.visitor_action %}<p><strong>Visitor action:</strong> {{ item.visitor_action }}</p>{% endif %}
+                </div>
+            </article>
+            {% else %}<p class="empty-note">No interaction recommendation returned.</p>{% endfor %}
         </section>
 
         <section class="dashboard-card full-width">
