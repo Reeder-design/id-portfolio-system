@@ -1,81 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive pursuit positioning sales enablement exercise by instructional designer Haley Reeder.">
-    <title>Pursuit Determination Lab | Haley Reeder</title>
-    <link rel="icon" type="image/svg+xml" href="../../../../assets/site/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../css/styles.css">
-    <link rel="stylesheet" href="../../../../css/portfolio-refresh.css">
-    <link rel="stylesheet" href="../../../../css/phase1-theme.css">
-    <link rel="stylesheet" href="../../../../css/phase1-frame.css">
-    <style>
-        .pursuit-hero .refresh-hero-grid{grid-template-columns:minmax(0,1.22fr) minmax(270px,.58fr);gap:30px;align-items:center}.pursuit-hero .refresh-hero-copy{position:relative;z-index:2}.pursuit-hero h1{max-width:650px;font-size:clamp(2.7rem,5.3vw,5rem);line-height:.98}.pursuit-mini-matrix{width:100%;max-width:355px;justify-self:end;padding:18px;border:1px solid rgba(80,132,132,.2);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(238,245,241,.82));box-shadow:0 16px 38px rgba(52,74,66,.1)}.pursuit-mini-matrix h2{margin:0 0 4px;font-size:1rem}.mini-helper{margin:0;color:#67716d;font-size:.76rem}.mini-matrix-stage{position:relative;margin:28px 18px 28px 34px}.mini-matrix-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;overflow:hidden;border:2px solid rgba(74,66,56,.62);border-radius:15px;aspect-ratio:1}.mini-quadrant{display:grid;place-items:center;min-height:82px;padding:10px;border:0;background:white;color:var(--charcoal);font:800 .72rem/1.2 var(--font-heading);text-align:center;cursor:pointer;transition:filter .15s ease,box-shadow .15s ease,color .15s ease}.mini-quadrant:nth-child(1){background:rgba(121,201,158,.13);border-right:1px solid rgba(74,66,56,.2);border-bottom:1px solid rgba(74,66,56,.2)}.mini-quadrant:nth-child(2){background:rgba(121,201,158,.28);border-bottom:1px solid rgba(74,66,56,.2)}.mini-quadrant:nth-child(3){background:rgba(74,66,56,.06);border-right:1px solid rgba(74,66,56,.2)}.mini-quadrant:nth-child(4){background:rgba(80,132,132,.13)}.mini-quadrant:hover,.mini-quadrant:focus-visible{filter:brightness(.97);box-shadow:inset 0 0 0 3px rgba(121,201,158,.8);outline:none}.mini-quadrant.active{box-shadow:inset 0 0 0 3px var(--pine-blue);color:var(--pine-blue)}.mini-axis{position:absolute;color:#68716e;font:800 .62rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}.mini-axis-x{left:50%;bottom:-20px;transform:translateX(-50%)}.mini-axis-y{top:50%;left:-54px;transform:translateY(-50%) rotate(-90deg)}.mini-matrix-detail{min-height:54px;margin-top:8px;padding:11px 13px;border-radius:13px;background:rgba(74,66,56,.06);font-size:.82rem;line-height:1.45}.opportunity-shell{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:22px;align-items:start}.snapshot-card,.evidence-viewer,.score-stage,.matrix-card,.result-card{border:1px solid rgba(80,132,132,.18);border-radius:22px;background:rgba(255,255,255,.93);box-shadow:0 14px 36px rgba(52,74,66,.08)}.snapshot-card{padding:24px}.snapshot-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}.snapshot-stat{padding:14px;border-radius:14px;background:rgba(238,245,241,.75)}.snapshot-stat strong{display:block;color:var(--pine-blue);font:800 1.25rem/1 var(--font-heading);margin-bottom:5px}.signal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.signal-card{padding:14px;border-radius:14px;background:rgba(243,240,232,.74)}.signal-card strong{display:block;margin-bottom:4px;color:var(--pine-blue);font-size:.82rem}.evidence-viewer{overflow:hidden}.evidence-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid rgba(80,132,132,.14)}.evidence-tab{padding:13px 10px;border:0;background:transparent;color:var(--charcoal);font:700 .75rem/1.2 var(--font-heading);cursor:pointer}.evidence-tab:hover,.evidence-tab:focus-visible{background:rgba(80,132,132,.08);outline:none}.evidence-tab.active{background:var(--pine-blue);color:white}.evidence-panel{padding:22px}.evidence-panel h3{margin-bottom:8px}.evidence-panel ul{margin:0;padding-left:20px}.evidence-panel li+li{margin-top:7px}.score-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:24px;align-items:start}.score-stage{padding:26px}.score-progress{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.score-progress-bar{flex:1;height:8px;overflow:hidden;border-radius:999px;background:rgba(80,132,132,.12)}.score-progress-fill{height:100%;width:16.66%;border-radius:999px;background:linear-gradient(90deg,var(--pine-blue),var(--mint-leaf));transition:width .2s ease}.criterion-kicker{display:flex;align-items:center;gap:10px;color:var(--pine-blue);font:800 .76rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}.criterion-prompt{margin:10px 0 18px;font-size:1.02rem}.score-buttons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.score-button{min-height:58px;border:2px solid rgba(80,132,132,.16);border-radius:14px;background:rgba(243,240,232,.72);color:var(--charcoal);font:800 .95rem/1 var(--font-heading);cursor:pointer}.score-button:hover,.score-button:focus-visible{border-color:var(--mint-leaf);outline:none}.score-button.selected{border-color:var(--pine-blue);background:rgba(80,132,132,.12);color:var(--pine-blue)}.score-labels{display:flex;justify-content:space-between;margin-top:7px;color:#68716e;font-size:.72rem}.criterion-note{margin-top:16px;padding:14px;border-left:4px solid var(--mint-leaf);border-radius:12px;background:rgba(238,245,241,.72)}.criterion-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}.matrix-card{position:sticky;top:106px;padding:22px}.matrix-wrap{position:relative;margin:32px 18px 34px 38px}.matrix{position:relative;aspect-ratio:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;overflow:hidden;border:2px solid rgba(74,66,56,.7);border-radius:16px}.quadrant{display:grid;place-items:center;padding:10px;font:800 .72rem/1.2 var(--font-heading);text-align:center}.quadrant:nth-child(1){background:rgba(121,201,158,.13)}.quadrant:nth-child(2){background:rgba(121,201,158,.28)}.quadrant:nth-child(3){background:rgba(74,66,56,.06)}.quadrant:nth-child(4){background:rgba(80,132,132,.13)}.quadrant:nth-child(1),.quadrant:nth-child(3){border-right:1px solid rgba(74,66,56,.2)}.quadrant:nth-child(1),.quadrant:nth-child(2){border-bottom:1px solid rgba(74,66,56,.2)}.matrix-marker{position:absolute;z-index:4;left:50%;top:50%;width:22px;height:22px;transform:translate(-50%,-50%);border:4px solid var(--yellow-green);border-radius:50%;background:var(--taupe);box-shadow:0 0 0 4px rgba(255,255,255,.7);transition:left .25s ease,top .25s ease}.axis-label{position:absolute;color:#68716e;font:800 .66rem/1 var(--font-heading);text-transform:uppercase}.axis-x{left:50%;bottom:-27px;transform:translateX(-50%)}.axis-y{top:50%;left:-58px;transform:translateY(-50%) rotate(-90deg)}.matrix-scores{display:grid;grid-template-columns:1fr 1fr;gap:9px}.matrix-score{padding:12px;border-radius:12px;background:rgba(243,240,232,.75);text-align:center}.matrix-score strong{display:block;color:var(--pine-blue);font:800 1.2rem/1 var(--font-heading);margin-bottom:4px}.quadrant-result{margin-top:10px;padding:12px;border-radius:12px;background:var(--taupe);color:white}.quadrant-result strong{color:var(--yellow-green)}.results-shell{display:none;margin-top:30px}.results-shell.show{display:grid;gap:16px}.result-card{padding:24px}.result-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}.result-summary div{padding:14px;border-radius:14px;background:rgba(238,245,241,.72)}.result-summary strong{display:block;color:var(--pine-blue);font:800 1.1rem/1.1 var(--font-heading);margin-bottom:5px}.benchmark-list{display:grid;gap:9px;margin-top:16px}.benchmark-row{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.2fr);gap:14px;padding:14px;border-radius:14px;background:rgba(243,240,232,.72)}.benchmark-row strong{color:var(--pine-blue)}@media(max-width:980px){.pursuit-hero .refresh-hero-grid,.opportunity-shell,.score-layout{grid-template-columns:1fr}.pursuit-mini-matrix{justify-self:start;max-width:420px}.matrix-card{position:static}.snapshot-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.pursuit-hero h1{font-size:clamp(2.4rem,12vw,3.6rem)}.evidence-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.score-buttons{grid-template-columns:repeat(5,1fr)}.result-summary,.signal-grid{grid-template-columns:1fr}.benchmark-row{grid-template-columns:1fr}.pursuit-mini-matrix{max-width:none;padding:16px}}
-    
-        .pursuit-context-visual{margin:20px 0 22px}
-        .pursuit-context-visual img{display:block;width:100%;height:auto;object-fit:initial;box-shadow:0 16px 34px rgba(52,74,66,.13)}
-        .pursuit-context-visual figcaption{margin-top:9px;color:#68716e;font-size:.72rem;line-height:1.45}
-</style>
-    <script defer src="../../../../js/portfolio-motion.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive pursuit determination practice by Haley Reeder, connecting opportunity evidence to scoring criteria, a live matrix, and benchmark calibration.">
+  <title>Pursuit Determination Lab | Haley Reeder</title>
+  <link rel="icon" type="image/svg+xml" href="../../../../assets/site/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../css/styles.css">
+  <link rel="stylesheet" href="../../../../css/portfolio-refresh.css">
+  <link rel="stylesheet" href="../../../../css/phase1-theme.css">
+  <link rel="stylesheet" href="../../../../css/phase1-frame.css">
+  <style>
+    body.pursuit-lab-page{background:#f8faf8}
+    body.pursuit-lab-page .section{padding-block:clamp(25px,3.2vw,36px)!important}
+
+    .pursuit-hero{
+      position:relative;
+      overflow:hidden;
+      padding:24px 0 30px!important;
+      color:#edf5f1;
+      background:
+        radial-gradient(circle at 86% 16%,rgba(151,219,79,.12),transparent 24rem),
+        linear-gradient(145deg,#14272e,#28474a);
+    }
+    .pursuit-hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.08;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+      background-size:30px 30px;
+    }
+    .pursuit-hero .container{position:relative;z-index:1}
+    .pursuit-hero .breadcrumbs,
+    .pursuit-hero .breadcrumbs a,
+    .pursuit-hero .breadcrumbs span{color:rgba(246,250,247,.78)!important;font-weight:500}
+    .pursuit-hero .breadcrumbs a:hover,
+    .pursuit-hero .breadcrumbs a:focus-visible{color:#fff!important}
+    .pursuit-hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+      gap:34px;
+      align-items:center;
+    }
+    .pursuit-hero h1{color:#fff}
+    .pursuit-hero .body-large{max-width:660px;color:#d5e2dc}
+    .pursuit-hero .btn-secondary{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff}
+
+    .pursuit-hero-visual{
+      position:relative;
+      min-height:260px;
+      display:grid;
+      place-items:center;
+    }
+    .pursuit-hero-core{
+      position:relative;
+      z-index:4;
+      display:grid;
+      place-items:center;
+      width:124px;
+      height:124px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:28px;
+      background:#eef5f0;
+      box-shadow:0 20px 44px rgba(0,0,0,.2);
+      animation:pursuitFloat 4.8s ease-in-out infinite;
+    }
+    .pursuit-hero-core img{width:98px;height:98px;object-fit:contain}
+    .pursuit-hero-node{
+      position:absolute;
+      z-index:5;
+      display:grid;
+      place-items:center;
+      width:68px;
+      height:68px;
+      border-radius:18px;
+      background:#eef5f0;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+    }
+    .pursuit-hero-node img{width:54px;height:54px;object-fit:contain}
+    .node-fit{left:10%;top:15%;animation:pursuitNode 5s ease-in-out infinite}
+    .node-risk{right:8%;top:22%;animation:pursuitNode 5s .8s ease-in-out infinite}
+    .node-go{right:18%;bottom:2%;animation:pursuitNode 5s 1.6s ease-in-out infinite}
+    .pursuit-orbit{
+      position:absolute;
+      width:245px;
+      height:245px;
+      border:1px dashed rgba(121,201,158,.3);
+      border-radius:50%;
+      animation:pursuitOrbit 11s linear infinite;
+    }
+    @keyframes pursuitFloat{50%{transform:translateY(-7px)}}
+    @keyframes pursuitNode{50%{transform:translateY(-6px) rotate(2deg)}}
+    @keyframes pursuitOrbit{to{transform:rotate(360deg)}}
+
+    .workbench-section{background:#f7faf8!important}
+    .workbench-intro{margin-bottom:13px}
+    .workbench-intro h2{margin:4px 0 5px}
+    .workbench-intro p{max-width:800px;margin:0;color:#596963;font-size:.82rem;line-height:1.5}
+
+    .opportunity-strip{
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) repeat(3,auto);
+      gap:11px;
+      align-items:center;
+      width:min(100%,1120px);
+      margin:0 auto 10px;
+      padding:10px 12px;
+      border:1px solid rgba(80,132,132,.12);
+      border-radius:14px;
+      background:#fff;
+      box-shadow:0 8px 20px rgba(44,72,65,.05);
+    }
+    .opportunity-strip img{width:42px;height:42px;object-fit:contain}
+    .opportunity-strip h3{margin:0 0 2px;color:#263d37;font-size:.76rem}
+    .opportunity-strip p{margin:0;color:#607069;font-size:.61rem}
+    .opp-stat{
+      min-width:92px;
+      padding:6px 8px;
+      border-radius:9px;
+      background:#eef4f0;
+      text-align:center;
+    }
+    .opp-stat strong{display:block;color:#315755;font:800 .66rem/1 var(--font-heading)}
+    .opp-stat span{display:block;margin-top:3px;color:#6b7873;font:.46rem/1.1 var(--font-body)}
+
+    .evidence-bar{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:7px;
+      width:min(100%,1120px);
+      margin:0 auto 9px;
+    }
+    .evidence-tab{
+      display:grid;
+      grid-template-columns:40px minmax(0,1fr);
+      gap:8px;
+      align-items:center;
+      min-height:60px;
+      padding:8px 9px;
+      border:1px solid rgba(80,132,132,.14);
+      border-radius:12px;
+      background:#fff;
+      color:#31463f;
+      text-align:left;
+      cursor:pointer;
+      transition:transform .16s ease,border-color .16s ease,background .16s ease;
+    }
+    .evidence-tab img{width:40px;height:40px;object-fit:contain}
+    .evidence-tab strong{display:block;font:800 .59rem/1.15 var(--font-heading)}
+    .evidence-tab small{display:block;margin-top:3px;color:#728079;font:.49rem/1.22 var(--font-body)}
+    .evidence-tab:hover,.evidence-tab:focus-visible{transform:translateY(-2px);border-color:#79c99e;outline:none}
+    .evidence-tab.active{border-color:#315755;background:#eaf3ee}
+    .evidence-tab.related{box-shadow:0 0 0 3px rgba(151,219,79,.09)}
+
+    .evidence-panel{
+      display:grid;
+      grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);
+      gap:12px;
+      width:min(100%,1120px);
+      margin:0 auto 10px;
+      padding:11px 12px;
+      border:1px solid rgba(80,132,132,.12);
+      border-radius:13px;
+      background:#fff;
+    }
+    .evidence-panel-copy .eyebrow{margin-bottom:3px;color:#4a796e!important}
+    .evidence-panel-copy h3{margin:0;color:#263d37;font-size:.82rem}
+    .evidence-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none}
+    .evidence-list li{padding:7px 8px;border-radius:9px;background:#f1f5f2;color:#586762;font-size:.58rem;line-height:1.35}
+
+    .decision-workbench{
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);
+      gap:12px;
+      width:min(100%,1120px);
+      margin:0 auto;
+      align-items:start;
+    }
+    .criterion-stage{
+      padding:14px;
+      border:1px solid rgba(80,132,132,.13);
+      border-radius:17px;
+      background:#fff;
+      box-shadow:0 12px 28px rgba(44,72,65,.06);
+    }
+    .criterion-progress{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-bottom:10px;
+    }
+    .criterion-progress span{color:#4a796e;font:800 .52rem/1 var(--font-heading)}
+    .criterion-progress-bar{flex:1;height:5px;overflow:hidden;border-radius:999px;background:#e7eeea}
+    .criterion-progress-fill{height:100%;width:16.67%;border-radius:inherit;background:linear-gradient(90deg,#508484,#79c99e,#97db4f);transition:width .2s ease}
+    .criterion-kicker{color:#4a796e;font:800 .52rem/1.1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+    .criterion-stage h3{margin:5px 0 5px;color:#263d37;font-size:1.02rem}
+    .criterion-stage>p{margin:0;color:#52625c;font-size:.73rem;line-height:1.48}
+    .criterion-evidence-link{
+      display:flex;
+      flex-wrap:wrap;
+      gap:5px;
+      margin-top:8px;
+    }
+    .criterion-evidence-link span{
+      padding:4px 7px;
+      border-radius:999px;
+      background:#eef4f0;
+      color:#4c6e64;
+      font:800 .49rem/1 var(--font-heading);
+    }
+    .score-buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+    .score-button{
+      min-height:47px;
+      border:2px solid rgba(80,132,132,.15);
+      border-radius:11px;
+      background:#f4f7f5;
+      color:#31463f;
+      font:800 .8rem/1 var(--font-heading);
+      cursor:pointer;
+    }
+    .score-button:hover,.score-button:focus-visible{border-color:#79c99e;outline:none}
+    .score-button.selected{border-color:#315755;background:#e2efea;color:#315755}
+    .score-labels{display:flex;justify-content:space-between;margin-top:5px;color:#7a8781;font-size:.49rem}
+    .criterion-note{margin-top:9px;padding:8px 9px;border-left:3px solid #79c99e;border-radius:8px;background:#f1f6f2;color:#53635d;font-size:.59rem;line-height:1.38}
+    .criterion-nav{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+    .criterion-nav .btn{padding:8px 10px;font-size:.6rem}
+
+    .decision-panel{
+      position:sticky;
+      top:90px;
+      padding:13px;
+      border:1px solid rgba(121,201,158,.19);
+      border-radius:17px;
+      background:
+        radial-gradient(circle at 86% 10%,rgba(151,219,79,.08),transparent 11rem),
+        linear-gradient(145deg,#173039,#264948);
+      color:#dce9e2;
+      box-shadow:0 14px 32px rgba(0,0,0,.1);
+    }
+    .decision-panel .eyebrow{margin-bottom:3px;color:#bfe6ce!important}
+    .decision-panel h3{margin:0 0 8px;color:#fff;font-size:.9rem}
+    .matrix-wrap{position:relative;margin:20px 17px 24px 30px}
+    .matrix{
+      position:relative;
+      aspect-ratio:1.35;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:12px;
+    }
+    .quadrant{display:grid;place-items:center;padding:7px;color:#dce9e2;font:800 .55rem/1.15 var(--font-heading);text-align:center}
+    .quadrant:nth-child(1){background:rgba(121,201,158,.08);border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+    .quadrant:nth-child(2){background:rgba(151,219,79,.11);border-bottom:1px solid rgba(255,255,255,.08)}
+    .quadrant:nth-child(3){background:rgba(255,255,255,.025);border-right:1px solid rgba(255,255,255,.08)}
+    .quadrant:nth-child(4){background:rgba(80,132,132,.11)}
+    .matrix-marker{
+      position:absolute;
+      z-index:4;
+      left:50%;
+      top:50%;
+      width:18px;
+      height:18px;
+      transform:translate(-50%,-50%);
+      border:3px solid #97db4f;
+      border-radius:50%;
+      background:#4a4238;
+      box-shadow:0 0 0 3px rgba(255,255,255,.65);
+      transition:left .25s ease,top .25s ease;
+    }
+    .axis-label{position:absolute;color:#9fb6ab;font:800 .48rem/1 var(--font-heading);text-transform:uppercase}
+    .axis-x{left:50%;bottom:-19px;transform:translateX(-50%)}
+    .axis-y{top:50%;left:-46px;transform:translateY(-50%) rotate(-90deg)}
+    .matrix-scores{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+    .matrix-score{padding:8px;border-radius:9px;background:rgba(255,255,255,.06);text-align:center;font-size:.5rem}
+    .matrix-score strong{display:block;margin-bottom:3px;color:#dff0e6;font:800 .92rem/1 var(--font-heading)}
+    .quadrant-result{margin-top:7px;padding:8px;border-radius:9px;background:#10272e;color:#dce9e2;font-size:.56rem}
+    .quadrant-result strong{color:#97db4f}
+    .decision-actions{
+      position:sticky;
+      bottom:8px;
+      z-index:4;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:6px;
+      margin-top:8px;
+      padding-top:8px;
+      border-top:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg,rgba(38,73,72,0),#264948 28%);
+    }
+    .decision-actions .btn{justify-content:center;padding:8px 9px;font-size:.58rem}
+    .decision-actions .btn-secondary{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff}
+
+    .results-shell{
+      display:none;
+      grid-column:1/-1;
+      grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+      gap:8px;
+      margin-top:0;
+    }
+    .results-shell.show{display:grid}
+    .result-card{
+      padding:12px;
+      border:1px solid rgba(80,132,132,.13);
+      border-radius:13px;
+      background:#fff;
+    }
+    .result-card .eyebrow{margin-bottom:3px;color:#4a796e!important}
+    .result-card h3,.result-card h2{margin:0 0 5px;color:#263d37;font-size:.88rem}
+    .result-card>p{margin:0;color:#596863;font-size:.62rem;line-height:1.4}
+    .result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:8px}
+    .result-summary div{padding:7px;border-radius:8px;background:#eef4f0;color:#66746e;font-size:.48rem}
+    .result-summary strong{display:block;margin-bottom:2px;color:#315755;font:800 .72rem/1 var(--font-heading)}
+    .benchmark-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+    .benchmark-row{padding:7px;border-radius:8px;background:#f1f5f2}
+    .benchmark-row strong{display:block;color:#315755;font:800 .51rem/1.15 var(--font-heading)}
+    .benchmark-row span{display:block;margin-top:3px;color:#66746e;font-size:.47rem;line-height:1.28}
+
+    .lab-back{padding:18px 0 22px!important;background:#edf4f0!important}
+    .lab-back a{display:inline-flex;align-items:center;gap:8px;color:#315755;text-decoration:none;font:800 .67rem/1.2 var(--font-heading)}
+
+    @media(max-width:900px){
+      .pursuit-hero-grid,.decision-workbench{grid-template-columns:1fr}
+      .decision-panel{position:static}
+      .decision-actions{position:static;background:transparent}
+    }
+    @media(max-width:760px){
+      .opportunity-strip{grid-template-columns:auto 1fr}
+      .opp-stat{min-width:0}
+      .evidence-bar{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .evidence-panel{grid-template-columns:1fr}
+      .evidence-list{grid-template-columns:1fr}
+      .results-shell{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){
+      body.pursuit-lab-page .section{padding-block:23px!important}
+      .pursuit-hero-visual{min-height:230px}
+      .pursuit-hero-core{width:104px;height:104px}
+      .pursuit-hero-core img{width:82px;height:82px}
+      .pursuit-hero-node{width:56px;height:56px}
+      .pursuit-hero-node img{width:44px;height:44px}
+      .result-summary,.benchmark-list{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .pursuit-hero-core,.pursuit-hero-node,.pursuit-orbit{animation:none!important}
+      .matrix-marker,.evidence-tab{transition:none}
+    }
+  </style>
+  <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
-<body>
+<body class="pursuit-lab-page">
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../../index.html">Home</a><a href="../../../../about/index.html">About Me</a><a class="active" href="../../../index.html">Projects</a><a href="../../../../contact/index.html">Contact</a></nav></div></header>
 <main>
-    <section class="page-hero refresh-hero pursuit-hero">
-        <div class="container refresh-hero-grid">
-            <div class="refresh-hero-copy"><p class="eyebrow">Interactive Sales Practice</p><h1>Pursuit Determination Lab</h1><p class="body-large">Separate <strong>solution fit</strong> from <strong>pursuit strength</strong>, then decide the next move.</p><div class="refresh-chip-row"><span class="refresh-chip">Opportunity Strategy</span><span class="refresh-chip">Qualification</span><span class="refresh-chip">Decision Practice</span></div></div>
-            <aside class="pursuit-mini-matrix" aria-label="Interactive pursuit matrix overview"><p class="eyebrow">Interactive Preview</p><h2>Choose a pursuit position.</h2><p class="mini-helper">Select any quadrant to see what it means.</p><div class="mini-matrix-stage"><div class="mini-matrix-grid"><button class="mini-quadrant" type="button" data-mini="develop">Develop Fit</button><button class="mini-quadrant active" type="button" data-mini="prioritize">Prioritize</button><button class="mini-quadrant" type="button" data-mini="deprioritize">Deprioritize</button><button class="mini-quadrant" type="button" data-mini="nurture">Nurture</button></div><span class="mini-axis mini-axis-x">Solution Fit →</span><span class="mini-axis mini-axis-y">Pursuit Strength →</span></div><div class="mini-matrix-detail" id="miniMatrixDetail" aria-live="polite">Strong solution fit + strong buying evidence: keep investing and close the remaining qualification gaps.</div></aside>
+  <section class="page-hero pursuit-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><a href="../index.html">Interactive Learning</a><span class="breadcrumb-separator">/</span><span>Pursuit Determination Lab</span></nav>
+      <div class="pursuit-hero-grid">
+        <div>
+          <h1>Pursuit Determination Lab</h1>
+          <p class="body-large">Review a fictional opportunity, score the evidence, and separate solution fit from pursuit strength before deciding the next move.</p>
+          <div class="button-row"><a class="btn btn-primary" href="#workbench">Start Evaluation</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
         </div>
-    </section>
+        <aside class="pursuit-hero-visual" aria-label="Animated pursuit evaluation visual">
+          <span class="pursuit-hero-core"><img src="../../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="Pixel-art pursuit confidence visual."></span>
+          <span class="pursuit-hero-node node-fit"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"></span>
+          <span class="pursuit-hero-node node-risk"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"></span>
+          <span class="pursuit-hero-node node-go"><img src="../../../../assets/icons/pixel/pursuit-determination/go-no-go.webp" alt="" aria-hidden="true"></span>
+          <i class="pursuit-orbit" aria-hidden="true"></i>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-    <section class="section section-soft">
-        <div class="container opportunity-shell">
-            <article class="snapshot-card"><p class="eyebrow">Fictional Opportunity</p><h2>Harborview Regional Medical Center</h2><p>Meridian Medical Systems is evaluating Harborview for the VitaTrack Mobile Imaging Cart.</p><figure class="pursuit-context-visual"><img src="../../../../assets/project-images/interactive-learning/pursuit-sales-scenario.webp" alt="Public-safe sales scenario asking the learner to choose the best next action." loading="lazy"><figcaption>General sales-practice pattern: review the situation, choose a next action, then compare the choice with the available evidence.</figcaption></figure><div class="snapshot-stats"><div class="snapshot-stat"><strong>280</strong>Beds</div><div class="snapshot-stat"><strong>65</strong>Portable exams/day</div><div class="snapshot-stat"><strong>39 min</strong>Current turnaround</div><div class="snapshot-stat"><strong>7–10 yrs</strong>Current fleet age</div></div><div class="signal-grid"><div class="signal-card"><strong>Strong signal</strong>Clinical pain and replacement timing are real.</div><div class="signal-card"><strong>Open question</strong>IT, security, funding, and final authority still need validation.</div></div></article>
-            <div class="evidence-viewer"><div class="evidence-tabs" role="tablist" aria-label="Opportunity evidence"><button class="evidence-tab active" type="button" data-evidence="pain">Pain</button><button class="evidence-tab" type="button" data-evidence="environment">Environment</button><button class="evidence-tab" type="button" data-evidence="stakeholders">Stakeholders</button><button class="evidence-tab" type="button" data-evidence="buying">Buying</button></div><div class="evidence-panel"><p class="eyebrow" id="evidenceLabel">Operational Pain</p><h3 id="evidenceTitle">The workflow problem is measurable.</h3><ul id="evidenceList"><li>Portable imaging turnaround increased from 24 to 39 minutes.</li><li>ER and ICU teams often wait for a cart.</li><li>Patient throughput is already a leadership priority.</li></ul></div></div>
-        </div>
-    </section>
+  <section class="section workbench-section" id="workbench">
+    <div class="container">
+      <div class="workbench-intro">
+        <p class="eyebrow">Opportunity Workbench</p>
+        <h2>Move from evidence to criterion to decision.</h2>
+        <p>Explore the opportunity evidence, score one criterion at a time, and watch the matrix update. Evidence categories tied to the current criterion are highlighted so the scoring decision stays grounded in what is actually known.</p>
+      </div>
 
-    <section class="section">
-        <div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">Your Evaluation</p><h2>Score one decision at a time.</h2><p>Use the evidence above. The live matrix moves with each choice.</p></div>
-            <div class="score-layout">
-                <section class="score-stage"><div class="score-progress"><span id="criterionCount">1 of 6</span><div class="score-progress-bar" aria-hidden="true"><div class="score-progress-fill" id="scoreProgressFill"></div></div></div><div class="criterion-kicker" id="criterionGroup">Solution Fit</div><h3 id="criterionTitle">Problem-to-Solution Fit</h3><p class="criterion-prompt" id="criterionPrompt">How directly does VitaTrack address the operational problem Harborview has demonstrated?</p><div class="score-buttons" id="scoreButtons" aria-label="Score from one to five"></div><div class="score-labels"><span>Weak evidence</span><span>Strong evidence</span></div><div class="criterion-note" id="criterionNote">Choose the score best supported by what is known right now.</div><div class="criterion-nav"><button class="btn btn-secondary" type="button" id="previousCriterion">Previous</button><button class="btn btn-primary" type="button" id="nextCriterion">Next</button></div></section>
-                <aside class="matrix-card"><p class="eyebrow">Live Position</p><h3>Pursuit Matrix</h3><div class="matrix-wrap"><div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker"></div></div><span class="axis-label axis-x">Solution Fit</span><span class="axis-label axis-y">Pursuit Strength</span></div><div class="matrix-scores"><div class="matrix-score"><strong id="solutionAverage">3.0</strong>Solution Fit</div><div class="matrix-score"><strong id="pursuitAverage">3.0</strong>Pursuit Strength</div></div><div class="quadrant-result">Current position: <strong id="quadrantLabel">Deprioritize</strong></div></aside>
-            </div>
-            <div class="button-row" style="margin-top:20px"><button class="btn btn-highlight" type="button" id="evaluateButton">Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
-            <section class="results-shell" id="analysisResults"><div class="result-card"><p class="eyebrow">Pursuit Analysis</p><h2 id="resultTitle"></h2><p id="resultSummary"></p><div class="result-summary"><div><strong id="resultSolutionScore"></strong>Solution fit</div><div><strong id="resultPursuitScore"></strong>Pursuit strength</div><div><strong id="resultStatus"></strong>Recommended posture</div></div></div><div class="result-card"><p class="eyebrow">Calibration</p><h3>Your scores vs. the benchmark</h3><div class="benchmark-list" id="benchmarkList"></div></div></section>
-        </div>
-    </section>
+      <div class="opportunity-strip">
+        <img src="../../../../assets/icons/pixel/pursuit-determination/opportunity-intake.webp" alt="" aria-hidden="true">
+        <div><h3>Harborview Regional Medical Center</h3><p>Fictional evaluation for the VitaTrack Mobile Imaging Cart.</p></div>
+        <div class="opp-stat"><strong>39 min</strong><span>Current turnaround</span></div>
+        <div class="opp-stat"><strong>65/day</strong><span>Portable exams</span></div>
+        <div class="opp-stat"><strong>7-10 yrs</strong><span>Fleet age</span></div>
+      </div>
 
-    <section class="section section-soft"><div class="container"><div class="cta"><p class="eyebrow">Keep Exploring</p><h2>Look more closely at qualification evidence.</h2><div class="button-row"><a class="btn btn-highlight" href="../meddpicc-practice/index.html">Try MEDDPICC Practice</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div></div></div></section>
+      <div class="evidence-bar" role="tablist" aria-label="Opportunity evidence categories">
+        <button class="evidence-tab active" type="button" role="tab" aria-selected="true" data-evidence="pain"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"><span><strong>Pain + Urgency</strong><small>What problem is driving action?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="environment"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"><span><strong>Environment + Fit</strong><small>Will the solution work here?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="stakeholders"><img src="../../../../assets/icons/pixel/pursuit-determination/align-stakeholders.webp" alt="" aria-hidden="true"><span><strong>Stakeholder Access</strong><small>Who can influence and approve?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="buying"><img src="../../../../assets/icons/pixel/pursuit-determination/assess-potential.webp" alt="" aria-hidden="true"><span><strong>Buying Motion</strong><small>Is the opportunity actually moving?</small></span></button>
+      </div>
+
+      <div class="evidence-panel">
+        <div class="evidence-panel-copy"><p class="eyebrow" id="evidenceLabel">Pain + Urgency</p><h3 id="evidenceTitle">The workflow problem is measurable.</h3></div>
+        <ul class="evidence-list" id="evidenceList"><li>Portable imaging turnaround increased from 24 to 39 minutes.</li><li>ER and ICU teams often wait for a cart.</li><li>Patient throughput is already a leadership priority.</li></ul>
+      </div>
+
+      <div class="decision-workbench">
+        <section class="criterion-stage">
+          <div class="criterion-progress"><span id="criterionCount">1 of 6</span><div class="criterion-progress-bar" aria-hidden="true"><div class="criterion-progress-fill" id="scoreProgressFill"></div></div></div>
+          <div class="criterion-kicker" id="criterionGroup">Solution Fit</div>
+          <h3 id="criterionTitle">Problem-to-Solution Fit</h3>
+          <p id="criterionPrompt">How directly does VitaTrack address the operational problem Harborview has demonstrated?</p>
+          <div class="criterion-evidence-link" id="criterionEvidenceLink"></div>
+          <div class="score-buttons" id="scoreButtons" aria-label="Score from one to five"></div>
+          <div class="score-labels"><span>Weak evidence</span><span>Strong evidence</span></div>
+          <div class="criterion-note" id="criterionNote">Choose the score best supported by what is known right now.</div>
+          <div class="criterion-nav"><button class="btn btn-secondary" type="button" id="previousCriterion">Previous</button><button class="btn btn-primary" type="button" id="nextCriterion">Next</button></div>
+        </section>
+
+        <aside class="decision-panel">
+          <p class="eyebrow">Live Decision</p>
+          <h3>Pursuit Matrix</h3>
+          <div class="matrix-wrap">
+            <div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker"></div></div>
+            <span class="axis-label axis-x">Solution Fit</span><span class="axis-label axis-y">Pursuit Strength</span>
+          </div>
+          <div class="matrix-scores"><div class="matrix-score"><strong id="solutionAverage">3.0</strong>Solution Fit</div><div class="matrix-score"><strong id="pursuitAverage">3.0</strong>Pursuit Strength</div></div>
+          <div class="quadrant-result">Current position: <strong id="quadrantLabel">Deprioritize</strong></div>
+          <div class="decision-actions"><button class="btn btn-highlight" type="button" id="evaluateButton">Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
+        </aside>
+
+        <section class="results-shell" id="analysisResults" aria-live="polite">
+          <article class="result-card"><p class="eyebrow">Pursuit Analysis</p><h2 id="resultTitle"></h2><p id="resultSummary"></p><div class="result-summary"><div><strong id="resultSolutionScore"></strong>Solution fit</div><div><strong id="resultPursuitScore"></strong>Pursuit strength</div><div><strong id="resultStatus"></strong>Recommended posture</div></div></article>
+          <article class="result-card"><p class="eyebrow">Calibration</p><h3>Your scores vs. the benchmark</h3><div class="benchmark-list" id="benchmarkList"></div></article>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section lab-back"><div class="container"><a href="../index.html"><span aria-hidden="true">←</span> Back to Interactive Learning</a></div></section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="../index.html">Interactive Learning</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a></div></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
+
 <script>
-const miniCopy={develop:'Strong buying motion, but solution fit is still uncertain. Validate the problem and technical fit before accelerating.',prioritize:'Strong solution fit + strong buying evidence: keep investing and close the remaining qualification gaps.',deprioritize:'Both fit and buying evidence are weak. Do not over-invest until discovery changes the picture.',nurture:'The account looks like a fit, but the buying process is immature. Build access, urgency, and decision clarity.'};
-document.querySelectorAll('.mini-quadrant').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.mini-quadrant').forEach(b=>b.classList.toggle('active',b===btn));document.getElementById('miniMatrixDetail').textContent=miniCopy[btn.dataset.mini]}));
-const evidence={pain:{label:'Operational Pain',title:'The workflow problem is measurable.',items:['Portable imaging turnaround increased from 24 to 39 minutes.','ER and ICU teams often wait for a cart.','Patient throughput is already a leadership priority.']},environment:{label:'Operational Fit',title:'The environment looks promising, but validation is incomplete.',items:['Harborview already uses digital PACS.','Two aging carts are entering a replacement cycle.','Formal IT and cybersecurity validation has not happened yet.']},stakeholders:{label:'Stakeholder Access',title:'Clinical access is good; authority access is not.',items:['Director of Radiology is actively advocating for replacement.','ER nursing leadership supports the effort.','CIO and final capital authority have not been engaged directly.']},buying:{label:'Buying Motion',title:'There is a real process, but not a committed purchase.',items:['A preliminary capital request exists.','Funding is not approved yet.','Two competitors remain active.']}};
-document.querySelectorAll('.evidence-tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.evidence-tab').forEach(b=>b.classList.toggle('active',b===btn));const d=evidence[btn.dataset.evidence];document.getElementById('evidenceLabel').textContent=d.label;document.getElementById('evidenceTitle').textContent=d.title;document.getElementById('evidenceList').innerHTML=d.items.map(i=>`<li>${i}</li>`).join('')}));
+const evidence={
+  pain:{label:'Pain + Urgency',title:'The workflow problem is measurable.',items:['Portable imaging turnaround increased from 24 to 39 minutes.','ER and ICU teams often wait for a cart.','Patient throughput is already a leadership priority.']},
+  environment:{label:'Environment + Fit',title:'The environment looks promising, but validation is incomplete.',items:['Harborview already uses digital PACS.','Two aging carts are entering a replacement cycle.','Formal IT and cybersecurity validation has not happened yet.']},
+  stakeholders:{label:'Stakeholder Access',title:'Clinical access is good; authority access is not.',items:['Director of Radiology is actively advocating for replacement.','ER nursing leadership supports the effort.','CIO and final capital authority have not been engaged directly.']},
+  buying:{label:'Buying Motion',title:'There is a real process, but not a committed purchase.',items:['A preliminary capital request exists.','Funding is not approved yet.','Two competitors remain active.']}
+};
+
 const criteria=[
-{id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'How directly does VitaTrack address the operational problem Harborview has demonstrated?',benchmark:5,note:'Imaging volume, delays, aging equipment, and throughput pressure all point to strong fit.'},
-{id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'How clearly has Meridian established a customer-valued advantage over alternatives?',benchmark:3,note:'Competitors are known, but Harborview has not yet validated a preference for VitaTrack.'},
-{id:'operationalFit',group:'Solution Fit',title:'Operational Fit',prompt:'How well does VitaTrack fit Harborview’s current workflow and technical environment?',benchmark:4,note:'The environment looks favorable, but IT and security still need formal validation.'},
-{id:'painUrgency',group:'Pursuit Strength',title:'Pain + Urgency',prompt:'How strong is the reason for Harborview to act now?',benchmark:5,note:'Measured delays, aging equipment, and a leadership initiative create clear urgency.'},
-{id:'stakeholderAccess',group:'Pursuit Strength',title:'Stakeholder Access',prompt:'How well connected is the seller to the people who influence, validate, and approve the purchase?',benchmark:3,note:'Clinical access is strong; IT and final financial authority are still missing.'},
-{id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'How much evidence shows Harborview is progressing toward a real buying decision?',benchmark:3,note:'A capital request and replacement cycle show movement, but funding and vendor preference remain unresolved.'}
+  {id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'How directly does VitaTrack address the operational problem Harborview has demonstrated?',benchmark:5,note:'Imaging volume, delays, aging equipment, and throughput pressure all point to strong fit.',evidence:['pain','environment']},
+  {id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'How clearly has Meridian established a customer-valued advantage over alternatives?',benchmark:3,note:'Competitors are known, but Harborview has not yet validated a preference for VitaTrack.',evidence:['environment','buying']},
+  {id:'operationalFit',group:'Solution Fit',title:'Operational Fit',prompt:'How well does VitaTrack fit Harborview’s current workflow and technical environment?',benchmark:4,note:'The environment looks favorable, but IT and security still need formal validation.',evidence:['environment']},
+  {id:'painUrgency',group:'Pursuit Strength',title:'Pain + Urgency',prompt:'How strong is the reason for Harborview to act now?',benchmark:5,note:'Measured delays, aging equipment, and a leadership initiative create clear urgency.',evidence:['pain']},
+  {id:'stakeholderAccess',group:'Pursuit Strength',title:'Stakeholder Access',prompt:'How well connected is the seller to the people who influence, validate, and approve the purchase?',benchmark:3,note:'Clinical access is strong; IT and final financial authority are still missing.',evidence:['stakeholders']},
+  {id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'How much evidence shows Harborview is progressing toward a real buying decision?',benchmark:3,note:'A capital request and replacement cycle show movement, but funding and vendor preference remain unresolved.',evidence:['buying','stakeholders']}
 ];
-let currentIndex=0;let scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
+
+let currentIndex=0;
+let scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
+const evidenceButtons=[...document.querySelectorAll('.evidence-tab')];
 const buttonsShell=document.getElementById('scoreButtons');
-function renderCriterion(){const c=criteria[currentIndex];document.getElementById('criterionCount').textContent=`${currentIndex+1} of ${criteria.length}`;document.getElementById('scoreProgressFill').style.width=`${((currentIndex+1)/criteria.length)*100}%`;document.getElementById('criterionGroup').textContent=c.group;document.getElementById('criterionTitle').textContent=c.title;document.getElementById('criterionPrompt').textContent=c.prompt;document.getElementById('criterionNote').textContent='Choose the score best supported by what is known right now.';buttonsShell.innerHTML='';for(let n=1;n<=5;n++){const b=document.createElement('button');b.type='button';b.className='score-button'+(scores[c.id]===n?' selected':'');b.textContent=n;b.addEventListener('click',()=>{scores[c.id]=n;renderCriterion();updateMatrix();document.getElementById('criterionNote').textContent=c.note});buttonsShell.appendChild(b)}document.getElementById('previousCriterion').disabled=currentIndex===0;document.getElementById('nextCriterion').textContent=currentIndex===criteria.length-1?'Review':'Next'}
-function avg(ids){return ids.reduce((s,id)=>s+scores[id],0)/ids.length}
-function quadrant(solution,pursuit){const t=3.5;if(solution>=t&&pursuit>=t)return'Prioritize';if(solution<t&&pursuit>=t)return'Develop Fit';if(solution>=t&&pursuit<t)return'Nurture';return'Deprioritize'}
-function updateMatrix(){const solution=avg(['problemFit','differentiation','operationalFit']),pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);const x=((solution-1)/4)*100,y=100-(((pursuit-1)/4)*100);document.getElementById('matrixMarker').style.left=`${x}%`;document.getElementById('matrixMarker').style.top=`${y}%`;document.getElementById('solutionAverage').textContent=solution.toFixed(1);document.getElementById('pursuitAverage').textContent=pursuit.toFixed(1);document.getElementById('quadrantLabel').textContent=quadrant(solution,pursuit)}
-document.getElementById('previousCriterion').addEventListener('click',()=>{if(currentIndex>0){currentIndex--;renderCriterion()}});document.getElementById('nextCriterion').addEventListener('click',()=>{if(currentIndex<criteria.length-1){currentIndex++;renderCriterion()}else document.getElementById('evaluateButton').focus()});
-document.getElementById('evaluateButton').addEventListener('click',()=>{const solution=avg(['problemFit','differentiation','operationalFit']),pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']),q=quadrant(solution,pursuit);const rec={Prioritize:['Advance the opportunity, then close the remaining qualification gaps.','The account shows strong fit and enough buying evidence to justify continued investment.'],Nurture:['Keep developing the opportunity before accelerating.','The account looks like a fit, but access and buying momentum are not mature enough yet.'],'Develop Fit':['Validate the solution fit before committing more pursuit effort.','Buying activity exists, but the product-to-problem connection needs stronger evidence.'],Deprioritize:['Limit investment until the evidence improves.','Current fit and buying evidence are not strong enough to justify heavy pursuit effort.']}[q];document.getElementById('resultTitle').textContent=rec[0];document.getElementById('resultSummary').textContent=rec[1];document.getElementById('resultSolutionScore').textContent=`${solution.toFixed(1)} / 5`;document.getElementById('resultPursuitScore').textContent=`${pursuit.toFixed(1)} / 5`;document.getElementById('resultStatus').textContent=q;document.getElementById('benchmarkList').innerHTML=criteria.map(c=>`<div class="benchmark-row"><strong>${c.title}</strong><span>Your score: ${scores[c.id]} · Benchmark: ${c.benchmark}. ${c.note}</span></div>`).join('');document.getElementById('analysisResults').classList.add('show');document.getElementById('analysisResults').scrollIntoView({behavior:'smooth',block:'start'})});
-document.getElementById('resetButton').addEventListener('click',()=>{scores=Object.fromEntries(criteria.map(c=>[c.id,3]));currentIndex=0;document.getElementById('analysisResults').classList.remove('show');renderCriterion();updateMatrix()});
-renderCriterion();updateMatrix();
+
+function showEvidence(key){
+  const data=evidence[key];
+  evidenceButtons.forEach(button=>{
+    const active=button.dataset.evidence===key;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-selected',String(active));
+  });
+  document.getElementById('evidenceLabel').textContent=data.label;
+  document.getElementById('evidenceTitle').textContent=data.title;
+  document.getElementById('evidenceList').replaceChildren(...data.items.map(item=>{
+    const li=document.createElement('li');
+    li.textContent=item;
+    return li;
+  }));
+}
+evidenceButtons.forEach(button=>button.addEventListener('click',()=>showEvidence(button.dataset.evidence)));
+
+function renderCriterion(){
+  const c=criteria[currentIndex];
+  document.getElementById('criterionCount').textContent=(currentIndex+1)+' of '+criteria.length;
+  document.getElementById('scoreProgressFill').style.width=(((currentIndex+1)/criteria.length)*100)+'%';
+  document.getElementById('criterionGroup').textContent=c.group;
+  document.getElementById('criterionTitle').textContent=c.title;
+  document.getElementById('criterionPrompt').textContent=c.prompt;
+  document.getElementById('criterionNote').textContent='Choose the score best supported by what is known right now.';
+
+  evidenceButtons.forEach(button=>button.classList.toggle('related',c.evidence.includes(button.dataset.evidence)));
+  document.getElementById('criterionEvidenceLink').replaceChildren(...c.evidence.map(key=>{
+    const chip=document.createElement('span');
+    chip.textContent='Evidence: '+evidence[key].label;
+    return chip;
+  }));
+
+  showEvidence(c.evidence[0]);
+  buttonsShell.replaceChildren();
+  for(let n=1;n<=5;n++){
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='score-button'+(scores[c.id]===n?' selected':'');
+    button.textContent=n;
+    button.addEventListener('click',()=>{
+      scores[c.id]=n;
+      renderCriterion();
+      updateMatrix();
+      document.getElementById('criterionNote').textContent=c.note;
+    });
+    buttonsShell.appendChild(button);
+  }
+
+  document.getElementById('previousCriterion').disabled=currentIndex===0;
+  document.getElementById('nextCriterion').textContent=currentIndex===criteria.length-1?'Review':'Next';
+}
+
+function avg(ids){return ids.reduce((sum,id)=>sum+scores[id],0)/ids.length}
+function quadrant(solution,pursuit){
+  const threshold=3.5;
+  if(solution>=threshold&&pursuit>=threshold)return'Prioritize';
+  if(solution<threshold&&pursuit>=threshold)return'Develop Fit';
+  if(solution>=threshold&&pursuit<threshold)return'Nurture';
+  return'Deprioritize';
+}
+function updateMatrix(){
+  const solution=avg(['problemFit','differentiation','operationalFit']);
+  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
+  document.getElementById('matrixMarker').style.left=(((solution-1)/4)*100)+'%';
+  document.getElementById('matrixMarker').style.top=(100-(((pursuit-1)/4)*100))+'%';
+  document.getElementById('solutionAverage').textContent=solution.toFixed(1);
+  document.getElementById('pursuitAverage').textContent=pursuit.toFixed(1);
+  document.getElementById('quadrantLabel').textContent=quadrant(solution,pursuit);
+}
+
+document.getElementById('previousCriterion').addEventListener('click',()=>{if(currentIndex>0){currentIndex--;renderCriterion()}});
+document.getElementById('nextCriterion').addEventListener('click',()=>{if(currentIndex<criteria.length-1){currentIndex++;renderCriterion()}else document.getElementById('evaluateButton').focus()});
+
+document.getElementById('evaluateButton').addEventListener('click',()=>{
+  const solution=avg(['problemFit','differentiation','operationalFit']);
+  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
+  const q=quadrant(solution,pursuit);
+  const rec={
+    Prioritize:['Advance the opportunity, then close the remaining qualification gaps.','The account shows strong fit and enough buying evidence to justify continued investment.'],
+    Nurture:['Keep developing the opportunity before accelerating.','The account looks like a fit, but access and buying momentum are not mature enough yet.'],
+    'Develop Fit':['Validate the solution fit before committing more pursuit effort.','Buying activity exists, but the product-to-problem connection needs stronger evidence.'],
+    Deprioritize:['Limit investment until the evidence improves.','Current fit and buying evidence are not strong enough to justify heavy pursuit effort.']
+  }[q];
+
+  document.getElementById('resultTitle').textContent=rec[0];
+  document.getElementById('resultSummary').textContent=rec[1];
+  document.getElementById('resultSolutionScore').textContent=solution.toFixed(1)+' / 5';
+  document.getElementById('resultPursuitScore').textContent=pursuit.toFixed(1)+' / 5';
+  document.getElementById('resultStatus').textContent=q;
+  document.getElementById('benchmarkList').replaceChildren(...criteria.map(c=>{
+    const row=document.createElement('div');
+    row.className='benchmark-row';
+    const title=document.createElement('strong');
+    title.textContent=c.title;
+    const detail=document.createElement('span');
+    detail.textContent='Your score: '+scores[c.id]+' · Benchmark: '+c.benchmark+'. '+c.note;
+    row.append(title,detail);
+    return row;
+  }));
+  document.getElementById('analysisResults').classList.add('show');
+});
+
+document.getElementById('resetButton').addEventListener('click',()=>{
+  scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
+  currentIndex=0;
+  document.getElementById('analysisResults').classList.remove('show');
+  renderCriterion();
+  updateMatrix();
+});
+
+renderCriterion();
+updateMatrix();
 </script>
 </body>
 </html>
