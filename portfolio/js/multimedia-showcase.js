@@ -223,7 +223,11 @@
       link.textContent = data.link;
     }
 
-    restartAnimation(flow);
+    if (flow) {
+      flow.dataset.project = key;
+      flow.setAttribute('aria-label', 'Animated media integration for ' + data.title);
+      restartAnimation(flow);
+    }
   });
 
   const navLinks = [...document.querySelectorAll('.case-nav a')];
