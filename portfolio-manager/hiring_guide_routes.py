@@ -2,6 +2,14 @@ from __future__ import annotations
 
 from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
 
+from hiring_guide_public_sync import (
+    APPLY_CONFIRMATION,
+    HiringGuidePublicSyncError,
+    apply_proposal,
+    build_proposal,
+    load_proposal,
+    test_routing,
+)
 from hiring_guide_service import (
     ALLOWED_EVIDENCE_STATUSES,
     HiringGuideLibraryError,
@@ -231,3 +239,62 @@ def save_evidence(evidence_id: str):
     else:
         flash(f"Saved evidence record {evidence_id}.", "success")
     return redirect(url_for("hiring_guide.edit_evidence", evidence_id=evidence_id), code=303)
+
+
+@hiring_guide_bp.get("/public-sync")
+def public_sync():
+    if not library_exists():
+        flash("Import the private Hiring Guide library before creating a public sync preview.", "error")
+        return redirect(url_for("hiring_guide.workspace"))
+    proposal = load_proposal()
+    return render_template(
+        "hiring-guide-public-sync.html",
+        proposal=proposal,
+        routing_query="",
+        routing_results=[],
+        apply_confirmation=APPLY_CONFIRMATION,
+    )
+
+
+@hiring_guide_bp.post("/public-sync/preview")
+def generate_public_sync():
+    try:
+        proposal = build_proposal()
+    except (HiringGuideLibraryError, HiringGuidePublicSyncError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("hiring_guide.public_sync"), code=303)
+    flash(
+        f"Public sync preview generated: {proposal['summary']['changed_public_questions']} changed, "
+        f"{proposal['summary']['new_public_questions']} new, "
+        f"{proposal['summary']['preserved_legacy_questions']} preserved.",
+        "success",
+    )
+    return redirect(url_for("hiring_guide.public_sync"), code=303)
+
+
+@hiring_guide_bp.post("/public-sync/test-routing")
+def test_public_routing():
+    query = request.form.get("query", "").strip()
+    proposal = load_proposal()
+    if not proposal:
+        flash("Generate a public sync preview before testing routing.", "error")
+        return redirect(url_for("hiring_guide.public_sync"), code=303)
+    results = test_routing(query, proposal) if query else []
+    return render_template(
+        "hiring-guide-public-sync.html",
+        proposal=proposal,
+        routing_query=query,
+        routing_results=results,
+        apply_confirmation=APPLY_CONFIRMATION,
+    )
+
+
+@hiring_guide_bp.post("/public-sync/apply")
+def apply_public_sync():
+    try:
+        success, message, _proposal = apply_proposal(request.form.get("confirm_text", ""))
+    except (HiringGuideLibraryError, HiringGuidePublicSyncError) as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("hiring_guide.public_sync"), code=303)
+    flash(message, "success" if success else "error")
+    return redirect(url_for("hiring_guide.public_sync"), code=303)
