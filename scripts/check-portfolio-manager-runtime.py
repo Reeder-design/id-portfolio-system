@@ -43,6 +43,8 @@ def main() -> int:
         ("/ai/settings", "AI Settings"),
         ("/manage/ai-review/", "AI Portfolio Review"),
         ("/create/", "Create Content"),
+        ("/related-references/", "Related References"),
+        ("/component-registry/", "Component Registry"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -103,11 +105,25 @@ def main() -> int:
     require(b"Choose a page to edit" in content_manager.data, "Manage Content must present human-facing page navigation.", errors)
     require(b"Open AI Portfolio Review" in content_manager.data, "Manage Content must expose portfolio-wide AI Review.", errors)
     require(b"Open Proposal History" in content_manager.data, "Manage Content must expose page-edit AI proposal history.", errors)
+    require(b"Open Related References" in content_manager.data, "Manage Content must expose the Related References graph workspace.", errors)
+    require(b"Open Component Registry" in content_manager.data, "Manage Content must expose the Component Registry workspace.", errors)
     require(b"Theme Editor" in content_manager.data, "Manage Content must retain the deferred Theme Editor placeholder.", errors)
     require(b"Interactive Learning" in content_manager.data, "Manage Content must mirror the instructional-design hierarchy.", errors)
     require(b"AI Training and Evaluation" in content_manager.data, "Manage Content must mirror the AI portfolio hierarchy.", errors)
     require(b"Systems and Workflows" in content_manager.data, "Manage Content must mirror the workflows hierarchy.", errors)
     require(b"Edit Demo Copy" not in content_manager.data, "Manage Content must not expose duplicate edit entry points for AI Evaluation.", errors)
+
+    related_workspace = client.get("/related-references/")
+    require(related_workspace.status_code == 200, "Related References workspace must render.", errors)
+    require(b"Portfolio relationship map" in related_workspace.data, "Related References must expose the project relationship map.", errors)
+
+    component_registry = client.get("/component-registry/")
+    require(component_registry.status_code == 200, "Component Registry workspace must render.", errors)
+    require(b"Reusable Component Registry" in component_registry.data, "Component Registry must identify the reusable-pattern workspace.", errors)
+
+    meddpicc_relationships = client.get("/related-references/projects/meddpicc-practice")
+    require(meddpicc_relationships.status_code == 200, "Project Related References workspace must render.", errors)
+    require(b"Deterministic suggestions" in meddpicc_relationships.data, "Project relationships must expose deterministic suggestions.", errors)
 
     review_workspace = client.get("/manage/ai-review/")
     require(review_workspace.status_code == 200, "AI Portfolio Review workspace must render.", errors)
