@@ -133,8 +133,18 @@
             linear-gradient(145deg,#182b31,#29494a);
         }
         .id-ecosystem-section .eyebrow{color:#b8e9c9!important}
-        .id-ecosystem-section h2{color:#fff}
-        .id-ecosystem-section .refresh-section-intro>p:last-child{color:#cfddd6;max-width:800px}
+        .id-ecosystem-section h2{color:#fff!important}
+        .id-ecosystem-section .refresh-section-intro>p:last-child{color:#cfddd6!important;max-width:800px}
+        body.id-landing .id-ecosystem-section.fs-surface-light{
+          background:
+            radial-gradient(circle at 8% 12%,rgba(121,201,158,.14),transparent 24rem),
+            linear-gradient(145deg,#182b31,#29494a)!important;
+          color:#e8f2ed!important;
+        }
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading .eyebrow{color:#b8e9c9!important}
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading h2{color:#fff!important}
+        body.id-landing .id-ecosystem-section.fs-surface-light .section-heading>p:not(.eyebrow){color:#cfddd6!important}
+        body.id-landing .id-ecosystem-section.fs-surface-light::after{display:none!important}
         .id-ecosystem-grid{display:grid;grid-template-columns:1fr;gap:18px}
         .id-ecosystem-card{
           position:relative;
@@ -431,7 +441,7 @@
       </div>
     </section>
 
-    <section class="section id-ecosystem-section">
+    <section class="section id-ecosystem-section" data-keep-exploring-standardized="true">
       <div class="container">
         <div class="section-heading refresh-section-intro">
           <p class="eyebrow">Other Work</p>
