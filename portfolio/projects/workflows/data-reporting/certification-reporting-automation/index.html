@@ -14,10 +14,11 @@
   <link rel="stylesheet" href="../../../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../../../css/phase1-frame.css">
   <link rel="stylesheet" href="../../../../css/reporting-automation-case.css">
+  <link rel="stylesheet" href="../../../../css/reporting-automation-compact.css">
   <script defer src="../../../../js/portfolio-motion.js"></script>
   <script defer src="../../../../js/reporting-automation-case.js"></script>
 </head>
-<body>
+<body class="reporting-automation-page">
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../../index.html">Home</a><a href="../../../../about/index.html">About Me</a><a class="active" href="../../../index.html">Projects</a><a href="../../../../contact/index.html">Contact</a></nav></div></header>
 
 <main id="main-content">
@@ -73,10 +74,16 @@
           <p class="short-copy">The recurring reporting package required the same four LMS reports and the same comparison work each time. I automated the repeatable steps while keeping failed downloads, missing matches, and unusual records visible for review.</p>
         </div>
       </div>
-      <div class="reporting-need-grid">
-        <article class="reporting-light-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg><h3>Repeatable inputs</h3><p>Generate the same employee and partner activity and certificate reports in a consistent sequence.</p></article>
-        <article class="reporting-light-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg><h3>Documented logic</h3><p>Use a stable learner key to compare report evidence and make the completion logic easy to inspect.</p></article>
-        <article class="reporting-light-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Human QA</h3><p>Keep exceptions visible so automation supports operational judgment instead of silently replacing it.</p></article>
+      <div class="reporting-need-lab">
+        <div class="reporting-need-grid" role="tablist" aria-label="Business needs addressed by the workflow">
+          <button class="reporting-need-tab active" type="button" role="tab" aria-selected="true" data-report-need="inputs"><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""><span><strong>Repeatable inputs</strong><small>Consistent report package</small></span></button>
+          <button class="reporting-need-tab" type="button" role="tab" aria-selected="false" data-report-need="logic"><img src="../../../../assets/icons/pixel/ai-evaluation/workflow-analytics.webp" alt=""><span><strong>Documented logic</strong><small>Inspectable comparison rules</small></span></button>
+          <button class="reporting-need-tab" type="button" role="tab" aria-selected="false" data-report-need="review"><img src="../../../../assets/icons/pixel/ai-evaluation/workflow-reviewer.webp" alt=""><span><strong>Human QA</strong><small>Visible exceptions</small></span></button>
+        </div>
+        <div class="reporting-need-panel" role="tabpanel" aria-live="polite">
+          <div><p class="eyebrow" id="reportNeedLabel">Input control</p><h3 id="reportNeedTitle">Start with the same four reports every time.</h3><p id="reportNeedSummary">The workflow expects employee and partner activity and certificate exports in a known sequence before analysis begins.</p></div>
+          <div class="reporting-need-motion" id="reportNeedMotion" data-need-visual="inputs" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -106,11 +113,7 @@
             <article><span>Validation</span><p id="reportStepValidation">Confirm the expected report package exists before analysis begins.</p></article>
             <article><span>Stage output</span><p id="reportStepOutput">Four Excel exports ready for data processing.</p></article>
           </div>
-          <div class="reporting-stage-visual" aria-hidden="true">
-            <span class="stage-file file-a"></span><span class="stage-file file-b"></span><span class="stage-file file-c"></span><span class="stage-file file-d"></span>
-            <div class="stage-track"><i></i></div>
-            <div class="stage-terminal"><span></span><span></span><span></span><b id="reportStageVisualLabel">4 exports downloaded</b></div>
-          </div>
+          <div class="reporting-stage-visual" id="reportStageVisual" data-stage-visual="pull" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -124,18 +127,21 @@
 
       <div class="exception-lab">
         <div class="exception-tabs" role="tablist" aria-label="Reporting exceptions">
-          <button class="exception-tab active" type="button" role="tab" aria-selected="true" data-exception="missing"><strong>Missing export</strong><small>Expected file is absent</small></button>
-          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="unmatched"><strong>Unmatched learner</strong><small>Username does not join cleanly</small></button>
-          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="duplicate"><strong>Duplicate record</strong><small>More than one candidate row</small></button>
-          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="state"><strong>Unexpected state</strong><small>Completion evidence needs review</small></button>
+          <button class="exception-tab active" type="button" role="tab" aria-selected="true" data-exception="missing"><img src="../../../../assets/icons/pixel/lms/mini-document.webp" alt=""><span><strong>Missing export</strong><small>Expected file is absent</small></span></button>
+          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="unmatched"><img src="../../../../assets/icons/pixel/lms/mini-user.webp" alt=""><span><strong>Unmatched learner</strong><small>Username does not join cleanly</small></span></button>
+          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="duplicate"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><span><strong>Duplicate record</strong><small>More than one candidate row</small></span></button>
+          <button class="exception-tab" type="button" role="tab" aria-selected="false" data-exception="state"><img src="../../../../assets/icons/pixel/ai-evaluation/workflow-checklist.webp" alt=""><span><strong>Unexpected state</strong><small>Completion evidence needs review</small></span></button>
         </div>
 
         <div class="exception-panel" role="tabpanel" aria-live="polite">
-          <div class="exception-status"><span class="exception-dot"></span><div><span id="exceptionLabel">Input check</span><strong id="exceptionTitle">Stop before analysis if the report set is incomplete.</strong></div></div>
-          <div class="exception-grid">
-            <article><span>Automation response</span><p id="exceptionAutomation">The workflow checks for the expected exports instead of moving forward with a partial report package.</p></article>
-            <article><span>Human checkpoint</span><p id="exceptionHuman">Confirm the missing report, rerun it if needed, and only continue when the input set is complete.</p></article>
+          <div class="exception-content">
+            <div class="exception-status"><span class="exception-dot"></span><div><span id="exceptionLabel">Input check</span><strong id="exceptionTitle">Stop before analysis if the report set is incomplete.</strong></div></div>
+            <div class="exception-grid">
+              <article><span>Automation response</span><p id="exceptionAutomation">The workflow checks for the expected exports instead of moving forward with a partial report package.</p></article>
+              <article><span>Human checkpoint</span><p id="exceptionHuman">Confirm the missing report, rerun it if needed, and only continue when the input set is complete.</p></article>
+            </div>
           </div>
+          <div class="exception-motion" id="exceptionMotion" data-exception-visual="missing" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -179,16 +185,6 @@
     </div>
   </section>
 
-  <section class="section section-soft reporting-related-section">
-    <div class="container">
-      <div class="section-heading refresh-section-intro"><p class="eyebrow">Keep Exploring</p><h2>More systems and learning-operations work</h2></div>
-      <div class="refresh-card-grid">
-        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Capability Area</p><h3>System Integrations and Workflows</h3></div><div class="refresh-link-card-body"><p>System handoffs, browser automation, reporting, and operational workflows.</p><a class="project-family-link" href="../../index.html">Explore System Integrations and Workflows →</a></div></article>
-        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span><p class="eyebrow">Learning Platforms</p><h3>LMS Administration</h3></div><div class="refresh-link-card-body"><p>Platform operations, migration work, learner support, and reporting.</p><a class="project-family-link" href="../../../lms-administration/index.html">Explore LMS Administration →</a></div></article>
-        <article class="refresh-link-card"><div class="refresh-link-card-header"><span class="icon-badge"><svg class="portfolio-icon icon-med"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span><p class="eyebrow">Portfolio</p><h3>All Projects</h3></div><div class="refresh-link-card-body"><p>Browse instructional design, AI evaluation, LMS, and systems work.</p><a class="project-family-link" href="../../../index.html">Explore All Projects →</a></div></article>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
