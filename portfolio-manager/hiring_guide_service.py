@@ -206,10 +206,8 @@ def import_library(json_upload, markdown_upload=None) -> dict[str, Any]:
         raise HiringGuideLibraryError("The uploaded Hiring Guide JSON is not valid UTF-8 JSON.") from exc
 
     normalized = validate_library(payload)
-    _ensure_private_root()
-    _backup_current("import")
-    LIBRARY_PATH.write_text(json.dumps(normalized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
+    markdown_text: str | None = None
     if markdown_upload and getattr(markdown_upload, "filename", ""):
         if Path(markdown_upload.filename).suffix.lower() not in {".md", ".markdown"}:
             raise HiringGuideLibraryError("The optional editorial source must be a Markdown file.")
@@ -217,10 +215,16 @@ def import_library(json_upload, markdown_upload=None) -> dict[str, Any]:
         if len(markdown) > MAX_MARKDOWN_BYTES:
             raise HiringGuideLibraryError("Hiring Guide Markdown must be 3 MB or smaller.")
         try:
-            text = markdown.decode("utf-8")
+            markdown_text = markdown.decode("utf-8")
         except UnicodeDecodeError as exc:
             raise HiringGuideLibraryError("Hiring Guide Markdown must use UTF-8 text.") from exc
-        SOURCE_MARKDOWN_PATH.write_text(text, encoding="utf-8")
+
+    # Validate every selected source before replacing either private canonical file.
+    _ensure_private_root()
+    _backup_current("import")
+    LIBRARY_PATH.write_text(json.dumps(normalized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if markdown_text is not None:
+        SOURCE_MARKDOWN_PATH.write_text(markdown_text, encoding="utf-8")
 
     return normalized
 
