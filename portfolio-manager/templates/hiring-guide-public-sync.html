@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Sync Preview | Hiring Guide Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiring-guide-manager.css') }}">
+</head>
+<body>
+<div class="manager-shell">
+    <header class="subpage-header hiring-sync-header">
+        <div>
+            <p class="eyebrow">Hiring Guide Library → Ask Haley</p>
+            <h1>Public Sync Review</h1>
+            <p class="hero-copy">Resolve likely overlaps, review the compact public diff, test routing, then apply only when the proposal is ready.</p>
+        </div>
+        <div class="header-actions">
+            <a class="btn btn-secondary" href="{{ url_for('hiring_guide.workspace') }}">Back to Private Library</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <section class="flash-stack">
+        {% for category, message in messages %}<div class="flash-message {{ category }}">{{ message }}</div>{% endfor %}
+    </section>
+    {% endif %}
+    {% endwith %}
+
+    <main class="hiring-sync-layout">
+        <section class="dashboard-card hiring-sync-intro">
+            <div class="action-title-row">
+                <div>
+                    <p class="eyebrow">Compile privately</p>
+                    <h2>Refresh the public-safe proposal</h2>
+                    <p class="section-copy">The compiler preserves legacy questions, uses remembered mapping decisions, strips private editorial metadata, and never publishes anything.</p>
+                </div>
+                <form method="post" action="{{ url_for('hiring_guide.generate_public_sync') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-primary" type="submit">{% if proposal %}Regenerate Preview{% else %}Generate Public Sync Preview{% endif %}</button>
+                </form>
+            </div>
+        </section>
+
+        {% if proposal %}
+        <nav class="sync-step-nav" aria-label="Public sync review steps">
+            <a href="#sync-map"><span>1</span><strong>Map</strong><small>{{ proposal.summary.mapping_review_required }} review</small></a>
+            <a href="#sync-diff"><span>2</span><strong>Diff</strong><small>{{ proposal.summary.changed_public_questions }} changed</small></a>
+            <a href="#sync-routing"><span>3</span><strong>Route</strong><small>Test questions</small></a>
+            <a href="#sync-apply"><span>4</span><strong>Apply</strong><small>{{ "Ready" if proposal.summary.apply_ready else "Blocked" }}</small></a>
+        </nav>
+
+        <section class="sync-health-card {% if proposal.summary.apply_ready %}ready{% else %}review{% endif %}">
+            <div class="sync-health-copy">
+                <p class="eyebrow">Mapping health</p>
+                {% if proposal.summary.mapping_review_required %}
+                <h2>{{ proposal.summary.mapping_review_required }} likely overlap{% if proposal.summary.mapping_review_required != 1 %}s{% endif %} need a decision</h2>
+                <p>Review only the ambiguous records. Questions with weak/no overlap can remain separate automatically.</p>
+                {% else %}
+                <h2>Mapping review complete</h2>
+                <p>The proposal has no unresolved likely duplicates. Continue to routing QA and content-warning review.</p>
+                {% endif %}
+            </div>
+            <div class="sync-health-status">
+                <strong>{{ "READY FOR ROUTING QA" if proposal.summary.apply_ready else "PUBLIC APPLY NOT READY" }}</strong>
+                <span>{{ proposal.summary.manual_decisions }} remembered manual decision{% if proposal.summary.manual_decisions != 1 %}s{% endif %}</span>
+            </div>
+            <div class="sync-health-metrics">
+                <div><span>Confirmed matches</span><strong>{{ proposal.summary.matched_existing }}</strong></div>
+                <div class="{% if proposal.summary.mapping_review_required %}needs-review{% endif %}"><span>Needs mapping review</span><strong>{{ proposal.summary.mapping_review_required }}</strong></div>
+                <div><span>Separate/new</span><strong>{{ proposal.summary.safe_new }}</strong></div>
+                <div><span>Legacy protected</span><strong>{{ proposal.summary.preserved_legacy_questions }}</strong></div>
+                <div><span>Destructive removals</span><strong>{{ proposal.summary.removed_public_questions }}</strong></div>
+            </div>
+        </section>
+
+        {% if proposal.warning_groups %}
+        <section class="dashboard-card sync-warning-card">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">Content review</p><h2>{{ proposal.summary.warnings }} evidence/editorial warning{% if proposal.summary.warnings != 1 %}s{% endif %}</h2></div>
+                <span class="muted-inline">Collapsed by default</span>
+            </div>
+            <div class="sync-warning-groups">
+                {% for group in proposal.warning_groups %}
+                <details>
+                    <summary><span><strong>{{ group.label }}</strong><small>{{ group.count }} item{% if group.count != 1 %}s{% endif %}</small></span><span>Review →</span></summary>
+                    <ul>{% for warning in group["items"] %}<li>{{ warning }}</li>{% endfor %}</ul>
+                </details>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="dashboard-card sync-review-section" id="sync-map">
+            <div class="compact-section-head">
+                <div>
+                    <p class="eyebrow">1 · Mapping review</p>
+                    <h2>Resolve likely duplicates, not every new question</h2>
+                    <p class="section-copy">Manual choices are saved privately and reused in future previews.</p>
+                </div>
+                <div class="sync-filter-buttons" data-sync-filters>
+                    <button type="button" data-filter="review" class="{% if proposal.summary.mapping_review_required %}active{% endif %}">Needs review <span>{{ proposal.summary.mapping_review_required }}</span></button>
+                    <button type="button" data-filter="matched">Matched <span>{{ proposal.summary.matched_existing }}</span></button>
+                    <button type="button" data-filter="new">Separate/new <span>{{ proposal.summary.safe_new }}</span></button>
+                    <button type="button" data-filter="all" class="{% if not proposal.summary.mapping_review_required %}active{% endif %}">All <span>{{ proposal.matches|length }}</span></button>
+                </div>
+            </div>
+
+            <div class="sync-mapping-list" data-default-filter="{{ 'review' if proposal.summary.mapping_review_required else 'all' }}">
+                {% for item in proposal.matches %}
+                {% set state = 'review' if item.requires_review else ('matched' if item.matched_existing else 'new') %}
+                <article class="sync-mapping-card {% if item.requires_review %}needs-review{% endif %}" data-sync-state="{{ state }}" id="mapping-{{ item.private_id }}">
+                    <div class="sync-mapping-summary">
+                        <div class="sync-mapping-question">
+                            <span><code>{{ item.private_id }}</code> · {{ item.category }}</span>
+                            <strong>{{ item.question }}</strong>
+                        </div>
+                        <div class="sync-mapping-result">
+                            {% if item.decision == 'manual-match' %}
+                            <span class="sync-result-pill matched">Manual match</span>
+                            {% elif item.decision == 'auto-match' %}
+                            <span class="sync-result-pill matched">Auto matched</span>
+                            {% elif item.decision == 'manual-new' %}
+                            <span class="sync-result-pill new">Confirmed separate</span>
+                            {% elif item.decision == 'review' %}
+                            <span class="sync-result-pill review">Needs review</span>
+                            {% else %}
+                            <span class="sync-result-pill new">New · low overlap</span>
+                            {% endif %}
+                            <small>{% if item.matched_existing %}<code>{{ item.public_id }}</code>{% else %}Proposed <code>{{ item.public_id }}</code>{% endif %} · score {{ item.match_score }}</small>
+                        </div>
+                        <button type="button" class="sync-mapping-toggle" data-mapping-toggle aria-expanded="{{ 'true' if item.requires_review else 'false' }}">{{ "Resolve" if item.requires_review else "Review" }}</button>
+                    </div>
+
+                    <div class="sync-mapping-editor" {% if not item.requires_review %}hidden{% endif %}>
+                        {% if item.candidates %}
+                        <div class="sync-candidate-strip">
+                            <span>Likely existing candidates</span>
+                            {% for candidate in item.candidates[:3] %}
+                            <button type="button" data-candidate-id="{{ candidate.public_id }}" title="{{ candidate.prompt }}">
+                                <strong>{{ candidate.label }}</strong>
+                                <small>{{ candidate.public_id }} · score {{ candidate.score }}</small>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <form method="post" action="{{ url_for('hiring_guide.save_public_mapping') }}" class="sync-mapping-form">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="private_id" value="{{ item.private_id }}">
+                            <label>Existing public question
+                                <select name="public_id">
+                                    <option value="">Choose an existing public question…</option>
+                                    {% for public in proposal.public_questions %}
+                                    <option value="{{ public.id }}" {% if item.matched_existing and item.public_id == public.id %}selected{% endif %}>{{ public.label }} · {{ public.id }} · {{ public.tier }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <div class="sync-mapping-actions">
+                                <button class="btn btn-primary" type="submit" name="mode" value="match">Match Selected</button>
+                                <button class="btn btn-secondary" type="submit" name="mode" value="new">Keep as Separate New Question</button>
+                                {% if item.manual %}<button class="btn btn-secondary" type="submit" name="mode" value="auto">Return to Automatic</button>{% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </article>
+                {% endfor %}
+                <div class="empty-state hiring-empty" data-sync-filter-empty hidden>No records in this review state.</div>
+            </div>
+        </section>
+
+        <section class="dashboard-card sync-review-section" id="sync-diff">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">2 · Diff review</p><h2>What the public guide would gain or change</h2></div>
+                <div class="sync-mini-stats"><span>{{ proposal.diff.added|length }} new</span><span>{{ proposal.diff.changed|length }} changed</span><span>{{ proposal.diff.removed|length }} removed</span></div>
+            </div>
+
+            {% if proposal.diff.added_by_category %}
+            <div class="sync-diff-section">
+                <h3>New public questions by category</h3>
+                <div class="sync-category-groups">
+                    {% for group in proposal.diff.added_by_category %}
+                    <details>
+                        <summary><span><strong>{{ group.category }}</strong><small>{{ group.count }} question{% if group.count != 1 %}s{% endif %}</small></span><span>View →</span></summary>
+                        <div class="sync-compact-list">
+                            {% for item in group["items"] %}
+                            <article><strong>{{ item.question }}</strong><span><code>{{ item.id }}</code></span></article>
+                            {% endfor %}
+                        </div>
+                    </details>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if proposal.diff.changed %}
+            <div class="sync-diff-section">
+                <h3>Changed existing public questions</h3>
+                <div class="sync-change-list">
+                    {% for item in proposal.diff.changed %}
+                    <details>
+                        <summary><span><strong>{{ item.question }}</strong><small><code>{{ item.id }}</code> · {{ item.fields|join(", ") }}</small></span><span>Compare →</span></summary>
+                        <div class="sync-before-after">
+                            <div><p class="eyebrow">Current public</p><p>{{ item.before.answer }}</p><small>{{ item.before.category }} · {{ item.before.short_label }}</small></div>
+                            <div><p class="eyebrow">Proposed public</p><p>{{ item.after.answer }}</p><small>{{ item.after.category }} · {{ item.after.short_label }}</small></div>
+                        </div>
+                    </details>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if proposal.diff.removed %}
+            <div class="private-boundary sync-removal-warning"><strong>Apply blocked</strong><span>This proposal would remove {{ proposal.diff.removed|length }} public question(s): {{ proposal.diff.removed|join(", ") }}.</span></div>
+            {% endif %}
+        </section>
+
+        <section class="dashboard-card sync-review-section" id="sync-routing">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">3 · Routing simulator</p><h2>Ask the proposed public library a real hiring-manager question</h2></div>
+            </div>
+            <form method="post" action="{{ url_for('hiring_guide.test_public_routing') }}" class="sync-routing-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label>Hiring-manager question
+                    <input type="text" name="query" value="{{ routing_query }}" placeholder="Example: How do you approach technical training for sales teams?" required>
+                </label>
+                <button class="btn btn-primary" type="submit">Test Routing</button>
+            </form>
+            {% if routing_query %}
+            <div class="sync-routing-results">
+                <div class="sync-query"><span>Query</span><strong>{{ routing_query }}</strong></div>
+                {% for item in routing_results %}
+                <article class="{% if loop.first %}top-match{% endif %}">
+                    <div><span class="sync-score">{{ item.score }}</span><div><strong>{{ item.label }}</strong><small>{{ item.id }} · {{ item.category }}</small></div></div>
+                    <p>{{ item.prompt }}</p>
+                    {% if loop.first %}<div class="sync-answer-preview">{{ item.answer }}</div>{% endif %}
+                </article>
+                {% else %}<div class="empty-state hiring-empty">No proposed public question scored above zero for this query.</div>{% endfor %}
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="dashboard-card sync-apply-card sync-review-section" id="sync-apply">
+            <div class="compact-section-head">
+                <div><p class="eyebrow">4 · Apply locally</p><h2>{{ "Ready for local apply" if proposal.summary.apply_ready else "Apply is blocked until mapping review is complete" }}</h2></div>
+                <span class="sync-apply-status {% if proposal.summary.apply_ready %}ready{% else %}blocked{% endif %}">{{ "READY" if proposal.summary.apply_ready else proposal.summary.mapping_review_required ~ " MAPPING REVIEW" }}</span>
+            </div>
+            <p class="section-copy">Apply creates a private recovery backup, writes only the two local public FAQ files, runs Full Validation, and automatically restores the old files if validation fails.</p>
+            <div class="private-boundary"><strong>This still does not publish.</strong><span>No Git commit or push happens here. Preview Ask Haley afterward, then use the normal Save &amp; Publish workflow only if you want the public changes live.</span></div>
+            <form method="post" action="{{ url_for('hiring_guide.apply_public_sync') }}" class="sync-apply-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <label>Type <code>{{ apply_confirmation }}</code> exactly
+                    <input type="text" name="confirm_text" autocomplete="off" {% if proposal.summary.apply_ready %}required{% else %}disabled{% endif %}>
+                </label>
+                <button class="btn btn-primary" type="submit" {% if not proposal.summary.apply_ready %}disabled{% endif %}>Apply Public Sync Locally + Validate</button>
+            </form>
+            {% if proposal.status == "applied-local" %}
+            <div class="sync-applied-state"><strong>Last proposal applied locally</strong><span>{{ proposal.applied_at }}</span>{% if proposal.backup_path %}<small>Recovery backup: {{ proposal.backup_path }}</small>{% endif %}</div>
+            {% endif %}
+        </section>
+        {% endif %}
+    </main>
+</div>
+<script src="{{ url_for('static', filename='hiring-guide-public-sync.js') }}"></script>
+</body>
+</html>

@@ -21,6 +21,7 @@
         </div>
         <div class="header-actions">
             {% if library %}
+            <a class="btn btn-primary" href="{{ url_for('hiring_guide.public_sync') }}">Preview Public Sync</a>
             <a class="btn btn-secondary" href="{{ url_for('hiring_guide.export_json') }}">Export JSON</a>
             {% if source_markdown %}<a class="btn btn-secondary" href="{{ url_for('hiring_guide.export_markdown') }}">Editorial Markdown</a>{% endif %}
             {% endif %}

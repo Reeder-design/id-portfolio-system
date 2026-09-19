@@ -69,7 +69,7 @@ Prefer one clear implementation over layered competing fixes. For sitewide behav
 
 ## Content Rules
 Never expose confidential employer, customer, partner, or unreleased product information.
-The rich Hiring Guide Library is private editorial state. Do not commit its confidence/source/implementation-note layer into public Git history; the existing public Ask Haley data is a separate public-safe representation.
+The rich Hiring Guide Library is private editorial state. Do not commit its confidence/source/implementation-note layer into public Git history. The public Ask Haley data is a separate public-safe representation produced only through the controlled Hiring Guide public-sync compiler: private proposal first, editorial stripping, human diff/routing review, exact local-apply confirmation, stale-source check, backup, Full Validation, and rollback on failure. Public sync must never commit or publish.
 Use fictionalized, sanitized, or generalized examples when needed.
 Do not invent professional claims, metrics, clients, tools, credentials, responsibilities, or results.
 
