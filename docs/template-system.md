@@ -140,6 +140,8 @@ The registry distinguishes **template-supported** components from **custom-patte
 
 Projects may record optional `component_refs` metadata for intentional component use. Portfolio Manager also infers some usage directly from structured project data and generated-page architecture. Inferred usage is not duplicated into project records automatically.
 
+Create Content AI planning receives this registry as an approved design-system menu. It should prefer an existing component when it fits and return only a valid registry ID; when no registered component fits, the plan may recommend a custom pattern without inventing an ID. Approved registry IDs flow into controlled local builds as metadata only.
+
 ## Breadcrumb and Page Path Standard
 
 Breadcrumbs are a shared navigation component rather than a page-by-page styling choice.
