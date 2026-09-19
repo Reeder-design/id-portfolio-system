@@ -193,7 +193,13 @@ def main() -> int:
 
     for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
-        require("Keep Exploring" in html, f"{path.relative_to(ROOT)}: AI page must end with a Keep Exploring path.", errors)
+        has_exploration_path = "Keep Exploring" in html or "Other Work" in html
+        has_back_path = "ai-back-section" in html and "Back to AI Training and Evaluation" in html
+        require(
+            has_exploration_path or has_back_path,
+            f"{path.relative_to(ROOT)}: AI page must end with an exploration or parent-page back path.",
+            errors,
+        )
 
     app_text = APP.read_text(encoding="utf-8")
     require('app.run(host="127.0.0.1", port=5055, debug=False)' in app_text, "Portfolio Manager must remain bound to localhost (127.0.0.1:5055).", errors)
