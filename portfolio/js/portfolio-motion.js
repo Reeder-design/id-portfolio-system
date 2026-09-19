@@ -293,6 +293,7 @@
   };
 
   const BREADCRUMB_ROUTES = [
+    ['hiring-manager', 'Ask Haley'],
     ['about', 'About Me'],
     ['contact', 'Contact'],
     ['projects', 'Projects'],
@@ -896,7 +897,53 @@
   initSectionRhythm();
   initCertificationCaseCopy();
   initProjectDetailExplorer();
+
+  const initAskHaleyReturnDock = () => {
+    if (document.body.classList.contains('hiring-manager-page')) return;
+    const current = new URL(window.location.href);
+    if (current.searchParams.get('from') !== 'ask-haley') return;
+
+    let saved = null;
+    try {
+      const raw = window.sessionStorage.getItem('ask-haley-session-v1');
+      saved = raw ? JSON.parse(raw) : null;
+    } catch (error) {}
+
+    const started = Boolean(saved?.chatStarted);
+    const target = new URL('hiring-manager/index.html', portfolioRoot);
+    if (started) target.searchParams.set('resume', '1');
+    target.hash = 'ask-haley';
+
+    const dock = document.createElement('a');
+    dock.className = 'ask-haley-return-dock';
+    dock.href = target.href;
+    dock.setAttribute('aria-label', started ? 'Back to Ask Haley chat' : 'Start Ask Haley chat');
+    dock.innerHTML = `
+      <span class="ask-haley-return-icon"><img src="${new URL('assets/icons/pixel/hiring-guide/person-man.webp', portfolioRoot).href}" alt=""></span>
+      <span><strong>${started ? 'Back to chat' : 'Start chat'}</strong><small>Ask Haley</small></span>
+      <i aria-hidden="true">→</i>`;
+
+    if (!document.getElementById('ask-haley-return-style')) {
+      const style = document.createElement('style');
+      style.id = 'ask-haley-return-style';
+      style.textContent = `
+        .ask-haley-return-dock{position:fixed;left:18px;right:auto;bottom:18px;z-index:1200;display:grid;grid-template-columns:46px auto auto;gap:10px;align-items:center;min-width:196px;padding:10px 13px;border:2px solid rgba(121,201,158,.62);border-radius:18px;background:rgba(255,255,255,.98);box-shadow:0 18px 48px rgba(34,52,47,.24),0 0 0 6px rgba(121,201,158,.08);color:#34413d;text-decoration:none;backdrop-filter:blur(10px)}
+        .ask-haley-return-dock:hover,.ask-haley-return-dock:focus-visible{transform:translateY(-3px);border-color:#79C99E;box-shadow:0 22px 54px rgba(34,52,47,.28),0 0 0 7px rgba(121,201,158,.12);outline:none}
+        .ask-haley-return-icon{display:grid;place-items:center;width:42px;height:42px;padding:3px;border-radius:12px;background:#fff;border:1px solid rgba(80,132,132,.14)}
+        .ask-haley-return-icon img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+        .ask-haley-return-dock>span:nth-child(2){display:grid;gap:1px}
+        .ask-haley-return-dock strong{font:800 .7rem/1.2 Montserrat,sans-serif}
+        .ask-haley-return-dock small{color:#74817b;font:.62rem/1.2 'Open Sans',sans-serif}
+        .ask-haley-return-dock i{color:#508484;font-style:normal;font-weight:800}
+        @media(max-width:640px){.ask-haley-return-dock{left:12px;right:auto;bottom:12px;min-width:0}.ask-haley-return-dock small{display:none}}
+      `;
+      document.head.appendChild(style);
+    }
+    document.body.appendChild(dock);
+  };
+
   initHiringAssistant();
+  initAskHaleyReturnDock();
   initDemoHelp();
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

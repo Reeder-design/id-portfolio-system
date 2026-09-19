@@ -5,13 +5,23 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "portfolio" / "hiring-manager" / "index.html"
 HOME = ROOT / "portfolio" / "index.html"
-BASE_CSS = ROOT / "portfolio" / "css" / "hiring-manager-v4.css"
-MOBILE_CSS = ROOT / "portfolio" / "css" / "hiring-manager-mobile.css"
-FINAL_CSS = ROOT / "portfolio" / "css" / "hiring-manager-v5.css"
-CONTROLLER = ROOT / "portfolio" / "js" / "hiring-manager-v4.js"
-FINAL_CONTROLLER = ROOT / "portfolio" / "js" / "hiring-manager-v5.js"
+CSS = ROOT / "portfolio" / "css" / "hiring-manager.css"
+CONTROLLER = ROOT / "portfolio" / "js" / "hiring-manager.js"
+MOTION = ROOT / "portfolio" / "js" / "portfolio-motion.js"
 SHARED_CSS = ROOT / "portfolio" / "css" / "phase21-visual-consistency.css"
 SEO_BUILDER = ROOT / "scripts" / "build-seo.py"
+
+LEGACY_RUNTIME = [
+    ROOT / "portfolio" / "css" / "hiring-manager-v2.css",
+    ROOT / "portfolio" / "css" / "hiring-manager-v3.css",
+    ROOT / "portfolio" / "css" / "hiring-manager-v4.css",
+    ROOT / "portfolio" / "css" / "hiring-manager-v5.css",
+    ROOT / "portfolio" / "css" / "hiring-manager-nav.css",
+    ROOT / "portfolio" / "css" / "hiring-manager-mobile.css",
+    ROOT / "portfolio" / "js" / "hiring-manager-v3.js",
+    ROOT / "portfolio" / "js" / "hiring-manager-v4.js",
+    ROOT / "portfolio" / "js" / "hiring-manager-v5.js",
+]
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -22,8 +32,11 @@ def require(condition: bool, message: str, errors: list[str]) -> None:
 def main() -> int:
     errors: list[str] = []
 
-    for path in [PAGE, HOME, BASE_CSS, MOBILE_CSS, FINAL_CSS, CONTROLLER, FINAL_CONTROLLER, SHARED_CSS, SEO_BUILDER]:
+    for path in [PAGE, HOME, CSS, CONTROLLER, MOTION, SHARED_CSS, SEO_BUILDER]:
         require(path.exists(), f"Missing required Hiring Manager UX file: {path.relative_to(ROOT)}", errors)
+
+    for path in LEGACY_RUNTIME:
+        require(not path.exists(), f"Legacy layered Hiring Manager runtime should be removed: {path.relative_to(ROOT)}", errors)
 
     if errors:
         for error in errors:
@@ -31,164 +44,132 @@ def main() -> int:
         return 1
 
     page = PAGE.read_text(encoding="utf-8")
-    home = HOME.read_text(encoding="utf-8")
-    base_css = BASE_CSS.read_text(encoding="utf-8")
-    mobile_css = MOBILE_CSS.read_text(encoding="utf-8")
-    final_css = FINAL_CSS.read_text(encoding="utf-8")
+    css = CSS.read_text(encoding="utf-8")
     controller = CONTROLLER.read_text(encoding="utf-8")
-    final_controller = FINAL_CONTROLLER.read_text(encoding="utf-8")
+    motion = MOTION.read_text(encoding="utf-8")
+    home = HOME.read_text(encoding="utf-8")
     shared_css = SHARED_CSS.read_text(encoding="utf-8")
     seo_builder = SEO_BUILDER.read_text(encoding="utf-8")
 
-    require("hiring-manager-v4.css" in page, "Hiring Manager page must load the V4 presentation layer.", errors)
-    require("hiring-manager-v5.css" in page, "Hiring Manager page must load the contained-library presentation layer.", errors)
-    require("hiring-manager-v4.js" in page, "Hiring Manager page must load the V4 layout controller.", errors)
-    require("hiring-manager-v5.js" in page, "Hiring Manager page must load the V5 Question Library controller.", errors)
-    require(
-        page.find("hiring-manager-v4.js") < page.find("hiring-manager-v5.js"),
-        "V5 Question Library controller must load after V4 layout controller.",
-        errors,
-    )
-    require('@import url("./hiring-manager-mobile.css");' in base_css, "V4 CSS must import the compact Hiring Manager UX layer.", errors)
+    require('href="../css/hiring-manager.css"' in page, "Hiring Manager page must load the single canonical Hiring Manager stylesheet.", errors)
+    require('src="../js/hiring-manager.js"' in page, "Hiring Manager page must load the single canonical Hiring Manager controller.", errors)
+    require("hiring-manager-v" not in page, "Hiring Manager page must not load version-stacked CSS or JavaScript.", errors)
+    require("\\`" not in controller and "\\${" not in controller, "Hiring Manager controller contains escaped template-literal syntax that will break in the browser.", errors)
 
     page_markers = [
-        "Interactive hiring guide",
-        "hm-library-header-grid",
-        "hm-library-notes",
-        "Browse instead of typing.",
-        "Curated answers, not live AI generation.",
-        "I wrote and reviewed the answers in this portfolio library myself.",
-        "Ask Haley matches your question to those stored responses",
+        "Interactive portfolio chat",
+        "Ask me what you would ask in the interview.",
+        '<span aria-current="page">Ask Haley</span>',
+        "hm-transfer-scene",
+        "hm-transfer-track",
+        "hm-transfer-return",
+        "Answer + proof",
+        "person-man.webp",
+        "person-woman.webp",
+        "Question → curated answer → portfolio evidence.",
+        "What this chat helps you evaluate",
+        "This is a chatbot demo, but there is no AI model behind it.",
+        "hm-chatbot-note",
+        'id="ask-haley"',
+        "Ask your own question, use a quick starter, or browse the Question Library.",
+        "Not AI, just pre-built me",
+        "data-hm-library",
+        "data-hm-topic-list",
+        "data-hm-prompt-panel",
+        "I wrote and reviewed the answer library myself.",
+        'id="quick-scan"',
+        "Hiring manager quick scan",
+        "What I bring",
+        "data-hm-capability-tabs",
+        "data-hm-tool-tabs",
+        "Want the work behind the answers?",
+        "handshake.webp",
     ]
     for marker in page_markers:
-        require(marker in page, f"Hiring Manager page is missing disclosure/content marker {marker!r}.", errors)
+        require(marker in page, f"Hiring Manager page is missing required marker {marker!r}.", errors)
 
-    obsolete_library_helper_markers = [
-        "hm-library-helper",
-        "hm-helper-subhead",
-        'aria-label="About the question library"',
+    obsolete_page_markers = [
+        "Hiring manager guide",
+        "Start with the conversation, not the navigation.",
+        "What the guide is designed to show",
+        "hm-signal-board",
+        "hm-helper",
+        "hm-mobile-chat-dock",
+        "hm-specialist-drawer",
+        "Portfolio Haley",
+        "Interview mode",
+        "conversation-man-laptop.webp",
+        "conversation-woman-laptop.webp",
+        "dual-chat.webp",
     ]
-    for marker in obsolete_library_helper_markers:
-        require(marker not in page, f"Question Library still contains removed helper feature marker {marker!r}.", errors)
+    for marker in obsolete_page_markers:
+        require(marker not in page, f"Hiring Manager page still contains retired marker {marker!r}.", errors)
 
-    require("hm-library-disclaimer" not in page, "Question Library disclosure must live in the static header notes, not as a standalone block.", errors)
-    require("topic bubbles" not in page.lower(), "Hiring Manager copy must not reference the abandoned topic-bubble interaction.", errors)
-    require("Human-centered learning" not in page, "Hiring Manager hero should not include the removed Human-centered learning label.", errors)
-    require("Systems + workflow" not in page, "Hiring Manager hero should not include the removed Systems + workflow label.", errors)
-
-    mobile_css_markers = [
-        ".hm-mobile-suggestions-toggle",
-        "height: min(78svh, 680px);",
-        "overflow-y: auto !important;",
-        "overscroll-behavior: contain;",
-        "@media (max-width: 680px)",
+    css_markers = [
+        ".hm-hero .breadcrumbs",
+        "line-height: 1.01;",
+        ".hm-transfer-scene",
+        ".hm-transfer-line::after",
+        "hm-packet-route",
+        ".hm-evaluate-track",
+        ".hm-chat-explainer",
+        ".hm-not-ai",
+        ".hm-library-workspace",
+        "height: min(48vh, 390px);",
+        "min-height: 0;",
+        "overflow-y: auto;",
+        "-webkit-overflow-scrolling: touch;",
+        ".hm-tab-icon-bubble",
+        ".hm-scan-flow",
+        ".hm-next-grid",
+        "@media (max-width: 700px)",
+        "@media (max-width: 480px)",
         "@media (prefers-reduced-motion: reduce)",
     ]
-    for marker in mobile_css_markers:
-        require(marker in mobile_css, f"Hiring Manager compact CSS is missing {marker!r}.", errors)
+    for marker in css_markers:
+        require(marker in css, f"Hiring Manager canonical CSS is missing {marker!r}.", errors)
 
-    obsolete_mobile_markers = [
-        ".hm-topic-browser",
-        ".hm-topic-bubble",
-        ".hm-topic-popover",
-        ".hm-topic-prompt",
+    controller_markers = [
+        "hiring-faq.json",
+        "hiring-faq-expanded.json",
+        "hiring-faq-specialist.json",
+        "hiring-capabilities.json",
+        "hiring-tools.json",
+        "hiring-search.json",
+        "const scoreQuestion =",
+        "const askById =",
+        "const renderLibrary =",
+        "const renderStarters =",
+        "const renderCapabilities =",
+        "const renderTools =",
+        "const setScanView =",
+        "chipGroupMarkup",
+        "hm-tab-icon-bubble",
+        "hm-scan-visual",
+        "question.specialist",
     ]
-    for marker in obsolete_mobile_markers:
-        require(marker not in mobile_css, f"Compact CSS still contains abandoned floating Question Library rule {marker!r}.", errors)
+    for marker in controller_markers:
+        require(marker in controller, f"Hiring Manager controller is missing {marker!r}.", errors)
 
-    final_css_markers = [
-        ".hm-shell",
-        "grid-template-columns: minmax(0, 1fr) !important;",
-        ".hm-library-header-grid",
-        ".hm-library-notes",
-        ".hm-library-notes p + p",
-        ".hm-library-accordion",
-        ".hm-library-toggle",
-        ".hm-library-window",
-        "height: 318px;",
-        ".hm-library-selection",
-        ".hm-library-detail",
-        ".hm-library-detail-close",
-        ".hm-library-prompt",
-        ".hm-mobile-chat-dock.hm-guide-switch",
-    ]
-    for marker in final_css_markers:
-        require(marker in final_css, f"Hiring Manager contained-library CSS is missing {marker!r}.", errors)
-
-    obsolete_final_css_markers = [
-        ".hm-top-layer-popover",
-        ".hm-topic-popover",
-        "--hm-topic-arrow-x",
-        ".hm-library-helper-popover",
-        ".hm-library-helper",
-        ".hm-helper-subhead",
-    ]
-    for marker in obsolete_final_css_markers:
-        require(marker not in final_css, f"Final CSS still contains abandoned Question Library helper/overlay rule {marker!r}.", errors)
-
-    hero_markers = [
-        ".hm-signal-board::before",
-        "hm-signal-route",
-        ".hm-signal-board::after",
-        "overflow: hidden !important;",
-    ]
-    for marker in hero_markers:
-        require(marker in base_css, f"Hiring Manager hero motion is missing {marker!r}.", errors)
-
-    retained_v4_markers = [
-        "const setupGuideDock = () =>",
-        "Question Library</button>",
-        "const setupSuggestionToggle = () =>",
-        "chatLog.scrollTop = chatLog.scrollHeight",
+    forbidden_controller_markers = [
+        "MutationObserver",
         "hm:close-question-workspace",
         "hm:open-question-topic",
+        "data-hm-specialist-id",
+        "data-question-id",
     ]
-    for marker in retained_v4_markers:
-        require(marker in controller, f"Hiring Manager V4 controller is missing retained layout behavior {marker!r}.", errors)
+    for marker in forbidden_controller_markers:
+        require(marker not in controller, f"Canonical Hiring Manager controller still contains legacy layered behavior {marker!r}.", errors)
 
-    forbidden_v4_markers = [
-        "const buildTopicBrowser = () =>",
-        "const openTopic =",
-        "data-hm-topic-question",
-        "data-hm-v5-topic",
-        "showPopover",
-        "hidePopover",
-        "hm-library-helper",
-    ]
-    for marker in forbidden_v4_markers:
-        require(marker not in controller, f"V4 must not own removed Question Library interaction behavior; found legacy marker {marker!r}.", errors)
-
-    final_js_markers = [
-        "const ensureWorkspace = () =>",
-        "hm-library-accordion",
-        "data-hm-library-toggle",
-        "data-hm-library-window",
-        "data-hm-library-selection",
-        "data-hm-library-detail",
-        "const setOpen = (open) =>",
-        "const showTopic = (category) =>",
-        "data-hm-library-topic",
-        "hm-library-detail-close",
-        "data-hm-library-question",
-        "new MutationObserver(scheduleRender)",
-        "hm:close-question-workspace",
-        "hm:open-question-topic",
-        "Loading curated interview prompts",
-    ]
-    for marker in final_js_markers:
-        require(marker in final_controller, f"Hiring Manager V5 controller is missing contained-library marker {marker!r}.", errors)
-
-    forbidden_final_js_markers = [
-        "showPopover",
-        "hidePopover",
-        ":popover-open",
-        "hm-top-layer-popover",
-        "hm-topic-popover",
-        "positionTopicPopover",
-        "hm-library-helper",
-    ]
-    for marker in forbidden_final_js_markers:
-        require(marker not in final_controller, f"V5 still contains abandoned helper/floating-overlay behavior {marker!r}.", errors)
+    require("['hiring-manager', 'Ask Haley']" in motion, "Canonical breadcrumbs must label the Hiring Manager route as Ask Haley.", errors)
+    require("data-hm-evidence-drawer" in page, "Hiring Manager page must include the evidence preview drawer.", errors)
+    require("sessionStorage" in controller, "Hiring Manager controller must preserve chat state in sessionStorage.", errors)
+    require("data-hm-expand-key" in controller, "Quick Scan chips must support expand/collapse behavior.", errors)
+    require("openEvidencePreview" in controller and "bindEvidenceCards" in controller, "Evidence cards must open the preview drawer before navigation.", errors)
+    require("EVIDENCE_PREVIEWS" in controller and "interactive-sales-overview.webp" in controller, "Evidence previews must use curated project visuals instead of arbitrary first-page images.", errors)
+    require("hm-chatbot-note" in page and "browser-conversation.webp" in page, "The chatbot/not-AI explanation must be a visual icon-supported callout.", errors)
+    require("ask-haley-session-v1" in motion and "ask-haley-return-dock" in motion, "Project pages must provide the Ask Haley return dock for evidence navigation.", errors)
+    require("left:18px" in motion and "right:auto" in motion, "Ask Haley return dock must stay away from the bottom-right assistant UI.", errors)
 
     home_markers = [
         "Hiring? Ask the portfolio.",
@@ -212,9 +193,10 @@ def main() -> int:
         return 1
 
     print(
-        "Hiring Manager UX validation passed: the Question Library uses static header notes plus a contained accordion above the chat, "
-        "the removed Question Library helper has no remaining markup/CSS/controller ownership, V4 owns layout only, V5 owns the accordion only, "
-        "and the existing bounded chat/homepage/sitewide behaviors remain present."
+        "Hiring Manager UX validation passed: Ask Haley uses a short canonical breadcrumb, compact spacing, "
+        "animated question-to-evidence visual routing, a pre-chat evaluation section, explicit curated-not-live-AI framing, "
+        "a scrollable integrated Question Library, compact hiring-manager-focused Quick Scan, white icon bubbles, "
+        "and one CSS owner plus one JavaScript owner."
     )
     return 0
 

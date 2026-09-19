@@ -1,26 +1,174 @@
 (() => {
   const root = new URL('../', window.location.href);
-  const faqUrl = new URL('data/hiring-faq.json', root);
-  const expandedFaqUrl = new URL('data/hiring-faq-expanded.json', root);
-  const toolsUrl = new URL('data/hiring-tools.json', root);
-  const searchUrl = new URL('data/hiring-search.json', root);
-  const iconSprite = new URL('assets/icons/portfolio-icons.svg', root).href;
+  const urls = {
+    faq: new URL('data/hiring-faq.json', root),
+    expanded: new URL('data/hiring-faq-expanded.json', root),
+    specialist: new URL('data/hiring-faq-specialist.json', root),
+    capabilities: new URL('data/hiring-capabilities.json', root),
+    tools: new URL('data/hiring-tools.json', root),
+    search: new URL('data/hiring-search.json', root)
+  };
+
+  const pixelRoot = new URL('assets/icons/pixel/hiring-guide/', root);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SESSION_KEY = 'ask-haley-session-v1';
 
   const state = {
     questions: [],
     searchEntries: [],
+    capabilities: [],
     tools: [],
     learningStatement: '',
-    activeCategory: 'All',
+    activeTopic: 'Featured',
+    activeCapability: null,
     activeTool: null,
-    lastQuestionId: null,
-    isReplying: false
+    activeScanView: 'capabilities',
+    replying: false,
+    chatStarted: false,
+    expandedChips: {},
+    lastEvidence: null
   };
 
   const STOP_WORDS = new Set([
     'a','an','and','are','about','can','do','does','did','for','from','have','has','how','i','in','is','me','my','of','on','or','show','tell','the','to','what','where','with','you','your'
   ]);
+
+  const STARTER_IDS = [
+    'why-hire-me',
+    'end-to-end-project',
+    'sales-enablement',
+    'ai-evaluation',
+    'lms-migration'
+  ];
+
+  const CAPABILITY_ICONS = {
+    'learning-architecture': 'target.webp',
+    'enterprise-tech': 'workflow-tree.webp',
+    'accessible-ux': 'checklist-document.webp',
+    'ai-automation': 'idea-bulb.webp',
+    'performance-consulting': 'goal-mountain.webp',
+    'delivery-leadership': 'team.webp'
+  };
+
+  const TOOL_ICONS = [
+    'browser-conversation.webp',
+    'document-star.webp',
+    'checklist-clipboard.webp',
+    'workflow-tree.webp',
+    'analytics-growth.webp',
+    'chat-bubbles.webp',
+    'reference-search.webp',
+    'idea-bulb.webp',
+    'team.webp'
+  ];
+
+
+  const CAPABILITY_VISUALS = {
+    'learning-architecture': { caption: 'Need → practice → evidence', nodes: [['target.webp','Need'],['checklist-document.webp','Practice'],['document-star.webp','Evidence']] },
+    'enterprise-tech': { caption: 'Platform → workflow → learner', nodes: [['browser-conversation.webp','Platform'],['workflow-tree.webp','Workflow'],['person-woman.webp','Learner']] },
+    'accessible-ux': { caption: 'Navigate → access → use', nodes: [['checklist-document.webp','Navigate'],['person-man.webp','Access'],['target.webp','Use']] },
+    'ai-automation': { caption: 'Constrain → automate → QA', nodes: [['idea-bulb.webp','Constrain'],['workflow-tree.webp','Automate'],['checklist-clipboard.webp','QA']] },
+    'performance-consulting': { caption: 'Diagnose → support → improve', nodes: [['goal-mountain.webp','Diagnose'],['reference-search.webp','Support'],['analytics-growth.webp','Improve']] },
+    'delivery-leadership': { caption: 'Align → review → launch', nodes: [['team.webp','Align'],['checklist-clipboard.webp','Review'],['calendar.webp','Launch']] }
+  };
+
+  const TOOL_VISUALS = {
+    authoring: { caption: 'Design → build → test', nodes: [['idea-bulb.webp','Design'],['browser-conversation.webp','Build'],['checklist-document.webp','Test']] },
+    multimedia: { caption: 'Concept → media → polish', nodes: [['idea-bulb.webp','Concept'],['video-call.webp','Media'],['star.webp','Polish']] },
+    lms: { caption: 'Configure → validate → support', nodes: [['workflow-tree.webp','Configure'],['checklist-clipboard.webp','Validate'],['person-woman.webp','Support']] },
+    integrations: { caption: 'System → handoff → QA', nodes: [['browser-conversation.webp','System'],['workflow-tree.webp','Handoff'],['checklist-document.webp','QA']] },
+    systems: { caption: 'Collect → automate → report', nodes: [['folder-cursor.webp','Collect'],['workflow-tree.webp','Automate'],['analytics-growth.webp','Report']] },
+    web: { caption: 'Prototype → interact → refine', nodes: [['browser-conversation.webp','Prototype'],['chat-bubbles.webp','Interact'],['star.webp','Refine']] },
+    'learning-data': { caption: 'Track → structure → analyze', nodes: [['checklist-document.webp','Track'],['workflow-tree.webp','Structure'],['analytics-growth.webp','Analyze']] },
+    accessibility: { caption: 'Navigate → perceive → use', nodes: [['person-man.webp','Navigate'],['checklist-document.webp','Perceive'],['target.webp','Use']] },
+    ai: { caption: 'Prompt → evaluate → verify', nodes: [['idea-bulb.webp','Prompt'],['checklist-clipboard.webp','Evaluate'],['reference-search.webp','Verify']] },
+    collaboration: { caption: 'Align → review → deliver', nodes: [['team.webp','Align'],['chat-bubbles.webp','Review'],['calendar.webp','Deliver']] }
+  };
+
+
+  const EVIDENCE_PREVIEWS = {
+    'projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html': {
+      image: 'assets/project-images/cellular-certification/cert-introduction.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/complete-learning-paths/index.html': {
+      image: 'assets/project-images/complete-learning-pathways/path-program-overview.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html': {
+      image: 'assets/project-images/microlearning/micro-marketing-hero.webp',
+      type: 'Microlearning'
+    },
+    'projects/instructional-design/index.html': {
+      image: 'assets/project-images/main-pages/instructional-design.webp',
+      type: 'Instructional Design'
+    },
+    'projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html': {
+      image: 'assets/project-images/live-training/virtual-training-facilitation.webp',
+      type: 'Live Training'
+    },
+    'projects/instructional-design/microlearning-performance-support/index.html': {
+      image: 'assets/project-images/microlearning-performance-support/micro-ps-hero.webp',
+      type: 'Microlearning + Performance Support'
+    },
+    'projects/instructional-design/interactive-learning/index.html': {
+      image: 'assets/project-images/interactive-learning/interactive-sales-overview.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/instructional-design/interactive-learning/meddpicc-practice/index.html': {
+      image: 'assets/project-images/interactive-learning/meddpicc-sales-use-case.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/instructional-design/interactive-learning/pursuit-positioning/index.html': {
+      image: 'assets/project-images/interactive-learning/pursuit-sales-scenario.webp',
+      type: 'Interactive Learning'
+    },
+    'projects/lms-administration/index.html': {
+      image: 'assets/project-images/main-pages/lms-administration.webp',
+      type: 'LMS + Learning Operations'
+    },
+    'projects/lms-administration/learning-platform-operations-migration-readiness/index.html': {
+      image: 'assets/project-images/lms-migration/learning-pathway.webp',
+      type: 'LMS + Learning Operations'
+    },
+    'projects/workflows/data-reporting/certification-reporting-automation/index.html': {
+      image: 'assets/project-images/reporting-automation/report-certification.webp',
+      type: 'Systems + Workflow'
+    },
+    'projects/workflows/index.html': {
+      image: 'assets/project-images/main-pages/system-integrations-workflows.webp',
+      type: 'Systems + Workflow'
+    },
+    'projects/ai-training-and-evaluation/index.html': {
+      image: 'assets/project-images/main-pages/ai-training-evaluation.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/ai-training-and-evaluation/rubric-demo/index.html': {
+      image: 'assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/ai-training-and-evaluation/workflow-demo/index.html': {
+      image: 'assets/project-images/ai-training-and-evaluation/nexusai-compare-responses.webp',
+      type: 'AI Training + Evaluation'
+    },
+    'projects/instructional-design/live-training/index.html': {
+      image: 'assets/project-images/instructional-design/id-live-training.webp',
+      type: 'Live Training'
+    },
+    'projects/instructional-design/multimedia/index.html': {
+      image: 'assets/project-images/multimedia/multimedia-after-effects-motion.webp',
+      type: 'Multimedia'
+    },
+    'projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html': {
+      image: 'assets/project-images/vertical-positioning/airports-connected.webp',
+      type: 'Microlearning'
+    }
+  };
+
+  const normalizeEvidencePath = (path) => String(path || '')
+    .replace(/^\.\//, '')
+    .replace(/^\/+/, '')
+    .replace(/^portfolio\//, '');
 
   const escapeHtml = (value) => String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -42,23 +190,24 @@
   const scoreQuestion = (query, question) => {
     const clean = normalize(query);
     if (!clean) return 0;
-
     const prompt = normalize(question.prompt);
     const label = normalize(question.short_label);
     const category = normalize(question.category);
     const keywords = normalize((question.keywords || []).join(' '));
+    const variants = normalize((question.variants || []).join(' '));
     const answer = normalize(question.answer);
-    const queryTokens = tokensFor(query);
     let score = 0;
 
-    if (prompt.includes(clean) || clean.includes(prompt)) score += 14;
-    if (label.includes(clean) || clean.includes(label)) score += 10;
-    if (keywords.includes(clean)) score += 8;
+    if (prompt.includes(clean) || clean.includes(prompt)) score += 16;
+    if (label.includes(clean) || clean.includes(label)) score += 12;
+    if (keywords.includes(clean)) score += 9;
+    if (variants.includes(clean)) score += 8;
 
-    queryTokens.forEach((token) => {
+    tokensFor(query).forEach((token) => {
       if (label.includes(token)) score += 5;
       if (prompt.includes(token)) score += 4;
-      if (keywords.includes(token)) score += 3;
+      if (keywords.includes(token)) score += 4;
+      if (variants.includes(token)) score += 3;
       if (category.includes(token)) score += 2;
       if (answer.includes(token)) score += 1;
     });
@@ -68,15 +217,14 @@
 
   const scoreSearchEntry = (query, entry) => {
     const clean = normalize(query);
-    const tokens = tokensFor(query);
-    if (!clean) return 0;
     const title = normalize(entry.title);
     const summary = normalize(entry.summary);
     const keywords = normalize((entry.keywords || []).join(' '));
     let score = 0;
+    if (!clean) return score;
     if (title.includes(clean) || clean.includes(title)) score += 12;
     if (keywords.includes(clean)) score += 7;
-    tokens.forEach((token) => {
+    tokensFor(query).forEach((token) => {
       if (title.includes(token)) score += 5;
       if (keywords.includes(token)) score += 3;
       if (summary.includes(token)) score += 1;
@@ -84,313 +232,639 @@
     return score;
   };
 
-  const chatLog = document.querySelector('[data-hm-chat-log]');
-  const form = document.querySelector('[data-hm-form]');
-  const input = document.querySelector('[data-hm-input]');
-  const questionList = document.querySelector('[data-hm-question-list]');
-  const categoryList = document.querySelector('[data-hm-categories]');
-  const starterList = document.querySelector('[data-hm-starters]');
-  const clearButton = document.querySelector('[data-hm-clear]');
-  const toolTabs = document.querySelector('[data-hm-tool-tabs]');
-  const toolPanel = document.querySelector('[data-hm-tool-panel]');
-  const learningStatement = document.querySelector('[data-hm-learning-statement] p');
+  const elements = {
+    count: document.querySelector('[data-hm-question-count]'),
+    libraryToggle: document.querySelector('[data-hm-library-toggle]'),
+    library: document.querySelector('[data-hm-library]'),
+    libraryClose: document.querySelector('[data-hm-library-close]'),
+    librarySummary: document.querySelector('[data-hm-library-summary]'),
+    topicList: document.querySelector('[data-hm-topic-list]'),
+    promptPanel: document.querySelector('[data-hm-prompt-panel]'),
+    starters: document.querySelector('[data-hm-starters]'),
+    chatLog: document.querySelector('[data-hm-chat-log]'),
+    form: document.querySelector('[data-hm-form]'),
+    input: document.querySelector('[data-hm-input]'),
+    clear: document.querySelector('[data-hm-clear]'),
+    scanButtons: [...document.querySelectorAll('[data-hm-scan-view]')],
+    scanPanels: [...document.querySelectorAll('[data-hm-scan-panel]')],
+    capabilityTabs: document.querySelector('[data-hm-capability-tabs]'),
+    capabilityDetail: document.querySelector('[data-hm-capability-detail]'),
+    toolTabs: document.querySelector('[data-hm-tool-tabs]'),
+    toolDetail: document.querySelector('[data-hm-tool-detail]'),
+    evidenceDrawer: document.querySelector('[data-hm-evidence-drawer]'),
+    evidenceOverlay: document.querySelector('[data-hm-evidence-overlay]'),
+    evidenceClose: document.querySelector('[data-hm-evidence-close]'),
+    evidenceTitle: document.querySelector('[data-hm-evidence-title]'),
+    evidenceType: document.querySelector('[data-hm-evidence-type]'),
+    evidenceSummary: document.querySelector('[data-hm-evidence-summary]'),
+    evidenceNote: document.querySelector('[data-hm-evidence-note]'),
+    evidenceVisual: document.querySelector('[data-hm-evidence-visual]'),
+    evidenceOpen: document.querySelector('[data-hm-evidence-open]'),
+    evidenceChat: document.querySelector('[data-hm-evidence-chat]')
+  };
 
-  if (!chatLog || !form || !input || !questionList || !categoryList || !starterList) return;
+  if (!elements.chatLog || !elements.form || !elements.input || !elements.starters) return;
 
-  const animateMessage = (article) => {
-    article.classList.add('is-entering');
+  const pixelUrl = (name) => new URL(name, pixelRoot).href;
+
+  const safeSessionRead = () => {
+    try {
+      const raw = window.sessionStorage.getItem(SESSION_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const saveSession = () => {
+    try {
+      const payload = {
+        chatStarted: state.chatStarted,
+        chatHtml: elements.chatLog.innerHTML,
+        chatScrollTop: elements.chatLog.scrollTop,
+        activeCapability: state.activeCapability,
+        activeTool: state.activeTool,
+        activeScanView: state.activeScanView,
+        expandedChips: state.expandedChips,
+        lastEvidence: state.lastEvidence,
+        updatedAt: Date.now()
+      };
+      window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+    } catch (error) {
+      // sessionStorage is a progressive enhancement; the chat still works without it.
+    }
+  };
+
+  const clearSession = () => {
+    try { window.sessionStorage.removeItem(SESSION_KEY); } catch (error) {}
+  };
+
+  const categoryFromPath = (path) => {
+    const value = String(path || '').toLowerCase();
+    if (value.includes('ai-training')) return 'AI Training + Evaluation';
+    if (value.includes('lms-administration')) return 'LMS + Learning Operations';
+    if (value.includes('workflows')) return 'Systems + Workflow';
+    if (value.includes('live-training')) return 'Live Training';
+    if (value.includes('microlearning')) return 'Microlearning';
+    if (value.includes('instructional-design')) return 'Instructional Design';
+    return 'Portfolio project';
+  };
+
+  const visualMarkup = (visual) => {
+    if (!visual) return '';
+    return `
+      <div class="hm-scan-visual" aria-label="${escapeHtml(visual.caption)}">
+        <span class="hm-scan-visual-caption">${escapeHtml(visual.caption)}</span>
+        <div class="hm-scan-visual-route">
+          ${visual.nodes.map(([icon,label]) => `
+            <span class="hm-scan-node"><i><img src="${pixelUrl(icon)}" alt=""></i><small>${escapeHtml(label)}</small></span>
+          `).join('')}
+        </div>
+      </div>`;
+  };
+
+  const chipGroupMarkup = (values, visibleCount, key) => {
+    const list = Array.isArray(values) ? values : [];
+    const expanded = Boolean(state.expandedChips[key]);
+    const shown = expanded ? list : list.slice(0, visibleCount);
+    const remaining = Math.max(0, list.length - visibleCount);
+    return `
+      <div class="hm-chip-group">
+        ${shown.map((value) => `<span>${escapeHtml(value)}</span>`).join('')}
+        ${remaining ? `<button type="button" class="hm-more-toggle" data-hm-expand-key="${escapeHtml(key)}">${expanded ? 'Show less' : `+${remaining} more`}</button>` : ''}
+      </div>`;
+  };
+
+  const bindExpandButtons = (rootNode) => {
+    rootNode.querySelectorAll('[data-hm-expand-key]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const key = button.dataset.hmExpandKey;
+        state.expandedChips[key] = !state.expandedChips[key];
+        saveSession();
+        if (key.startsWith('cap:')) renderCapability(state.activeCapability);
+        else renderTool(state.activeTool);
+      });
+    });
+  };
+
+  const closeEvidencePreview = ({ returnToChat = false } = {}) => {
+    if (!elements.evidenceDrawer || !elements.evidenceOverlay) return;
+    elements.evidenceDrawer.classList.remove('open');
+    elements.evidenceDrawer.setAttribute('aria-hidden', 'true');
+    elements.evidenceOverlay.hidden = true;
+    document.body.classList.remove('hm-preview-open');
+    if (returnToChat) {
+      document.querySelector('#ask-haley')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      window.setTimeout(() => elements.input?.focus(), reducedMotion ? 0 : 280);
+    }
+  };
+
+  const hydrateEvidencePreview = async (item) => {
+    const target = new URL(item.path, root);
+    const normalizedPath = normalizeEvidencePath(item.path);
+    const curated = EVIDENCE_PREVIEWS[normalizedPath] || null;
+    elements.evidenceTitle.textContent = item.title || 'Portfolio project';
+    elements.evidenceType.textContent = curated?.type || categoryFromPath(item.path);
+    elements.evidenceNote.textContent = item.note || 'This public project supports the answer you were reviewing.';
+    elements.evidenceSummary.textContent = 'Loading the public project summary…';
+    const fullUrl = new URL(target.href);
+    fullUrl.searchParams.set('from', 'ask-haley');
+    elements.evidenceOpen.href = fullUrl.href;
+    elements.evidenceChat.textContent = state.chatStarted ? 'Back to chat' : 'Start chat';
+
+    if (curated?.image) {
+      const resolved = new URL(curated.image, root).href;
+      elements.evidenceVisual.innerHTML = `<img src="${escapeHtml(resolved)}" alt="Preview of ${escapeHtml(item.title || 'portfolio project')}">`;
+    } else {
+      elements.evidenceVisual.innerHTML = `
+        <div class="hm-evidence-preview-placeholder hm-evidence-preview-fallback">
+          <span class="hm-icon-bubble"><img src="${pixelUrl(categoryFromPath(item.path).includes('AI') ? 'idea-bulb.webp' : categoryFromPath(item.path).includes('LMS') ? 'workflow-tree.webp' : categoryFromPath(item.path).includes('Workflow') ? 'analytics-growth.webp' : 'document-star.webp')}" alt=""></span>
+          <strong>${escapeHtml(item.title || 'Portfolio project')}</strong>
+          <span>${escapeHtml(categoryFromPath(item.path))}</span>
+        </div>`;
+    }
+
+    try {
+      const response = await fetch(target.href);
+      if (!response.ok) throw new Error('Preview fetch failed');
+      const markup = await response.text();
+      const doc = new DOMParser().parseFromString(markup, 'text/html');
+      const description = doc.querySelector('meta[name="description"]')?.content || doc.querySelector('main p')?.textContent?.trim();
+      elements.evidenceSummary.textContent = description || 'Open the full project for the complete public case study and interaction details.';
+    } catch (error) {
+      elements.evidenceSummary.textContent = 'Open the full project for the complete public case study and interaction details.';
+    }
+  };
+
+  const openEvidencePreview = (item) => {
+    if (!elements.evidenceDrawer || !elements.evidenceOverlay) return;
+    state.lastEvidence = item;
+    saveSession();
+    elements.evidenceOverlay.hidden = false;
+    elements.evidenceDrawer.classList.add('open');
+    elements.evidenceDrawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('hm-preview-open');
+    hydrateEvidencePreview(item);
+    window.setTimeout(() => elements.evidenceClose?.focus(), 20);
+  };
+
+  const bindEvidenceCards = (rootNode) => {
+    rootNode.querySelectorAll('[data-hm-evidence-card]').forEach((card) => {
+      card.addEventListener('click', () => openEvidencePreview({
+        title: card.dataset.evidenceTitle,
+        path: card.dataset.evidencePath,
+        note: card.dataset.evidenceNote
+      }));
+    });
   };
 
   const scrollChat = () => {
     requestAnimationFrame(() => {
-      chatLog.scrollTop = chatLog.scrollHeight;
+      elements.chatLog.scrollTop = elements.chatLog.scrollHeight;
     });
   };
 
-  const appendUserMessage = (text) => {
+  const setLibraryOpen = (open) => {
+    const isOpen = Boolean(open);
+    if (elements.library) elements.library.hidden = !isOpen;
+    if (elements.libraryToggle) elements.libraryToggle.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const appendUser = (text) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-user';
     article.innerHTML = `
       <div class="hm-message-label">Hiring manager</div>
       <div class="hm-message-bubble">${escapeHtml(text)}</div>`;
-    chatLog.appendChild(article);
-    animateMessage(article);
+    elements.chatLog.appendChild(article);
+    state.chatStarted = true;
     scrollChat();
+    saveSession();
   };
 
-  const evidenceMarkup = (evidence = []) => {
-    if (!evidence.length) return '';
+  const evidenceMarkup = (items = []) => {
+    if (!items.length) return '';
     return `
       <div class="hm-evidence">
         <p class="hm-evidence-label">Portfolio evidence</p>
         <div class="hm-evidence-grid">
-          ${evidence.map((item) => `
-            <a class="hm-evidence-card" href="${new URL(item.path, root).href}">
+          ${items.map((item) => `
+            <button type="button" class="hm-evidence-card" data-hm-evidence-card data-evidence-path="${escapeHtml(item.path)}" data-evidence-title="${escapeHtml(item.title)}" data-evidence-note="${escapeHtml(item.note || '')}">
+              <img src="${pixelUrl('document-star.webp')}" alt="">
               <strong>${escapeHtml(item.title)}</strong>
               <span>${escapeHtml(item.note)}</span>
-              <em>Open evidence →</em>
-            </a>`).join('')}
+              <em>Preview evidence →</em>
+            </button>`).join('')}
         </div>
       </div>`;
   };
+  const followupMarkup = (question) => {
+    let related = (question.followups || [])
+      .map((id) => state.questions.find((item) => item.id === id))
+      .filter(Boolean);
 
-  const followupMarkup = (ids = []) => {
-    const related = ids
-      .map((id) => state.questions.find((question) => question.id === id))
-      .filter(Boolean)
-      .slice(0, 3);
+    if (!related.length) {
+      related = state.questions
+        .filter((item) => item.id !== question.id && item.category === question.category)
+        .slice(0, 3);
+    } else {
+      related = related.slice(0, 3);
+    }
+
     if (!related.length) return '';
     return `
       <div class="hm-followups">
-        <span>Go one level deeper</span>
+        <span>Keep the interview going</span>
         <div>
-          ${related.map((question) => `<button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('')}
+          ${related.map((item) => `<button type="button" data-hm-question-id="${escapeHtml(item.id)}">${escapeHtml(item.short_label)}</button>`).join('')}
         </div>
       </div>`;
   };
 
-  const createTypingMessage = () => {
+  const typingMessage = () => {
     const article = document.createElement('article');
-    article.className = 'hm-message hm-message-haley is-entering hm-typing-message';
+    article.className = 'hm-message hm-message-haley hm-typing-message';
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley</div>
-      <div class="hm-message-bubble"><span class="hm-typing" aria-label="Preparing answer"><span></span><span></span><span></span></span></div>`;
-    chatLog.appendChild(article);
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble"><span class="hm-typing" aria-label="Preparing answer"><i></i><i></i><i></i></span></div>`;
+    elements.chatLog.appendChild(article);
     scrollChat();
     return article;
   };
 
-  const appendHaleyAnswerNow = (question, typingNode = null) => {
-    state.lastQuestionId = question.id;
+  const bindQuestionButtons = (rootNode) => {
+    rootNode.querySelectorAll('[data-hm-question-id]').forEach((button) => {
+      button.addEventListener('click', () => askById(button.dataset.hmQuestionId));
+    });
+  };
+
+  const answerNow = (question, typing) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-haley';
+    const tag = question.specialist ? 'Deep Dive' : question.category;
     article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley · ${escapeHtml(question.category)}</div>
+      <div class="hm-message-label">Haley</div>
       <div class="hm-message-bubble">
+        <span class="hm-answer-tag">${escapeHtml(tag)}</span>
         <p>${escapeHtml(question.answer)}</p>
         ${evidenceMarkup(question.evidence)}
-        ${followupMarkup(question.followups)}
+        ${followupMarkup(question)}
       </div>`;
-    if (typingNode) typingNode.replaceWith(article);
-    else chatLog.appendChild(article);
-    article.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
-    });
-    animateMessage(article);
-    state.isReplying = false;
+    typing.replaceWith(article);
+    bindQuestionButtons(article);
+    bindEvidenceCards(article);
+    state.replying = false;
     scrollChat();
+    saveSession();
   };
 
-  const appendHaleyAnswer = (question) => {
-    if (state.isReplying) return;
-    state.isReplying = true;
-    const typingNode = createTypingMessage();
-    const delay = reducedMotion ? 0 : 360;
-    window.setTimeout(() => appendHaleyAnswerNow(question, typingNode), delay);
-  };
-
-  const appendFallbackNow = (query, matches, typingNode = null) => {
-    const article = document.createElement('article');
-    article.className = 'hm-message hm-message-haley';
-    article.innerHTML = `
-      <div class="hm-message-label">Portfolio Haley · Evidence check</div>
-      <div class="hm-message-bubble">
-        <p>I do not have a supported interview answer for that exact question, so I would rather point you to the closest published work than make something up.</p>
-        ${matches.length ? `
-          <div class="hm-evidence">
-            <p class="hm-evidence-label">Closest portfolio matches</p>
-            <div class="hm-evidence-grid">
-              ${matches.map((entry) => `
-                <a class="hm-evidence-card" href="${new URL(entry.path, root).href}">
-                  <strong>${escapeHtml(entry.title)}</strong>
-                  <span>${escapeHtml(entry.summary)}</span>
-                  <em>Open evidence →</em>
-                </a>`).join('')}
-            </div>
-          </div>` : '<p class="hm-chat-note">Try asking about instructional design, technical sales training, tools, LMS work, AI evaluation, facilitation, reporting, collaboration, or automation.</p>'}
-      </div>`;
-    if (typingNode) typingNode.replaceWith(article);
-    else chatLog.appendChild(article);
-    animateMessage(article);
-    state.isReplying = false;
-    scrollChat();
-  };
-
-  const appendFallback = (query) => {
-    if (state.isReplying) return;
-    state.isReplying = true;
+  const fallbackNow = (query, typing) => {
     const matches = state.searchEntries
       .map((entry) => ({ entry, score: scoreSearchEntry(query, entry) }))
       .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((item) => item.entry);
-    const typingNode = createTypingMessage();
-    const delay = reducedMotion ? 0 : 280;
-    window.setTimeout(() => appendFallbackNow(query, matches, typingNode), delay);
-  };
 
-  const askQuestion = (query, options = {}) => {
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Evidence check</span>
+        <p>I do not have a supported interview answer for that exact question, so I would rather point you toward the closest published work than make something up.</p>
+        ${matches.length ? `
+          <div class="hm-evidence">
+            <p class="hm-evidence-label">Closest portfolio matches</p>
+            <div class="hm-evidence-grid">
+              ${matches.map((entry) => `
+                <button type="button" class="hm-evidence-card" data-hm-evidence-card data-evidence-path="${escapeHtml(entry.path)}" data-evidence-title="${escapeHtml(entry.title)}" data-evidence-note="${escapeHtml(entry.summary)}">
+                  <img src="${pixelUrl('reference-search.webp')}" alt="">
+                  <strong>${escapeHtml(entry.title)}</strong>
+                  <span>${escapeHtml(entry.summary)}</span>
+                  <em>Preview evidence →</em>
+                </button>`).join('')}
+            </div>
+          </div>` : '<p>Try asking about instructional design, sales enablement, LMS work, AI evaluation, facilitation, reporting, collaboration, tools, or automation.</p>'}
+      </div>`;
+    typing.replaceWith(article);
+    bindEvidenceCards(article);
+    state.replying = false;
+    scrollChat();
+    saveSession();
+  };
+  const ask = (query, options = {}) => {
     const clean = String(query || '').trim();
-    if (!clean || state.isReplying) return;
-    if (!options.skipUserMessage) appendUserMessage(clean);
+    if (!clean || state.replying) return;
+    setLibraryOpen(false);
+    if (!options.skipUser) appendUser(clean);
 
     const ranked = state.questions
       .map((question) => ({ question, score: scoreQuestion(clean, question) }))
       .sort((a, b) => b.score - a.score);
 
-    if (ranked[0] && ranked[0].score >= 6) appendHaleyAnswer(ranked[0].question);
-    else appendFallback(clean);
+    state.replying = true;
+    const typing = typingMessage();
+    const delay = reducedMotion ? 0 : 300;
+    window.setTimeout(() => {
+      if (ranked[0] && ranked[0].score >= 6) answerNow(ranked[0].question, typing);
+      else fallbackNow(clean, typing);
+    }, delay);
   };
 
   const askById = (id) => {
-    if (state.isReplying) return;
+    if (state.replying) return;
     const question = state.questions.find((item) => item.id === id);
     if (!question) return;
-    appendUserMessage(question.prompt);
-    appendHaleyAnswer(question);
+    appendUser(question.prompt);
+    state.replying = true;
+    setLibraryOpen(false);
+    const typing = typingMessage();
+    window.setTimeout(() => answerNow(question, typing), reducedMotion ? 0 : 260);
   };
 
-  const renderQuestionLibrary = () => {
-    const visible = state.questions.filter((question) => state.activeCategory === 'All' || question.category === state.activeCategory);
-    questionList.innerHTML = visible.map((question) => `
-      <button class="hm-question-card" type="button" data-question-id="${escapeHtml(question.id)}">
-        <span>${escapeHtml(question.category)}</span>
-        <strong>${escapeHtml(question.short_label)}</strong>
-      </button>`).join('');
-    questionList.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
+  const resetChat = ({ clearStoredSession = true } = {}) => {
+    state.replying = false;
+    state.chatStarted = false;
+    state.lastEvidence = null;
+    elements.chatLog.innerHTML = '';
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Start anywhere</span>
+        <p>Ask me the question you would normally save for the interview. I can answer from the curated library and link you to the portfolio work behind the answer.</p>
+      </div>`;
+    elements.chatLog.appendChild(article);
+    if (clearStoredSession) clearSession();
+  };
+  const topicGroups = () => {
+    const groups = new Map();
+    const featured = state.questions.filter((question) => question.featured && !question.specialist);
+    if (featured.length) groups.set('Featured', featured);
+
+    state.questions.filter((question) => !question.specialist).forEach((question) => {
+      if (!groups.has(question.category)) groups.set(question.category, []);
+      groups.get(question.category).push(question);
+    });
+
+    const deepDive = state.questions.filter((question) => question.specialist);
+    if (deepDive.length) groups.set('Deep Dive', deepDive);
+    return [...groups.entries()].map(([label, questions]) => ({ label, questions }));
+  };
+
+  const renderPromptPanel = () => {
+    if (!elements.promptPanel) return;
+    const groups = topicGroups();
+    const group = groups.find((item) => item.label === state.activeTopic) || groups[0];
+    if (!group) return;
+
+    elements.promptPanel.innerHTML = `
+      <div class="hm-prompt-heading">
+        <p class="eyebrow">${escapeHtml(group.label)}</p>
+        <h4>${group.label === 'Featured' ? 'Good questions to start with' : `${escapeHtml(group.label)} questions`}</h4>
+      </div>
+      <div class="hm-prompt-list">
+        ${group.questions.map((question) => `
+          <button type="button" class="hm-library-prompt" data-hm-library-question="${escapeHtml(question.id)}">${escapeHtml(question.prompt)}</button>
+        `).join('')}
+      </div>`;
+
+    elements.promptPanel.querySelectorAll('[data-hm-library-question]').forEach((button) => {
+      button.addEventListener('click', () => askById(button.dataset.hmLibraryQuestion));
     });
   };
 
-  const renderCategories = () => {
-    const categories = ['All', ...new Set(state.questions.map((question) => question.category))];
-    categoryList.innerHTML = categories.map((category) => `
-      <button type="button" class="${category === state.activeCategory ? 'active' : ''}" data-category="${escapeHtml(category)}" aria-pressed="${String(category === state.activeCategory)}">${escapeHtml(category)}</button>`).join('');
-    categoryList.querySelectorAll('[data-category]').forEach((button) => {
+  const renderLibrary = () => {
+    const groups = topicGroups();
+    if (!groups.length || !elements.topicList) return;
+    if (!groups.some((item) => item.label === state.activeTopic)) state.activeTopic = groups[0].label;
+
+    elements.topicList.innerHTML = groups.map((group) => `
+      <button type="button" class="hm-topic-button ${group.label === state.activeTopic ? 'active' : ''}" data-hm-topic="${escapeHtml(group.label)}">
+        <span>${escapeHtml(group.label)}</span><span>${group.questions.length}</span>
+      </button>
+    `).join('');
+
+    elements.topicList.querySelectorAll('[data-hm-topic]').forEach((button) => {
       button.addEventListener('click', () => {
-        state.activeCategory = button.dataset.category;
-        renderCategories();
-        renderQuestionLibrary();
+        state.activeTopic = button.dataset.hmTopic;
+        renderLibrary();
       });
     });
+
+    renderPromptPanel();
+    if (elements.librarySummary) {
+      const totalTopics = groups.length;
+      elements.librarySummary.textContent = `${state.questions.length} curated prompts across ${totalTopics} topics`;
+    }
   };
 
   const renderStarters = () => {
-    const priorityIds = ['why-hire-me','end-to-end-project','technical-training','tool-choice','sme-pushback','learn-new-tools','self-critique','coding-automation'];
-    const starters = priorityIds
-      .map((id) => state.questions.find((question) => question.id === id))
+    const preferred = STARTER_IDS
+      .map((id) => state.questions.find((item) => item.id === id))
       .filter(Boolean);
-    starterList.innerHTML = starters.map((question) => `
-      <button type="button" data-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>`).join('');
-    starterList.querySelectorAll('[data-question-id]').forEach((button) => {
-      button.addEventListener('click', () => askById(button.dataset.questionId));
-    });
+
+    const fill = state.questions
+      .filter((item) => item.featured && !preferred.some((chosen) => chosen.id === item.id))
+      .slice(0, Math.max(0, 5 - preferred.length));
+
+    const starters = [...preferred, ...fill].slice(0, 5);
+    elements.starters.innerHTML = starters.map((question) => `
+      <button type="button" class="hm-starter" data-hm-question-id="${escapeHtml(question.id)}">${escapeHtml(question.short_label)}</button>
+    `).join('');
+    bindQuestionButtons(elements.starters);
   };
 
-  const renderToolPanel = (group) => {
-    if (!toolPanel || !group) return;
-    state.activeTool = group.id;
-    const familiarity = Array.isArray(group.familiarity) && group.familiarity.length
-      ? `<div class="hm-tool-familiarity"><strong>Additional platform familiarity:</strong> ${group.familiarity.map(escapeHtml).join(' · ')}</div>`
-      : '';
-    toolPanel.innerHTML = `
-      <div class="hm-tool-panel-head">
-        <span class="hm-tool-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg></span>
-        <div><p class="eyebrow">Capability Area</p><h3>${escapeHtml(group.label)}</h3><p>${escapeHtml(group.summary)}</p></div>
+  const renderCapability = (id) => {
+    const item = state.capabilities.find((capability) => capability.id === id) || state.capabilities[0];
+    if (!item || !elements.capabilityDetail) return;
+    state.activeCapability = item.id;
+    const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
+    const visual = CAPABILITY_VISUALS[item.id] || CAPABILITY_VISUALS['learning-architecture'];
+    elements.capabilityDetail.innerHTML = `
+      <div class="hm-scan-detail-head">
+        <span class="hm-icon-bubble hm-scan-detail-icon"><img src="${pixelUrl(icon)}" alt=""></span>
+        <div>
+          <p class="eyebrow">${escapeHtml(item.label)}</p>
+          <h3>${escapeHtml(item.headline)}</h3>
+        </div>
       </div>
-      <div class="hm-tool-columns">
-        <div class="hm-tool-column"><h4>Hands-on tools</h4><div class="hm-tool-chip-row">${(group.hands_on || []).map((item) => `<span class="hm-tool-chip">${escapeHtml(item)}</span>`).join('')}</div></div>
-        <div class="hm-tool-column"><h4>What transfers across tools</h4><div class="hm-tool-chip-row">${(group.capabilities || []).map((item) => `<span class="hm-tool-chip capability">${escapeHtml(item)}</span>`).join('')}</div></div>
-      </div>
-      ${familiarity}`;
-    toolTabs?.querySelectorAll('[data-tool-id]').forEach((button) => {
-      const active = button.dataset.toolId === group.id;
+      <div class="hm-scan-detail-body">
+        <div class="hm-scan-copy">
+          <span class="hm-scan-label">How this shows up in my work</span>
+          <p>${escapeHtml(item.proof)}</p>
+          ${chipGroupMarkup(item.skills, 5, `cap:${item.id}`)}
+        </div>
+        ${visualMarkup(visual)}
+      </div>`;
+    bindExpandButtons(elements.capabilityDetail);
+    elements.capabilityTabs?.querySelectorAll('[data-hm-capability]').forEach((button) => {
+      const active = button.dataset.hmCapability === item.id;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', String(active));
     });
+    saveSession();
+  };
+
+  const renderCapabilities = () => {
+    if (!elements.capabilityTabs || !state.capabilities.length) return;
+    elements.capabilityTabs.innerHTML = state.capabilities.map((item) => {
+      const icon = CAPABILITY_ICONS[item.id] || 'target.webp';
+      return `
+        <button type="button" role="tab" aria-selected="false" class="hm-capability-tab" data-hm-capability="${escapeHtml(item.id)}">
+          <span class="hm-tab-icon-bubble"><img src="${pixelUrl(icon)}" alt=""></span><span>${escapeHtml(item.label)}</span>
+        </button>`;
+    }).join('');
+    elements.capabilityTabs.querySelectorAll('[data-hm-capability]').forEach((button) => {
+      button.addEventListener('click', () => renderCapability(button.dataset.hmCapability));
+    });
+    renderCapability(state.activeCapability || state.capabilities[0].id);
+  };
+  const renderTool = (id) => {
+    const item = state.tools.find((tool) => tool.id === id) || state.tools[0];
+    if (!item || !elements.toolDetail) return;
+    state.activeTool = item.id;
+    const index = Math.max(0, state.tools.findIndex((tool) => tool.id === item.id));
+    const icon = TOOL_ICONS[index % TOOL_ICONS.length];
+    const visual = TOOL_VISUALS[item.id] || TOOL_VISUALS.authoring;
+    elements.toolDetail.innerHTML = `
+      <div class="hm-scan-detail-head">
+        <span class="hm-icon-bubble hm-scan-detail-icon"><img src="${pixelUrl(icon)}" alt=""></span>
+        <div>
+          <p class="eyebrow">${escapeHtml(item.label)}</p>
+          <h3>${escapeHtml(item.summary)}</h3>
+        </div>
+      </div>
+      <div class="hm-scan-detail-body">
+        <div class="hm-scan-copy">
+          ${item.hands_on?.length ? `<span class="hm-scan-label">Hands-on</span>${chipGroupMarkup(item.hands_on, 6, `tool:${item.id}:hands`)}` : ''}
+          ${item.capabilities?.length ? `<span class="hm-scan-label hm-scan-label-spaced">What I use it for</span>${chipGroupMarkup(item.capabilities, 5, `tool:${item.id}:caps`)}` : ''}
+        </div>
+        ${visualMarkup(visual)}
+      </div>`;
+    bindExpandButtons(elements.toolDetail);
+    elements.toolTabs?.querySelectorAll('[data-hm-tool]').forEach((button) => {
+      const active = button.dataset.hmTool === item.id;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+    saveSession();
   };
 
   const renderTools = () => {
-    if (!toolTabs || !toolPanel || !state.tools.length) return;
-    toolTabs.innerHTML = state.tools.map((group, index) => `
-      <button class="hm-tool-tab ${index === 0 ? 'active' : ''}" type="button" role="tab" aria-selected="${String(index === 0)}" data-tool-id="${escapeHtml(group.id)}">
-        <svg class="portfolio-icon" aria-hidden="true"><use href="${iconSprite}#${escapeHtml(group.icon)}"></use></svg>
-        <span>${escapeHtml(group.label)}</span>
-      </button>`).join('');
-    toolTabs.querySelectorAll('[data-tool-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const group = state.tools.find((item) => item.id === button.dataset.toolId);
-        renderToolPanel(group);
-      });
+    if (!elements.toolTabs || !state.tools.length) return;
+    elements.toolTabs.innerHTML = state.tools.map((item, index) => `
+      <button type="button" role="tab" aria-selected="false" class="hm-tool-tab" data-hm-tool="${escapeHtml(item.id)}">
+        <span class="hm-tab-icon-bubble"><img src="${pixelUrl(TOOL_ICONS[index % TOOL_ICONS.length])}" alt=""></span><span>${escapeHtml(item.label)}</span>
+      </button>
+    `).join('');
+    elements.toolTabs.querySelectorAll('[data-hm-tool]').forEach((button) => {
+      button.addEventListener('click', () => renderTool(button.dataset.hmTool));
     });
-    renderToolPanel(state.tools[0]);
-    if (learningStatement) learningStatement.textContent = state.learningStatement;
+    renderTool(state.activeTool || state.tools[0].id);
+  };
+  const setScanView = (view) => {
+    state.activeScanView = view;
+    elements.scanButtons.forEach((button) => {
+      const active = button.dataset.hmScanView === view;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+    elements.scanPanels.forEach((panel) => {
+      const active = panel.dataset.hmScanPanel === view;
+      panel.hidden = !active;
+      panel.classList.toggle('active', active);
+    });
+    saveSession();
   };
 
-  const resetConversation = () => {
-    state.lastQuestionId = null;
-    state.isReplying = false;
-    chatLog.innerHTML = `
-      <article class="hm-message hm-message-haley is-entering">
-        <div class="hm-message-label">Portfolio Haley</div>
-        <div class="hm-message-bubble">
-          <p>Hi — use this like the part of an interview where you get past the résumé bullets. Ask what I actually owned, how I make tradeoffs, how I work with technical content and SMEs, what tools I use, what I would improve, or where I add value beyond building the course.</p>
-          <p class="hm-chat-note"><strong>Try a stronger first question:</strong> “Why would I hire you?” or “What do you do when an SME wants everything in the course?”</p>
-        </div>
-      </article>`;
-    scrollChat();
-  };
-
-  form.addEventListener('submit', (event) => {
+  elements.form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const value = input.value.trim();
-    if (!value || state.isReplying) return;
-    askQuestion(value);
-    input.value = '';
-    input.focus();
+    const value = elements.input.value.trim();
+    if (!value) return;
+    elements.input.value = '';
+    ask(value);
   });
 
-  clearButton?.addEventListener('click', resetConversation);
+  elements.clear?.addEventListener('click', () => resetChat({ clearStoredSession: true }));
+  elements.evidenceClose?.addEventListener('click', () => closeEvidencePreview());
+  elements.evidenceOverlay?.addEventListener('click', () => closeEvidencePreview());
+  elements.evidenceChat?.addEventListener('click', () => closeEvidencePreview({ returnToChat: true }));
+  elements.evidenceOpen?.addEventListener('click', () => saveSession());
+  elements.libraryToggle?.addEventListener('click', () => {
+    const open = elements.library?.hidden !== false;
+    setLibraryOpen(open);
+  });
+  elements.libraryClose?.addEventListener('click', () => setLibraryOpen(false));
+  elements.scanButtons.forEach((button) => {
+    button.addEventListener('click', () => setScanView(button.dataset.hmScanView));
+  });
 
-  Promise.all([
-    fetch(faqUrl).then((response) => {
-      if (!response.ok) throw new Error('Hiring FAQ unavailable');
-      return response.json();
-    }),
-    fetch(expandedFaqUrl).then((response) => {
-      if (!response.ok) throw new Error('Advanced hiring FAQ unavailable');
-      return response.json();
-    }),
-    fetch(searchUrl).then((response) => {
-      if (!response.ok) throw new Error('Portfolio search unavailable');
-      return response.json();
-    }),
-    fetch(toolsUrl).then((response) => {
-      if (!response.ok) throw new Error('Hiring tools unavailable');
-      return response.json();
-    })
-  ])
-    .then(([faqData, expandedData, searchData, toolsData]) => {
-      const baseQuestions = Array.isArray(faqData.questions) ? faqData.questions : [];
-      const advancedQuestions = Array.isArray(expandedData.questions) ? expandedData.questions : [];
-      state.questions = [...baseQuestions, ...advancedQuestions];
-      state.searchEntries = Array.isArray(searchData.entries) ? searchData.entries : [];
-      state.tools = Array.isArray(toolsData.groups) ? toolsData.groups : [];
-      state.learningStatement = toolsData.learning_statement || '';
-      renderCategories();
-      renderQuestionLibrary();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && elements.evidenceDrawer?.classList.contains('open')) closeEvidencePreview();
+    else if (event.key === 'Escape' && elements.library?.hidden === false) setLibraryOpen(false);
+  });
+
+  let chatScrollTimer = null;
+  elements.chatLog.addEventListener('scroll', () => {
+    window.clearTimeout(chatScrollTimer);
+    chatScrollTimer = window.setTimeout(saveSession, 120);
+  });
+  window.addEventListener('beforeunload', saveSession);
+
+  const load = async () => {
+    try {
+      const [faq, expanded, specialist, capabilities, tools, search] = await Promise.all(
+        Object.values(urls).map((url) => fetch(url).then((response) => {
+          if (!response.ok) throw new Error(`Could not load ${url.pathname}`);
+          return response.json();
+        }))
+      );
+
+      state.questions = [
+        ...(faq.questions || []).map((item) => ({ ...item, specialist: false })),
+        ...(expanded.questions || []).map((item) => ({ ...item, specialist: false })),
+        ...(specialist.questions || []).map((item) => ({ ...item, specialist: true }))
+      ];
+      state.searchEntries = search.entries || [];
+      state.capabilities = capabilities.pillars || [];
+      state.tools = tools.groups || [];
+      state.learningStatement = tools.learning_statement || '';
+
+      if (elements.count) elements.count.textContent = state.questions.length;
+      const saved = safeSessionRead();
+      if (saved) {
+        state.chatStarted = Boolean(saved.chatStarted);
+        state.activeCapability = saved.activeCapability || null;
+        state.activeTool = saved.activeTool || null;
+        state.activeScanView = saved.activeScanView || 'capabilities';
+        state.expandedChips = saved.expandedChips || {};
+        state.lastEvidence = saved.lastEvidence || null;
+      }
+      renderLibrary();
       renderStarters();
+      renderCapabilities();
       renderTools();
-      resetConversation();
-    })
-    .catch(() => {
-      chatLog.innerHTML = `
-        <article class="hm-message hm-message-haley is-entering">
-          <div class="hm-message-label">Portfolio guide</div>
-          <div class="hm-message-bubble"><p>The interview guide could not load its public data. You can still browse the Projects page or open the résumé.</p></div>
-        </article>`;
-      form.querySelector('button[type="submit"]').disabled = true;
-      input.disabled = true;
-    });
+      setScanView(state.activeScanView || 'capabilities');
+      if (saved?.chatStarted && saved.chatHtml) {
+        elements.chatLog.innerHTML = saved.chatHtml;
+        bindQuestionButtons(elements.chatLog);
+        bindEvidenceCards(elements.chatLog);
+        requestAnimationFrame(() => { elements.chatLog.scrollTop = Number(saved.chatScrollTop || 0); });
+      } else {
+        resetChat({ clearStoredSession: false });
+      }
+      const params = new URL(window.location.href).searchParams;
+      if (params.get('resume') === '1') {
+        window.setTimeout(() => document.querySelector('#ask-haley')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }), reducedMotion ? 0 : 180);
+      }
+    } catch (error) {
+      console.error(error);
+      elements.chatLog.innerHTML = '<article class="hm-message hm-message-haley"><div class="hm-message-label">Guide unavailable</div><div class="hm-message-bubble"><p>The interview library could not load. Please use the project pages or résumé links instead.</p></div></article>';
+    }
+  };
+
+  load();
 })();

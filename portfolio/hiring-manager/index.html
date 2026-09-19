@@ -3,33 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A hiring-manager guide to Haley Reeder's instructional design, sales enablement, learning technology, accessibility, LMS, AI evaluation, multimedia, and automation experience.">
-  <title>Ask Haley | Hiring Manager Guide</title>
+  <meta name="description" content="Ask Haley is an interactive portfolio chat for hiring managers, built from curated self-written interview answers and direct portfolio evidence.">
+  <title>Ask Haley | Interactive Portfolio Chat</title>
   <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/portfolio-refresh.css">
   <link rel="stylesheet" href="../css/phase1-theme.css">
   <link rel="stylesheet" href="../css/phase1-frame.css">
   <link rel="stylesheet" href="../css/hiring-manager.css">
-  <link rel="stylesheet" href="../css/hiring-manager-v2.css">
-  <link rel="stylesheet" href="../css/hiring-manager-v3.css">
-  <link rel="stylesheet" href="../css/hiring-manager-nav.css">
-  <link rel="stylesheet" href="../css/hiring-manager-v4.css">
-  <link rel="stylesheet" href="../css/hiring-manager-v5.css">
-  <style>
-    body.hiring-manager-page .portfolio-assistant-launcher,
-    body.hiring-manager-page .portfolio-assistant-panel { display: none !important; }
-    .hm-hero-grid { column-gap: clamp(28px, 6vw, 70px); row-gap: 18px; }
-    .hm-hero-grid > .breadcrumbs { grid-column: 1 / -1; }
-  </style>
   <script defer src="../js/portfolio-motion.js"></script>
   <script defer src="../js/hiring-manager.js"></script>
-  <script defer src="../js/hiring-manager-v3.js"></script>
-  <script defer src="../js/hiring-manager-v4.js"></script>
-  <script defer src="../js/hiring-manager-v5.js"></script>
 </head>
 <body class="hiring-manager-page">
   <header class="site-header">
@@ -45,176 +31,145 @@
   </header>
 
   <main>
-    <section class="page-hero hm-hero">
-      <div class="container hm-hero-grid">
+    <section class="hm-hero">
+      <div class="container hm-hero-layout">
         <div class="hm-hero-copy">
-          <div class="hm-hero-kicker"><span class="hm-live-dot" aria-hidden="true"></span><span>Interactive hiring guide</span></div>
-          <h1>Ask Haley the questions you would ask in the interview.</h1>
-          <p class="body-large">Skip the generic portfolio tour. Ask about instructional design decisions, technical sales training, learning architecture, tools, LMS administration, accessibility, AI, data, automation, collaboration, or how I handle the messy parts of real projects.</p>
-          <div class="hm-hero-tags" aria-label="Topics this guide can answer">
-            <span class="hm-hero-tag">Instructional Design</span>
-            <span class="hm-hero-tag">Sales Enablement</span>
-            <span class="hm-hero-tag">Learning Architecture</span>
-            <span class="hm-hero-tag">Accessibility + UX</span>
-            <span class="hm-hero-tag">Learning Technology</span>
-            <span class="hm-hero-tag">AI + Automation</span>
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a><span class="breadcrumb-separator" aria-hidden="true">/</span><span aria-current="page">Ask Haley</span>
+          </nav>
+          <div class="hm-kicker"><span aria-hidden="true"></span> Interactive portfolio chat</div>
+          <h1>Ask me what you would ask in the interview.</h1>
+          <p class="hm-hero-lede">Get past the portfolio thumbnails and into how I actually think, build, collaborate, troubleshoot, and improve learning systems.</p>
+          <div class="hm-hero-actions">
+            <a class="btn btn-primary" href="#ask-haley">Ask Haley</a>
+            <a class="btn btn-secondary" href="#quick-scan">Quick skills scan</a>
+          </div>
+          <div class="hm-hero-proof" aria-label="How Ask Haley works">
+            <span><strong data-hm-question-count>Curated</strong> interview answers</span>
+            <span><strong>Direct</strong> portfolio evidence</span>
+            <span><strong>No</strong> live AI generation</span>
           </div>
         </div>
 
-        <aside class="hm-signal-board" aria-label="Connected capability map">
-          <div class="hm-orbit" aria-hidden="true"></div>
-          <div class="hm-signal-core"><div><strong>Haley</strong><span>Learning Designer</span></div></div>
-          <span class="hm-signal-node hm-node-design">Design</span>
-          <span class="hm-signal-node hm-node-build">Build</span>
-          <span class="hm-signal-node hm-node-operate">Operate</span>
-          <span class="hm-signal-node hm-node-automate">Automate</span>
-        </aside>
+        <div class="hm-transfer-scene" aria-label="A hiring manager question moving through Haley's curated answer and evidence system">
+          <div class="hm-participant-card hm-participant-manager">
+            <span class="hm-participant-icon"><img src="../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span>
+            <div><strong>Hiring manager</strong><span>asks a real interview question</span></div>
+          </div>
+
+          <div class="hm-transfer-lane" aria-hidden="true">
+            <div class="hm-transfer-direction hm-direction-question"><span>Question</span><i>→</i></div>
+            <div class="hm-transfer-track hm-transfer-question">
+              <span class="hm-transfer-line"></span>
+              <span class="hm-transfer-packet hm-question-packet"><img src="../assets/icons/pixel/hiring-guide/qa-bubbles.webp" alt=""></span>
+            </div>
+            <div class="hm-transfer-track hm-transfer-return">
+              <span class="hm-transfer-line"></span>
+              <span class="hm-transfer-packet hm-answer-packet"><img src="../assets/icons/pixel/hiring-guide/checklist-document.webp" alt=""></span>
+              <span class="hm-transfer-packet hm-proof-packet"><img src="../assets/icons/pixel/hiring-guide/document-star.webp" alt=""></span>
+            </div>
+            <div class="hm-transfer-direction hm-direction-return"><i>←</i><span>Answer + proof</span></div>
+          </div>
+
+          <div class="hm-participant-card hm-participant-haley">
+            <span class="hm-participant-icon"><img src="../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span>
+            <div><strong>Haley</strong><span>routes to a reviewed personal answer</span></div>
+          </div>
+
+          <div class="hm-transfer-caption">
+            <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""></span>
+            <p><strong>Question → curated answer → portfolio evidence.</strong><br>The interaction is dynamic. The claims stay grounded in material I wrote and reviewed.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="hm-explore-nav-wrap">
+    <section class="hm-evaluate-section" aria-labelledby="hmEvaluateTitle">
       <div class="container">
-        <nav class="hm-explore-nav" aria-label="Explore the hiring guide">
-          <span class="hm-explore-label">Explore this guide</span>
-          <details class="hm-helper hm-helper-page">
-            <summary aria-label="How to use this page">?</summary>
-            <div class="hm-helper-card">
-              <strong>Use this page however you want.</strong>
-              <p>Browse my capabilities and tools for a quick overview, explore interview topics for suggested questions, or jump straight into Ask Haley and type anything. Nothing you click limits what the chat can answer.</p>
-            </div>
-          </details>
-          <a href="#skills">Capabilities + Tools</a>
-          <a href="#chat">Ask Haley</a>
-          <a href="#deep-dive">Deep Dive</a>
-        </nav>
-      </div>
-    </div>
-
-    <section class="hm-expertise-section" id="skills">
-      <div class="container">
-        <div class="hm-expertise-heading">
+        <div class="hm-compact-heading">
           <div>
-            <div class="hm-heading-with-help">
-              <p class="eyebrow">Capabilities + Tools</p>
-              <details class="hm-helper">
-                <summary aria-label="About capabilities and tools">?</summary>
-                <div class="hm-helper-card">
-                  <strong>A quick skills overview.</strong>
-                  <p>Use the switch below to move between the way I think and work as an instructional designer and the tools, platforms, standards, and technical workflows I use to build and operate learning.</p>
-                </div>
-              </details>
-            </div>
-            <h2>See the thinking and the toolkit in one place.</h2>
+            <p class="eyebrow">What this chat helps you evaluate</p>
+            <h2 id="hmEvaluateTitle">A faster read on how I would actually work on your team.</h2>
           </div>
-          <p>This is the fastest way to scan my breadth before asking questions. It is an overview only; the interview guide still has access to the full knowledge base.</p>
+          <aside class="hm-chatbot-note">
+            <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/browser-conversation.webp" alt=""></span>
+            <div>
+              <span class="hm-chatbot-note-label">How this works</span>
+              <p><strong>This is a chatbot demo, but there is no AI model behind it.</strong> It routes questions to a prebuilt answer library I wrote and continuously update, then connects the answer to relevant portfolio evidence.</p>
+            </div>
+          </aside>
         </div>
 
-        <div class="hm-expertise-switch" role="tablist" aria-label="Capabilities and tools view">
-          <button type="button" class="active" role="tab" aria-selected="true" data-hm-expertise-view="capabilities">Capability Overview</button>
-          <button type="button" role="tab" aria-selected="false" data-hm-expertise-view="tools">Tools + Tech</button>
-        </div>
-
-        <div class="hm-expertise-stage">
-          <div class="hm-expertise-panel active" data-hm-expertise-panel="capabilities">
-            <div class="hm-capability-shell">
-              <div class="hm-capability-tabs" data-hm-capability-tabs role="tablist" aria-label="Capability overview areas"></div>
-              <div class="hm-capability-panel" data-hm-capability-panel role="tabpanel" aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="hm-expertise-panel" data-hm-expertise-panel="tools" hidden>
-            <div class="hm-tool-lab">
-              <div class="hm-tool-tabs" data-hm-tool-tabs role="tablist" aria-label="Tool capability areas"></div>
-              <div class="hm-tool-panel" data-hm-tool-panel role="tabpanel" aria-live="polite"></div>
-            </div>
-            <div class="hm-learning-statement" data-hm-learning-statement>
-              <svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg>
-              <p>Loading tool approach…</p>
-            </div>
-          </div>
+        <div class="hm-evaluate-track">
+          <article class="hm-evaluate-card">
+            <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/idea-bulb.webp" alt=""></span>
+            <div><strong>How I think</strong><p>Tradeoffs, audience choices, design decisions, reflection, and what I would change next time.</p></div>
+          </article>
+          <span class="hm-evaluate-connector" aria-hidden="true"></span>
+          <article class="hm-evaluate-card">
+            <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/checklist-clipboard.webp" alt=""></span>
+            <div><strong>What I can own</strong><p>Learning design, sales enablement, LMS operations, facilitation, multimedia, AI evaluation, and workflow improvement.</p></div>
+          </article>
+          <span class="hm-evaluate-connector" aria-hidden="true"></span>
+          <article class="hm-evaluate-card">
+            <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/document-star.webp" alt=""></span>
+            <div><strong>Where the proof is</strong><p>Supported answers link directly to public work so you can inspect the example instead of taking the claim on faith.</p></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <div class="hm-flow-strip hm-chat-instructions">
+    <section class="hm-conversation-section" id="ask-haley">
       <div class="container">
-        <div class="hm-flow-heading">
-          <div class="hm-heading-with-help">
-            <p class="eyebrow">How to use Ask Haley</p>
-            <details class="hm-helper">
-              <summary aria-label="About Ask Haley">?</summary>
-              <div class="hm-helper-card">
-                <strong>A guided interview, not a locked mode.</strong>
-                <p>Type your own question, click a suggested prompt, or browse the Question Library. The assistant searches the same full curated knowledge base either way and links answers back to supporting portfolio work.</p>
-              </div>
-            </details>
-          </div>
-          <h2>Ask what you would actually ask in the interview.</h2>
-        </div>
-        <div class="hm-flow-card" aria-label="How to use the hiring guide chat">
-          <div class="hm-flow-step"><span class="hm-flow-number">01</span><div><strong>Ask anything</strong><span>Type a question or browse the Question Library. No setup or mode selection required.</span></div></div>
-          <div class="hm-flow-step"><span class="hm-flow-number">02</span><div><strong>Use a suggestion if you want</strong><span>Prompt buttons are simply shortcuts when you want ideas or a faster overview.</span></div></div>
-          <div class="hm-flow-step"><span class="hm-flow-number">03</span><div><strong>Check the evidence</strong><span>Answers connect back to public work instead of floating claims.</span></div></div>
-        </div>
-      </div>
-    </div>
-
-    <section class="hm-main" id="chat">
-      <div class="container hm-shell">
-        <aside class="hm-library" aria-label="Interview question library">
-          <div class="hm-library-header">
-            <div class="hm-library-header-grid">
-              <div class="hm-library-heading-copy">
-                <p class="eyebrow">Question Library</p>
-                <h2>What would you want to know?</h2>
-                <p>Pick a topic for a few relevant prompts, or skip the browser and type directly into the chat.</p>
-              </div>
-              <div class="hm-library-notes" aria-label="About the Question Library">
-                <p><strong>Browse instead of typing.</strong><br>Pick a topic to open a focused set of interview questions. Topics organize suggestions only; they never restrict what Ask Haley knows.</p>
-                <p><strong>Curated answers, not live AI generation.</strong><br>I wrote and reviewed the answers in this portfolio library myself. Ask Haley matches your question to those stored responses and supporting evidence; it does not generate a brand-new AI answer in the moment.</p>
-              </div>
-            </div>
-          </div>
-          <div class="hm-categories" data-hm-categories aria-label="Filter visible interview questions"></div>
-          <div class="hm-question-list" data-hm-question-list></div>
-          <div class="hm-specialist-drawer" id="deep-dive">
-            <div class="hm-specialist-head">
-              <div class="hm-heading-with-help">
-                <span>Deep Dive</span>
-                <details class="hm-helper hm-helper-dark">
-                  <summary aria-label="About Deep Dive questions">?</summary>
-                  <div class="hm-helper-card">
-                    <strong>For the technical or senior-level follow-up.</strong>
-                    <p>These prompts focus on learning architecture, accessibility, enterprise systems, xAPI, UX, AI, HPI, and other specialist topics. They use the same chat and do not create a separate mode.</p>
-                  </div>
-                </details>
-              </div>
-              <strong>Specialist questions</strong>
-              <p>Learning architecture, accessibility, enterprise systems, xAPI, UX, AI, and HPI.</p>
-            </div>
-            <div class="hm-specialist-list" data-hm-specialist-list></div>
-          </div>
-        </aside>
-
-        <section class="hm-chat-panel" aria-labelledby="hmChatTitle">
-          <div class="hm-chat-header">
+        <div class="hm-chat-shell">
+          <header class="hm-chat-header">
             <div class="hm-chat-identity">
-              <span class="hm-avatar" aria-hidden="true"><svg class="portfolio-icon"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
+              <span class="hm-avatar" aria-hidden="true">
+                <img src="../assets/icons/pixel/hiring-guide/person-woman.webp" alt="">
+              </span>
               <div>
-                <strong id="hmChatTitle">Portfolio Haley</strong>
-                <span>Curated answers + direct portfolio evidence</span>
-                <span class="hm-chat-status">Full knowledge base available at all times</span>
+                <span class="hm-chat-kicker">Interactive portfolio chat</span>
+                <strong>Ask Haley</strong>
+                <span>Curated, self-written interview answers with portfolio evidence.</span>
               </div>
             </div>
-            <div class="hm-chat-actions">
-              <span class="hm-interview-badge"><i aria-hidden="true"></i> Interview mode</span>
-              <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
+
+            <div class="hm-chat-explainer">
+              <p><strong>Ask your own question, use a quick starter, or browse the Question Library.</strong> Every path searches the same prebuilt answer library I wrote and continuously update.</p>
+              <span class="hm-not-ai"><i aria-hidden="true"></i> Not AI, just pre-built me</span>
+            </div>
+
+            <button class="hm-clear" type="button" data-hm-clear>Clear chat</button>
+          </header>
+
+          <div class="hm-chat-tools">
+            <button class="hm-library-toggle" type="button" data-hm-library-toggle aria-expanded="false" aria-controls="hmQuestionLibrary">
+              <span class="hm-icon-bubble hm-tool-icon"><img src="../assets/icons/pixel/hiring-guide/qa-bubbles.webp" alt=""></span>
+              <span><strong>Browse Question Library</strong><small data-hm-library-summary>Loading interview topics…</small></span>
+              <span class="hm-chevron" aria-hidden="true">⌄</span>
+            </button>
+          </div>
+
+          <div class="hm-library-drawer" id="hmQuestionLibrary" data-hm-library hidden>
+            <div class="hm-library-intro">
+              <div>
+                <p class="eyebrow">Question Library</p>
+                <h3>Browse by interview topic.</h3>
+                <p>Choose a topic on the left, then scroll the question list and send any prompt directly into the conversation.</p>
+              </div>
+              <button type="button" class="hm-library-close" data-hm-library-close aria-label="Close Question Library">×</button>
+            </div>
+            <div class="hm-library-workspace">
+              <div class="hm-topic-list" data-hm-topic-list aria-label="Interview question topics"></div>
+              <div class="hm-prompt-panel" data-hm-prompt-panel aria-live="polite"></div>
             </div>
           </div>
 
-          <div class="hm-starter-wrap hm-suggestion-wrap">
-            <p class="hm-starter-label">Suggested questions</p>
-            <p class="hm-suggestion-note">Use these if you want a quick starting point, or ignore them and type anything below.</p>
+          <div class="hm-starter-wrap">
+            <div class="hm-starter-heading">
+              <span>Quick starters</span>
+              <small>Good places to begin if you only have a few minutes.</small>
+            </div>
             <div class="hm-starters" data-hm-starters></div>
           </div>
 
@@ -224,17 +179,113 @@
             <form class="hm-form" data-hm-form>
               <label class="sr-only" for="hiringQuestion">Ask a question about Haley's experience</label>
               <div class="hm-input-shell">
-                <span class="hm-input-icon" aria-hidden="true">↗</span>
-                <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Ask about a project, tradeoff, tool, system, theory, or working style…">
+                <span class="hm-icon-bubble hm-input-icon"><img src="../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt="" aria-hidden="true"></span>
+                <input class="hm-input" id="hiringQuestion" data-hm-input type="text" autocomplete="off" placeholder="Ask about a project, tradeoff, tool, system, working style, or decision…">
               </div>
               <button class="hm-submit" type="submit">Ask Haley</button>
             </form>
-            <p class="hm-disclosure">Suggested prompts and Question Library topics only organize what you see. Every free-text question can search the full curated knowledge base.</p>
+            <p class="hm-disclosure">I wrote and reviewed the answer library myself. Ask Haley matches your question to those stored responses and public evidence instead of generating a new claim about my experience.</p>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="hm-quick-scan" id="quick-scan">
+      <div class="container">
+        <div class="hm-compact-heading hm-compact-heading-dark">
+          <div>
+            <p class="eyebrow">Hiring manager quick scan</p>
+            <h2>What I bring to the work.</h2>
+          </div>
+          <p>Use this for breadth before depth. Scan what I can contribute or own, then ask Haley above for the examples, decisions, and proof behind any area.</p>
+        </div>
+
+        <div class="hm-scan-switch" role="tablist" aria-label="What Haley brings and tools">
+          <button type="button" class="active" role="tab" aria-selected="true" data-hm-scan-view="capabilities">What I bring</button>
+          <button type="button" role="tab" aria-selected="false" data-hm-scan-view="tools">Tools + Tech</button>
+        </div>
+
+        <div class="hm-scan-panel active" data-hm-scan-panel="capabilities">
+          <div class="hm-capability-layout">
+            <div class="hm-capability-tabs" data-hm-capability-tabs role="tablist" aria-label="Capability areas"></div>
+            <article class="hm-capability-detail" data-hm-capability-detail role="tabpanel" aria-live="polite"></article>
+          </div>
+        </div>
+
+        <div class="hm-scan-panel" data-hm-scan-panel="tools" hidden>
+          <div class="hm-tool-layout">
+            <div class="hm-tool-tabs" data-hm-tool-tabs role="tablist" aria-label="Tool and technology areas"></div>
+            <article class="hm-tool-detail" data-hm-tool-detail role="tabpanel" aria-live="polite"></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hm-next-section">
+      <div class="container">
+        <div class="hm-next-shell">
+          <div class="hm-next-copy">
+            <p class="eyebrow">Go deeper</p>
+            <h2>Want the work behind the answers?</h2>
+            <p>Jump into the full case studies, scan the résumé, or start a conversation.</p>
+          </div>
+          <div class="hm-next-grid">
+            <a class="hm-next-card" href="../projects/index.html">
+              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/folder-cursor.webp" alt=""></span>
+              <span><strong>Browse Projects</strong><small>Case studies, demos, systems, and learning work</small></span>
+              <i aria-hidden="true">→</i>
+            </a>
+            <a class="hm-next-card" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">
+              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/document-star.webp" alt=""></span>
+              <span><strong>Open Résumé</strong><small>The faster career overview</small></span>
+              <i aria-hidden="true">→</i>
+            </a>
+            <a class="hm-next-card" href="../contact/index.html">
+              <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/handshake.webp" alt=""></span>
+              <span><strong>Contact Haley</strong><small>Continue the conversation</small></span>
+              <i aria-hidden="true">→</i>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
+
+  <div class="hm-evidence-overlay" data-hm-evidence-overlay hidden></div>
+  <aside class="hm-evidence-drawer" data-hm-evidence-drawer aria-hidden="true" aria-labelledby="hmEvidenceTitle">
+    <header class="hm-evidence-drawer-header">
+      <div>
+        <p class="eyebrow">Portfolio evidence preview</p>
+        <h2 id="hmEvidenceTitle" data-hm-evidence-title>Project preview</h2>
+      </div>
+      <button type="button" class="hm-evidence-drawer-close" data-hm-evidence-close aria-label="Close project preview">×</button>
+    </header>
+    <div class="hm-evidence-preview-visual" data-hm-evidence-visual>
+      <div class="hm-evidence-preview-placeholder">
+        <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/reference-search.webp" alt=""></span>
+        <span>Loading project preview…</span>
+      </div>
+    </div>
+    <div class="hm-evidence-drawer-body">
+      <span class="hm-evidence-type" data-hm-evidence-type>Portfolio project</span>
+      <section>
+        <h3>What this project is</h3>
+        <p data-hm-evidence-summary>Loading the public project summary…</p>
+      </section>
+      <section>
+        <h3>Why this supports the answer</h3>
+        <p data-hm-evidence-note></p>
+      </section>
+      <div class="hm-evidence-drawer-actions">
+        <a class="btn btn-primary" data-hm-evidence-open href="../projects/index.html">Open full project</a>
+        <button class="btn btn-secondary" type="button" data-hm-evidence-chat>Back to chat</button>
+      </div>
+      <div class="hm-evidence-companion-slot" data-hm-mascot-slot>
+        <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span>
+        <p><strong>Hiring-manager companion slot</strong><span>Your custom mascot can drop in here next.</span></p>
+      </div>
+    </div>
+  </aside>
 
   <footer class="site-footer">
     <div class="container footer-grid">
