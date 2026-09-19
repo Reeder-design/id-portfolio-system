@@ -88,6 +88,7 @@ def main() -> int:
     require("does not inject markup" in template_text, "Registry UI must not imply metadata auto-injects custom-page markup.", errors)
     require("component_refs_present" in editor_text, "Project editor must support intentionally clearing recorded component refs.", errors)
     require("Detected automatically" in editor_text, "Project editor must distinguish inferred component usage.", errors)
+    require('{% if component.selected %}<input type="hidden" name="component_refs" value="{{ component.id }}">{% endif %}' in editor_text, "Explicit refs must survive when the same component is also inferred.", errors)
     require('"component_refs"' in schema_text, "Project schema must allow component_refs.", errors)
     require("COMPONENT_REGISTRY_PATH" in content_text and "unknown component reference" in content_text, "Structured-content validation must reject unknown component refs.", errors)
     require("REUSABLE COMPONENT REGISTRY" in create_service_text, "Create Content planning prompt must include the reusable component registry.", errors)
