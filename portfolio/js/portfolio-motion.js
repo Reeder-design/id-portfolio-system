@@ -95,7 +95,8 @@
       'projects/instructional-design/microlearning-performance-support/microlearning',
       'projects/instructional-design/microlearning-performance-support/performance-support',
       'projects/instructional-design/interactive-learning/ai-integrations-in-learning',
-      'projects/instructional-design/multimedia'
+      'projects/instructional-design/multimedia',
+      'projects/lms-administration/system-integrations'
     ]);
     const demos = new Set([
       'projects/instructional-design/interactive-learning/meddpicc-practice',
@@ -310,8 +311,9 @@
     ['projects/instructional-design/interactive-learning/ai-integrations-in-learning', 'Learner-facing AI'],
     ['projects/instructional-design/multimedia', 'Multimedia'],
     ['projects/ai-training-and-evaluation', 'AI Training & Evaluation'],
-    ['projects/lms-administration', 'LMS Administration & System Operations'],
-    ['projects/workflows', 'Systems & Workflows']
+    ['projects/lms-administration', 'LMS Administration'],
+    ['projects/lms-administration/system-integrations', 'System Integrations'],
+    ['projects/workflows', 'Workflows']
   ];
 
   const initCanonicalBreadcrumbs = () => {
