@@ -496,6 +496,30 @@
     @media(max-width:900px){.med-primer-letters{overflow-x:auto;grid-template-columns:repeat(8,minmax(88px,1fr))!important;padding-bottom:12px}.demo-use-card{grid-template-columns:60px 1fr}.demo-use-steps{grid-column:1/-1;justify-content:flex-start;max-width:none}}
     @media(max-width:560px){.med-primer-detail{grid-template-columns:1fr!important;height:auto!important;max-height:none!important}.med-primer-copy{height:auto!important;max-height:none!important}.demo-use-card{grid-template-columns:1fr}.demo-use-icon{width:58px;height:58px}.demo-use-steps{display:grid;grid-template-columns:1fr}}
 
+
+    /* Keep the three How to Use the Demo steps aligned as one vertical stack. */
+    .demo-use-steps{
+      display:grid!important;
+      grid-template-columns:1fr!important;
+      gap:7px!important;
+      justify-self:end;
+      align-self:center;
+      width:220px;
+      max-width:100%;
+    }
+    .demo-use-steps span{
+      width:100%;
+      justify-content:flex-start!important;
+    }
+    @media(max-width:900px){
+      .demo-use-steps{
+        grid-column:1/-1;
+        justify-self:start;
+        width:min(260px,100%);
+        max-width:100%!important;
+      }
+    }
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
