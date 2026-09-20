@@ -1,63 +1,73 @@
-(() => {
-  const signalFlows = {
-    unsupported: {
-      steps: [['Model output', '99.9%'], ['Issue noticed', 'Source?'], ['Evidence check', 'No match'], ['Classification', 'Major']]
-    },
-    instruction: {
-      steps: [['Model output', '2 of 4'], ['Issue noticed', 'Missing'], ['Evidence check', 'Requirements'], ['Classification', 'Miss']]
-    },
-    slop: {
-      steps: [['Model output', 'Generic'], ['Issue noticed', 'Filler'], ['Evidence check', 'Purpose'], ['Classification', 'Style']]
-    },
-    wordy: {
-      steps: [['Model output', '24 lines'], ['Issue noticed', 'Repeated'], ['Evidence check', 'Trim test'], ['Classification', 'Wordy']]
-    },
-    slogan: {
-      steps: [['Model output', '“#1”'], ['Issue noticed', 'Proof?'], ['Evidence check', 'Limited fit'], ['Classification', 'Overclaim']]
-    },
-    logic: {
-      steps: [['Model output', 'A → C'], ['Issue noticed', 'B missing'], ['Evidence check', 'Trace'], ['Classification', 'Logic gap']]
-    }
-  };
+(()=>{'use strict';
+const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
+const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+const setActive=(buttons,active)=>buttons.forEach(btn=>{const on=btn===active;btn.classList.toggle('active',on);btn.setAttribute('aria-selected',String(on));btn.tabIndex=on?0:-1;});
+const keyboardTabs=(buttons,activate)=>buttons.forEach((btn,i)=>btn.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key))return;e.preventDefault();let n=i;if(e.key==='Home')n=0;else if(e.key==='End')n=buttons.length-1;else if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%buttons.length;else n=(i-1+buttons.length)%buttons.length;buttons[n].focus();activate(buttons[n]);}));
+const baseLanding='../../assets/icons/pixel/';
+const baseDemo='../../../assets/icons/pixel/';
 
-  const signalDetail = document.querySelector('.ai-suite-landing .signal-detail');
-  if (signalDetail) {
-    const icon = signalDetail.querySelector('.signal-icon');
-    const content = signalDetail.querySelector(':scope > div');
-    const motion = document.createElement('div');
-    motion.className = 'signal-motion';
-    motion.setAttribute('aria-live', 'polite');
-    content.appendChild(motion);
-    icon.hidden = true;
+const lensData={
+ instruction:{label:'Instruction Following',title:'Did the output actually complete the assigned job?',text:'I check required elements, prohibited content, requested format, audience, and explicit constraints before I judge polish.',checks:['Required elements are present','Constraints were followed','The response solves the requested task'],image:'ai-training-evaluation/quality-evaluate.webp',visual:'Task → output alignment'},
+ grounding:{label:'Source Grounding',title:'Can important claims be traced to approved evidence?',text:'I separate supported claims from plausible invention, exaggeration, unsupported synthesis, and missing evidence.',checks:['Claims map to the source','No unsupported additions','Evidence is represented accurately'],image:'ai-training-evaluation/quality-curate-data.webp',visual:'Source → claim traceability'},
+ logic:{label:'Accuracy + Logic',title:'Do the conclusions actually follow from the evidence?',text:'I check factual correctness, internal consistency, reasoning steps, hidden assumptions, and contradictions across the response.',checks:['Facts are correct','Reasoning is consistent','Conclusions are supported'],image:'ai-training-evaluation/quality-review.webp',visual:'Evidence → reasoning → conclusion'},
+ writing:{label:'Writing Quality',title:'Is the language clear, natural, and proportionate to the task?',text:'I flag repetition, filler, formulaic AI phrasing, inflated claims, slogans, weak transitions, and unnecessary length.',checks:['Meaning is easy to find','Tone fits the audience','No filler or formulaic phrasing'],image:'ai-training-evaluation/quality-refine.webp',visual:'Draft → edit → clarity'},
+ audience:{label:'Audience Usefulness',title:'Can the intended user act on the answer correctly?',text:'I evaluate whether the answer is usable for the actual reader, includes the right context, and avoids language that could mislead or overstate certainty.',checks:['Context is sufficient','Action is clear','Confidence matches the evidence'],image:'ai-training-evaluation/quality-ensure.webp',visual:'Reader → decision → action'}
+};
+const lensButtons=qa('[data-ai-lens]');
+const renderLens=btn=>{const d=lensData[btn.dataset.aiLens];if(!d)return;setActive(lensButtons,btn);set('aiLensLabel',d.label);set('aiLensTitle',d.title);set('aiLensText',d.text);const checks=q('#aiLensChecks');if(checks)checks.replaceChildren(...d.checks.map(v=>{const s=document.createElement('span');s.textContent=v;return s;}));const img=q('#aiLensImage');if(img){img.src=baseLanding+d.image;img.alt='';}set('aiLensVisual',d.visual);};
+lensButtons.forEach(b=>b.addEventListener('click',()=>renderLens(b)));keyboardTabs(lensButtons,renderLens);if(lensButtons[0])renderLens(lensButtons[0]);
 
-    const renderFlow = (key) => {
-      const data = signalFlows[key];
-      if (!data) return;
-      motion.className = 'signal-motion';
-      motion.innerHTML = data.steps.map((step, index) => `<div class="signal-motion-step signal-motion-step-${index + 1}"><span>${step[0]}</span><strong>${step[1]}</strong><i aria-hidden="true"></i></div>`).join('');
-      requestAnimationFrame(() => motion.classList.add('is-running'));
-      signalDetail.dataset.signal = key;
-    };
-    document.querySelectorAll('[data-signal]').forEach((button) => button.addEventListener('click', () => renderFlow(button.dataset.signal)));
-    renderFlow('unsupported');
+const signalData={
+ unsupported:{label:'Grounding',title:'Unsupported claim',text:'The answer introduces a claim that sounds plausible but is not supported by the approved source.',motion:[['ai-evaluation/demo-search.webp','Trace claim'],['ai-training-evaluation/quality-curate-data.webp','Check source'],['ai-evaluation/demo-feedback.webp','Flag gap']],response:'Mark the unsupported claim, cite the missing evidence, and distinguish the problem from stylistic preference.'},
+ instruction:{label:'Instruction Following',title:'Instruction miss',text:'The response may be polished and still fail because a required element, format, audience constraint, or explicit direction was missed.',motion:[['ai-training-evaluation/quality-evaluate.webp','Read task'],['ai-evaluation/workflow-checklist.webp','Check requirement'],['ai-training-evaluation/quality-feedback.webp','Name miss']],response:'Tie the feedback directly to the instruction that was missed and explain the consequence for the task.'},
+ slop:{label:'Writing Quality',title:'Formulaic / AI-like phrasing',text:'Generic framing, empty transitions, repeated conclusions, or inflated language can make the response less natural and less useful.',motion:[['ai-evaluation/demo-document-chat.webp','Read draft'],['ai-training-evaluation/quality-review.webp','Spot pattern'],['ai-training-evaluation/quality-refine.webp','Tighten']],response:'Identify the pattern, not just that it “sounds AI,” and show what would make the language clearer or more specific.'},
+ wordy:{label:'Writing Quality',title:'Excessive wording',text:'Extra setup and repetition become a quality issue when they bury the answer or add effort without adding meaning.',motion:[['ai-evaluation/demo-document-chat.webp','Find answer'],['ai-training-evaluation/quality-review.webp','Find repetition'],['ai-training-evaluation/quality-refine.webp','Compress']],response:'Preserve useful context while removing repeated setup, redundant conclusions, and low-value explanation.'},
+ slogan:{label:'Grounding + Tone',title:'Slogan-like phrasing',text:'Catchy claims can sound confident while outrunning the evidence, requested tone, or level of certainty the source supports.',motion:[['ai-training-evaluation/quality-review.webp','Inspect claim'],['ai-evaluation/demo-search.webp','Check evidence'],['ai-training-evaluation/quality-ensure.webp','Calibrate']],response:'Replace promotional certainty with language that reflects the actual evidence and audience need.'},
+ logic:{label:'Accuracy + Logic',title:'Logic gap',text:'Correct facts can still be connected incorrectly when the response skips a condition, overgeneralizes, or contradicts itself.',motion:[['ai-evaluation/demo-compare-ab.webp','Compare facts'],['ai-training-evaluation/quality-review.webp','Trace reasoning'],['ai-evaluation/demo-feedback.webp','Flag gap']],response:'Point to the exact reasoning break and explain what evidence or condition is missing.'}
+};
+const signalButtons=qa('[data-quality-signal]');
+const renderSignal=btn=>{const d=signalData[btn.dataset.qualitySignal];if(!d)return;setActive(signalButtons,btn);set('qualitySignalLabel',d.label);set('qualitySignalTitle',d.title);set('qualitySignalText',d.text);set('qualitySignalResponse',d.response);d.motion.forEach(([file,label],i)=>{const key=['A','B','C'][i],img=q('#qualityMotion'+key),lab=q('#qualityMotionLabel'+key);if(img){img.src=baseLanding+file;img.alt='';}if(lab)lab.textContent=label;});};
+signalButtons.forEach(b=>b.addEventListener('click',()=>renderSignal(b)));keyboardTabs(signalButtons,renderSignal);if(signalButtons[0])renderSignal(signalButtons[0]);
 
-    const spotlightGrid = document.querySelector('.ai-demo-grid');
-    const spotlightHeading = spotlightGrid?.previousElementSibling;
-    if (spotlightHeading) {
-      spotlightHeading.querySelector('.eyebrow').textContent = 'Spotlight Projects';
-      spotlightHeading.querySelector('h2').textContent = 'Three evaluation workspaces, each built around a different judgment.';
-      spotlightHeading.querySelector('p:last-child').textContent = 'Practice issue detection, apply a criterion-based rubric, or follow the full evidence-to-feedback workflow.';
-    }
+const evalScenarios={
+ partner:{name:'Partner sales summary',task:'Write a concise partner-facing summary of the Atlas XR500. Use only the approved brief. Explain the use case, two supported capabilities, and one limitation. Do not add pricing or performance claims.',source:'Approved brief: Atlas XR500 is a fictional edge gateway for distributed sites. It supports managed failover and centralized policy updates. The brief does not provide throughput benchmarks, pricing, deployment-time guarantees, or claims that it eliminates downtime.',output:'Atlas XR500 gives distributed teams always-on connectivity with industry-leading performance. It automatically prevents downtime, deploys in minutes, and reduces networking costs. Partners can position it as a simple way to centralize policy and use managed failover across branch locations.',benchmark:'Critical',feedback:'The draft invents performance, deployment, cost, and “prevents downtime” claims that are not supported by the source. The supported value is managed failover and centralized policy—not guaranteed outcomes.',image:'nexusai-evaluate-response.webp'},
+ pilot:{name:'Internal pilot recap',task:'Summarize the fictional pilot notes for an internal project team. Separate observed results from open questions and keep the recap under 140 words.',source:'Pilot notes: 18 reviewers completed the task. Most completed the workflow without help. Three reviewers misunderstood the final instruction. Two reviewers reported that the results screen needed clearer next steps. No production metrics were collected.',output:'The pilot was successful and confirmed that the workflow is ready for broad release. Reviewers completed the task without support, and the results screen performed well. The next step is deployment.',benchmark:'Major',feedback:'The summary overstates readiness and erases the observed friction. It should separate the generally positive completion pattern from instruction confusion, results-screen feedback, and the absence of production metrics.',image:'nexusai-compare-responses.webp'},
+ followup:{name:'Customer follow-up',task:'Draft a short follow-up note after a fictional discovery call. Reflect only the needs in the notes and propose a next conversation. Avoid promising a solution fit.',source:'Discovery notes: the operations team loses time during site handoffs, local troubleshooting varies by location, and the customer wants more consistent visibility. Technical requirements and procurement timing have not been confirmed.',output:'Thanks for the conversation. Based on what we heard, our platform will solve the handoff delays and standardize troubleshooting across every site. I would like to schedule a technical session to confirm requirements and discuss the right next step.',benchmark:'Major',feedback:'The response jumps from discovery evidence to a solution guarantee. A stronger follow-up would restate the observed problems, acknowledge that fit still needs validation, and use the technical session to test requirements.',image:'nexusai-submission-confirmation.webp'}
+};
+let currentScenario='partner',currentPacket='task',currentSeverity='';
+const scenarioButtons=qa('[data-eval-scenario]'),packetButtons=qa('[data-packet-tab]'),severityButtons=qa('[data-severity]');
+const renderScenario=btn=>{currentScenario=btn.dataset.evalScenario;setActive(scenarioButtons,btn);const d=evalScenarios[currentScenario];set('evalScenarioName',d.name);const img=q('#evalScenarioImage');if(img){img.src='../../../assets/project-images/ai-training-and-evaluation/'+d.image;img.alt='Public-safe evaluation interface preview.';}renderPacket(packetButtons.find(b=>b.dataset.packetTab===currentPacket)||packetButtons[0]);q('#evalBenchmarkResult')?.replaceChildren();currentSeverity='';severityButtons.forEach(b=>b.classList.remove('active'));};
+const renderPacket=btn=>{if(!btn)return;currentPacket=btn.dataset.packetTab;setActive(packetButtons,btn);const d=evalScenarios[currentScenario];set('evalPacketLabel',currentPacket==='task'?'Task':currentPacket==='source'?'Approved source':'Model output');set('evalPacketTitle',d.name);set('evalPacketText',d[currentPacket]);};
+scenarioButtons.forEach(b=>b.addEventListener('click',()=>renderScenario(b)));keyboardTabs(scenarioButtons,renderScenario);
+packetButtons.forEach(b=>b.addEventListener('click',()=>renderPacket(b)));keyboardTabs(packetButtons,renderPacket);
+severityButtons.forEach(b=>b.addEventListener('click',()=>{severityButtons.forEach(x=>x.classList.toggle('active',x===b));currentSeverity=b.dataset.severity;}));
+q('[data-eval-compare]')?.addEventListener('click',()=>{const d=evalScenarios[currentScenario],box=q('#evalBenchmarkResult');if(!box)return;box.innerHTML='<span>Benchmark: <strong>'+d.benchmark+'</strong></span><strong>'+d.feedback+'</strong>'+(currentSeverity?'<small>Your selection: '+currentSeverity+'</small>':'<small>Choose a severity first to compare your judgment.</small>');});
+q('[data-eval-reset]')?.addEventListener('click',()=>{currentSeverity='';severityButtons.forEach(b=>b.classList.remove('active'));q('#evalBenchmarkResult')?.replaceChildren();});
+if(scenarioButtons[0])renderScenario(scenarioButtons[0]);
 
-  }
+const rubricData={
+ instruction:{label:'Instruction Following',question:'Did the response complete the required job and follow explicit constraints?',anchors:['Misses the task','Major required elements missing','Mostly follows with a limited miss','Fully follows the instruction'],benchmark:1,feedback:'A major miss: the answer includes unsupported claims and does not stay within the approved source boundary.'},
+ grounding:{label:'Grounding',question:'Are important claims supported by the approved evidence?',anchors:['Mostly invented','Multiple unsupported claims','Mostly grounded with a limited issue','Fully grounded'],benchmark:0,feedback:'The unsupported performance, deployment, cost, and downtime claims make grounding the strongest failure.'},
+ accuracy:{label:'Accuracy + Logic',question:'Are facts and conclusions correct, consistent, and supported?',anchors:['Materially wrong','Major logic/fact issue','Minor issue','Accurate and consistent'],benchmark:1,feedback:'The response turns supported capabilities into guaranteed outcomes, creating a material logic and accuracy problem.'},
+ writing:{label:'Writing Quality',question:'Is the writing clear, direct, natural, and proportionate to the task?',anchors:['Hard to use','Noticeable quality issues','Generally clear','Clear and concise'],benchmark:2,feedback:'The writing is readable, but promotional certainty and vague superlatives reduce precision.'},
+ usefulness:{label:'Audience Usefulness',question:'Can the intended reader act on the response without being misled?',anchors:['Misleading','Major usability risk','Useful with caveats','Accurate and actionable'],benchmark:1,feedback:'A partner could repeat unsupported claims to a customer, so the response is not safe to use as written.'}
+};
+let currentCriterion='instruction',currentRubricScore=null;
+const criterionButtons=qa('[data-rubric-criterion]'),rubricScoreButtons=qa('[data-rubric-score]');
+const renderCriterion=btn=>{currentCriterion=btn.dataset.rubricCriterion;setActive(criterionButtons,btn);const d=rubricData[currentCriterion];set('rubricLabel',d.label);set('rubricQuestion',d.question);qa('[data-anchor-index]').forEach((el,i)=>{set('rubricAnchorTitle'+i,d.anchors[i]);});currentRubricScore=null;rubricScoreButtons.forEach(b=>b.classList.remove('active'));q('#rubricBenchmark')?.replaceChildren();};
+criterionButtons.forEach(b=>b.addEventListener('click',()=>renderCriterion(b)));keyboardTabs(criterionButtons,renderCriterion);
+rubricScoreButtons.forEach(b=>b.addEventListener('click',()=>{currentRubricScore=Number(b.dataset.rubricScore);rubricScoreButtons.forEach(x=>x.classList.toggle('active',x===b));}));
+q('[data-rubric-compare]')?.addEventListener('click',()=>{const d=rubricData[currentCriterion],box=q('#rubricBenchmark');if(!box)return;box.innerHTML='<span>Benchmark score: <strong>'+d.benchmark+'</strong></span><strong>'+d.feedback+'</strong>'+(currentRubricScore===null?'<small>Choose a score first to compare.</small>':'<small>Your score: '+currentRubricScore+'</small>');});
+q('[data-rubric-reset]')?.addEventListener('click',()=>{currentRubricScore=null;rubricScoreButtons.forEach(b=>b.classList.remove('active'));q('#rubricBenchmark')?.replaceChildren();});
+if(criterionButtons[0])renderCriterion(criterionButtons[0]);
 
-  const stageShell = document.querySelector('.ai-suite-workflow .stage-shell');
-  document.querySelectorAll('.ai-suite-workflow .stage-button').forEach((button) => {
-    button.addEventListener('click', () => {
-      if (!stageShell) return;
-      stageShell.classList.remove('is-transitioning');
-      requestAnimationFrame(() => stageShell.classList.add('is-transitioning'));
-      window.setTimeout(() => stageShell.classList.remove('is-transitioning'), 360);
-    });
-  });
+const workflowData={
+ frame:{label:'Frame',title:'Define the assignment before reading for quality.',text:'Start with the task, intended audience, allowed evidence, constraints, and what a successful response must do.',checks:['Clarify the user job','Identify required elements','Name source and boundary'],motion:[['ai-evaluation/workflow-documents.webp','Task'],['ai-evaluation/workflow-reviewer.webp','Audience'],['ai-evaluation/workflow-checklist.webp','Criteria']],output:'Review brief: what must be true before quality can be judged.'},
+ verify:{label:'Verify',title:'Trace claims and facts back to the approved evidence.',text:'Check material claims against the source before spending time on style. Unsupported content can make an otherwise polished answer unusable.',checks:['Trace material claims','Separate fact from inference','Flag unsupported additions'],motion:[['ai-evaluation/demo-search.webp','Claim'],['ai-training-evaluation/quality-curate-data.webp','Source'],['ai-evaluation/workflow-checklist.webp','Evidence']],output:'Evidence record: supported, unsupported, or unclear.'},
+ diagnose:{label:'Diagnose',title:'Classify the issue and its impact on the user or task.',text:'Distinguish instruction, grounding, logic, writing, and usefulness problems. Then determine severity based on consequence, not annoyance.',checks:['Name the failure type','Judge consequence','Separate major from minor'],motion:[['ai-evaluation/demo-compare-ab.webp','Compare'],['ai-evaluation/workflow-analytics.webp','Impact'],['ai-evaluation/rubric-rating.webp','Severity']],output:'Issue statement: type + evidence + consequence.'},
+ calibrate:{label:'Calibrate',title:'Compare judgments and turn them into reusable feedback.',text:'Use a rubric or benchmark to align severity, explain the reasoning, and capture patterns that improve future evaluation consistency.',checks:['Compare to benchmark','Explain disagreement','Capture reusable pattern'],motion:[['ai-evaluation/rubric-matrix.webp','Rubric'],['ai-evaluation/demo-feedback.webp','Feedback'],['ai-evaluation/workflow-finish.webp','Record']],output:'Calibration record: score, rationale, and feedback pattern.'}
+};
+const wfButtons=qa('[data-workflow-stage]');
+const renderWorkflow=btn=>{const d=workflowData[btn.dataset.workflowStage];if(!d)return;setActive(wfButtons,btn);set('workflowLabel',d.label);set('workflowTitle',d.title);set('workflowText',d.text);const checks=q('#workflowChecks');if(checks)checks.replaceChildren(...d.checks.map(v=>{const s=document.createElement('span');s.textContent=v;return s;}));d.motion.forEach(([file,label],i)=>{const key=['A','B','C'][i],img=q('#workflowMotion'+key),lab=q('#workflowMotionLabel'+key);if(img){img.src=baseDemo+file;img.alt='';}if(lab)lab.textContent=label;});set('workflowOutput',d.output);};
+wfButtons.forEach(b=>b.addEventListener('click',()=>renderWorkflow(b)));keyboardTabs(wfButtons,renderWorkflow);if(wfButtons[0])renderWorkflow(wfButtons[0]);
 })();
