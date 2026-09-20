@@ -421,7 +421,29 @@
       .demo-howto-inline{grid-template-columns:1fr!important}
     }
 
-  </style>
+  
+    /* UAT: explicit target-profile comparison and concise demo guidance */
+    .pursuit-demo-use{padding-block:26px!important;background:linear-gradient(145deg,#173139,#294d4c)!important;color:#e6efe9!important}
+    .pursuit-use-intro{max-width:960px}
+    .pursuit-use-intro .eyebrow{margin-bottom:3px;color:#afe1bf!important}
+    .pursuit-use-intro h2{margin:0 0 5px;color:#fff!important;font-size:1.2rem}
+    .pursuit-use-intro p:not(.eyebrow){margin:0;color:#cbdad2;font-size:.69rem;line-height:1.48}
+    .pursuit-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+    .pursuit-compare-card{padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(255,255,255,.055)}
+    .pursuit-compare-card.target-profile{box-shadow:inset 3px 0 0 #79c99e}
+    .pursuit-compare-card.account-profile{box-shadow:inset 3px 0 0 #97db4f}
+    .pursuit-compare-head{display:grid;grid-template-columns:50px 1fr;gap:9px;align-items:center}
+    .pursuit-compare-head img{width:48px;height:48px;padding:5px;border-radius:12px;background:#fff;object-fit:contain}
+    .pursuit-compare-head small{display:block;color:#aee1bf;font:800 .46rem/1.1 var(--font-heading);letter-spacing:.05em}
+    .pursuit-compare-head strong{display:block;margin-top:3px;color:#fff;font:800 .66rem/1.2 var(--font-heading)}
+    .pursuit-compare-card ul{display:grid;gap:4px;margin:10px 0 0;padding-left:18px;color:#d4e1da;font-size:.59rem;line-height:1.4}
+    .pursuit-use-steps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .pursuit-use-steps span{display:flex;align-items:center;gap:5px;padding:6px 8px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(255,255,255,.055);color:#e1ece6;font:800 .5rem/1.1 var(--font-heading)}
+    .pursuit-use-steps b{display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#97db4f;color:#173139;font-size:.43rem}
+    .workbench-intro{margin-bottom:10px}
+    @media(max-width:760px){.pursuit-compare-grid{grid-template-columns:1fr}.pursuit-use-steps{display:grid;grid-template-columns:1fr}}
+
+</style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
 <body class="pursuit-lab-page">
@@ -448,7 +470,7 @@
   </section><section class="section demo-primer-section pursuit-primer-section" id="primer">
     <div class="container">
       <div class="demo-primer-head">
-        <div><p class="eyebrow">Pursuit Matrix Quick Start</p><h2>Two questions drive the matrix: is this a fit, and is it worth pursuing now?</h2><p>The main demo asks you to score evidence one criterion at a time. Use the four-quadrant map below to see how solution fit and pursuit strength combine before you start.</p></div>
+        <div><p class="eyebrow">Pursuit Matrix Quick Start</p><h2>Two questions drive the matrix: is this a fit, and is it worth pursuing now?</h2><p>The main demo asks you to compare the account with the target profile and score the evidence across six decision factors. Use the four-quadrant map below to see how solution fit and pursuit strength combine before you start.</p></div>
         <a class="btn btn-secondary demo-skip" href="#workbench">I use pursuit matrices · Start the demo</a>
       </div>
       <div class="pursuit-primer-console" data-stable-interaction>
@@ -467,9 +489,49 @@
           <p class="eyebrow" id="pursuitPrimerLabel">Prioritize</p>
           <h3 id="pursuitPrimerTitle">The need fits and the buying evidence is strong enough to justify continued investment.</h3>
           <p id="pursuitPrimerText">A high-fit, high-strength opportunity has credible problem alignment plus evidence of urgency, stakeholder access, buying motion, and a realistic path forward.</p>
-          <div class="pursuit-primer-rule"><span>How to score in the demo</span><strong id="pursuitPrimerRule">Use 1–5 based on the evidence you can actually point to. Do not reward assumptions.</strong></div>
+          <div class="pursuit-primer-rule"><span>How to score in the demo</span><strong id="pursuitPrimerRule">Use 1 to 5 based on the evidence you can actually point to. Do not reward assumptions.</strong></div>
         </div>
-        <div class="demo-howto demo-howto-inline"><article><b>1</b><span><strong>Read the evidence</strong><span>Separate what is known from what is assumed.</span></span></article><article><b>2</b><span><strong>Score one criterion</strong><span>Use the strongest evidence available right now.</span></span></article><article><b>3</b><span><strong>Watch the posture move</strong><span>The combined averages change the recommended pursuit posture.</span></span></article></div>
+        </div>
+    </div>
+  </section>
+
+  <section class="section pursuit-demo-use">
+    <div class="container">
+      <div class="pursuit-use-intro">
+        <p class="eyebrow">How to Use the Demo</p>
+        <h2>Compare the solution target profile with Harborview, then decide how much pursuit investment the evidence supports.</h2>
+        <p>The fictional VitaTrack solution has a target customer profile. Harborview Regional Medical Center is the potential pursuit. Compare the account with the target profile, score the six decision factors, and use the matrix to see whether the evidence supports prioritizing, developing, nurturing, or deprioritizing the opportunity.</p>
+      </div>
+      <div class="pursuit-compare-grid">
+        <article class="pursuit-compare-card target-profile">
+          <div class="pursuit-compare-head">
+            <img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="">
+            <span><small>SOLUTION TARGET PROFILE</small><strong>VitaTrack Mobile Imaging Cart</strong></span>
+          </div>
+          <ul>
+            <li>Acute-care hospital with frequent bedside imaging.</li>
+            <li>Portable imaging delays are affecting throughput or staff workflow.</li>
+            <li>Mobile imaging equipment is aging, constrained, or entering replacement planning.</li>
+            <li>Digital imaging environment can support integration after IT and security validation.</li>
+          </ul>
+        </article>
+        <article class="pursuit-compare-card account-profile">
+          <div class="pursuit-compare-head">
+            <img src="../../../../assets/icons/pixel/pursuit-determination/opportunity-intake.webp" alt="">
+            <span><small>POTENTIAL PURSUIT</small><strong>Harborview Regional Medical Center</strong></span>
+          </div>
+          <ul>
+            <li>65 portable exams per day and turnaround increased from 24 to 39 minutes.</li>
+            <li>ER and ICU teams regularly wait for a cart.</li>
+            <li>Two aging carts are entering a replacement cycle and Harborview already uses digital PACS.</li>
+            <li>Clinical support exists, but IT validation, final authority access, and funding are not complete.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="pursuit-use-steps">
+        <span><b>1</b>Compare target fit</span>
+        <span><b>2</b>Score six decision factors</span>
+        <span><b>3</b>Review the pursuit posture</span>
       </div>
     </div>
   </section>
@@ -478,13 +540,12 @@
     <div class="container">
       <div class="workbench-intro">
         <p class="eyebrow">Opportunity Workbench</p>
-        <h2>Move from evidence to criterion to decision.</h2>
-        <p>Explore the opportunity evidence, score one criterion at a time, and watch the matrix update. Evidence categories tied to the current criterion are highlighted so the scoring decision stays grounded in what is actually known.</p>
+        <h2>Evaluate Harborview against the target profile.</h2>
       </div>
 
       <div class="opportunity-strip">
         <img src="../../../../assets/icons/pixel/pursuit-determination/opportunity-intake.webp" alt="" aria-hidden="true">
-        <div><h3>Harborview Regional Medical Center</h3><p>Fictional evaluation for the VitaTrack Mobile Imaging Cart.</p></div>
+        <div><h3>Harborview Regional Medical Center</h3><p>Potential pursuit for the fictional VitaTrack Mobile Imaging Cart.</p></div>
         <div class="opp-stat"><strong>39 min</strong><span>Current turnaround</span></div>
         <div class="opp-stat"><strong>65/day</strong><span>Portable exams</span></div>
         <div class="opp-stat"><strong>7-10 yrs</strong><span>Fleet age</span></div>
@@ -544,7 +605,7 @@ const pursuitPrimerData={
   prioritize:{label:'Prioritize',title:'The need fits and the buying evidence is strong enough to justify continued investment.',text:'A high-fit, high-strength opportunity has credible problem alignment plus evidence of urgency, stakeholder access, buying motion, and a realistic path forward.',rule:'Use 1–5 based on the evidence you can actually point to. Do not reward assumptions.',image:'prioritize-opportunities.webp'},
   develop:{label:'Develop Fit',title:'Buying activity exists, but the solution-to-problem connection is not proven yet.',text:'The opportunity may be active, but more discovery or technical validation is needed before the team should assume the solution is a strong fit.',rule:'A strong buying process cannot compensate for weak or unvalidated solution fit.',image:'evaluate-fit.webp'},
   nurture:{label:'Nurture',title:'The solution appears to fit, but the opportunity is not mature enough to accelerate.',text:'The customer problem and environment look promising, but urgency, authority access, funding, or buying momentum still need development.',rule:'Strong fit is not the same as a qualified opportunity. Score the buying evidence separately.',image:'assess-potential.webp'},
-  deprioritize:{label:'Deprioritize',title:'Current fit and pursuit evidence do not justify heavy seller investment.',text:'This does not mean the account can never become viable. It means the evidence available right now is too weak to justify treating it as a priority pursuit.',rule:'Score the current evidence, not the potential story you hope will become true.',image:'go-no-go.webp'}
+  deprioritize:{label:'Deprioritize',title:'Current fit and pursuit evidence do not justify heavy seller investment.',text:'This does not mean the account can never become viable. It means the evidence available right now is too weak to justify treating it as a priority pursuit.',rule:'Score the current evidence, not the future story you hope will become true.',image:'go-no-go.webp'}
 };
 const pursuitPrimerButtons=[...document.querySelectorAll('[data-pursuit-primer]')];
 const renderPursuitPrimer=(key)=>{
