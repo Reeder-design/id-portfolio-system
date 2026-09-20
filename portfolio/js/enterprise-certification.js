@@ -83,7 +83,7 @@
     },
     alignment: {
       title: 'Make the relationship between objective, content, practice, and assessment visible.',
-      text: 'Choose an objective and replay the sequence. Every layer supports the same seller behavior.',
+      text: 'Choose an objective and walk through the alignment decision process I used for it.',
       html: '<div class="alignment-reveal" id="alignmentReveal"></div>'
     },
     launch: {
@@ -481,81 +481,42 @@
   deliveryButtons.forEach((button, index) => { button.tabIndex = index === 0 ? 0 : -1; });
   renderDelivery('build');
 
-  const authoringData = {
-    explain: {
-      label: 'Content Architecture / Explain',
-      title: 'Sequence the information around the seller decision.',
-      summary: 'Introduce only the context sellers need to recognize the opportunity and prepare for the next decision.',
-      focus: ['Customer context','Need-to-value logic','Seller relevance'],
-      image: '../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',
-      alt: 'Public-safe cellular networking market opportunity learning screen.'
-    },
-    reinforce: {
-      label: 'Content Architecture / Reinforce',
-      title: 'Use short checks to strengthen the distinctions that matter.',
-      summary: 'Use short checks to test customer fit and key distinctions before moving into applied practice.',
-      focus: ['Knowledge checks','Retrieval practice','Immediate feedback'],
-      image: '../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',
-      alt: 'Public-safe cellular networking sales knowledge check.'
-    },
-    practice: {
-      label: 'Content Architecture / Practice',
-      title: 'Move from knowing the idea to making the seller decision.',
-      summary: 'Ask learners to interpret a customer situation, choose a direction, and use coaching feedback before assessment.',
-      focus: ['Scenario decisions','Coaching feedback','Assessment alignment'],
-      image: '../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',
-      alt: 'Public-safe cellular networking customer scenario interaction.'
-    }
+  const curriculumData = {
+    intro:{label:'Introduction',title:"Start with the seller's job, not a technical data dump.",summary:'The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.',behavior:'Explain the business context and recognize when the topic belongs in a customer conversation.',image:'../../../../assets/project-images/cellular-certification/cert-introduction.webp',alt:'Sanitized certification introduction screen.'},
+    market:{label:'Market Opportunity',title:'Teach the market signal before asking for product recall.',summary:'This section gives sellers enough context to spot the business conditions, customer pressures, and opportunity signals that make cellular networking relevant.',behavior:'Recognize customer conditions that justify deeper discovery rather than pitching a product too early.',image:'../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',alt:'Sanitized cellular networking market opportunity screen.'},
+    value:{label:'Need → Value',title:'Translate the customer problem into a credible value conversation.',summary:'The curriculum connects operational challenges to outcomes and value so the seller can move from symptoms to business relevance without overstepping into engineering detail.',behavior:'Connect a customer need to an outcome and explain why the capability matters in business terms.',image:'../../../../assets/project-images/cellular-certification/cert-need-to-value.webp',alt:'Sanitized need-to-value learning screen.'},
+    scenario:{label:'Customer Scenario',title:'Make the learner use the decision logic in context.',summary:'A fictionalized customer situation asks the learner to interpret the evidence, choose the stronger direction, and use feedback before the formal assessment.',behavior:'Apply discovery and solution-fit reasoning to a realistic seller situation.',image:'../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',alt:'Sanitized customer scenario interaction.'},
+    check:{label:'Knowledge Check',title:'Use retrieval to verify the distinction before the final assessment.',summary:'Short checks reinforce the concepts that are easy to confuse and surface misconceptions while feedback can still correct the reasoning.',behavior:'Distinguish between similar options and explain which evidence makes one choice stronger.',image:'../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',alt:'Sanitized cellular networking knowledge check.'},
+    complete:{label:'Completion',title:'Close the module with the next seller action visible.',summary:'The learner leaves with a completed module state and a clear next step in the pathway instead of treating completion as the end of the experience.',behavior:'Carry the decision framework into the next module, customer conversation, or assessment requirement.',image:'../../../../assets/project-images/cellular-certification/cert-module-complete.webp',alt:'Sanitized module completion screen.'}
   };
-
-  const authoringButtons = [...document.querySelectorAll('[data-authoring]')];
-  const authoringImage = document.getElementById('authoringImage');
-  const authoringLabel = document.getElementById('authoringLabel');
-  const authoringTitle = document.getElementById('authoringTitle');
-  const authoringSummary = document.getElementById('authoringSummary');
-  const authoringFocus = document.getElementById('authoringFocus');
-
-  const renderAuthoring = (key) => {
-    const data = authoringData[key];
-    if (!data || !authoringImage) return;
-    authoringLabel.textContent = data.label;
-    authoringTitle.textContent = data.title;
-    authoringSummary.textContent = data.summary;
-    authoringFocus.replaceChildren(...data.focus.map((item) => {
-      const chip = document.createElement('span');
-      chip.textContent = item;
-      return chip;
-    }));
-    authoringImage.classList.add('is-switching');
-    window.setTimeout(() => {
-      authoringImage.src = data.image;
-      authoringImage.alt = data.alt;
-      authoringImage.classList.remove('is-switching');
-    }, 110);
-    authoringButtons.forEach((button) => {
-      const active = button.dataset.authoring === key;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
+  const curriculumButtons=[...document.querySelectorAll('[data-curriculum]')];
+  const curriculumImage=document.getElementById('curriculumImage');
+  const renderCurriculum=(key)=>{
+    const data=curriculumData[key]; if(!data||!curriculumImage)return;
+    const index=curriculumButtons.findIndex(button=>button.dataset.curriculum===key);
+    curriculumButtons.forEach((button,buttonIndex)=>{const active=buttonIndex===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});
+    document.getElementById('curriculumProgress').textContent=(index+1)+' / '+curriculumButtons.length;
+    document.getElementById('curriculumLabel').textContent=data.label;
+    document.getElementById('curriculumTitle').textContent=data.title;
+    document.getElementById('curriculumSummary').textContent=data.summary;
+    document.getElementById('curriculumBehavior').textContent=data.behavior;
+    curriculumImage.classList.add('is-switching');
+    window.setTimeout(()=>{curriculumImage.src=data.image;curriculumImage.alt=data.alt;curriculumImage.classList.remove('is-switching');},100);
   };
-
-  authoringButtons.forEach((button, index) => {
-    button.addEventListener('click', () => renderAuthoring(button.dataset.authoring));
-    button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+  curriculumButtons.forEach((button,index)=>{
+    button.addEventListener('click',()=>renderCurriculum(button.dataset.curriculum));
+    button.addEventListener('keydown',(event)=>{
+      if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
       event.preventDefault();
       let next=index;
-      if(event.key==='Home') next=0;
-      else if(event.key==='End') next=authoringButtons.length-1;
-      else if(event.key==='ArrowRight'||event.key==='ArrowDown') next=(index+1)%authoringButtons.length;
-      else next=(index-1+authoringButtons.length)%authoringButtons.length;
-      authoringButtons[next].focus();
-      renderAuthoring(authoringButtons[next].dataset.authoring);
+      if(event.key==='Home')next=0; else if(event.key==='End')next=curriculumButtons.length-1;
+      else if(event.key==='ArrowDown'||event.key==='ArrowRight')next=(index+1)%curriculumButtons.length;
+      else next=(index-1+curriculumButtons.length)%curriculumButtons.length;
+      curriculumButtons[next].focus();renderCurriculum(curriculumButtons[next].dataset.curriculum);
     });
   });
-  authoringButtons.forEach((button,index)=>{button.tabIndex=index===0?0:-1;});
-  renderAuthoring('explain');
+  curriculumButtons.forEach((button,index)=>button.tabIndex=index===0?0:-1);
+  renderCurriculum('intro');
 
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));

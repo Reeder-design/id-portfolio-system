@@ -70,11 +70,13 @@ The schema and validation scripts are authoritative for exact required/optional 
 
 No required subcategory currently.
 
-### LMS Administration & System Operations
+### LMS Administration
 
-No required subcategory currently.
+Structured subcategories currently include:
 
-### System Integrations and Workflows
+- System Integrations
+
+### Workflows
 
 Structured groupings currently include:
 

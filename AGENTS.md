@@ -25,8 +25,8 @@ The repository is public. Treat all tracked content and Git metadata as publicly
 Current top-level areas are:
 1. Instructional Design
 2. AI Training and Evaluation
-3. LMS Administration & System Operations
-4. System Integrations and Workflows
+3. LMS Administration
+4. Workflows
 
 Instructional Design currently includes:
 - Interactive Learning
@@ -35,7 +35,7 @@ Instructional Design currently includes:
 - Live Training
 - Complete eLearning Pathways
 
-System Integrations and Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
+Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
 
 ## Source-of-Truth Order
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.

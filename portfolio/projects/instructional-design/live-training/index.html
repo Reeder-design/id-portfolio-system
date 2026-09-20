@@ -433,7 +433,31 @@
       .live-training-flow i,.foundation-line i,.case-room-signal,.live-mode-flow i::after{animation:none!important}
       .live-mode-tab{transition:none}
     }
-  </style>
+  
+    .foundation-career-motion{grid-template-columns:1fr 34px 1fr 34px 1fr!important;gap:7px!important;padding:14px!important;background:linear-gradient(145deg,#fff,#f6faf7)!important}
+    .foundation-career-stage{position:relative;display:grid;justify-items:center;align-content:center;min-height:112px;padding:10px;border:1px solid rgba(80,132,132,.13);border-radius:14px;background:#fff;text-align:center}
+    .foundation-career-stage>span{position:absolute;left:8px;top:8px;color:#8b9993;font:900 .48rem/1 var(--font-heading)}
+    .foundation-career-stage img{width:58px;height:58px;object-fit:contain;image-rendering:pixelated}
+    .foundation-career-stage strong{margin-top:4px;color:#315755;font:800 .62rem/1.15 var(--font-heading)}
+    .foundation-career-stage small{margin-top:3px;color:#6c7a74;font:.52rem/1.2 var(--font-body)}
+    .foundation-career-link{position:relative;height:2px;background:linear-gradient(90deg,#508484,#79c99e,#97db4f)}
+    .foundation-career-link b{position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#97db4f;box-shadow:0 0 11px rgba(151,219,79,.45);animation:foundationFlow 2.6s linear infinite}
+    .foundation-career-link:nth-of-type(2) b{animation-delay:1.1s}
+    .case-adaptation-motion{display:grid!important;grid-template-columns:1fr 24px 1fr 24px 1fr!important;gap:6px!important;align-items:center!important;padding:16px!important}
+    .case-adapt-node{position:relative;z-index:2;display:grid;justify-items:center;gap:5px;padding:10px 7px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:#173139}
+    .case-adapt-node img{width:56px;height:56px;object-fit:contain}.case-adapt-node small{color:#d9e7e0;font:800 .52rem/1.15 var(--font-heading)}
+    .case-adapt-link{position:relative;height:2px;background:linear-gradient(90deg,#508484,#97db4f)}
+    .case-adapt-link b{position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#97db4f;animation:modeFlowDot 2.3s linear infinite}
+    .case-adapt-link:nth-of-type(2) b{animation-delay:1s}
+    .case-adapt-return{position:absolute;left:18%;right:18%;bottom:12px;height:28px;border-right:2px solid rgba(121,201,158,.25);border-bottom:2px solid rgba(121,201,158,.25);border-left:2px solid rgba(121,201,158,.25);border-radius:0 0 24px 24px}
+    @media(max-width:650px){.foundation-career-motion,.case-adaptation-motion{grid-template-columns:1fr!important}.foundation-career-link,.case-adapt-link,.case-adapt-return{display:none}}
+
+    /* Live hero top-spacing correction */
+    .live-landing-hero{padding:20px 0 30px!important}
+    .live-landing-hero .breadcrumbs{margin:0 0 10px!important}
+    .live-landing-hero .live-hero-grid{margin-top:0!important}
+    @media(max-width:760px){.live-landing-hero{padding:18px 0 26px!important}}
+</style>
   <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
 <body class="live-training-page">
@@ -469,12 +493,12 @@
         <h2>Live adaptation started before corporate L&amp;D.</h2>
         <p>Before moving into instructional design, I spent three years teaching high-school history and English. That experience built the habits I still use in live learning: explain clearly, check understanding, and change the approach when the room needs something different.</p>
       </div>
-      <div class="live-foundation-motion" aria-hidden="true">
-        <span class="foundation-node">Explain<small>Make the idea clear</small></span>
-        <span class="foundation-line"><i></i></span>
-        <span class="foundation-node">Check<small>Listen for the signal</small></span>
-        <span class="foundation-line"><i></i></span>
-        <span class="foundation-node">Adapt<small>Change the route</small></span>
+      <div class="live-foundation-motion foundation-career-motion" aria-label="Career stages shaping my facilitation methodology">
+        <article class="foundation-career-stage"><span>01</span><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><strong>Classroom</strong><small>Teach + observe</small></article>
+        <i class="foundation-career-link" aria-hidden="true"><b></b></i>
+        <article class="foundation-career-stage"><span>02</span><img src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""><strong>Learning design</strong><small>Structure + practice</small></article>
+        <i class="foundation-career-link" aria-hidden="true"><b></b></i>
+        <article class="foundation-career-stage"><span>03</span><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""><strong>Enterprise L&amp;D</strong><small>Facilitate + adapt</small></article>
       </div>
     </div>
   </aside>
@@ -531,9 +555,13 @@
           <div class="live-case-points"><span>Questions + polling</span><span>Seller examples</span><span>Live reframing</span><span>Internal + partner audiences</span></div>
           <a class="live-case-action" href="virtual-sales-workshop-facilitation/index.html"><span>View the Facilitation Case Study</span><span aria-hidden="true">→</span></a>
         </div>
-        <div class="live-case-motion" aria-hidden="true">
-          <div class="case-room"><span class="case-facilitator">Facilitator</span><span class="case-audience">Room signal</span></div>
-          <span class="case-room-signal"></span>
+        <div class="live-case-motion case-adaptation-motion" aria-label="Facilitation feedback loop from learner signal to live adaptation">
+          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt=""><small>Prompt</small></div>
+          <i class="case-adapt-link" aria-hidden="true"><b></b></i>
+          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""><small>Read room</small></div>
+          <i class="case-adapt-link" aria-hidden="true"><b></b></i>
+          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/idea-bulb.webp" alt=""><small>Reframe</small></div>
+          <span class="case-adapt-return" aria-hidden="true"></span>
         </div>
       </article>
     </div>

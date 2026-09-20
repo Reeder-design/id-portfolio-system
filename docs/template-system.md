@@ -170,8 +170,8 @@ Structured categories and paths come from `portfolio-data/taxonomy.json`. The cu
 
 - Instructional Design
 - AI Training and Evaluation
-- LMS Administration & System Operations
-- System Integrations and Workflows
+- LMS Administration
+- Workflows
 
 Instructional Design subcategories and workflow groupings should also be read from the taxonomy rather than duplicated in renderer logic when avoidable.
 

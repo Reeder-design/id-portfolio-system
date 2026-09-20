@@ -68,6 +68,297 @@
         @media(max-width:980px){.about-experience-panel,.adapt-content-grid{grid-template-columns:1fr}.about-work-collage{min-height:410px;max-width:660px;width:100%;margin:0 auto}.adapt-evidence-stage{position:static}.adapt-evidence-frame{min-height:360px}.adapt-evidence-frame img{height:360px}}
         @media(max-width:620px){.about-work-collage{min-height:330px}.about-work-shot--desk{left:5%;top:72px;width:90%;height:220px}.about-work-shot--storyboard{left:-1%;top:10px;width:43%;height:112px}.about-work-shot--visual-plan{right:-1%;top:12px;width:42%;height:108px}.about-work-shot--learning-plan{right:0;bottom:0;width:45%;height:108px}.adapt-evidence-frame{min-height:310px}.adapt-evidence-frame img{height:310px}}
         @media(prefers-reduced-motion:reduce){.about-work-shot,.adapt-evidence-frame img{transition:none}.about-work-shot:hover{transform:none}.live-signal b i{animation:none}}
+        /* About closeout: align hero with the open parent-page system. */
+        body.about-primary .about-experience-hero{
+          padding:clamp(38px,5vw,62px) 0 clamp(44px,5.4vw,68px)!important;
+          background:
+            radial-gradient(circle at 88% 18%,rgba(121,201,158,.13),transparent 22rem),
+            radial-gradient(circle at 8% 86%,rgba(151,219,79,.07),transparent 18rem),
+            #fbfaf4!important;
+        }
+        body.about-primary .about-experience-panel{
+          grid-template-columns:minmax(0,.94fr) minmax(390px,1.06fr)!important;
+          gap:clamp(40px,6vw,78px)!important;
+          align-items:center!important;
+          padding:0!important;
+          overflow:visible!important;
+          border:0!important;
+          border-radius:0!important;
+          background:transparent!important;
+          box-shadow:none!important;
+        }
+        body.about-primary .about-experience-panel::after{display:none!important}
+        body.about-primary .about-experience-copy h1{
+          margin:0 0 14px!important;
+          color:#263d37;
+          font-size:clamp(3rem,6vw,5.3rem)!important;
+          line-height:.98;
+          letter-spacing:-.045em;
+        }
+        body.about-primary .about-experience-copy>.eyebrow{
+          margin-bottom:6px;
+          color:#47796f!important;
+        }
+        body.about-primary .about-focus-row{margin:22px 0 0!important}
+        body.about-primary .about-work-collage{
+          min-height:390px!important;
+          max-width:610px;
+          width:100%;
+          margin-inline:auto;
+        }
+        body.about-primary .about-collage-orbit{
+          inset:42px 44px 38px!important;
+          border-color:rgba(80,132,132,.16)!important;
+        }
+
+        /* Role switcher: make the work-type choice itself part of the story. */
+        body.about-primary .about-role-section{
+          background:
+            radial-gradient(circle at 88% 10%,rgba(121,201,158,.08),transparent 20rem),
+            linear-gradient(180deg,#fff,#f4f8f5);
+        }
+        body.about-primary .about-role-section .refresh-section-intro{
+          display:block;
+          max-width:820px;
+        }
+        body.about-primary .about-role-section .refresh-section-intro h2{
+          margin:0;
+          max-width:720px;
+          font-size:clamp(2rem,4vw,3.15rem);
+          line-height:1.04;
+        }
+        body.about-primary .about-role-section .refresh-section-intro p{
+          margin:0;
+          max-width:650px;
+          color:#5d6d66;
+        }
+        body.about-primary .adapt-lab{
+          overflow:hidden;
+          border:1px solid rgba(80,132,132,.17);
+          border-radius:28px;
+          background:#fff;
+          box-shadow:0 24px 58px rgba(29,53,50,.12);
+        }
+        body.about-primary .adapt-lab-heading{
+          display:flex;
+          align-items:end;
+          justify-content:space-between;
+          gap:22px;
+          padding:22px 24px 18px;
+          background:
+            radial-gradient(circle at 90% 0,rgba(151,219,79,.10),transparent 15rem),
+            linear-gradient(145deg,#20383e,#315755);
+        }
+        body.about-primary .adapt-lab-heading .eyebrow{
+          margin:0 0 4px;
+          color:#b8e9c9!important;
+        }
+        body.about-primary .adapt-lab-heading h3{
+          margin:0;
+          max-width:680px;
+          color:#fff;
+          font-size:clamp(1.05rem,2vw,1.45rem);
+        }
+        body.about-primary .adapt-lab-signal{
+          flex:0 0 auto;
+          padding:7px 10px;
+          border:1px solid rgba(255,255,255,.12);
+          border-radius:999px;
+          background:rgba(255,255,255,.07);
+          color:#d8eee1;
+          font:800 .58rem/1.2 var(--font-heading);
+          letter-spacing:.04em;
+          text-transform:uppercase;
+        }
+        body.about-primary .adapt-tabs{
+          grid-template-columns:repeat(4,minmax(0,1fr))!important;
+          gap:0!important;
+          padding:0!important;
+          background:#e8efeb!important;
+          border-bottom:1px solid rgba(80,132,132,.14);
+        }
+        body.about-primary .adapt-tab{
+          position:relative;
+          display:grid!important;
+          grid-template-columns:auto 50px minmax(0,1fr)!important;
+          gap:10px!important;
+          align-items:center!important;
+          justify-content:stretch!important;
+          min-height:82px!important;
+          padding:12px 14px!important;
+          border:0!important;
+          border-right:1px solid rgba(80,132,132,.12)!important;
+          border-radius:0!important;
+          background:#f9fbf9!important;
+          color:#31463f!important;
+          text-align:left!important;
+          box-shadow:none!important;
+        }
+        body.about-primary .adapt-tab:last-child{border-right:0!important}
+        body.about-primary .adapt-tab::after{
+          left:0!important;
+          right:0!important;
+          bottom:0!important;
+          height:3px!important;
+          border-radius:0!important;
+          opacity:0!important;
+        }
+        body.about-primary .adapt-tab:hover,
+        body.about-primary .adapt-tab:focus-visible{
+          transform:none!important;
+          background:#edf5f0!important;
+          color:#203a35!important;
+        }
+        body.about-primary .adapt-tab.active{
+          background:linear-gradient(145deg,#eef7f1,#fff)!important;
+          color:#183129!important;
+          box-shadow:inset 0 3px 0 #97db4f!important;
+        }
+        body.about-primary .adapt-tab.active span,
+        body.about-primary .adapt-tab.active strong,
+        body.about-primary .adapt-tab.active small{
+          color:#203a35!important;
+        }
+        body.about-primary .adapt-tab.active::after{opacity:1!important;background:#79c99e!important}
+        body.about-primary .adapt-tab-number{
+          align-self:start;
+          margin-top:4px;
+          color:#83918b;
+          font:900 .52rem/1 var(--font-heading);
+          letter-spacing:.05em;
+        }
+        body.about-primary .adapt-tab-art{
+          display:grid;
+          place-items:center;
+          width:48px;
+          height:48px;
+          padding:4px;
+          border:1px solid rgba(80,132,132,.13);
+          border-radius:13px;
+          background:#fff;
+          box-shadow:0 7px 16px rgba(43,72,64,.07);
+        }
+        body.about-primary .adapt-tab-art img{
+          width:100%;
+          height:100%;
+          object-fit:contain;
+          image-rendering:pixelated;
+        }
+        body.about-primary .adapt-tab-copy{
+          display:grid;
+          gap:3px;
+          min-width:0;
+        }
+        body.about-primary .adapt-tab-copy strong{
+          color:inherit;
+          font:800 .68rem/1.25 var(--font-heading);
+        }
+        body.about-primary .adapt-tab-copy small{
+          color:#72817a;
+          font:.59rem/1.2 var(--font-body);
+        }
+        body.about-primary .adapt-tab.active .adapt-tab-number{
+          color:#315f57!important;
+        }
+        body.about-primary .adapt-tab.active .adapt-tab-copy strong{
+          color:#203a35!important;
+        }
+        body.about-primary .adapt-tab.active .adapt-tab-copy small{
+          color:#536861!important;
+        }
+        body.about-primary .adapt-panel{
+          padding:clamp(22px,3vw,32px)!important;
+          background:#fff!important;
+        }
+        body.about-primary .adapt-summary{
+          position:relative;
+          padding-bottom:18px;
+          border-bottom:1px solid rgba(80,132,132,.11);
+        }
+        body.about-primary .adapt-summary::after{
+          content:"Role lens";
+          position:absolute;
+          right:0;
+          top:0;
+          padding:5px 7px;
+          border-radius:999px;
+          background:#eef5f1;
+          color:#47746a;
+          font:800 .52rem/1 var(--font-heading);
+          letter-spacing:.05em;
+          text-transform:uppercase;
+        }
+        body.about-primary .adapt-steps{
+          position:relative;
+          counter-reset:adaptStep;
+          gap:10px!important;
+          padding-top:10px;
+        }
+        body.about-primary .adapt-steps::before{
+          content:"";
+          position:absolute;
+          left:8%;
+          right:8%;
+          top:33px;
+          height:2px;
+          background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
+          opacity:.26;
+          pointer-events:none;
+        }
+        body.about-primary .adapt-step{
+          counter-increment:adaptStep;
+          position:relative;
+          z-index:1;
+          padding:14px!important;
+          border-color:rgba(80,132,132,.13)!important;
+          background:#fbfcfa!important;
+          box-shadow:0 8px 18px rgba(43,72,64,.045);
+        }
+        body.about-primary .adapt-step::after{
+          content:"0" counter(adaptStep);
+          position:absolute;
+          right:10px;
+          top:10px;
+          color:#a2aea8;
+          font:900 .5rem/1 var(--font-heading);
+          letter-spacing:.04em;
+        }
+        body.about-primary .adapt-step-icon{
+          position:relative;
+          z-index:2;
+          background:#fff!important;
+          border:1px solid rgba(80,132,132,.13);
+          box-shadow:0 6px 14px rgba(43,72,64,.055);
+        }
+        body.about-primary .adapt-evidence-stage{
+          position:sticky;
+          top:102px;
+          padding:12px;
+          border:1px solid rgba(80,132,132,.13);
+          border-radius:22px;
+          background:linear-gradient(145deg,#eef5f1,#f9fbf9);
+        }
+        body.about-primary .adapt-evidence-frame{
+          border:0!important;
+          box-shadow:0 10px 24px rgba(42,71,63,.08)!important;
+        }
+        @media(max-width:980px){
+          body.about-primary .about-role-section .refresh-section-intro{grid-template-columns:1fr}
+          body.about-primary .adapt-lab-heading{align-items:start}
+          body.about-primary .adapt-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+          body.about-primary .adapt-tab:nth-child(2){border-right:0!important}
+          body.about-primary .adapt-tab:nth-child(-n+2){border-bottom:1px solid rgba(80,132,132,.12)!important}
+          body.about-primary .adapt-evidence-stage{position:static}
+        }
+        @media(max-width:620px){
+          body.about-primary .adapt-lab-heading{display:grid}
+          body.about-primary .adapt-lab-signal{justify-self:start}
+          body.about-primary .adapt-tabs{grid-template-columns:1fr!important}
+          body.about-primary .adapt-tab{border-right:0!important;border-bottom:1px solid rgba(80,132,132,.12)!important}
+          body.about-primary .adapt-tab:last-child{border-bottom:0!important}
+          body.about-primary .adapt-steps::before{display:none}
+        }
+
 </style>
     <script defer src="../js/portfolio-motion.js"></script>
     <script defer src="../js/primary-pages.js"></script>
@@ -76,20 +367,17 @@
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a class="active" href="./index.html">About Me</a><a href="../projects/index.html">Projects</a><a href="../contact/index.html">Contact</a></nav></div></header>
 <main>
     <!-- PROFESSIONAL INTRO -->
-    <section class="page-hero about-experience-hero">
+    <section class="page-hero refresh-hero about-experience-hero">
       <div class="container">
         <div class="about-experience-panel">
           <div class="about-experience-copy">
             <p class="eyebrow">Background</p>
-            <h1>About Me</h1>
+            <h1>Hi there,</h1>
             <p class="body-large">I started in high-school classrooms and K-12 curriculum, where Universal Design, the Zone of Proximal Development, and problem-posing education shaped how I think about access, challenge, and learner agency. I now design enterprise learning for adult audiences across eLearning, interactive enablement, facilitation, LMS operations, AI quality evaluation, web and coding work, AI chat experiences, and automated workflows.</p>
             <div class="about-focus-row" aria-label="About page focus areas">
               <span>Background</span>
               <span>Skills</span>
               <span>Tools</span>
-            </div>
-            <div class="button-row about-experience-actions">
-              <a class="btn btn-primary" href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">View Résumé</a>
             </div>
           </div>
 
@@ -120,15 +408,37 @@
       <div class="container">
         <div class="section-heading refresh-section-intro">
           <h2>How my role changes across the work</h2>
-          <p class="body-large reading-width">The center stays the same: understand the need, choose the right response, build it, and make it usable. What changes is the role I need to play.</p>
         </div>
 
         <div class="adapt-lab">
+          <div class="adapt-lab-heading">
+            <div>
+              <p class="eyebrow">Choose the work type</p>
+              <h3>The goal stays consistent. My role shifts with the problem.</h3>
+            </div>
+            <span class="adapt-lab-signal" aria-hidden="true">Need → role → response</span>
+          </div>
           <div class="adapt-tabs" role="tablist" aria-label="Choose a type of learning work">
-            <button class="adapt-tab active" type="button" role="tab" aria-selected="true" data-adapt="elearning"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span>eLearning</span></button>
-            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="ai"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg><span>AI Quality Evaluation</span></button>
-            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="lms"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg><span>LMS &amp; Learning Ops</span></button>
-            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="live"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><span>Live Learning</span></button>
+            <button class="adapt-tab active" type="button" role="tab" aria-selected="true" data-adapt="elearning">
+              <span class="adapt-tab-number">01</span>
+              <span class="adapt-tab-art"><img src="../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span>
+              <span class="adapt-tab-copy"><strong>eLearning</strong><small>Design + build</small></span>
+            </button>
+            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="ai">
+              <span class="adapt-tab-number">02</span>
+              <span class="adapt-tab-art"><img src="../assets/icons/pixel/ai-training-evaluation/quality-evaluate.webp" alt=""></span>
+              <span class="adapt-tab-copy"><strong>AI Quality Evaluation</strong><small>Review + calibrate</small></span>
+            </button>
+            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="lms">
+              <span class="adapt-tab-number">03</span>
+              <span class="adapt-tab-art"><img src="../assets/icons/pixel/other-work/lms-settings.webp" alt=""></span>
+              <span class="adapt-tab-copy"><strong>LMS + Learning Ops</strong><small>Operate + support</small></span>
+            </button>
+            <button class="adapt-tab" type="button" role="tab" aria-selected="false" data-adapt="live">
+              <span class="adapt-tab-number">04</span>
+              <span class="adapt-tab-art"><img src="../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span>
+              <span class="adapt-tab-copy"><strong>Live Learning</strong><small>Facilitate + adapt</small></span>
+            </button>
           </div>
 
           <div class="adapt-panel" role="tabpanel" aria-live="polite">
@@ -233,32 +543,6 @@
             </article>
             <span class="about-toolbox-signal signal-one" aria-hidden="true"></span>
             <span class="about-toolbox-signal signal-two" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="about-connect-section">
-      <div class="container">
-        <div class="about-connect-strip">
-          <div class="about-connect-copy">
-            <span class="about-connect-pixel" aria-hidden="true"><img src="../assets/icons/pixel/portfolio-general/lets-chat.webp" alt=""></span>
-            <div>
-              <p class="eyebrow">Keep in touch</p>
-              <h2>Want to talk about the work?</h2>
-            </div>
-          </div>
-          <div class="about-connect-actions">
-            <a class="about-connect-link" href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">
-              <img src="../assets/project-images/portfolio-general/cta-linkedin.webp" alt="">
-              <span><strong>LinkedIn</strong><small>Connect professionally</small></span>
-              <b aria-hidden="true">↗</b>
-            </a>
-            <a class="about-connect-link" href="../contact/index.html">
-              <img src="../assets/project-images/portfolio-general/cta-contact.webp" alt="">
-              <span><strong>Contact</strong><small>Choose the best route</small></span>
-              <b aria-hidden="true">→</b>
-            </a>
           </div>
         </div>
       </div>

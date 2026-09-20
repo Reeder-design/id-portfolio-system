@@ -27,12 +27,13 @@ Current portfolio version: **1.0.0**
     - Ericsson Cellular Networking Sales Certification — `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` (live)
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
-- **LMS Administration & System Operations** — `portfolio/projects/lms-administration/index.html`
+- **LMS Administration** — `portfolio/projects/lms-administration/index.html`
+  - **System Integrations** — `portfolio/projects/lms-administration/system-integrations/index.html`
+    - Salesforce-to-LMS Account Automation — `portfolio/projects/workflows/ai-automation/salesforce-lms-account-automation/index.html` (live)
   - LMS Migration Experience — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (live)
-- **System Integrations and Workflows** — `portfolio/projects/workflows/index.html`
+- **Workflows** — `portfolio/projects/workflows/index.html`
   - **Design + Development**
   - **AI + Automation**
-    - Salesforce-to-LMS Account Automation — `portfolio/projects/workflows/ai-automation/salesforce-lms-account-automation/index.html` (live)
   - **Data + Reporting**
     - Certification Reporting Automation — `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` (live)
 
@@ -48,4 +49,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/instructional-design/microlearning-performance-support/microlearning/index.html`
 - `portfolio/projects/instructional-design/microlearning-performance-support/performance-support/index.html`
 
-Total public HTML pages: **30**
+Total public HTML pages: **31**

@@ -104,8 +104,8 @@ def main() -> int:
         "Read `AGENTS.md`",
         "Source of Truth",
         "portfolio-data/taxonomy.json",
-        "System Integrations and Workflows",
-        "LMS Administration & System Operations",
+        "Workflows",
+        "LMS Administration",
         "Hiring Guide editorial source",
         "Do not resurrect retired experiments",
     ]:
@@ -139,8 +139,8 @@ def main() -> int:
     expected_categories = [
         "Instructional Design",
         "AI Training and Evaluation",
-        "LMS Administration & System Operations",
-        "System Integrations and Workflows",
+        "LMS Administration",
+        "Workflows",
     ]
     require(category_labels == expected_categories, "taxonomy top-level category labels do not match the expected current IA", errors)
 
@@ -160,7 +160,7 @@ def main() -> int:
     for phrase in [
         "Source of Truth",
         "Portfolio Manager **Create Content**",
-        "System Integrations and Workflows",
+        "Workflows",
         "compatibility behavior",
         "Reusable Component Registry",
         "Related Work and Related References",

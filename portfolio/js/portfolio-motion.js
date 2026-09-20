@@ -92,7 +92,11 @@
       'projects/instructional-design/interactive-learning',
       'projects/instructional-design/live-training',
       'projects/instructional-design/microlearning-performance-support',
-      'projects/instructional-design/multimedia'
+      'projects/instructional-design/microlearning-performance-support/microlearning',
+      'projects/instructional-design/microlearning-performance-support/performance-support',
+      'projects/instructional-design/interactive-learning/ai-integrations-in-learning',
+      'projects/instructional-design/multimedia',
+      'projects/lms-administration/system-integrations'
     ]);
     const demos = new Set([
       'projects/instructional-design/interactive-learning/meddpicc-practice',
@@ -302,10 +306,14 @@
     ['projects/instructional-design/interactive-learning', 'Interactive Learning'],
     ['projects/instructional-design/live-training', 'Live Training'],
     ['projects/instructional-design/microlearning-performance-support', 'Microlearning & Performance Support'],
+    ['projects/instructional-design/microlearning-performance-support/microlearning', 'Microlearning'],
+    ['projects/instructional-design/microlearning-performance-support/performance-support', 'Performance Support'],
+    ['projects/instructional-design/interactive-learning/ai-integrations-in-learning', 'Learner-facing AI'],
     ['projects/instructional-design/multimedia', 'Multimedia'],
     ['projects/ai-training-and-evaluation', 'AI Training & Evaluation'],
-    ['projects/lms-administration', 'LMS Administration & System Operations'],
-    ['projects/workflows', 'Systems & Workflows']
+    ['projects/lms-administration', 'LMS Administration'],
+    ['projects/lms-administration/system-integrations', 'System Integrations'],
+    ['projects/workflows', 'Workflows']
   ];
 
   const initCanonicalBreadcrumbs = () => {
@@ -318,7 +326,19 @@
 
     const h1 = document.querySelector('main h1, .page-hero h1, h1');
     const currentLabel = h1 ? h1.textContent.trim() : document.title.split('|')[0].trim();
-    const ancestors = BREADCRUMB_ROUTES.filter(([route]) => relativePath === route || relativePath.startsWith(`${route}/`));
+    let ancestors = BREADCRUMB_ROUTES.filter(([route]) => relativePath === route || relativePath.startsWith(`${route}/`));
+    if (relativePath === 'projects/workflows/ai-automation/salesforce-lms-account-automation') {
+      ancestors = [['projects','Projects'],['projects/lms-administration','LMS Administration'],['projects/lms-administration/system-integrations','System Integrations']];
+    }
+    const breadcrumbParentSkips = new Set();
+    if (relativePath === 'projects/instructional-design/microlearning-performance-support/microlearning' ||
+        relativePath === 'projects/instructional-design/microlearning-performance-support/performance-support') {
+      breadcrumbParentSkips.add('projects/instructional-design/microlearning-performance-support');
+    }
+    if (relativePath === 'projects/instructional-design/interactive-learning/ai-integrations-in-learning') {
+      breadcrumbParentSkips.add('projects/instructional-design/interactive-learning');
+    }
+    ancestors = ancestors.filter(([route]) => !breadcrumbParentSkips.has(route));
     const exact = ancestors.find(([route]) => route === relativePath);
 
     const items = [{ label: 'Home', href: new URL('index.html', portfolioRoot).href }];
@@ -347,6 +367,28 @@
         : `<span aria-current="page">${escapeHtml(item.label)}</span>`;
       return `${separator}${crumb}`;
     }).join('');
+  };
+
+  const initBreadcrumbTone = () => {
+    const breadcrumbs = document.querySelector('.breadcrumbs');
+    if (!breadcrumbs) return;
+    const hero = breadcrumbs.closest('section, header, main') || breadcrumbs.parentElement;
+    const heading = hero?.querySelector('h1') || document.querySelector('main h1');
+    if (!heading) return;
+
+    const match = window.getComputedStyle(heading).color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+    if (!match) return;
+    const [r,g,b] = match.slice(1,4).map(Number);
+    const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+    const lightText = luminance > 0.58;
+    const primary = lightText ? 'rgba(248,252,249,.84)' : '#40554d';
+    const current = lightText ? '#ffffff' : '#263d37';
+    const separator = lightText ? 'rgba(248,252,249,.56)' : '#7a8781';
+
+    breadcrumbs.dataset.breadcrumbTone = lightText ? 'light' : 'dark';
+    breadcrumbs.querySelectorAll('a').forEach((node) => node.style.setProperty('color', primary, 'important'));
+    breadcrumbs.querySelectorAll('[aria-current="page"]').forEach((node) => node.style.setProperty('color', current, 'important'));
+    breadcrumbs.querySelectorAll('.breadcrumb-separator').forEach((node) => node.style.setProperty('color', separator, 'important'));
   };
 
   const cleanLinkLabel = (value) => String(value || '')
@@ -889,6 +931,7 @@
   initHiringGuideNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
+  initBreadcrumbTone();
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();
@@ -897,6 +940,71 @@
   initSectionRhythm();
   initCertificationCaseCopy();
   initProjectDetailExplorer();
+
+  const initStableTabInteractions = () => {
+    const desktop = window.matchMedia('(min-width: 761px)');
+    const shells = new Set();
+
+    const findShell = (tablist) => {
+      const explicit = tablist.closest('[data-stable-interaction]');
+      if (explicit) return explicit;
+
+      let node = tablist.parentElement;
+      let depth = 0;
+      while (node && node !== document.body && depth < 5) {
+        if (node.querySelector('[role="tabpanel"]')) return node;
+        node = node.parentElement;
+        depth += 1;
+      }
+      return null;
+    };
+
+    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+      const shell = findShell(tablist);
+      if (!shell) return;
+      shell.dataset.stableTabShell = 'true';
+      shells.add(shell);
+    });
+
+    const clearLock = (shell) => {
+      shell.style.removeProperty('--stable-tab-shell-height');
+      shell.querySelectorAll('[data-stable-tab-panel="true"]').forEach((panel) => {
+        panel.style.removeProperty('--stable-tab-panel-height');
+      });
+    };
+
+    const lockShell = (shell) => {
+      clearLock(shell);
+      if (!desktop.matches) return;
+      const rect = shell.getBoundingClientRect();
+      if (rect.width < 80 || rect.height < 40) return;
+
+      const panels = [...shell.querySelectorAll('[role="tabpanel"]')];
+      const visible = panels.find((panel) => !panel.hidden && panel.getClientRects().length);
+      const panelHeight = visible ? Math.ceil(visible.getBoundingClientRect().height) : 0;
+
+      shell.style.setProperty('--stable-tab-shell-height', Math.ceil(rect.height) + 'px');
+      panels.forEach((panel) => {
+        panel.dataset.stableTabPanel = 'true';
+        if (panelHeight > 0) panel.style.setProperty('--stable-tab-panel-height', panelHeight + 'px');
+      });
+    };
+
+    const lockAll = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+      shells.forEach(lockShell);
+    }));
+
+    if (document.readyState === 'complete') lockAll();
+    else window.addEventListener('load', lockAll, { once: true });
+
+    if (document.fonts?.ready) document.fonts.ready.then(lockAll).catch(() => {});
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(lockAll, 140);
+    }, { passive: true });
+  };
 
   const initAskHaleyReturnDock = () => {
     if (document.body.classList.contains('hiring-manager-page')) return;
@@ -945,6 +1053,7 @@
   initHiringAssistant();
   initAskHaleyReturnDock();
   initDemoHelp();
+  initStableTabInteractions();
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
