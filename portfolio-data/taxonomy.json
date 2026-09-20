@@ -41,13 +41,19 @@
     },
     {
       "id": "lms-administration",
-      "label": "LMS Administration & System Operations",
+      "label": "LMS Administration",
       "path": "portfolio/projects/lms-administration/index.html",
-      "subcategories": []
+      "subcategories": [
+        {
+          "id": "system-integrations",
+          "label": "System Integrations",
+          "path": "portfolio/projects/lms-administration/system-integrations/index.html"
+        }
+      ]
     },
     {
       "id": "workflows",
-      "label": "System Integrations and Workflows",
+      "label": "Workflows",
       "path": "portfolio/projects/workflows/index.html",
       "subcategories": [
         {
