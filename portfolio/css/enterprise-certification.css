@@ -2382,3 +2382,92 @@
 @media(min-width:761px){.blueprint-panel{height:465px;overflow:auto;scrollbar-gutter:stable}.delivery-panel{height:315px;overflow:hidden}.delivery-panel-main>div{max-height:235px;overflow:auto;scrollbar-gutter:stable}.overview-stage{height:230px}}
 @media(max-width:850px){.curriculum-demo{grid-template-columns:1fr}.curriculum-syllabus{grid-template-columns:repeat(2,minmax(0,1fr))}.curriculum-player{grid-template-columns:1fr;grid-template-rows:38px auto auto}.curriculum-coach{max-height:none}.curriculum-screen img{max-height:380px}}
 @media(max-width:560px){.curriculum-syllabus{grid-template-columns:1fr}}
+
+/* Certification interaction layout guard */
+.cert-case-page .overview-stage,
+.cert-case-page .blueprint-shell,
+.cert-case-page .curriculum-demo,
+.cert-case-page .delivery-workspace{
+  height:auto;
+  max-height:none;
+}
+.cert-case-page .overview-grid,
+.cert-case-page .overview-cards,
+.cert-case-page .blueprint-tabs,
+.cert-case-page .curriculum-syllabus,
+.cert-case-page .delivery-tabs{
+  align-content:start;
+  align-items:start;
+  height:auto;
+  max-height:none;
+}
+.cert-case-page .overview-card,
+.cert-case-page .blueprint-tab,
+.cert-case-page .curriculum-step,
+.cert-case-page .delivery-tab{
+  align-self:start;
+}
+@media(min-width:761px){
+  .cert-case-page .overview-stage{
+    height:230px!important;
+    min-height:230px!important;
+    max-height:230px!important;
+    overflow:hidden;
+  }
+  .cert-case-page .overview-detail{
+    max-height:98px;
+    overflow:auto;
+    scrollbar-gutter:stable;
+  }
+  .cert-case-page .blueprint-panel{
+    height:465px!important;
+    min-height:465px!important;
+    max-height:465px!important;
+    overflow:auto!important;
+    scrollbar-gutter:stable;
+  }
+  .cert-case-page .curriculum-demo{
+    height:520px!important;
+    min-height:520px!important;
+    max-height:520px!important;
+    align-items:start!important;
+  }
+  .cert-case-page .curriculum-syllabus{
+    height:auto!important;
+    align-self:start!important;
+  }
+  .cert-case-page .curriculum-player{
+    height:520px!important;
+    min-height:520px!important;
+    max-height:520px!important;
+  }
+  .cert-case-page .curriculum-coach{
+    max-height:482px!important;
+    overflow:auto!important;
+    scrollbar-gutter:stable;
+  }
+  .cert-case-page .delivery-panel{
+    height:315px!important;
+    min-height:315px!important;
+    max-height:315px!important;
+    overflow:hidden!important;
+  }
+  .cert-case-page .delivery-panel-main>div,
+  .cert-case-page .delivery-result{
+    max-height:235px;
+    overflow:auto;
+    scrollbar-gutter:stable;
+  }
+}
+@media(max-width:760px){
+  .cert-case-page .overview-stage,
+  .cert-case-page .blueprint-panel,
+  .cert-case-page .curriculum-demo,
+  .cert-case-page .curriculum-player,
+  .cert-case-page .delivery-panel{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
