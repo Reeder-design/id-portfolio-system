@@ -327,6 +327,9 @@
     const h1 = document.querySelector('main h1, .page-hero h1, h1');
     const currentLabel = h1 ? h1.textContent.trim() : document.title.split('|')[0].trim();
     let ancestors = BREADCRUMB_ROUTES.filter(([route]) => relativePath === route || relativePath.startsWith(`${route}/`));
+    if (relativePath === 'projects/workflows/ai-automation/salesforce-lms-account-automation') {
+      ancestors = [['projects','Projects'],['projects/lms-administration','LMS Administration'],['projects/lms-administration/system-integrations','System Integrations']];
+    }
     const breadcrumbParentSkips = new Set();
     if (relativePath === 'projects/instructional-design/microlearning-performance-support/microlearning' ||
         relativePath === 'projects/instructional-design/microlearning-performance-support/performance-support') {
