@@ -451,3 +451,11 @@
   .reporting-evidence-tabs{grid-template-columns:1fr}
   .reporting-evidence-frame figcaption{align-items:flex-start;flex-direction:column;padding:10px 12px}
 }
+
+/* Public portfolio-boundary contrast */
+.reporting-outcome-section .public-safe-note,
+.reporting-outcome-section .public-safe-note span,
+.reporting-outcome-section .portfolio-safety-note .public-safe-note,
+.reporting-outcome-section .portfolio-safety-note .public-safe-note span{color:#334841!important}
+.reporting-outcome-section .public-safe-note strong,
+.reporting-outcome-section .portfolio-safety-note .public-safe-note strong{color:#102d25!important;font-weight:900!important}
