@@ -827,6 +827,273 @@
           .id-capability-node,.id-capability-node-arrow{transition:none!important}
         }
 
+
+        /* UAT refinement: professional capability wheel */
+        .id-capability-wheel{
+          width:min(100%,930px);
+          margin:30px auto 0;
+          padding:18px 18px 16px;
+          border:1px solid rgba(255,255,255,.08);
+          border-radius:28px;
+          background:
+            radial-gradient(circle at 50% 45%,rgba(121,201,158,.07),transparent 17rem),
+            linear-gradient(145deg,rgba(15,45,49,.38),rgba(22,55,57,.2));
+          box-shadow:0 22px 50px rgba(0,0,0,.08) inset,0 14px 34px rgba(0,0,0,.08);
+        }
+        .id-wheel-canvas{
+          position:relative;
+          min-height:640px;
+        }
+        .id-wheel-visual{
+          position:absolute;
+          left:50%;
+          top:50%;
+          width:570px;
+          height:570px;
+          transform:translate(-50%,-50%);
+          border-radius:50%;
+          pointer-events:none;
+        }
+        .id-wheel-ring{position:absolute;border-radius:50%}
+        .id-wheel-ring.ring-outer{inset:0;border:1px dashed rgba(184,233,201,.24)}
+        .id-wheel-ring.ring-middle{inset:74px;border:1px solid rgba(255,255,255,.07)}
+        .id-wheel-ring.ring-inner{inset:136px;border:1px solid rgba(121,201,158,.14)}
+        .id-wheel-spokes{
+          position:absolute;
+          inset:0;
+          border-radius:50%;
+          background:repeating-conic-gradient(from -90deg,rgba(121,201,158,.16) 0deg 1deg,transparent 1deg 40deg);
+          -webkit-mask:radial-gradient(circle at center,transparent 0 26%,#000 27% 49%,transparent 50%);
+          mask:radial-gradient(circle at center,transparent 0 26%,#000 27% 49%,transparent 50%);
+        }
+        .id-wheel-tracer{
+          position:absolute;
+          left:50%;
+          top:50%;
+          width:12px;
+          height:12px;
+          margin:-6px;
+          border:2px solid rgba(255,255,255,.9);
+          border-radius:50%;
+          background:#97db4f;
+          box-shadow:0 0 0 6px rgba(151,219,79,.08),0 0 20px rgba(151,219,79,.55);
+          transform-origin:0 0;
+          animation:idWheelTracer 10s linear infinite;
+        }
+        @keyframes idWheelTracer{
+          from{transform:rotate(0deg) translateY(-284px)}
+          to{transform:rotate(360deg) translateY(-284px)}
+        }
+        .id-wheel-stage{
+          position:absolute;
+          display:grid;
+          place-items:center;
+          min-width:74px;
+          min-height:28px;
+          padding:5px 10px;
+          border:1px solid rgba(121,201,158,.19);
+          border-radius:999px;
+          background:#244944;
+          color:#dff0e5;
+          font:900 .5rem/1 var(--font-heading);
+          letter-spacing:.05em;
+          text-transform:uppercase;
+          box-shadow:0 6px 14px rgba(0,0,0,.09);
+        }
+        .id-wheel-stage.stage-design{left:50%;top:88px;transform:translateX(-50%)}
+        .id-wheel-stage.stage-build{right:77px;top:50%;transform:translateY(-50%)}
+        .id-wheel-stage.stage-deliver{left:50%;bottom:88px;transform:translateX(-50%)}
+        .id-wheel-stage.stage-improve{left:77px;top:50%;transform:translateY(-50%)}
+
+        .id-wheel-center{
+          position:absolute;
+          z-index:4;
+          left:50%;
+          top:50%;
+          width:230px;
+          min-height:230px;
+          transform:translate(-50%,-50%);
+          display:grid;
+          place-items:center;
+          align-content:center;
+          padding:20px;
+          border:1px solid rgba(151,219,79,.34);
+          border-radius:50%;
+          background:linear-gradient(145deg,#fff,#edf6f0);
+          box-shadow:0 22px 46px rgba(0,0,0,.19),0 0 0 11px rgba(255,255,255,.035);
+          text-align:center;
+        }
+        .id-wheel-center::before{
+          content:"";
+          position:absolute;
+          inset:-26px;
+          z-index:-1;
+          border:1px solid rgba(121,201,158,.08);
+          border-radius:50%;
+        }
+        .id-wheel-avatar{
+          display:grid;
+          place-items:center;
+          width:76px;
+          height:76px;
+          margin-bottom:7px;
+          padding:5px;
+          border:1px solid rgba(80,132,132,.13);
+          border-radius:20px;
+          background:#fff;
+          box-shadow:0 8px 18px rgba(43,72,64,.1);
+        }
+        .id-wheel-avatar img{width:64px;height:64px;object-fit:contain;image-rendering:pixelated}
+        .id-wheel-kicker{color:#4a796e;font:900 .49rem/1 var(--font-heading);letter-spacing:.08em;text-transform:uppercase}
+        .id-wheel-center>strong{margin-top:4px;color:#263d37;font:800 1rem/1.1 var(--font-heading)}
+        .id-wheel-center p{max-width:175px;margin:7px 0 0;color:#607069;font-size:.57rem;line-height:1.38}
+
+        .id-wheel-nodes{
+          position:absolute;
+          inset:0;
+          z-index:3;
+        }
+        .id-wheel-node{
+          position:absolute;
+          left:50%;
+          top:50%;
+          width:114px;
+          transform:
+            translate(-50%,-50%)
+            rotate(var(--a))
+            translateX(286px)
+            rotate(calc(var(--a) * -1));
+          display:grid;
+          justify-items:center;
+          gap:6px;
+          color:#fff;
+          text-decoration:none;
+          transition:transform .18s ease;
+        }
+        .id-wheel-icon{
+          position:relative;
+          display:grid;
+          place-items:center;
+          width:76px;
+          height:76px;
+          padding:5px;
+          border:1px solid rgba(121,201,158,.28);
+          border-radius:22px;
+          background:linear-gradient(145deg,#fff,#edf6f0);
+          box-shadow:0 14px 30px rgba(0,0,0,.15);
+        }
+        .id-wheel-icon::after{
+          content:"↗";
+          position:absolute;
+          right:-7px;
+          top:-7px;
+          display:grid;
+          place-items:center;
+          width:24px;
+          height:24px;
+          border:3px solid #315755;
+          border-radius:9px;
+          background:#97db4f;
+          color:#173139;
+          font:900 .55rem/1 var(--font-heading);
+          opacity:0;
+          transform:translate(-2px,2px) scale(.85);
+          transition:opacity .18s ease,transform .18s ease;
+        }
+        .id-wheel-icon img{
+          width:62px;
+          height:62px;
+          object-fit:contain;
+          image-rendering:pixelated;
+        }
+        .id-wheel-node>strong{
+          max-width:112px;
+          padding:5px 8px;
+          border:1px solid rgba(255,255,255,.1);
+          border-radius:999px;
+          background:#244944;
+          color:#fff;
+          font:800 .55rem/1.15 var(--font-heading);
+          text-align:center;
+          box-shadow:0 7px 16px rgba(0,0,0,.08);
+        }
+        .id-wheel-node:hover,.id-wheel-node:focus-visible{
+          transform:
+            translate(-50%,-50%)
+            rotate(var(--a))
+            translateX(286px)
+            rotate(calc(var(--a) * -1))
+            scale(1.07);
+          outline:none;
+        }
+        .id-wheel-node:hover .id-wheel-icon,
+        .id-wheel-node:focus-visible .id-wheel-icon{
+          border-color:#97db4f;
+          box-shadow:0 18px 34px rgba(0,0,0,.2),0 0 0 4px rgba(151,219,79,.08);
+        }
+        .id-wheel-node:hover .id-wheel-icon::after,
+        .id-wheel-node:focus-visible .id-wheel-icon::after{
+          opacity:1;
+          transform:none;
+        }
+        .id-wheel-node:hover>strong,
+        .id-wheel-node:focus-visible>strong{background:#315755;color:#dff6e5}
+
+        .id-wheel-footer{
+          display:grid;
+          justify-items:center;
+          gap:4px;
+          max-width:650px;
+          margin:4px auto 0;
+          padding:11px 16px;
+          border-top:1px solid rgba(255,255,255,.07);
+          text-align:center;
+        }
+        .id-wheel-footer p{margin:0;color:#d5e4dc;font-size:.62rem;line-height:1.42}
+        .id-wheel-footer p strong{color:#fff}
+        .id-wheel-footer span{color:#9fb5ab;font-size:.53rem}
+
+        @media(max-width:860px){
+          .id-capability-wheel{padding:16px}
+          .id-wheel-canvas{min-height:0}
+          .id-wheel-visual{display:none}
+          .id-wheel-center{
+            position:relative;
+            left:auto;
+            top:auto;
+            width:min(260px,84vw);
+            min-height:0;
+            margin:0 auto 18px;
+            transform:none;
+            border-radius:28px;
+          }
+          .id-wheel-center::before{display:none}
+          .id-wheel-nodes{
+            position:relative;
+            inset:auto;
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:12px;
+          }
+          .id-wheel-node{
+            position:relative;
+            left:auto;
+            top:auto;
+            width:auto;
+            transform:none!important;
+          }
+        }
+        @media(max-width:620px){
+          .id-wheel-nodes{grid-template-columns:repeat(2,minmax(0,1fr))}
+        }
+        @media(max-width:420px){
+          .id-wheel-nodes{grid-template-columns:1fr}
+        }
+        @media(prefers-reduced-motion:reduce){
+          .id-wheel-tracer{animation:none!important}
+          .id-wheel-node,.id-wheel-icon::after{transition:none!important}
+        }
+
 </style>
     <script defer src="../../js/portfolio-motion.js"></script>
 </head>
@@ -916,49 +1183,61 @@
           <p>Strategy, content, practice, media, facilitation, performance support, delivery, and measurement work better as one connected system. I move across those pieces as the learning problem requires.</p>
         </div>
 
-        <div class="id-capability-system">
-          <div class="id-capability-stage" aria-label="Connected instructional design capabilities">
-            <div class="id-capability-network" aria-hidden="true">
-              <span class="id-network-ring outer"></span>
-              <span class="id-network-ring middle"></span>
-              <span class="id-network-ring inner"></span>
-              <span class="id-network-spokes"></span>
-              <span class="id-network-pulse pulse-a"></span>
-              <span class="id-network-pulse pulse-b"></span>
-              <span class="id-network-pulse pulse-c"></span>
+        <div class="id-capability-wheel">
+          <div class="id-wheel-canvas" aria-label="Connected learning and development capabilities">
+            <div class="id-wheel-visual" aria-hidden="true">
+              <span class="id-wheel-ring ring-outer"></span>
+              <span class="id-wheel-ring ring-middle"></span>
+              <span class="id-wheel-ring ring-inner"></span>
+              <span class="id-wheel-spokes"></span>
+              <span class="id-wheel-tracer"></span>
+              <span class="id-wheel-stage stage-design">Design</span>
+              <span class="id-wheel-stage stage-build">Build</span>
+              <span class="id-wheel-stage stage-deliver">Deliver</span>
+              <span class="id-wheel-stage stage-improve">Improve</span>
             </div>
 
-            <div class="id-capability-center">
-              <span class="id-capability-avatar"><img src="../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span>
-              <p class="eyebrow">Full-cycle L&amp;D</p>
-              <h3>Haley Reeder</h3>
-              <p>I connect the learning need to the right mix of design, development, delivery, support, and measurement.</p>
-              <div class="id-capability-center-flow" aria-label="Learning and development lifecycle">
-                <span><b>01</b>Design</span>
-                <span><b>02</b>Build</span>
-                <span><b>03</b>Deliver</span>
-                <span><b>04</b>Improve</span>
-              </div>
+            <div class="id-wheel-center">
+              <span class="id-wheel-avatar"><img src="../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span>
+              <span class="id-wheel-kicker">Full-cycle L&amp;D</span>
+              <strong>Haley Reeder</strong>
+              <p>I connect strategy, learning design, development, delivery, support, and measurement into one system.</p>
             </div>
 
-            <ol class="id-capability-orbit-list">
-              <li style="--angle:0deg"><a class="id-capability-node" href="./complete-learning-paths/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span><span class="id-capability-node-copy"><strong>eLearning</strong><small>Paths + courses</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:40deg"><a class="id-capability-node" href="./interactive-learning/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""></span><span class="id-capability-node-copy"><strong>Interactive Learning</strong><small>Practice + decisions</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:80deg"><a class="id-capability-node" href="./microlearning-performance-support/microlearning/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/microlearning-performance-support/microlearning.webp" alt=""></span><span class="id-capability-node-copy"><strong>Microlearning</strong><small>Focused learning</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:120deg"><a class="id-capability-node" href="./microlearning-performance-support/performance-support/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/performance-support/tools.webp" alt=""></span><span class="id-capability-node-copy"><strong>Performance Support</strong><small>Point-of-need tools</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:160deg"><a class="id-capability-node" href="./interactive-learning/ai-integrations-in-learning/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt=""></span><span class="id-capability-node-copy"><strong>Learner-facing AI</strong><small>Guided AI practice</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:200deg"><a class="id-capability-node" href="./live-training/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><span class="id-capability-node-copy"><strong>Live Training</strong><small>Facilitation + coaching</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:240deg"><a class="id-capability-node" href="./multimedia/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/ai-evaluation/demo-video.webp" alt=""></span><span class="id-capability-node-copy"><strong>Multimedia</strong><small>Video + motion</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:280deg"><a class="id-capability-node" href="./complete-learning-paths/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/ai-evaluation/rubric-checklist.webp" alt=""></span><span class="id-capability-node-copy"><strong>Assessment Design</strong><small>Evidence + scoring</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-              <li style="--angle:320deg"><a class="id-capability-node" href="../workflows/index.html"><span class="id-capability-node-icon"><img src="../../assets/icons/pixel/performance-support/report-search.webp" alt=""></span><span class="id-capability-node-copy"><strong>Tools + Reporting</strong><small>Data + action</small></span><span class="id-capability-node-arrow" aria-hidden="true">↗</span></a></li>
-            </ol>
+            <nav class="id-wheel-nodes" aria-label="Instructional design capabilities">
+              <a class="id-wheel-node" style="--a:-90deg" href="./complete-learning-paths/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span><strong>eLearning</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:-50deg" href="./interactive-learning/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""></span><strong>Interactive Learning</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:-10deg" href="./microlearning-performance-support/microlearning/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/microlearning-performance-support/microlearning.webp" alt=""></span><strong>Microlearning</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:30deg" href="./microlearning-performance-support/performance-support/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/performance-support/tools.webp" alt=""></span><strong>Performance Support</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:70deg" href="./interactive-learning/ai-integrations-in-learning/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt=""></span><strong>Learner-facing AI</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:110deg" href="./live-training/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><strong>Live Training</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:150deg" href="./multimedia/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/ai-evaluation/demo-video.webp" alt=""></span><strong>Multimedia</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:190deg" href="./complete-learning-paths/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt=""></span><strong>Assessment Design</strong>
+              </a>
+              <a class="id-wheel-node" style="--a:230deg" href="../workflows/index.html">
+                <span class="id-wheel-icon"><img src="../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""></span><strong>Tools + Reporting</strong>
+              </a>
+            </nav>
           </div>
 
-          <div class="id-capability-system-footer">
-            <span class="id-system-key"><i></i>Learning strategy</span>
-            <span class="id-system-key"><i></i>Development</span>
-            <span class="id-system-key"><i></i>Delivery + support</span>
-            <span class="id-system-key"><i></i>Measurement + iteration</span>
+          <div class="id-wheel-footer">
+            <p><strong>One connected L&amp;D system.</strong> Each capability supports the same learner experience from first need through delivery and iteration.</p>
+            <span>Choose a capability to explore the related work.</span>
           </div>
         </div>
       </div>
