@@ -83,7 +83,7 @@
     },
     alignment: {
       title: 'Make the relationship between objective, content, practice, and assessment visible.',
-      text: 'Choose an objective and replay the sequence. Every layer supports the same seller behavior.',
+      text: 'Choose an objective and walk through the alignment decision process I used for it.',
       html: '<div class="alignment-reveal" id="alignmentReveal"></div>'
     },
     launch: {

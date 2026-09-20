@@ -51,41 +51,25 @@
 
   <section class="section flagship-section facilitation-control-section" id="facilitation">
     <div class="container">
-      <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><p class="eyebrow">Facilitation Control Room</p></div>
-      <h2>One interaction for how I moved through the module and facilitated the room.</h2>
-      <p class="short-copy">Switch perspectives, then choose a stage or facilitation move. Each state keeps the action, learner signal, and design takeaway together on one screen.</p>
-
+      <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><p class="eyebrow">Facilitation Decision Loop</p></div>
+      <h2>The session moved forward through four facilitation decisions.</h2>
+      <p class="short-copy">Choose a decision to see what I was trying to accomplish, what signal I needed from the room, and how that decision changed the next move.</p>
       <div class="control-room">
-        <div class="control-view-tabs" role="tablist" aria-label="Facilitation perspective">
-          <button class="control-view-tab active" type="button" role="tab" aria-selected="true" data-control-view="arc"><span>01</span><strong>Session Arc</strong><small>How I moved through the module</small></button>
-          <button class="control-view-tab" type="button" role="tab" aria-selected="false" data-control-view="moves"><span>02</span><strong>Facilitation Moves</strong><small>How I checked and adapted</small></button>
+        <div class="control-options control-decision-tabs" id="controlOptions" role="tablist" aria-label="Facilitation decisions">
+          <button class="control-option active" type="button" role="tab" aria-selected="true" data-control-key="orient">Orient</button>
+          <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="diagnose">Diagnose</button>
+          <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="adapt">Adapt</button>
+          <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="transfer">Transfer</button>
         </div>
-
         <div class="control-room-panel" role="tabpanel" aria-live="polite">
-          <div class="control-options" id="controlOptions" role="tablist" aria-label="Session Arc options">
-            <button class="control-option active" type="button" role="tab" aria-selected="true" data-control-key="prepare">Prepare</button>
-            <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="frame">Frame</button>
-            <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="explain">Explain</button>
-            <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="check">Ask + Poll</button>
-            <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="apply">Apply</button>
-            <button class="control-option" type="button" role="tab" aria-selected="false" data-control-key="reflect">Debrief</button>
-          </div>
-
           <div class="control-state">
-            <div class="control-state-copy">
-              <p class="eyebrow" id="controlLabel">Prepare</p>
-              <h3 id="controlTitle">Prepare for the assigned module.</h3>
-              <p id="controlSummary">Before delivery, I reviewed the facilitator and participant materials, identified the objective, marked transitions, and anticipated where the seller or partner audience might need a clearer example or more discussion.</p>
-            </div>
-            <div class="control-state-grid">
-              <article><span>What I did</span><p id="controlAction">Reviewed the objective, materials, transitions, and likely friction points before delivery.</p></article>
-              <article><span>Signal I watched</span><p id="controlSignal">Places where the content might create uncertainty, competing interpretations, or weak application.</p></article>
-              <article><span>What came back to design</span><p id="controlDesign">Preparation helped me flag areas where examples, prompts, or facilitator notes might need stronger support.</p></article>
-            </div>
+            <div class="control-state-copy"><p class="eyebrow" id="controlLabel">Orient</p><h3 id="controlTitle">Give the room a clear job before adding detail.</h3><p id="controlSummary">I connected the module objective to the seller task so learners knew what they should be listening for and what they would need to do with the idea.</p></div>
+            <div class="control-state-grid"><article><span>What I did</span><p id="controlAction">Framed the objective in seller language and connected it to the customer conversation.</p></article><article><span>Signal I needed</span><p id="controlSignal">Learners could explain why the concept mattered before we moved deeper.</p></article></div>
           </div>
-
-          <div class="control-motion is-switching" id="controlMotion" data-view="arc" aria-hidden="true">
-            <span class="control-motion-node active">Prepare</span><i></i><span class="control-motion-node">Deliver</span><i></i><span class="control-motion-node">Check</span><i></i><span class="control-motion-node">Adapt</span>
+          <div class="control-motion control-decision-motion" id="controlMotion" aria-label="Selected facilitation decision flow">
+            <span class="control-motion-node"><img id="controlMotionIconA" src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small id="controlMotionLabelA">Objective</small></span><i></i>
+            <span class="control-motion-node active"><img id="controlMotionIconB" src="../../../../assets/icons/pixel/hiring-guide/team.webp" alt=""><small id="controlMotionLabelB">Audience</small></span><i></i>
+            <span class="control-motion-node"><img id="controlMotionIconC" src="../../../../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt=""><small id="controlMotionLabelC">Frame</small></span>
           </div>
         </div>
       </div>
@@ -95,26 +79,23 @@
   <section class="section flagship-section live-adaptation-section" id="adaptation">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><p class="eyebrow">Read the Room</p></div>
-      <h2>I changed the delivery when the room gave me a different signal.</h2>
-      <p class="short-copy">Choose a learner signal. The whole state shows what I read, what I changed live, and what that signal taught me about the learning itself.</p>
-
+      <h2>The learner signal changed what I did next.</h2>
+      <p class="short-copy">Choose a signal to see the live response.</p>
       <div class="signal-lab">
         <div class="signal-grid" role="tablist" aria-label="Learner signals">
-          <button class="signal-btn active" type="button" role="tab" aria-selected="true" data-signal="confidence"><span class="signal-status-dot"></span><span><strong>Low poll confidence</strong><small>Understanding is not stable</small></span></button>
-          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="repeated"><span class="signal-status-dot"></span><span><strong>Question repeats</strong><small>The framing is not resolving it</small></span></button>
-          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="examples"><span class="signal-status-dot"></span><span><strong>Strong learner examples</strong><small>The room has experience to use</small></span></button>
-          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="time"><span class="signal-status-dot"></span><span><strong>Time is tightening</strong><small>The agenda needs a tradeoff</small></span></button>
+          <button class="signal-btn active" type="button" role="tab" aria-selected="true" data-signal="confidence"><span class="signal-status-dot"></span><span><strong>Low confidence</strong><small>Poll results split</small></span></button>
+          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="repeated"><span class="signal-status-dot"></span><span><strong>Question repeats</strong><small>Framing is not landing</small></span></button>
+          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="examples"><span class="signal-status-dot"></span><span><strong>Strong examples</strong><small>Use the room's experience</small></span></button>
+          <button class="signal-btn" type="button" role="tab" aria-selected="false" data-signal="time"><span class="signal-status-dot"></span><span><strong>Time pressure</strong><small>Protect the practice</small></span></button>
         </div>
-
         <div class="signal-detail" role="tabpanel" aria-live="polite">
-          <div class="signal-meter-panel">
-            <span>Live room signal</span>
-            <div class="signal-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-            <strong id="signalHeadline">Mixed confidence</strong>
+          <div class="signal-motion-stage" id="signalMotion" aria-label="Selected learner signal and facilitation response">
+            <span><img id="signalIconA" src="../../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""><small id="signalLabelA">Poll</small></span><i></i>
+            <span><img id="signalIconB" src="../../../../assets/icons/pixel/hiring-guide/reference-search.webp" alt=""><small id="signalLabelB">Interpret</small></span><i></i>
+            <span><img id="signalIconC" src="../../../../assets/icons/pixel/hiring-guide/idea-bulb.webp" alt=""><small id="signalLabelC">Reframe</small></span>
           </div>
-          <article class="signal-state-card"><span>What I read</span><p id="signalSuggests">The concept or distinction was not stable yet.</p></article>
-          <article class="signal-state-card signal-response-card"><span>What I did next</span><p id="signalResponse">I slowed down, reframed the concept, and tested it again with a concrete seller example.</p></article>
-          <article class="signal-state-card signal-design-card"><span>What came back to design</span><p id="signalDesign">A low-confidence response showed where future explanations, examples, or formative checks needed to make the distinction clearer.</p></article>
+          <article class="signal-state-card"><span>What it told me</span><p id="signalSuggests">The distinction was not stable yet.</p></article>
+          <article class="signal-state-card signal-response-card"><span>How I adapted</span><p id="signalResponse">I slowed down, changed the example, and checked the distinction again before moving on.</p></article>
         </div>
       </div>
     </div>
@@ -123,7 +104,7 @@
   <section class="live-case-end">
     <div class="container">
       <p class="public-safe-note"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><strong>Scope note:</strong> I facilitated assigned modules within a larger MEDDPICC workshop program. Employer names, participant details, proprietary materials, recordings, and private performance data are omitted.</span></p>
-      <a class="live-case-back" href="../index.html"><span aria-hidden="true">←</span><span><small>Back to Live Training</small><strong>Live Training projects</strong></span></a>
+      
     </div>
   </section>
 </main>

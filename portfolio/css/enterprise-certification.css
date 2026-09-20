@@ -2364,3 +2364,6 @@
 .cert-authoring-section .authoring-tool-tab.active strong{
   color:#213b34!important;
 }
+
+#overview .overview-principle-callout{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center;margin:0!important;padding:14px 16px;border:1px solid rgba(121,201,158,.34);border-radius:17px;background:linear-gradient(145deg,#eef7f1,#fff);box-shadow:0 10px 24px rgba(42,75,68,.07);color:#315755!important;font:700 .78rem/1.48 var(--font-heading)!important}
+#overview .overview-principle-callout img{width:54px;height:54px;padding:5px;border-radius:13px;background:#fff;object-fit:contain}
