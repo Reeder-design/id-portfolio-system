@@ -144,41 +144,29 @@
         <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Content</p></div>
         <div class="authoring-heading-grid">
           <div>
-            <h2>Explain it. Reinforce it. Then make the learner use it.</h2>
-            <p class="short-copy">Each layer supports the same seller decision, from first explanation through practice and assessment.</p>
+            <h2>A sanitized walkthrough of the curriculum I actually built.</h2>
+            <p class="short-copy">Instead of showing isolated screens, this mini course player follows the seller sequence from context to application and assessment.</p>
           </div>
         </div>
 
-        <div class="authoring-workspace">
-          <div class="authoring-tool-tabs" role="tablist" aria-label="Content architecture">
-            <button class="authoring-tool-tab active" type="button" role="tab" aria-selected="true" data-authoring="explain">
-              <span class="authoring-tool-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span>
-              <span><small>01</small><strong>Explain</strong></span>
-            </button>
-            <button class="authoring-tool-tab" type="button" role="tab" aria-selected="false" data-authoring="reinforce">
-              <span class="authoring-tool-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-verified.webp" alt=""></span>
-              <span><small>02</small><strong>Reinforce</strong></span>
-            </button>
-            <button class="authoring-tool-tab" type="button" role="tab" aria-selected="false" data-authoring="practice">
-              <span class="authoring-tool-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""></span>
-              <span><small>03</small><strong>Practice</strong></span>
-            </button>
-          </div>
+        <div class="curriculum-demo" data-stable-interaction>
+          <aside class="curriculum-syllabus" role="tablist" aria-label="Sanitized certification curriculum">
+            <button class="curriculum-step active" type="button" role="tab" aria-selected="true" data-curriculum="intro"><span>01</span><strong>Introduction</strong><small>Set the seller context</small></button>
+            <button class="curriculum-step" type="button" role="tab" aria-selected="false" data-curriculum="market"><span>02</span><strong>Market Opportunity</strong><small>Recognize customer signals</small></button>
+            <button class="curriculum-step" type="button" role="tab" aria-selected="false" data-curriculum="value"><span>03</span><strong>Need → Value</strong><small>Connect pain to outcomes</small></button>
+            <button class="curriculum-step" type="button" role="tab" aria-selected="false" data-curriculum="scenario"><span>04</span><strong>Customer Scenario</strong><small>Apply the decision logic</small></button>
+            <button class="curriculum-step" type="button" role="tab" aria-selected="false" data-curriculum="check"><span>05</span><strong>Knowledge Check</strong><small>Confirm key distinctions</small></button>
+            <button class="curriculum-step" type="button" role="tab" aria-selected="false" data-curriculum="complete"><span>06</span><strong>Completion</strong><small>Close the module + next step</small></button>
+          </aside>
 
-          <div class="authoring-panel" role="tabpanel" aria-live="polite">
-            <div class="authoring-copy">
-              <p class="eyebrow" id="authoringLabel">Content Architecture / Explain</p>
-              <h3 id="authoringTitle">Sequence the information around the seller decision.</h3>
-              <p id="authoringSummary">I introduced only the context sellers needed to recognize the opportunity, connect customer need to value, and prepare for the next decision.</p>
-              <div class="authoring-focus-row" id="authoringFocus">
-                <span>Customer context</span><span>Need-to-value logic</span><span>Seller relevance</span>
-              </div>
-            </div>
-
-            <div class="authoring-visual-shell">
-              <div class="authoring-visual-frame">
-                <img id="authoringImage" src="../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp" alt="Public-safe cellular sales market opportunity learning screen." loading="lazy">
-              </div>
+          <div class="curriculum-player" role="tabpanel" aria-live="polite">
+            <div class="curriculum-player-bar"><span><i></i><i></i><i></i></span><strong>Cellular Networking Sales Certification · sanitized sample</strong><small id="curriculumProgress">1 / 6</small></div>
+            <div class="curriculum-screen"><img id="curriculumImage" src="../../../../assets/project-images/cellular-certification/cert-introduction.webp" alt="Sanitized certification introduction screen."></div>
+            <div class="curriculum-coach interaction-scroll-region">
+              <p class="eyebrow" id="curriculumLabel">Introduction</p>
+              <h3 id="curriculumTitle">Start with the seller's job, not a technical data dump.</h3>
+              <p id="curriculumSummary">The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.</p>
+              <div class="curriculum-decision"><span>Seller behavior</span><strong id="curriculumBehavior">Explain the business context and recognize when the topic belongs in a customer conversation.</strong></div>
             </div>
           </div>
         </div>
