@@ -632,3 +632,11 @@ svg {
         overflow-wrap: anywhere;
     }
 }
+
+/* Stable interaction layout utility: tab/state changes should not resize the surrounding section. */
+[data-stable-interaction]{--stable-interaction-height:auto}
+[data-stable-interaction] .interaction-scroll-region{scrollbar-gutter:stable}
+@media(min-width:761px){
+  [data-stable-interaction]{min-height:var(--stable-interaction-height)}
+  [data-stable-interaction] .interaction-scroll-region{overflow:auto;overscroll-behavior:contain}
+}
