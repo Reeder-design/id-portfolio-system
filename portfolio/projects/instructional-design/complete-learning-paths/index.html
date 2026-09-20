@@ -232,6 +232,46 @@
           #elearning-lifecycle .lifecycle-evidence-frame img{height:100%!important;max-height:100%!important}
           #elearning-lifecycle #lifeEvidenceNote{min-height:42px;margin-bottom:0}
         }
+
+        /* Complete Learning Pathways lifecycle guard: keep tabs compact and only stabilize the detail panel. */
+        #elearning-lifecycle .lifecycle-shell{
+          align-items:start!important;
+          height:auto!important;
+          max-height:none!important;
+          overflow:visible!important;
+        }
+        #elearning-lifecycle .lifecycle-nav{
+          align-self:start!important;
+          align-content:start!important;
+          height:auto!important;
+          max-height:none!important;
+        }
+        #elearning-lifecycle .lifecycle-step{
+          height:auto!important;
+          min-height:48px;
+        }
+        @media(min-width:981px){
+          #elearning-lifecycle .lifecycle-detail{
+            height:420px!important;
+            min-height:420px!important;
+            max-height:420px!important;
+            overflow:hidden!important;
+          }
+          #elearning-lifecycle .lifecycle-detail-grid{
+            height:100%!important;
+            min-height:0!important;
+          }
+          #elearning-lifecycle .lifecycle-copy{
+            min-height:0!important;
+            max-height:100%!important;
+            overflow:auto!important;
+            scrollbar-gutter:stable;
+          }
+          #elearning-lifecycle .lifecycle-evidence{
+            min-height:0!important;
+            max-height:100%!important;
+          }
+        }
 </style>
     <script defer src="../../../js/portfolio-motion.js"></script>
 </head>
