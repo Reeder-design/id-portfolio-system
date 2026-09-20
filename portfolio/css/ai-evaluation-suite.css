@@ -233,3 +233,77 @@
 @media(prefers-reduced-motion:reduce){.ai-pipe-flow{animation:none!important}.ai-case-packet{transition:none!important}}
 
 /* PR108 UAT round 2 complete */
+
+
+/* PR108 UAT round 3: compact rubric workspace + water-pipeline interaction */
+.ai-rubric-studio-v2{align-items:start}
+.ai-rubric-packet-pane{min-height:354px;padding:10px}
+.ai-rubric-packet-head{grid-template-columns:44px 1fr;gap:8px}
+.ai-rubric-packet-head img{width:42px;height:42px}
+.ai-rubric-packet-tabs{margin:9px 0 7px}
+.ai-rubric-packet-copy{padding:9px}
+.ai-rubric-scoring-pane{display:flex;flex-direction:column;align-self:start;gap:7px;padding:10px}
+.ai-rubric-scoring-pane .ai-rubric-criteria-grid{gap:4px}
+.ai-rubric-scoring-pane .ai-rubric-criterion{min-height:56px;padding:5px}
+.ai-rubric-scoring-pane .ai-rubric-criterion img{width:30px;height:30px}
+.ai-rubric-question h3{margin:3px 0 5px;font-size:.96rem}
+.ai-rubric-focus{grid-template-columns:76px 1fr;gap:7px;padding:7px 9px}
+.ai-rubric-focus strong{font-size:.56rem;line-height:1.32}
+.ai-anchor-scale-v2{gap:5px}
+.ai-anchor-v2{grid-template-columns:34px 1fr;gap:8px;min-height:84px;padding:8px}
+.ai-anchor-v2>b{width:32px;height:32px}
+.ai-anchor-v2 strong{font-size:.55rem}
+.ai-anchor-v2 small{margin-top:3px;font-size:.49rem;line-height:1.24}
+.ai-rubric-studio-v2 .ai-calibration-console{min-height:354px;padding:12px}
+.ai-rubric-studio-v2 .ai-rubric-benchmark{min-height:112px}
+.ai-rubric-page .ai-demo-main .section-heading{margin-bottom:8px}
+
+/* Make the workflow read as a working water pipe rather than a flat process line. */
+.ai-workflow-page .ai-demo-main .section-heading{margin-bottom:8px}
+.ai-pipe-shell{min-height:188px;padding:16px 24px 14px}
+.ai-pipe-label{position:absolute;z-index:5;top:67px;display:grid;justify-items:center;gap:4px;color:#bce7ca;font:900 .4rem/1 var(--font-heading);letter-spacing:.08em}
+.ai-pipe-label i{display:block;width:24px;height:24px;border:4px solid rgba(121,201,158,.55);border-radius:7px;background:#102c31;box-shadow:inset 0 0 0 3px rgba(255,255,255,.02)}
+.ai-pipe-label-in{left:2.2%}.ai-pipe-label-out{right:2.2%}
+.ai-pipe-track{left:7%;right:7%;top:72px;height:24px;border:4px solid rgba(121,201,158,.58);background:#0d2a30;box-shadow:inset 0 0 0 4px rgba(255,255,255,.025),0 0 20px rgba(121,201,158,.10)}
+.ai-pipe-track::before,.ai-pipe-track::after{width:20px;height:40px;border-width:4px;border-color:rgba(121,201,158,.58)}
+.ai-pipe-liquid{position:absolute;left:4px;top:4px;bottom:4px;width:7%;overflow:hidden;border-radius:999px;background:linear-gradient(180deg,rgba(151,219,79,.9),rgba(80,132,132,.86));box-shadow:0 0 14px rgba(151,219,79,.25);transition:width .48s cubic-bezier(.2,.7,.2,1)}
+.ai-pipe-liquid::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 22px,rgba(255,255,255,.28) 22px 28px,rgba(255,255,255,.04) 28px 50px);background-size:78px 100%;animation:aiWaterCurrent 1.9s linear infinite}
+.ai-water-bubble{position:absolute;z-index:2;top:50%;width:5px;height:5px;margin-top:-2px;border:1px solid rgba(255,255,255,.72);border-radius:50%;background:rgba(255,255,255,.18);animation:aiWaterBubble 2.8s linear infinite}
+.ai-water-bubble.b1{left:7%;animation-delay:0s}.ai-water-bubble.b2{left:28%;animation-delay:.7s}.ai-water-bubble.b3{left:52%;animation-delay:1.4s}.ai-water-bubble.b4{left:76%;animation-delay:2.1s}
+.ai-pipeline-machine[data-current-stage="0"] .ai-pipe-liquid{width:8%}
+.ai-pipeline-machine[data-current-stage="1"] .ai-pipe-liquid{width:36%}
+.ai-pipeline-machine[data-current-stage="2"] .ai-pipe-liquid{width:67%}
+.ai-pipeline-machine[data-current-stage="3"] .ai-pipe-liquid{width:calc(100% - 8px)}
+.ai-case-packet{width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;border-color:#dff6e5;box-shadow:0 0 0 4px rgba(151,219,79,.12),0 8px 18px rgba(0,0,0,.2)}
+.ai-case-packet img{width:24px;height:24px}
+.ai-pipeline-stations{gap:14px}
+.ai-pipe-station{grid-template-rows:auto 76px auto auto;gap:2px}
+.ai-pipe-station>b{width:25px;height:25px}
+.ai-pipe-valve{width:72px;height:72px;border-width:4px;overflow:visible}
+.ai-pipe-valve img{width:50px;height:50px}
+.ai-valve-handle{position:absolute;z-index:3;top:-19px;left:50%;width:34px;height:8px;margin-left:-17px;border:3px solid #315755;border-radius:6px;background:#dff1e6;box-shadow:0 5px 0 -2px #315755;transition:transform .24s ease}
+.ai-valve-handle::before{content:"";position:absolute;left:50%;top:5px;width:5px;height:13px;margin-left:-2.5px;border-radius:3px;background:#315755}
+.ai-pipe-station.active .ai-valve-handle{transform:rotate(90deg);background:#97db4f}
+.ai-pipe-station.active .ai-pipe-valve{box-shadow:0 0 0 4px #97db4f,0 14px 26px rgba(0,0,0,.2),0 0 22px rgba(151,219,79,.18)}
+
+.ai-pipeline-detail-row{grid-template-columns:minmax(0,1fr) 290px;gap:8px}
+.ai-pipeline-stage-card{display:flex;flex-direction:column;min-height:0;padding:11px}
+.ai-pipeline-stage-card h3{margin:5px 0 3px;font-size:1rem}
+.ai-pipeline-stage-card>p{font-size:.63rem;line-height:1.4}
+.ai-pipeline-stage-card .ai-workflow-checks{grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.ai-pipeline-stage-card .ai-workflow-checks span{min-height:36px;padding:7px;font-size:.5rem}
+.ai-pipeline-stage-card .ai-workflow-motion{align-self:stretch;margin-top:8px;padding:8px}
+.ai-pipeline-stage-card .ai-workflow-motion img{width:44px;height:44px}
+.ai-pipeline-stage-card .ai-workflow-motion small{font-size:.46rem}
+.ai-current-artifact{grid-template-columns:62px 1fr;gap:10px;padding:12px}
+.ai-current-artifact>img{width:60px;height:60px}
+.ai-current-artifact strong{font-size:.78rem}
+.ai-current-artifact p{margin-top:5px;font-size:.58rem;line-height:1.38}
+.ai-artifact-belt{padding:8px}
+.ai-artifact-belt article{min-height:46px;padding:6px}
+
+@keyframes aiWaterCurrent{to{background-position:78px 0}}
+@keyframes aiWaterBubble{0%{transform:translateX(-18px) scale(.6);opacity:0}15%{opacity:.8}80%{opacity:.8}100%{transform:translateX(90px) scale(1.15);opacity:0}}
+@media(max-width:900px){.ai-pipe-label{display:none}.ai-pipe-track{left:9%;right:9%}.ai-pipeline-detail-row{grid-template-columns:1fr}}
+@media(max-width:680px){.ai-pipe-track{display:none}.ai-valve-handle{top:-14px;width:28px;margin-left:-14px}.ai-pipe-station{grid-template-rows:auto 62px auto auto}}
+@media(prefers-reduced-motion:reduce){.ai-pipe-liquid,.ai-valve-handle{transition:none!important}.ai-pipe-liquid::before,.ai-water-bubble{animation:none!important}}
