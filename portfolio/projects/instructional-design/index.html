@@ -326,6 +326,200 @@
         @media(max-width:900px){.id-capability-accordion summary{grid-template-columns:30px 48px 1fr 30px}.id-capability-chips{display:none}.id-capability-body{grid-template-columns:1fr}.id-capability-process{grid-template-columns:1fr 1fr}}
         @media(max-width:600px){.id-capability-accordion summary{grid-template-columns:44px 1fr 28px}.id-capability-number{display:none}.id-capability-process{grid-template-columns:1fr}}
 
+
+        /* Capabilities as one connected L&D system */
+        .id-capability-system{
+          position:relative;
+          width:min(100%,820px);
+          min-height:650px;
+          margin:24px auto 0;
+          isolation:isolate;
+        }
+        .id-capability-orbit{
+          position:absolute;
+          z-index:0;
+          left:50%;
+          top:49%;
+          width:560px;
+          height:560px;
+          transform:translate(-50%,-50%);
+          border-radius:50%;
+          background:radial-gradient(circle,rgba(255,255,255,.035) 0 46%,transparent 47%);
+        }
+        .id-capability-orbit-ring{
+          position:absolute;
+          inset:0;
+          border:1px dashed rgba(184,233,201,.25);
+          border-radius:50%;
+        }
+        .id-capability-orbit-ring::after{
+          content:"";
+          position:absolute;
+          inset:-4px;
+          border:3px solid transparent;
+          border-top-color:#97db4f;
+          border-right-color:rgba(121,201,158,.75);
+          border-radius:50%;
+          animation:idCapabilityOrbit 18s linear infinite;
+        }
+        .id-capability-orbit-ring.inner{
+          inset:76px;
+          border-style:solid;
+          border-color:rgba(255,255,255,.07);
+        }
+        .id-capability-orbit-ring.inner::after{display:none}
+        @keyframes idCapabilityOrbit{to{transform:rotate(360deg)}}
+
+        .id-capability-center{
+          position:absolute;
+          z-index:4;
+          left:50%;
+          top:49%;
+          width:236px;
+          min-height:236px;
+          transform:translate(-50%,-50%);
+          display:grid;
+          place-items:center;
+          align-content:center;
+          padding:20px;
+          border:1px solid rgba(151,219,79,.34);
+          border-radius:50%;
+          background:
+            radial-gradient(circle at 72% 18%,rgba(151,219,79,.11),transparent 7rem),
+            linear-gradient(145deg,#fff,#edf6f0);
+          box-shadow:0 22px 48px rgba(0,0,0,.18),0 0 0 10px rgba(255,255,255,.035);
+          text-align:center;
+        }
+        .id-capability-avatar{
+          display:grid;
+          place-items:center;
+          width:82px;
+          height:82px;
+          margin-bottom:7px;
+          padding:7px;
+          border:1px solid rgba(80,132,132,.15);
+          border-radius:22px;
+          background:#fff;
+          box-shadow:0 9px 20px rgba(43,72,64,.1);
+        }
+        .id-capability-avatar img{width:68px;height:68px;object-fit:contain;image-rendering:pixelated}
+        .id-capability-center .eyebrow{margin:0 0 2px;color:#4a796e!important}
+        .id-capability-center h3{margin:0;color:#263d37;font-size:1.16rem}
+        .id-capability-center-flow{display:grid;grid-template-columns:repeat(2,auto);gap:5px;margin-top:10px}
+        .id-capability-center-flow span{padding:5px 7px;border:1px solid rgba(80,132,132,.14);border-radius:999px;background:#f7faf8;color:#42675e;font:800 .5rem/1 var(--font-heading)}
+
+        .id-capability-orbit-list{
+          position:absolute;
+          inset:0;
+          z-index:3;
+          margin:0;
+          padding:0;
+          list-style:none;
+        }
+        .id-capability-orbit-list li{position:absolute;width:154px}
+        .id-capability-orbit-list li:nth-child(1){left:50%;top:0;transform:translateX(-50%)}
+        .id-capability-orbit-list li:nth-child(2){right:7%;top:9%}
+        .id-capability-orbit-list li:nth-child(3){right:-1%;top:36%}
+        .id-capability-orbit-list li:nth-child(4){right:4%;bottom:14%}
+        .id-capability-orbit-list li:nth-child(5){right:23%;bottom:0}
+        .id-capability-orbit-list li:nth-child(6){left:23%;bottom:0}
+        .id-capability-orbit-list li:nth-child(7){left:4%;bottom:14%}
+        .id-capability-orbit-list li:nth-child(8){left:-1%;top:36%}
+        .id-capability-orbit-list li:nth-child(9){left:7%;top:9%}
+
+        .id-capability-node{
+          display:grid;
+          grid-template-columns:44px minmax(0,1fr);
+          grid-template-rows:auto auto;
+          gap:2px 8px;
+          align-items:center;
+          min-height:72px;
+          padding:9px 10px;
+          border:1px solid rgba(121,201,158,.25);
+          border-radius:16px;
+          background:#fff;
+          color:#29463e;
+          text-decoration:none;
+          box-shadow:0 11px 26px rgba(0,0,0,.11);
+          transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+        }
+        .id-capability-node>span{
+          grid-row:1/3;
+          display:grid;
+          place-items:center;
+          width:44px;
+          height:44px;
+          border-radius:13px;
+          background:#edf5f0;
+          color:#508484;
+        }
+        .id-capability-node .portfolio-icon{width:25px;height:25px}
+        .id-capability-node strong{align-self:end;color:#263d37;font:800 .62rem/1.18 var(--font-heading)}
+        .id-capability-node small{align-self:start;color:#65766f;font:.5rem/1.2 var(--font-body)}
+        .id-capability-node:hover,.id-capability-node:focus-visible{
+          transform:translateY(-5px) scale(1.02);
+          border-color:#97db4f;
+          box-shadow:0 17px 34px rgba(0,0,0,.16);
+          outline:none;
+        }
+        .id-capability-system-note{
+          position:absolute;
+          z-index:5;
+          left:50%;
+          bottom:52px;
+          width:min(420px,70%);
+          transform:translateX(-50%);
+          margin:0;
+          color:#d5e4dc;
+          font-size:.62rem;
+          line-height:1.42;
+          text-align:center;
+        }
+
+        @media(max-width:760px){
+          .id-capability-system{min-height:0}
+          .id-capability-orbit{display:none}
+          .id-capability-center{
+            position:relative;
+            left:auto;
+            top:auto;
+            width:min(260px,80vw);
+            min-height:0;
+            margin:0 auto 16px;
+            transform:none;
+            border-radius:28px;
+          }
+          .id-capability-orbit-list{
+            position:relative;
+            inset:auto;
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:9px;
+          }
+          .id-capability-orbit-list li,
+          .id-capability-orbit-list li:nth-child(n){
+            position:relative;
+            inset:auto;
+            width:auto;
+            transform:none;
+          }
+          .id-capability-system-note{
+            position:relative;
+            left:auto;
+            bottom:auto;
+            width:auto;
+            transform:none;
+            margin:14px auto 0;
+          }
+        }
+        @media(max-width:480px){
+          .id-capability-orbit-list{grid-template-columns:1fr}
+        }
+        @media(prefers-reduced-motion:reduce){
+          .id-capability-orbit-ring::after{animation:none}
+          .id-capability-node{transition:none}
+        }
+
 </style>
     <script defer src="../../js/portfolio-motion.js"></script>
 </head>
@@ -407,29 +601,45 @@
     </section>
 
     <!-- OVERVIEW -->
-    <section class="section id-capabilities-section" id="capabilities"><div class="container">
-      <div class="parent-overview-copy refresh-section-intro"><p class="eyebrow">Capabilities</p><h2>Different deliverables need different design decisions.</h2><p>Open a capability to see what I am solving for, what I build, and how the work moves from definition through delivery and maintenance.</p></div>
-      <div class="id-capability-stack">
-          <details class="id-capability-accordion" open><summary><span class="id-capability-number">01</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><span class="id-capability-heading"><strong>eLearning</strong><small>Courses and pathways that connect explanation, practice, assessment, and delivery.</small></span><span class="id-capability-chips"><span>Rise</span><span>Storyline</span><span>LMS</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I design the full learner path, not just the screen content.</h3><p>I define what the learner needs to do, organize the source material, decide where practice and assessment belong, build the experience, and prepare it for review and LMS delivery.</p><div class="id-capability-process"><article><b>1</b><strong>Define</strong><span>Learner job, audience, source material, scope, and success evidence.</span></article><article><b>2</b><strong>Design</strong><span>Objectives, structure, scenarios, assessments, resources, and review points.</span></article><article><b>3</b><strong>Build</strong><span>Rise, Storyline, custom interactions, accessibility, and QA.</span></article><article><b>4</b><strong>Deliver + maintain</strong><span>LMS testing, source ownership, updates, and learner feedback.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/instructional-design/id-elearning-module.webp" alt="Public-safe standalone learning module interface."><span>Example output</span><strong>A complete learner experience with a clear next action</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">02</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><span class="id-capability-heading"><strong>Multimedia</strong><small>Video, motion, audio, and graphics when media explains something better than text alone.</small></span><span class="id-capability-chips"><span>Video</span><span>Motion</span><span>Audio</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>The production format starts with what the learner needs to see or hear.</h3><p>I use multimedia when pacing, demonstration, visual sequence, or narration improves the explanation. The work includes scripting, storyboarding, production, editing, accessibility, and reusable source assets.</p><div class="id-capability-process"><article><b>1</b><strong>Define</strong><span>What needs visual, audio, motion, or demonstration support.</span></article><article><b>2</b><strong>Plan</strong><span>Script, storyboard, brand requirements, accessibility, and placement.</span></article><article><b>3</b><strong>Produce</strong><span>Adobe tools, Camtasia, Colossyan, PowerPoint, or project-specific media tools.</span></article><article><b>4</b><strong>Reuse</strong><span>Editable source files and modular assets that can be revised later.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/multimedia/multimedia-premiere-editing.webp" alt="Public-safe video editing development interface."><span>Example output</span><strong>Media shaped for explanation, demonstration, and learning flow</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">03</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><span class="id-capability-heading"><strong>Interactive Learning</strong><small>Practice built around a decision, judgment, classification, or response.</small></span><span class="id-capability-chips"><span>Scenarios</span><span>Scoring</span><span>Feedback</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>The interaction begins with the decision the learner needs to practice.</h3><p>I map the inputs, choices, states, scoring, feedback, accessibility, and edge cases before development. I build in Storyline or with HTML, CSS, and JavaScript when the learner task needs more custom behavior.</p><div class="id-capability-process"><article><b>1</b><strong>Define</strong><span>The real decision or judgment the learner needs to practice.</span></article><article><b>2</b><strong>Map</strong><span>Choices, states, scoring, feedback, accessibility, and edge cases.</span></article><article><b>3</b><strong>Build</strong><span>Storyline or browser-based interaction logic and visual states.</span></article><article><b>4</b><strong>Improve</strong><span>Error patterns and successful interaction patterns inform later scenarios.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/instructional-design/id-interactions.webp" alt="Customer discovery scenario with learner choice and coaching feedback."><span>Example output</span><strong>Decision practice with an immediate consequence and explanation</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">04</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><span class="id-capability-heading"><strong>Microlearning</strong><small>A short experience for one focused learner need.</small></span><span class="id-capability-chips"><span>Focused</span><span>Modular</span><span>Fast</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I remove everything that does not support the one learner job.</h3><p>Microlearning works when a product change, concept, judgment, or practice need can stand on its own. I keep the context tight, move quickly into the learner action, and build each piece so it can be updated or reused easily.</p><div class="id-capability-process"><article><b>1</b><strong>Focus</strong><span>One thing the learner needs to understand, recognize, explain, or decide.</span></article><article><b>2</b><strong>Strip back</strong><span>Remove adjacent content and keep only the context needed for the task.</span></article><article><b>3</b><strong>Build</strong><span>Responsive modules, short scenarios, demonstrations, and lightweight checks.</span></article><article><b>4</b><strong>Maintain</strong><span>Keep the module easy to update, sequence, reuse, or retire.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/instructional-design/id-microlearning.webp" alt="Connected microlearning screens and knowledge check."><span>Example output</span><strong>One clear learning move without a full course around it</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">05</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><span class="id-capability-heading"><strong>Performance Support</strong><small>Guides, tools, references, and resources used in the flow of work.</small></span><span class="id-capability-chips"><span>Job aids</span><span>Tools</span><span>Resources</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I first decide whether training is actually the right answer.</h3><p>If the gap is access, process, environment, confidence, or decision support, the better solution may be a guide, repository, dashboard, prompt, or decision tool that sits closer to the work.</p><div class="id-capability-process"><article><b>1</b><strong>Diagnose</strong><span>Find the actual source of friction before choosing an intervention.</span></article><article><b>2</b><strong>Map</strong><span>Task, decision points, source of truth, ownership, and maintenance needs.</span></article><article><b>3</b><strong>Build</strong><span>Job aids, references, dashboards, repositories, and decision tools.</span></article><article><b>4</b><strong>Maintain</strong><span>Use feedback, exceptions, search behavior, and source changes to keep it useful.</span></article></div></div><aside class="id-capability-visual icon"><img src="../../assets/icons/pixel/performance-support/tools.webp" alt="Pixel-art performance support toolkit."><span>Example output</span><strong>The answer is available at the point of need</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">06</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span><span class="id-capability-heading"><strong>Learner-facing AI</strong><small>Constrained model-backed experiences designed around a defined learner job.</small></span><span class="id-capability-chips"><span>Context</span><span>Testing</span><span>QA</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I design the model behavior and the human learning experience together.</h3><p>I define the learner task, evidence boundary, instructions, context, allowed behavior, evaluation logic, fallbacks, and review path. The build includes testing weak outputs, refining prompts and context, and maintaining the QA system around the interaction.</p><div class="id-capability-process"><article><b>1</b><strong>Bound</strong><span>Learner job, risk, evidence, allowed behavior, and human role.</span></article><article><b>2</b><strong>Design</strong><span>Instructions, source context, interaction states, fallbacks, and evaluation rules.</span></article><article><b>3</b><strong>Test</strong><span>Prototype outputs, edge cases, weak responses, and model behavior.</span></article><article><b>4</b><strong>Maintain</strong><span>Instructions, source material, test cases, evaluation logic, and human review.</span></article></div></div><aside class="id-capability-visual icon"><img src="../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt="Pixel-art human and AI learning visual."><span>Example output</span><strong>AI behavior constrained around a specific learning task</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">07</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><span class="id-capability-heading"><strong>Live Training</strong><small>Facilitator-led learning that can respond to the room.</small></span><span class="id-capability-chips"><span>Workshop</span><span>Practice</span><span>Coaching</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I design the session and leave room for facilitation.</h3><p>Live time is most useful for explanation, discussion, questions, practice, and coaching. I plan the objectives, timing, prompts, examples, activities, participant materials, and facilitator guidance, then adapt pacing during delivery.</p><div class="id-capability-process"><article><b>1</b><strong>Prepare</strong><span>Objectives, timing, content, participant materials, and likely questions.</span></article><article><b>2</b><strong>Structure</strong><span>Explanations, prompts, polls, examples, activities, and transitions.</span></article><article><b>3</b><strong>Facilitate</strong><span>Guide discussion and adjust pacing or explanation based on learner response.</span></article><article><b>4</b><strong>Improve</strong><span>Bring recurring questions and misconceptions into future content updates.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/instructional-design/id-live-training.webp" alt="Virtual facilitator leading a live training session with participants."><span>Example output</span><strong>A planned workshop that still responds to learner needs</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">08</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><span class="id-capability-heading"><strong>Assessment Design</strong><small>Checks and certification items aligned to the performance the objective requires.</small></span><span class="id-capability-chips"><span>Items</span><span>Scoring</span><span>Feedback</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I start with the evidence of learning, then write the question.</h3><p>I map objectives to the kind of response the learner needs to demonstrate, then design item coverage, difficulty, distractors, scoring, feedback, remediation, and QA around that evidence.</p><div class="id-capability-process"><article><b>1</b><strong>Define</strong><span>The performance evidence needed for the objective.</span></article><article><b>2</b><strong>Map</strong><span>Item type, coverage, difficulty, distractors, scoring, and remediation.</span></article><article><b>3</b><strong>Build + QA</strong><span>Item banks, answer logic, randomization, feedback, and accessible interactions.</span></article><article><b>4</b><strong>Revise</strong><span>Use learner errors and item performance to improve weak or outdated questions.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/instructional-design/id-assessment-check.webp" alt="Public-safe interactive assessment screen with response choices."><span>Example output</span><strong>A question that tests the right level of learner performance</strong></aside></div></details>
-          <details class="id-capability-accordion"><summary><span class="id-capability-number">09</span><span class="id-capability-icon"><svg class="portfolio-icon"><use href="../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span><span class="id-capability-heading"><strong>Performance Tools + Reporting</strong><small>Lightweight tools when faster access, analysis, or action solves the real problem.</small></span><span class="id-capability-chips"><span>Data</span><span>Workflow</span><span>Action</span></span><span class="id-capability-toggle" aria-hidden="true"></span></summary>
-            <div class="id-capability-body"><div class="id-capability-copy"><p class="eyebrow">What changes in this work</p><h3>I build a tool when another course would add friction.</h3><p>I map the task, information, decision points, data rules, and review checkpoints, then build a maintainable resource with spreadsheets, reporting tools, HTML, JavaScript, Python, or another fit-for-purpose approach.</p><div class="id-capability-process"><article><b>1</b><strong>Define</strong><span>The user task and the information or decision slowing it down.</span></article><article><b>2</b><strong>Map</strong><span>Inputs, outputs, labels, filters, data rules, and review checkpoints.</span></article><article><b>3</b><strong>Build</strong><span>Reporting views, spreadsheets, browser tools, or Python-based workflows.</span></article><article><b>4</b><strong>Support</strong><span>Document logic, ownership, exceptions, and source data for future maintenance.</span></article></div></div><aside class="id-capability-visual"><img src="../../assets/project-images/reporting-automation/analytics-course-completion.webp" alt="Public-safe learning analytics course completion view."><span>Example output</span><strong>Progress and exceptions turned into a usable next action</strong></aside></div></details>
+    <section class="section id-capabilities-section" id="capabilities">
+      <div class="container">
+        <div class="parent-overview-copy refresh-section-intro">
+          <p class="eyebrow">Capabilities</p>
+          <h2>I work across the full L&amp;D cycle.</h2>
+          <p>Strategy, content, practice, media, facilitation, performance support, delivery, and measurement work better as one connected system. I move across those pieces as the learning problem requires.</p>
+        </div>
+
+        <div class="id-capability-system" aria-label="Connected instructional design capabilities">
+          <div class="id-capability-orbit" aria-hidden="true">
+            <span class="id-capability-orbit-ring"></span>
+            <span class="id-capability-orbit-ring inner"></span>
+          </div>
+
+          <div class="id-capability-center">
+            <span class="id-capability-avatar"><img src="../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span>
+            <p class="eyebrow">Full-cycle L&amp;D</p>
+            <h3>Haley Reeder</h3>
+            <div class="id-capability-center-flow" aria-label="Learning and development lifecycle">
+              <span>Design</span><span>Build</span><span>Deliver</span><span>Improve</span>
+            </div>
+          </div>
+
+          <ol class="id-capability-orbit-list">
+            <li><a class="id-capability-node" href="./complete-learning-paths/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><strong>eLearning</strong><small>Paths + courses</small></a></li>
+            <li><a class="id-capability-node" href="./interactive-learning/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg></span><strong>Interactive Learning</strong><small>Practice + decisions</small></a></li>
+            <li><a class="id-capability-node" href="./microlearning-performance-support/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><strong>Microlearning</strong><small>Focused learning</small></a></li>
+            <li><a class="id-capability-node" href="./microlearning-performance-support/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><strong>Performance Support</strong><small>Point-of-need tools</small></a></li>
+            <li><a class="id-capability-node" href="./interactive-learning/ai-integrations-in-learning/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span><strong>Learner-facing AI</strong><small>Guided AI practice</small></a></li>
+            <li><a class="id-capability-node" href="./live-training/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span><strong>Live Training</strong><small>Facilitation + coaching</small></a></li>
+            <li><a class="id-capability-node" href="./multimedia/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span><strong>Multimedia</strong><small>Video + motion</small></a></li>
+            <li><a class="id-capability-node" href="./complete-learning-paths/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><strong>Assessment Design</strong><small>Evidence + scoring</small></a></li>
+            <li><a class="id-capability-node" href="../workflows/index.html"><span><svg class="portfolio-icon" aria-hidden="true"><use href="../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span><strong>Tools + Reporting</strong><small>Data + action</small></a></li>
+          </ol>
+
+          <p class="id-capability-system-note">Each capability connects to the same learning system. Select one to explore the related work.</p>
+        </div>
       </div>
-    </div></section>
+    </section>
 
     <section class="section id-ecosystem-section" data-keep-exploring-standardized="true">
       <div class="container">
