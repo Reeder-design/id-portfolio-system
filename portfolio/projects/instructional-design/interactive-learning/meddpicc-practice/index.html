@@ -439,6 +439,34 @@
     @media(max-width:820px){.med-primer-console,.pursuit-primer-console{grid-template-columns:1fr;min-height:0}.med-primer-detail{grid-template-columns:140px 1fr}.pursuit-primer-axis-label{display:none}.demo-howto-inline{grid-column:1}.pursuit-primer-console{padding-left:14px}}
     @media(max-width:560px){.med-primer-letters{grid-template-columns:1fr}.med-primer-detail{grid-template-columns:1fr}.med-primer-visual{min-height:160px}.pursuit-primer-matrix{min-height:360px}}
 
+  
+    /* MEDDPICC icon cleanup + stable interaction sizing */
+    .med-primer-visual{background:rgba(255,255,255,.045)!important}
+    .med-primer-visual img{
+      width:156px!important;
+      height:156px!important;
+      padding:10px;
+      border-radius:22px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(0,0,0,.12)
+    }
+    .category-piece img{
+      width:54px!important;
+      height:54px!important;
+      padding:5px;
+      border-radius:12px;
+      background:#fff;
+      box-shadow:0 5px 12px rgba(44,72,65,.06)
+    }
+    @media(min-width:761px){
+      .med-primer-console{height:430px!important;min-height:430px!important;max-height:430px!important}
+      .med-primer-detail{height:325px!important;min-height:325px!important;max-height:325px!important;overflow:hidden}
+      .med-primer-copy{height:286px;max-height:286px;overflow:auto!important;scrollbar-gutter:stable}
+      .match-stage{min-height:404px}
+      .active-evidence{height:262px;min-height:262px;max-height:262px;overflow:auto;scrollbar-gutter:stable}
+      .match-feedback{height:58px;min-height:58px;max-height:58px;overflow:auto;scrollbar-gutter:stable}
+    }
+
   </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>

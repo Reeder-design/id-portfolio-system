@@ -654,3 +654,18 @@ svg {
 .fs-surface-dark .portfolio-safety-note .public-safe-note strong{
   color:#ffffff!important;
 }
+
+/* Global fixed-footprint tab interaction rule */
+@media(min-width:761px){
+  [data-stable-tab-shell="true"]{
+    height:var(--stable-tab-shell-height);
+    max-height:var(--stable-tab-shell-height);
+    overflow:hidden;
+  }
+  [data-stable-tab-shell="true"] [data-stable-tab-panel="true"]{
+    max-height:var(--stable-tab-panel-height);
+    overflow:auto;
+    overscroll-behavior:contain;
+    scrollbar-gutter:stable;
+  }
+}

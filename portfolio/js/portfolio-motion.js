@@ -941,6 +941,71 @@
   initCertificationCaseCopy();
   initProjectDetailExplorer();
 
+  const initStableTabInteractions = () => {
+    const desktop = window.matchMedia('(min-width: 761px)');
+    const shells = new Set();
+
+    const findShell = (tablist) => {
+      const explicit = tablist.closest('[data-stable-interaction]');
+      if (explicit) return explicit;
+
+      let node = tablist.parentElement;
+      let depth = 0;
+      while (node && node !== document.body && depth < 5) {
+        if (node.querySelector('[role="tabpanel"]')) return node;
+        node = node.parentElement;
+        depth += 1;
+      }
+      return null;
+    };
+
+    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+      const shell = findShell(tablist);
+      if (!shell) return;
+      shell.dataset.stableTabShell = 'true';
+      shells.add(shell);
+    });
+
+    const clearLock = (shell) => {
+      shell.style.removeProperty('--stable-tab-shell-height');
+      shell.querySelectorAll('[data-stable-tab-panel="true"]').forEach((panel) => {
+        panel.style.removeProperty('--stable-tab-panel-height');
+      });
+    };
+
+    const lockShell = (shell) => {
+      clearLock(shell);
+      if (!desktop.matches) return;
+      const rect = shell.getBoundingClientRect();
+      if (rect.width < 80 || rect.height < 40) return;
+
+      const panels = [...shell.querySelectorAll('[role="tabpanel"]')];
+      const visible = panels.find((panel) => !panel.hidden && panel.getClientRects().length);
+      const panelHeight = visible ? Math.ceil(visible.getBoundingClientRect().height) : 0;
+
+      shell.style.setProperty('--stable-tab-shell-height', Math.ceil(rect.height) + 'px');
+      panels.forEach((panel) => {
+        panel.dataset.stableTabPanel = 'true';
+        if (panelHeight > 0) panel.style.setProperty('--stable-tab-panel-height', panelHeight + 'px');
+      });
+    };
+
+    const lockAll = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+      shells.forEach(lockShell);
+    }));
+
+    if (document.readyState === 'complete') lockAll();
+    else window.addEventListener('load', lockAll, { once: true });
+
+    if (document.fonts?.ready) document.fonts.ready.then(lockAll).catch(() => {});
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(lockAll, 140);
+    }, { passive: true });
+  };
+
   const initAskHaleyReturnDock = () => {
     if (document.body.classList.contains('hiring-manager-page')) return;
     const current = new URL(window.location.href);
@@ -988,6 +1053,7 @@
   initHiringAssistant();
   initAskHaleyReturnDock();
   initDemoHelp();
+  initStableTabInteractions();
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
