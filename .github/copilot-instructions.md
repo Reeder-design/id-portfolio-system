@@ -28,8 +28,8 @@ Before adding a new shared stylesheet, script, helper, controller, renderer, or 
 Top-level portfolio areas:
 - Instructional Design
 - AI Training and Evaluation
-- LMS Administration & System Operations
-- System Integrations and Workflows
+- LMS Administration
+- Workflows
 
 Instructional Design currently includes:
 - Interactive Learning
@@ -38,7 +38,7 @@ Instructional Design currently includes:
 - Live Training
 - Complete eLearning Pathways
 
-Do not use older three-category descriptions such as generic `Workflows` as the public label when the taxonomy provides the current name.
+Do not use retired category labels from older portfolio iterations. Read the current labels and paths from `portfolio-data/taxonomy.json`.
 
 ## Design System
 Use the existing design language and shared CSS variables before introducing page-specific patterns.
