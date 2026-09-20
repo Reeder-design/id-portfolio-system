@@ -443,6 +443,16 @@
     .workbench-intro{margin-bottom:10px}
     @media(max-width:760px){.pursuit-compare-grid{grid-template-columns:1fr}.pursuit-use-steps{display:grid;grid-template-columns:1fr}}
 
+
+    /* Six customer-information tabs map one-to-one to the six scoring questions. */
+    .evidence-bar{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+    .evidence-tab{grid-template-columns:34px minmax(0,1fr)!important;min-height:66px!important;padding:8px!important}
+    .evidence-tab img{width:34px!important;height:34px!important}
+    .evidence-tab strong{font-size:.61rem!important}
+    .evidence-tab small{font-size:.52rem!important}
+    @media(max-width:980px){.evidence-bar{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+    @media(max-width:620px){.evidence-bar{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
@@ -551,16 +561,18 @@
         <div class="opp-stat"><strong>7-10 yrs</strong><span>Fleet age</span></div>
       </div>
 
-      <div class="evidence-bar" role="tablist" aria-label="Opportunity evidence categories">
-        <button class="evidence-tab active" type="button" role="tab" aria-selected="true" data-evidence="pain"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"><span><strong>Pain + Urgency</strong><small>What problem is driving action?</small></span></button>
-        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="environment"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"><span><strong>Environment + Fit</strong><small>Will the solution work here?</small></span></button>
+      <div class="evidence-bar" role="tablist" aria-label="Harborview customer information">
+        <button class="evidence-tab active" type="button" role="tab" aria-selected="true" data-evidence="pain"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"><span><strong>Pain</strong><small>What problem is Harborview experiencing?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="competition"><img src="../../../../assets/icons/pixel/pursuit-determination/weigh-resources.webp" alt="" aria-hidden="true"><span><strong>Competition</strong><small>What alternatives could win instead?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="environment"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"><span><strong>Environment + Fit</strong><small>Will VitaTrack work here?</small></span></button>
+        <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="urgency"><img src="../../../../assets/icons/pixel/pursuit-determination/action-track.webp" alt="" aria-hidden="true"><span><strong>Urgency</strong><small>Why would Harborview act now?</small></span></button>
         <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="stakeholders"><img src="../../../../assets/icons/pixel/pursuit-determination/align-stakeholders.webp" alt="" aria-hidden="true"><span><strong>Stakeholder Access</strong><small>Who can influence and approve?</small></span></button>
         <button class="evidence-tab" type="button" role="tab" aria-selected="false" data-evidence="buying"><img src="../../../../assets/icons/pixel/pursuit-determination/assess-potential.webp" alt="" aria-hidden="true"><span><strong>Buying Motion</strong><small>Is the opportunity actually moving?</small></span></button>
       </div>
 
       <div class="evidence-panel">
-        <div class="evidence-panel-copy"><p class="eyebrow" id="evidenceLabel">Pain + Urgency</p><h3 id="evidenceTitle">The workflow problem is measurable.</h3></div>
-        <ul class="evidence-list" id="evidenceList"><li>Portable imaging turnaround increased from 24 to 39 minutes.</li><li>ER and ICU teams often wait for a cart.</li><li>Patient throughput is already a leadership priority.</li></ul>
+        <div class="evidence-panel-copy"><p class="eyebrow" id="evidenceLabel">Pain</p><h3 id="evidenceTitle">The operational problem is clear.</h3></div>
+        <ul class="evidence-list" id="evidenceList"><li>ER and ICU teams regularly wait for a mobile imaging cart.</li><li>Harborview completes about 65 portable exams each day.</li><li>Imaging delays are disrupting patient flow and staff workflow.</li></ul>
       </div>
 
       <div class="decision-workbench">
@@ -621,19 +633,21 @@ pursuitPrimerButtons.forEach((b,i)=>{b.addEventListener('click',()=>renderPursui
 renderPursuitPrimer('prioritize');
 
 const evidence={
-  pain:{label:'Pain + Urgency',title:'The workflow problem is measurable.',items:['Portable imaging turnaround increased from 24 to 39 minutes.','ER and ICU teams often wait for a cart.','Patient throughput is already a leadership priority.']},
-  environment:{label:'Environment + Fit',title:'The environment looks promising, but validation is incomplete.',items:['Harborview already uses digital PACS.','Two aging carts are entering a replacement cycle.','Formal IT and cybersecurity validation has not happened yet.']},
+  pain:{label:'Pain',title:'The operational problem is clear.',items:['ER and ICU teams regularly wait for a mobile imaging cart.','Harborview completes about 65 portable exams each day.','Imaging delays are disrupting patient flow and staff workflow.']},
+  competition:{label:'Competition',title:'Harborview still has credible alternatives.',items:['Two competing mobile-imaging vendors remain active.','Biomedical Engineering is considering extending the life of existing carts through refurbishment.','Harborview has not yet identified a customer-valued reason to prefer VitaTrack.']},
+  environment:{label:'Environment + Fit',title:'The environment looks promising, but validation is incomplete.',items:['Harborview already uses digital PACS.','The mobile imaging workflow is already established across ER and ICU teams.','Formal IT and cybersecurity validation has not happened yet.']},
+  urgency:{label:'Urgency',title:'There are concrete reasons to act now.',items:['Portable imaging turnaround increased from 24 to 39 minutes.','Patient throughput is already a leadership priority.','Two carts are 7 to 10 years old and entering replacement planning.']},
   stakeholders:{label:'Stakeholder Access',title:'Clinical access is good; authority access is not.',items:['Director of Radiology is actively advocating for replacement.','ER nursing leadership supports the effort.','CIO and final capital authority have not been engaged directly.']},
-  buying:{label:'Buying Motion',title:'There is a real process, but not a committed purchase.',items:['A preliminary capital request exists.','Funding is not approved yet.','Two competitors remain active.']}
+  buying:{label:'Buying Motion',title:'There is a real process, but not a committed purchase.',items:['A preliminary capital request exists.','Funding is not approved yet.','A final vendor-selection timeline has not been confirmed.']}
 };
 
 const criteria=[
-  {id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'How directly does VitaTrack address the operational problem Harborview has demonstrated?',benchmark:5,note:'Imaging volume, delays, aging equipment, and throughput pressure all point to strong fit.',evidence:['pain','environment']},
-  {id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'How clearly has Meridian established a customer-valued advantage over alternatives?',benchmark:3,note:'Competitors are known, but Harborview has not yet validated a preference for VitaTrack.',evidence:['environment','buying']},
+  {id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'How directly does VitaTrack address the operational problem Harborview has demonstrated?',benchmark:5,note:'The imaging volume, cart waits, and workflow disruption all point to strong problem-to-solution fit.',evidence:['pain']},
+  {id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'How clearly has the seller established a customer-valued advantage for VitaTrack over Harborview’s alternatives?',benchmark:3,note:'Harborview has viable alternatives, and a customer-valued preference for VitaTrack has not been established yet.',evidence:['competition']},
   {id:'operationalFit',group:'Solution Fit',title:'Operational Fit',prompt:'How well does VitaTrack fit Harborview’s current workflow and technical environment?',benchmark:4,note:'The environment looks favorable, but IT and security still need formal validation.',evidence:['environment']},
-  {id:'painUrgency',group:'Pursuit Strength',title:'Pain + Urgency',prompt:'How strong is the reason for Harborview to act now?',benchmark:5,note:'Measured delays, aging equipment, and a leadership initiative create clear urgency.',evidence:['pain']},
+  {id:'painUrgency',group:'Pursuit Strength',title:'Urgency',prompt:'How strong is the reason for Harborview to act now?',benchmark:5,note:'Turnaround delays, leadership focus on throughput, and aging carts create clear urgency.',evidence:['urgency']},
   {id:'stakeholderAccess',group:'Pursuit Strength',title:'Stakeholder Access',prompt:'How well connected is the seller to the people who influence, validate, and approve the purchase?',benchmark:3,note:'Clinical access is strong; IT and final financial authority are still missing.',evidence:['stakeholders']},
-  {id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'How much evidence shows Harborview is progressing toward a real buying decision?',benchmark:3,note:'A capital request and replacement cycle show movement, but funding and vendor preference remain unresolved.',evidence:['buying','stakeholders']}
+  {id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'How much evidence shows Harborview is progressing toward a real buying decision?',benchmark:3,note:'A capital request shows movement, but funding and the final decision timeline remain unresolved.',evidence:['buying']}
 ];
 
 let currentIndex=0;
