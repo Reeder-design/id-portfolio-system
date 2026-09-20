@@ -640,3 +640,17 @@ svg {
   [data-stable-interaction]{min-height:var(--stable-interaction-height)}
   [data-stable-interaction] .interaction-scroll-region{overflow:auto;overscroll-behavior:contain}
 }
+
+/* Portfolio safety-note contrast normalization */
+.portfolio-safety-note .public-safe-note,
+.portfolio-safety-note .public-safe-note span,
+.portfolio-safety-note .public-safe-note strong{
+  color:#263d37!important;
+}
+.fs-surface-dark .portfolio-safety-note .public-safe-note,
+.fs-surface-dark .portfolio-safety-note .public-safe-note span{
+  color:#dce9e2!important;
+}
+.fs-surface-dark .portfolio-safety-note .public-safe-note strong{
+  color:#ffffff!important;
+}

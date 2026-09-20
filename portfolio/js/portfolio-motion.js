@@ -369,6 +369,28 @@
     }).join('');
   };
 
+  const initBreadcrumbTone = () => {
+    const breadcrumbs = document.querySelector('.breadcrumbs');
+    if (!breadcrumbs) return;
+    const hero = breadcrumbs.closest('section, header, main') || breadcrumbs.parentElement;
+    const heading = hero?.querySelector('h1') || document.querySelector('main h1');
+    if (!heading) return;
+
+    const match = window.getComputedStyle(heading).color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+    if (!match) return;
+    const [r,g,b] = match.slice(1,4).map(Number);
+    const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+    const lightText = luminance > 0.58;
+    const primary = lightText ? 'rgba(248,252,249,.84)' : '#40554d';
+    const current = lightText ? '#ffffff' : '#263d37';
+    const separator = lightText ? 'rgba(248,252,249,.56)' : '#7a8781';
+
+    breadcrumbs.dataset.breadcrumbTone = lightText ? 'light' : 'dark';
+    breadcrumbs.querySelectorAll('a').forEach((node) => node.style.setProperty('color', primary, 'important'));
+    breadcrumbs.querySelectorAll('[aria-current="page"]').forEach((node) => node.style.setProperty('color', current, 'important'));
+    breadcrumbs.querySelectorAll('.breadcrumb-separator').forEach((node) => node.style.setProperty('color', separator, 'important'));
+  };
+
   const cleanLinkLabel = (value) => String(value || '')
     .replace(/[→›»]+\s*$/g, '')
     .replace(/^open\s+/i, '')
@@ -909,6 +931,7 @@
   initHiringGuideNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
+  initBreadcrumbTone();
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();
