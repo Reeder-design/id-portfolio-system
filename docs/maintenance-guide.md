@@ -68,6 +68,10 @@ The pull-request validation workflow also rejects a PR branch that does not cont
 
 ## Existing Public Page Preservation
 
+Structured general-page copy is a mirror/validation layer, not an HTML-generation source. The retired `render-site-content.py` process must not be restored. For an existing page, edit the current public HTML through the current page-copy workflow or directly in source, then synchronize structured values from that page.
+
+Project records follow the same rule: structured data supports metadata and workflows, but it does not rebuild the finished public experience.
+
 The current files under `portfolio/` are the presentation source of truth for existing pages.
 
 Do not use the standard project template, renderer, structured project JSON, old PRs, or older Git history to reconstruct an existing public page. Those sources may predate later UAT fixes.
