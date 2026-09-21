@@ -86,7 +86,7 @@ The standard project template is a **new-page scaffold only**. Portfolio Manager
 
 For future visual work, use:
 
-- `docs/portfolio-visual-qa-standard.md`
+- `docs/portfolio-uat-guardrails.md`
 - `docs/portfolio-consistency-audit.md`
 
 The recurring UAT checks include breadcrumbs, Other Work/project endings, interaction-height stability, interaction copy width, tab contrast, icon clipping/centering, icon bubbles, motion layering, hero overflow, padding, and light/dark section rhythm.
@@ -200,7 +200,7 @@ This affects future local commits only; it does not rewrite existing history.
 
 ## Documentation Maintenance
 
-`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, `docs/ai-assistance.md`, `docs/template-system.md`, and `docs/portfolio-visual-qa-standard.md` describe live architecture/maintenance rules and must be updated when those ownership or workflow rules change.
+`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, `docs/ai-assistance.md`, `docs/template-system.md`, and `docs/portfolio-uat-guardrails.md` describe live architecture/maintenance rules and must be updated when those ownership or workflow rules change.
 
 Generated documentation is maintained by `scripts/update-docs.py` and should be checked with:
 
