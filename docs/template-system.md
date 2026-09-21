@@ -169,6 +169,7 @@ Pull-request CI remains the authoritative automated gate for infrastructure chan
 
 ## Supporting References
 
+- `docs/current-page-patterns.md` — current live page families to use as future-build references
 - `docs/portfolio-uat-guardrails.md` — recurring visual/UAT rules
 - `docs/portfolio-consistency-audit.md` — current code/history audit
 - `docs/maintenance-guide.md` — repository maintenance workflow
