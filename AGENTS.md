@@ -88,7 +88,7 @@ The main user workflows are:
 
 - **Manage Content** — edit existing pages/projects, assets, related references, private notes, page-aware AI proposals, and portfolio review.
 - **Reference Library** — store private originals, review/sanitize separate derivatives, and approve public-safe derivatives for later use.
-- **Create Content** — Content Brief → optional AI plan → human refinement → controlled local build → validation/preview → Keep or Revert → publishing handoff.
+- **Create Content** — Content Brief → optional AI plan → human refinement → structured-record build → validation → Keep or Revert. The visible public page is then built/reviewed intentionally from the current live page family; Create Content does not auto-generate or overwrite it.
 - **Hiring Guide Library** — maintain the private evidence-grounded Q&A/editorial source behind Ask Haley. Store canonical JSON, optional Markdown source, edits, and backups under `.portfolio-manager/hiring-guide/`; do not put the rich editorial library in tracked public data.
 - **Save & Publish** — routine portfolio-content commit/publish flow on `main` with explicit validation and private-path safeguards.
 
