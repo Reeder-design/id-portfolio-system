@@ -45,10 +45,10 @@ def main() -> int:
     require("plan_is_approved" in service_text, "Controlled build must require explicit plan approval.", errors)
     require("BUILD_PROPOSAL_INSTRUCTIONS" in service_text, "Controlled build must use a dedicated proposal-only AI contract.", errors)
     require("Do not create HTML, code, Git commands, files, commits, or publishing instructions" in service_text, "AI build proposal must be denied direct write/publish authority.", errors)
-    require("new_project.create_project" in service_text, "Local build must reuse the existing structured project generator.", errors)
-    require("run_full_validation()" in service_text, "Local build must run the repository validation suite before review.", errors)
+    require("new_project.create_project" in service_text, "Local build must reuse the structured project-record generator.", errors)
+    require("run_full_validation()" in service_text, "Local record creation must run the repository validation suite before review.", errors)
     require("refresh_documentation" in service_text, "Controlled build must keep generated documentation synchronized.", errors)
-    require("record_sha256" in service_text and "page_sha256" in service_text, "Local build must hash created files for safe revert.", errors)
+    require("record_sha256" in service_text, "Local build must hash the created structured record for safe revert.", errors)
     require("Automatic revert stopped because" in service_text, "Revert must refuse to delete files edited after generation.", errors)
     require('"decision": "pending"' in service_text, "New local builds must remain pending human review.", errors)
     require('build["decision"] = "kept"' in service_text, "Keep must be a separate explicit human action.", errors)
@@ -70,6 +70,7 @@ def main() -> int:
     ):
         require(label in template_text, f"Controlled build UI must include {label}.", errors)
     require("does not commit, push, publish, or merge" in template_text, "Build UI must clearly explain its non-publishing boundary.", errors)
+    require("will not generate or overwrite the visible portfolio page" in template_text, "Build UI must state the portfolio-preservation boundary.", errors)
 
     sys.path.insert(0, str(MANAGER))
     try:
