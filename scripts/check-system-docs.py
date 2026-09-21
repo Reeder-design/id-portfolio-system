@@ -13,6 +13,7 @@ AI_DOCS = ROOT / "docs" / "ai-assistance.md"
 CONTENT_MODEL = ROOT / "docs" / "content-model.md"
 TEMPLATE_SYSTEM = ROOT / "docs" / "template-system.md"
 NEW_PROJECT_GUIDE = ROOT / "docs" / "new-project-guide.md"
+CURRENT_PATTERNS = ROOT / "docs" / "current-page-patterns.md"
 UAT_GUARDRAILS = ROOT / "docs" / "portfolio-uat-guardrails.md"
 CONSISTENCY_AUDIT = ROOT / "docs" / "portfolio-consistency-audit.md"
 TAXONOMY = ROOT / "portfolio-data" / "taxonomy.json"
@@ -44,6 +45,7 @@ def main() -> int:
         (CONTENT_MODEL, "content model guide"),
         (TEMPLATE_SYSTEM, "template system guide"),
         (NEW_PROJECT_GUIDE, "new project guide"),
+        (CURRENT_PATTERNS, "current page-pattern map"),
         (UAT_GUARDRAILS, "portfolio UAT guardrails"),
         (CONSISTENCY_AUDIT, "portfolio consistency audit"),
         (TAXONOMY, "portfolio taxonomy"),
@@ -72,6 +74,7 @@ def main() -> int:
     content_model = CONTENT_MODEL.read_text(encoding="utf-8")
     template_system = TEMPLATE_SYSTEM.read_text(encoding="utf-8")
     new_project_guide = NEW_PROJECT_GUIDE.read_text(encoding="utf-8")
+    current_patterns = CURRENT_PATTERNS.read_text(encoding="utf-8")
     uat_guardrails = UAT_GUARDRAILS.read_text(encoding="utf-8")
     consistency_audit = CONSISTENCY_AUDIT.read_text(encoding="utf-8")
     taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
@@ -198,6 +201,16 @@ def main() -> int:
         require(phrase.lower() in new_project_guide.lower(), f"New project guide is missing current workflow language: {phrase!r}.", errors)
 
     for phrase in [
+        "Current Portfolio Page Patterns",
+        "Flagship project case studies",
+        "Interactive learning demos",
+        "Systems, integrations, automation, and reporting",
+        "Default reference scaffold",
+        "prefer the current live family",
+    ]:
+        require(phrase in current_patterns, f"Current page-pattern map is missing future-build guidance: {phrase!r}.", errors)
+
+    for phrase in [
         "## Preservation Rule",
         "Tabbed interactions changing section height",
         "Interaction headings and copy constrained too narrowly",
@@ -237,6 +250,7 @@ def main() -> int:
         content_model,
         template_system,
         new_project_guide,
+        current_patterns,
         uat_guardrails,
         consistency_audit,
     ])
