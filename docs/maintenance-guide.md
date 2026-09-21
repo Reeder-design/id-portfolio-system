@@ -82,7 +82,7 @@ existing page
   → UAT current page
 ```
 
-The standard project template is a **new-page scaffold only**. Portfolio Manager does not expose a Regenerate Page action, and the renderer has no supported force-overwrite mode.
+The standard project template is a **preview-only reference scaffold**. Portfolio Manager does not expose a Regenerate Page action, `scripts/new-project.py` is record-only, and the renderer cannot write public HTML.
 
 For future visual work, use:
 
@@ -99,7 +99,7 @@ The suite covers:
 
 - public-site links, assets, metadata, mobile/readiness rules, and GitHub Pages assumptions
 - structured project and general-page content
-- renderer and new-project generator
+- preview-only scaffold renderer and record-only project generator
 - generated documentation/versioning
 - Git publishing guardrails
 - AI privacy/proposal/apply boundaries
