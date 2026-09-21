@@ -1,8 +1,8 @@
-# New Page Scaffold and Existing Page Preservation
+# Reference Scaffold and Existing Page Preservation
 
 The portfolio no longer treats the standard project template as an authority over finished public pages.
 
-The current public files under `portfolio/` are the presentation source of truth for existing work. The scaffold in `templates/project-page/` exists only to help create a **new** structured project page when a generic case-study starting point is appropriate.
+The current public files under `portfolio/` are the presentation source of truth for existing work. The scaffold in `templates/project-page/` is a **preview/reference only** for brand-new work. Repository automation does not write it into `portfolio/`.
 
 ## Source of Truth
 
@@ -13,7 +13,7 @@ Use this order for current work:
 3. `portfolio-data/taxonomy.json` for canonical labels, IDs, and paths.
 4. Structured project records for the metadata/content fields they explicitly own.
 5. `portfolio-data/component-registry.json` for reusable-pattern documentation.
-6. The new-page scaffold and renderer only when creating a page that does not already exist.
+6. The reference scaffold and preview renderer only for planning a brand-new page; they never write public HTML.
 7. Documentation describes the current system; it must never override the live public implementation.
 
 When these disagree, do not rebuild the public page from an older source. Inspect the current page and reconcile metadata/documentation around it.
@@ -25,8 +25,8 @@ Existing public pages must never be regenerated from the standard scaffold.
 The old overwrite path is retired:
 
 - Portfolio Manager does not offer **Regenerate Page** for structured projects.
-- `scripts/render-project.py` does not have a force-overwrite mode.
-- The renderer refuses to write when the target page already exists.
+- `scripts/render-project.py` is preview-only and has no output-file or force-overwrite mode.
+- `scripts/new-project.py` creates structured records only.
 - A structured record is not permission to replace a bespoke or UAT-refined public page.
 - Old PRs, old screenshots, Git history, generated docs, and template markup are not valid reasons to revive a superseded page version.
 
@@ -46,16 +46,18 @@ The flow is:
 ```text
 new structured project record
         ↓
-current new-page scaffold
+optional reference-scaffold preview
         ↓
-new public index.html
+inspect closest current live page family
+        ↓
+build new public page intentionally
         ↓
 human review / UAT
         ↓
 page becomes a maintained public experience
 ```
 
-The scaffold is a starting point, not a permanent regeneration system.
+The scaffold is reference material, not a page generator.
 
 ## Current Scaffold Rules
 
@@ -66,7 +68,7 @@ Important defaults:
 - source breadcrumb markup in the hero
 - current shared theme/frame files
 - compact project snapshot
-- stable tab panels that do not collapse/expand on every state change
+- no default tab interaction; interactions are added intentionally from a current live pattern
 - interaction copy allowed to use the available width
 - no generic Keep Exploring footer
 - no public Related Work footer generated from metadata
@@ -113,9 +115,9 @@ The existing shared runtime contains compatibility normalization for older/custo
 
 ## Interaction Standards
 
-The scaffold's built-in tab switches reserve their panel shell instead of using a collapse/expand pattern.
+The default scaffold is intentionally non-interactive. Tabs, scenarios, motion graphics, and other richer behaviors must be added deliberately from a current live pattern and tested as bespoke work.
 
-For bespoke interactions created after the scaffold:
+For interactions added to a new page:
 
 - keep state changes from resizing the whole section
 - let titles and explanatory text use the interaction width
@@ -125,23 +127,15 @@ For bespoke interactions created after the scaffold:
 
 See `docs/portfolio-uat-guardrails.md`.
 
-## Rendering a New Page
+## Previewing the Reference Scaffold
 
-Preview a proposed new page without writing it:
-
-```bash
-python scripts/render-project.py portfolio-data/projects/new-project.json --stdout
-```
-
-Write the page only when its target path does not already exist:
+Preview a proposed scaffold:
 
 ```bash
 python scripts/render-project.py portfolio-data/projects/new-project.json
 ```
 
-If the target page already exists, the renderer stops. Edit the existing public page instead.
-
-There is no supported force-overwrite workflow.
+The command prints HTML for review and never writes a public file. There is no output-file switch and no force-overwrite workflow. Build the real page deliberately from the closest current live page family.
 
 ## Bespoke Projects
 
@@ -151,7 +145,7 @@ Do not copy an old generic template over a bespoke page to make maintenance appe
 
 ## Portfolio Manager Relationship
 
-Portfolio Manager **Create Content** may use the scaffold to create a new project locally.
+Portfolio Manager **Create Content** creates the structured project record only. It does not render the scaffold or create public HTML.
 
 Portfolio Manager **Manage Content** may continue to manage structured fields, assets, references, and project metadata, but it does not regenerate the finished public page from the template.
 
@@ -169,7 +163,7 @@ python scripts/check-final-polish.py
 python scripts/check-site.py
 ```
 
-The renderer/generator checks validate the **future new-page path**. They are not a license to rewrite current public pages.
+The scaffold preview and structured-record checks validate future-build inputs. They are not a license to rewrite current public pages.
 
 Pull-request CI remains the authoritative automated gate for infrastructure changes.
 
