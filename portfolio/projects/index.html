@@ -34,8 +34,12 @@
 .github-spotlight-rail::before{content:"";position:absolute;z-index:0;left:10%;right:10%;top:65px;height:4px;border-radius:999px;background:rgba(121,201,158,.2)}
 .github-spotlight-stage{position:relative;z-index:4;display:grid;justify-items:center;gap:10px;text-align:center}
 .github-spotlight-stage i{position:relative;display:grid;place-items:center;width:96px;height:96px;padding:5px;overflow:hidden;border:1px solid rgba(80,132,132,.13);border-radius:22px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.16)}
-.github-spotlight-stage i::after{content:"";position:absolute;z-index:2;left:7px;right:7px;bottom:5px;height:13px;border-radius:0 0 14px 14px;background:#fff;pointer-events:none}
-.github-spotlight-stage:nth-child(4) i::before{content:"";position:absolute;z-index:2;left:7px;right:7px;top:5px;height:12px;border-radius:14px 14px 0 0;background:#fff;pointer-events:none}
+.github-spotlight-stage i::after,.github-spotlight-stage i::before{content:"";position:absolute;z-index:3;left:0;right:0;background:#fff;pointer-events:none}
+.github-spotlight-stage i::after{display:none;bottom:0;height:19px;border-radius:0 0 21px 21px}
+.github-spotlight-stage:nth-child(1) i::after{display:block;height:18px}
+.github-spotlight-stage:nth-child(3) i::after{display:block;height:20px}
+.github-spotlight-stage i::before{display:none;top:0;height:20px;border-radius:21px 21px 0 0}
+.github-spotlight-stage:nth-child(4) i::before{display:block;height:21px}
 .github-spotlight-stage img{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;object-position:center;transform:none;image-rendering:pixelated}
 .github-spotlight-stage small{color:#9fcdb0;font:900 .46rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
 .github-spotlight-stage strong{max-width:145px;color:#fff;font:800 .62rem/1.2 var(--font-heading)}
