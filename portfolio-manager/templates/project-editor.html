@@ -19,7 +19,7 @@
             <div>
                 <p class="eyebrow">Manage Portfolio Content</p>
                 <h1>{{ project.title }}</h1>
-                <p class="hero-copy">Edit the project identity, visible content, and connected assets in one place, then preview the real local project before publishing.</p>
+                <p class="hero-copy">Maintain the structured project record and connected assets here. If a public page exists, its current HTML/CSS/JS remains the presentation source of truth.</p>
             </div>
             <div class="header-actions">
                 <a class="btn btn-primary" href="{{ url_for('related_references.project_relationships', project_id=project.id) }}">Related References</a>
@@ -49,10 +49,10 @@
                     <button class="inline-help" type="button" data-help-key="save-project" data-help-label="Save Project Edits">?</button>
                 </div>
 
-                {% if project._generated_page %}
-                <p class="action-note">This page began from the structured project scaffold. Automatic regeneration is retired so template changes cannot overwrite finished portfolio work. These fields maintain the structured project record; edit the current public page directly for presentation changes.</p>
+                {% if not project._has_public_page %}
+                <p class="action-note">This project currently has a structured record only. Edit its metadata here, then build any future public page intentionally from the closest current live portfolio pattern.</p>
                 {% else %}
-                <p class="action-note">This project contains a hand-maintained portfolio experience. The project title stays connected here so portfolio references remain consistent. Visible copy is edited through the full page-copy workspace linked below.</p>
+                <p class="action-note">This project has a hand-maintained public page. Structured metadata stays here, while the current public HTML/CSS/JS remains authoritative for visible layout, interactions, and presentation.</p>
                 {% endif %}
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
@@ -61,7 +61,7 @@
                     <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" value="{{ project.title }}" required></div>
 
                     {% if project._generated_page %}
-                    <div class="full-span"><label for="summary">Page introduction</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
+                    <div class="full-span"><label for="summary">Structured summary</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
                     <div class="full-span"><label for="business_need">Challenge / business or learning need</label><textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea></div>
                     <div><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3">{{ project.content.audience }}</textarea></div>
                     <div><label for="role">My role</label><textarea id="role" name="role" rows="3">{{ project.content.role }}</textarea></div>
@@ -69,8 +69,8 @@
                     <div class="full-span"><label for="design_approach">Design approach</label><textarea id="design_approach" name="design_approach" rows="5">{{ project.content.design_approach }}</textarea></div>
                     <div class="full-span"><label for="development_process">Development</label><textarea id="development_process" name="development_process" rows="5">{{ project.content.development_process }}</textarea></div>
                     <div class="full-span"><label for="outcomes">Results / outcomes</label><p class="field-help">One item per line.</p><textarea id="outcomes" name="outcomes" rows="6">{{ outcomes }}</textarea></div>
-                    <div><label for="skills">Skills shown on the page</label><p class="field-help">Comma-separated.</p><textarea id="skills" name="skills" rows="4">{{ skills }}</textarea></div>
-                    <div><label for="tools">Tools shown on the page</label><p class="field-help">Comma-separated.</p><textarea id="tools" name="tools" rows="4">{{ tools }}</textarea></div>
+                    <div><label for="skills">Skills metadata</label><p class="field-help">Comma-separated.</p><textarea id="skills" name="skills" rows="4">{{ skills }}</textarea></div>
+                    <div><label for="tools">Tools metadata</label><p class="field-help">Comma-separated.</p><textarea id="tools" name="tools" rows="4">{{ tools }}</textarea></div>
                     <div class="full-span"><label for="live_project">Live project button link</label><input id="live_project" name="live_project" type="text" value="{{ project.get('links', {}).get('live_project', '') }}"></div>
 
                     <div class="full-span v2-secondary-settings">
@@ -164,14 +164,20 @@
             </section>
 
             <aside class="dashboard-card v2-preview-panel">
+                {% if project._has_public_page %}
                 <div class="action-title-row">
-                    <div><p class="eyebrow">Live local preview</p><h2>Current project</h2></div>
+                    <div><p class="eyebrow">Live local preview</p><h2>Current public page</h2></div>
                     <a class="btn btn-secondary" href="http://127.0.0.1:8000/{{ project.page_path|replace('portfolio/', '')|replace('index.html', '') }}" target="_blank">Open Full Preview</a>
                 </div>
-                <p class="section-copy">If the preview server is running on port 8000, this frame shows the real project page. Refresh it after saving to inspect the local result.</p>
+                <p class="section-copy">If the preview server is running on port 8000, this frame shows the current hand-maintained page. Refresh it after direct page edits to inspect the local result.</p>
                 <div class="v2-preview-frame-wrap">
                     <iframe class="v2-preview-frame" src="http://127.0.0.1:8000/{{ project.page_path|replace('portfolio/', '')|replace('index.html', '') }}" title="Preview of {{ project.title }}"></iframe>
                 </div>
+                {% else %}
+                <p class="eyebrow">Public page</p>
+                <h2>Not built yet</h2>
+                <p class="section-copy">This record does not have a public page. When you are ready, inspect the closest current live page family and build the new experience intentionally. The reference scaffold may be previewed, but it will not write into the portfolio.</p>
+                {% endif %}
             </aside>
         </main>
     </div>
