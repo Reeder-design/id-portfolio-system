@@ -146,8 +146,29 @@ def main() -> int:
     require(ai_project_editor.status_code == 200, "AI Evaluation project editor must render.", errors)
     require(b"Edit Visible Page Copy" in ai_project_editor.data, "AI Evaluation project editor must expose one route into demo copy editing.", errors)
 
-    general_library = client.get("/site-content")
-    require(general_library.status_code == 200, "General Page Content library must remain available during transition.", errors)
+    legacy_general = client.get("/site-content", follow_redirects=False)
+    require(
+        legacy_general.status_code in {301, 302, 303, 307, 308},
+        "Legacy General Page Content route must redirect to the current workflow.",
+        errors,
+    )
+    require(
+        "/content" in legacy_general.headers.get("Location", ""),
+        "Legacy General Page Content route must redirect to Manage Content.",
+        errors,
+    )
+
+    legacy_home_editor = client.get("/site-content/home", follow_redirects=False)
+    require(
+        legacy_home_editor.status_code in {301, 302, 303, 307, 308},
+        "Legacy page-editor URL must redirect safely.",
+        errors,
+    )
+    require(
+        "/manage/pages/home" in legacy_home_editor.headers.get("Location", ""),
+        "Legacy page-editor URL must redirect to the current page-copy editor.",
+        errors,
+    )
 
     home_editor = client.get("/manage/pages/home")
     require(home_editor.status_code == 200, "Home v2 page editor must render.", errors)

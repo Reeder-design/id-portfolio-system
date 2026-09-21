@@ -89,11 +89,13 @@ Optional AI Plan Proposal
         ↓
 Human Review / Refinement
         ↓
-Controlled Local Build
+Structured Record Build
         ↓
-Validation + Preview
+Validation
         ↓
 Keep or Revert
+        ↓
+Build/review the public page from the current live pattern
         ↓
 Save & Publish
 ```
@@ -177,7 +179,7 @@ Portfolio Manager **Run Full Validation** and pull-request CI exercise the same 
 - public-site integrity and GitHub Pages readiness
 - structured project/general-page content
 - responsive/final public polish
-- renderer and new-project generator
+- scaffold previewer and structured project generator
 - generated documentation/versioning
 - Git publishing safety
 - AI privacy and proposal/apply boundaries
@@ -217,7 +219,7 @@ If that terminal is already running after a Git pull, you can normally just refr
 - `portfolio/` — deployed public website
 - `portfolio-data/` — structured public-content source data, including the canonical reusable `component-registry.json`
 - `portfolio-manager/` — local-only Flask management application
-- `templates/` — reusable standard project templates
+- `templates/` — preview/reference scaffolds for brand-new work; never a page-generation or overwrite source
 - `design-system/` — design-system/development resources
 - `scripts/` — creation, rendering, maintenance, validation, and regression scripts
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
@@ -225,29 +227,35 @@ If that terminal is already running after a Git pull, you can normally just refr
 - `.portfolio-manager/` — private local runtime state; never commit
 - `.env` — private local secrets; never commit
 
-## Project Creation and Rendering
+## Project Creation and Page Preservation
 
-The guided Create Content workflow is the normal user path for new work. Lower-level deterministic scripts remain available for development/maintenance.
+Structured general-page copy is source-synchronized from the current public page. It is not used to regenerate the page. The legacy `render-site-content.py` workflow is retired so stale structured copy cannot overwrite current HTML. Legacy `/site-content` URLs remain compatibility redirects only; they cannot write public HTML.
 
-Create a standard project:
+The current public files under `portfolio/` are the presentation source of truth for existing pages. Do not rebuild an existing page from the generic project template or a structured record.
+
+The guided Create Content workflow is the normal user path for **new** work. Lower-level deterministic scripts remain available for new-page development and maintenance testing.
+
+Create a new structured project record:
 
 ```bash
 python3 scripts/new-project.py
 ```
 
-Preview generation without writing:
+Preview the record without writing:
 
 ```bash
 python3 scripts/new-project.py --dry-run
 ```
 
-Render an existing structured project:
+To preview the locked reference scaffold without writing a public file:
 
 ```bash
-python3 scripts/render-project.py portfolio-data/projects/pursuit-positioning.json --stdout
+python3 scripts/render-project.py portfolio-data/projects/new-project.json
 ```
 
-The renderer refuses to overwrite an existing page unless `--force` is explicitly supplied.
+The scaffold preview is a planning/reference artifact only. Automation does not write it into `portfolio/`. Build the actual page intentionally from the closest current live page family. Existing public pages are never regenerated from the scaffold.
+
+Use `docs/current-page-patterns.md` to choose the closest current live reference, `docs/portfolio-uat-guardrails.md` for recurring UAT rules, and `docs/portfolio-consistency-audit.md` for the maintenance audit.
 
 ## Documentation and Versioning
 

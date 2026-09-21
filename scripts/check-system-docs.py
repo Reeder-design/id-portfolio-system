@@ -13,11 +13,24 @@ AI_DOCS = ROOT / "docs" / "ai-assistance.md"
 CONTENT_MODEL = ROOT / "docs" / "content-model.md"
 TEMPLATE_SYSTEM = ROOT / "docs" / "template-system.md"
 NEW_PROJECT_GUIDE = ROOT / "docs" / "new-project-guide.md"
+CURRENT_PATTERNS = ROOT / "docs" / "current-page-patterns.md"
+UAT_GUARDRAILS = ROOT / "docs" / "portfolio-uat-guardrails.md"
+CONSISTENCY_AUDIT = ROOT / "docs" / "portfolio-consistency-audit.md"
 TAXONOMY = ROOT / "portfolio-data" / "taxonomy.json"
 COMPONENT_REGISTRY = ROOT / "portfolio-data" / "component-registry.json"
 APP = ROOT / "portfolio-manager" / "app.py"
 VALIDATION = ROOT / "portfolio-manager" / "validation_service.py"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate-site.yml"
+RENDERER = ROOT / "scripts" / "render-project.py"
+NEW_PROJECT = ROOT / "scripts" / "new-project.py"
+CREATE_BUILD_SERVICE = ROOT / "portfolio-manager" / "create_content_build_service.py"
+CONTENT_ROUTES = ROOT / "portfolio-manager" / "content_routes.py"
+PROJECT_EDITOR = ROOT / "portfolio-manager" / "templates" / "project-editor.html"
+SITE_CONTENT_ROUTES = ROOT / "portfolio-manager" / "site_content_routes.py"
+SITE_CONTENT_MODEL = ROOT / "scripts" / "site_content_model.py"
+LEGACY_SITE_RENDERER = ROOT / "scripts" / "render-site-content.py"
+LEGACY_GENERAL_CONTENT_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "general-content.html"
+LEGACY_GENERAL_PAGE_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "general-page-editor.html"
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -37,11 +50,21 @@ def main() -> int:
         (CONTENT_MODEL, "content model guide"),
         (TEMPLATE_SYSTEM, "template system guide"),
         (NEW_PROJECT_GUIDE, "new project guide"),
+        (CURRENT_PATTERNS, "current page-pattern map"),
+        (UAT_GUARDRAILS, "portfolio UAT guardrails"),
+        (CONSISTENCY_AUDIT, "portfolio consistency audit"),
         (TAXONOMY, "portfolio taxonomy"),
         (COMPONENT_REGISTRY, "reusable component registry"),
         (APP, "Portfolio Manager app"),
         (VALIDATION, "Full Validation service"),
         (WORKFLOW, "pull-request validation workflow"),
+        (RENDERER, "new-page scaffold previewer"),
+        (NEW_PROJECT, "structured project creator"),
+        (CREATE_BUILD_SERVICE, "Create Content build service"),
+        (CONTENT_ROUTES, "content routes"),
+        (PROJECT_EDITOR, "project editor"),
+        (SITE_CONTENT_ROUTES, "site content routes"),
+        (SITE_CONTENT_MODEL, "site content model"),
     ]:
         require(path.exists(), f"Missing {label}: {path.relative_to(ROOT)}", errors)
 
@@ -58,10 +81,20 @@ def main() -> int:
     content_model = CONTENT_MODEL.read_text(encoding="utf-8")
     template_system = TEMPLATE_SYSTEM.read_text(encoding="utf-8")
     new_project_guide = NEW_PROJECT_GUIDE.read_text(encoding="utf-8")
+    current_patterns = CURRENT_PATTERNS.read_text(encoding="utf-8")
+    uat_guardrails = UAT_GUARDRAILS.read_text(encoding="utf-8")
+    consistency_audit = CONSISTENCY_AUDIT.read_text(encoding="utf-8")
     taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     app = APP.read_text(encoding="utf-8")
     validation = VALIDATION.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
+    renderer = RENDERER.read_text(encoding="utf-8")
+    new_project = NEW_PROJECT.read_text(encoding="utf-8")
+    create_build_service = CREATE_BUILD_SERVICE.read_text(encoding="utf-8")
+    content_routes = CONTENT_ROUTES.read_text(encoding="utf-8")
+    project_editor = PROJECT_EDITOR.read_text(encoding="utf-8")
+    site_content_routes = SITE_CONTENT_ROUTES.read_text(encoding="utf-8")
+    site_content_model = SITE_CONTENT_MODEL.read_text(encoding="utf-8")
 
     for phrase in [
         "Manage Content",
@@ -111,6 +144,8 @@ def main() -> int:
     ]:
         require(phrase in copilot, f"Copilot instructions are missing current operating guidance: {phrase!r}.", errors)
 
+    require("Structured general-page copy is a mirror/validation layer" in maintenance, "Maintenance guide must preserve source-first general-page ownership.", errors)
+
     for phrase in [
         "Routine portfolio content publishing",
         "Developing Portfolio Manager or repository infrastructure",
@@ -148,7 +183,6 @@ def main() -> int:
         require(phrase in agents, f"AGENTS.md is missing current taxonomy label {phrase!r}.", errors)
         require(phrase in copilot, f"Copilot guidance is missing current taxonomy label {phrase!r}.", errors)
         require(phrase in content_model, f"Content model guide is missing current taxonomy label {phrase!r}.", errors)
-        require(phrase in template_system, f"Template system guide is missing current taxonomy label {phrase!r}.", errors)
 
     for phrase in [
         "Structured data is not a future placeholder",
@@ -159,21 +193,51 @@ def main() -> int:
 
     for phrase in [
         "Source of Truth",
+        "Preservation Contract",
         "Portfolio Manager **Create Content**",
-        "Workflows",
-        "compatibility behavior",
+        "reference scaffold",
         "Reusable Component Registry",
         "Related Work and Related References",
+        "There is no output-file switch and no force-overwrite workflow",
     ]:
-        require(phrase in template_system, f"Template system guide is missing current architecture language: {phrase!r}.", errors)
+        require(phrase in template_system, f"Template system guide is missing current preservation language: {phrase!r}.", errors)
 
     for phrase in [
         "Portfolio Manager **Create Content** is the normal human-facing workflow",
         "Reference Library",
-        "routine approved portfolio-content maintenance",
+        "current public HTML/CSS/JavaScript is authoritative",
+        "There is no supported force-overwrite path",
         "portfolio-data/taxonomy.json",
     ]:
         require(phrase.lower() in new_project_guide.lower(), f"New project guide is missing current workflow language: {phrase!r}.", errors)
+
+    for phrase in [
+        "Current Portfolio Page Patterns",
+        "Flagship project case studies",
+        "Interactive learning demos",
+        "Systems, integrations, automation, and reporting",
+        "Default reference scaffold",
+        "prefer the current live family",
+    ]:
+        require(phrase in current_patterns, f"Current page-pattern map is missing future-build guidance: {phrase!r}.", errors)
+
+    for phrase in [
+        "## Preservation Rule",
+        "Tabbed interactions changing section height",
+        "Interaction headings and copy constrained too narrowly",
+        "Pixel icon clipping, centering, and neighboring-image bleed",
+        "Motion paths, dots, and decorative animation crossing content",
+        "## UAT Workflow for Future Visual Changes",
+    ]:
+        require(phrase in uat_guardrails, f"UAT guardrails are missing recurring portfolio QA guidance: {phrase!r}.", errors)
+
+    for phrase in [
+        "Repeated issue patterns from project UAT",
+        "Current repository observations",
+        "Interactive-state height risk",
+        "Existing public page first",
+    ]:
+        require(phrase in consistency_audit, f"Consistency audit is missing current audit language: {phrase!r}.", errors)
 
     stale_phrases = [
         "The v1 dashboard is intentionally narrow",
@@ -197,6 +261,9 @@ def main() -> int:
         content_model,
         template_system,
         new_project_guide,
+        current_patterns,
+        uat_guardrails,
+        consistency_audit,
     ])
     for phrase in stale_phrases:
         require(phrase not in combined_docs, f"Current documentation still contains retired workflow language: {phrase!r}.", errors)
@@ -212,7 +279,6 @@ def main() -> int:
 
     for label, script in [
         ("System docs/architecture freshness", "scripts/check-system-docs.py"),
-        ("Breadcrumb consistency", "scripts/check-breadcrumb-consistency.py"),
         ("Hiring Manager UX", "scripts/check-hiring-mobile-ux.py"),
         ("Hiring Guide Manager", "scripts/check-hiring-guide-manager.py"),
         ("Hiring Guide public sync", "scripts/check-hiring-guide-public-sync.py"),
@@ -227,7 +293,6 @@ def main() -> int:
 
     for script in [
         "python scripts/check-system-docs.py",
-        "python scripts/check-breadcrumb-consistency.py",
         "python scripts/check-hiring-mobile-ux.py",
         "python scripts/check-hiring-guide-manager.py",
         "python scripts/check-hiring-guide-public-sync.py",
@@ -235,6 +300,22 @@ def main() -> int:
         "python scripts/check-component-registry.py",
     ]:
         require(script in workflow, f"Pull-request CI must run {script}.", errors)
+
+
+    require("--force" not in renderer, "Scaffold previewer must not expose a force-overwrite option.", errors)
+    require("write_text(rendered" not in renderer, "Scaffold previewer must never write public HTML.", errors)
+    require("--output" not in renderer, "Scaffold previewer must not expose an output-file switch.", errors)
+    require("--render-scaffold" not in new_project and "render=" not in new_project, "Structured project creator must remain record-only.", errors)
+    require("create_project(project_record)" in create_build_service and "render=" not in create_build_service, "Create Content build must remain record-only.", errors)
+    require("/regenerate" not in content_routes, "Portfolio Manager must not expose the retired project regeneration route.", errors)
+    require("Regenerate Page" not in project_editor, "Project editor must not expose the retired Regenerate Page action.", errors)
+    require("check-breadcrumb-consistency.py" not in validation, "Breadcrumb checks should remain consolidated in final-polish validation.", errors)
+    require("check-breadcrumb-consistency.py" not in workflow, "CI should not run the retired standalone breadcrumb checker.", errors)
+    require(not LEGACY_SITE_RENDERER.exists(), "Legacy structured-to-HTML site renderer must stay removed.", errors)
+    require(not LEGACY_GENERAL_CONTENT_TEMPLATE.exists(), "Legacy general-content editor template must stay removed.", errors)
+    require(not LEGACY_GENERAL_PAGE_TEMPLATE.exists(), "Legacy general-page editor template must stay removed.", errors)
+    require("render-site-content.py" not in site_content_routes, "Site content routes must not invoke the retired structured-to-HTML renderer.", errors)
+    require("def render_page(" not in site_content_model and "def render_page_text(" not in site_content_model, "Site content model must remain extraction/validation only.", errors)
 
     require(
         workflow.count("python scripts/check-final-polish.py") == 1,

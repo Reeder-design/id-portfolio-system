@@ -7,12 +7,9 @@ import os
 import re
 import sys
 from pathlib import Path
-from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE_ROOT = ROOT / "portfolio"
 DATA_ROOT = ROOT / "portfolio-data"
-PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 TEMPLATE_PATH = ROOT / "templates" / "project-page" / "index.html"
 
@@ -78,6 +75,33 @@ def find_taxonomy_item(taxonomy: dict, project: dict) -> tuple[dict, dict | None
             )
 
     return category, subcategory
+
+
+def render_breadcrumbs(
+    output_path: Path,
+    project: dict,
+    category: dict,
+    subcategory: dict | None,
+) -> str:
+    crumbs = [
+        ("Home", "portfolio/index.html"),
+        ("Projects", "portfolio/projects/index.html"),
+        (category["label"], category.get("path")),
+    ]
+
+    if subcategory:
+        crumbs.append((subcategory["label"], subcategory.get("path")))
+
+    html_parts: list[str] = []
+    for label, path in crumbs:
+        if path:
+            html_parts.append(f'<a href="{esc(relative_href(output_path, path))}">{esc(label)}</a>')
+        else:
+            html_parts.append(f"<span>{esc(label)}</span>")
+        html_parts.append('<span class="breadcrumb-separator">/</span>')
+
+    html_parts.append(f"<span>{esc(project['title'])}</span>")
+    return "\n".join(html_parts)
 
 
 def render_list(items: list[str]) -> str:
@@ -187,11 +211,12 @@ def render_detail_sections(project: dict, start_number: int) -> tuple[str, str, 
         layout_html = render_detail_layout(section)
 
         html_parts.append(
-            f'<section class="project-story-section project-detail-section" id="{esc(section_id)}">'
-            f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-            f'<div><p class="eyebrow">{esc(section.get("eyebrow", "Project Detail"))}</p>'
-            f'<h2>{esc(section.get("title", ""))}</h2></div></div>'
-            f"{summary_html}{layout_html}{note_html}</section>"
+            f'<section class="section flagship-section scaffold-section project-detail-section" id="{esc(section_id)}">'
+            '<div class="container scaffold-copy">'
+            f'<div class="scaffold-kicker"><span class="project-detail-number" aria-hidden="true">{number:02d}</span>'
+            f'<p class="eyebrow">{esc(section.get("eyebrow", "Project Detail"))}</p></div>'
+            f'<h2>{esc(section.get("title", ""))}</h2>'
+            f"{summary_html}{layout_html}{note_html}</div></section>"
         )
         number += 1
 
@@ -234,96 +259,26 @@ def render_assets(project: dict, output_path: Path, number: int) -> tuple[str, b
             )
 
     section = (
-        '<section class="project-story-section project-assets" id="evidence">'
-        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-        '<div><p class="eyebrow">Evidence</p><h2>Explore the work</h2></div></div>'
+        '<section class="section section-soft flagship-section scaffold-section project-assets" id="evidence">'
+        '<div class="container scaffold-copy">'
+        f'<div class="scaffold-kicker"><span class="project-detail-number" aria-hidden="true">{number:02d}</span>'
+        '<p class="eyebrow">Evidence</p></div>'
+        '<h2>Explore the work.</h2>'
         '<p>Public-safe artifacts and project outputs from this case study.</p>'
         f'<div class="project-asset-grid">{"".join(cards)}</div>'
-        '</section>'
+        '</div></section>'
     )
     return section, True
 
 
-def render_related_work(project: dict, output_path: Path, taxonomy: dict, number: int) -> tuple[str, str]:
-    references = project.get("related_work", [])
-    if not references:
-        return "", ""
-
-    cards: list[str] = []
-    for reference in references:
-        project_id = reference.get("project_id", "").strip()
-        if not project_id or project_id == project.get("id"):
-            continue
-
-        target_path = PROJECT_ROOT / f"{project_id}.json"
-        if not target_path.exists():
-            raise ValueError(
-                f"Project '{project.get('id')}' references missing related project '{project_id}'."
-            )
-        target = load_json(target_path)
-        target_category, _ = find_taxonomy_item(taxonomy, target)
-        href = relative_href(output_path, target["page_path"])
-        relationship = reference.get("relationship", "").strip()
-
-        cards.append(
-            '<a class="related-work-card" href="' + esc(href) + '">'
-            f'<span class="related-work-category">{esc(target_category["label"])}</span>'
-            f'<h3>{esc(target["title"])}</h3>'
-            f'<p class="related-work-relationship">{esc(relationship)}</p>'
-            f'<p>{esc(target["summary"])}</p>'
-            '<span class="related-work-link">Explore project →</span>'
-            '</a>'
-        )
-
-    if not cards:
-        return "", ""
-
-    section = (
-        '<section class="project-story-section related-work-section" id="related-work">'
-        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-        '<div><p class="eyebrow">Related Work</p><h2>See how this work connects across the portfolio.</h2></div></div>'
-        '<p>These projects show adjacent parts of the same learning ecosystem without duplicating the full story here.</p>'
-        f'<div class="related-work-grid">{"".join(cards)}</div>'
-        '</section>'
-    )
-    return section, '<a href="#related-work">Related Work</a>'
-
-
-def render_breadcrumbs(
-    output_path: Path,
-    project: dict,
-    category: dict,
-    subcategory: dict | None,
-) -> str:
-    crumbs = [
-        ("Home", "portfolio/index.html"),
-        ("Projects", "portfolio/projects/index.html"),
-        (category["label"], category.get("path")),
-    ]
-
-    if subcategory:
-        crumbs.append((subcategory["label"], subcategory.get("path")))
-
-    html_parts: list[str] = []
-    for label, path in crumbs:
-        if path:
-            html_parts.append(f'<a href="{esc(relative_href(output_path, path))}">{esc(label)}</a>')
-        else:
-            html_parts.append(f"<span>{esc(label)}</span>")
-        html_parts.append('<span class="breadcrumb-separator">/</span>')
-
-    html_parts.append(f"<span>{esc(project['title'])}</span>")
-    return "\n".join(html_parts)
-
-
-def render_primary_action(project: dict, output_path: Path, *, cta: bool = False) -> str:
+def render_primary_action(project: dict, output_path: Path) -> str:
     live_project = project.get("links", {}).get("live_project")
     if not live_project:
         return ""
 
     href = asset_href(output_path, live_project)
-    css_class = "btn btn-highlight" if cta else "btn btn-primary"
-    label = "Launch Project" if cta else "View Live Project"
+    css_class = "btn btn-primary"
+    label = "View Live Project"
     return (
         f'<a class="{css_class}" href="{esc(href)}" target="_blank" '
         f'rel="noopener noreferrer">{label}</a>'
@@ -334,7 +289,7 @@ def render_confidentiality_note(project: dict) -> str:
     confidentiality = project.get("confidentiality")
     if confidentiality == "needs-sanitization":
         raise ValueError(
-            f"Project '{project.get('id')}' still needs sanitization and cannot be rendered for publishing."
+            f"Project '{project.get('id')}' still needs sanitization and cannot be previewed as a public scaffold."
         )
     if confidentiality != "sanitized":
         return ""
@@ -349,13 +304,13 @@ def render_confidentiality_note(project: dict) -> str:
     )
 
 
-def render_project_text(project_path: Path, output_path: Path | None = None) -> tuple[str, Path]:
+def render_project_text(project_path: Path) -> tuple[str, Path]:
     project_path = project_path.resolve()
     project = load_json(project_path)
     taxonomy = load_json(TAXONOMY_PATH)
     category, subcategory = find_taxonomy_item(taxonomy, project)
 
-    final_output = output_path.resolve() if output_path else (ROOT / project["page_path"]).resolve()
+    final_output = (ROOT / project["page_path"]).resolve()
 
     try:
         final_output.relative_to(ROOT)
@@ -363,9 +318,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         raise ValueError("Output path must remain inside the repository.") from exc
 
     content = project.get("content", {})
-    statuses = {item["id"]: item["label"] for item in taxonomy.get("statuses", [])}
-    status = project.get("status", "planned")
-
     back_item = subcategory if subcategory and subcategory.get("path") else category
     back_path = back_item.get("path", "portfolio/projects/index.html")
     back_label = f"Back to {back_item['label']}"
@@ -380,16 +332,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
     next_number = 4
     detail_sections, detail_nav, next_number = render_detail_sections(project, next_number)
     assets_section, has_assets = render_assets(project, final_output, next_number)
-    if has_assets:
-        next_number += 1
-    outcome_number = next_number
-    next_number += 1
-    related_work_section, related_work_nav = render_related_work(
-        project,
-        final_output,
-        taxonomy,
-        next_number,
-    )
 
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
@@ -412,7 +354,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "SUMMARY": esc(project["summary"]),
         "TAGS": render_tags(project),
         "PRIMARY_ACTION": render_primary_action(project, final_output),
-        "PRIMARY_ACTION_CTA": render_primary_action(project, final_output, cta=True),
         "BACK_PATH": esc(relative_href(final_output, back_path)),
         "BACK_LABEL": esc(back_label),
         "ROLE": esc(content.get("role", "")),
@@ -429,14 +370,8 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "DETAIL_SECTIONS": detail_sections,
         "ASSETS_SECTION": assets_section,
         "EVIDENCE_NAV": '<a href="#evidence">Evidence</a>' if has_assets else "",
-        "OUTCOME_NUMBER": f"{outcome_number:02d}",
         "OUTCOMES": render_list(content.get("outcomes", [])),
-        "RELATED_WORK_SECTION": related_work_section,
-        "RELATED_WORK_NAV": related_work_nav,
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
-        "STATUS_CLASS": esc(status),
-        "STATUS_LABEL": esc(statuses.get(status, status.title())),
-        "CTA_HEADING": esc("Explore the finished project." if project.get("links", {}).get("live_project") else "Explore more of my work."),
     }
 
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
@@ -453,40 +388,27 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Render a structured portfolio project JSON record into the standard project-page template."
+        description="Preview the locked new-page reference scaffold for a structured project. This command never writes public portfolio files."
     )
     parser.add_argument("project", help="Project JSON path, for example portfolio-data/projects/example.json")
-    parser.add_argument("--output", help="Optional output path. Defaults to the record's page_path.")
-    parser.add_argument("--force", action="store_true", help="Allow overwriting an existing output file.")
-    parser.add_argument("--stdout", action="store_true", help="Print rendered HTML instead of writing it.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     project_path = as_repo_path(args.project)
-    output_path = as_repo_path(args.output) if args.output else None
 
     try:
-        rendered, final_output = render_project_text(project_path, output_path)
+        rendered, final_output = render_project_text(project_path)
     except (ValueError, KeyError) as exc:
         print(f"ERROR: {exc}")
         return 1
 
-    if args.stdout:
-        print(rendered)
-        return 0
-
-    if final_output.exists() and not args.force:
-        print(
-            f"ERROR: {final_output.relative_to(ROOT)} already exists. "
-            "Use --force only when you intentionally want to replace that page."
-        )
-        return 1
-
-    final_output.parent.mkdir(parents=True, exist_ok=True)
-    final_output.write_text(rendered, encoding="utf-8")
-    print(f"Rendered {project_path.relative_to(ROOT)} -> {final_output.relative_to(ROOT)}")
+    print(rendered)
+    print(
+        f"\n<!-- Preview only. Target path: {final_output.relative_to(ROOT)}. "
+        "Build the real page intentionally from the current live portfolio pattern. -->"
+    )
     return 0
 
 

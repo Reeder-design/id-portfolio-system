@@ -87,7 +87,7 @@ def main() -> int:
     require("Reuse the pattern, not a copied page" in template_text, "Registry UI must explain the reuse boundary.", errors)
     require("does not inject markup" in template_text, "Registry UI must not imply metadata auto-injects custom-page markup.", errors)
     require("component_refs_present" in editor_text, "Project editor must support intentionally clearing recorded component refs.", errors)
-    require("Detected automatically" in editor_text, "Project editor must distinguish inferred component usage.", errors)
+    require("Detected automatically" in editor_text, "Project editor must distinguish safe structured-data inference from explicitly recorded visual patterns.", errors)
     require('{% if component.selected %}<input type="hidden" name="component_refs" value="{{ component.id }}">{% endif %}' in editor_text, "Explicit refs must survive when the same component is also inferred.", errors)
     require('"component_refs"' in schema_text, "Project schema must allow component_refs.", errors)
     require("COMPONENT_REGISTRY_PATH" in content_text and "unknown component reference" in content_text, "Structured-content validation must reject unknown component refs.", errors)
@@ -107,8 +107,9 @@ def main() -> int:
         require(certification is not None, "Expected structured project missing during registry test.", errors)
         if certification:
             inferred = set(module.inferred_component_ids(certification))
-            require("related-work-cards" in inferred, "Existing related_work should infer Related Work Cards.", errors)
-            require("project-snapshot" not in inferred, "Custom/recovered pages must not be misclassified as standard generated pages.", errors)
+            require("related-work-cards" not in inferred, "related_work metadata must not imply a visible Related Work component.", errors)
+            require("tabs-switcher" not in inferred, "Legacy generation metadata must not infer tab interactions.", errors)
+            require("project-snapshot" not in inferred, "Structured metadata must not infer presentation components on an existing public page.", errors)
         try:
             module.validate_component_refs({}, ["not-a-real-component"])
         except module.ComponentRegistryError:

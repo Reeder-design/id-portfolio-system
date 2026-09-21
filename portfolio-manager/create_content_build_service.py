@@ -247,7 +247,7 @@ Rules:
 - Never reintroduce information that was removed or generalized during sanitization.
 - Use only existing taxonomy category/subcategory ids supplied in the prompt.
 - Do not create HTML, code, Git commands, files, commits, or publishing instructions.
-- This is a proposal for the repository's standard structured case-study renderer only.
+- This is a proposal for a structured project record only. Do not assume the retired standard renderer controls the visible portfolio page.
 - Return one JSON object only, with no Markdown fences.
 """
 
@@ -471,10 +471,10 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
     record = load_brief(brief_id)
     fingerprint = _require_current_plan(record)
     if not plan_is_approved(record):
-        raise CreateBuildError("Approve the current Content Plan before creating local portfolio files.")
+        raise CreateBuildError("Approve the current Content Plan before creating a local structured record.")
     proposal = record.get("build_proposal")
     if not isinstance(proposal, dict) or proposal.get("fingerprint") != fingerprint or record.get("build_proposal_stale"):
-        raise CreateBuildError("Generate or save a current build proposal before creating local portfolio files.")
+        raise CreateBuildError("Generate or save a current build proposal before creating the local structured record.")
     if record.get("local_build") and record.get("local_build", {}).get("active"):
         raise CreateBuildError("A local build is already active for this brief.")
 
@@ -505,19 +505,13 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
         project_record["component_refs"] = list(proposal["component_refs"])
 
     record_path: Path | None = None
-    page_path: Path | None = None
     try:
-        created_record, created_page = new_project.create_project(project_record, render=True)
-        record_path = created_record
-        page_path = created_page
+        record_path = new_project.create_project(project_record)
         new_project.refresh_documentation()
         valid, validation_output = run_full_validation()
         if not valid:
-            raise CreateBuildError("Full validation failed after local build:\n" + validation_output)
+            raise CreateBuildError("Full validation failed after local record creation:\n" + validation_output)
     except Exception as exc:
-        if page_path and page_path.exists():
-            page_path.unlink()
-            new_project.cleanup_empty_parents(page_path, ROOT / "portfolio" / "projects")
         if record_path and record_path.exists():
             record_path.unlink()
         try:
@@ -535,28 +529,13 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
         "fingerprint": fingerprint,
         "project_id": project_record["id"],
         "record_path": record_path.relative_to(ROOT).as_posix(),
-        "page_path": page_path.relative_to(ROOT).as_posix() if page_path else None,
         "record_sha256": _file_sha(record_path),
-        "page_sha256": _file_sha(page_path) if page_path else None,
         "created_at": datetime.now().isoformat(timespec="seconds"),
         "validation": "passed",
     }
     record["local_build"] = build
     record["status"] = "local-build-review"
     return _save(record)
-
-
-def preview_url(record: dict[str, Any]) -> str | None:
-    build = record.get("local_build")
-    if not isinstance(build, dict) or not build.get("active") or not build.get("page_path"):
-        return None
-    page_path = str(build["page_path"])
-    if not page_path.startswith("portfolio/"):
-        return None
-    relative = page_path[len("portfolio/"):]
-    if relative.endswith("index.html"):
-        relative = relative[: -len("index.html")]
-    return "http://127.0.0.1:8000/" + relative.lstrip("/")
 
 
 def keep_local_build(brief_id: str) -> dict[str, Any]:
@@ -578,19 +557,11 @@ def revert_local_build(brief_id: str) -> dict[str, Any]:
         raise CreateBuildError("There is no active local build to revert.")
 
     record_path = (ROOT / str(build.get("record_path", ""))).resolve()
-    page_path_raw = build.get("page_path")
-    page_path = (ROOT / str(page_path_raw)).resolve() if page_path_raw else None
     if ROOT.resolve() not in record_path.parents:
         raise CreateBuildError("Stored local build record path is invalid.")
-    if page_path and ROOT.resolve() not in page_path.parents:
-        raise CreateBuildError("Stored local build page path is invalid.")
 
-    if page_path:
-        _remove_if_unchanged(page_path, build.get("page_sha256"))
     _remove_if_unchanged(record_path, build.get("record_sha256"))
     new_project = _load_new_project_module()
-    if page_path:
-        new_project.cleanup_empty_parents(page_path, ROOT / "portfolio" / "projects")
     try:
         new_project.refresh_documentation()
     except Exception as exc:
@@ -615,6 +586,5 @@ def build_workspace_context(record: dict[str, Any]) -> dict[str, Any]:
         "taxonomy": taxonomy,
         "proposal": proposal,
         "plan_approved": plan_is_approved(record),
-        "preview_url": preview_url(record),
         "preflight": brief_preflight(record),
     }

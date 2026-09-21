@@ -3,10 +3,8 @@ from __future__ import annotations
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from content_routes import (
-    REPO_ROOT,
-    is_generated_page,
     load_project,
-    regenerate_project as regenerate_project_view,
+    public_page_snapshot,
     save_project as save_project_view,
 )
 from page_copy_service import extract_visible_fields, page_info
@@ -66,7 +64,7 @@ def save_project_with_references(project_id: str):
 
     old_title = str(before.get("title", "")).strip()
     target_path = str(before.get("page_path", "")).strip()
-    generated = is_generated_page(before)
+    had_public_page = public_page_snapshot(before)[0] is not None
 
     response = save_project_view(project_id)
 
@@ -82,16 +80,8 @@ def save_project_with_references(project_id: str):
         return response
 
     automatic_updates = ["Project record", "Generated documentation"]
-    if generated:
-        regenerate_project_view(project_id)
-        try:
-            generated_html = (REPO_ROOT / target_path).read_text(encoding="utf-8")
-        except OSError:
-            generated_html = ""
-        if new_title in generated_html:
-            automatic_updates.append("Current generated project page")
-    else:
-        automatic_updates.append("Current custom project page title")
+    if had_public_page:
+        automatic_updates.append("Current public project page title")
 
     try:
         review_record = create_related_reference_review(

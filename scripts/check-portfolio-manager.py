@@ -98,18 +98,19 @@ def main() -> int:
             )
 
     require(SITE_ROUTES.exists(), "General page content routes are missing", errors)
-    require(SITE_MODEL.exists(), "General page safe renderer model is missing", errors)
-    require(SITE_DATA.exists(), "Structured general page content source is missing", errors)
+    require(SITE_MODEL.exists(), "General page extraction/validation model is missing", errors)
+    require(SITE_DATA.exists(), "Structured general page content mirror is missing", errors)
     if site_routes_text:
-        require('request.form.get("public_safe") != "on"' in site_routes_text, "General page saves must require explicit public-safe confirmation", errors)
-        require("scripts/render-site-content.py" in site_routes_text, "General page saves must use the safe renderer", errors)
-        require("scripts/check-site-content.py" in site_routes_text, "General page saves must validate structured/public copy sync", errors)
-        require("scripts/check-site.py" in site_routes_text, "General page saves must validate the public site", errors)
-        require("rollback(" in site_routes_text, "General page saves must support rollback", errors)
+        require('request.form.get("public_safe") != "on"' in site_routes_text, "Current page-copy saves must require explicit public-safe confirmation", errors)
+        require("scripts/render-site-content.py" not in site_routes_text, "Retired structured-to-HTML renderer must not be callable from Portfolio Manager", errors)
+        require("scripts/check-site-content.py" in site_routes_text, "Current page-copy saves must validate structured/public copy sync", errors)
+        require("scripts/check-site.py" in site_routes_text, "Current page-copy saves must validate the public site", errors)
+        require('return redirect(url_for("content.content_manager"))' in site_routes_text, "Legacy /site-content route must redirect to Manage Content", errors)
+        require('return redirect(url_for("site_content.v2_page_editor", page_id=page_id))' in site_routes_text, "Legacy page-editor URLs must redirect to the current page-copy editor", errors)
     if site_model_text:
-        require("escape(" in site_model_text, "General page renderer must escape managed copy as plain text", errors)
-        require("expected exactly one safe locator match" in site_model_text, "General page renderer must fail closed on ambiguous locators", errors)
-        require("LOCATORS" in site_model_text, "General page renderer must use an explicit approved locator set", errors)
+        require("def render_page(" not in site_model_text and "def render_page_text(" not in site_model_text, "Structured site-content model must not render public HTML", errors)
+        require("expected exactly one safe locator match" in site_model_text, "General page extraction must fail closed on ambiguous locators", errors)
+        require("LOCATORS" in site_model_text, "General page extraction must use an explicit approved locator set", errors)
 
     for path in TEMPLATES.glob("*.html"):
         text = path.read_text(encoding="utf-8")
@@ -128,13 +129,8 @@ def main() -> int:
         require('name="public_safe"' in template_text, "Asset upload UI must require public-safe confirmation", errors)
         require("data-confirm-action=\"remove-asset\"" in template_text, "Asset removal must require confirmation", errors)
 
-    general_template = TEMPLATES / "general-page-editor.html"
-    require(general_template.exists(), "General page editor template is missing", errors)
-    if general_template.exists():
-        template_text = general_template.read_text(encoding="utf-8")
-        require('name="public_safe"' in template_text, "General page editor must require public-safe confirmation", errors)
-        require('data-confirm-action="general-save"' in template_text, "General page save must require a confirmation dialog", errors)
-        require("field__" in template_text, "General page editor must render only approved structured fields", errors)
+    require(not (TEMPLATES / "general-content.html").exists(), "Retired General Page Content library template must stay removed", errors)
+    require(not (TEMPLATES / "general-page-editor.html").exists(), "Retired General Page Content editor template must stay removed", errors)
 
     if errors:
         print("Portfolio Manager validation failed:")
@@ -142,7 +138,7 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    print("Portfolio Manager security, asset-safety, and general-content validation passed.")
+    print("Portfolio Manager security, asset-safety, and source-first page-content validation passed.")
     return 0
 
 

@@ -45,10 +45,11 @@ def main() -> int:
     require("plan_is_approved" in service_text, "Controlled build must require explicit plan approval.", errors)
     require("BUILD_PROPOSAL_INSTRUCTIONS" in service_text, "Controlled build must use a dedicated proposal-only AI contract.", errors)
     require("Do not create HTML, code, Git commands, files, commits, or publishing instructions" in service_text, "AI build proposal must be denied direct write/publish authority.", errors)
-    require("new_project.create_project" in service_text, "Local build must reuse the existing structured project generator.", errors)
-    require("run_full_validation()" in service_text, "Local build must run the repository validation suite before review.", errors)
+    require("new_project.create_project" in service_text, "Local build must reuse the structured project-record generator.", errors)
+    require("render=" not in service_text, "Controlled build must not expose a public-page render switch.", errors)
+    require("run_full_validation()" in service_text, "Local record creation must run the repository validation suite before review.", errors)
     require("refresh_documentation" in service_text, "Controlled build must keep generated documentation synchronized.", errors)
-    require("record_sha256" in service_text and "page_sha256" in service_text, "Local build must hash created files for safe revert.", errors)
+    require("record_sha256" in service_text, "Local build must hash the created structured record for safe revert.", errors)
     require("Automatic revert stopped because" in service_text, "Revert must refuse to delete files edited after generation.", errors)
     require('"decision": "pending"' in service_text, "New local builds must remain pending human review.", errors)
     require('build["decision"] = "kept"' in service_text, "Keep must be a separate explicit human action.", errors)
@@ -63,13 +64,13 @@ def main() -> int:
         "Approve Plan for Build",
         "Generate Build Proposal",
         "Save Build Proposal",
-        "Create Local Project &amp; Validate",
-        "Open Real Local Preview",
-        "Keep Local Build",
-        "Revert Local Build",
+        "Create Structured Record &amp; Validate",
+                "Keep Structured Record",
+        "Revert Structured Record",
     ):
         require(label in template_text, f"Controlled build UI must include {label}.", errors)
     require("does not commit, push, publish, or merge" in template_text, "Build UI must clearly explain its non-publishing boundary.", errors)
+    require("will not generate or overwrite the visible portfolio page" in template_text, "Build UI must state the portfolio-preservation boundary.", errors)
 
     sys.path.insert(0, str(MANAGER))
     try:
@@ -163,14 +164,11 @@ def main() -> int:
                         }
 
                     @staticmethod
-                    def create_project(project_record, render=True):
+                    def create_project(project_record):
                         record_path = temp_root / "portfolio-data" / "projects" / f"{project_record['id']}.json"
-                        page_path = temp_root / project_record["page_path"]
                         record_path.parent.mkdir(parents=True, exist_ok=True)
-                        page_path.parent.mkdir(parents=True, exist_ok=True)
                         record_path.write_text(json.dumps(project_record, indent=2), encoding="utf-8")
-                        page_path.write_text("<html><body>Controlled Build Test</body></html>", encoding="utf-8")
-                        return record_path, page_path
+                        return record_path
 
                     @staticmethod
                     def refresh_documentation():
@@ -192,23 +190,23 @@ def main() -> int:
                 built = build.apply_local_build(record["id"])
                 local = built["local_build"]
                 record_file = temp_root / local["record_path"]
-                page_file = temp_root / local["page_path"]
-                require(record_file.exists() and page_file.exists(), "Controlled build must create both structured record and rendered page locally.", errors)
+                require(record_file.exists(), "Controlled build must create the structured project record locally.", errors)
+                require("page_path" not in local, "Controlled build state must not carry a generated public-page path.", errors)
                 require(local["decision"] == "pending", "Created local build must wait for human Keep/Revert decision.", errors)
 
                 build.revert_local_build(record["id"])
-                require(not record_file.exists() and not page_file.exists(), "Revert must remove unchanged files created by the controlled build.", errors)
+                require(not record_file.exists(), "Revert must remove the unchanged structured record created by the controlled build.", errors)
 
                 build.apply_local_build(record["id"])
                 rebuilt = content.load_brief(record["id"])["local_build"]
-                changed_page = temp_root / rebuilt["page_path"]
-                changed_page.write_text("<html><body>User edited this after generation.</body></html>", encoding="utf-8")
+                changed_record = temp_root / rebuilt["record_path"]
+                changed_record.write_text(changed_record.read_text(encoding="utf-8") + "\n", encoding="utf-8")
                 try:
                     build.revert_local_build(record["id"])
-                    errors.append("Revert must refuse to delete a generated file that changed after creation.")
+                    errors.append("Revert must refuse to delete a structured record that changed after creation.")
                 except build.CreateBuildError as exc:
                     require("changed after the local build" in str(exc), "Edited-file revert failure should explain the hash protection.", errors)
-                require(changed_page.exists(), "Hash-protected revert must preserve an edited generated page.", errors)
+                require(changed_record.exists(), "Hash-protected revert must preserve an edited structured record.", errors)
         finally:
             content.BRIEFS_ROOT = old_briefs_root
             build.ROOT = old_build_root

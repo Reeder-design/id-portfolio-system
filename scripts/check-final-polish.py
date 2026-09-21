@@ -11,6 +11,8 @@ REFRESH_CSS = PORTFOLIO / "css" / "portfolio-refresh.css"
 CONSISTENCY_CSS = PORTFOLIO / "css" / "consistency-polish.css"
 HIRING_SUPPORT_CSS = PORTFOLIO / "css" / "hiring-support.css"
 MOTION_JS = PORTFOLIO / "js" / "portfolio-motion.js"
+FRAME_CSS = PORTFOLIO / "css" / "phase1-frame.css"
+VISUAL_CONSISTENCY_CSS = PORTFOLIO / "css" / "phase21-visual-consistency.css"
 ABOUT = PORTFOLIO / "about" / "index.html"
 HOME = PORTFOLIO / "index.html"
 PROJECT_TEMPLATE = ROOT / "templates" / "project-page" / "index.html"
@@ -93,6 +95,11 @@ def main() -> int:
         require(
             VIEWPORT_RE.search(html) is not None,
             f"{relative}: missing mobile viewport metadata.",
+            errors,
+        )
+        require(
+            "phase1-frame.css" in html,
+            f"{relative}: missing shared phase1-frame.css visual layer.",
             errors,
         )
         prose = visible_text(path)
@@ -178,18 +185,43 @@ def main() -> int:
     ]:
         require(marker in motion_js, f"Shared portfolio navigation/component logic is missing {marker!r}.", errors)
 
+    require(FRAME_CSS.exists(), "portfolio/css/phase1-frame.css is missing.", errors)
+    if FRAME_CSS.exists():
+        frame_css = FRAME_CSS.read_text(encoding="utf-8")
+        require(
+            '@import url("./phase21-visual-consistency.css");' in frame_css,
+            "phase1-frame.css must import phase21-visual-consistency.css.",
+            errors,
+        )
+
+    require(VISUAL_CONSISTENCY_CSS.exists(), "portfolio/css/phase21-visual-consistency.css is missing.", errors)
+    if VISUAL_CONSISTENCY_CSS.exists():
+        visual_css = VISUAL_CONSISTENCY_CSS.read_text(encoding="utf-8")
+        for marker in [
+            "main > section:first-child .container:has(> .breadcrumbs)",
+            "grid-column: 1 / -1 !important;",
+            "row-gap: 12px !important;",
+            ".about-experience-hero + .section .section-heading",
+            ".adapt-lab::before",
+            ".adapt-tab.active",
+            ".adapt-step:hover",
+            "prefers-reduced-motion",
+        ]:
+            require(marker in visual_css, f"Shared visual-consistency CSS is missing {marker!r}.", errors)
+
     project_template = PROJECT_TEMPLATE.read_text(encoding="utf-8")
-    require("project-template-cta" not in project_template, "Generated project pages must not use the retired project-template-cta Keep Exploring variant.", errors)
+    require("project-template-cta" not in project_template, "New-page scaffold must not use the retired project-template-cta variant.", errors)
+    require('role="tab"' not in project_template, "Default new-page scaffold should not ship with tab interactions.", errors)
+    require("Keep Exploring" not in project_template, "New-page scaffold must not recreate the retired Keep Exploring footer.", errors)
+    require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "New-page scaffold must not recreate a public Related Work section.", errors)
     for marker in [
-        '<p class="eyebrow">Keep Exploring</p>',
-        'class="section-heading refresh-section-intro"',
-        'class="refresh-card-grid"',
-        'class="refresh-link-card"',
-        'class="refresh-link-card-header"',
-        'class="refresh-link-card-body"',
-        'class="project-family-link"',
+        'PORTFOLIO-REFERENCE-SCAFFOLD:NEW-PAGE-ONLY',
+        'class="scaffold-hero-grid"',
+        'class="snapshot-band"',
+        'class="case-nav-shell"',
+        'class="section portfolio-back-row"',
     ]:
-        require(marker in project_template, f"Generated project template is missing canonical Keep Exploring marker {marker!r}.", errors)
+        require(marker in project_template, f"New-page scaffold is missing current hardening marker {marker!r}.", errors)
 
     for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
