@@ -251,7 +251,7 @@ python3 scripts/render-project.py portfolio-data/projects/new-project.json --std
 
 The renderer has no supported force-overwrite mode. If the target public page already exists, edit that current page directly.
 
-See `docs/portfolio-visual-qa-standard.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
+See `docs/portfolio-uat-guardrails.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
 
 ## Documentation and Versioning
 
