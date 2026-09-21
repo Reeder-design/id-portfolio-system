@@ -40,6 +40,14 @@ DEFAULT_ROUTING_POLICY = {
     },
     "min_answer_score": 8,
     "min_answer_margin": 3,
+    "typo_aliases": {
+        "automtion": "automation", "certfication": "certification", "certifcation": "certification",
+        "evaluaton": "evaluation", "evalution": "evaluation", "experiance": "experience",
+        "experince": "experience", "expreince": "experience", "faciliatation": "facilitation",
+        "instrucional": "instructional", "interative": "interactive", "migraton": "migration",
+        "mirgation": "migration", "multmedia": "multimedia", "performace": "performance",
+        "perfromance": "performance", "suport": "support",
+    },
 }
 
 GENERIC_MATCH_TOKENS = {
@@ -103,19 +111,33 @@ def _routing_policy() -> dict[str, Any]:
     stop_words = raw.get("stop_words", DEFAULT_ROUTING_POLICY["stop_words"])
     if not isinstance(stop_words, list):
         stop_words = DEFAULT_ROUTING_POLICY["stop_words"]
+    typo_aliases = raw.get("typo_aliases", DEFAULT_ROUTING_POLICY["typo_aliases"])
+    if not isinstance(typo_aliases, dict):
+        typo_aliases = DEFAULT_ROUTING_POLICY["typo_aliases"]
     return {
         "stop_words": {str(word).lower() for word in stop_words if str(word).strip()},
+        "typo_aliases": {
+            _normalize(source): _normalize(target)
+            for source, target in typo_aliases.items()
+            if _normalize(source) and _normalize(target)
+        },
         "min_answer_score": int(raw.get("min_answer_score", DEFAULT_ROUTING_POLICY["min_answer_score"])),
         "min_answer_margin": int(raw.get("min_answer_margin", DEFAULT_ROUTING_POLICY["min_answer_margin"])),
     }
 
 
+def _canonical_token(token: str) -> str:
+    return _routing_policy()["typo_aliases"].get(token, token)
+
+
 def _tokens(value: Any) -> list[str]:
     policy = _routing_policy()
     return [
-        token
+        canonical
         for token in _normalize(value).split()
-        if len(token) > 1 and token not in policy["stop_words"] and token not in GENERIC_MATCH_TOKENS
+        if len(canonical := _canonical_token(token)) > 1
+        and canonical not in policy["stop_words"]
+        and canonical not in GENERIC_MATCH_TOKENS
     ]
 
 
@@ -818,9 +840,17 @@ def score_question(query: str, question: dict[str, Any]) -> int:
 
 
 def _phrase_match(query: str, field: Any) -> bool:
-    clean = _normalize(query)
-    candidate = _normalize(field)
-    return len(_tokens(candidate)) >= 2 and bool(candidate) and (candidate in clean or clean in candidate)
+    query_tokens = _tokens(query)
+    field_tokens = _tokens(field)
+    if len(query_tokens) < 2 or len(field_tokens) < 2:
+        return False
+    clean = " ".join(query_tokens)
+    candidate = " ".join(field_tokens)
+    return candidate in clean or clean in candidate
+
+
+def _field_has_token(field: Any, token: str) -> bool:
+    return token in _normalize(field).split()
 
 
 def _score_question_match(query: str, question: dict[str, Any]) -> dict[str, Any]:
@@ -850,19 +880,19 @@ def _score_question_match(query: str, question: dict[str, Any]) -> dict[str, Any
     matched_tokens: set[str] = set()
     for token in query_tokens:
         matched = False
-        if token in label:
+        if _field_has_token(label, token):
             score += 5
             matched = True
-        if token in prompt:
+        if _field_has_token(prompt, token):
             score += 4
             matched = True
-        if token in keywords:
+        if _field_has_token(keywords, token):
             score += 4
             matched = True
-        if token in variants:
+        if _field_has_token(variants, token):
             score += 3
             matched = True
-        if token in category:
+        if _field_has_token(category, token):
             score += 2
             matched = True
         if matched:

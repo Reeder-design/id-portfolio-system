@@ -23,7 +23,15 @@
     min_search_score: 6,
     max_input_length: 480,
     max_repeated_character_run: 8,
-    max_repeated_token_count: 4
+    max_repeated_token_count: 4,
+    typo_aliases: {
+      automtion: 'automation', certfication: 'certification', certifcation: 'certification',
+      evaluaton: 'evaluation', evalution: 'evaluation', experiance: 'experience',
+      experince: 'experience', expreince: 'experience', faciliatation: 'facilitation',
+      instrucional: 'instructional', interative: 'interactive', migraton: 'migration',
+      mirgation: 'migration', multmedia: 'multimedia', performace: 'performance',
+      perfromance: 'performance', suport: 'support'
+    }
   };
 
   const GENERIC_MATCH_TOKENS = new Set([
@@ -204,9 +212,17 @@
 
   const routingStopWords = () => new Set(routingPolicy().stop_words || DEFAULT_ROUTING_POLICY.stop_words);
 
+  const canonicalToken = (token) => routingPolicy().typo_aliases?.[token] || token;
+
   const tokensFor = (value) => normalize(value)
     .split(' ')
+    .map(canonicalToken)
     .filter((token) => token.length > 1 && !routingStopWords().has(token) && !GENERIC_MATCH_TOKENS.has(token));
+
+  const allTokensFor = (value) => normalize(value)
+    .split(' ')
+    .map(canonicalToken)
+    .filter(Boolean);
 
   const normalizeRoutingPolicy = (value) => {
     const candidate = value && typeof value === 'object' ? value : {};
@@ -214,9 +230,15 @@
     const stopWords = Array.isArray(candidate.stop_words)
       ? candidate.stop_words.map((item) => normalize(item)).filter(Boolean)
       : DEFAULT_ROUTING_POLICY.stop_words;
+    const aliases = candidate.typo_aliases && typeof candidate.typo_aliases === 'object'
+      ? Object.fromEntries(Object.entries(candidate.typo_aliases)
+        .map(([from, to]) => [normalize(from), normalize(to)])
+        .filter(([from, to]) => from && to))
+      : DEFAULT_ROUTING_POLICY.typo_aliases;
     return {
       ...DEFAULT_ROUTING_POLICY,
       stop_words: stopWords,
+      typo_aliases: aliases,
       min_answer_score: number('min_answer_score'),
       min_answer_margin: number('min_answer_margin'),
       min_search_score: number('min_search_score'),
@@ -227,10 +249,15 @@
   };
 
   const phraseMatch = (query, field) => {
-    const clean = normalize(query);
-    const candidate = normalize(field);
-    return tokensFor(candidate).length >= 2 && Boolean(candidate) && (clean.includes(candidate) || candidate.includes(clean));
+    const queryTokens = tokensFor(query);
+    const fieldTokens = tokensFor(field);
+    if (queryTokens.length < 2 || fieldTokens.length < 2) return false;
+    const clean = queryTokens.join(' ');
+    const candidate = fieldTokens.join(' ');
+    return clean.includes(candidate) || candidate.includes(clean);
   };
+
+  const fieldHasToken = (field, token) => normalize(field).split(' ').includes(token);
 
   const scoreQuestionMatch = (query, question) => {
     const clean = normalize(query);
@@ -265,11 +292,11 @@
 
     tokensFor(query).forEach((token) => {
       let matched = false;
-      if (label.includes(token)) { score += 5; matched = true; }
-      if (prompt.includes(token)) { score += 4; matched = true; }
-      if (keywords.includes(token)) { score += 4; matched = true; }
-      if (variants.includes(token)) { score += 3; matched = true; }
-      if (category.includes(token)) { score += 2; matched = true; }
+      if (fieldHasToken(label, token)) { score += 5; matched = true; }
+      if (fieldHasToken(prompt, token)) { score += 4; matched = true; }
+      if (fieldHasToken(keywords, token)) { score += 4; matched = true; }
+      if (fieldHasToken(variants, token)) { score += 3; matched = true; }
+      if (fieldHasToken(category, token)) { score += 2; matched = true; }
       if (matched) matchedTokens.add(token);
     });
 
@@ -285,7 +312,41 @@
     && (match.exactPhrase || match.matchedTokens.length > 0)
   );
 
+  const BROWSE_ROUTES = {
+    projects: {
+      message: 'Here is the portfolio map. These landing pages let you browse the work by discipline before opening a specific example.',
+      evidence: [
+        { title: 'Projects', path: 'projects/index.html', note: 'Portfolio overview across instructional design, AI evaluation, LMS work, and workflows.' },
+        { title: 'Instructional Design', path: 'projects/instructional-design/index.html', note: 'Learning pathways, microlearning, performance support, live training, multimedia, and interactive practice.' },
+        { title: 'AI Training and Evaluation', path: 'projects/ai-training-and-evaluation/index.html', note: 'Evaluation lenses, rubrics, calibration, and public-safe practice demos.' },
+        { title: 'LMS Administration', path: 'projects/lms-administration/index.html', note: 'Learning operations, access, delivery, migration, support, and reporting.' },
+        { title: 'Workflows', path: 'projects/workflows/index.html', note: 'Automation, data, reporting, systems, and operational improvement.' }
+      ]
+    },
+    performanceSupport: {
+      message: 'Performance support is part of my instructional-design approach when people need a reliable answer during the work, not just more course time. These pages show the method and related examples.',
+      evidence: [
+        { title: 'Microlearning and Performance Support', path: 'projects/instructional-design/microlearning-performance-support/index.html', note: 'How I choose focused learning, point-of-need support, or a connected combination.' },
+        { title: 'Performance Support', path: 'projects/instructional-design/microlearning-performance-support/performance-support/index.html', note: 'Access, scanability, trust, maintenance, and usable support resources.' },
+        { title: 'Product Launch Microlearning', path: 'projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html', note: 'Focused launch learning connected to practical next-step support.' }
+      ]
+    }
+  };
+
+  const browseIntentFor = (query) => {
+    const allTokens = allTokensFor(query);
+    const has = (value) => allTokens.includes(value);
+    const asksForExperience = ['experience', 'examples', 'portfolio', 'project', 'projects', 'work'].some(has);
+    if (has('performance') && has('support') && asksForExperience) return BROWSE_ROUTES.performanceSupport;
+    if (!tokensFor(query).length && ['example', 'examples', 'portfolio', 'project', 'projects', 'work'].some(has)) {
+      return BROWSE_ROUTES.projects;
+    }
+    return null;
+  };
+
   const routeQuestion = (query) => {
+    const browseRoute = browseIntentFor(query);
+    if (browseRoute) return { type: 'browse', browseRoute, matches: [] };
     const ranked = state.questions
       .map((question) => ({ question, ...scoreQuestionMatch(query, question) }))
       .sort((a, b) => b.score - a.score);
@@ -308,8 +369,8 @@
     if (phraseMatch(clean, title)) score += 12;
     if (phraseMatch(clean, keywords)) score += 9;
     tokensFor(query).forEach((token) => {
-      if (title.includes(token)) score += 5;
-      if (keywords.includes(token)) score += 3;
+      if (fieldHasToken(title, token)) score += 5;
+      if (fieldHasToken(keywords, token)) score += 3;
     });
     return score;
   };
@@ -617,6 +678,23 @@
     saveSession();
   };
 
+  const browseNow = (browseRoute, typing) => {
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Browse the portfolio</span>
+        <p>${escapeHtml(browseRoute.message)}</p>
+        ${evidenceMarkup(browseRoute.evidence)}
+      </div>`;
+    typing.replaceWith(article);
+    bindEvidenceCards(article);
+    state.replying = false;
+    scrollChat();
+    saveSession();
+  };
+
   const boundaryNow = (reason) => {
     const article = document.createElement('article');
     article.className = 'hm-message hm-message-haley';
@@ -699,6 +777,7 @@
     window.setTimeout(() => {
       if (route.type === 'answer') answerNow(route.matches[0].question, typing);
       else if (route.type === 'ambiguous') ambiguousNow(route.matches, typing);
+      else if (route.type === 'browse') browseNow(route.browseRoute, typing);
       else fallbackNow(clean, typing);
     }, delay);
   };

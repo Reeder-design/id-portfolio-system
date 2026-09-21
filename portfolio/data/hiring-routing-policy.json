@@ -11,5 +11,24 @@
   "min_search_score": 6,
   "max_input_length": 480,
   "max_repeated_character_run": 8,
-  "max_repeated_token_count": 4
+  "max_repeated_token_count": 4,
+  "typo_aliases": {
+    "automtion": "automation",
+    "certfication": "certification",
+    "certifcation": "certification",
+    "evaluaton": "evaluation",
+    "evalution": "evaluation",
+    "experiance": "experience",
+    "experince": "experience",
+    "expreince": "experience",
+    "faciliatation": "facilitation",
+    "instrucional": "instructional",
+    "interative": "interactive",
+    "migraton": "migration",
+    "mirgation": "migration",
+    "multmedia": "multimedia",
+    "performace": "performance",
+    "perfromance": "performance",
+    "suport": "support"
+  }
 }
