@@ -23,17 +23,17 @@
       "label": "Tabbed / Switcher Interaction",
       "category": "interaction",
       "status": "stable",
-      "support": "template-supported",
-      "summary": "Keyboard-accessible tabs that let visitors switch between tightly related views without lengthening the page.",
-      "best_for": "Approach vs. capabilities, process vs. tools, scenario states, or other paired/multi-view content.",
-      "avoid_when": "The content should be read sequentially or each option needs its own URL/state.",
+      "support": "custom-pattern",
+      "summary": "Intentional tab/switcher pattern for current bespoke interactions. It is not included in the default scaffold because state-height, contrast, and responsive behavior require page-specific UAT.",
+      "best_for": "Tightly related states where switching views materially improves comprehension and a current live interaction can be reused safely.",
+      "avoid_when": "Static sections are sufficient, the states vary greatly in height, or there is no current live pattern to adapt and test.",
       "implementation_files": [
-        "templates/project-page/index.html",
-        "scripts/render-project.py"
+        "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
+        "portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html"
       ],
       "markers": [
-        "data-generic-switcher",
-        "role=\"tab\""
+        "role=\"tab\"",
+        "role=\"tabpanel\""
       ]
     },
     {
@@ -109,13 +109,12 @@
       "label": "Related Work Cards",
       "category": "navigation",
       "status": "stable",
-      "support": "template-supported",
-      "summary": "Contextual project-to-project cards generated from structured related_work relationships.",
-      "best_for": "Showing a meaningful adjacent capability, workflow, or companion project.",
-      "avoid_when": "The connection is weak, repetitive, or only exists to create more links.",
+      "support": "custom-pattern",
+      "summary": "Optional contextual navigation cards used only when a current page intentionally includes them. Structured related_work metadata does not imply a visible Related Work block.",
+      "best_for": "A deliberate cross-link on a landing page or project where the connection is useful and already fits the page's approved ending.",
+      "avoid_when": "A project already has a compact parent back path, the relationship is weak, or cards would recreate a retired generic footer.",
       "implementation_files": [
-        "scripts/render-project.py",
-        "templates/project-page/index.html"
+        "portfolio/js/portfolio-motion.js"
       ],
       "markers": [
         "related-work-grid",
