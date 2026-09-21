@@ -187,7 +187,7 @@ def main() -> int:
         "reference scaffold",
         "Reusable Component Registry",
         "Related Work and Related References",
-        "There is no supported force-overwrite workflow",
+        "There is no output-file switch and no force-overwrite workflow",
     ]:
         require(phrase in template_system, f"Template system guide is missing current preservation language: {phrase!r}.", errors)
 
