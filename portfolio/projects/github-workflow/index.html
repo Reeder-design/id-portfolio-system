@@ -16,45 +16,46 @@
   <style>
     .github-workflow-page{background:#f8faf7}
     .github-workflow-page .page-hero{background:linear-gradient(135deg,rgba(80,132,132,.13),rgba(151,219,79,.08))}
-    .github-hero-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(430px,1.1fr);gap:clamp(30px,5vw,68px);align-items:center}
-    .github-hero-copy .breadcrumbs{margin-bottom:18px}
-    .github-hero-copy h1{max-width:660px}
-    .github-hero-copy .body-large{max-width:660px}
-    .github-hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-    .github-hero-tags span{padding:7px 10px;border:1px solid rgba(80,132,132,.16);border-radius:999px;background:rgba(255,255,255,.58);color:#315755;font:800 .58rem/1 var(--font-heading)}
+    .github-hero-layout{display:block}
+    .github-hero-copy{max-width:none}
+    .github-hero-copy .breadcrumbs{margin-bottom:16px}
+    .github-workflow-page .page-hero .breadcrumbs a,.github-workflow-page .page-hero .breadcrumbs span{color:rgba(255,255,255,.62)!important}
+    .github-workflow-page .page-hero .breadcrumbs span:last-child{color:rgba(255,255,255,.82)!important}
+    .github-hero-copy h1{max-width:none;margin-right:0}
+    .github-hero-copy .body-large{max-width:1180px}
+    .github-hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .github-hero-tags span{padding:7px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.12);color:#edf5f0;font:800 .58rem/1 var(--font-heading)}
 
-    .git-hero-stage{position:relative;min-height:420px;padding:20px;border:1px solid rgba(80,132,132,.16);border-radius:28px;background:linear-gradient(145deg,#173139,#294d4c);box-shadow:0 22px 48px rgba(32,67,59,.16);overflow:hidden}
-    .git-hero-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px}
+    .git-hero-stage{position:relative;margin-top:24px;min-height:0;padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(145deg,#173139,#294d4c);box-shadow:0 18px 38px rgba(32,67,59,.14);overflow:hidden}
+    .git-hero-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);background-size:28px 28px}
     .git-hero-header{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:12px}
     .git-hero-header span{color:#afe1bf;font:900 .52rem/1 var(--font-heading);letter-spacing:.08em;text-transform:uppercase}
     .git-hero-header b{display:flex;align-items:center;gap:6px;color:#dce9e2;font:800 .52rem/1 var(--font-heading)}
     .git-hero-header b::before{content:"";width:8px;height:8px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.09)}
-    .git-ecosystem-map{position:relative;z-index:2;display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:center;margin-top:24px;min-height:300px}
-    .git-hub{position:relative;z-index:3;display:grid;justify-items:center;gap:5px}
-    .git-hub::after{content:"";position:absolute;left:91px;top:51px;width:52px;height:3px;border-radius:999px;background:linear-gradient(90deg,#97db4f,#79c99e)}
-    .git-hub-icon{display:grid;place-items:center;width:92px;height:92px;padding:10px;border:1px solid rgba(151,219,79,.3);border-radius:24px;background:#fff;box-shadow:0 15px 28px rgba(0,0,0,.22),0 0 0 6px rgba(151,219,79,.05)}
-    .git-hub-icon img{width:72px;height:72px;object-fit:contain;image-rendering:pixelated}
-    .git-hub strong{color:#fff;font:800 .58rem/1.1 var(--font-heading)}
-    .git-hub small{color:#9fb5ab;font:.45rem/1.1 var(--font-body)}
-    .git-repo-row{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-    .git-repo-row::before{content:"";position:absolute;left:-18px;right:0;top:50%;height:1px;background:rgba(121,201,158,.16);transform:translateY(-50%)}
-    .git-repo{position:relative;z-index:2;display:grid;justify-items:center;gap:5px;min-height:198px;padding:12px 8px;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:rgba(255,255,255,.055);box-shadow:0 12px 24px rgba(0,0,0,.1)}
-    .git-repo::before{content:"";position:absolute;left:50%;top:-10px;width:8px;height:8px;border:3px solid #294d4c;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.08);transform:translateX(-50%)}
-    .git-repo-icon{display:grid;place-items:center;width:52px;height:52px;padding:6px;border-radius:14px;background:#edf6f0}
-    .git-repo-icon img{width:42px;height:42px;object-fit:contain}
-    .git-repo>strong{max-width:120px;color:#fff;font:800 .5rem/1.2 var(--font-heading);text-align:center}
-    .git-repo-children{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;width:100%;margin-top:5px}
-    .git-repo-children.single{grid-template-columns:1fr}
-    .git-repo-children span{display:grid;justify-items:center;gap:3px;padding:6px 3px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.08);color:#dce9e2;font:700 .42rem/1.1 var(--font-heading);text-align:center}
-    .git-repo-children img{width:38px;height:38px;object-fit:contain}
-    .git-ecosystem-pulse{position:absolute;z-index:3;width:8px;height:8px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08),0 0 14px rgba(151,219,79,.45);animation:gitEcosystemPulse 4.5s ease-in-out infinite}
-    .git-ecosystem-pulse.pulse-one{left:120px;top:84px}
-    .git-ecosystem-pulse.pulse-two{left:120px;top:145px;animation-delay:-1.5s}
-    .git-ecosystem-pulse.pulse-three{left:120px;top:206px;animation-delay:-3s}
-    @keyframes gitEcosystemPulse{0%,100%{transform:translateX(0);opacity:.25}45%{opacity:1}70%{transform:translateX(90px);opacity:.8}}
-    .git-hero-status{position:relative;z-index:4;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-    .git-hero-status span{display:flex;align-items:center;justify-content:center;gap:5px;padding:6px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.045);color:#dce9e2;font:800 .44rem/1 var(--font-heading)}
-    .git-hero-status img{width:25px;height:25px;object-fit:contain}
+    .git-simple-flow{position:relative;z-index:2;display:grid;grid-template-columns:minmax(190px,.75fr) 44px minmax(250px,1fr) 44px minmax(420px,1.65fr);gap:9px;align-items:stretch;margin-top:16px}
+    .git-simple-stage{display:grid;align-items:center;min-height:132px;padding:14px;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:rgba(255,255,255,.055)}
+    .git-simple-stage.source,.git-simple-stage.repos{grid-template-columns:74px 1fr;gap:12px}
+    .git-simple-stage.tools{grid-template-rows:1fr auto;gap:8px}
+    .git-simple-icon{display:grid;place-items:center;width:64px;height:64px;padding:7px;border-radius:16px;background:#fff}
+    .git-simple-icon.large{width:70px;height:70px}
+    .git-simple-icon img{width:52px;height:52px;object-fit:contain}.git-simple-icon.large img{width:58px;height:58px}
+    .git-simple-stage small{display:block;color:#aee1bf;font:800 .44rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+    .git-simple-stage strong{display:block;margin-top:4px;color:#fff;font:800 .65rem/1.18 var(--font-heading)}
+    .git-simple-stage p{margin:4px 0 0;color:#bdcec5;font-size:.49rem;line-height:1.3}
+    .git-simple-stage ul{display:grid;gap:3px;margin:7px 0 0;padding:0;list-style:none}.git-simple-stage li{padding:4px 6px;border-radius:7px;background:rgba(0,0,0,.09);color:#dce9e2;font:700 .43rem/1.15 var(--font-heading)}
+    .git-simple-arrow{position:relative;display:grid;place-items:center}
+    .git-simple-arrow::before{content:"";width:100%;height:3px;border-radius:999px;background:rgba(121,201,158,.28)}
+    .git-simple-arrow::after{content:"";position:absolute;right:1px;width:9px;height:9px;border-top:3px solid #97db4f;border-right:3px solid #97db4f;transform:rotate(45deg)}
+    .git-simple-arrow i{position:absolute;left:2px;width:8px;height:8px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:gitSimplePacket 2.6s ease-in-out infinite}
+    @keyframes gitSimplePacket{0%,100%{left:2px;opacity:.25}50%{left:calc(100% - 10px);opacity:1}}
+    .git-tool-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+    .git-tool-strip span{display:grid;justify-items:center;align-content:center;gap:4px;min-width:0;padding:7px 3px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(0,0,0,.08)}
+    .git-tool-strip img{width:46px;height:46px;object-fit:contain}
+    .git-tool-strip b{max-width:78px;color:#dce9e2;font:700 .4rem/1.12 var(--font-heading);text-align:center}
+    .git-simple-stage.tools>small{text-align:right;color:#9fb5ab}
+    .git-simple-status{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:9px}
+    .git-simple-status span{display:flex;align-items:center;justify-content:center;gap:5px;padding:6px;border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(255,255,255,.035);color:#dce9e2;font:800 .43rem/1 var(--font-heading)}
+    .git-simple-status img{width:24px;height:24px;object-fit:contain}
 
     .github-purpose-section{background:#fff}
     .github-purpose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
@@ -65,25 +66,38 @@
 
     .github-ecosystem-section{background:linear-gradient(145deg,#173139,#294d4c);color:#e6efe9}
     .github-ecosystem-section .section-heading .eyebrow{color:#afe1bf!important}
-    .github-ecosystem-section .section-heading h2{color:#fff!important}
-    .github-ecosystem-section .section-heading p:not(.eyebrow){color:#cbdad2!important}
-    .github-project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:22px}
-    .github-project-card{position:relative;display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.055)}
-    .github-project-card.is-wide{grid-column:1/-1}
-    .github-project-icon{display:grid;place-items:center;width:88px;height:88px;padding:5px;border-radius:19px;background:#fff;box-shadow:0 12px 24px rgba(0,0,0,.16)}
-    .github-project-icon img{width:78px;height:78px;object-fit:contain;image-rendering:pixelated}
-    .github-project-copy .eyebrow{margin-bottom:3px;color:#afe1bf!important}
-    .github-project-copy h3{margin:0 0 5px;color:#fff;font-size:.9rem}
-    .github-project-copy p{margin:0;color:#cfddd6;font-size:.63rem;line-height:1.48}
-    .github-project-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-    .github-project-meta span{padding:4px 6px;border:1px solid rgba(121,201,158,.18);border-radius:999px;background:rgba(121,201,158,.06);color:#dff0e5;font:800 .46rem/1 var(--font-heading)}
-    .github-project-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:7px;padding-top:3px}
-    .github-project-actions a{display:inline-flex;align-items:center;gap:5px;padding:7px 9px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.065);color:#fff;text-decoration:none;font:800 .52rem/1 var(--font-heading);transition:transform .18s ease,background .18s ease,border-color .18s ease}
-    .github-project-actions a:hover,.github-project-actions a:focus-visible{transform:translateY(-2px);border-color:#97db4f;background:rgba(151,219,79,.09);outline:none}
-    .github-local-note{display:inline-flex;align-items:center;gap:5px;margin-top:7px;color:#b9c9c1;font-size:.52rem}
-    .github-local-note::before{content:"";width:7px;height:7px;border-radius:50%;background:#f6c95b}
-    .github-project-detail-link{grid-column:1/-1;justify-self:start;margin-top:2px;color:#afe1bf;text-decoration:none;font:800 .5rem/1 var(--font-heading)}
-    .github-project-detail-link:hover,.github-project-detail-link:focus-visible{color:#97db4f;outline:none}
+    .github-ecosystem-section .section-heading h2{max-width:1050px;color:#fff!important}
+    .github-ecosystem-section .section-heading p:not(.eyebrow){max-width:1050px;color:#cbdad2!important}
+
+    .github-system-map{margin-top:22px;padding:18px;border:1px solid rgba(255,255,255,.09);border-radius:22px;background:rgba(0,0,0,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+    .github-system-head{display:grid;grid-template-columns:minmax(210px,.95fr) 52px minmax(250px,1fr) 52px minmax(230px,.95fr);gap:8px;margin-bottom:7px;padding:0 8px}
+    .github-system-head span{color:#92aca1;font:900 .42rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase;text-align:center}
+    .github-system-head span:nth-child(1){grid-column:1}.github-system-head span:nth-child(2){grid-column:3}.github-system-head span:nth-child(3){grid-column:5}
+    .github-system-lanes{display:grid;gap:8px}
+    .github-system-lane{display:grid;grid-template-columns:minmax(210px,.95fr) 52px minmax(250px,1fr) 52px minmax(230px,.95fr);gap:8px;align-items:center;padding:9px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.035)}
+    .system-node{display:grid;grid-template-columns:54px minmax(0,1fr);gap:9px;align-items:center;min-height:70px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.045);text-decoration:none}
+    a.system-node{transition:transform .18s ease,border-color .18s ease,background .18s ease}
+    a.system-node:hover,a.system-node:focus-visible{transform:translateY(-2px);border-color:#97db4f;background:rgba(151,219,79,.08);outline:none}
+    .system-node img{width:52px;height:52px;padding:4px;border-radius:12px;background:#fff;object-fit:contain}
+    .system-node small{display:block;color:#aee1bf;font:800 .4rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
+    .system-node strong{display:block;margin-top:3px;color:#fff;font:800 .55rem/1.18 var(--font-heading)}
+    .system-node.repo{background:rgba(121,201,158,.06)}
+    .system-node.output{background:rgba(255,255,255,.06)}
+    .system-connector{position:relative;height:4px;border-radius:999px;background:rgba(121,201,158,.2);overflow:visible}
+    .system-connector::after{content:"";position:absolute;right:-1px;top:-4px;width:9px;height:9px;border-top:3px solid #97db4f;border-right:3px solid #97db4f;transform:rotate(45deg)}
+    .system-connector i{position:absolute;top:-4px;left:0;width:12px;height:12px;border:2px solid #264b48;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.08);animation:systemPacket 3s ease-in-out infinite}
+    .github-system-lane:nth-child(2) .system-connector i{animation-delay:-1s}
+    .github-system-lane:nth-child(3) .system-connector i{animation-delay:-2s}
+    @keyframes systemPacket{0%,100%{left:0;opacity:.25}50%{left:calc(100% - 12px);opacity:1}}
+
+    .github-release-rail{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px;padding:15px 12px 4px}
+    .release-line{position:absolute;left:8%;right:8%;top:35px;height:4px;border-radius:999px;background:rgba(121,201,158,.17)}
+    .release-runner{position:absolute;z-index:2;left:8%;top:29px;width:12px;height:12px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:releaseRunner 7s ease-in-out infinite}
+    @keyframes releaseRunner{0%,8%{left:8%}30%{left:34%}52%{left:59%}74%,100%{left:84%}}
+    .github-release-rail div{position:relative;z-index:3;display:grid;justify-items:center;gap:4px}
+    .github-release-rail img{width:46px;height:46px;padding:5px;border-radius:12px;background:#fff;object-fit:contain}
+    .github-release-rail b{color:#dce9e2;font:800 .44rem/1 var(--font-heading)}
+    .github-system-note{margin:11px 0 0;color:#9fb5ab;font-size:.51rem;text-align:center}
 
     .github-project-details-section{background:#f8faf7}
     .github-deep-dive{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,.95fr);gap:26px;align-items:center;margin-top:18px;padding:24px;border-radius:24px;scroll-margin-top:92px}
@@ -218,9 +232,15 @@
     .github-profile-card .button-row{margin-top:14px}
 
     @media(max-width:980px){
-      .github-hero-grid,.github-signal-grid{grid-template-columns:1fr}
-      .github-project-grid{grid-template-columns:1fr}
-      .github-project-card.is-wide{grid-column:auto}
+      .github-signal-grid{grid-template-columns:1fr}
+      .git-simple-flow{grid-template-columns:1fr}
+      .git-simple-arrow{height:28px}.git-simple-arrow::before{width:3px;height:100%}.git-simple-arrow::after{right:auto;bottom:0;transform:rotate(135deg)}
+      .git-simple-arrow i{left:calc(50% - 4px);top:0;animation:gitSimplePacketVertical 2.6s ease-in-out infinite}
+      @keyframes gitSimplePacketVertical{0%,100%{top:0;opacity:.25}50%{top:calc(100% - 8px);opacity:1}}
+      .github-system-head{display:none}
+      .github-system-lane{grid-template-columns:1fr 34px 1fr 34px 1fr}
+      .system-node{grid-template-columns:46px minmax(0,1fr)}
+      .system-node img{width:44px;height:44px}
       .github-deep-dive{grid-template-columns:1fr}
       .github-deep-dive--dark .github-motion-panel{order:2}
       .github-pipeline{grid-template-columns:repeat(3,1fr);gap:14px}
@@ -228,14 +248,15 @@
       .github-profile-card{position:relative;top:auto}
     }
     @media(max-width:700px){
-      .git-ecosystem-map{grid-template-columns:1fr}
-      .git-hub::after,.git-repo-row::before,.git-ecosystem-pulse{display:none}
-      .git-repo-row{grid-template-columns:1fr}
-      .git-repo{min-height:0}
+      .git-simple-stage.source,.git-simple-stage.repos{grid-template-columns:62px 1fr}
+      .git-tool-strip{grid-template-columns:repeat(3,1fr)}
+      .git-simple-status{grid-template-columns:repeat(2,1fr)}
       .github-purpose-grid{grid-template-columns:1fr}
-      .github-project-card{grid-template-columns:70px 1fr}
-      .github-project-icon{width:66px;height:66px}
-      .github-project-icon img{width:56px;height:56px}
+      .github-system-lane{grid-template-columns:1fr}
+      .system-connector{width:4px;height:28px;justify-self:center;overflow:visible}
+      .system-connector::after{right:-4px;top:auto;bottom:-1px;transform:rotate(135deg)}
+      .system-connector i{left:-4px;top:0;animation:systemPacketVertical 3s ease-in-out infinite}
+      @keyframes systemPacketVertical{0%,100%{top:0;opacity:.25}50%{top:calc(100% - 12px);opacity:1}}
       .github-deep-dive{padding:16px}
       .github-deep-facts span{grid-template-columns:1fr}
       .library-shelf{grid-template-columns:1fr}
@@ -246,11 +267,13 @@
       .github-pipeline{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:460px){
-      .git-hero-status{grid-template-columns:repeat(2,1fr)}
+      .git-tool-strip{grid-template-columns:repeat(2,1fr)}
+      .github-release-rail{grid-template-columns:repeat(2,1fr);row-gap:12px}
+      .release-line,.release-runner{display:none}
       .github-pipeline{grid-template-columns:1fr}
     }
     @media(prefers-reduced-motion:reduce){
-      .git-ecosystem-pulse,.portfolio-motion-packet,.manager-arrow,.library-card,.lm-runner,.workbench-transform span{animation:none!important}
+      .git-simple-arrow i,.system-connector i,.release-runner,.portfolio-motion-packet,.manager-arrow,.library-card,.lm-runner,.workbench-transform span{animation:none!important}
     }
   </style>
   <script defer src="../../js/portfolio-motion.js"></script>
@@ -270,7 +293,7 @@
 
   <main>
     <section class="page-hero refresh-hero">
-      <div class="container github-hero-grid">
+      <div class="container github-hero-layout">
         <div class="github-hero-copy">
           <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../index.html">Projects</a><span>/</span><span>GitHub Workflow</span></nav>
           <p class="eyebrow">Build + Maintain + Ship</p>
@@ -279,54 +302,37 @@
           <div class="github-hero-tags"><span>Version Control</span><span>Pull Requests</span><span>GitHub Pages</span><span>Validation</span><span>Reusable Systems</span></div>
         </div>
 
-        <div class="git-hero-stage" aria-label="Animated GitHub ecosystem connecting repositories to portfolio tools">
-          <div class="git-hero-header"><span>Repository ecosystem</span><b>3 repos · 5 connected tools</b></div>
-          <div class="git-ecosystem-map">
-            <div class="git-hub">
-              <span class="git-hub-icon"><img src="../../assets/icons/pixel/github/github.webp" alt=""></span>
-              <strong>Reeder-design</strong>
-              <small>GitHub source + history</small>
-            </div>
+        <div class="git-hero-stage" aria-label="Simple GitHub workflow from one source through three repositories to five connected tools">
+          <div class="git-hero-header"><span>One source, three repositories, five tools</span><b>versioned + reviewable</b></div>
+          <div class="git-simple-flow">
+            <article class="git-simple-stage source">
+              <span class="git-simple-icon large"><img src="../../assets/icons/pixel/github/github.webp" alt=""></span>
+              <div><small>Shared source</small><strong>Reeder-design</strong><p>Code, history, branches, and review.</p></div>
+            </article>
 
-            <div class="git-repo-row">
-              <article class="git-repo">
-                <span class="git-repo-icon"><img src="../../assets/icons/pixel/github/repository.webp" alt=""></span>
-                <strong>id-portfolio-system</strong>
-                <div class="git-repo-children">
-                  <span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt="">Portfolio</span>
-                  <span><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt="">Manager</span>
-                </div>
-              </article>
+            <span class="git-simple-arrow" aria-hidden="true"><i></i></span>
 
-              <article class="git-repo">
-                <span class="git-repo-icon"><img src="../../assets/icons/pixel/github/repository.webp" alt=""></span>
-                <strong>id-content-library</strong>
-                <div class="git-repo-children">
-                  <span><img src="../../assets/icons/pixel/github-projects/library.webp" alt="">Library</span>
-                  <span><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt="">Manager</span>
-                </div>
-              </article>
+            <article class="git-simple-stage repos">
+              <span class="git-simple-icon"><img src="../../assets/icons/pixel/github/repository.webp" alt=""></span>
+              <div><small>3 repositories</small><strong>Separate systems, shared workflow</strong>
+                <ul><li>id-portfolio-system</li><li>id-content-library</li><li>learning-experience-engine</li></ul>
+              </div>
+            </article>
 
-              <article class="git-repo">
-                <span class="git-repo-icon"><img src="../../assets/icons/pixel/github/repository.webp" alt=""></span>
-                <strong>learning-experience-engine</strong>
-                <div class="git-repo-children single">
-                  <span><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt="">Workbench</span>
-                </div>
-              </article>
-            </div>
+            <span class="git-simple-arrow" aria-hidden="true"><i></i></span>
 
-            <span class="git-ecosystem-pulse pulse-one" aria-hidden="true"></span>
-            <span class="git-ecosystem-pulse pulse-two" aria-hidden="true"></span>
-            <span class="git-ecosystem-pulse pulse-three" aria-hidden="true"></span>
+            <article class="git-simple-stage tools">
+              <div class="git-tool-strip">
+                <span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><b>Portfolio</b></span>
+                <span><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><b>Portfolio Manager</b></span>
+                <span><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><b>Library</b></span>
+                <span><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><b>Library Manager</b></span>
+                <span><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><b>Workbench</b></span>
+              </div>
+              <small>5 connected tools</small>
+            </article>
           </div>
-
-          <div class="git-hero-status">
-            <span><img src="../../assets/icons/pixel/github/branch.webp" alt="">Branch</span>
-            <span><img src="../../assets/icons/pixel/github/pull-request.webp" alt="">Review</span>
-            <span><img src="../../assets/icons/pixel/github/track-progress.webp" alt="">Validate</span>
-            <span><img src="../../assets/icons/pixel/tools-tech/deploy.webp" alt="">Deploy</span>
-          </div>
+          <div class="git-simple-status"><span><img src="../../assets/icons/pixel/github/branch.webp" alt="">Branch</span><span><img src="../../assets/icons/pixel/github/pull-request.webp" alt="">Review</span><span><img src="../../assets/icons/pixel/github/track-progress.webp" alt="">Validate</span><span><img src="../../assets/icons/pixel/tools-tech/deploy.webp" alt="">Deploy</span></div>
         </div>
       </div>
     </section>
@@ -350,45 +356,49 @@
       <div class="container">
         <div class="section-heading refresh-section-intro">
           <p class="eyebrow">GitHub Project Ecosystem</p>
-          <h2>Five connected tools, three public repositories.</h2>
-          <p>The public sites and local management tools serve different jobs, but they are designed as connected parts of the same portfolio and learning-development workflow.</p>
+          <h2>Local tools feed versioned repositories, which power the public experience.</h2>
+          <p>The systems do different jobs, but they share the same review and release workflow. Follow each lane to see what is maintained locally, what lives in GitHub, and what becomes a public experience.</p>
         </div>
 
-        <div class="github-project-grid">
-          <article class="github-project-card">
-            <span class="github-project-icon"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""></span>
-            <div class="github-project-copy"><p class="eyebrow">Public portfolio</p><h3>Instructional Design Portfolio</h3><p>The visitor-facing portfolio plus the design system, structured public content, templates, validation, deployment, and documentation that keep the site maintainable.</p><div class="github-project-meta"><span>Static site</span><span>GitHub Pages</span><span>CI validation</span></div></div>
-            <div class="github-project-actions"><a href="https://reeder-design.github.io/id-portfolio-system/" target="_blank" rel="noopener noreferrer">View live project ↗</a><a href="https://github.com/Reeder-design/id-portfolio-system" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
-            <a class="github-project-detail-link" href="#portfolio-system">See how it works ↓</a>
-          </article>
+        <div class="github-system-map" aria-label="Animated workflow showing Portfolio Manager to portfolio, Library Manager to Learning Content Lab, and source content to Learning Project Workbench through GitHub repositories">
+          <div class="github-system-head" aria-hidden="true"><span>Local / builder layer</span><span>Versioned source</span><span>Public / working experience</span></div>
 
-          <article class="github-project-card">
-            <span class="github-project-icon"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></span>
-            <div class="github-project-copy"><p class="eyebrow">Local management app</p><h3>Portfolio Manager</h3><p>A local Flask workspace for editing public content, managing assets and references, reviewing AI proposals, maintaining the Hiring Guide, validating changes, and publishing deliberately.</p><span class="github-local-note">Local-only by design. The source is public, the management interface is not deployed.</span><div class="github-project-meta"><span>Flask</span><span>Content operations</span><span>Human review</span></div></div>
-            <div class="github-project-actions"><a href="https://github.com/Reeder-design/id-portfolio-system/tree/main/portfolio-manager" target="_blank" rel="noopener noreferrer">View source folder ↗</a><a href="https://github.com/Reeder-design/id-portfolio-system" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
-            <a class="github-project-detail-link" href="#portfolio-manager">See how it works ↓</a>
-          </article>
+          <div class="github-system-lanes">
+            <div class="github-system-lane lane-portfolio">
+              <a class="system-node tool" href="#portfolio-manager"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><span><small>Local tool</small><strong>Portfolio Manager</strong></span></a>
+              <span class="system-connector"><i></i></span>
+              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>id-portfolio-system</strong></span></span>
+              <span class="system-connector"><i></i></span>
+              <a class="system-node output" href="#portfolio-system"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span><small>Public output</small><strong>Portfolio</strong></span></a>
+            </div>
 
-          <article class="github-project-card">
-            <span class="github-project-icon"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""></span>
-            <div class="github-project-copy"><p class="eyebrow">Reusable content library</p><h3>Learning Content Lab</h3><p>A separate public library for reusable instructional-design templates, interactions, prompts, code, resources, and experiments that do not all need a full portfolio case study.</p><div class="github-project-meta"><span>Reusable assets</span><span>Public-safe content</span><span>GitHub Pages</span></div></div>
-            <div class="github-project-actions"><a href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">View live project ↗</a><a href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
-            <a class="github-project-detail-link" href="#content-library">See how it works ↓</a>
-          </article>
+            <div class="github-system-lane lane-library">
+              <a class="system-node tool" href="#library-manager"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><span><small>Local tool</small><strong>Library Manager</strong></span></a>
+              <span class="system-connector"><i></i></span>
+              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>id-content-library</strong></span></span>
+              <span class="system-connector"><i></i></span>
+              <a class="system-node output" href="#content-library"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><span><small>Public output</small><strong>Learning Content Lab</strong></span></a>
+            </div>
 
-          <article class="github-project-card">
-            <span class="github-project-icon"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""></span>
-            <div class="github-project-copy"><p class="eyebrow">Local library maintenance</p><h3>Library Manager</h3><p>A local maintenance utility for adding, editing, previewing, validating, batching, and publishing Learning Content Lab items without requiring day-to-day Git or repository knowledge.</p><span class="github-local-note">Local-only by design. It manages public-safe library content before publish.</span><div class="github-project-meta"><span>Flask</span><span>Preview + QA</span><span>Publishing safety</span></div></div>
-            <div class="github-project-actions"><a href="https://github.com/Reeder-design/id-content-library/tree/main/library-manager" target="_blank" rel="noopener noreferrer">View source folder ↗</a><a href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
-            <a class="github-project-detail-link" href="#library-manager">See how it works ↓</a>
-          </article>
+            <div class="github-system-lane lane-workbench">
+              <span class="system-node tool"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><span><small>Builder input</small><strong>Source + templates</strong></span></span>
+              <span class="system-connector"><i></i></span>
+              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>learning-experience-engine</strong></span></span>
+              <span class="system-connector"><i></i></span>
+              <a class="system-node output" href="#learning-workbench"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><span><small>Working prototype</small><strong>Learning Project Workbench</strong></span></a>
+            </div>
+          </div>
 
-          <article class="github-project-card is-wide">
-            <span class="github-project-icon"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></span>
-            <div class="github-project-copy"><p class="eyebrow">Learning development prototype</p><h3>Learning Project Workbench</h3><p>An instructional-design workbench for starting from source content, templates, or existing structured projects, then editing, previewing, transforming, and reusing learning experiences. The current public prototype focuses on branching scenarios first.</p><div class="github-project-meta"><span>Learning Experience Engine</span><span>Scenario authoring</span><span>Reusable architecture</span><span>AI-ready workflow</span></div></div>
-            <div class="github-project-actions"><a href="https://reeder-design.github.io/learning-experience-engine/workbench/" target="_blank" rel="noopener noreferrer">View live project ↗</a><a href="https://github.com/Reeder-design/learning-experience-engine" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
-            <a class="github-project-detail-link" href="#learning-workbench">See how it works ↓</a>
-          </article>
+          <div class="github-release-rail">
+            <span class="release-line"></span>
+            <span class="release-runner" aria-hidden="true"></span>
+            <div><img src="../../assets/icons/pixel/github/branch.webp" alt=""><b>Branch</b></div>
+            <div><img src="../../assets/icons/pixel/github/pull-request.webp" alt=""><b>Review</b></div>
+            <div><img src="../../assets/icons/pixel/github/track-progress.webp" alt=""><b>Validate</b></div>
+            <div><img src="../../assets/icons/pixel/tools-tech/deploy.webp" alt=""><b>Deploy</b></div>
+          </div>
+
+          <p class="github-system-note">Select a project node to jump to its deeper breakdown below.</p>
         </div>
       </div>
     </section>
