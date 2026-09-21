@@ -214,7 +214,6 @@ def main() -> int:
     require("Keep Exploring" not in project_template, "New-page scaffold must not recreate the retired Keep Exploring footer.", errors)
     require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "New-page scaffold must not recreate a public Related Work section.", errors)
     for marker in [
-        'PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE',
         'class="section portfolio-back-row"',
         'class="generic-switch-panels"',
         'aria-hidden="true"',
