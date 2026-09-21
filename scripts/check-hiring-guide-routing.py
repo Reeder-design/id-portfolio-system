@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "portfolio-manager"))
 
-from hiring_guide_public_sync import _has_supported_question_match, _score_question_match  # noqa: E402
+from hiring_guide_public_sync import _has_supported_question_match, _score_question_match, _tokens  # noqa: E402
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -28,6 +28,7 @@ def main() -> int:
     for marker in [
         "const routeQuestion =", "const inputBoundary =", "const boundaryNow =",
         "PROFESSIONAL_BOUNDARY_PATTERN", "min_search_score", "answerNow(route.matches[0].question",
+        "BROWSE_ROUTES", "browseNow", "typo_aliases", "fieldHasToken",
     ]:
         require(marker in controller, f"Hiring Manager controller is missing routing guardrail {marker!r}.", errors)
     for marker in ["PUBLIC_ROUTING_POLICY_PATH", "_score_question_match", "_has_supported_question_match"]:
@@ -42,8 +43,22 @@ def main() -> int:
     }
     supported = _score_question_match("How do you simplify technical material for sellers?", technical)
     unsupported = _score_question_match("What's your favorite thing about California?", technical)
+    filler = _score_question_match("the", technical)
+    greeting = _score_question_match("hi", technical)
+    performance_support = {
+        "prompt": "What performance support experience do you have for a training launch?",
+        "short_label": "Performance support experience",
+        "category": "Instructional Design",
+        "keywords": ["performance support", "job aid", "point of need"],
+        "variants": ["How do you decide between training and performance support?"],
+    }
+    typo_supported = _score_question_match("performance suport training expreince", performance_support)
     require(_has_supported_question_match(supported), "A supported paraphrase did not route to its question.", errors)
     require(not _has_supported_question_match(unsupported), "An unrelated question routed from incidental language.", errors)
+    require(not _has_supported_question_match(filler), "A filler word routed to a Hiring Guide answer.", errors)
+    require(not _has_supported_question_match(greeting), "A greeting routed to a Hiring Guide answer.", errors)
+    require(_has_supported_question_match(typo_supported), "A common high-value term typo did not route to its intended question.", errors)
+    require(_tokens("performance suport training expreince")[:2] == ["performance", "support"], "Typo aliases did not normalize important routing terms.", errors)
 
     if errors:
         print("Hiring Guide routing validation failed:")
