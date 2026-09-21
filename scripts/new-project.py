@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import importlib.util
 import json
 import re
 import subprocess
@@ -13,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = ROOT / "portfolio-data"
 PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
-RENDERER_PATH = ROOT / "scripts" / "render-project.py"
 DOCS_UPDATER_PATH = ROOT / "scripts" / "update-docs.py"
 
 
@@ -27,15 +25,6 @@ def load_json(path: Path) -> dict:
             f"Invalid JSON in {path.relative_to(ROOT)}: "
             f"line {exc.lineno}, column {exc.colno}: {exc.msg}"
         ) from exc
-
-
-def load_renderer():
-    spec = importlib.util.spec_from_file_location("portfolio_render_project", RENDERER_PATH)
-    if spec is None or spec.loader is None:
-        raise ValueError("Could not load scripts/render-project.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def slugify(value: str) -> str:
@@ -278,34 +267,18 @@ def cleanup_empty_parents(path: Path, stop: Path) -> None:
         current = current.parent
 
 
-def create_project(record: dict, *, render: bool = False) -> tuple[Path, Path | None]:
-    record_path, page_path = preflight(record)
-    should_render = render and record["confidentiality"] != "needs-sanitization"
-    created_page: Path | None = None
-
+def create_project(record: dict) -> Path:
+    record_path, _ = preflight(record)
     record_path.parent.mkdir(parents=True, exist_ok=True)
     record_path.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    try:
-        if should_render:
-            renderer = load_renderer()
-            rendered, final_output = renderer.render_project_text(record_path)
-            final_output.parent.mkdir(parents=True, exist_ok=True)
-            final_output.write_text(rendered, encoding="utf-8")
-            created_page = final_output
-
-        valid, validation_output = run_validation(include_site=should_render)
-        if not valid:
-            raise ValueError("Validation failed after creating the project:\n" + validation_output)
-    except Exception:
-        if created_page and created_page.exists():
-            created_page.unlink()
-            cleanup_empty_parents(created_page, ROOT / "portfolio" / "projects")
+    valid, validation_output = run_validation(include_site=False)
+    if not valid:
         if record_path.exists():
             record_path.unlink()
-        raise
+        raise ValueError("Validation failed after creating the project record:\n" + validation_output)
 
-    return record_path, created_page
+    return record_path
 
 
 def prompt_assets(taxonomy: dict) -> list[dict]:
@@ -412,10 +385,9 @@ def print_summary(record: dict) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create a new structured portfolio project record. Optional legacy scaffold rendering is explicit and never overwrites an existing page."
+        description="Create a new structured portfolio project record without generating or changing any public portfolio page."
     )
     parser.add_argument("--dry-run", action="store_true", help="Collect and preview the project without writing files.")
-    parser.add_argument("--render-scaffold", action="store_true", help="Explicitly render the legacy starter scaffold for a brand-new page. Existing pages are never overwritten.")
     parser.add_argument("--yes", action="store_true", help="Skip the final confirmation prompt.")
     return parser.parse_args()
 
@@ -437,7 +409,7 @@ def main() -> int:
             print("Cancelled. No files were created.")
             return 0
 
-        record_path, page_path = create_project(record, render=args.render_scaffold)
+        record_path = create_project(record)
     except (ValueError, KeyError) as exc:
         print(f"\nERROR: {exc}")
         return 1
@@ -451,12 +423,7 @@ def main() -> int:
 
     print("\nProject created successfully.")
     print(f"  Data: {record_path.relative_to(ROOT)}")
-    if page_path:
-        print(f"  Page: {page_path.relative_to(ROOT)}")
-    elif record["confidentiality"] == "needs-sanitization":
-        print("  Page: not generated because the project still needs sanitization")
-    else:
-        print("  Page: not generated (record-only default)")
+    print("  Page: not generated (record-only workflow)")
 
     if docs_refreshed:
         print("  Documentation: refreshed")
@@ -465,7 +432,7 @@ def main() -> int:
         print(f"\n{docs_error}")
         return 1
 
-    print("\nNext: review the files in VS Code, then commit them on a feature/content branch.")
+    print("\nNext: review the structured record, then build any public page intentionally from the closest current live page pattern.")
     return 0
 
 
