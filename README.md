@@ -253,7 +253,7 @@ python3 scripts/render-project.py portfolio-data/projects/new-project.json
 
 The scaffold preview is a planning/reference artifact only. Automation does not write it into `portfolio/`. Build the actual page intentionally from the closest current live page family. Existing public pages are never regenerated from the scaffold.
 
-See `docs/portfolio-uat-guardrails.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
+Use `docs/current-page-patterns.md` to choose the closest current live reference, `docs/portfolio-uat-guardrails.md` for recurring UAT rules, and `docs/portfolio-consistency-audit.md` for the maintenance audit.
 
 ## Documentation and Versioning
 
