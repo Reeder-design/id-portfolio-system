@@ -89,11 +89,13 @@ Optional AI Plan Proposal
         ↓
 Human Review / Refinement
         ↓
-Controlled Local Build
+Structured Record Build
         ↓
-Validation + Preview
+Validation
         ↓
 Keep or Revert
+        ↓
+Build/review the public page from the current live pattern
         ↓
 Save & Publish
 ```
@@ -231,25 +233,31 @@ The current public files under `portfolio/` are the presentation source of truth
 
 The guided Create Content workflow is the normal user path for **new** work. Lower-level deterministic scripts remain available for new-page development and maintenance testing.
 
-Create a new standard project:
+Create a new structured project record:
 
 ```bash
 python3 scripts/new-project.py
 ```
 
-Preview a new project without writing:
+Preview the record without writing:
 
 ```bash
 python3 scripts/new-project.py --dry-run
 ```
 
-Preview the scaffold for a project whose public path does not yet exist:
+If you explicitly want the legacy starter scaffold for a brand-new path:
+
+```bash
+python3 scripts/new-project.py --render-scaffold
+```
+
+You can also preview scaffold output without writing:
 
 ```bash
 python3 scripts/render-project.py portfolio-data/projects/new-project.json --stdout
 ```
 
-The renderer has no supported force-overwrite mode. If the target public page already exists, edit that current page directly.
+The scaffold is a starting point only. The current live page family is the visual reference for the finished page. The renderer has no supported force-overwrite mode; if the target public page already exists, edit that current page directly.
 
 See `docs/portfolio-uat-guardrails.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
 
