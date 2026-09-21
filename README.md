@@ -219,7 +219,7 @@ If that terminal is already running after a Git pull, you can normally just refr
 - `portfolio/` — deployed public website
 - `portfolio-data/` — structured public-content source data, including the canonical reusable `component-registry.json`
 - `portfolio-manager/` — local-only Flask management application
-- `templates/` — new-page scaffolds only; never an overwrite source for existing public pages
+- `templates/` — preview/reference scaffolds for brand-new work; never a page-generation or overwrite source
 - `design-system/` — design-system/development resources
 - `scripts/` — creation, rendering, maintenance, validation, and regression scripts
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
