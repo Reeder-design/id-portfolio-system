@@ -13,7 +13,7 @@ AI_DOCS = ROOT / "docs" / "ai-assistance.md"
 CONTENT_MODEL = ROOT / "docs" / "content-model.md"
 TEMPLATE_SYSTEM = ROOT / "docs" / "template-system.md"
 NEW_PROJECT_GUIDE = ROOT / "docs" / "new-project-guide.md"
-VISUAL_QA = ROOT / "docs" / "portfolio-uat-guardrails.md"
+UAT_GUARDRAILS = ROOT / "docs" / "portfolio-uat-guardrails.md"
 CONSISTENCY_AUDIT = ROOT / "docs" / "portfolio-consistency-audit.md"
 TAXONOMY = ROOT / "portfolio-data" / "taxonomy.json"
 COMPONENT_REGISTRY = ROOT / "portfolio-data" / "component-registry.json"
@@ -42,7 +42,7 @@ def main() -> int:
         (CONTENT_MODEL, "content model guide"),
         (TEMPLATE_SYSTEM, "template system guide"),
         (NEW_PROJECT_GUIDE, "new project guide"),
-        (VISUAL_QA, "portfolio visual QA standard"),
+        (UAT_GUARDRAILS, "portfolio UAT guardrails"),
         (CONSISTENCY_AUDIT, "portfolio consistency audit"),
         (TAXONOMY, "portfolio taxonomy"),
         (COMPONENT_REGISTRY, "reusable component registry"),
@@ -68,7 +68,7 @@ def main() -> int:
     content_model = CONTENT_MODEL.read_text(encoding="utf-8")
     template_system = TEMPLATE_SYSTEM.read_text(encoding="utf-8")
     new_project_guide = NEW_PROJECT_GUIDE.read_text(encoding="utf-8")
-    visual_qa = VISUAL_QA.read_text(encoding="utf-8")
+    uat_guardrails = UAT_GUARDRAILS.read_text(encoding="utf-8")
     consistency_audit = CONSISTENCY_AUDIT.read_text(encoding="utf-8")
     taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     app = APP.read_text(encoding="utf-8")
@@ -192,14 +192,14 @@ def main() -> int:
         require(phrase.lower() in new_project_guide.lower(), f"New project guide is missing current workflow language: {phrase!r}.", errors)
 
     for phrase in [
-        "Preservation rule",
-        "Stable tabs and state changes",
-        "Interaction title and copy width",
-        "Pixel icons",
-        "Motion graphics and stacking",
-        "UAT checklist",
+        "## Preservation Rule",
+        "Tabbed interactions changing section height",
+        "Interaction headings and copy constrained too narrowly",
+        "Pixel icon clipping, centering, and neighboring-image bleed",
+        "Motion paths, dots, and decorative animation crossing content",
+        "## UAT Workflow for Future Visual Changes",
     ]:
-        require(phrase in visual_qa, f"Visual QA standard is missing recurring UAT guidance: {phrase!r}.", errors)
+        require(phrase in uat_guardrails, f"UAT guardrails are missing recurring portfolio QA guidance: {phrase!r}.", errors)
 
     for phrase in [
         "Repeated issue patterns from project UAT",
@@ -231,7 +231,7 @@ def main() -> int:
         content_model,
         template_system,
         new_project_guide,
-        visual_qa,
+        uat_guardrails,
         consistency_audit,
     ])
     for phrase in stale_phrases:
