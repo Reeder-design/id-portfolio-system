@@ -26,6 +26,11 @@ NEW_PROJECT = ROOT / "scripts" / "new-project.py"
 CREATE_BUILD_SERVICE = ROOT / "portfolio-manager" / "create_content_build_service.py"
 CONTENT_ROUTES = ROOT / "portfolio-manager" / "content_routes.py"
 PROJECT_EDITOR = ROOT / "portfolio-manager" / "templates" / "project-editor.html"
+SITE_CONTENT_ROUTES = ROOT / "portfolio-manager" / "site_content_routes.py"
+SITE_CONTENT_MODEL = ROOT / "scripts" / "site_content_model.py"
+LEGACY_SITE_RENDERER = ROOT / "scripts" / "render-site-content.py"
+LEGACY_GENERAL_CONTENT_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "general-content.html"
+LEGACY_GENERAL_PAGE_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "general-page-editor.html"
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -58,6 +63,8 @@ def main() -> int:
         (CREATE_BUILD_SERVICE, "Create Content build service"),
         (CONTENT_ROUTES, "content routes"),
         (PROJECT_EDITOR, "project editor"),
+        (SITE_CONTENT_ROUTES, "site content routes"),
+        (SITE_CONTENT_MODEL, "site content model"),
     ]:
         require(path.exists(), f"Missing {label}: {path.relative_to(ROOT)}", errors)
 
@@ -86,6 +93,8 @@ def main() -> int:
     create_build_service = CREATE_BUILD_SERVICE.read_text(encoding="utf-8")
     content_routes = CONTENT_ROUTES.read_text(encoding="utf-8")
     project_editor = PROJECT_EDITOR.read_text(encoding="utf-8")
+    site_content_routes = SITE_CONTENT_ROUTES.read_text(encoding="utf-8")
+    site_content_model = SITE_CONTENT_MODEL.read_text(encoding="utf-8")
 
     for phrase in [
         "Manage Content",
@@ -134,6 +143,8 @@ def main() -> int:
         "Do not resurrect retired experiments",
     ]:
         require(phrase in copilot, f"Copilot instructions are missing current operating guidance: {phrase!r}.", errors)
+
+    require("Structured general-page copy is a mirror/validation layer" in maintenance, "Maintenance guide must preserve source-first general-page ownership.", errors)
 
     for phrase in [
         "Routine portfolio content publishing",
@@ -300,6 +311,11 @@ def main() -> int:
     require("Regenerate Page" not in project_editor, "Project editor must not expose the retired Regenerate Page action.", errors)
     require("check-breadcrumb-consistency.py" not in validation, "Breadcrumb checks should remain consolidated in final-polish validation.", errors)
     require("check-breadcrumb-consistency.py" not in workflow, "CI should not run the retired standalone breadcrumb checker.", errors)
+    require(not LEGACY_SITE_RENDERER.exists(), "Legacy structured-to-HTML site renderer must stay removed.", errors)
+    require(not LEGACY_GENERAL_CONTENT_TEMPLATE.exists(), "Legacy general-content editor template must stay removed.", errors)
+    require(not LEGACY_GENERAL_PAGE_TEMPLATE.exists(), "Legacy general-page editor template must stay removed.", errors)
+    require("render-site-content.py" not in site_content_routes, "Site content routes must not invoke the retired structured-to-HTML renderer.", errors)
+    require("def render_page(" not in site_content_model and "def render_page_text(" not in site_content_model, "Site content model must remain extraction/validation only.", errors)
 
     require(
         workflow.count("python scripts/check-final-polish.py") == 1,
