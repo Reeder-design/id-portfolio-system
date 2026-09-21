@@ -179,17 +179,16 @@ def main() -> int:
         require(marker in motion_js, f"Shared portfolio navigation/component logic is missing {marker!r}.", errors)
 
     project_template = PROJECT_TEMPLATE.read_text(encoding="utf-8")
-    require("project-template-cta" not in project_template, "Generated project pages must not use the retired project-template-cta Keep Exploring variant.", errors)
+    require("project-template-cta" not in project_template, "New-page scaffold must not use the retired project-template-cta variant.", errors)
+    require("Keep Exploring" not in project_template, "New-page scaffold must not recreate the retired Keep Exploring footer.", errors)
+    require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "New-page scaffold must not recreate a public Related Work section.", errors)
     for marker in [
-        '<p class="eyebrow">Keep Exploring</p>',
-        'class="section-heading refresh-section-intro"',
-        'class="refresh-card-grid"',
-        'class="refresh-link-card"',
-        'class="refresh-link-card-header"',
-        'class="refresh-link-card-body"',
-        'class="project-family-link"',
+        'PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE',
+        'class="section portfolio-back-row"',
+        'class="generic-switch-panels"',
+        'aria-hidden="true"',
     ]:
-        require(marker in project_template, f"Generated project template is missing canonical Keep Exploring marker {marker!r}.", errors)
+        require(marker in project_template, f"New-page scaffold is missing current hardening marker {marker!r}.", errors)
 
     for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
