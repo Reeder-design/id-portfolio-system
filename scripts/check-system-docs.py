@@ -21,6 +21,8 @@ APP = ROOT / "portfolio-manager" / "app.py"
 VALIDATION = ROOT / "portfolio-manager" / "validation_service.py"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate-site.yml"
 RENDERER = ROOT / "scripts" / "render-project.py"
+NEW_PROJECT = ROOT / "scripts" / "new-project.py"
+CREATE_BUILD_SERVICE = ROOT / "portfolio-manager" / "create_content_build_service.py"
 CONTENT_ROUTES = ROOT / "portfolio-manager" / "content_routes.py"
 PROJECT_EDITOR = ROOT / "portfolio-manager" / "templates" / "project-editor.html"
 
@@ -49,7 +51,9 @@ def main() -> int:
         (APP, "Portfolio Manager app"),
         (VALIDATION, "Full Validation service"),
         (WORKFLOW, "pull-request validation workflow"),
-        (RENDERER, "new-page renderer"),
+        (RENDERER, "new-page scaffold previewer"),
+        (NEW_PROJECT, "structured project creator"),
+        (CREATE_BUILD_SERVICE, "Create Content build service"),
         (CONTENT_ROUTES, "content routes"),
         (PROJECT_EDITOR, "project editor"),
     ]:
@@ -75,6 +79,8 @@ def main() -> int:
     validation = VALIDATION.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
     renderer = RENDERER.read_text(encoding="utf-8")
+    new_project = NEW_PROJECT.read_text(encoding="utf-8")
+    create_build_service = CREATE_BUILD_SERVICE.read_text(encoding="utf-8")
     content_routes = CONTENT_ROUTES.read_text(encoding="utf-8")
     project_editor = PROJECT_EDITOR.read_text(encoding="utf-8")
 
@@ -271,7 +277,11 @@ def main() -> int:
         require(script in workflow, f"Pull-request CI must run {script}.", errors)
 
 
-    require("--force" not in renderer, "New-page renderer must not expose a force-overwrite option.", errors)
+    require("--force" not in renderer, "Scaffold previewer must not expose a force-overwrite option.", errors)
+    require("write_text(rendered" not in renderer, "Scaffold previewer must never write public HTML.", errors)
+    require("--output" not in renderer, "Scaffold previewer must not expose an output-file switch.", errors)
+    require("--render-scaffold" not in new_project and "render=" not in new_project, "Structured project creator must remain record-only.", errors)
+    require("create_project(project_record)" in create_build_service and "render=" not in create_build_service, "Create Content build must remain record-only.", errors)
     require("/regenerate" not in content_routes, "Portfolio Manager must not expose the retired project regeneration route.", errors)
     require("Regenerate Page" not in project_editor, "Project editor must not expose the retired Regenerate Page action.", errors)
     require("check-breadcrumb-consistency.py" not in validation, "Breadcrumb checks should remain consolidated in final-polish validation.", errors)
