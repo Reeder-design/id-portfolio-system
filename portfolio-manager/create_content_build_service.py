@@ -507,7 +507,7 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
     record_path: Path | None = None
     page_path: Path | None = None
     try:
-        created_record, created_page = new_project.create_project(project_record, render=False)
+        created_record, created_page = new_project.create_project(project_record)
         record_path = created_record
         page_path = created_page
         new_project.refresh_documentation()
