@@ -158,6 +158,12 @@ Current workflows include:
 
 Private proposals, uploads, backups, notes, and reference originals remain outside tracked public content under `.portfolio-manager/`.
 
+## Future public-page builds
+
+Structured records do not define a finished page layout. For new public work, use `docs/current-page-patterns.md` to choose the closest current live page family, then apply the recurring checks in `docs/portfolio-uat-guardrails.md`.
+
+The reference scaffold is useful for content architecture only. Current live pages remain the visual and interaction standard.
+
 ## Design Principle
 
 Structured data should hold information that benefits from consistent editing, validation, reuse, or automation. Existing public pages own their presentation. Shared code should own genuinely shared behavior, and templates should remain preview/reference material rather than an overwrite mechanism.
