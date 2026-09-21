@@ -50,7 +50,7 @@
                 </div>
 
                 {% if project._generated_page %}
-                <p class="action-note">This is a legacy scaffold page. Automatic regeneration is retired so template changes cannot overwrite finished portfolio work. Structured fields remain available as metadata; edit the public page directly for presentation changes.</p>
+                <p class="action-note">This page began from the structured project scaffold. Automatic regeneration is retired so template changes cannot overwrite finished portfolio work. These fields maintain the structured project record; edit the current public page directly for presentation changes.</p>
                 {% else %}
                 <p class="action-note">This project contains a hand-maintained portfolio experience. The project title stays connected here so portfolio references remain consistent. Visible copy is edited through the full page-copy workspace linked below.</p>
                 {% endif %}
@@ -120,7 +120,7 @@
                             </div>
                             <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Browse Registry</a>
                         </div>
-                        <p class="field-help">Detected components reflect the actual standard template structure. Optional selections document intentional custom/reusable patterns; recording one does not inject markup into a bespoke page.</p>
+                        <p class="field-help">Detected components reflect the scaffold/structured project metadata. Optional selections document intentional reusable patterns; recording one does not inject or replace public-page markup.</p>
                         <div class="project-component-grid">
                             {% for component in component_context.components %}
                             {% if component.inferred %}
