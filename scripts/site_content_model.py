@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from html import escape, unescape
+from html import unescape
 import json
 from pathlib import Path
 import re
@@ -301,37 +301,6 @@ def extract_page_fields(page_id: str, data: dict | None = None) -> dict[str, str
         extracted[field_id] = normalize_text(matches[0].group("content"))
 
     return extracted
-
-
-def render_page_text(page_id: str, data: dict | None = None) -> tuple[Path, str]:
-    data = data or load_site_content()
-    page = data["pages"][page_id]
-    page_path = ROOT / page["page_path"]
-    html_text = page_path.read_text(encoding="utf-8")
-
-    for field_id in page.get("fields", {}):
-        pattern = LOCATORS[page_id][field_id]
-        matches = list(re.finditer(pattern, html_text, flags=re.I | re.S))
-        if len(matches) != 1:
-            raise ValueError(
-                f"{page_id}.{field_id}: page structure changed; expected one locator match, found {len(matches)}"
-            )
-        replacement_value = escape(page["fields"][field_id]["value"].strip(), quote=False)
-
-        def replace(match: re.Match[str], value: str = replacement_value) -> str:
-            return f"{match.group('prefix')}{value}{match.group('suffix')}"
-
-        html_text, count = re.subn(pattern, replace, html_text, count=1, flags=re.I | re.S)
-        if count != 1:
-            raise ValueError(f"{page_id}.{field_id}: renderer did not replace exactly one field")
-
-    return page_path, html_text
-
-
-def render_page(page_id: str, data: dict | None = None) -> Path:
-    page_path, html_text = render_page_text(page_id, data=data)
-    page_path.write_text(html_text, encoding="utf-8")
-    return page_path
 
 
 def clone_data(data: dict) -> dict:
