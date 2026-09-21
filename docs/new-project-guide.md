@@ -30,7 +30,7 @@ human UAT
 normal maintenance as a public page
 ```
 
-A legacy scaffold may be rendered explicitly as a starting point, but it is not the visual source of truth and it is not created by default.
+A reference scaffold can be previewed for planning, but automation does not write it into `portfolio/`. The real public page is built intentionally from the closest current live page family.
 
 ## Running the lower-level creator
 
@@ -52,13 +52,15 @@ Preview without writing:
 python scripts/new-project.py --dry-run
 ```
 
-The normal command already creates only the structured JSON record. To explicitly render the legacy starter scaffold for a brand-new path:
+The normal command creates only the structured JSON record. There is no page-generation flag.
+
+To preview the locked reference scaffold without writing a public file:
 
 ```bash
-python scripts/new-project.py --render-scaffold
+python scripts/render-project.py portfolio-data/projects/new-project.json
 ```
 
-`--yes` skips the final confirmation but does not bypass path/safety checks.
+`--yes` skips the final record-creation confirmation but does not bypass path/safety checks.
 
 ## What it collects
 
@@ -98,7 +100,7 @@ The creator stops when:
 
 There is no supported force-overwrite path.
 
-If an explicitly rendered new scaffold fails validation during creation, files created by that operation are rolled back. Record-only creation does not touch the public page.
+Record creation validates the structured data and rolls the record back if validation fails. It never touches the public page.
 
 ## Existing pages
 
