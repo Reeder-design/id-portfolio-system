@@ -247,7 +247,7 @@ Rules:
 - Never reintroduce information that was removed or generalized during sanitization.
 - Use only existing taxonomy category/subcategory ids supplied in the prompt.
 - Do not create HTML, code, Git commands, files, commits, or publishing instructions.
-- This is a proposal for the repository's standard structured case-study renderer only.
+- This is a proposal for a structured project record only. Do not assume the retired standard renderer controls the visible portfolio page.
 - Return one JSON object only, with no Markdown fences.
 """
 
@@ -507,7 +507,7 @@ def apply_local_build(brief_id: str) -> dict[str, Any]:
     record_path: Path | None = None
     page_path: Path | None = None
     try:
-        created_record, created_page = new_project.create_project(project_record, render=True)
+        created_record, created_page = new_project.create_project(project_record, render=False)
         record_path = created_record
         page_path = created_page
         new_project.refresh_documentation()
