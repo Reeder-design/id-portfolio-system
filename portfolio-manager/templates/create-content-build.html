@@ -17,7 +17,7 @@
         <div>
             <p class="eyebrow">Create Content · Controlled Build</p>
             <h1>{{ record.fields.working_title }}</h1>
-            <p class="hero-copy">Turn the current Content Plan into a standard structured portfolio case study. AI may propose the public copy, but only your approved proposal can be written locally, and local files are validated before you review them.</p>
+            <p class="hero-copy">Turn the current Content Plan into a reviewed structured project record without touching the live portfolio page. AI may propose the record content, but the current public HTML/CSS/JS remains the visual source of truth.</p>
         </div>
         <div class="header-actions">
             <a class="btn btn-secondary" href="{{ url_for('create_content.brief', brief_id=record.id) }}">Back to Content Brief</a>
@@ -32,8 +32,8 @@
 
     <section class="dashboard-card full-width">
         <p class="eyebrow">Build boundary</p>
-        <h2>Plan → approve → proposal → create locally → validate → preview → keep or revert</h2>
-        <p class="section-copy">This workflow creates local portfolio files only. It does not commit, push, publish, or merge anything. The first controlled build uses the repository's existing standard case-study renderer so project structure stays consistent.</p>
+        <h2>Plan → approve → proposal → create record locally → validate → keep or revert</h2>
+        <p class="section-copy">This workflow creates a structured project record only. It does not generate, replace, or restyle a public portfolio page, and it does not commit, push, publish, or merge anything.</p>
     </section>
 
     <main class="v2-manage-layout">
@@ -77,7 +77,7 @@
         <section class="dashboard-card full-width">
             <p class="eyebrow">Step 2 · Build Proposal</p>
             <h2>{{ 'Regenerate structured project proposal' if proposal else 'Generate structured project proposal' }}</h2>
-            <p class="section-copy">AI converts the approved brief, current plan, and attached approved sanitized source text into the fields used by the repository's standard case-study renderer. It does not write portfolio files in this step.</p>
+            <p class="section-copy">AI converts the approved brief, current plan, and attached approved sanitized source text into structured project fields. It does not generate public HTML or write portfolio files in this step.</p>
             {% if ai_settings.configured %}
             <form method="post" action="{{ url_for('create_content.generate_build', brief_id=record.id) }}" class="form-grid">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -157,15 +157,15 @@
 
         <section class="dashboard-card full-width">
             <p class="eyebrow">Step 4 · Create locally</p>
-            <h2>Write the reviewed proposal into the portfolio</h2>
-            <p class="section-copy">Portfolio Manager will use the existing structured project generator and renderer, create the JSON project record and standard case-study page locally, refresh generated maintenance documentation, then run Full Validation. If validation fails, the newly created project files are rolled back and the generated documentation is refreshed again.</p>
+            <h2>Create the reviewed structured record</h2>
+            <p class="section-copy">Portfolio Manager will create the JSON project record locally, refresh generated maintenance documentation, then run Full Validation. It will not generate or overwrite the visible portfolio page. Build the public page intentionally from the closest current live page pattern after reviewing the existing design.</p>
             <form method="post" action="{{ url_for('create_content.apply_build', brief_id=record.id) }}" class="form-grid">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="full-span">
                     <label class="ai-check"><input type="checkbox" name="public_safe_ack" required><span>I reviewed the proposed public content and confirm it is appropriate for my portfolio.</span></label>
-                    <label class="ai-check"><input type="checkbox" name="local_write_ack" required><span>I want Portfolio Manager to create these project files locally and run validation. This does not publish them.</span></label>
+                    <label class="ai-check"><input type="checkbox" name="local_write_ack" required><span>I want Portfolio Manager to create this structured project record locally and run validation. This does not create or change the visible portfolio page.</span></label>
                 </div>
-                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Create Local Project &amp; Validate</button></div>
+                <div class="full-span button-row"><button class="btn btn-primary" type="submit">Create Structured Record &amp; Validate</button></div>
             </form>
         </section>
         {% endif %}
@@ -178,7 +178,7 @@
             </div>
             <p><strong>Structured record:</strong> {{ record.local_build.record_path }}</p>
             {% if record.local_build.page_path %}<p><strong>Rendered page:</strong> {{ record.local_build.page_path }}</p>{% endif %}
-            <p class="section-copy">This build exists only in your local working copy. It has not been committed or published.</p>
+            <p class="section-copy">This structured record exists only in your local working copy. It has not changed the visible portfolio page and has not been committed or published.</p>
             <div class="button-row">
                 {% if preview_url %}<a class="btn btn-primary" href="{{ preview_url }}" target="_blank" rel="noopener noreferrer">Open Real Local Preview</a>{% endif %}
                 <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=record.local_build.project_id) }}">Open in Manage Content</a>
@@ -190,7 +190,7 @@
             <div class="v2-general-grid">
                 <article class="v2-small-card">
                     <h3>Keep this local build</h3>
-                    <p>Accept the validated local project as the version you want to continue refining.</p>
+                    <p>Accept the validated structured record as the metadata/content source you want to continue refining.</p>
                     <form method="post" action="{{ url_for('create_content.keep_build', brief_id=record.id) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-primary" type="submit">Keep Local Build</button>
@@ -198,7 +198,7 @@
                 </article>
                 <article class="v2-small-card">
                     <h3>Revert this build</h3>
-                    <p>Delete only the files created by this build. Revert stops automatically if either generated file changed after creation.</p>
+                    <p>Delete only the structured files created by this build. Revert stops automatically if a created file changed after creation.</p>
                     <form method="post" action="{{ url_for('create_content.revert_build', brief_id=record.id) }}" data-confirm-action="revert-created-project">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button class="btn btn-secondary" type="submit">Revert Local Build</button>
