@@ -118,7 +118,7 @@ This protects later UAT fixes from stale template output.
 
 Before approving a new page, compare it with the nearest current page family and use:
 
-- `docs/portfolio-visual-qa-standard.md`
+- `docs/portfolio-uat-guardrails.md`
 - `docs/portfolio-consistency-audit.md`
 
 Pay particular attention to recurring issues: breadcrumbs, light/dark contrast, tab height changes, interaction copy width, icon clipping/centering, icon bubbles, motion layering, padding, and project-ending behavior.
