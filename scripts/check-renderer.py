@@ -55,12 +55,15 @@ def main() -> int:
         "phase1-theme.css",
         "phase1-frame.css",
         "portfolio-motion.js",
-        "project-snapshot-grid",
-        "project-story",
-        'href="#need"',
+        "PORTFOLIO-REFERENCE-SCAFFOLD:NEW-PAGE-ONLY",
+        "scaffold-hero-grid",
+        "snapshot-band",
+        "case-nav-shell",
+        'href="#overview"',
         'href="#decisions"',
         'href="#build"',
         'href="#outcome"',
+        "section-soft",
         "portfolio-back-row",
     ]
 
@@ -69,7 +72,7 @@ def main() -> int:
         intended_output = (ROOT / project["page_path"]).resolve()
 
         result = subprocess.run(
-            [sys.executable, str(RENDERER), str(project_file), "--stdout"],
+            [sys.executable, str(RENDERER), str(project_file)],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -100,8 +103,8 @@ def main() -> int:
             errors.append(f"{label}: generated page still contains deprecated template architecture")
         if "Keep Exploring" in rendered or 'id="related-work"' in rendered or 'href="#related-work"' in rendered:
             errors.append(f"{label}: initial scaffold must not recreate retired exploration/Related Work sections")
-        if "generic-switch-panels" not in rendered or 'aria-hidden="true"' not in rendered:
-            errors.append(f"{label}: scaffold tab panels must use the stable-height panel pattern")
+        if 'role="tab"' in rendered or "data-generic-switcher" in rendered:
+            errors.append(f"{label}: default scaffold must stay non-interactive; add tabs only as an intentional custom pattern")
 
         for section in project.get("detail_sections", []):
             section_id = section.get("id", "")
