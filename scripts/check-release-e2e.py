@@ -90,7 +90,6 @@ def main() -> int:
         "/create/new": "New Content Brief",
         "/create/references/": "Reference Library",
         "/assets": "Asset Library",
-        "/site-content": "General Page Content",
         "/git/": "Save & Publish",
         "/ai/": "Advanced AI Drafting Helper",
         "/ai/settings": "AI Settings",
@@ -118,6 +117,18 @@ def main() -> int:
 
     manage = rendered.get("/content", b"")
     require(b'href="/manage/pages/home"' in manage, "Manage Content must link to the Home page editor.", errors)
+
+    legacy_general = client.get("/site-content", follow_redirects=False)
+    require(
+        legacy_general.status_code in {301, 302, 303, 307, 308},
+        f"Legacy General Page Content route must redirect; got HTTP {legacy_general.status_code}.",
+        errors,
+    )
+    require(
+        "/content" in legacy_general.headers.get("Location", ""),
+        "Legacy General Page Content route must redirect to the current Manage Content workflow.",
+        errors,
+    )
     require(b"Open AI Portfolio Review" in manage, "Manage Content must expose AI Portfolio Review.", errors)
     require(b"Open Proposal History" in manage, "Manage Content must expose Proposal History.", errors)
 

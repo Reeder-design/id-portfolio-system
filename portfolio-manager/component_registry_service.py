@@ -9,8 +9,6 @@ import json
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = REPO_ROOT / "portfolio-data" / "component-registry.json"
 PROJECT_ROOT = REPO_ROOT / "portfolio-data" / "projects"
-GENERATED_PAGE_MARKER = "<!-- PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE -->"
-
 
 class ComponentRegistryError(RuntimeError):
     pass
@@ -68,27 +66,12 @@ def list_projects() -> list[dict[str, Any]]:
     return projects
 
 
-def _is_generated(project: dict[str, Any]) -> bool:
-    raw_path = str(project.get("page_path") or "").strip()
-    if not raw_path:
-        return False
-    page_path = REPO_ROOT / raw_path
-    try:
-        return GENERATED_PAGE_MARKER in page_path.read_text(encoding="utf-8")
-    except OSError:
-        return False
-
-
 def inferred_component_ids(project: dict[str, Any]) -> list[str]:
     result: list[str] = []
 
     def add(component_id: str) -> None:
         if component_id not in result:
             result.append(component_id)
-
-    if _is_generated(project):
-        add("project-snapshot")
-        add("tabs-switcher")
 
     for section in project.get("detail_sections", []):
         if not isinstance(section, dict):
@@ -106,9 +89,6 @@ def inferred_component_ids(project: dict[str, Any]) -> list[str]:
         for asset in project.get("assets", [])
     ):
         add("evidence-grid")
-
-    if project.get("related_work"):
-        add("related-work-cards")
 
     return result
 

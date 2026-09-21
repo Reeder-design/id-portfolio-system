@@ -55,13 +55,16 @@ def main() -> int:
         "phase1-theme.css",
         "phase1-frame.css",
         "portfolio-motion.js",
-        "project-snapshot-grid",
-        "project-story",
-        'href="#need"',
+        "PORTFOLIO-REFERENCE-SCAFFOLD:NEW-PAGE-ONLY",
+        "scaffold-hero-grid",
+        "snapshot-band",
+        "case-nav-shell",
+        'href="#overview"',
         'href="#decisions"',
         'href="#build"',
         'href="#outcome"',
-        "Keep Exploring",
+        "section-soft",
+        "portfolio-back-row",
     ]
 
     for project_file in project_files:
@@ -69,7 +72,7 @@ def main() -> int:
         intended_output = (ROOT / project["page_path"]).resolve()
 
         result = subprocess.run(
-            [sys.executable, str(RENDERER), str(project_file), "--stdout"],
+            [sys.executable, str(RENDERER), str(project_file)],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -98,6 +101,10 @@ def main() -> int:
 
         if "case-study-sidebar" in rendered or "template-flourish" in rendered:
             errors.append(f"{label}: generated page still contains deprecated template architecture")
+        if "Keep Exploring" in rendered or 'id="related-work"' in rendered or 'href="#related-work"' in rendered:
+            errors.append(f"{label}: initial scaffold must not recreate retired exploration/Related Work sections")
+        if 'role="tab"' in rendered or "data-generic-switcher" in rendered:
+            errors.append(f"{label}: default scaffold must stay non-interactive; add tabs only as an intentional custom pattern")
 
         for section in project.get("detail_sections", []):
             section_id = section.get("id", "")
@@ -116,22 +123,6 @@ def main() -> int:
         elif 'href="#evidence"' in rendered:
             errors.append(f"{label}: Evidence nav should not render when there are no public assets")
 
-        related_work = project.get("related_work", [])
-        if related_work:
-            if 'href="#related-work"' not in rendered or 'id="related-work"' not in rendered:
-                errors.append(f"{label}: related work should produce a section and nav link")
-            for reference in related_work:
-                target_path = PROJECT_ROOT / f"{reference.get('project_id', '')}.json"
-                if not target_path.exists():
-                    continue
-                target = json.loads(target_path.read_text(encoding="utf-8"))
-                expected_related_title = escape(target.get("title", ""), quote=True)
-                if expected_related_title and expected_related_title not in rendered:
-                    errors.append(
-                        f"{label}: related project '{reference.get('project_id')}' did not render"
-                    )
-        elif 'href="#related-work"' in rendered:
-            errors.append(f"{label}: Related Work nav should not render when there are no references")
 
         parser = ReferenceParser()
         try:

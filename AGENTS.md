@@ -9,7 +9,7 @@ Maintain a professional, reliable, reusable portfolio system that is easy to upd
 - `portfolio/` — public website deployed to GitHub Pages
 - `portfolio-data/` — structured public-content source data, taxonomy, schemas, and version data
 - `portfolio-manager/` — authenticated local-only Flask application for Manage/Create/Reference/Hiring Guide/AI/publishing workflows
-- `templates/` — reusable HTML templates for standard generated pages
+- `templates/` — preview/reference scaffolds for brand-new work; never an overwrite or automatic page-generation source
 - `design-system/` — supporting design-system and reusable development resources
 - `.github/workflows/` — CI and GitHub Pages deployment
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
@@ -41,32 +41,49 @@ Workflows currently includes the structured groupings Design + Development, AI +
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.
 
 Use this authority order:
-1. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
-2. `portfolio-data/component-registry.json` for canonical reusable component IDs, ownership, support level, and intended use.
-3. Structured records under `portfolio-data/` for content fields they explicitly own.
-4. `templates/` + deterministic renderers for standard generated pages.
-5. Bespoke public HTML/CSS/JavaScript for custom interactive experiences that are intentionally not template-generated.
-6. Portfolio Manager code for Manager workflow/state behavior.
-7. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override live code/data.
+1. Existing public HTML/CSS/JavaScript under `portfolio/` for the presentation and interaction behavior of an existing page.
+2. Shared current portfolio styles/JavaScript loaded by that page.
+3. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
+4. Structured records under `portfolio-data/` for the metadata/content fields they explicitly own.
+5. `portfolio-data/component-registry.json` for reusable component IDs, ownership, support level, and intended use.
+6. `templates/` + scaffold preview tooling only for planning brand-new pages; automation does not write public HTML from them.
+7. Portfolio Manager code for Manager workflow/state behavior.
+8. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override the current public implementation.
 
 Generated documentation produced by `scripts/update-docs.py` is output, not an editing source.
 
 Do not revive retired experiments, old UI concepts, temporary workarounds, or superseded architecture merely because they still appear in Git history, old PR descriptions, comments, or versioned filenames. Verify the current live owner first.
 
-## Structured Content and Templates
-Standard project case-study pages should use structured records in `portfolio-data/projects/` and the reusable template in `templates/project-page/` when the shared layout fits the project.
+## Structured General Page Content
 
-For standard project generation, prefer the existing Create Content workflow or `python scripts/new-project.py` rather than manually duplicating project JSON, paths, and rendered HTML.
+`portfolio-data/site-content.json` is a mirror/validation layer for approved copy fields, not a source allowed to regenerate existing HTML. The old structured-to-HTML general-page renderer is retired. For existing pages, edit the current public page through the page-copy workflow or directly, then synchronize structured data from the page.
 
-Use `python scripts/render-project.py <project-json>` when intentionally re-rendering an existing generated project page. The renderer fails closed rather than guessing and does not overwrite an existing page without explicit force behavior.
+## Structured Content and New-Page Scaffolding
+Existing public pages are protected from template regeneration. The standard project template is preview/reference only.
 
-Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study template.
+For a genuinely new project, prefer Portfolio Manager **Create Content** or `python scripts/new-project.py` to create the structured record. Neither workflow creates the public page.
+
+`python scripts/render-project.py <project-json>` previews the locked reference scaffold to stdout only. It never writes public HTML and has no output/overwrite mode.
+
+Do not use the template, renderer, structured record, old Git history, or an older PR to rebuild an existing public page. Finished public pages often contain later UAT refinements that the generic scaffold does not know about.
+
+Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study scaffold.
 
 Before adding another shared stylesheet, script, renderer, helper, or interaction controller, inspect the current stack and extend an existing owner when practical. Avoid multiple implementations competing for the same DOM behavior.
 
-Use `portfolio-data/component-registry.json` to describe reusable interaction/presentation patterns. A recorded `component_refs` value documents intentional design-system usage; it does not imply that Portfolio Manager may inject markup into a bespoke page. Template-supported components may be rendered only by the established deterministic renderer.
+Use `portfolio-data/component-registry.json` to describe reusable interaction/presentation patterns. A recorded `component_refs` value documents intentional design-system usage; it does not imply that Portfolio Manager may inject markup into a bespoke page.
 
-Structured project-to-project connections belong in `related_work`. Manage them through Related References when practical. Deterministic suggestions may use existing taxonomy/skills/tools/graph metadata, but suggestions must remain human-reviewed and must never auto-add a relationship.
+Structured project-to-project connections belong in `related_work` for the internal relationship graph. Manage them through Related References when practical. Relationship metadata does not automatically create a public Related Work section.
+
+Use `docs/current-page-patterns.md` to choose the closest current live reference, then use `docs/portfolio-uat-guardrails.md` and `docs/portfolio-consistency-audit.md` when building or reviewing future pages.
+
+
+## Recurring UAT Guardrails
+The repository has a history of recurring visual regressions. Before broad styling, navigation, or interaction work, read `docs/portfolio-uat-guardrails.md` and inspect the current page in the browser/source rather than relying on old template assumptions.
+
+Common regression classes include breadcrumb placement/tone, stale exploration footers, tabs that resize their section, narrow interaction copy, clipped or off-center icons, missing white icon bubbles on busy surfaces, motion paths crossing in front of icons, broken light/dark alternation, unreadable tab states, excessive padding/scrolling, hero overflow, and copy that drifts into hypothetical language instead of describing completed work.
+
+These are audit targets, not permission for automatic portfolio-wide rewrites. Report or fix only what is in scope for the current task, and preserve the approved live design unless the user explicitly asks for a visual change.
 
 ## Portfolio Manager Product Boundaries
 Portfolio Manager must remain local-only on `127.0.0.1:5055`.
@@ -75,7 +92,7 @@ The main user workflows are:
 
 - **Manage Content** — edit existing pages/projects, assets, related references, private notes, page-aware AI proposals, and portfolio review.
 - **Reference Library** — store private originals, review/sanitize separate derivatives, and approve public-safe derivatives for later use.
-- **Create Content** — Content Brief → optional AI plan → human refinement → controlled local build → validation/preview → Keep or Revert → publishing handoff.
+- **Create Content** — Content Brief → optional AI plan → human refinement → structured-record build → validation → Keep or Revert. The visible public page is then built/reviewed intentionally from the current live page family; Create Content does not auto-generate or overwrite it.
 - **Hiring Guide Library** — maintain the private evidence-grounded Q&A/editorial source behind Ask Haley. Store canonical JSON, optional Markdown source, edits, and backups under `.portfolio-manager/hiring-guide/`; do not put the rich editorial library in tracked public data.
 - **Save & Publish** — routine portfolio-content commit/publish flow on `main` with explicit validation and private-path safeguards.
 
@@ -176,7 +193,7 @@ Manual architecture documentation must describe the current implementation, not 
 
 ## Development Rules
 When modifying the public portfolio:
-1. Inspect the existing implementation and identify the current owner before adding code.
+1. Inspect the existing implementation and identify the current owner before adding code. For an existing page, the current public page is the presentation authority; do not regenerate it from a template.
 2. Preserve the existing visual system unless a redesign is explicitly requested.
 3. Use shared CSS variables and existing components before creating new styles.
 4. Keep HTML semantic, responsive, and accessible.
@@ -196,7 +213,7 @@ For substantial changes, use the existing Full Validation suite rather than sele
 
 At minimum, the automated suite must continue to cover:
 - public-site integrity and GitHub Pages readiness
-- structured content and renderer/generator rules
+- structured content, preview-scaffold, and record-generator rules
 - responsive/final polish
 - documentation/versioning freshness
 - Git workflow safety

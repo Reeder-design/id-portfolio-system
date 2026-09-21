@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import importlib.util
 import json
 import re
 import subprocess
@@ -13,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = ROOT / "portfolio-data"
 PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
-RENDERER_PATH = ROOT / "scripts" / "render-project.py"
 DOCS_UPDATER_PATH = ROOT / "scripts" / "update-docs.py"
 
 
@@ -27,15 +25,6 @@ def load_json(path: Path) -> dict:
             f"Invalid JSON in {path.relative_to(ROOT)}: "
             f"line {exc.lineno}, column {exc.colno}: {exc.msg}"
         ) from exc
-
-
-def load_renderer():
-    spec = importlib.util.spec_from_file_location("portfolio_render_project", RENDERER_PATH)
-    if spec is None or spec.loader is None:
-        raise ValueError("Could not load scripts/render-project.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def slugify(value: str) -> str:
@@ -236,10 +225,8 @@ def preflight(record: dict) -> tuple[Path, Path]:
     return record_path, page_path
 
 
-def run_validation(include_site: bool) -> tuple[bool, str]:
+def run_validation() -> tuple[bool, str]:
     commands = [[sys.executable, str(ROOT / "scripts" / "check-content.py")]]
-    if include_site:
-        commands.append([sys.executable, str(ROOT / "scripts" / "check-site.py")])
 
     output: list[str] = []
     for command in commands:
@@ -262,50 +249,24 @@ def refresh_documentation() -> str:
     output = "\n".join(part for part in [result.stdout, result.stderr] if part).strip()
     if result.returncode != 0:
         raise ValueError(
-            "Project files were created, but documentation refresh failed. "
+            "The project record was created, but documentation refresh failed. "
             "Run `python3 scripts/update-docs.py` after resolving the error.\n" + output
         )
     return output
 
 
-def cleanup_empty_parents(path: Path, stop: Path) -> None:
-    current = path.parent
-    while current != stop and current.is_relative_to(stop):
-        try:
-            current.rmdir()
-        except OSError:
-            break
-        current = current.parent
-
-
-def create_project(record: dict, *, render: bool = True) -> tuple[Path, Path | None]:
-    record_path, page_path = preflight(record)
-    should_render = render and record["confidentiality"] != "needs-sanitization"
-    created_page: Path | None = None
-
+def create_project(record: dict) -> Path:
+    record_path, _ = preflight(record)
     record_path.parent.mkdir(parents=True, exist_ok=True)
     record_path.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    try:
-        if should_render:
-            renderer = load_renderer()
-            rendered, final_output = renderer.render_project_text(record_path)
-            final_output.parent.mkdir(parents=True, exist_ok=True)
-            final_output.write_text(rendered, encoding="utf-8")
-            created_page = final_output
-
-        valid, validation_output = run_validation(include_site=should_render)
-        if not valid:
-            raise ValueError("Validation failed after creating the project:\n" + validation_output)
-    except Exception:
-        if created_page and created_page.exists():
-            created_page.unlink()
-            cleanup_empty_parents(created_page, ROOT / "portfolio" / "projects")
+    valid, validation_output = run_validation()
+    if not valid:
         if record_path.exists():
             record_path.unlink()
-        raise
+        raise ValueError("Validation failed after creating the project record:\n" + validation_output)
 
-    return record_path, created_page
+    return record_path
 
 
 def prompt_assets(taxonomy: dict) -> list[dict]:
@@ -332,7 +293,7 @@ def prompt_assets(taxonomy: dict) -> list[dict]:
 
 def collect_project(taxonomy: dict) -> dict:
     print("\n=== New Portfolio Project ===")
-    print("This creates a structured project record and a standard case-study page.")
+    print("This creates a structured project record only. Public page generation is not part of this workflow.")
     print("Private/reference source files should NOT be added to this public repository.\n")
 
     title = prompt_required("Project title")
@@ -405,17 +366,15 @@ def print_summary(record: dict) -> None:
     print(f"Status:          {record['status']}")
     print(f"Confidentiality: {record['confidentiality']}")
     print(f"Data record:     portfolio-data/projects/{record['id']}.json")
-    print(f"Page:            {record['page_path']}")
-    if record["confidentiality"] == "needs-sanitization":
-        print("Public page:     NOT generated until content is sanitized")
+    print(f"Reserved path:   {record['page_path']}")
+    print("Public page:     not created by this workflow")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create a new structured portfolio project and standard case-study page."
+        description="Create a new structured portfolio project record without generating or changing any public portfolio page."
     )
     parser.add_argument("--dry-run", action="store_true", help="Collect and preview the project without writing files.")
-    parser.add_argument("--no-render", action="store_true", help="Create the JSON record without generating the HTML page.")
     parser.add_argument("--yes", action="store_true", help="Skip the final confirmation prompt.")
     return parser.parse_args()
 
@@ -437,7 +396,7 @@ def main() -> int:
             print("Cancelled. No files were created.")
             return 0
 
-        record_path, page_path = create_project(record, render=not args.no_render)
+        record_path = create_project(record)
     except (ValueError, KeyError) as exc:
         print(f"\nERROR: {exc}")
         return 1
@@ -451,12 +410,7 @@ def main() -> int:
 
     print("\nProject created successfully.")
     print(f"  Data: {record_path.relative_to(ROOT)}")
-    if page_path:
-        print(f"  Page: {page_path.relative_to(ROOT)}")
-    elif record["confidentiality"] == "needs-sanitization":
-        print("  Page: not generated because the project still needs sanitization")
-    else:
-        print("  Page: not generated (--no-render)")
+    print("  Page: not generated (record-only workflow)")
 
     if docs_refreshed:
         print("  Documentation: refreshed")
@@ -465,7 +419,7 @@ def main() -> int:
         print(f"\n{docs_error}")
         return 1
 
-    print("\nNext: review the files in VS Code, then commit them on a feature/content branch.")
+    print("\nNext: review the structured record, then build any public page intentionally from the closest current live page pattern.")
     return 0
 
 

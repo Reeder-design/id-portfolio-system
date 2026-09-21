@@ -1,22 +1,38 @@
-# New Project Generator
+# New Project Creation
 
-`scripts/new-project.py` is the lower-level guided generator for standard portfolio case-study pages.
+Portfolio Manager **Create Content** is the normal human-facing workflow for new portfolio work.
 
-Portfolio Manager **Create Content** is the normal human-facing workflow for new portfolio work. The script remains useful for deterministic development, maintenance, testing, and direct structured-page generation.
+The lower-level `scripts/new-project.py` command remains available for deterministic development, maintenance, and testing. It creates a **structured project record only**. Public-page rendering is not available from this command, so it cannot regenerate an existing portfolio page.
 
-It sits on top of the structured content model and project renderer:
+## Core rule
+
+If a public page already exists, do not recreate it from a template or structured record.
+
+The current public HTML/CSS/JavaScript is authoritative for that existing page.
+
+## Creation flow
+
+For a new standard project:
 
 ```text
-Guided prompts
-    ↓
-portfolio-data/projects/<slug>.json
-    ↓
-templates/project-page/index.html
-    ↓
-portfolio/projects/.../<slug>/index.html
+approved project idea / approved sources
+        ↓
+structured project record
+        ↓
+inspect the closest current live page family
+        ↓
+build the public page intentionally
+        ↓
+validation + local preview
+        ↓
+human UAT
+        ↓
+normal maintenance as a public page
 ```
 
-## Run It
+A reference scaffold can be previewed for planning, but automation does not write it into `portfolio/`. The real public page is built intentionally from the closest current live page family.
+
+## Running the lower-level creator
 
 From the repository root:
 
@@ -24,24 +40,39 @@ From the repository root:
 python scripts/new-project.py
 ```
 
-On systems where `python` is not mapped to Python 3, use:
+or:
 
 ```bash
 python3 scripts/new-project.py
 ```
 
-## What It Collects
+Preview without writing:
+
+```bash
+python scripts/new-project.py --dry-run
+```
+
+The normal command creates only the structured JSON record. There is no page-generation flag.
+
+To preview the locked reference scaffold without writing a public file:
+
+```bash
+python scripts/render-project.py portfolio-data/projects/new-project.json
+```
+
+`--yes` skips the final record-creation confirmation but does not bypass path/safety checks.
+
+## What it collects
 
 The guided flow asks for:
 
-- project title
-- URL slug (automatically suggested from the title)
-- portfolio category
-- optional subcategory
-- project status
+- title
+- slug
+- category / optional subcategory
+- status
 - confidentiality state
 - summary
-- business / learning need
+- business or learning need
 - audience
 - role
 - learning objectives
@@ -50,114 +81,87 @@ The guided flow asks for:
 - outcomes
 - skills
 - tools
-- featured-project status
+- featured status
 - optional live-project link
-- optional public-safe source/sanitization notes
-- optional public asset references
+- optional public-safe source notes
+- optional public assets
 
-New projects default to `building` rather than `live`.
+Canonical placements come from `portfolio-data/taxonomy.json`.
 
-Category labels and output locations come from `portfolio-data/taxonomy.json`. Do not hard-code an alternate category list in documentation or helper code.
+## Safety behavior
 
-## What It Creates
-
-For a standard public-safe project, the generator creates both:
-
-1. a structured record under `portfolio-data/projects/`
-2. a rendered case-study page under the correct `portfolio/projects/` location
-
-The output path is calculated from the taxonomy, category, subcategory, and slug. You do not manually count relative folders or build navigation paths.
-
-Example:
-
-```text
-Project title: Sales Discovery Lab
-Category: Instructional Design
-Subcategory: Interactive Learning
-Slug: sales-discovery-lab
-```
-
-creates:
-
-```text
-portfolio-data/projects/sales-discovery-lab.json
-portfolio/projects/instructional-design/interactive-learning/sales-discovery-lab/index.html
-```
-
-## Safety Behavior
-
-The generator refuses to continue if:
+The creator stops when:
 
 - the project ID already exists
-- the structured JSON filename already exists
-- the calculated page path already exists
-- another record already uses the same page path
+- the structured record already exists
+- the target public page already exists
+- another record already claims the target page
 - a project is both `live` and `needs-sanitization`
 
-After files are created, the generator runs structured-content validation and site validation. If the new project causes validation to fail, the newly created files are rolled back.
+There is no supported force-overwrite path.
 
-### Projects Needing Sanitization
+Record creation validates the structured data and rolls the record back if validation fails. It never touches the public page.
 
-If confidentiality is set to `needs-sanitization`, the structured record can be created, but the public HTML page is not generated.
+## Existing pages
 
-This creates a safe holding state for work that needs to be generalized, fictionalized, or reviewed before publication.
+Do not use `new-project.py`, `render-project.py`, or the standard scaffold to repair, modernize, or refresh an existing public page.
 
-## Source Files vs Public Assets
+For an existing page:
 
-Do not place proprietary, confidential, customer, employer, or private reference material in this public repository merely because it was used to create a portfolio project.
+1. inspect the current public HTML/CSS/JavaScript
+2. identify the current shared/page-specific owners
+3. make the smallest direct change
+4. validate
+5. UAT the actual current page
 
-The generator only records assets that are explicitly intended to be public.
+This protects later UAT fixes from stale template output.
 
-Private/reference originals belong in the local-only Portfolio Manager **Reference Library** / `.portfolio-manager/` workflow. Approved sanitized derivatives can later be attached to Create Content or managed project work without exposing the original source file.
+## Visual baseline for a new page
 
-## Useful Options
+Before approving a new page, build from or compare against the nearest current page family and use:
 
-Preview everything without writing files:
+- `docs/current-page-patterns.md`
+- `docs/portfolio-uat-guardrails.md`
+- `docs/portfolio-consistency-audit.md`
 
-```bash
-python scripts/new-project.py --dry-run
-```
+Pay particular attention to recurring issues: breadcrumbs, light/dark contrast, tab height changes, interaction copy width, icon clipping/centering, icon bubbles, motion layering, padding, and project-ending behavior.
 
-Create only the structured JSON record:
+## Source files vs public assets
 
-```bash
-python scripts/new-project.py --no-render
-```
+Private originals do not belong in the public repository.
 
-Skip the final confirmation prompt:
+Use the Portfolio Manager **Reference Library** for private professional source material. Only deliberate public-safe derivatives/assets belong in tracked public paths.
 
-```bash
-python scripts/new-project.py --yes
-```
+## After creation
 
-The prompts themselves still run; `--yes` only skips the final confirmation.
+A created page is not automatically finished because validation passes.
 
-## After Creating a Project
+Review the real local page for:
 
-Review the generated JSON and HTML before treating the output as complete.
+- visual hierarchy
+- current theme consistency
+- interaction behavior
+- responsive layout
+- copy accuracy
+- asset quality
+- accessibility
+- page-family consistency
 
-For substantial code, shared-layout, renderer, validation, or repository-infrastructure changes, use the normal development workflow:
+Then use the normal workflow for the type of change:
 
-```text
-feature branch → PR → CI → UAT → explicit merge approval
-```
-
-For routine approved portfolio-content maintenance, use Portfolio Manager Save & Publish on local `main` as documented in `AGENTS.md` and `docs/maintenance-guide.md`. Do not create a development PR solely because a content record was generated if no infrastructure change is involved.
+- routine approved content: Portfolio Manager Save & Publish on local `main`
+- code/system/template infrastructure: feature branch → PR → CI → UAT → explicit merge approval
 
 ## Validation
 
-Generator-specific checks run with:
+Relevant checks include:
 
 ```bash
 python scripts/check-new-project.py
-```
-
-The normal validation suite also includes:
-
-```bash
-python scripts/check-content.py
 python scripts/check-renderer.py
+python scripts/check-content.py
+python scripts/check-final-polish.py
 python scripts/check-site.py
 ```
 
-For substantial work, use the repository's complete validation suite rather than stopping after these generator-specific checks.
+These validate creation and repository integrity. They do not replace human visual UAT.

@@ -66,6 +66,36 @@ After every merge to `main`, re-check every remaining open PR immediately. Sync 
 The pull-request validation workflow also rejects a PR branch that does not contain the latest `main`, providing an automated guard against accidentally validating a stale branch.
 
 
+## Existing Public Page Preservation
+
+Structured general-page copy is a mirror/validation layer, not an HTML-generation source. The retired `render-site-content.py` process must not be restored. For an existing page, edit the current public HTML through the current page-copy workflow or directly in source, then synchronize structured values from that page.
+
+Project records follow the same rule: structured data supports metadata and workflows, but it does not rebuild the finished public experience.
+
+The current files under `portfolio/` are the presentation source of truth for existing pages.
+
+Do not use the standard project template, renderer, structured project JSON, old PRs, or older Git history to reconstruct an existing public page. Those sources may predate later UAT fixes.
+
+The supported rule is:
+
+```text
+existing page
+  → inspect current HTML/CSS/JS owners
+  → make focused edit
+  → validate
+  → UAT current page
+```
+
+The standard project template is a **preview-only reference scaffold**. Portfolio Manager does not expose a Regenerate Page action, `scripts/new-project.py` is record-only, and the renderer cannot write public HTML.
+
+For future visual work, use:
+
+- `docs/current-page-patterns.md`
+- `docs/portfolio-uat-guardrails.md`
+- `docs/portfolio-consistency-audit.md`
+
+The recurring UAT checks include breadcrumbs, Other Work/project endings, interaction-height stability, interaction copy width, tab contrast, icon clipping/centering, icon bubbles, motion layering, hero overflow, padding, and light/dark section rhythm.
+
 ## Full Validation
 
 Portfolio Manager **Run Full Validation** and pull-request CI are intentionally kept aligned.
@@ -74,7 +104,7 @@ The suite covers:
 
 - public-site links, assets, metadata, mobile/readiness rules, and GitHub Pages assumptions
 - structured project and general-page content
-- renderer and new-project generator
+- preview-only scaffold renderer and record-only project generator
 - generated documentation/versioning
 - Git publishing guardrails
 - AI privacy/proposal/apply boundaries
@@ -175,7 +205,7 @@ This affects future local commits only; it does not rewrite existing history.
 
 ## Documentation Maintenance
 
-`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, and `docs/ai-assistance.md` describe live architecture and must be updated when the workflow/privacy model changes.
+`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, `docs/ai-assistance.md`, `docs/template-system.md`, and `docs/portfolio-uat-guardrails.md` describe live architecture/maintenance rules and must be updated when those ownership or workflow rules change.
 
 Generated documentation is maintained by `scripts/update-docs.py` and should be checked with:
 
