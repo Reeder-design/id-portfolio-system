@@ -54,6 +54,10 @@ Generated documentation produced by `scripts/update-docs.py` is output, not an e
 
 Do not revive retired experiments, old UI concepts, temporary workarounds, or superseded architecture merely because they still appear in Git history, old PR descriptions, comments, or versioned filenames. Verify the current live owner first.
 
+## Structured General Page Content
+
+`portfolio-data/site-content.json` is a mirror/validation layer for approved copy fields, not a source allowed to regenerate existing HTML. The old structured-to-HTML general-page renderer is retired. For existing pages, edit the current public page through the page-copy workflow or directly, then synchronize structured data from the page.
+
 ## Structured Content and New-Page Scaffolding
 Existing public pages are protected from template regeneration. The standard project template is preview/reference only.
 
