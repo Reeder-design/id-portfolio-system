@@ -120,6 +120,7 @@ This protects later UAT fixes from stale template output.
 
 Before approving a new page, build from or compare against the nearest current page family and use:
 
+- `docs/current-page-patterns.md`
 - `docs/portfolio-uat-guardrails.md`
 - `docs/portfolio-consistency-audit.md`
 
