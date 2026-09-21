@@ -277,13 +277,13 @@ def render_confidentiality_note(project: dict) -> str:
     )
 
 
-def render_project_text(project_path: Path, output_path: Path | None = None) -> tuple[str, Path]:
+def render_project_text(project_path: Path) -> tuple[str, Path]:
     project_path = project_path.resolve()
     project = load_json(project_path)
     taxonomy = load_json(TAXONOMY_PATH)
     category, subcategory = find_taxonomy_item(taxonomy, project)
 
-    final_output = output_path.resolve() if output_path else (ROOT / project["page_path"]).resolve()
+    final_output = (ROOT / project["page_path"]).resolve()
 
     try:
         final_output.relative_to(ROOT)
@@ -354,9 +354,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "OUTCOME_NUMBER": f"{outcome_number:02d}",
         "OUTCOMES": render_list(content.get("outcomes", [])),
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
-        "STATUS_CLASS": esc(status),
-        "STATUS_LABEL": esc(statuses.get(status, status.title())),
-        "CTA_HEADING": esc("Explore the finished project." if project.get("links", {}).get("live_project") else "Explore more of my work."),
     }
 
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
@@ -373,40 +370,27 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Render a new structured project into the initial project-page scaffold. Existing public pages are protected."
+        description="Preview the locked new-page reference scaffold for a structured project. This command never writes public portfolio files."
     )
     parser.add_argument("project", help="Project JSON path, for example portfolio-data/projects/example.json")
-    parser.add_argument("--output", help="Optional output path. Defaults to the record's page_path.")
-    parser.add_argument("--stdout", action="store_true", help="Print rendered HTML instead of writing it.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     project_path = as_repo_path(args.project)
-    output_path = as_repo_path(args.output) if args.output else None
 
     try:
-        rendered, final_output = render_project_text(project_path, output_path)
+        rendered, final_output = render_project_text(project_path)
     except (ValueError, KeyError) as exc:
         print(f"ERROR: {exc}")
         return 1
 
-    if args.stdout:
-        print(rendered)
-        return 0
-
-    if final_output.exists():
-        print(
-            f"ERROR: {final_output.relative_to(ROOT)} already exists. "
-            "Existing portfolio pages are protected from template regeneration. "
-            "Edit the public page directly instead."
-        )
-        return 1
-
-    final_output.parent.mkdir(parents=True, exist_ok=True)
-    final_output.write_text(rendered, encoding="utf-8")
-    print(f"Rendered {project_path.relative_to(ROOT)} -> {final_output.relative_to(ROOT)}")
+    print(rendered)
+    print(
+        f"\n<!-- Preview only. Target path: {final_output.relative_to(ROOT)}. "
+        "Build the real page intentionally from the current live portfolio pattern. -->"
+    )
     return 0
 
 
