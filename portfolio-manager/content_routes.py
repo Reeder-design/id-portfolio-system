@@ -418,7 +418,7 @@ def create_project():
             source_material_notes="",
         )
 
-        generator.create_project(record, render=False)
+        generator.create_project(record)
 
         docs_ok, docs_output = refresh_docs()
         if not docs_ok:
