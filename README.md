@@ -179,7 +179,7 @@ Portfolio Manager **Run Full Validation** and pull-request CI exercise the same 
 - public-site integrity and GitHub Pages readiness
 - structured project/general-page content
 - responsive/final public polish
-- renderer and new-project generator
+- scaffold previewer and structured project generator
 - generated documentation/versioning
 - Git publishing safety
 - AI privacy and proposal/apply boundaries
@@ -245,19 +245,13 @@ Preview the record without writing:
 python3 scripts/new-project.py --dry-run
 ```
 
-If you explicitly want the legacy starter scaffold for a brand-new path:
+To preview the locked reference scaffold without writing a public file:
 
 ```bash
-python3 scripts/new-project.py --render-scaffold
+python3 scripts/render-project.py portfolio-data/projects/new-project.json
 ```
 
-You can also preview scaffold output without writing:
-
-```bash
-python3 scripts/render-project.py portfolio-data/projects/new-project.json --stdout
-```
-
-The scaffold is a starting point only. The current live page family is the visual reference for the finished page. The renderer has no supported force-overwrite mode; if the target public page already exists, edit that current page directly.
+The scaffold preview is a planning/reference artifact only. Automation does not write it into `portfolio/`. Build the actual page intentionally from the closest current live page family. Existing public pages are never regenerated from the scaffold.
 
 See `docs/portfolio-uat-guardrails.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
 
