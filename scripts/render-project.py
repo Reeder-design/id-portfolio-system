@@ -244,78 +244,6 @@ def render_assets(project: dict, output_path: Path, number: int) -> tuple[str, b
     return section, True
 
 
-def render_related_work(project: dict, output_path: Path, taxonomy: dict, number: int) -> tuple[str, str]:
-    references = project.get("related_work", [])
-    if not references:
-        return "", ""
-
-    cards: list[str] = []
-    for reference in references:
-        project_id = reference.get("project_id", "").strip()
-        if not project_id or project_id == project.get("id"):
-            continue
-
-        target_path = PROJECT_ROOT / f"{project_id}.json"
-        if not target_path.exists():
-            raise ValueError(
-                f"Project '{project.get('id')}' references missing related project '{project_id}'."
-            )
-        target = load_json(target_path)
-        target_category, _ = find_taxonomy_item(taxonomy, target)
-        href = relative_href(output_path, target["page_path"])
-        relationship = reference.get("relationship", "").strip()
-
-        cards.append(
-            '<a class="related-work-card" href="' + esc(href) + '">'
-            f'<span class="related-work-category">{esc(target_category["label"])}</span>'
-            f'<h3>{esc(target["title"])}</h3>'
-            f'<p class="related-work-relationship">{esc(relationship)}</p>'
-            f'<p>{esc(target["summary"])}</p>'
-            '<span class="related-work-link">Explore project →</span>'
-            '</a>'
-        )
-
-    if not cards:
-        return "", ""
-
-    section = (
-        '<section class="project-story-section related-work-section" id="related-work">'
-        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-        '<div><p class="eyebrow">Related Work</p><h2>See how this work connects across the portfolio.</h2></div></div>'
-        '<p>These projects show adjacent parts of the same learning ecosystem without duplicating the full story here.</p>'
-        f'<div class="related-work-grid">{"".join(cards)}</div>'
-        '</section>'
-    )
-    return section, '<a href="#related-work">Related Work</a>'
-
-
-def render_breadcrumbs(
-    output_path: Path,
-    project: dict,
-    category: dict,
-    subcategory: dict | None,
-) -> str:
-    crumbs = [
-        ("Home", "portfolio/index.html"),
-        ("Projects", "portfolio/projects/index.html"),
-        (category["label"], category.get("path")),
-    ]
-
-    if subcategory:
-        crumbs.append((subcategory["label"], subcategory.get("path")))
-
-    html_parts: list[str] = []
-    for label, path in crumbs:
-        if path:
-            html_parts.append(f'<a href="{esc(relative_href(output_path, path))}">{esc(label)}</a>')
-        else:
-            html_parts.append(f"<span>{esc(label)}</span>")
-        html_parts.append('<span class="breadcrumb-separator">/</span>')
-
-    html_parts.append(f"<span>{esc(project['title'])}</span>")
-    return "\n".join(html_parts)
-
-
 def render_primary_action(project: dict, output_path: Path, *, cta: bool = False) -> str:
     live_project = project.get("links", {}).get("live_project")
     if not live_project:
@@ -384,12 +312,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         next_number += 1
     outcome_number = next_number
     next_number += 1
-    related_work_section, related_work_nav = render_related_work(
-        project,
-        final_output,
-        taxonomy,
-        next_number,
-    )
 
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
@@ -431,8 +353,6 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
         "EVIDENCE_NAV": '<a href="#evidence">Evidence</a>' if has_assets else "",
         "OUTCOME_NUMBER": f"{outcome_number:02d}",
         "OUTCOMES": render_list(content.get("outcomes", [])),
-        "RELATED_WORK_SECTION": related_work_section,
-        "RELATED_WORK_NAV": related_work_nav,
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
         "STATUS_CLASS": esc(status),
         "STATUS_LABEL": esc(statuses.get(status, status.title())),
@@ -453,11 +373,10 @@ def render_project_text(project_path: Path, output_path: Path | None = None) -> 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Render a structured portfolio project JSON record into the standard project-page template."
+        description="Render a new structured project into the initial project-page scaffold. Existing public pages are protected."
     )
     parser.add_argument("project", help="Project JSON path, for example portfolio-data/projects/example.json")
     parser.add_argument("--output", help="Optional output path. Defaults to the record's page_path.")
-    parser.add_argument("--force", action="store_true", help="Allow overwriting an existing output file.")
     parser.add_argument("--stdout", action="store_true", help="Print rendered HTML instead of writing it.")
     return parser.parse_args()
 
@@ -477,10 +396,11 @@ def main() -> int:
         print(rendered)
         return 0
 
-    if final_output.exists() and not args.force:
+    if final_output.exists():
         print(
             f"ERROR: {final_output.relative_to(ROOT)} already exists. "
-            "Use --force only when you intentionally want to replace that page."
+            "Existing portfolio pages are protected from template regeneration. "
+            "Edit the public page directly instead."
         )
         return 1
 
