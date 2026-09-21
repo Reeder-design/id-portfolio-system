@@ -184,7 +184,7 @@ def main() -> int:
         "Source of Truth",
         "Preservation Contract",
         "Portfolio Manager **Create Content**",
-        "new-page scaffold",
+        "reference scaffold",
         "Reusable Component Registry",
         "Related Work and Related References",
         "There is no supported force-overwrite workflow",
