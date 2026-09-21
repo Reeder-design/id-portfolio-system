@@ -132,17 +132,17 @@
         "overview_heading": {
           "label": "Overview heading",
           "type": "short",
-          "value": "Use evidence to make the quality decision."
+          "value": "A defensible AI evaluation has five parts."
         },
         "overview_body_one": {
           "label": "Overview paragraph 1",
           "type": "long",
-          "value": "A quality signal is the specific evidence that changes a score, ranking, or feedback decision. I separate material misses from preference and tie each finding to the right lens."
+          "value": "A lens defines the question. A rubric defines the standard. A quality signal is the evidence. The rationale explains why it matters, and calibration checks whether the judgment is consistent."
         },
         "overview_body_two": {
           "label": "Overview paragraph 2",
           "type": "long",
-          "value": "Select a signal to see how I diagnose it."
+          "value": "Select a step to see how an evaluator turns an observation into a decision another reviewer can follow."
         }
       }
     },
