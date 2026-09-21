@@ -7,12 +7,9 @@ import os
 import re
 import sys
 from pathlib import Path
-from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE_ROOT = ROOT / "portfolio"
 DATA_ROOT = ROOT / "portfolio-data"
-PROJECT_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 TEMPLATE_PATH = ROOT / "templates" / "project-page" / "index.html"
 
@@ -291,9 +288,6 @@ def render_project_text(project_path: Path) -> tuple[str, Path]:
         raise ValueError("Output path must remain inside the repository.") from exc
 
     content = project.get("content", {})
-    statuses = {item["id"]: item["label"] for item in taxonomy.get("statuses", [])}
-    status = project.get("status", "planned")
-
     back_item = subcategory if subcategory and subcategory.get("path") else category
     back_path = back_item.get("path", "portfolio/projects/index.html")
     back_label = f"Back to {back_item['label']}"
