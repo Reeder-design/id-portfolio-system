@@ -55,7 +55,7 @@ Typography:
 - Headings: Montserrat
 - Body/UI: Open Sans
 
-Prefer one clear implementation over layered competing fixes. For sitewide behavior, inspect and test multiple page families rather than validating only one page. Use `docs/portfolio-uat-guardrails.md` for the recurring UAT checks.
+Prefer one clear implementation over layered competing fixes. For sitewide behavior, inspect and test multiple page families rather than validating only one page. Use `docs/current-page-patterns.md` to choose the closest current live reference and `docs/portfolio-uat-guardrails.md` for recurring UAT checks.
 
 ## Coding Rules
 - Use semantic HTML.
