@@ -50,9 +50,9 @@
                 </div>
 
                 {% if project._generated_page %}
-                <p class="action-note">This project uses the shared portfolio project layout, so the fields below map to visible sections of the page. Save your edits here, then regenerate the page when you want to rebuild the full project view from the updated content.</p>
+                <p class="action-note">This is a legacy scaffold page. Automatic regeneration is retired so template changes cannot overwrite finished portfolio work. Structured fields remain available as metadata; edit the public page directly for presentation changes.</p>
                 {% else %}
-                <p class="action-note">This project contains a custom interaction. The project title stays connected here so portfolio references remain consistent. The rest of the visible copy is edited through the full page-copy workspace linked below.</p>
+                <p class="action-note">This project contains a hand-maintained portfolio experience. The project title stays connected here so portfolio references remain consistent. Visible copy is edited through the full page-copy workspace linked below.</p>
                 {% endif %}
 
                 <form method="post" action="{{ url_for('content.save_project', project_id=project.id) }}" class="form-grid">
@@ -155,9 +155,6 @@
 
                     <div class="full-span button-row">
                         <button class="btn btn-primary" type="submit">Save Edits</button>
-                        {% if project._generated_page %}
-                        <button class="btn btn-secondary" type="submit" formaction="{{ url_for('content.regenerate_project', project_id=project.id) }}" formmethod="post">Regenerate Page</button>
-                        {% endif %}
                     </div>
                 </form>
 
