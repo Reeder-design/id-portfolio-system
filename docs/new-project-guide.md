@@ -2,7 +2,7 @@
 
 Portfolio Manager **Create Content** is the normal human-facing workflow for new portfolio work.
 
-The lower-level `scripts/new-project.py` command remains available for deterministic development, maintenance, and testing. It is a **new-page creator only**. It is not a regeneration tool for existing portfolio pages.
+The lower-level `scripts/new-project.py` command remains available for deterministic development, maintenance, and testing. It creates a **structured project record by default**. Optional legacy scaffold rendering is explicit and is only for a brand-new public path. It is never a regeneration tool for existing portfolio pages.
 
 ## Core rule
 
@@ -19,9 +19,9 @@ approved project idea / approved sources
         ↓
 structured project record
         ↓
-current new-page scaffold
+inspect the closest current live page family
         ↓
-new public page at a previously unused path
+build the public page intentionally
         ↓
 validation + local preview
         ↓
@@ -30,7 +30,7 @@ human UAT
 normal maintenance as a public page
 ```
 
-The scaffold is only the first build.
+A legacy scaffold may be rendered explicitly as a starting point, but it is not the visual source of truth and it is not created by default.
 
 ## Running the lower-level creator
 
@@ -52,10 +52,10 @@ Preview without writing:
 python scripts/new-project.py --dry-run
 ```
 
-Create only the structured JSON record:
+The normal command already creates only the structured JSON record. To explicitly render the legacy starter scaffold for a brand-new path:
 
 ```bash
-python scripts/new-project.py --no-render
+python scripts/new-project.py --render-scaffold
 ```
 
 `--yes` skips the final confirmation but does not bypass path/safety checks.
@@ -98,7 +98,7 @@ The creator stops when:
 
 There is no supported force-overwrite path.
 
-If a new page fails validation during creation, the files created by that operation are rolled back.
+If an explicitly rendered new scaffold fails validation during creation, files created by that operation are rolled back. Record-only creation does not touch the public page.
 
 ## Existing pages
 
@@ -116,7 +116,7 @@ This protects later UAT fixes from stale template output.
 
 ## Visual baseline for a new page
 
-Before approving a new page, compare it with the nearest current page family and use:
+Before approving a new page, build from or compare against the nearest current page family and use:
 
 - `docs/portfolio-uat-guardrails.md`
 - `docs/portfolio-consistency-audit.md`
