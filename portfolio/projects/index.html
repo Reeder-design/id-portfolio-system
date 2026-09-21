@@ -26,25 +26,25 @@
 .github-spotlight-actions{margin-top:16px}
 .github-spotlight-actions .btn{display:inline-flex}
 
-.github-spotlight-workflow{position:relative;padding:16px 16px 14px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#10272e;overflow:hidden}
-.github-spotlight-workflow-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-.github-spotlight-workflow-header span{color:#afe1bf;font:900 .43rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
-.github-spotlight-workflow-header b{color:#dce9e2;font:800 .42rem/1 var(--font-heading)}
-.github-spotlight-rail{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:start}
-.github-spotlight-rail::before{content:"";position:absolute;left:10%;right:10%;top:55px;height:4px;border-radius:999px;background:rgba(121,201,158,.2)}
-.github-spotlight-stage{position:relative;z-index:2;display:grid;justify-items:center;gap:7px;text-align:center}
-.github-spotlight-stage i{display:grid;place-items:center;width:78px;height:78px;padding:6px;border:1px solid rgba(80,132,132,.13);border-radius:19px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.16)}
-.github-spotlight-stage img{width:64px;height:64px;object-fit:contain;image-rendering:pixelated}
-.github-spotlight-stage small{color:#9fcdb0;font:900 .39rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
-.github-spotlight-stage strong{max-width:110px;color:#fff;font:800 .52rem/1.18 var(--font-heading)}
-.github-spotlight-packet{position:absolute;z-index:3;left:10%;top:50px;width:14px;height:14px;border:2px solid #10272e;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:githubSpotlightRail 5.8s ease-in-out infinite}
+.github-spotlight-workflow{position:relative;padding:20px 20px 18px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#10272e;overflow:hidden}
+.github-spotlight-workflow-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.github-spotlight-workflow-header span{color:#afe1bf;font:900 .5rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
+.github-spotlight-workflow-header b{color:#dce9e2;font:800 .48rem/1 var(--font-heading)}
+.github-spotlight-rail{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
+.github-spotlight-rail::before{content:"";position:absolute;left:10%;right:10%;top:65px;height:4px;border-radius:999px;background:rgba(121,201,158,.2)}
+.github-spotlight-stage{position:relative;z-index:2;display:grid;justify-items:center;gap:10px;text-align:center}
+.github-spotlight-stage i{display:grid;place-items:center;width:96px;height:96px;padding:0;overflow:hidden;border:1px solid rgba(80,132,132,.13);border-radius:22px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.16)}
+.github-spotlight-stage img{width:122px;height:122px;object-fit:cover;object-position:center top;transform:translateY(-6px);image-rendering:pixelated}
+.github-spotlight-stage small{color:#9fcdb0;font:900 .46rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+.github-spotlight-stage strong{max-width:145px;color:#fff;font:800 .62rem/1.2 var(--font-heading)}
+.github-spotlight-packet{position:absolute;z-index:3;left:10%;top:59px;width:14px;height:14px;border:2px solid #10272e;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:githubSpotlightRail 5.8s ease-in-out infinite}
 @keyframes githubSpotlightRail{0%,8%{left:10%}34%{left:36%}60%{left:63%}86%,100%{left:88%}}
-.github-spotlight-system-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
-.github-spotlight-system-chips span{display:flex;align-items:center;justify-content:center;gap:5px;min-height:42px;padding:6px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(255,255,255,.045);color:#dce9e2;font:800 .4rem/1.1 var(--font-heading);text-align:center}
-.github-spotlight-system-chips img{width:30px;height:30px;padding:2px;border-radius:7px;background:#fff;object-fit:contain}
+.github-spotlight-system-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.github-spotlight-system-chips span{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:9px 11px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.045);color:#dce9e2;font:800 .49rem/1.2 var(--font-heading);text-align:center}
+.github-spotlight-system-chips img{width:38px;height:38px;padding:4px;border-radius:9px;background:#fff;object-fit:contain}
 
 @media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}}
-@media(max-width:620px){.github-spotlight-rail{grid-template-columns:repeat(2,1fr);row-gap:18px}.github-spotlight-rail::before,.github-spotlight-packet{display:none}.github-spotlight-system-chips{grid-template-columns:1fr}}
+@media(max-width:620px){.github-spotlight-rail{grid-template-columns:repeat(2,1fr);row-gap:22px}.github-spotlight-rail::before,.github-spotlight-packet{display:none}.github-spotlight-system-chips{grid-template-columns:1fr}.github-spotlight-stage i{width:88px;height:88px}.github-spotlight-stage img{width:112px;height:112px}.github-spotlight-stage strong{font-size:.58rem}}
 @media(prefers-reduced-motion:reduce){.github-spotlight-packet{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
