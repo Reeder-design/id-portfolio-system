@@ -215,9 +215,11 @@ def main() -> int:
     require("Keep Exploring" not in project_template, "New-page scaffold must not recreate the retired Keep Exploring footer.", errors)
     require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "New-page scaffold must not recreate a public Related Work section.", errors)
     for marker in [
+        'PORTFOLIO-REFERENCE-SCAFFOLD:NEW-PAGE-ONLY',
+        'class="scaffold-hero-grid"',
+        'class="snapshot-band"',
+        'class="case-nav-shell"',
         'class="section portfolio-back-row"',
-        'class="generic-switch-panels"',
-        'aria-hidden="true"',
     ]:
         require(marker in project_template, f"New-page scaffold is missing current hardening marker {marker!r}.", errors)
 
