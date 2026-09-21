@@ -229,6 +229,8 @@ If that terminal is already running after a Git pull, you can normally just refr
 
 ## Project Creation and Page Preservation
 
+Structured general-page copy is source-synchronized from the current public page. It is not used to regenerate the page. The legacy `render-site-content.py` workflow is retired so stale structured copy cannot overwrite current HTML.
+
 The current public files under `portfolio/` are the presentation source of truth for existing pages. Do not rebuild an existing page from the generic project template or a structured record.
 
 The guided Create Content workflow is the normal user path for **new** work. Lower-level deterministic scripts remain available for new-page development and maintenance testing.
