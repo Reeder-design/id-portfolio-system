@@ -61,7 +61,7 @@ def main() -> int:
         'href="#decisions"',
         'href="#build"',
         'href="#outcome"',
-        "Keep Exploring",
+        "portfolio-back-row",
     ]
 
     for project_file in project_files:
@@ -98,6 +98,10 @@ def main() -> int:
 
         if "case-study-sidebar" in rendered or "template-flourish" in rendered:
             errors.append(f"{label}: generated page still contains deprecated template architecture")
+        if "Keep Exploring" in rendered or 'id="related-work"' in rendered or 'href="#related-work"' in rendered:
+            errors.append(f"{label}: initial scaffold must not recreate retired exploration/Related Work sections")
+        if "generic-switch-panels" not in rendered or 'aria-hidden="true"' not in rendered:
+            errors.append(f"{label}: scaffold tab panels must use the stable-height panel pattern")
 
         for section in project.get("detail_sections", []):
             section_id = section.get("id", "")
@@ -116,22 +120,6 @@ def main() -> int:
         elif 'href="#evidence"' in rendered:
             errors.append(f"{label}: Evidence nav should not render when there are no public assets")
 
-        related_work = project.get("related_work", [])
-        if related_work:
-            if 'href="#related-work"' not in rendered or 'id="related-work"' not in rendered:
-                errors.append(f"{label}: related work should produce a section and nav link")
-            for reference in related_work:
-                target_path = PROJECT_ROOT / f"{reference.get('project_id', '')}.json"
-                if not target_path.exists():
-                    continue
-                target = json.loads(target_path.read_text(encoding="utf-8"))
-                expected_related_title = escape(target.get("title", ""), quote=True)
-                if expected_related_title and expected_related_title not in rendered:
-                    errors.append(
-                        f"{label}: related project '{reference.get('project_id')}' did not render"
-                    )
-        elif 'href="#related-work"' in rendered:
-            errors.append(f"{label}: Related Work nav should not render when there are no references")
 
         parser = ReferenceParser()
         try:
