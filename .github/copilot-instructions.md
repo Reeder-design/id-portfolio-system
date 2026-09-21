@@ -15,14 +15,15 @@ The repository itself is public. Never commit confidential employer/customer mat
 Do not infer architecture from old filenames, Git history, comments, or PR descriptions.
 
 Use this order:
-1. `portfolio-data/taxonomy.json` for canonical public category labels and paths.
-2. Structured records under `portfolio-data/` for fields they own.
-3. `templates/` plus deterministic renderers for standard generated pages.
-4. Bespoke HTML/CSS/JS for intentionally custom interactive pages.
-5. Portfolio Manager code for Manager behavior. The private Hiring Guide editorial source lives at runtime under Git-ignored `.portfolio-manager/hiring-guide/`.
-6. Documentation describes the current implementation and must not override live code/data.
+1. Existing HTML/CSS/JS under `portfolio/` for the presentation and interaction behavior of an existing page.
+2. Shared current portfolio styles/JavaScript loaded by that page.
+3. `portfolio-data/taxonomy.json` for canonical public category labels and paths.
+4. Structured records under `portfolio-data/` for fields they explicitly own.
+5. `templates/` plus deterministic renderers only for creating a new page whose target path does not already exist.
+6. Portfolio Manager code for Manager behavior. The private Hiring Guide editorial source lives at runtime under Git-ignored `.portfolio-manager/hiring-guide/`.
+7. Documentation describes the current implementation and must not override the current public page.
 
-Before adding a new shared stylesheet, script, helper, controller, renderer, or template variation, inspect the existing implementation and extend the current owner when practical.
+Before adding a new shared stylesheet, script, helper, controller, renderer, or template variation, inspect the existing implementation and extend the current owner when practical. Never regenerate or replace an existing public page from the generic template or a stale structured copy.
 
 ## Current Public Taxonomy
 Top-level portfolio areas:
@@ -54,7 +55,7 @@ Typography:
 - Headings: Montserrat
 - Body/UI: Open Sans
 
-Prefer one clear implementation over layered competing fixes. For sitewide behavior, inspect and test multiple page families rather than validating only one page.
+Prefer one clear implementation over layered competing fixes. For sitewide behavior, inspect and test multiple page families rather than validating only one page. Use `docs/portfolio-visual-qa-standard.md` for the recurring UAT checks.
 
 ## Coding Rules
 - Use semantic HTML.
