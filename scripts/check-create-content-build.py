@@ -65,8 +65,8 @@ def main() -> int:
         "Generate Build Proposal",
         "Save Build Proposal",
         "Create Structured Record &amp; Validate",
-                "Keep Local Build",
-        "Revert Local Build",
+                "Keep Structured Record",
+        "Revert Structured Record",
     ):
         require(label in template_text, f"Controlled build UI must include {label}.", errors)
     require("does not commit, push, publish, or merge" in template_text, "Build UI must clearly explain its non-publishing boundary.", errors)
@@ -168,7 +168,7 @@ def main() -> int:
                         record_path = temp_root / "portfolio-data" / "projects" / f"{project_record['id']}.json"
                         record_path.parent.mkdir(parents=True, exist_ok=True)
                         record_path.write_text(json.dumps(project_record, indent=2), encoding="utf-8")
-                        return record_path, None
+                        return record_path
 
                     @staticmethod
                     def refresh_documentation():
@@ -191,7 +191,7 @@ def main() -> int:
                 local = built["local_build"]
                 record_file = temp_root / local["record_path"]
                 require(record_file.exists(), "Controlled build must create the structured project record locally.", errors)
-                require(local["page_path"] is None, "Controlled build must not generate a public portfolio page.", errors)
+                require("page_path" not in local, "Controlled build state must not carry a generated public-page path.", errors)
                 require(local["decision"] == "pending", "Created local build must wait for human Keep/Revert decision.", errors)
 
                 build.revert_local_build(record["id"])
