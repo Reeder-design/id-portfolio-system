@@ -176,7 +176,7 @@
       "short_label": "AI evaluation",
       "prompt": "What experience do you have evaluating or training AI systems?",
       "featured": true,
-      "keywords": ["ai", "artificial intelligence", "llm", "model evaluation", "ai training", "rubric", "grounding", "hallucination", "quality assurance", "calibration"],
+      "keywords": ["ai", "artificial intelligence", "llm", "model evaluation", "ai training", "rubric", "grounding", "evidence validation", "hallucination", "quality assurance", "calibration"],
       "answer": "My AI work focuses on evaluating model outputs against the task, approved evidence, scoring criteria, and the needs of the intended user. I look for instruction-following failures, unsupported claims, logic gaps, writing-quality problems, and subtle issues that make an answer less useful even when it sounds polished. I also write actionable feedback and use rubrics and calibration to keep judgments consistent.",
       "evidence": [
         {"title": "AI Training & Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation lenses, quality signals, and human-review approach."},
