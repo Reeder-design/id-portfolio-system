@@ -173,35 +173,33 @@
         {% if record.local_build and record.local_build.active %}
         <section class="dashboard-card full-width">
             <div class="action-title-row">
-                <div><p class="eyebrow">Step 5 · Local build review</p><h2>{{ record.local_build.project_id }}</h2></div>
+                <div><p class="eyebrow">Step 5 · Structured record review</p><h2>{{ record.local_build.project_id }}</h2></div>
                 <span class="v2-ai-status connected">Validation passed</span>
             </div>
             <p><strong>Structured record:</strong> {{ record.local_build.record_path }}</p>
-            {% if record.local_build.page_path %}<p><strong>Rendered page:</strong> {{ record.local_build.page_path }}</p>{% endif %}
-            <p class="section-copy">This structured record exists only in your local working copy. It has not changed the visible portfolio page and has not been committed or published.</p>
+                        <p class="section-copy">This structured record exists only in your local working copy. It has not changed the visible portfolio page and has not been committed or published.</p>
             <div class="button-row">
-                {% if preview_url %}<a class="btn btn-primary" href="{{ preview_url }}" target="_blank" rel="noopener noreferrer">Open Real Local Preview</a>{% endif %}
                 <a class="btn btn-secondary" href="{{ url_for('content.project_editor', project_id=record.local_build.project_id) }}">Open in Manage Content</a>
             </div>
 
             {% if record.local_build.decision == 'kept' %}
-            <div class="flash-message success"><strong>Local build kept.</strong> You can continue editing it in Manage Content. It is still not committed or published.</div>
+            <div class="flash-message success"><strong>Structured record kept.</strong> You can continue refining it in Manage Content. It is still not committed or published.</div>
             {% else %}
             <div class="v2-general-grid">
                 <article class="v2-small-card">
-                    <h3>Keep this local build</h3>
+                    <h3>Keep this structured record</h3>
                     <p>Accept the validated structured record as the metadata/content source you want to continue refining.</p>
                     <form method="post" action="{{ url_for('create_content.keep_build', brief_id=record.id) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-primary" type="submit">Keep Local Build</button>
+                        <button class="btn btn-primary" type="submit">Keep Structured Record</button>
                     </form>
                 </article>
                 <article class="v2-small-card">
-                    <h3>Revert this build</h3>
-                    <p>Delete only the structured files created by this build. Revert stops automatically if a created file changed after creation.</p>
+                    <h3>Revert this structured record</h3>
+                    <p>Delete only the structured record created by this step. Revert stops automatically if the record changed after creation.</p>
                     <form method="post" action="{{ url_for('create_content.revert_build', brief_id=record.id) }}" data-confirm-action="revert-created-project">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-secondary" type="submit">Revert Local Build</button>
+                        <button class="btn btn-secondary" type="submit">Revert Structured Record</button>
                     </form>
                 </article>
             </div>
