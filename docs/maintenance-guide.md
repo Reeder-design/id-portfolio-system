@@ -66,6 +66,31 @@ After every merge to `main`, re-check every remaining open PR immediately. Sync 
 The pull-request validation workflow also rejects a PR branch that does not contain the latest `main`, providing an automated guard against accidentally validating a stale branch.
 
 
+## Existing Public Page Preservation
+
+The current files under `portfolio/` are the presentation source of truth for existing pages.
+
+Do not use the standard project template, renderer, structured project JSON, old PRs, or older Git history to reconstruct an existing public page. Those sources may predate later UAT fixes.
+
+The supported rule is:
+
+```text
+existing page
+  → inspect current HTML/CSS/JS owners
+  → make focused edit
+  → validate
+  → UAT current page
+```
+
+The standard project template is a **new-page scaffold only**. Portfolio Manager does not expose a Regenerate Page action, and the renderer has no supported force-overwrite mode.
+
+For future visual work, use:
+
+- `docs/portfolio-visual-qa-standard.md`
+- `docs/portfolio-consistency-audit.md`
+
+The recurring UAT checks include breadcrumbs, Other Work/project endings, interaction-height stability, interaction copy width, tab contrast, icon clipping/centering, icon bubbles, motion layering, hero overflow, padding, and light/dark section rhythm.
+
 ## Full Validation
 
 Portfolio Manager **Run Full Validation** and pull-request CI are intentionally kept aligned.
@@ -175,7 +200,7 @@ This affects future local commits only; it does not rewrite existing history.
 
 ## Documentation Maintenance
 
-`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, and `docs/ai-assistance.md` describe live architecture and must be updated when the workflow/privacy model changes.
+`README.md`, `AGENTS.md`, `docs/maintenance-guide.md`, `docs/ai-assistance.md`, `docs/template-system.md`, and `docs/portfolio-visual-qa-standard.md` describe live architecture/maintenance rules and must be updated when those ownership or workflow rules change.
 
 Generated documentation is maintained by `scripts/update-docs.py` and should be checked with:
 
