@@ -15,7 +15,56 @@
     <link rel="stylesheet" href="../css/phase1-frame.css">
     <link rel="stylesheet" href="../css/project-areas.css">
     <style>
-        .featured-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.featured-case-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));box-shadow:0 14px 38px rgba(52,74,66,.08)}.featured-case-card .icon-badge{margin-bottom:16px}.featured-case-card h3{margin-bottom:9px;color:var(--pine-blue)}.featured-case-card p:not(.eyebrow){margin-bottom:18px;line-height:1.6}.featured-case-card .case-meta-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.featured-case-card .project-family-link{margin-top:auto}.projects-contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}.refresh-hero-grid{column-gap:clamp(28px,6vw,72px);row-gap:18px}.refresh-hero-grid>.breadcrumbs{margin-bottom:0}.github-workflow-spotlight{background:linear-gradient(145deg,#173139,#294d4c);color:#e6efe9}.github-workflow-spotlight-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.86fr);gap:28px;align-items:center;padding:28px;border:1px solid rgba(255,255,255,.09);border-radius:24px;background:radial-gradient(circle at 86% 18%,rgba(151,219,79,.1),transparent 15rem),rgba(255,255,255,.035);box-shadow:0 18px 42px rgba(0,0,0,.12)}.github-workflow-spotlight .eyebrow{color:#afe1bf!important}.github-workflow-spotlight h2{margin:0 0 8px;color:#fff}.github-workflow-spotlight p:not(.eyebrow){max-width:720px;margin:0;color:#cbdad2;line-height:1.55}.github-spotlight-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.github-spotlight-tags span{padding:6px 8px;border:1px solid rgba(121,201,158,.16);border-radius:999px;background:rgba(121,201,158,.06);color:#dff0e5;font:800 .48rem/1 var(--font-heading)}.github-spotlight-actions{margin-top:16px}.github-spotlight-actions .btn{display:inline-flex}.github-spotlight-visual{position:relative;min-height:250px}.github-spotlight-center{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:108px;height:108px;padding:12px;border:1px solid rgba(151,219,79,.3);border-radius:28px;background:#fff;box-shadow:0 16px 30px rgba(0,0,0,.18);transform:translate(-50%,-50%)}.github-spotlight-center img{width:82px;height:82px;object-fit:contain}.github-spotlight-node{position:absolute;display:grid;justify-items:center;gap:4px;width:94px}.github-spotlight-node i{display:grid;place-items:center;width:70px;height:70px;padding:5px;border:1px solid rgba(121,201,158,.25);border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.15)}.github-spotlight-node img{width:58px;height:58px;object-fit:contain}.github-spotlight-node b{color:#dff0e5;font:800 .46rem/1.12 var(--font-heading);text-align:center}.github-spotlight-node.portfolio{left:0;top:12px}.github-spotlight-node.library{right:0;top:12px}.github-spotlight-node.workbench{left:50%;bottom:0;transform:translateX(-50%)}.github-spotlight-visual::before,.github-spotlight-visual::after{content:"";position:absolute;z-index:0;height:3px;border-radius:999px;background:linear-gradient(90deg,rgba(121,201,158,.18),#97db4f,rgba(121,201,158,.18));transform-origin:center;animation:githubSpotlightPulse 3.4s ease-in-out infinite}.github-spotlight-visual::before{left:22%;right:22%;top:39%;transform:rotate(-25deg)}.github-spotlight-visual::after{left:22%;right:22%;top:39%;transform:rotate(25deg);animation-delay:-1.7s}@keyframes githubSpotlightPulse{0%,100%{opacity:.25}50%{opacity:1}}@media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}.github-spotlight-visual{min-height:230px}}@media(prefers-reduced-motion:reduce){.github-spotlight-visual::before,.github-spotlight-visual::after{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
+        .featured-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.featured-case-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));box-shadow:0 14px 38px rgba(52,74,66,.08)}.featured-case-card .icon-badge{margin-bottom:16px}.featured-case-card h3{margin-bottom:9px;color:var(--pine-blue)}.featured-case-card p:not(.eyebrow){margin-bottom:18px;line-height:1.6}.featured-case-card .case-meta-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.featured-case-card .project-family-link{margin-top:auto}.projects-contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}.refresh-hero-grid{column-gap:clamp(28px,6vw,72px);row-gap:18px}.refresh-hero-grid>.breadcrumbs{margin-bottom:0}.github-workflow-spotlight{background:linear-gradient(145deg,#173139 0%,#214844 58%,#294d4c 100%)!important;color:#eef6f1!important}
+.github-workflow-spotlight .container{position:relative}
+.github-workflow-spotlight-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:34px;align-items:center;padding:30px;border:1px solid rgba(255,255,255,.09);border-radius:24px;background:radial-gradient(circle at 85% 18%,rgba(151,219,79,.11),transparent 14rem),rgba(7,28,31,.22)!important;box-shadow:0 20px 46px rgba(0,0,0,.16)}
+.github-workflow-spotlight .eyebrow{color:#afe1bf!important}
+.github-workflow-spotlight h2{max-width:760px;margin:0 0 9px;color:#fff!important}
+.github-workflow-spotlight p:not(.eyebrow){max-width:760px;margin:0;color:#cbdad2!important;line-height:1.52}
+.github-spotlight-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.github-spotlight-tags span{padding:6px 8px;border:1px solid rgba(121,201,158,.18);border-radius:999px;background:rgba(121,201,158,.07);color:#dff0e5!important;font:800 .48rem/1 var(--font-heading)}
+.github-spotlight-actions{margin-top:16px}
+.github-spotlight-actions .btn{display:inline-flex}
+
+.github-spotlight-workflow{position:relative;min-height:300px;padding:14px 16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(0,0,0,.12);overflow:hidden}
+.github-spotlight-workflow::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:26px 26px}
+.github-spotlight-workflow-header{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.github-spotlight-workflow-header span{color:#afe1bf;font:900 .43rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
+.github-spotlight-workflow-header b{color:#dce9e2;font:800 .42rem/1 var(--font-heading)}
+
+.github-spotlight-cycle{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,105px);gap:12px 28px;margin-top:18px}
+.github-spotlight-step{position:relative;display:grid;grid-template-columns:54px 1fr;gap:8px;align-items:center;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.055)}
+.github-spotlight-step i{display:grid;place-items:center;width:54px;height:54px;padding:4px;border:1px solid rgba(80,132,132,.12);border-radius:14px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.13)}
+.github-spotlight-step img{width:45px;height:45px;object-fit:contain;image-rendering:pixelated}
+.github-spotlight-step small{display:block;color:#9fcdb0;font:900 .38rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+.github-spotlight-step strong{display:block;margin-top:3px;color:#fff;font:800 .49rem/1.12 var(--font-heading)}
+.github-spotlight-step:nth-child(1){grid-column:1;grid-row:1}
+.github-spotlight-step:nth-child(2){grid-column:2;grid-row:1}
+.github-spotlight-step:nth-child(3){grid-column:3;grid-row:1}
+.github-spotlight-step:nth-child(4){grid-column:3;grid-row:2}
+.github-spotlight-step:nth-child(5){grid-column:2;grid-row:2}
+.github-spotlight-step:nth-child(6){grid-column:1;grid-row:2}
+
+.github-spotlight-connector{position:absolute;z-index:1;height:3px;border-radius:999px;background:linear-gradient(90deg,rgba(121,201,158,.25),#97db4f,rgba(121,201,158,.25));overflow:visible}
+.github-spotlight-connector::after{content:"";position:absolute;top:-3px;right:-1px;width:8px;height:8px;border-top:2px solid #97db4f;border-right:2px solid #97db4f;transform:rotate(45deg)}
+.github-spotlight-connector span{position:absolute;top:-4px;left:0;width:10px;height:10px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.08);animation:githubSpotlightPacket 3.4s ease-in-out infinite}
+.github-spotlight-connector.c1{left:29%;right:55%;top:77px}
+.github-spotlight-connector.c2{left:55%;right:29%;top:77px}
+.github-spotlight-connector.c3{right:16.5%;top:86px;width:3px;height:122px;background:linear-gradient(rgba(121,201,158,.25),#97db4f,rgba(121,201,158,.25))}
+.github-spotlight-connector.c3::after{top:auto;right:-3px;bottom:-1px;transform:rotate(135deg)}
+.github-spotlight-connector.c3 span{top:0;left:-4px;animation-name:githubSpotlightPacketVertical}
+.github-spotlight-connector.c4{left:55%;right:29%;bottom:69px;transform:rotate(180deg)}
+.github-spotlight-connector.c5{left:29%;right:55%;bottom:69px;transform:rotate(180deg)}
+@keyframes githubSpotlightPacket{0%,100%{left:0;opacity:.2}50%{left:calc(100% - 10px);opacity:1}}
+@keyframes githubSpotlightPacketVertical{0%,100%{top:0;opacity:.2}50%{top:calc(100% - 10px);opacity:1}}
+
+.github-spotlight-github{position:absolute;z-index:4;left:50%;top:50%;display:grid;place-items:center;width:72px;height:72px;padding:8px;border:1px solid rgba(151,219,79,.26);border-radius:19px;background:#fff;box-shadow:0 14px 26px rgba(0,0,0,.2);transform:translate(-50%,-50%)}
+.github-spotlight-github img{width:56px;height:56px;object-fit:contain}
+.github-spotlight-github::after{content:"versioned";position:absolute;top:76px;padding:4px 6px;border-radius:999px;background:#315755;color:#dff0e5;font:800 .36rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
+
+@media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}.github-spotlight-workflow{min-height:300px}}
+@media(max-width:600px){.github-spotlight-cycle{grid-template-columns:1fr;grid-template-rows:none}.github-spotlight-step:nth-child(n){grid-column:1;grid-row:auto}.github-spotlight-connector,.github-spotlight-github{display:none}}
+@media(prefers-reduced-motion:reduce){.github-spotlight-connector span{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
     <script defer src="../js/primary-pages.js"></script>
@@ -68,11 +117,24 @@
         <div class="github-spotlight-tags"><span>3 repositories</span><span>5 connected tools</span><span>UAT + CI</span><span>Reusable content</span></div>
         <div class="github-spotlight-actions"><a class="btn btn-primary" href="./github-workflow/index.html">Explore GitHub Portfolio Workflow →</a></div>
       </div>
-      <div class="github-spotlight-visual" aria-label="GitHub connects the portfolio, content library, and learning workbench">
-        <span class="github-spotlight-node portfolio"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><b>Portfolio</b></span>
-        <span class="github-spotlight-node library"><i><img src="../assets/icons/pixel/github-projects/library.webp" alt=""></i><b>Content Lab</b></span>
-        <span class="github-spotlight-center"><img src="../assets/icons/pixel/github/github.webp" alt=""></span>
-        <span class="github-spotlight-node workbench"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><b>Workbench</b></span>
+      <div class="github-spotlight-workflow" aria-label="Portfolio workflow from source content through reusable library and workbench into the public portfolio">
+        <div class="github-spotlight-workflow-header"><span>Portfolio content lifecycle</span><b>reuse → build → publish</b></div>
+
+        <div class="github-spotlight-cycle">
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/content-design/content.webp" alt=""></i><span><small>01 · Capture</small><strong>Source + ideas</strong></span></span>
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/library-manager.webp" alt=""></i><span><small>02 · Organize</small><strong>Library Manager</strong></span></span>
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/library.webp" alt=""></i><span><small>03 · Reuse</small><strong>Content Lab</strong></span></span>
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><span><small>04 · Build</small><strong>Workbench</strong></span></span>
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></i><span><small>05 · Package</small><strong>Portfolio Manager</strong></span></span>
+          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><span><small>06 · Publish</small><strong>Portfolio</strong></span></span>
+
+          <span class="github-spotlight-connector c1" aria-hidden="true"><span></span></span>
+          <span class="github-spotlight-connector c2" aria-hidden="true"><span></span></span>
+          <span class="github-spotlight-connector c3" aria-hidden="true"><span></span></span>
+          <span class="github-spotlight-connector c4" aria-hidden="true"><span></span></span>
+          <span class="github-spotlight-connector c5" aria-hidden="true"><span></span></span>
+          <span class="github-spotlight-github" aria-hidden="true"><img src="../assets/icons/pixel/github/github.webp" alt=""></span>
+        </div>
       </div>
     </div>
   </div>
