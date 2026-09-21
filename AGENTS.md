@@ -9,7 +9,7 @@ Maintain a professional, reliable, reusable portfolio system that is easy to upd
 - `portfolio/` — public website deployed to GitHub Pages
 - `portfolio-data/` — structured public-content source data, taxonomy, schemas, and version data
 - `portfolio-manager/` — authenticated local-only Flask application for Manage/Create/Reference/Hiring Guide/AI/publishing workflows
-- `templates/` — reusable HTML templates for standard generated pages
+- `templates/` — preview/reference scaffolds for brand-new work; never an overwrite or automatic page-generation source
 - `design-system/` — supporting design-system and reusable development resources
 - `.github/workflows/` — CI and GitHub Pages deployment
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
@@ -46,7 +46,7 @@ Use this authority order:
 3. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
 4. Structured records under `portfolio-data/` for the metadata/content fields they explicitly own.
 5. `portfolio-data/component-registry.json` for reusable component IDs, ownership, support level, and intended use.
-6. `templates/` + deterministic renderers only for creating a new page whose target path does not already exist.
+6. `templates/` + scaffold preview tooling only for planning brand-new pages; automation does not write public HTML from them.
 7. Portfolio Manager code for Manager workflow/state behavior.
 8. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override the current public implementation.
 
@@ -55,11 +55,11 @@ Generated documentation produced by `scripts/update-docs.py` is output, not an e
 Do not revive retired experiments, old UI concepts, temporary workarounds, or superseded architecture merely because they still appear in Git history, old PR descriptions, comments, or versioned filenames. Verify the current live owner first.
 
 ## Structured Content and New-Page Scaffolding
-Existing public pages are protected from template regeneration. The standard project template is a new-page scaffold only.
+Existing public pages are protected from template regeneration. The standard project template is preview/reference only.
 
-For a genuinely new standard project, prefer Portfolio Manager **Create Content** or `python scripts/new-project.py`. Both must fail closed if the intended public page path already exists.
+For a genuinely new project, prefer Portfolio Manager **Create Content** or `python scripts/new-project.py` to create the structured record. Neither workflow creates the public page.
 
-`python scripts/render-project.py <project-json>` may preview or create a new page only. There is no supported force-overwrite workflow.
+`python scripts/render-project.py <project-json>` previews the locked reference scaffold to stdout only. It never writes public HTML and has no output/overwrite mode.
 
 Do not use the template, renderer, structured record, old Git history, or an older PR to rebuild an existing public page. Finished public pages often contain later UAT refinements that the generic scaffold does not know about.
 
@@ -209,7 +209,7 @@ For substantial changes, use the existing Full Validation suite rather than sele
 
 At minimum, the automated suite must continue to cover:
 - public-site integrity and GitHub Pages readiness
-- structured content and renderer/generator rules
+- structured content, preview-scaffold, and record-generator rules
 - responsive/final polish
 - documentation/versioning freshness
 - Git workflow safety
