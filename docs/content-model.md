@@ -6,7 +6,7 @@ The portfolio uses structured JSON data alongside purpose-built public HTML/CSS/
 
 The content model separates information that should be reusable and machine-readable from presentation code that may vary by experience.
 
-Structured data is not a future placeholder. It is part of the current system and is used by Portfolio Manager, renderers, generators, validation, and documentation tooling.
+Structured data is not a future placeholder. It is part of the current system and is used by Portfolio Manager, record generators, scaffold preview, validation, and documentation tooling.
 
 ## Source-of-Truth Boundaries
 
@@ -18,7 +18,7 @@ Use the narrowest authoritative source for the thing being changed:
 - `portfolio-data/site-content.json` — supported structured general-page content
 - `portfolio-data/schema/` — structured-record requirements
 - existing files under `portfolio/` — authoritative presentation/interaction for every existing public page
-- `templates/project-page/index.html` + `scripts/render-project.py` — new-page scaffold only, never an overwrite source for an existing page
+- `templates/project-page/index.html` + `scripts/render-project.py` — preview-only reference scaffold; they do not write public HTML
 
 Documentation describes these sources; it does not replace them.
 
@@ -112,21 +112,21 @@ Only publishable assets should live under public/tracked portfolio paths. Struct
 
 Portfolio Manager is the normal human-facing editing layer for supported structured content. Lower-level scripts remain available for deterministic new-page development and maintenance testing.
 
-For a **new** standard project whose public path does not exist:
+For a **new** project:
 
 ```text
 project JSON
     ↓
-new-page scaffold
+optional reference-scaffold preview
     ↓
-render-project.py
+inspect closest current live page family
     ↓
-new public index.html
+intentional public-page build
     ↓
 human UAT
 ```
 
-After creation, the public HTML/CSS/JavaScript is the presentation source of truth. The template does not retain authority to rebuild that page.
+The scaffold preview never writes the public page. Once a page is built, its HTML/CSS/JavaScript is the presentation source of truth.
 
 For existing pages, edit the current public implementation directly. Structured records may continue to provide metadata/content fields, but they are not a replacement copy of the full page.
 
@@ -160,4 +160,4 @@ Private proposals, uploads, backups, notes, and reference originals remain outsi
 
 ## Design Principle
 
-Structured data should hold information that benefits from consistent editing, validation, reuse, or automation. Existing public pages own their presentation. Shared code should own genuinely shared behavior, and templates should scaffold new pages without becoming an overwrite mechanism.
+Structured data should hold information that benefits from consistent editing, validation, reuse, or automation. Existing public pages own their presentation. Shared code should own genuinely shared behavior, and templates should remain preview/reference material rather than an overwrite mechanism.
