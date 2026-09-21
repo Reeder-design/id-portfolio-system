@@ -230,3 +230,8 @@ The command prints reference HTML only. It never writes into `portfolio/`.
 When deciding between the reference scaffold and a current live family, prefer the current live family.
 
 The scaffold is useful for content architecture. The live portfolio is the visual and interaction standard.
+
+
+## General page copy ownership
+
+General-page copy edits are source-first. The current public page is edited through the active page-copy workflow or directly in source, then structured values are synchronized from that HTML. The retired structured-to-HTML editor and renderer are not valid future-build references.
