@@ -59,7 +59,7 @@ The scaffold is a starting point, not a permanent regeneration system.
 
 ## Current Scaffold Rules
 
-Future scaffold output follows the recurring UAT rules captured in `docs/portfolio-visual-qa-standard.md`.
+Future scaffold output follows the recurring UAT rules captured in `docs/portfolio-uat-guardrails.md`.
 
 Important defaults:
 
@@ -123,7 +123,7 @@ For bespoke interactions created after the scaffold:
 - isolate pixel icons and use clean bubbles where needed
 - keep motion tracks/dots behind readable icons and labels
 
-See `docs/portfolio-visual-qa-standard.md`.
+See `docs/portfolio-uat-guardrails.md`.
 
 ## Rendering a New Page
 
@@ -175,7 +175,7 @@ Pull-request CI remains the authoritative automated gate for infrastructure chan
 
 ## Supporting References
 
-- `docs/portfolio-visual-qa-standard.md` — recurring visual/UAT rules
+- `docs/portfolio-uat-guardrails.md` — recurring visual/UAT rules
 - `docs/portfolio-consistency-audit.md` — current code/history audit
 - `docs/maintenance-guide.md` — repository maintenance workflow
 - `AGENTS.md` — repository-wide assisted-development rules
