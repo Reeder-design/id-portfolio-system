@@ -25,6 +25,11 @@
     .github-hero-copy .body-large{max-width:1180px}
     .github-hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
     .github-hero-tags span{padding:7px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.12);color:#edf5f0;font:800 .58rem/1 var(--font-heading)}
+    .github-hero-actions{margin-top:18px}
+    .github-hero-actions .btn-primary{border-color:#97db4f;background:#97db4f;color:#173139}
+    .github-hero-actions .btn-primary:hover,.github-hero-actions .btn-primary:focus-visible{border-color:#c3ee78;background:#c3ee78;color:#173139}
+    .github-hero-actions .btn-secondary{border-color:rgba(255,255,255,.7);color:#fff}
+    .github-hero-actions .btn-secondary:hover,.github-hero-actions .btn-secondary:focus-visible{border-color:#fff;background:rgba(255,255,255,.14);color:#fff}
 
     .git-hero-stage{position:relative;margin-top:24px;min-height:0;padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(145deg,#173139,#294d4c);box-shadow:0 18px 38px rgba(32,67,59,.14);overflow:hidden}
     .git-hero-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);background-size:28px 28px}
@@ -96,7 +101,8 @@
     .circle-pipeline-nodes{position:absolute;inset:0;z-index:5;margin:0;padding:0;list-style:none}
     .circle-pipeline-nodes li{position:absolute;left:50%;top:50%;width:162px;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-284px) rotate(calc(var(--a) * -1))}
     .circle-pipeline-node{position:relative;display:grid;grid-template-columns:72px 1fr;grid-template-rows:auto auto;gap:4px 9px;align-items:center;width:100%;min-height:98px;padding:10px;border:1px solid rgba(121,201,158,.18);border-radius:18px;background:#fff;color:#29463e;box-shadow:0 13px 28px rgba(0,0,0,.16);text-align:left;cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
-    .circle-pipeline-node:hover,.circle-pipeline-node:focus-visible{transform:translateY(-4px);border-color:#79c99e;box-shadow:0 18px 34px rgba(0,0,0,.2);outline:none}
+    .circle-pipeline-node:hover{transform:translateY(-4px);border-color:#79c99e;box-shadow:0 18px 34px rgba(0,0,0,.2)}
+    .circle-pipeline-node:focus-visible{transform:translateY(-4px);border-color:#97db4f;box-shadow:0 18px 34px rgba(0,0,0,.2);outline:3px solid #97db4f;outline-offset:3px}
     .circle-pipeline-node.active{border-color:#97db4f;box-shadow:0 18px 34px rgba(0,0,0,.2),0 0 0 4px rgba(151,219,79,.12)}
     .circle-node-icon{grid-row:1/3;display:grid;place-items:center;width:72px;height:72px;padding:6px;border:1px solid rgba(80,132,132,.12);border-radius:18px;background:#fff;box-shadow:0 8px 18px rgba(43,72,64,.08)}
     .circle-node-icon img{width:60px;height:60px;object-fit:contain;image-rendering:pixelated}
@@ -163,7 +169,27 @@
     .manager-check{position:absolute;right:13px;bottom:12px;display:flex;align-items:center;gap:4px;padding:5px 7px;border-radius:999px;background:#315755;color:#dff0e5;font:800 .41rem/1 var(--font-heading)}
     .manager-check img{width:24px;height:24px}
 
-    .library-shelf{position:relative;display:grid;grid-template-columns:100px 1fr 110px;align-items:center;gap:12px;min-height:278px}
+    .github-deep-dive--library{position:relative;overflow:hidden;border-color:rgba(121,201,158,.42);background:linear-gradient(135deg,#ffffff 0%,#f1faf3 56%,#e1f2e7 100%);box-shadow:0 20px 46px rgba(43,72,64,.12)}
+    .github-deep-dive--library::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,#315755,#79c99e,#97db4f)}
+    .github-deep-dive--library .github-deep-copy{position:relative;z-index:1}
+    .content-lab-label{display:inline-flex;align-items:center;gap:7px;margin:0 0 7px;padding:6px 9px;border:1px solid rgba(80,132,132,.17);border-radius:999px;background:rgba(255,255,255,.76);color:#315755;font:900 .46rem/1 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
+    .content-lab-label::before{content:"";width:7px;height:7px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.15)}
+    .github-deep-dive--library .github-deep-copy>p:not(.eyebrow):not(.content-lab-label){font-size:1rem;line-height:1.58}
+    .content-lab-value-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0 0;padding:0;list-style:none}
+    .content-lab-value-grid li{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;min-height:56px;padding:8px;border:1px solid rgba(80,132,132,.13);border-radius:12px;background:rgba(255,255,255,.78);box-shadow:0 7px 16px rgba(43,72,64,.045)}
+    .content-lab-value-grid img{width:30px;height:30px;object-fit:contain}
+    .content-lab-value-grid strong{display:block;color:#315755;font:800 .72rem/1.18 var(--font-heading)}
+    .content-lab-value-grid span{display:block;margin-top:3px;color:#687770;font-size:.68rem;line-height:1.34}
+    .github-deep-dive--library .github-deep-facts span{font-size:.76rem;line-height:1.42}
+    .github-deep-dive--library .github-deep-facts b{font-size:.68rem}
+    .github-library-actions{margin-top:16px}
+    .github-library-live-link{border-color:#315755!important;background:#315755!important;color:#fff!important;box-shadow:0 8px 18px rgba(49,87,85,.16)}
+    .github-library-live-link:hover,.github-library-live-link:focus-visible{border-color:#173139!important;background:#173139!important;color:#fff!important}
+    .library-motion{display:grid;grid-template-rows:auto 1fr auto;gap:10px;border-color:rgba(80,132,132,.18);background:linear-gradient(145deg,#e8f5eb,#fbfefa)}
+    .library-motion-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 4px 0}
+    .library-motion-head span{color:#4a796e;font:900 .44rem/1 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
+    .library-motion-head b{padding:5px 7px;border-radius:999px;background:#315755;color:#e6f4e9;font:800 .4rem/1 var(--font-heading)}
+    .library-shelf{position:relative;display:grid;grid-template-columns:100px 1fr 110px;align-items:center;gap:12px;min-height:214px;padding:12px;border:1px solid rgba(80,132,132,.13);border-radius:16px;background:rgba(255,255,255,.76);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
     .library-source{display:grid;justify-items:center;gap:5px}
     .library-source img{width:72px;height:72px;padding:7px;border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(43,72,64,.08)}
     .library-source span{color:#315755;font:800 .47rem/1 var(--font-heading)}
@@ -182,6 +208,8 @@
     .library-stack i{width:82px;height:8px;border-radius:4px;background:#315755}
     .library-stack i:nth-of-type(2){width:70px;background:#79c99e}
     .library-stack i:nth-of-type(3){width:58px;background:#97db4f}
+    .library-motion-footer{display:flex;justify-content:space-between;gap:6px}
+    .library-motion-footer span{flex:1;padding:6px;border:1px solid rgba(80,132,132,.12);border-radius:8px;background:rgba(255,255,255,.67);color:#557068;font:800 .42rem/1 var(--font-heading);text-align:center}
 
     .lm-pipeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;align-items:center;min-height:218px;padding:12px 4px}
     .lm-pipeline::before{content:"";position:absolute;left:8%;right:8%;top:50%;height:4px;border-radius:999px;background:rgba(121,201,158,.2)}
@@ -254,6 +282,7 @@
       .circle-handoffs{grid-template-columns:1fr 1fr 1fr}
       .github-deep-dive{grid-template-columns:1fr}
       .github-deep-dive--dark .github-motion-panel{order:2}
+      .github-deep-dive--library .library-motion{order:-1}
       .github-pipeline{grid-template-columns:repeat(3,1fr);gap:14px}
       .github-pipeline-step::after{display:none}
       .github-profile-card{position:relative;top:auto}
@@ -267,11 +296,14 @@
       .circle-handoffs{grid-template-columns:1fr}
       .github-deep-dive{padding:16px}
       .github-deep-facts span{grid-template-columns:1fr}
+      .content-lab-value-grid{grid-template-columns:1fr}
       .library-shelf{grid-template-columns:1fr}
       .library-flight{height:100px}
       .workbench-motion{grid-template-columns:1fr}
       .workbench-transform{grid-template-columns:repeat(3,30px);justify-content:center}
-      .lm-pipeline{overflow-x:auto}
+      .lm-pipeline{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;overflow:visible}
+      .lm-step img{width:44px;height:44px}
+      .lm-step b{font-size:.38rem}
       .github-pipeline{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:460px){
@@ -307,6 +339,7 @@
           <h1>GitHub Workflow</h1>
           <p class="body-large">GitHub is where I turn portfolio ideas and learning-tool prototypes into maintainable systems. I use it for version control, structured review, validation, deployment, and the reusable tools that sit behind my public work.</p>
           <div class="github-hero-tags"><span>Version Control</span><span>Pull Requests</span><span>GitHub Pages</span><span>Validation</span><span>Reusable Systems</span></div>
+          <div class="button-row github-hero-actions"><a class="btn btn-primary" href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Explore Learning Content Lab ↗</a><a class="btn btn-secondary" href="#content-library">See the featured spotlight</a></div>
         </div>
 
         <div class="git-hero-stage" aria-label="Simple GitHub workflow from one source through three repositories to five connected tools">
@@ -378,14 +411,14 @@
               <span class="circle-arrow arrow-6">›</span>
             </div>
 
-            <div class="circle-pipeline-center" aria-live="polite">
+            <div class="circle-pipeline-center" id="ecosystem-detail" role="tabpanel" tabindex="0" aria-live="polite" aria-labelledby="circle-step-2">
               <span class="circle-center-icon"><img src="../../assets/icons/pixel/github/github.webp" alt=""></span>
-              <p class="eyebrow" id="circleStepLabel">01 · Capture</p>
-              <h3 id="circleStepTitle">Source + ideas</h3>
-              <p id="circleStepCopy">Collect project evidence, notes, templates, and reusable patterns.</p>
+              <p class="eyebrow" id="circleStepLabel">03 · Reuse</p>
+              <h3 id="circleStepTitle">Learning Content Lab</h3>
+              <p id="circleStepCopy">Browse reusable templates, interactions, visual assets, prompts, and prototypes that can carry forward into the next learning build.</p>
               <div class="circle-center-meta">
-                <span id="circleStepNext">Next: Library Manager</span>
-                <span id="circleStepReuse">Reuse: library or Workbench</span>
+                <span id="circleStepNext">Next: Workbench</span>
+                <span id="circleStepReuse">Reuse: across new learning projects</span>
               </div>
               <div class="circle-repo-strip">
                 <span>id-content-library</span>
@@ -394,44 +427,44 @@
               </div>
             </div>
 
-            <ol class="circle-pipeline-nodes">
-              <li style="--a:-90deg">
-                <button class="circle-pipeline-node active" type="button" data-circle-step="0" aria-pressed="true">
+            <ol class="circle-pipeline-nodes" role="tablist" aria-label="Portfolio ecosystem stages">
+              <li role="presentation" style="--a:-90deg">
+                <button class="circle-pipeline-node" id="circle-step-0" type="button" role="tab" data-circle-step="0" aria-controls="ecosystem-detail" aria-selected="false">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""></span>
                   <span class="circle-node-step">01</span>
                   <strong>Source + ideas</strong>
                 </button>
               </li>
-              <li style="--a:-30deg">
-                <button class="circle-pipeline-node" type="button" data-circle-step="1" aria-pressed="false">
+              <li role="presentation" style="--a:-30deg">
+                <button class="circle-pipeline-node" id="circle-step-1" type="button" role="tab" data-circle-step="1" aria-controls="ecosystem-detail" aria-selected="false">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""></span>
                   <span class="circle-node-step">02</span>
                   <strong>Library Manager</strong>
                 </button>
               </li>
-              <li style="--a:30deg">
-                <button class="circle-pipeline-node" type="button" data-circle-step="2" aria-pressed="false">
+              <li role="presentation" style="--a:30deg">
+                <button class="circle-pipeline-node active" id="circle-step-2" type="button" role="tab" data-circle-step="2" aria-controls="ecosystem-detail" aria-selected="true">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""></span>
                   <span class="circle-node-step">03</span>
                   <strong>Content Lab</strong>
                 </button>
               </li>
-              <li style="--a:90deg">
-                <button class="circle-pipeline-node" type="button" data-circle-step="3" aria-pressed="false">
+              <li role="presentation" style="--a:90deg">
+                <button class="circle-pipeline-node" id="circle-step-3" type="button" role="tab" data-circle-step="3" aria-controls="ecosystem-detail" aria-selected="false">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></span>
                   <span class="circle-node-step">04</span>
                   <strong>Workbench</strong>
                 </button>
               </li>
-              <li style="--a:150deg">
-                <button class="circle-pipeline-node" type="button" data-circle-step="4" aria-pressed="false">
+              <li role="presentation" style="--a:150deg">
+                <button class="circle-pipeline-node" id="circle-step-4" type="button" role="tab" data-circle-step="4" aria-controls="ecosystem-detail" aria-selected="false">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></span>
                   <span class="circle-node-step">05</span>
                   <strong>Portfolio Manager</strong>
                 </button>
               </li>
-              <li style="--a:210deg">
-                <button class="circle-pipeline-node" type="button" data-circle-step="5" aria-pressed="false">
+              <li role="presentation" style="--a:210deg">
+                <button class="circle-pipeline-node" id="circle-step-5" type="button" role="tab" data-circle-step="5" aria-controls="ecosystem-detail" aria-selected="false">
                   <span class="circle-node-icon"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""></span>
                   <span class="circle-node-step">06</span>
                   <strong>Portfolio</strong>
@@ -501,20 +534,29 @@
           </div>
         </article>
 
-        <article class="github-deep-dive github-deep-dive--light" id="content-library">
+        <article class="github-deep-dive github-deep-dive--light github-deep-dive--library" id="content-library">
           <div class="github-deep-copy">
-            <p class="eyebrow">03 · Reusable Content Library</p>
+            <p class="content-lab-label">Featured spotlight project</p>
+            <p class="eyebrow">03 · Reusable Learning Content</p>
             <h3>Learning Content Lab</h3>
-            <p>The library gives smaller instructional-design assets a useful home without forcing every experiment, template, interaction, prompt, or code pattern into a full case study. It is designed for reuse, browsing, and continued iteration.</p>
-            <div class="github-deep-facts"><span><b>Visitor job</b> Browse reusable learning-design resources and experiments.</span><span><b>Design choice</b> Separate durable resources from narrative portfolio case studies.</span><span><b>System role</b> Reusable building-block layer across future projects.</span></div>
-            <div class="github-project-actions github-deep-actions"><a href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">View live project ↗</a><a href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View repository ↗</a></div>
+            <p>I built the Learning Content Lab as a home for the useful pieces that deserve a life beyond one project: practical templates, interactive patterns, visual and media assets, prompts, and small learning prototypes. It makes those building blocks easy to browse, reuse, and evolve into the next learning experience.</p>
+            <ul class="content-lab-value-grid" aria-label="What visitors can explore in the Learning Content Lab">
+              <li><img src="../../assets/icons/pixel/content-design/strategy.webp" alt=""><div><strong>Templates + patterns</strong><span>Reusable starting points for learning design.</span></div></li>
+              <li><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><div><strong>Practice + interactions</strong><span>Small experiences that support application.</span></div></li>
+              <li><img src="../../assets/icons/pixel/content-design/visuals.webp" alt=""><div><strong>Visual + media assets</strong><span>Components that make complex ideas clearer.</span></div></li>
+              <li><img src="../../assets/icons/pixel/github-support/build.webp" alt=""><div><strong>Prompts + prototypes</strong><span>Ideas that can grow into useful tools.</span></div></li>
+            </ul>
+            <div class="github-deep-facts"><span><b>Visitor job</b> Browse practical learning-design resources, experiments, and ideas.</span><span><b>Design choice</b> Give strong reusable assets their own destination instead of burying them inside a case study.</span><span><b>System role</b> A living building-block library that feeds future learning work.</span></div>
+            <div class="button-row github-library-actions"><a class="btn btn-primary github-library-live-link" href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Open Learning Content Lab ↗</a><a class="btn btn-secondary" href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View Content Lab repository ↗</a></div>
           </div>
-          <div class="github-motion-panel library-motion" aria-label="Motion graphic showing reusable content assets being organized into a learning library">
+          <div class="github-motion-panel library-motion" role="img" aria-label="Visual pathway showing useful learning patterns becoming reusable Content Lab resources">
+            <div class="library-motion-head"><span>Make once. Reuse well.</span><b>Content Lab</b></div>
             <div class="library-shelf">
-              <div class="library-source"><img src="../../assets/icons/pixel/github-support/build.webp" alt=""><span>Reusable asset</span></div>
+              <div class="library-source"><img src="../../assets/icons/pixel/github-support/build.webp" alt=""><span>Useful pattern</span></div>
               <div class="library-flight"><span class="library-card c1"><img src="../../assets/icons/pixel/content-design/visuals.webp" alt=""></span><span class="library-card c2"><img src="../../assets/icons/pixel/content-design/video.webp" alt=""></span><span class="library-card c3"><img src="../../assets/icons/pixel/content-design/strategy.webp" alt=""></span></div>
-              <div class="library-stack"><span><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><b>Library</b></span><i></i><i></i><i></i></div>
+              <div class="library-stack"><span><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><b>Content Lab</b></span><i></i><i></i><i></i></div>
             </div>
+            <div class="library-motion-footer" aria-hidden="true"><span>Browse</span><span>Reuse</span><span>Build</span></div>
           </div>
         </article>
 
@@ -617,7 +659,7 @@
       const steps = [
         {label:'01 · Capture',title:'Source + ideas',copy:'Collect project evidence, notes, templates, and reusable patterns.',next:'Next: Library Manager',reuse:'Reuse: library or Workbench'},
         {label:'02 · Organize',title:'Library Manager',copy:'Add metadata, preview, QA, and prepare reusable content.',next:'Next: Content Lab',reuse:'Reuse: public-safe building blocks'},
-        {label:'03 · Reuse',title:'Learning Content Lab',copy:'Store templates, interactions, prompts, and patterns that can support future builds.',next:'Next: Workbench',reuse:'Reuse: across new learning projects'},
+        {label:'03 · Reuse',title:'Learning Content Lab',copy:'Browse reusable templates, interactions, visual assets, prompts, and prototypes that can carry forward into the next learning build.',next:'Next: Workbench',reuse:'Reuse: across new learning projects'},
         {label:'04 · Build',title:'Learning Project Workbench',copy:'Combine source content and reusable patterns into working learning experiences.',next:'Next: Portfolio Manager',reuse:'Reuse: patterns can return to the library'},
         {label:'05 · Package',title:'Portfolio Manager',copy:'Sanitize, structure, preview, and prepare project evidence for public use.',next:'Next: Portfolio',reuse:'Reuse: project evidence + examples'},
         {label:'06 · Publish',title:'Portfolio',copy:'Show the finished work and capture useful patterns that can feed the next project.',next:'Next: new source + ideas',reuse:'Reuse: the loop starts again'}
@@ -629,30 +671,40 @@
       const copy = root.querySelector('#circleStepCopy');
       const next = root.querySelector('#circleStepNext');
       const reuse = root.querySelector('#circleStepReuse');
-      let active = 0;
-      let timer = null;
+      const panel = root.querySelector('#ecosystem-detail');
+      let active = 2;
 
-      const show = (index, restart = true) => {
+      const show = (index) => {
         active = index;
         const step = steps[index];
         buttons.forEach((button, i) => {
           button.classList.toggle('active', i === index);
-          button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+          button.setAttribute('aria-selected', i === index ? 'true' : 'false');
         });
         label.textContent = step.label;
         title.textContent = step.title;
         copy.textContent = step.copy;
         next.textContent = step.next;
         reuse.textContent = step.reuse;
-
-        if (restart && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          clearInterval(timer);
-          timer = setInterval(() => show((active + 1) % steps.length, false), 5200);
-        }
+        panel?.setAttribute('aria-labelledby', buttons[index].id);
       };
 
-      buttons.forEach((button, index) => button.addEventListener('click', () => show(index)));
-      show(0);
+      buttons.forEach((button, index) => {
+        button.addEventListener('click', () => show(index));
+        button.addEventListener('keydown', (event) => {
+          const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+          if (!keys.includes(event.key)) return;
+          event.preventDefault();
+          let nextIndex = index;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % buttons.length;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + buttons.length) % buttons.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = buttons.length - 1;
+          show(nextIndex);
+          buttons[nextIndex].focus();
+        });
+      });
+      show(active);
     })();
   </script>
 </body>
