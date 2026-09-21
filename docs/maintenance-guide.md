@@ -86,6 +86,7 @@ The standard project template is a **preview-only reference scaffold**. Portfoli
 
 For future visual work, use:
 
+- `docs/current-page-patterns.md`
 - `docs/portfolio-uat-guardrails.md`
 - `docs/portfolio-consistency-audit.md`
 
