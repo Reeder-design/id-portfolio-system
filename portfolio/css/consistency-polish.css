@@ -341,3 +341,97 @@
     flex-basis: 100%;
   }
 }
+
+
+/* =========================================================
+   Recurring UAT guardrails
+   These utilities exist because the same layout failures repeatedly appeared
+   across bespoke interactions: section-height jumps, cramped copy, clipped
+   pixel art, and motion layers crossing in front of content.
+   ========================================================= */
+
+/* Keep tabbed interactions from resizing when the active panel changes.
+   Put every sibling panel in the same grid cell and toggle .active / aria-hidden. */
+.stable-tab-panels {
+  display: grid;
+  align-items: stretch;
+}
+
+.stable-tab-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stable-tab-panel.active,
+.stable-tab-panel[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Interaction titles and explanatory copy should use the full available width
+   instead of inheriting narrow reading widths that create unnecessary lines. */
+.interaction-copy-wide,
+.interaction-copy-wide h2,
+.interaction-copy-wide h3,
+.interaction-copy-wide p {
+  width: 100%;
+  max-width: none;
+}
+
+/* Pixel-art icons on dark/complex surfaces get a clean white bubble so the
+   artwork stays readable without cropping the art itself. */
+.pixel-icon-bubble {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: clamp(58px, 6vw, 78px);
+  aspect-ratio: 1;
+  padding: 8px;
+  overflow: visible;
+  border: 1px solid rgba(80,132,132,.18);
+  border-radius: 18px;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 8px 20px rgba(30,48,43,.10);
+}
+
+.pixel-icon-bubble img,
+.pixel-icon-bubble svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Animated dots/lines/traces belong behind the readable node/icon layer. */
+.motion-layer-behind {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.motion-content-front {
+  position: relative;
+  z-index: 1;
+}
+
+/* Project examples close with one compact parent path, not a large related-work
+   or Keep Exploring footer. */
+.portfolio-back-row {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
+.portfolio-back-row .container {
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-back-row .btn {
+  margin: 0;
+}
