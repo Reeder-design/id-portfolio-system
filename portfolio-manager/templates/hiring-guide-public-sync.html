@@ -240,7 +240,7 @@
                     <p>{{ item.prompt }}</p>
                     {% if loop.first %}<div class="sync-answer-preview">{{ item.answer }}</div>{% endif %}
                 </article>
-                {% else %}<div class="empty-state hiring-empty">No proposed public question scored above zero for this query.</div>{% endfor %}
+                {% else %}<div class="empty-state hiring-empty">No supported public question matches this query.</div>{% endfor %}
             </div>
             {% endif %}
         </section>

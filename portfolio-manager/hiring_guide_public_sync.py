@@ -22,6 +22,7 @@ PUBLIC_FAQ_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-faq.json"
 PUBLIC_EXPANDED_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-faq-expanded.json"
 PUBLIC_SPECIALIST_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-faq-specialist.json"
 PUBLIC_SEARCH_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-search.json"
+PUBLIC_ROUTING_POLICY_PATH = REPO_ROOT / "portfolio" / "data" / "hiring-routing-policy.json"
 
 SYNC_ROOT = HIRING_ROOT / "public-sync"
 PROPOSAL_PATH = SYNC_ROOT / "proposal.json"
@@ -30,10 +31,20 @@ MAPPING_OVERRIDES_PATH = SYNC_ROOT / "mapping-overrides.json"
 
 APPLY_CONFIRMATION = "APPLY PUBLIC HIRING GUIDE"
 
-STOP_WORDS = {
-    "a", "an", "and", "are", "about", "can", "do", "does", "did", "for", "from",
-    "have", "has", "how", "i", "in", "is", "me", "my", "of", "on", "or", "show",
-    "tell", "the", "to", "what", "where", "with", "you", "your",
+DEFAULT_ROUTING_POLICY = {
+    "stop_words": {
+        "a", "an", "and", "are", "about", "can", "could", "did", "do", "does", "for", "from",
+        "have", "has", "how", "i", "in", "is", "it", "me", "my", "of", "on", "or", "please",
+        "show", "tell", "the", "to", "what", "where", "which", "who", "why", "with", "would", "you", "your",
+        "thing", "things", "really", "just", "some", "something", "stuff", "kind", "sort", "one",
+    },
+    "min_answer_score": 8,
+    "min_answer_margin": 3,
+}
+
+GENERIC_MATCH_TOKENS = {
+    "answer", "answers", "career", "experience", "help", "information", "job", "project",
+    "projects", "question", "questions", "role", "team", "work",
 }
 
 DEFAULT_EVIDENCE_PATHS = {
@@ -84,11 +95,27 @@ def _normalize(value: Any) -> str:
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9+#.\-\s]", " ", str(value or "").lower())).strip()
 
 
+def _routing_policy() -> dict[str, Any]:
+    try:
+        raw = _json(PUBLIC_ROUTING_POLICY_PATH)
+    except HiringGuidePublicSyncError:
+        raw = {}
+    stop_words = raw.get("stop_words", DEFAULT_ROUTING_POLICY["stop_words"])
+    if not isinstance(stop_words, list):
+        stop_words = DEFAULT_ROUTING_POLICY["stop_words"]
+    return {
+        "stop_words": {str(word).lower() for word in stop_words if str(word).strip()},
+        "min_answer_score": int(raw.get("min_answer_score", DEFAULT_ROUTING_POLICY["min_answer_score"])),
+        "min_answer_margin": int(raw.get("min_answer_margin", DEFAULT_ROUTING_POLICY["min_answer_margin"])),
+    }
+
+
 def _tokens(value: Any) -> list[str]:
+    policy = _routing_policy()
     return [
         token
         for token in _normalize(value).split()
-        if len(token) > 1 and token not in STOP_WORDS
+        if len(token) > 1 and token not in policy["stop_words"] and token not in GENERIC_MATCH_TOKENS
     ]
 
 
@@ -787,34 +814,68 @@ def _proposal_is_fresh(proposal: dict[str, Any]) -> bool:
 
 
 def score_question(query: str, question: dict[str, Any]) -> int:
+    return _score_question_match(query, question)["score"]
+
+
+def _phrase_match(query: str, field: Any) -> bool:
+    clean = _normalize(query)
+    candidate = _normalize(field)
+    return len(_tokens(candidate)) >= 2 and bool(candidate) and (candidate in clean or clean in candidate)
+
+
+def _score_question_match(query: str, question: dict[str, Any]) -> dict[str, Any]:
     clean = _normalize(query)
     if not clean:
-        return 0
+        return {"score": 0, "matched_tokens": [], "exact_phrase": False}
     prompt = _normalize(question.get("prompt"))
     label = _normalize(question.get("short_label"))
     category = _normalize(question.get("category"))
-    keywords = _normalize(" ".join(str(item) for item in question.get("keywords", [])))
-    answer = _normalize(question.get("answer"))
+    keyword_values = question.get("keywords", []) if isinstance(question.get("keywords", []), list) else []
+    variant_values = question.get("variants", []) if isinstance(question.get("variants", []), list) else []
+    keywords = _normalize(" ".join(str(item) for item in keyword_values))
+    variants = _normalize(" ".join(str(item) for item in variant_values))
     query_tokens = _tokens(query)
     score = 0
-    if prompt and (prompt in clean or clean in prompt):
-        score += 14
-    if label and (label in clean or clean in label):
+    exact_phrase = False
+    for field, points in [(prompt, 16), (label, 12)]:
+        if _phrase_match(clean, field):
+            score += points
+            exact_phrase = True
+    if any(_phrase_match(clean, item) for item in keyword_values):
         score += 10
-    if keywords and clean in keywords:
-        score += 8
+        exact_phrase = True
+    if any(_phrase_match(clean, item) for item in variant_values):
+        score += 10
+        exact_phrase = True
+    matched_tokens: set[str] = set()
     for token in query_tokens:
+        matched = False
         if token in label:
             score += 5
+            matched = True
         if token in prompt:
             score += 4
+            matched = True
         if token in keywords:
+            score += 4
+            matched = True
+        if token in variants:
             score += 3
+            matched = True
         if token in category:
             score += 2
-        if token in answer:
-            score += 1
-    return score
+            matched = True
+        if matched:
+            matched_tokens.add(token)
+    return {"score": score, "matched_tokens": sorted(matched_tokens), "exact_phrase": exact_phrase}
+
+
+def _has_supported_question_match(match: dict[str, Any]) -> bool:
+    policy = _routing_policy()
+    return bool(
+        match["score"] >= policy["min_answer_score"]
+        and (match["exact_phrase"] or match["matched_tokens"])
+    )
 
 
 def test_routing(query: str, proposal: dict[str, Any] | None = None) -> list[dict[str, Any]]:
@@ -825,22 +886,20 @@ def test_routing(query: str, proposal: dict[str, Any] | None = None) -> list[dic
         *proposal.get("outputs", {}).get("hiring-faq.json", {}).get("questions", []),
         *proposal.get("outputs", {}).get("hiring-faq-expanded.json", {}).get("questions", []),
     ]
-    ranked = sorted(
-        [
-            {
-                "id": str(question.get("id") or ""),
-                "category": str(question.get("category") or ""),
-                "label": str(question.get("short_label") or ""),
-                "prompt": str(question.get("prompt") or ""),
-                "answer": str(question.get("answer") or ""),
-                "score": score_question(query, question),
-            }
-            for question in questions
-        ],
-        key=lambda item: item["score"],
-        reverse=True,
-    )
-    return [item for item in ranked if item["score"] > 0][:5]
+    ranked = []
+    for question in questions:
+        match = _score_question_match(query, question)
+        ranked.append({
+            "id": str(question.get("id") or ""),
+            "category": str(question.get("category") or ""),
+            "label": str(question.get("short_label") or ""),
+            "prompt": str(question.get("prompt") or ""),
+            "answer": str(question.get("answer") or ""),
+            "score": match["score"],
+            "supported": _has_supported_question_match(match),
+        })
+    ranked.sort(key=lambda item: item["score"], reverse=True)
+    return [item for item in ranked if item["supported"]][:5]
 
 
 def _backup_public_files() -> Path:
