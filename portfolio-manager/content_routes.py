@@ -24,7 +24,6 @@ PROJECT_DATA_ROOT = DATA_ROOT / "projects"
 TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 
 NEW_PROJECT_SCRIPT = REPO_ROOT / "scripts" / "new-project.py"
-RENDER_PROJECT_SCRIPT = REPO_ROOT / "scripts" / "render-project.py"
 UPDATE_DOCS_SCRIPT = REPO_ROOT / "scripts" / "update-docs.py"
 
 GENERATED_PAGE_MARKER = "<!-- PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE -->"
@@ -481,62 +480,6 @@ def save_project(project_id: str):
         message = str(exc)
 
     flash(message, "success" if success else "error")
-    return redirect(
-        url_for("content.project_editor", project_id=project_id)
-    )
-
-
-@content_bp.route(
-    "/content/projects/<project_id>/regenerate",
-    methods=["POST"],
-)
-def regenerate_project(project_id: str):
-    try:
-        project, project_path = load_project(project_id)
-    except FileNotFoundError as exc:
-        flash(str(exc), "error")
-        return redirect(url_for("content.content_manager"))
-
-    if not is_generated_page(project):
-        flash(
-            "Regeneration is disabled because this is a custom page, "
-            "not a standard template-generated page.",
-            "error",
-        )
-        return redirect(
-            url_for("content.project_editor", project_id=project_id)
-        )
-
-    success, output = run_command([
-        sys.executable,
-        str(RENDER_PROJECT_SCRIPT),
-        str(project_path.relative_to(REPO_ROOT)),
-        "--force",
-    ])
-
-    if not success:
-        flash(
-            "Page regeneration failed."
-            + (f"\n\n{output}" if output else ""),
-            "error",
-        )
-        return redirect(
-            url_for("content.project_editor", project_id=project_id)
-        )
-
-    site_ok, site_output = run_command(
-        [sys.executable, "scripts/check-site.py"]
-    )
-
-    if site_ok:
-        flash("Standard project page regenerated successfully.", "success")
-    else:
-        flash(
-            "The page regenerated, but site validation failed."
-            + (f"\n\n{site_output}" if site_output else ""),
-            "error",
-        )
-
     return redirect(
         url_for("content.project_editor", project_id=project_id)
     )
