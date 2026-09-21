@@ -184,11 +184,12 @@ def render_detail_sections(project: dict, start_number: int) -> tuple[str, str, 
         layout_html = render_detail_layout(section)
 
         html_parts.append(
-            f'<section class="project-story-section project-detail-section" id="{esc(section_id)}">'
-            f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-            f'<div><p class="eyebrow">{esc(section.get("eyebrow", "Project Detail"))}</p>'
-            f'<h2>{esc(section.get("title", ""))}</h2></div></div>'
-            f"{summary_html}{layout_html}{note_html}</section>"
+            f'<section class="section flagship-section scaffold-section project-detail-section" id="{esc(section_id)}">'
+            '<div class="container scaffold-copy">'
+            f'<div class="scaffold-kicker"><span class="project-detail-number" aria-hidden="true">{number:02d}</span>'
+            f'<p class="eyebrow">{esc(section.get("eyebrow", "Project Detail"))}</p></div>'
+            f'<h2>{esc(section.get("title", ""))}</h2>'
+            f"{summary_html}{layout_html}{note_html}</div></section>"
         )
         number += 1
 
@@ -231,24 +232,26 @@ def render_assets(project: dict, output_path: Path, number: int) -> tuple[str, b
             )
 
     section = (
-        '<section class="project-story-section project-assets" id="evidence">'
-        f'<div class="project-story-heading"><span class="project-story-number">{number:02d}</span>'
-        '<div><p class="eyebrow">Evidence</p><h2>Explore the work</h2></div></div>'
+        '<section class="section section-soft flagship-section scaffold-section project-assets" id="evidence">'
+        '<div class="container scaffold-copy">'
+        f'<div class="scaffold-kicker"><span class="project-detail-number" aria-hidden="true">{number:02d}</span>'
+        '<p class="eyebrow">Evidence</p></div>'
+        '<h2>Explore the work.</h2>'
         '<p>Public-safe artifacts and project outputs from this case study.</p>'
         f'<div class="project-asset-grid">{"".join(cards)}</div>'
-        '</section>'
+        '</div></section>'
     )
     return section, True
 
 
-def render_primary_action(project: dict, output_path: Path, *, cta: bool = False) -> str:
+def render_primary_action(project: dict, output_path: Path) -> str:
     live_project = project.get("links", {}).get("live_project")
     if not live_project:
         return ""
 
     href = asset_href(output_path, live_project)
-    css_class = "btn btn-highlight" if cta else "btn btn-primary"
-    label = "Launch Project" if cta else "View Live Project"
+    css_class = "btn btn-primary"
+    label = "View Live Project"
     return (
         f'<a class="{css_class}" href="{esc(href)}" target="_blank" '
         f'rel="noopener noreferrer">{label}</a>'
@@ -259,7 +262,7 @@ def render_confidentiality_note(project: dict) -> str:
     confidentiality = project.get("confidentiality")
     if confidentiality == "needs-sanitization":
         raise ValueError(
-            f"Project '{project.get('id')}' still needs sanitization and cannot be rendered for publishing."
+            f"Project '{project.get('id')}' still needs sanitization and cannot be previewed as a public scaffold."
         )
     if confidentiality != "sanitized":
         return ""
@@ -302,10 +305,6 @@ def render_project_text(project_path: Path) -> tuple[str, Path]:
     next_number = 4
     detail_sections, detail_nav, next_number = render_detail_sections(project, next_number)
     assets_section, has_assets = render_assets(project, final_output, next_number)
-    if has_assets:
-        next_number += 1
-    outcome_number = next_number
-    next_number += 1
 
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
@@ -328,7 +327,6 @@ def render_project_text(project_path: Path) -> tuple[str, Path]:
         "SUMMARY": esc(project["summary"]),
         "TAGS": render_tags(project),
         "PRIMARY_ACTION": render_primary_action(project, final_output),
-        "PRIMARY_ACTION_CTA": render_primary_action(project, final_output, cta=True),
         "BACK_PATH": esc(relative_href(final_output, back_path)),
         "BACK_LABEL": esc(back_label),
         "ROLE": esc(content.get("role", "")),
@@ -345,7 +343,6 @@ def render_project_text(project_path: Path) -> tuple[str, Path]:
         "DETAIL_SECTIONS": detail_sections,
         "ASSETS_SECTION": assets_section,
         "EVIDENCE_NAV": '<a href="#evidence">Evidence</a>' if has_assets else "",
-        "OUTCOME_NUMBER": f"{outcome_number:02d}",
         "OUTCOMES": render_list(content.get("outcomes", [])),
         "CONFIDENTIALITY_NOTE": render_confidentiality_note(project),
     }
