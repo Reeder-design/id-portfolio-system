@@ -140,17 +140,17 @@ def main() -> int:
         pass
 
 
-    if errors:
-        print("New-project generator validation failed:")
-        for error in errors:
-            print(f"  - {error}")
-        return 1
-
     require(
         "render" not in generator.create_project.__code__.co_varnames,
         "new project creation must not expose a public-page render switch",
         errors,
     )
+
+    if errors:
+        print("New-project generator validation failed:")
+        for error in errors:
+            print(f"  - {error}")
+        return 1
 
     print("New-project record generator validation passed.")
     return 0
