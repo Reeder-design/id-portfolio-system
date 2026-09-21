@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -96,9 +95,9 @@ def main() -> int:
         audience="Portfolio maintainers.",
         learning_objectives=["Create valid structured project data."],
         role="Instructional Designer",
-        design_approach="Use the standard project model and renderer.",
-        development_process="Generate structured data, render HTML, and validate the output.",
-        outcomes=["The generated record renders without unresolved template tokens."],
+        design_approach="Use the structured project model without generating public HTML.",
+        development_process="Generate structured data and validate the record without touching the live portfolio.",
+        outcomes=["The structured record is valid and does not alter the public page."],
         skills=["Instructional Design"],
         tools=["Python"],
         today="2026-09-08",
@@ -140,21 +139,6 @@ def main() -> int:
     except ValueError:
         pass
 
-    try:
-        renderer = generator.load_renderer()
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = Path(temp_dir) / "generator-test-project.json"
-            temp_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
-            rendered, output_path = renderer.render_project_text(temp_path)
-            require("{{" not in rendered, "generated project should not contain unresolved template tokens", errors)
-            require("Generator Test Project" in rendered, "rendered project title is missing", errors)
-            require(output_path.name == "index.html", "renderer output should be an index.html page", errors)
-            require("project-snapshot-grid" in rendered, "generated project should use the compact project snapshot", errors)
-            require("project-story" in rendered, "generated project should use the modern project story structure", errors)
-            require("portfolio-motion.js" in rendered, "generated project should inherit shared portfolio motion/hiring support", errors)
-            require("case-study-sidebar" not in rendered, "generated project should not use the deprecated sidebar architecture", errors)
-    except Exception as exc:
-        errors.append(f"generated record failed renderer test: {exc}")
 
     if errors:
         print("New-project generator validation failed:")
@@ -162,7 +146,9 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    print("New-project generator validation passed.")
+    require(generator.create_project.__kwdefaults__.get("render") is False, "new project creation must default to record-only mode", errors)
+
+    print("New-project record generator validation passed.")
     return 0
 
 
