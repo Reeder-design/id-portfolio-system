@@ -225,10 +225,8 @@ def preflight(record: dict) -> tuple[Path, Path]:
     return record_path, page_path
 
 
-def run_validation(include_site: bool) -> tuple[bool, str]:
+def run_validation() -> tuple[bool, str]:
     commands = [[sys.executable, str(ROOT / "scripts" / "check-content.py")]]
-    if include_site:
-        commands.append([sys.executable, str(ROOT / "scripts" / "check-site.py")])
 
     output: list[str] = []
     for command in commands:
@@ -251,20 +249,10 @@ def refresh_documentation() -> str:
     output = "\n".join(part for part in [result.stdout, result.stderr] if part).strip()
     if result.returncode != 0:
         raise ValueError(
-            "Project files were created, but documentation refresh failed. "
+            "The project record was created, but documentation refresh failed. "
             "Run `python3 scripts/update-docs.py` after resolving the error.\n" + output
         )
     return output
-
-
-def cleanup_empty_parents(path: Path, stop: Path) -> None:
-    current = path.parent
-    while current != stop and current.is_relative_to(stop):
-        try:
-            current.rmdir()
-        except OSError:
-            break
-        current = current.parent
 
 
 def create_project(record: dict) -> Path:
@@ -272,7 +260,7 @@ def create_project(record: dict) -> Path:
     record_path.parent.mkdir(parents=True, exist_ok=True)
     record_path.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    valid, validation_output = run_validation(include_site=False)
+    valid, validation_output = run_validation()
     if not valid:
         if record_path.exists():
             record_path.unlink()
@@ -305,7 +293,7 @@ def prompt_assets(taxonomy: dict) -> list[dict]:
 
 def collect_project(taxonomy: dict) -> dict:
     print("\n=== New Portfolio Project ===")
-    print("This creates a structured project record. Public page generation is disabled by default to protect the current portfolio design.")
+    print("This creates a structured project record only. Public page generation is not part of this workflow.")
     print("Private/reference source files should NOT be added to this public repository.\n")
 
     title = prompt_required("Project title")
@@ -378,9 +366,8 @@ def print_summary(record: dict) -> None:
     print(f"Status:          {record['status']}")
     print(f"Confidentiality: {record['confidentiality']}")
     print(f"Data record:     portfolio-data/projects/{record['id']}.json")
-    print(f"Page:            {record['page_path']}")
-    if record["confidentiality"] == "needs-sanitization":
-        print("Public page:     NOT generated until content is sanitized")
+    print(f"Reserved path:   {record['page_path']}")
+    print("Public page:     not created by this workflow")
 
 
 def parse_args() -> argparse.Namespace:
