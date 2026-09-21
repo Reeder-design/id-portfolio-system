@@ -157,3 +157,45 @@ body.lms-admin-page .lms-other-work-card>.eyebrow,body.lms-admin-page .lms-other
 .lms-integration-entry:hover,.lms-integration-entry:focus-visible{transform:translateY(-3px);border-color:rgba(121,201,158,.5)!important;box-shadow:0 18px 38px rgba(42,75,68,.11)!important;outline:none}
 .lms-integration-entry-action{display:inline-flex;margin-top:12px;color:#315755;font:800 .68rem/1.2 var(--font-heading)}
 @media(max-width:680px){.lms-hero-network{display:none}.lms-hero-platform-core{top:64%!important}}
+
+
+/* System Integrations spotlight emphasis */
+.lms-integration-entry{
+  position:relative;
+  grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr)!important;
+  padding:24px!important;
+  border-color:rgba(151,219,79,.26)!important;
+  background:linear-gradient(145deg,#173139,#234946)!important;
+  color:#eaf3ee!important;
+  box-shadow:0 20px 46px rgba(29,66,63,.2)!important;
+  overflow:hidden;
+}
+.lms-integration-entry::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 88% 15%,rgba(151,219,79,.11),transparent 15rem);
+}
+.lms-integration-entry-copy{position:relative;z-index:2}
+.lms-integration-spotlight-badge{
+  display:inline-flex;
+  margin-bottom:9px;
+  padding:6px 9px;
+  border:1px solid rgba(151,219,79,.32);
+  border-radius:999px;
+  background:rgba(151,219,79,.1);
+  color:#dff6e5;
+  font:900 .5rem/1 var(--font-heading);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.lms-integration-entry .eyebrow{color:#afe1bf!important}
+.lms-integration-entry h3{max-width:720px;margin:3px 0 8px!important;color:#fff!important;font-size:1.3rem!important}
+.lms-integration-entry p:not(.eyebrow){max-width:760px;color:#d2e0d9!important}
+.lms-integration-entry-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.lms-integration-entry-tags span{padding:5px 7px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(255,255,255,.055);color:#dff0e5;font:800 .48rem/1 var(--font-heading)}
+.lms-integration-entry-action{color:#c8f0d5!important;font-size:.7rem!important}
+.lms-integration-entry .lms-integration-case-flow{position:relative;z-index:2;border:1px solid rgba(255,255,255,.08);background:rgba(8,28,31,.46)!important}
+.lms-integration-entry:hover,.lms-integration-entry:focus-visible{border-color:#97db4f!important;box-shadow:0 24px 54px rgba(29,66,63,.28)!important}
+@media(max-width:900px){.lms-integration-entry{grid-template-columns:1fr!important}}
