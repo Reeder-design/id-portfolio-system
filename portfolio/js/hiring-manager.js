@@ -6,12 +6,31 @@
     specialist: new URL('data/hiring-faq-specialist.json', root),
     capabilities: new URL('data/hiring-capabilities.json', root),
     tools: new URL('data/hiring-tools.json', root),
-    search: new URL('data/hiring-search.json', root)
+    search: new URL('data/hiring-search.json', root),
+    routingPolicy: new URL('data/hiring-routing-policy.json', root)
   };
 
   const pixelRoot = new URL('assets/icons/pixel/hiring-guide/', root);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SESSION_KEY = 'ask-haley-session-v1';
+
+  const DEFAULT_ROUTING_POLICY = {
+    stop_words: [
+      'a','an','and','are','about','can','could','did','do','does','for','from','have','has','how','i','in','is','it','me','my','of','on','or','please','show','tell','the','to','what','where','which','who','why','with','would','you','your','thing','things','really','just','some','something','stuff','kind','sort','one'
+    ],
+    min_answer_score: 8,
+    min_answer_margin: 3,
+    min_search_score: 6,
+    max_input_length: 480,
+    max_repeated_character_run: 8,
+    max_repeated_token_count: 4
+  };
+
+  const GENERIC_MATCH_TOKENS = new Set([
+    'answer','answers','career','experience','help','information','job','project','projects','question','questions','role','team','work'
+  ]);
+
+  const PROFESSIONAL_BOUNDARY_PATTERN = /\b(?:asshole|bitch|blowjob|dick|fuck|jailbreak|nudes?|onlyfans|porn(?:ography)?|sex(?:ual)?|shit|system prompt|tits|vagina|xxx)\b/i;
 
   const state = {
     questions: [],
@@ -26,12 +45,9 @@
     replying: false,
     chatStarted: false,
     expandedChips: {},
-    lastEvidence: null
+    lastEvidence: null,
+    routingPolicy: DEFAULT_ROUTING_POLICY
   };
-
-  const STOP_WORDS = new Set([
-    'a','an','and','are','about','can','do','does','did','for','from','have','has','how','i','in','is','me','my','of','on','or','show','tell','the','to','what','where','with','you','your'
-  ]);
 
   const STARTER_IDS = [
     'why-hire-me',
@@ -178,56 +194,122 @@
     .replaceAll("'", '&#039;');
 
   const normalize = (value) => String(value || '')
+    .normalize('NFKC')
     .toLowerCase()
     .replace(/[^a-z0-9+#.\-\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 
+  const routingPolicy = () => state.routingPolicy || DEFAULT_ROUTING_POLICY;
+
+  const routingStopWords = () => new Set(routingPolicy().stop_words || DEFAULT_ROUTING_POLICY.stop_words);
+
   const tokensFor = (value) => normalize(value)
     .split(' ')
-    .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
+    .filter((token) => token.length > 1 && !routingStopWords().has(token) && !GENERIC_MATCH_TOKENS.has(token));
 
-  const scoreQuestion = (query, question) => {
+  const normalizeRoutingPolicy = (value) => {
+    const candidate = value && typeof value === 'object' ? value : {};
+    const number = (key) => Number.isFinite(Number(candidate[key])) ? Number(candidate[key]) : DEFAULT_ROUTING_POLICY[key];
+    const stopWords = Array.isArray(candidate.stop_words)
+      ? candidate.stop_words.map((item) => normalize(item)).filter(Boolean)
+      : DEFAULT_ROUTING_POLICY.stop_words;
+    return {
+      ...DEFAULT_ROUTING_POLICY,
+      stop_words: stopWords,
+      min_answer_score: number('min_answer_score'),
+      min_answer_margin: number('min_answer_margin'),
+      min_search_score: number('min_search_score'),
+      max_input_length: number('max_input_length'),
+      max_repeated_character_run: number('max_repeated_character_run'),
+      max_repeated_token_count: number('max_repeated_token_count')
+    };
+  };
+
+  const phraseMatch = (query, field) => {
     const clean = normalize(query);
-    if (!clean) return 0;
+    const candidate = normalize(field);
+    return tokensFor(candidate).length >= 2 && Boolean(candidate) && (clean.includes(candidate) || candidate.includes(clean));
+  };
+
+  const scoreQuestionMatch = (query, question) => {
+    const clean = normalize(query);
+    if (!clean) return { score: 0, matchedTokens: [], exactPhrase: false };
     const prompt = normalize(question.prompt);
     const label = normalize(question.short_label);
     const category = normalize(question.category);
-    const keywords = normalize((question.keywords || []).join(' '));
-    const variants = normalize((question.variants || []).join(' '));
-    const answer = normalize(question.answer);
+    const keywordValues = Array.isArray(question.keywords) ? question.keywords : [];
+    const variantValues = Array.isArray(question.variants) ? question.variants : [];
+    const keywords = normalize(keywordValues.join(' '));
+    const variants = normalize(variantValues.join(' '));
+    const matchedTokens = new Set();
+    let exactPhrase = false;
     let score = 0;
 
-    if (prompt.includes(clean) || clean.includes(prompt)) score += 16;
-    if (label.includes(clean) || clean.includes(label)) score += 12;
-    if (keywords.includes(clean)) score += 9;
-    if (variants.includes(clean)) score += 8;
+    const addPhrase = (field, points) => {
+      if (phraseMatch(clean, field)) {
+        score += points;
+        exactPhrase = true;
+      }
+    };
+    addPhrase(prompt, 16);
+    addPhrase(label, 12);
+    if (keywordValues.some((value) => phraseMatch(clean, value))) {
+      score += 10;
+      exactPhrase = true;
+    }
+    if (variantValues.some((value) => phraseMatch(clean, value))) {
+      score += 10;
+      exactPhrase = true;
+    }
 
     tokensFor(query).forEach((token) => {
-      if (label.includes(token)) score += 5;
-      if (prompt.includes(token)) score += 4;
-      if (keywords.includes(token)) score += 4;
-      if (variants.includes(token)) score += 3;
-      if (category.includes(token)) score += 2;
-      if (answer.includes(token)) score += 1;
+      let matched = false;
+      if (label.includes(token)) { score += 5; matched = true; }
+      if (prompt.includes(token)) { score += 4; matched = true; }
+      if (keywords.includes(token)) { score += 4; matched = true; }
+      if (variants.includes(token)) { score += 3; matched = true; }
+      if (category.includes(token)) { score += 2; matched = true; }
+      if (matched) matchedTokens.add(token);
     });
 
-    return score;
+    return { score, matchedTokens: [...matchedTokens], exactPhrase };
+  };
+
+  const scoreQuestion = (query, question) => {
+    return scoreQuestionMatch(query, question).score;
+  };
+
+  const hasSupportedQuestionMatch = (match) => (
+    match.score >= routingPolicy().min_answer_score
+    && (match.exactPhrase || match.matchedTokens.length > 0)
+  );
+
+  const routeQuestion = (query) => {
+    const ranked = state.questions
+      .map((question) => ({ question, ...scoreQuestionMatch(query, question) }))
+      .sort((a, b) => b.score - a.score);
+    const matches = ranked.filter(hasSupportedQuestionMatch);
+    if (!matches.length) return { type: 'unsupported', matches: [] };
+    const top = matches[0];
+    const next = matches[1];
+    if (next && top.score - next.score < routingPolicy().min_answer_margin) {
+      return { type: 'ambiguous', matches: matches.slice(0, 3) };
+    }
+    return { type: 'answer', matches: [top] };
   };
 
   const scoreSearchEntry = (query, entry) => {
     const clean = normalize(query);
     const title = normalize(entry.title);
-    const summary = normalize(entry.summary);
     const keywords = normalize((entry.keywords || []).join(' '));
     let score = 0;
     if (!clean) return score;
-    if (title.includes(clean) || clean.includes(title)) score += 12;
-    if (keywords.includes(clean)) score += 7;
+    if (phraseMatch(clean, title)) score += 12;
+    if (phraseMatch(clean, keywords)) score += 9;
     tokensFor(query).forEach((token) => {
       if (title.includes(token)) score += 5;
       if (keywords.includes(token)) score += 3;
-      if (summary.includes(token)) score += 1;
     });
     return score;
   };
@@ -518,10 +600,56 @@
     saveSession();
   };
 
+  const ambiguousNow = (matches, typing) => {
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble">
+        <span class="hm-answer-tag">Choose a topic</span>
+        <p>I found a few related interview topics. Choose the one closest to what you mean so I can keep the answer specific.</p>
+        <div class="hm-followups"><div>${matches.map((item) => `<button type="button" data-hm-question-id="${escapeHtml(item.question.id)}">${escapeHtml(item.question.short_label)}</button>`).join('')}</div></div>
+      </div>`;
+    typing.replaceWith(article);
+    bindQuestionButtons(article);
+    state.replying = false;
+    scrollChat();
+    saveSession();
+  };
+
+  const boundaryNow = (reason) => {
+    const article = document.createElement('article');
+    article.className = 'hm-message hm-message-haley';
+    const message = reason === 'length'
+      ? 'Please keep the question under 480 characters so I can match it to one focused interview topic.'
+      : reason === 'spam'
+        ? 'Please enter one clear, respectful hiring question so I can match it to the right evidence.'
+        : 'This guide is for respectful, work-related hiring questions. Try asking about projects, decisions, tools, systems, or working style.';
+    article.innerHTML = `
+      <div class="hm-message-label">Haley</div>
+      <div class="hm-message-bubble"><span class="hm-answer-tag">Professional questions only</span><p>${escapeHtml(message)}</p></div>`;
+    elements.chatLog.appendChild(article);
+    scrollChat();
+    saveSession();
+  };
+
+  const inputBoundary = (query) => {
+    const raw = String(query || '').normalize('NFKC').trim();
+    if (raw.length > routingPolicy().max_input_length) return 'length';
+    if (PROFESSIONAL_BOUNDARY_PATTERN.test(raw)) return 'professional';
+    const repeatedLimit = routingPolicy().max_repeated_character_run;
+    if (new RegExp(`(.)\\1{${repeatedLimit},}`, 'u').test(raw)) return 'spam';
+    const tokens = normalize(raw).split(' ').filter(Boolean);
+    const counts = new Map();
+    tokens.forEach((token) => counts.set(token, (counts.get(token) || 0) + 1));
+    if ([...counts.values()].some((count) => count > routingPolicy().max_repeated_token_count)) return 'spam';
+    return null;
+  };
+
   const fallbackNow = (query, typing) => {
     const matches = state.searchEntries
       .map((entry) => ({ entry, score: scoreSearchEntry(query, entry) }))
-      .filter((item) => item.score > 0)
+      .filter((item) => item.score >= routingPolicy().min_search_score)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((item) => item.entry);
@@ -557,17 +685,20 @@
     const clean = String(query || '').trim();
     if (!clean || state.replying) return;
     setLibraryOpen(false);
+    const boundary = inputBoundary(clean);
+    if (boundary) {
+      boundaryNow(boundary);
+      return;
+    }
     if (!options.skipUser) appendUser(clean);
-
-    const ranked = state.questions
-      .map((question) => ({ question, score: scoreQuestion(clean, question) }))
-      .sort((a, b) => b.score - a.score);
+    const route = routeQuestion(clean);
 
     state.replying = true;
     const typing = typingMessage();
     const delay = reducedMotion ? 0 : 300;
     window.setTimeout(() => {
-      if (ranked[0] && ranked[0].score >= 6) answerNow(ranked[0].question, typing);
+      if (route.type === 'answer') answerNow(route.matches[0].question, typing);
+      else if (route.type === 'ambiguous') ambiguousNow(route.matches, typing);
       else fallbackNow(clean, typing);
     }, delay);
   };
@@ -816,11 +947,20 @@
 
   const load = async () => {
     try {
-      const [faq, expanded, specialist, capabilities, tools, search] = await Promise.all(
-        Object.values(urls).map((url) => fetch(url).then((response) => {
-          if (!response.ok) throw new Error(`Could not load ${url.pathname}`);
-          return response.json();
-        }))
+      const fetchJson = (url) => fetch(url).then((response) => {
+        if (!response.ok) throw new Error(`Could not load ${url.pathname}`);
+        return response.json();
+      });
+      const [faq, expanded, specialist, capabilities, tools, search, policy] = await Promise.all(
+        [
+          fetchJson(urls.faq),
+          fetchJson(urls.expanded),
+          fetchJson(urls.specialist),
+          fetchJson(urls.capabilities),
+          fetchJson(urls.tools),
+          fetchJson(urls.search),
+          fetchJson(urls.routingPolicy).catch(() => DEFAULT_ROUTING_POLICY)
+        ]
       );
 
       state.questions = [
@@ -832,6 +972,8 @@
       state.capabilities = capabilities.pillars || [];
       state.tools = tools.groups || [];
       state.learningStatement = tools.learning_statement || '';
+      state.routingPolicy = normalizeRoutingPolicy(policy);
+      elements.input.maxLength = String(state.routingPolicy.max_input_length);
 
       if (elements.count) elements.count.textContent = state.questions.length;
       const saved = safeSessionRead();

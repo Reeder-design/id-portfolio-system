@@ -40,6 +40,7 @@ def run_full_validation() -> tuple[bool, str]:
         ("Final public polish/mobile", [sys.executable, "scripts/check-final-polish.py"]),
         ("Breadcrumb consistency", [sys.executable, "scripts/check-breadcrumb-consistency.py"]),
         ("Hiring Manager UX", [sys.executable, "scripts/check-hiring-mobile-ux.py"]),
+        ("Hiring Manager routing", [sys.executable, "scripts/check-hiring-guide-routing.py"]),
         ("Hiring Guide Manager", [sys.executable, "scripts/check-hiring-guide-manager.py"]),
         ("Hiring Guide public sync", [sys.executable, "scripts/check-hiring-guide-public-sync.py"]),
         ("Public privacy/leakage", [sys.executable, "scripts/check-public-privacy.py"]),

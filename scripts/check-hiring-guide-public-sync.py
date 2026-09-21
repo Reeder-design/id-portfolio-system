@@ -308,7 +308,7 @@ def main() -> int:
         require(any("emerging evidence" in warning for warning in proposal["warnings"]), "Emerging evidence must produce a human-review warning.", errors)
         require(any("editorial notes" in warning for warning in proposal["warnings"]), "Private editorial notes must produce a review warning.", errors)
 
-        routing = sync.test_routing("tell me about your background", proposal)
+        routing = sync.test_routing("Walk me through your background.", proposal)
         require(bool(routing) and routing[0]["id"] == "about-me", "Routing simulator did not rank the expected public question first.", errors)
 
         # A manual "new" choice is also remembered and can return to automatic mode.
