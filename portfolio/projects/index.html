@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="../css/phase1-frame.css">
     <link rel="stylesheet" href="../css/project-areas.css">
     <style>
-        .featured-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.featured-case-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));box-shadow:0 14px 38px rgba(52,74,66,.08)}.featured-case-card .icon-badge{margin-bottom:16px}.featured-case-card h3{margin-bottom:9px;color:var(--pine-blue)}.featured-case-card p:not(.eyebrow){margin-bottom:18px;line-height:1.6}.featured-case-card .case-meta-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.featured-case-card .project-family-link{margin-top:auto}.projects-contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}.refresh-hero-grid{column-gap:clamp(28px,6vw,72px);row-gap:18px}.refresh-hero-grid>.breadcrumbs{margin-bottom:0}.github-workflow-spotlight{background:linear-gradient(145deg,#173139 0%,#214844 58%,#294d4c 100%)!important;color:#eef6f1!important}
+        .featured-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.featured-case-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));box-shadow:0 14px 38px rgba(52,74,66,.08)}.featured-case-card .icon-badge{margin-bottom:16px}.featured-case-card h3{margin-bottom:9px;color:var(--pine-blue)}.featured-case-card p:not(.eyebrow){margin-bottom:18px;line-height:1.6}.featured-case-card .case-meta-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.featured-case-card .project-family-link{margin-top:auto}.projects-contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}.refresh-hero-grid{column-gap:clamp(28px,6vw,72px);row-gap:18px}.refresh-hero-grid>.breadcrumbs{margin-bottom:0}.github-workflow-spotlight{background:#173139!important;color:#eef6f1!important}
 .github-workflow-spotlight .container{position:relative}
-.github-workflow-spotlight-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:34px;align-items:center;padding:30px;border:1px solid rgba(255,255,255,.09);border-radius:24px;background:radial-gradient(circle at 85% 18%,rgba(151,219,79,.11),transparent 14rem),rgba(7,28,31,.22)!important;box-shadow:0 20px 46px rgba(0,0,0,.16)}
+.github-workflow-spotlight-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(440px,.9fr);gap:34px;align-items:center;padding:30px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(145deg,#1a3439,#234947)!important;box-shadow:0 20px 46px rgba(0,0,0,.18)}
 .github-workflow-spotlight .eyebrow{color:#afe1bf!important}
 .github-workflow-spotlight h2{max-width:760px;margin:0 0 9px;color:#fff!important}
 .github-workflow-spotlight p:not(.eyebrow){max-width:760px;margin:0;color:#cbdad2!important;line-height:1.52}
@@ -26,45 +26,26 @@
 .github-spotlight-actions{margin-top:16px}
 .github-spotlight-actions .btn{display:inline-flex}
 
-.github-spotlight-workflow{position:relative;min-height:300px;padding:14px 16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(0,0,0,.12);overflow:hidden}
-.github-spotlight-workflow::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:26px 26px}
-.github-spotlight-workflow-header{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.github-spotlight-workflow{position:relative;padding:16px 16px 14px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#10272e;overflow:hidden}
+.github-spotlight-workflow-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
 .github-spotlight-workflow-header span{color:#afe1bf;font:900 .43rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
 .github-spotlight-workflow-header b{color:#dce9e2;font:800 .42rem/1 var(--font-heading)}
+.github-spotlight-rail{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:start}
+.github-spotlight-rail::before{content:"";position:absolute;left:10%;right:10%;top:55px;height:4px;border-radius:999px;background:rgba(121,201,158,.2)}
+.github-spotlight-stage{position:relative;z-index:2;display:grid;justify-items:center;gap:7px;text-align:center}
+.github-spotlight-stage i{display:grid;place-items:center;width:78px;height:78px;padding:6px;border:1px solid rgba(80,132,132,.13);border-radius:19px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.16)}
+.github-spotlight-stage img{width:64px;height:64px;object-fit:contain;image-rendering:pixelated}
+.github-spotlight-stage small{color:#9fcdb0;font:900 .39rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+.github-spotlight-stage strong{max-width:110px;color:#fff;font:800 .52rem/1.18 var(--font-heading)}
+.github-spotlight-packet{position:absolute;z-index:3;left:10%;top:50px;width:14px;height:14px;border:2px solid #10272e;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:githubSpotlightRail 5.8s ease-in-out infinite}
+@keyframes githubSpotlightRail{0%,8%{left:10%}34%{left:36%}60%{left:63%}86%,100%{left:88%}}
+.github-spotlight-system-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
+.github-spotlight-system-chips span{display:flex;align-items:center;justify-content:center;gap:5px;min-height:42px;padding:6px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(255,255,255,.045);color:#dce9e2;font:800 .4rem/1.1 var(--font-heading);text-align:center}
+.github-spotlight-system-chips img{width:30px;height:30px;padding:2px;border-radius:7px;background:#fff;object-fit:contain}
 
-.github-spotlight-cycle{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,105px);gap:12px 28px;margin-top:18px}
-.github-spotlight-step{position:relative;display:grid;grid-template-columns:54px 1fr;gap:8px;align-items:center;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.055)}
-.github-spotlight-step i{display:grid;place-items:center;width:54px;height:54px;padding:4px;border:1px solid rgba(80,132,132,.12);border-radius:14px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.13)}
-.github-spotlight-step img{width:45px;height:45px;object-fit:contain;image-rendering:pixelated}
-.github-spotlight-step small{display:block;color:#9fcdb0;font:900 .38rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
-.github-spotlight-step strong{display:block;margin-top:3px;color:#fff;font:800 .49rem/1.12 var(--font-heading)}
-.github-spotlight-step:nth-child(1){grid-column:1;grid-row:1}
-.github-spotlight-step:nth-child(2){grid-column:2;grid-row:1}
-.github-spotlight-step:nth-child(3){grid-column:3;grid-row:1}
-.github-spotlight-step:nth-child(4){grid-column:3;grid-row:2}
-.github-spotlight-step:nth-child(5){grid-column:2;grid-row:2}
-.github-spotlight-step:nth-child(6){grid-column:1;grid-row:2}
-
-.github-spotlight-connector{position:absolute;z-index:1;height:3px;border-radius:999px;background:linear-gradient(90deg,rgba(121,201,158,.25),#97db4f,rgba(121,201,158,.25));overflow:visible}
-.github-spotlight-connector::after{content:"";position:absolute;top:-3px;right:-1px;width:8px;height:8px;border-top:2px solid #97db4f;border-right:2px solid #97db4f;transform:rotate(45deg)}
-.github-spotlight-connector span{position:absolute;top:-4px;left:0;width:10px;height:10px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.08);animation:githubSpotlightPacket 3.4s ease-in-out infinite}
-.github-spotlight-connector.c1{left:29%;right:55%;top:77px}
-.github-spotlight-connector.c2{left:55%;right:29%;top:77px}
-.github-spotlight-connector.c3{right:16.5%;top:86px;width:3px;height:122px;background:linear-gradient(rgba(121,201,158,.25),#97db4f,rgba(121,201,158,.25))}
-.github-spotlight-connector.c3::after{top:auto;right:-3px;bottom:-1px;transform:rotate(135deg)}
-.github-spotlight-connector.c3 span{top:0;left:-4px;animation-name:githubSpotlightPacketVertical}
-.github-spotlight-connector.c4{left:55%;right:29%;bottom:69px;transform:rotate(180deg)}
-.github-spotlight-connector.c5{left:29%;right:55%;bottom:69px;transform:rotate(180deg)}
-@keyframes githubSpotlightPacket{0%,100%{left:0;opacity:.2}50%{left:calc(100% - 10px);opacity:1}}
-@keyframes githubSpotlightPacketVertical{0%,100%{top:0;opacity:.2}50%{top:calc(100% - 10px);opacity:1}}
-
-.github-spotlight-github{position:absolute;z-index:4;left:50%;top:50%;display:grid;place-items:center;width:72px;height:72px;padding:8px;border:1px solid rgba(151,219,79,.26);border-radius:19px;background:#fff;box-shadow:0 14px 26px rgba(0,0,0,.2);transform:translate(-50%,-50%)}
-.github-spotlight-github img{width:56px;height:56px;object-fit:contain}
-.github-spotlight-github::after{content:"versioned";position:absolute;top:76px;padding:4px 6px;border-radius:999px;background:#315755;color:#dff0e5;font:800 .36rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
-
-@media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}.github-spotlight-workflow{min-height:300px}}
-@media(max-width:600px){.github-spotlight-cycle{grid-template-columns:1fr;grid-template-rows:none}.github-spotlight-step:nth-child(n){grid-column:1;grid-row:auto}.github-spotlight-connector,.github-spotlight-github{display:none}}
-@media(prefers-reduced-motion:reduce){.github-spotlight-connector span{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}}
+@media(max-width:620px){.github-spotlight-rail{grid-template-columns:repeat(2,1fr);row-gap:18px}.github-spotlight-rail::before,.github-spotlight-packet{display:none}.github-spotlight-system-chips{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.github-spotlight-packet{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
     <script defer src="../js/primary-pages.js"></script>
@@ -117,23 +98,21 @@
         <div class="github-spotlight-tags"><span>3 repositories</span><span>5 connected tools</span><span>UAT + CI</span><span>Reusable content</span></div>
         <div class="github-spotlight-actions"><a class="btn btn-primary" href="./github-workflow/index.html">Explore GitHub Portfolio Workflow →</a></div>
       </div>
-      <div class="github-spotlight-workflow" aria-label="Portfolio workflow from source content through reusable library and workbench into the public portfolio">
-        <div class="github-spotlight-workflow-header"><span>Portfolio content lifecycle</span><b>reuse → build → publish</b></div>
+      <div class="github-spotlight-workflow" aria-label="Simplified GitHub portfolio lifecycle from source content through reuse, build, and publish">
+        <div class="github-spotlight-workflow-header"><span>Portfolio workflow</span><b>capture → reuse → build → publish</b></div>
 
-        <div class="github-spotlight-cycle">
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/content-design/content.webp" alt=""></i><span><small>01 · Capture</small><strong>Source + ideas</strong></span></span>
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/library-manager.webp" alt=""></i><span><small>02 · Organize</small><strong>Library Manager</strong></span></span>
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/library.webp" alt=""></i><span><small>03 · Reuse</small><strong>Content Lab</strong></span></span>
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><span><small>04 · Build</small><strong>Workbench</strong></span></span>
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></i><span><small>05 · Package</small><strong>Portfolio Manager</strong></span></span>
-          <span class="github-spotlight-step"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><span><small>06 · Publish</small><strong>Portfolio</strong></span></span>
+        <div class="github-spotlight-rail">
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/content-design/content.webp" alt=""></i><small>01 · Capture</small><strong>Source + ideas</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/library.webp" alt=""></i><small>02 · Reuse</small><strong>Content Lab</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><small>03 · Build</small><strong>Workbench</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><small>04 · Publish</small><strong>Portfolio</strong></span>
+          <span class="github-spotlight-packet" aria-hidden="true"></span>
+        </div>
 
-          <span class="github-spotlight-connector c1" aria-hidden="true"><span></span></span>
-          <span class="github-spotlight-connector c2" aria-hidden="true"><span></span></span>
-          <span class="github-spotlight-connector c3" aria-hidden="true"><span></span></span>
-          <span class="github-spotlight-connector c4" aria-hidden="true"><span></span></span>
-          <span class="github-spotlight-connector c5" aria-hidden="true"><span></span></span>
-          <span class="github-spotlight-github" aria-hidden="true"><img src="../assets/icons/pixel/github/github.webp" alt=""></span>
+        <div class="github-spotlight-system-chips">
+          <span><img src="../assets/icons/pixel/github/github.webp" alt="">GitHub keeps every handoff versioned</span>
+          <span><img src="../assets/icons/pixel/github-projects/library-manager.webp" alt="">Managers prepare content before publish</span>
+          <span><img src="../assets/icons/pixel/github/track-progress.webp" alt="">UAT + validation protect releases</span>
         </div>
       </div>
     </div>
