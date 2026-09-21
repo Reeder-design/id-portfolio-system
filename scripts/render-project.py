@@ -77,6 +77,33 @@ def find_taxonomy_item(taxonomy: dict, project: dict) -> tuple[dict, dict | None
     return category, subcategory
 
 
+def render_breadcrumbs(
+    output_path: Path,
+    project: dict,
+    category: dict,
+    subcategory: dict | None,
+) -> str:
+    crumbs = [
+        ("Home", "portfolio/index.html"),
+        ("Projects", "portfolio/projects/index.html"),
+        (category["label"], category.get("path")),
+    ]
+
+    if subcategory:
+        crumbs.append((subcategory["label"], subcategory.get("path")))
+
+    html_parts: list[str] = []
+    for label, path in crumbs:
+        if path:
+            html_parts.append(f'<a href="{esc(relative_href(output_path, path))}">{esc(label)}</a>')
+        else:
+            html_parts.append(f"<span>{esc(label)}</span>")
+        html_parts.append('<span class="breadcrumb-separator">/</span>')
+
+    html_parts.append(f"<span>{esc(project['title'])}</span>")
+    return "\n".join(html_parts)
+
+
 def render_list(items: list[str]) -> str:
     if not items:
         return "<li>Not specified</li>"
