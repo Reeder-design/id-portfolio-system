@@ -825,8 +825,8 @@
 
 .ai-suite-landing .ai-scope-map{position:relative;align-self:center;min-height:165px}
 .ai-suite-landing .ai-scope-orbit{position:absolute;inset:15px 72px 7px;border:1px dashed rgba(174,225,191,.32);border-radius:50%}
-.ai-suite-landing .ai-scope-output{position:absolute;z-index:3;top:32%;left:50%;display:grid;place-items:center;width:76px;height:76px;border:1px solid rgba(151,219,79,.35);border-radius:50%;background:#eaf5ec;box-shadow:0 0 0 9px rgba(121,201,158,.09);transform:translate(-50%,-50%)}
-.ai-suite-landing .ai-scope-output img{width:50px;height:50px;object-fit:contain}.ai-suite-landing .ai-scope-output b{position:absolute;top:calc(100% + 4px);color:#cde7d6;font:900 .58rem/1 var(--font-heading);letter-spacing:.04em;white-space:nowrap}
+.ai-suite-landing .ai-scope-output{position:absolute;z-index:3;top:32%;left:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:118px;height:92px;padding:7px 12px 8px;border:1px solid rgba(151,219,79,.35);border-radius:50%;background:#eaf5ec;box-shadow:0 0 0 9px rgba(121,201,158,.09);box-sizing:border-box;transform:translate(-50%,-50%)}
+.ai-suite-landing .ai-scope-output img{width:52px;height:52px;object-fit:contain}.ai-suite-landing .ai-scope-output b{position:static;color:#315755;font:900 .58rem/1 var(--font-heading);letter-spacing:.04em;white-space:nowrap}
 .ai-suite-landing .ai-scope-question{position:absolute;z-index:2;display:grid;grid-template-columns:34px minmax(0,1fr);align-items:center;gap:9px;width:144px;min-height:52px;padding:7px 10px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.08);color:#e5f1eb;box-sizing:border-box}
 .ai-suite-landing .ai-scope-question img{width:34px;height:34px;padding:3px;border-radius:9px;background:#fff;object-fit:contain}.ai-suite-landing .ai-scope-question b{font:800 .66rem/1.08 var(--font-heading);letter-spacing:.01em;white-space:nowrap}
 .ai-suite-landing .ai-scope-task{top:8px;left:3%}.ai-suite-landing .ai-scope-evidence{top:8px;right:3%}.ai-suite-landing .ai-scope-experience{bottom:0;left:50%;transform:translateX(-50%)}
@@ -971,6 +971,9 @@
 .ai-workflow-page .ai-brief-sheet b{font-size:.64rem}.ai-workflow-page .ai-brief-parts span{font-size:.58rem}.ai-workflow-page .ai-ledger-head{font-size:.6rem}.ai-workflow-page .ai-ledger-row>b{font-size:.58rem}.ai-workflow-page .ai-triage-chip small{font-size:.58rem}.ai-workflow-page .ai-triage-chip b{font-size:.68rem}.ai-workflow-page .ai-severity-gauge small{font-size:.58rem}.ai-workflow-page .ai-severity-gauge b{font-size:.64rem}.ai-workflow-page .ai-feedback-note small{font-size:.58rem}.ai-workflow-page .ai-pattern-drawer small{font-size:.57rem}
 
 @media(max-width:680px){
+  .ai-suite-landing .ai-scope-output{top:45%;width:92px;height:84px;padding:6px 8px 7px}
+  .ai-suite-landing .ai-scope-output img{width:47px;height:47px}
+  .ai-suite-landing .ai-scope-output b{font-size:.52rem}
   .ai-suite-landing .ai-scope-question{width:108px;min-height:45px;grid-template-columns:31px minmax(0,1fr);gap:6px;padding:6px 8px}
   .ai-suite-landing .ai-scope-question img{width:31px;height:31px;padding:2px}
   .ai-suite-landing .ai-scope-question b{font-size:.58rem}
