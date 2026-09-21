@@ -392,6 +392,107 @@
     breadcrumbs.querySelectorAll('.breadcrumb-separator').forEach((node) => node.style.setProperty('color', separator, 'important'));
   };
 
+  const cleanLinkLabel = (value) => String(value || '')
+    .replace(/[→›»]+\s*$/g, '')
+    .replace(/^open\s+/i, '')
+    .trim();
+
+  const pixelAssetForLink = (link) => {
+    const haystack = `${link.textContent || ''} ${link.getAttribute('href') || ''}`.toLowerCase();
+    if (haystack.includes('ai') || haystack.includes('evaluation')) return 'assets/icons/pixel/ai-training-evaluation/training-hero.webp';
+    if (haystack.includes('lms') || haystack.includes('learning platform') || haystack.includes('migration')) return 'assets/icons/pixel/lms/goal-mountain.webp';
+    if (haystack.includes('workflow') || haystack.includes('automation') || haystack.includes('system')) return 'assets/icons/pixel/hiring-guide/workflow-tree.webp';
+    if (haystack.includes('meddpicc')) return 'assets/icons/pixel/meddpicc/qualified-opportunity.webp';
+    if (haystack.includes('pursuit')) return 'assets/icons/pixel/pursuit-determination/pursue-confidence.webp';
+    if (haystack.includes('microlearning') || haystack.includes('performance support')) return 'assets/icons/pixel/microlearning-performance-support/microlearning.webp';
+    if (haystack.includes('live training') || haystack.includes('facilitation')) return 'assets/icons/pixel/portfolio-general/collaboration.webp';
+    if (haystack.includes('multimedia') || haystack.includes('video')) return 'assets/icons/pixel/portfolio-general/ideas.webp';
+    if (haystack.includes('certification') || haystack.includes('elearning') || haystack.includes('learning path')) return 'assets/icons/pixel/portfolio-general/learning.webp';
+    return 'assets/icons/pixel/portfolio-general/portfolio.webp';
+  };
+
+  const initExploreFooters = () => {
+    const eyebrowNodes = [...document.querySelectorAll('.eyebrow')]
+      .filter((node) => /^(keep exploring|related work|other work)$/i.test((node.textContent || '').trim()));
+
+    eyebrowNodes.forEach((eyebrow) => {
+      const section = eyebrow.closest('section') || eyebrow.closest('.cta') || eyebrow.parentElement;
+      if (!section || section.dataset.keepExploringStandardized === 'true') return;
+
+      const sectionLabel = eyebrow.textContent.trim();
+      const heading = section.querySelector('h2');
+      const headingText = heading?.textContent.trim() || (sectionLabel === 'Related Work' ? 'Related work' : 'More work to explore');
+      const introCandidates = [...section.querySelectorAll('p')]
+        .filter((p) => !p.classList.contains('eyebrow'));
+      const introText = introCandidates.find((p) => {
+        const card = p.closest('article, a, .refresh-link-card, .explore-card, .live-explore-card, .micro-explore-card');
+        return !card;
+      })?.textContent.trim() || 'Continue through the portfolio.';
+
+      const links = [...section.querySelectorAll('a[href]')];
+      const seen = new Set();
+      const cards = links.map((link) => {
+        const rawHref = link.getAttribute('href');
+        if (!rawHref || seen.has(rawHref)) return null;
+        seen.add(rawHref);
+        const card = link.closest('article, .refresh-link-card, .explore-card, .live-explore-card, .micro-explore-card') || link.parentElement;
+        const titleNode = card?.querySelector('h3');
+        const existingEyebrow = card?.querySelector('.eyebrow');
+        const descriptionNode = [...(card?.querySelectorAll('p') || [])]
+          .find((p) => !p.classList.contains('eyebrow'));
+        const existingUse = card?.querySelector('svg use');
+        const useHref = existingUse?.getAttribute('href') || existingUse?.getAttribute('xlink:href') || '';
+        const existingIcon = useHref.includes('#') ? useHref.split('#').pop() : '';
+        const title = titleNode?.textContent.trim() || cleanLinkLabel(link.textContent) || 'Explore more work';
+        const category = existingEyebrow && !/^(keep exploring|related work|other work)$/i.test(existingEyebrow.textContent.trim())
+          ? existingEyebrow.textContent.trim()
+          : 'Explore';
+        const description = descriptionNode?.textContent.trim() || `Continue to ${title}.`;
+        const icon = existingIcon || iconForLink(link);
+        const pixel = pixelAssetForLink(link);
+        return { href: rawHref, title, category, description, icon, pixel };
+      }).filter(Boolean);
+
+      if (!cards.length) return;
+
+      section.dataset.keepExploringStandardized = 'true';
+      section.className = 'section section-soft';
+      section.classList.add('portfolio-explore-section');
+
+      const relativePath = currentRelativePath();
+      const aiDemoPaths = new Set([
+        'projects/ai-training-and-evaluation/ai-training-and-evaluation-demo',
+        'projects/ai-training-and-evaluation/rubric-demo',
+        'projects/ai-training-and-evaluation/workflow-demo'
+      ]);
+      if (aiDemoPaths.has(relativePath)) section.classList.add('ai-demo-explore');
+      section.removeAttribute('aria-labelledby');
+      section.innerHTML = `
+        <div class="container">
+          <div class="section-heading refresh-section-intro">
+            <p class="eyebrow">${escapeHtml(sectionLabel)}</p>
+            <h2>${escapeHtml(headingText)}</h2>
+            <p>${escapeHtml(introText)}</p>
+          </div>
+          <div class="refresh-card-grid portfolio-explore-grid">
+            ${cards.map((card) => `
+              <a class="refresh-link-card portfolio-explore-card" href="${escapeHtml(card.href)}">
+                <div class="refresh-link-card-header">
+                  <span class="icon-badge has-pixel" aria-hidden="true"><svg class="portfolio-icon"><use href="${iconSprite}#${escapeHtml(card.icon)}"></use></svg></span>
+                  <img class="portfolio-explore-pixel" src="${new URL(card.pixel, portfolioRoot).href}" alt="" aria-hidden="true" loading="lazy">
+                  <span class="portfolio-explore-category">${escapeHtml(card.category)}</span>
+                  <h3>${escapeHtml(card.title)}</h3>
+                </div>
+                <div class="refresh-link-card-body">
+                  <p>${escapeHtml(card.description)}</p>
+                  <span class="project-family-link">Explore related work →</span>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div>`;
+    });
+  };
+
   const initPortfolioSafetyNotes = () => {
     const candidates = [...document.querySelectorAll('p')].filter((node) => {
       const text = (node.textContent || '').trim();
@@ -835,6 +936,7 @@
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();
+  initExploreFooters();
   initPortfolioSafetyNotes();
   initSectionRhythm();
   initCertificationCaseCopy();
@@ -897,7 +999,7 @@
   document.documentElement.classList.add('motion-ready');
 
   const revealTargets = document.querySelectorAll(
-    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer, .portfolio-safety-note, .snapshot-band'
+    '.section-heading, .refresh-section-intro, .refresh-link-card, .project-family-card, .home-feature-card, .experience-panel, .cta, .refresh-explorer, .visual-flourish, .scenario-card, .project-path-card, .process-step, .workflow-principle, .context-card, .progress-card, .feature-callout, .project-case-explorer, .portfolio-explore-card, .portfolio-safety-note, .snapshot-band'
   );
   revealTargets.forEach((element) => element.classList.add('reveal-on-scroll'));
 
