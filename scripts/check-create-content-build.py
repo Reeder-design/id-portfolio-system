@@ -46,6 +46,7 @@ def main() -> int:
     require("BUILD_PROPOSAL_INSTRUCTIONS" in service_text, "Controlled build must use a dedicated proposal-only AI contract.", errors)
     require("Do not create HTML, code, Git commands, files, commits, or publishing instructions" in service_text, "AI build proposal must be denied direct write/publish authority.", errors)
     require("new_project.create_project" in service_text, "Local build must reuse the structured project-record generator.", errors)
+    require("render=" not in service_text, "Controlled build must not expose a public-page render switch.", errors)
     require("run_full_validation()" in service_text, "Local record creation must run the repository validation suite before review.", errors)
     require("refresh_documentation" in service_text, "Controlled build must keep generated documentation synchronized.", errors)
     require("record_sha256" in service_text, "Local build must hash the created structured record for safe revert.", errors)
@@ -163,7 +164,7 @@ def main() -> int:
                         }
 
                     @staticmethod
-                    def create_project(project_record, render=False):
+                    def create_project(project_record):
                         record_path = temp_root / "portfolio-data" / "projects" / f"{project_record['id']}.json"
                         record_path.parent.mkdir(parents=True, exist_ok=True)
                         record_path.write_text(json.dumps(project_record, indent=2), encoding="utf-8")
