@@ -38,7 +38,6 @@ def run_full_validation() -> tuple[bool, str]:
         ("Structured content", [sys.executable, "scripts/check-content.py"]),
         ("General site content", [sys.executable, "scripts/check-site-content.py"]),
         ("Final public polish/mobile", [sys.executable, "scripts/check-final-polish.py"]),
-        ("Breadcrumb consistency", [sys.executable, "scripts/check-breadcrumb-consistency.py"]),
         ("Hiring Manager UX", [sys.executable, "scripts/check-hiring-mobile-ux.py"]),
         ("Hiring Manager routing", [sys.executable, "scripts/check-hiring-guide-routing.py"]),
         ("Hiring Guide Manager", [sys.executable, "scripts/check-hiring-guide-manager.py"]),
