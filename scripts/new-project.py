@@ -278,7 +278,7 @@ def cleanup_empty_parents(path: Path, stop: Path) -> None:
         current = current.parent
 
 
-def create_project(record: dict, *, render: bool = True) -> tuple[Path, Path | None]:
+def create_project(record: dict, *, render: bool = False) -> tuple[Path, Path | None]:
     record_path, page_path = preflight(record)
     should_render = render and record["confidentiality"] != "needs-sanitization"
     created_page: Path | None = None
@@ -332,7 +332,7 @@ def prompt_assets(taxonomy: dict) -> list[dict]:
 
 def collect_project(taxonomy: dict) -> dict:
     print("\n=== New Portfolio Project ===")
-    print("This creates a structured project record and a standard case-study page.")
+    print("This creates a structured project record. Public page generation is disabled by default to protect the current portfolio design.")
     print("Private/reference source files should NOT be added to this public repository.\n")
 
     title = prompt_required("Project title")
@@ -412,10 +412,10 @@ def print_summary(record: dict) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create a new structured portfolio project and standard case-study page."
+        description="Create a new structured portfolio project record. Optional legacy scaffold rendering is explicit and never overwrites an existing page."
     )
     parser.add_argument("--dry-run", action="store_true", help="Collect and preview the project without writing files.")
-    parser.add_argument("--no-render", action="store_true", help="Create the JSON record without generating the HTML page.")
+    parser.add_argument("--render-scaffold", action="store_true", help="Explicitly render the legacy starter scaffold for a brand-new page. Existing pages are never overwritten.")
     parser.add_argument("--yes", action="store_true", help="Skip the final confirmation prompt.")
     return parser.parse_args()
 
@@ -437,7 +437,7 @@ def main() -> int:
             print("Cancelled. No files were created.")
             return 0
 
-        record_path, page_path = create_project(record, render=not args.no_render)
+        record_path, page_path = create_project(record, render=args.render_scaffold)
     except (ValueError, KeyError) as exc:
         print(f"\nERROR: {exc}")
         return 1
@@ -456,7 +456,7 @@ def main() -> int:
     elif record["confidentiality"] == "needs-sanitization":
         print("  Page: not generated because the project still needs sanitization")
     else:
-        print("  Page: not generated (--no-render)")
+        print("  Page: not generated (record-only default)")
 
     if docs_refreshed:
         print("  Documentation: refreshed")
