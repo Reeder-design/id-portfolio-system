@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "stop_words": [
+    "a", "an", "and", "are", "about", "can", "could", "did", "do", "does", "for", "from",
+    "have", "has", "how", "i", "in", "is", "it", "me", "my", "of", "on", "or", "please",
+    "show", "tell", "the", "to", "what", "where", "which", "who", "why", "with", "would", "you", "your",
+    "thing", "things", "really", "just", "some", "something", "stuff", "kind", "sort", "one"
+  ],
+  "min_answer_score": 8,
+  "min_answer_margin": 3,
+  "min_search_score": 6,
+  "max_input_length": 480,
+  "max_repeated_character_run": 8,
+  "max_repeated_token_count": 4,
+  "typo_aliases": {
+    "automtion": "automation",
+    "certfication": "certification",
+    "certifcation": "certification",
+    "evaluaton": "evaluation",
+    "evalution": "evaluation",
+    "experiance": "experience",
+    "experince": "experience",
+    "expreince": "experience",
+    "faciliatation": "facilitation",
+    "instrucional": "instructional",
+    "interative": "interactive",
+    "migraton": "migration",
+    "mirgation": "migration",
+    "multmedia": "multimedia",
+    "performace": "performance",
+    "perfromance": "performance",
+    "suport": "support"
+  }
+}
