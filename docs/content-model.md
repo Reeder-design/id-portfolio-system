@@ -17,8 +17,8 @@ Use the narrowest authoritative source for the thing being changed:
 - `portfolio-data/projects/*.json` — structured project records
 - `portfolio-data/site-content.json` — supported structured general-page content
 - `portfolio-data/schema/` — structured-record requirements
-- `templates/project-page/index.html` + `scripts/render-project.py` — standard generated case-study presentation
-- bespoke files under `portfolio/` — authoritative presentation/interaction for intentionally custom experiences
+- existing files under `portfolio/` — authoritative presentation/interaction for every existing public page
+- `templates/project-page/index.html` + `scripts/render-project.py` — new-page scaffold only, never an overwrite source for an existing page
 
 Documentation describes these sources; it does not replace them.
 
@@ -110,29 +110,33 @@ Only publishable assets should live under public/tracked portfolio paths. Struct
 
 ## Editing and Rendering Rules
 
-Portfolio Manager is the normal human-facing editing layer for supported structured content. Lower-level scripts remain available for deterministic development and maintenance.
+Portfolio Manager is the normal human-facing editing layer for supported structured content. Lower-level scripts remain available for deterministic new-page development and maintenance testing.
 
-For a standard generated project:
+For a **new** standard project whose public path does not exist:
 
 ```text
 project JSON
     ↓
-project-page template
+new-page scaffold
     ↓
 render-project.py
     ↓
-public index.html
+new public index.html
+    ↓
+human UAT
 ```
 
-For intentionally bespoke interactive pages, custom HTML/CSS/JavaScript may remain the presentation source of truth while structured records provide metadata or case-study content where supported.
+After creation, the public HTML/CSS/JavaScript is the presentation source of truth. The template does not retain authority to rebuild that page.
 
-Do not assume every existing HTML page is generated, and do not assume every structured record may be edited independently of its rendered output. Inspect the page type and current ownership before changing it.
+For existing pages, edit the current public implementation directly. Structured records may continue to provide metadata/content fields, but they are not a replacement copy of the full page.
+
+Do not use a stale template, generated documentation, old Git history, or a structured record to overwrite a current public page.
 
 ### Project Relationships
 
 `related_work` is the structured source for meaningful project-to-project connections. Portfolio Manager Related References exposes outgoing connections, incoming references, and deterministic suggestions based only on existing structured metadata. Suggestions require human approval and never auto-add links.
 
-Generated pages can render approved `related_work` through the standard template after regeneration. Bespoke pages do not receive injected Related Work markup merely because metadata exists.
+`related_work` supports the internal project relationship graph and Related References workflow. It does not automatically create or inject a public Related Work section.
 
 ### Reusable Components
 
@@ -156,4 +160,4 @@ Private proposals, uploads, backups, notes, and reference originals remain outsi
 
 ## Design Principle
 
-Structured data should hold information that benefits from consistent editing, validation, reuse, or automation. Templates and shared code should hold behavior/presentation that should stay consistent. Bespoke public experiences should remain custom only when the custom interaction itself is valuable evidence.
+Structured data should hold information that benefits from consistent editing, validation, reuse, or automation. Existing public pages own their presentation. Shared code should own genuinely shared behavior, and templates should scaffold new pages without becoming an overwrite mechanism.
