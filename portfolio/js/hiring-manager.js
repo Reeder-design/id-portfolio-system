@@ -317,10 +317,10 @@
       message: 'Here is the portfolio map. These landing pages let you browse the work by discipline before opening a specific example.',
       evidence: [
         { title: 'Projects', path: 'projects/index.html', note: 'Portfolio overview across instructional design, AI evaluation, LMS work, and workflows.' },
-        { title: 'Instructional Design', path: 'projects/instructional-design/index.html', note: 'Learning pathways, microlearning, performance support, live training, multimedia, and interactive practice.' },
-        { title: 'AI Training and Evaluation', path: 'projects/ai-training-and-evaluation/index.html', note: 'Evaluation lenses, rubrics, calibration, and public-safe practice demos.' },
-        { title: 'LMS Administration', path: 'projects/lms-administration/index.html', note: 'Learning operations, access, delivery, migration, support, and reporting.' },
-        { title: 'Workflows', path: 'projects/workflows/index.html', note: 'Automation, data, reporting, systems, and operational improvement.' }
+        { title: 'Instructional Design', path: 'projects/instructional-design/index.html', note: 'Sales and partner enablement, learner practice, technical translation, and performance support.' },
+        { title: 'AI Training and Evaluation', path: 'projects/ai-training-and-evaluation/index.html', note: 'Clear evaluation lenses, rubrics, calibration, and human quality judgment.' },
+        { title: 'LMS Administration', path: 'projects/lms-administration/index.html', note: 'Learner journey, access, delivery, records, reporting, and platform operations.' },
+        { title: 'Workflows', path: 'projects/workflows/index.html', note: 'Cross-functional delivery, system handoffs, reporting, automation, and human review.' }
       ]
     },
     performanceSupport: {

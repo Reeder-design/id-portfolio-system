@@ -199,3 +199,18 @@ body.lms-admin-page .lms-other-work-card>.eyebrow,body.lms-admin-page .lms-other
 .lms-integration-entry .lms-integration-case-flow{position:relative;z-index:2;border:1px solid rgba(255,255,255,.08);background:rgba(8,28,31,.46)!important}
 .lms-integration-entry:hover,.lms-integration-entry:focus-visible{border-color:#97db4f!important;box-shadow:0 24px 54px rgba(29,66,63,.28)!important}
 @media(max-width:900px){.lms-integration-entry{grid-template-columns:1fr!important}}
+
+/* Expanded learner journey: keep all seven operational checks legible at every viewport. */
+.lms-journey-nav{grid-template-columns:repeat(7,minmax(0,1fr))}
+@media(max-width:900px){
+  .lms-journey-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+  .lms-journey-step{flex:0 0 122px;scroll-snap-align:start}
+  .lms-journey-track{display:none}
+}
+@media(max-width:700px){
+  .lms-journey-nav{gap:7px}
+  .lms-journey-step{flex-basis:112px;min-height:78px}
+}
+@media(prefers-reduced-motion:reduce){
+  .lms-hero-network path,.lms-integration-orbit i{animation:none!important}
+}

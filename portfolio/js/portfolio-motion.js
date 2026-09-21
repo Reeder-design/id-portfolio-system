@@ -859,7 +859,7 @@
       title: 'AI evaluation demo help',
       intro: 'Keep the model output visible while you compare it with the task and approved source.',
       steps: ['Check the assignment.', 'Review the approved source.', 'Mark concrete failure signals.', 'Choose severity and compare with calibration.'],
-      signal: 'This demonstrates model-output evaluation, evidence grounding, error detection, and reviewer calibration.'
+      signal: 'This demonstrates model-output evaluation, evidence validation, error detection, and reviewer calibration.'
     },
     {
       match: '/ai-training-and-evaluation/rubric-demo/',
@@ -872,7 +872,7 @@
       match: '/ai-training-and-evaluation/workflow-demo/',
       title: 'Workflow demo help',
       intro: 'Follow the review packet through four stages: Frame, Verify, Diagnose, and Calibrate.',
-      steps: ['Frame the task.', 'Verify source-grounded claims.', 'Diagnose material issues.', 'Calibrate severity and feedback.'],
+      steps: ['Frame the task.', 'Validate claims against approved evidence.', 'Diagnose material issues.', 'Calibrate severity and feedback.'],
       signal: 'This demonstrates repeatable QA workflow design and evidence-based human review.'
     }
   ];

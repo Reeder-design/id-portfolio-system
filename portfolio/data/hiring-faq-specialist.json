@@ -80,7 +80,7 @@
       "keywords": ["agentic ai", "prompt engineering", "chatgpt", "claude", "agent", "gpt", "llm", "automation", "ai workflow", "fine tune"],
       "answer": "For me, advanced AI use is not asking a chatbot to write a course and pasting the result. I am much more interested in structured systems: clear agent instructions, reusable prompt patterns, source boundaries, evaluation rubrics, modular generation, human review, and workflows that move content from one stage to the next without losing context. I have built and tested custom-agent style workflows, used AI for evaluation work, and designed processes where the model has a defined job instead of unlimited creative freedom. I also care a lot about privacy and source control, especially when the content is internal or technical. The goal is to make the ID faster and more consistent without outsourcing judgment.",
       "evidence": [
-        {"title": "AI Training and Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation, rubric scoring, source-grounded review, and quality feedback."},
+        {"title": "AI Training and Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation, rubric scoring, evidence validation, and quality feedback."},
         {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Structured automation and workflow thinking beyond traditional course authoring."}
       ]
     },
