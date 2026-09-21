@@ -89,3 +89,10 @@ The largest structural risk is not a single visual bug. It is an old generation/
 The maintenance standard therefore uses this ownership rule:
 
 **Existing public page first. Current shared styles/behavior second. Structured metadata for content management. Templates only as preview/reference material for brand-new work. Never use an old template to rebuild a finished page.**
+
+
+## Legacy structured general-page regeneration
+
+The older General Page Content editor could write public HTML from `portfolio-data/site-content.json`. That direction of ownership is now retired because stale structured copy could overwrite newer hand-maintained page edits.
+
+The current rule is source-first: edit the current public page through the active page-copy workflow or directly in source, then synchronize structured values from the resulting HTML. The legacy renderer, templates, and stylesheet were removed, while compatibility routes only redirect to the current editor without writing portfolio files.
