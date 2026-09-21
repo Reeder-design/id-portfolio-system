@@ -6,29 +6,54 @@
   "category": "instructional-design",
   "subcategory": "complete-learning-paths",
   "status": "live",
-  "summary": "I designed and developed cellular networking sales certification for Ericsson sellers and channel partners, translating technical and product source material into seller-focused discovery, solution-fit, scenario-practice, assessment, LMS, and maintenance workflows.",
+  "summary": "I rebuilt and maintained a multi-course cellular networking sales certification during a product, portfolio, and organizational transition. I unified two historically separate product lines and a third new line into a seller-focused learning pathway for internal teams and partners, then carried the design through assessment, LMS delivery, feedback, reporting support, and later revisions.",
   "page_path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html",
   "featured": true,
   "confidentiality": "sanitized",
   "content": {
-    "business_need": "Create a maintainable Ericsson sales-learning pathway that gave internal sellers and channel partners enough cellular-networking fluency to recognize customer needs, ask useful discovery questions, distinguish solution approaches, explain value, and choose an appropriate next sales step without turning the certification into engineering training.",
-    "audience": "Ericsson internal sellers and channel partners with mixed levels of cellular-networking experience.",
+    "business_need": "Rebuild a maintainable sales certification that brought two historically separate product lines from merging business operations and a third new product line into one broader portfolio. The pathway needed to help internal sellers and channel partners recognize customer needs, ask useful discovery questions, distinguish solution approaches, explain value, and choose a next sales step without turning them into implementation engineers, even as source ownership, messaging, terminology, branding, and go-to-market context changed.",
+    "audience": "Internal sellers and external channel partners, including new learner populations with different product knowledge, technical foundations, and familiarity with the LMS and certification structure.",
     "learning_objectives": [
       "Recognize customer situations where enterprise cellular connectivity may be relevant.",
       "Distinguish solution approaches using customer workflows, users, constraints, and desired outcomes.",
       "Ask discovery questions that connect connectivity symptoms to business impact.",
       "Choose an appropriate next sales step and know when technical specialist support is needed."
     ],
-    "role": "Lead instructional designer and LMS administrator responsible for curriculum architecture, learning development, assessment design, review coordination, learner-path testing, reporting support, and ongoing content maintenance.",
-    "design_approach": "Used backward design around seller decisions rather than product recall. I separated the broadly required path, market-specific extensions, and optional technical foundations so sellers received the depth relevant to their role and route.",
-    "development_process": "Translated approved technical, product, and sales inputs into Rise and Storyline learning; built diagrams, comparisons, scenarios, knowledge checks, and certification assessment; coordinated staged QA and SME review; validated learner routes and renewal behavior in the LMS; and maintained the certification as approved source information changed.",
+    "role": "Lead instructional designer and LMS administrator for the learning solution: objectives, curriculum architecture, content organization, practice, knowledge checks, cumulative assessment, many visual and interactive assets, learner experience, source tracking, review packages, learner-path testing, reporting support, and maintenance documentation. SMEs and stakeholders validated product truth, terminology, branding, and portfolio boundaries.",
+    "design_approach": "Started with the seller decisions the certification should prepare rather than product recall. I reconciled multiple source owners and documented decisions, separated a common seller path from regional requirements and optional technical foundations, and used modular structure so later source and messaging changes could be handled without rebuilding the full pathway.",
+    "development_process": "The expected development window contracted from approximately ten months to approximately four while source information was still changing. I prioritized seller-critical decisions, organized sources and reusable patterns, translated approved technical, product, and sales inputs into Rise and Storyline learning, built scenarios and assessments, coordinated staged QA and SME review, validated learner routes and completion behavior in the LMS, and continued to maintain the certification after release.",
     "outcomes": [
-      "Released a multi-course cellular networking sales certification with scenario practice, assessment, and LMS implementation support.",
-      "Separated broadly relevant and market-specific requirements into clearer learner routes.",
-      "Supported supplemental assessment and reporting logic when platform completion states did not fully match the certification design."
+      "Released and maintained a multi-course cellular networking sales certification with resources, scenario practice, knowledge checks, assessment, evaluation, formal completion, and LMS implementation support.",
+      "Brought historically separate portfolio areas and a new product line into one seller-focused learning architecture with common, regional, and optional-foundation routes.",
+      "Kept source decisions, review history, modular assets, and content structure organized so later terminology, product, and organizational changes could be addressed through revision rather than wholesale reconstruction.",
+      "Used qualitative partner feedback and LMS/reporting signals to guide continued assessment review, clarity, pacing, support, and maintenance without claiming unverified performance gains."
     ]
   },
   "detail_sections": [
+    {
+      "id": "portfolio-transition",
+      "eyebrow": "What I Inherited",
+      "title": "Unify a changing portfolio without losing the history behind it.",
+      "summary": "Two established product lines from separate business operations and a newly introduced third line needed one coherent certification while messaging, terminology, product features, verticals, branding, go-to-market routes, and source ownership were changing.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Fragmented source ownership",
+          "body": "Track which teams owned technical and business facts, reconcile differing histories and interpretations, and preserve decisions through changing organizational structures.",
+          "tag": "Source"
+        },
+        {
+          "title": "One learning architecture",
+          "body": "Translate approved information into a common seller path, differentiated regional learning, optional foundations, practice, and assessment.",
+          "tag": "Design"
+        },
+        {
+          "title": "Compressed delivery window",
+          "body": "Adapt the original approximately ten-month development expectation to approximately four months through prioritization, reusable structure, review coordination, and disciplined source management.",
+          "tag": "Delivery"
+        }
+      ]
+    },
     {
       "id": "curriculum-architecture",
       "eyebrow": "Curriculum Architecture",
@@ -121,6 +146,30 @@
           "tag": "Operate"
         }
       ]
+    },
+    {
+      "id": "feedback-and-evolution",
+      "eyebrow": "Learner Signals + Continuous Improvement",
+      "title": "Treat the certification as a living learning product.",
+      "summary": "Qualitative partner feedback and changing product and organizational context informed assessment QA, terminology support, modality, pacing, LMS support, and ongoing revisions. Historical criticism is evidence for diagnosis and maintenance, not proof of a current unresolved problem or quantified outcome.",
+      "layout": "cards",
+      "items": [
+        {
+          "title": "Positive partner signals",
+          "body": "Partners described the learning as exceptionally prepared, presented and structured, and valued the overview and opportunities to go deeper.",
+          "tag": "Feedback"
+        },
+        {
+          "title": "Historical improvement signals",
+          "body": "Assessment integrity, text load and modality, unfamiliar acronyms, and underestimated time were translated into review questions and testable revisions.",
+          "tag": "Maintenance"
+        },
+        {
+          "title": "Design for later change",
+          "body": "Modular taxonomy, separated routes, documented source decisions, and reusable assets supported later terminology, positioning, product, and organizational updates.",
+          "tag": "Evolution"
+        }
+      ]
     }
   ],
   "related_work": [
@@ -187,6 +236,6 @@
   "source_material_notes": "The employer, project type, responsibilities, and instructional-design approach are real. Customer details, internal course names, product names, proprietary source material, Ericsson positioning language, learner records, screenshots, links, reviewer material, and internal metrics are intentionally omitted. The public sample learning scenario uses fictional customer and solution language created for the portfolio.",
   "dates": {
     "created": "2026-09-15",
-    "updated": "2026-09-18"
+    "updated": "2026-09-21"
   }
 }

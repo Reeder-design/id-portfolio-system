@@ -216,6 +216,7 @@
   };
 
   const initHeroCleanup = () => {
+    if (currentRelativePath() === 'projects/instructional-design/complete-learning-paths') return;
     const hero = document.querySelector('main > section:first-of-type');
     const h1 = hero?.querySelector('h1');
     if (!hero || !h1) return;
@@ -525,59 +526,6 @@
       paragraph.parentNode.insertBefore(wrapper, paragraph);
       wrapper.appendChild(paragraph);
     });
-  };
-
-  const initCertificationCaseCopy = () => {
-    if (!window.location.pathname.toLowerCase().includes('/enterprise-sales-certification/')) return;
-
-    const heroSummary = document.querySelector('.project-hero-content .body-large');
-    if (heroSummary) {
-      heroSummary.textContent = 'I turned sales, product, and technical source material into a multi-course sales certification, then built the learning, assessment, review, LMS testing, and reporting support around it.';
-    }
-
-    const snapshotItems = Array.from(document.querySelectorAll('.project-snapshot-item'));
-    if (snapshotItems[0]) {
-      const role = snapshotItems[0].querySelector('strong');
-      if (role) role.textContent = 'Designed and developed the curriculum, interactions, and assessments; coordinated QA and SME review; supported LMS testing, migration validation, maintenance, and reporting.';
-    }
-    if (snapshotItems[1]) {
-      const audience = snapshotItems[1].querySelector('strong');
-      if (audience) audience.textContent = 'Internal sellers and channel partners, from new to experienced.';
-    }
-
-    const need = document.querySelector('#need > p');
-    if (need) need.textContent = 'Turn broad, changing source material into focused sales learning that helped sellers recognize fit, explain value, and choose the next step without teaching installation.';
-
-    const audienceCard = document.querySelector('#need .project-story-card:first-child p');
-    if (audienceCard) audienceCard.textContent = 'Internal sellers and channel partners, from new to experienced.';
-
-    const objectives = document.querySelector('#need .project-story-card:nth-child(2) ul');
-    if (objectives) {
-      objectives.innerHTML = [
-        'Recognize opportunities that fit the portfolio.',
-        'Distinguish related solution categories using customer needs and constraints.',
-        'Ask useful discovery questions and connect capabilities to value.',
-        'Recommend next steps and know when specialist support is needed.'
-      ].map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-    }
-
-    const approach = document.querySelector('#decisions .project-story-card:first-child p');
-    if (approach) approach.textContent = 'I wrote seller-focused objectives, grouped approved source material into courses, separated core and regional requirements, and moved deeper technical detail into optional or technical learning.';
-
-    const build = document.querySelector('#build > p');
-    if (build) build.textContent = 'I built modular Rise and Storyline lessons, comparisons, scenarios, knowledge checks, multimedia, and assessment content; coordinated QA and SME review; then tested the learner experience in the LMS.';
-
-    const buildRole = document.querySelector('#build .project-story-card:nth-child(2) p');
-    if (buildRole) buildRole.textContent = 'Designed and developed the learning; coordinated review; supported LMS testing, migration validation, maintenance, and reporting improvements.';
-
-    const outcomes = document.querySelector('#outcome .project-outcome-list');
-    if (outcomes) {
-      outcomes.innerHTML = [
-        'Released a multi-course sales certification with practice, assessment, review documentation, and LMS support.',
-        'Separated broadly applicable and regional requirements into distinct learner routes.',
-        'Added a supplemental regional assessment and spreadsheet workflow when LMS reporting did not fully match the design.'
-      ].map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-    }
   };
 
   const EXPLORER_GROUPS = [
@@ -939,7 +887,6 @@
   initExploreFooters();
   initPortfolioSafetyNotes();
   initSectionRhythm();
-  initCertificationCaseCopy();
   initProjectDetailExplorer();
 
   const initAskHaleyReturnDock = () => {

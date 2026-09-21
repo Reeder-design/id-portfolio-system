@@ -1,410 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Complete eLearning pathway portfolio by instructional designer Haley Reeder, including course design, certification, assessment, LMS delivery, reporting, and continuous improvement.">
-    <title>Complete eLearning Pathways | Haley Reeder</title>
-    <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
-    <link rel="stylesheet" href="../../../css/phase1-theme.css">
-    <link rel="stylesheet" href="../../../css/phase1-frame.css">
-    <style>
-        .pathway-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:42px;align-items:center}.pathway-hero-copy .body-large{max-width:680px}.scale-selector{padding:24px;border:1px solid rgba(80,132,132,.2);border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(238,245,241,.78));box-shadow:0 18px 46px rgba(52,74,66,.11)}.scale-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}.scale-option{display:grid;place-items:center;gap:8px;min-height:104px;padding:13px;border:1px solid rgba(80,132,132,.2);border-radius:17px;background:rgba(255,255,255,.85);color:var(--charcoal);font:700 .76rem/1.25 "Montserrat",sans-serif;text-align:center;cursor:pointer;transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease,background 180ms ease}.scale-option .portfolio-icon{width:31px;height:31px;color:var(--pine-blue)}.scale-option:hover,.scale-option:focus-visible{transform:translateY(-3px);border-color:rgba(121,201,158,.65);box-shadow:0 12px 28px rgba(52,74,66,.1);outline:none}.scale-option.active{border-color:rgba(80,132,132,.48);background:linear-gradient(145deg,rgba(238,245,241,.98),rgba(255,255,255,.96));box-shadow:0 12px 30px rgba(52,74,66,.11)}.scale-note{min-height:74px;margin:16px 0 0;padding:16px 18px;border-radius:15px;background:rgba(80,132,132,.08);color:var(--charcoal);font-size:.92rem}.pathway-principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.pathway-principle{padding:22px;border:1px solid rgba(80,132,132,.18);border-radius:20px;background:rgba(255,255,255,.88);box-shadow:0 12px 30px rgba(52,74,66,.07)}.pathway-principle .icon-badge{margin-bottom:16px}.pathway-principle h3{font-size:1rem;color:var(--pine-blue)}.pathway-principle p{margin:0;font-size:.9rem}.lifecycle-shell{display:grid;grid-template-columns:minmax(210px,.62fr) minmax(0,1.7fr);gap:20px;align-items:start;margin-top:28px}.lifecycle-nav{display:grid;gap:9px;position:sticky;top:106px}.lifecycle-step{display:flex;align-items:center;gap:11px;width:100%;padding:13px 14px;border:1px solid rgba(80,132,132,.19);border-radius:15px;background:rgba(255,255,255,.86);color:var(--charcoal);font:700 .82rem/1.3 "Montserrat",sans-serif;text-align:left;cursor:pointer;transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease}.lifecycle-step .portfolio-icon{width:25px;height:25px;color:var(--pine-blue);flex:0 0 auto}.lifecycle-step:hover,.lifecycle-step:focus-visible{transform:translateY(-2px);border-color:rgba(121,201,158,.65);outline:none}.lifecycle-step.active{border-color:rgba(80,132,132,.48);background:linear-gradient(135deg,rgba(238,245,241,.98),rgba(255,255,255,.96));box-shadow:0 12px 28px rgba(52,74,66,.1)}.lifecycle-detail{position:relative;overflow:hidden;min-height:390px;padding:30px;border:1px solid rgba(80,132,132,.2);border-radius:25px;background:radial-gradient(circle at 92% 8%,rgba(151,219,79,.11),transparent 26%),linear-gradient(145deg,rgba(255,255,255,.96),rgba(248,250,248,.9));box-shadow:0 18px 46px rgba(52,74,66,.1)}.lifecycle-detail::after{content:"";position:absolute;right:-80px;bottom:-105px;width:250px;height:250px;border:1px dashed rgba(80,132,132,.14);border-radius:50%;pointer-events:none}.lifecycle-heading{display:flex;gap:16px;align-items:flex-start;position:relative;z-index:1}.lifecycle-heading .icon-badge{width:58px;height:58px;border-radius:18px;flex:0 0 auto}.lifecycle-heading .portfolio-icon{width:31px;height:31px}.lifecycle-heading h2{margin:3px 0 7px}.lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px;position:relative;z-index:1}.lifecycle-card{padding:18px;border:1px solid rgba(80,132,132,.17);border-radius:17px;background:rgba(255,255,255,.82)}.lifecycle-card span{display:block;margin-bottom:8px;color:var(--pine-blue);font:.74rem/1.2 "Montserrat",sans-serif;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.lifecycle-card p{margin:0;font-size:.88rem;line-height:1.6}.loop-return{display:flex;align-items:center;gap:9px;margin-top:18px;color:var(--pine-blue);font-size:.82rem;font-weight:800;position:relative;z-index:1}.loop-return::before{content:"↻";display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(121,201,158,.16);font-size:1.05rem}.project-path-grid{display:grid;grid-template-columns:minmax(0,760px);gap:18px}.project-path-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:20px;background:rgba(255,255,255,.88);box-shadow:0 12px 30px rgba(52,74,66,.07)}.project-path-card .button-row{margin-top:auto;padding-top:18px}.project-path-card.featured-case{border-color:rgba(80,132,132,.3);background:linear-gradient(155deg,rgba(255,255,255,.98),rgba(238,245,241,.82));box-shadow:0 16px 38px rgba(52,74,66,.1)}.maintainability-note{display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px;align-items:start;padding:4px 0;border-top:1px solid rgba(80,132,132,.18)}.maintainability-note .icon-badge{margin-top:2px}.maintainability-note h2{margin:2px 0 7px;font-size:clamp(1.25rem,2.6vw,1.7rem)}.maintainability-note p:last-child{max-width:800px;margin:0;color:#5f6965;line-height:1.6}.pathway-explore{padding:26px 0 30px;border-top:1px solid rgba(80,132,132,.14)}.pathway-explore-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.pathway-explore-head h2{margin:0;font-size:clamp(1.35rem,2.6vw,1.8rem)}.pathway-explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.pathway-explore-card{display:flex;align-items:center;gap:12px;min-width:0;padding:16px;border:1px solid rgba(80,132,132,.16);border-radius:17px;background:rgba(255,255,255,.9);color:inherit;text-decoration:none;transition:transform 180ms ease,border-color 180ms ease}.pathway-explore-card:hover,.pathway-explore-card:focus-visible{transform:translateY(-2px);border-color:rgba(121,201,158,.65);outline:none}.pathway-explore-card .icon-badge{width:42px;height:42px;border-radius:13px;flex:0 0 auto}.pathway-explore-card .portfolio-icon{width:22px;height:22px}.pathway-explore-card span:last-child{min-width:0;color:var(--pine-blue);font:700 .8rem/1.35 var(--font-heading);overflow-wrap:anywhere}@media(max-width:980px){.pathway-hero-grid,.lifecycle-shell{grid-template-columns:1fr}.lifecycle-nav{position:static;grid-template-columns:repeat(5,minmax(0,1fr))}.lifecycle-step{justify-content:center;flex-direction:column;text-align:center}.pathway-principles{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.lifecycle-grid,.pathway-explore-grid{grid-template-columns:1fr}.lifecycle-nav{grid-template-columns:1fr 1fr}.lifecycle-step{justify-content:flex-start;flex-direction:row;text-align:left}.pathway-explore-head{align-items:start;flex-direction:column}}@media(max-width:620px){.scale-options,.pathway-principles,.lifecycle-nav{grid-template-columns:1fr}.scale-option{min-height:84px;grid-template-columns:38px 1fr;justify-items:start;text-align:left}.lifecycle-detail{padding:22px}.maintainability-note{grid-template-columns:1fr}}
-    
-        /* Visual pathway integration */
-        .pathway-hero-visual{display:grid;gap:14px}
-        .pathway-browser-frame{overflow:hidden;border:1px solid rgba(80,132,132,.22);border-radius:24px;background:#f8fbf9;box-shadow:0 24px 58px rgba(38,63,62,.16);transform:rotate(1.2deg)}
-        .pathway-browser-bar{display:flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-bottom:1px solid rgba(80,132,132,.14);background:linear-gradient(180deg,#edf4f0,#e5eee9)}
-        .pathway-browser-bar span{width:8px;height:8px;border-radius:50%;background:rgba(80,132,132,.42)}
-        .pathway-browser-bar i{margin-left:auto;width:70px;height:6px;border-radius:999px;background:rgba(80,132,132,.14)}
-        .pathway-browser-screen{padding:14px;background:linear-gradient(145deg,#edf4f0,#e5eee9)}
-        .pathway-browser-screen img{display:block;width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:14px;background:#fff}
-        .pathway-hero-visual .scale-selector{padding:18px 19px;border-radius:20px}
-        .pathway-hero-visual .scale-selector h2{font-size:1rem}
-        .pathway-hero-visual .scale-option{min-height:82px;padding:10px}
-        .pathway-hero-visual .scale-note{min-height:0;margin-top:12px;padding:12px 14px;font-size:.8rem}
-
-        .pathway-featured-section{
-          color:#edf5f0;
-          background:
-            radial-gradient(circle at 86% 14%,rgba(151,219,79,.1),transparent 24%),
-            linear-gradient(145deg,#17272e,#263f44);
-        }
-        .pathway-featured-section .eyebrow{color:#bfe4ce}
-        .pathway-featured-section h2{color:#fff}
-        .pathway-featured-section p{color:#c9d7d0}
-        .pathway-featured-layout{display:grid;grid-template-columns:minmax(0,.78fr) minmax(380px,1.22fr);gap:34px;align-items:center}
-        .pathway-featured-copy{max-width:620px}
-        .pathway-featured-visual{position:relative;padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:#10242b;box-shadow:0 22px 50px rgba(0,0,0,.18)}
-        .pathway-featured-visual img{display:block;width:100%;height:auto;object-fit:contain;border-radius:14px;background:#f8fbf9}
-        .pathway-featured-label{position:absolute;z-index:2;left:30px;top:30px;padding:7px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(16,36,43,.86);color:#fff;font:800 .55rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase;backdrop-filter:blur(7px)}
-
-        .lifecycle-detail{padding:26px}
-        .lifecycle-detail-grid{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(300px,.97fr);gap:24px;align-items:start;position:relative;z-index:1}
-        .lifecycle-grid{grid-template-columns:1fr;gap:10px}
-        .lifecycle-card{padding:15px 16px}
-        .lifecycle-evidence{min-width:0}
-        .lifecycle-evidence-frame{position:relative;overflow:hidden;min-height:390px;padding:14px;border:1px solid rgba(80,132,132,.17);border-radius:22px;background:linear-gradient(145deg,#edf4f0,#e5eee9);box-shadow:0 14px 34px rgba(52,74,66,.08)}
-        .lifecycle-evidence-frame img{display:block;width:100%;height:362px;object-fit:contain;object-position:center;border-radius:14px;background:#fff}
-        .lifecycle-evidence-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 66%,rgba(13,30,35,.88) 100%);pointer-events:none}
-        .lifecycle-evidence-overlay{position:absolute;z-index:3;left:28px;right:28px;bottom:24px;display:grid;gap:5px}
-        .lifecycle-evidence-overlay span{color:#bfe4ce;font:800 .55rem/1 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
-        .lifecycle-evidence-overlay strong{max-width:360px;color:#fff;font:800 .76rem/1.35 var(--font-heading)}
-        #lifeEvidenceNote{margin:10px 4px 0;color:#65706c;font-size:.73rem;line-height:1.48}
-
-        .analyze-motion[hidden]{display:none}
-        .analyze-motion{position:absolute;inset:14px;display:grid;grid-template-columns:1fr 86px 1fr;gap:12px;align-items:center;padding:22px;border-radius:14px;background:radial-gradient(circle at 15% 18%,rgba(121,201,158,.16),transparent 24%),linear-gradient(145deg,#173138,#244247)}
-        .analyze-source-stack{display:grid;gap:9px}
-        .analyze-source-stack span,.analyze-target{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#10242b;color:#dce9e2;font:700 .6rem/1.3 var(--font-heading)}
-        .analyze-flow{display:grid;justify-items:center;gap:8px}
-        .analyze-flow i{position:relative;width:100%;height:2px;background:linear-gradient(90deg,rgba(121,201,158,.18),var(--mint-leaf),rgba(121,201,158,.18))}
-        .analyze-flow i::after{content:"";position:absolute;top:50%;left:0;width:8px;height:8px;border-radius:50%;transform:translateY(-50%);background:var(--yellow-green);box-shadow:0 0 12px rgba(151,219,79,.5);animation:pathAnalyze 3.6s linear infinite}
-        .analyze-flow b{padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font:800 .52rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
-        .analyze-target{display:grid;gap:6px;padding:18px 14px;border-color:rgba(151,219,79,.2);background:linear-gradient(145deg,#1c3b3b,#244842)}
-        .analyze-target strong{color:#fff;font:800 .72rem/1.2 var(--font-heading)}
-        .analyze-target small{color:#bfd0c8;font-size:.55rem;line-height:1.4}
-        @keyframes pathAnalyze{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 8px);opacity:0}}
-
-        .pathway-maintenance-section{
-          color:#edf5f0;
-          background:linear-gradient(145deg,#17272e,#263f44);
-        }
-        .pathway-maintenance-section .eyebrow{color:#bfe4ce}
-        .pathway-maintenance-section h2{color:#fff}
-        .pathway-maintenance-section .maintainability-note{border-top-color:rgba(255,255,255,.1)}
-        .pathway-maintenance-section .maintainability-note p:last-child{color:#c9d7d0}
-        .pathway-maintenance-section .icon-badge{background:#10242b;color:var(--mint-leaf)}
-        .pathway-back{padding:18px 0 22px!important;background:#edf4f0!important}
-        .pathway-back a{display:inline-flex;align-items:center;gap:8px;color:#315755;text-decoration:none;font:800 .67rem/1.2 var(--font-heading)}
-        .pathway-back a:hover,.pathway-back a:focus-visible{text-decoration:underline;outline:none}
-
-        @media(max-width:1080px){.pathway-featured-layout,.lifecycle-detail-grid{grid-template-columns:1fr}.pathway-featured-visual{max-width:760px}.lifecycle-evidence{max-width:760px}}
-        @media(max-width:700px){.pathway-browser-screen img{max-height:none}.lifecycle-evidence-frame{min-height:320px}.lifecycle-evidence-frame img{height:292px}.analyze-motion{grid-template-columns:1fr;align-content:center}.analyze-flow{grid-template-columns:1fr auto 1fr;align-items:center}.analyze-flow i{grid-column:1 / -1}.analyze-flow b{grid-column:2}.pathway-featured-label{left:24px;top:24px}}
-        @media(prefers-reduced-motion:reduce){.analyze-flow i::after{animation:none}}
-
-        /* Final visual polish */
-        body .page-hero.refresh-hero{
-          padding:clamp(22px,3vw,32px) 0 clamp(24px,3.2vw,34px)!important;
-          background:radial-gradient(circle at 84% 16%,rgba(151,219,79,.12),transparent 22rem),radial-gradient(circle at 10% 90%,rgba(121,201,158,.10),transparent 20rem),linear-gradient(145deg,#24444a,#4f7c70)!important;
-          color:#fff!important;
-        }
-        body .page-hero.refresh-hero .breadcrumbs{margin-bottom:8px!important}
-        body .page-hero.refresh-hero .breadcrumbs a,body .page-hero.refresh-hero .breadcrumbs span{color:rgba(255,255,255,.74)!important}
-        .pathway-hero-grid{grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);gap:28px}
-        .pathway-hero-copy h1{margin:5px 0 12px;color:#fff!important;font-size:clamp(2.5rem,5vw,4.6rem);line-height:1}
-        .pathway-hero-copy .body-large{margin-bottom:14px;color:#edf5f1!important;font-size:.96rem;line-height:1.58}
-        .pathway-hero-copy .eyebrow{color:#d4efdf!important}.pathway-hero-copy .button-row{margin-top:12px}
-        .pathway-hero-visual{display:block;align-items:center}
-        .pathway-hero-map{position:relative;min-height:300px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(145deg,rgba(16,36,43,.58),rgba(28,67,65,.48));box-shadow:0 18px 42px rgba(0,0,0,.15)}
-        .pathway-map-orbit{position:absolute;left:50%;top:48%;border:1px dashed rgba(121,201,158,.25);border-radius:50%;transform:translate(-50%,-50%)}
-        .pathway-map-orbit.orbit-one{width:150px;height:150px}.pathway-map-orbit.orbit-two{width:220px;height:220px}
-        .pathway-map-center{position:absolute;z-index:3;left:50%;top:48%;display:grid;place-items:center;width:94px;height:94px;transform:translate(-50%,-50%);border-radius:22px;background:#fff;box-shadow:0 16px 34px rgba(0,0,0,.18)}
-        .pathway-map-center img{width:72px;height:72px;object-fit:contain}
-        .pathway-map-node{position:absolute;z-index:4;display:grid;justify-items:center;gap:3px;width:74px;padding:7px;border:1px solid rgba(255,255,255,.13);border-radius:14px;background:#10242b;color:#fff;box-shadow:0 9px 18px rgba(0,0,0,.16);animation:pathNodeFloat 4s ease-in-out infinite}
-        .pathway-map-node img{width:49px;height:49px;object-fit:contain}.pathway-map-node small{font:800 .49rem/1.1 var(--font-heading)}
-        .node-course{left:8%;top:16%}.node-cert{right:7%;top:14%;animation-delay:.6s}.node-path{right:10%;bottom:10%;animation-delay:1.2s}
-        .pathway-map-signal{position:absolute;z-index:2;left:50%;top:48%;width:9px;height:9px;border-radius:50%;background:#97db4f;box-shadow:0 0 16px rgba(151,219,79,.55);animation:pathwaySignal 5s ease-in-out infinite}
-        @keyframes pathNodeFloat{50%{transform:translateY(-4px)}}@keyframes pathwaySignal{0%,100%{transform:translate(-4px,-4px)}33%{transform:translate(84px,-78px)}66%{transform:translate(78px,73px)}}
-        .solution-scale-section{padding:clamp(30px,4vw,44px) 0!important;background:#f7faf8!important;border-bottom:1px solid rgba(80,132,132,.09)}
-        .solution-scale-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:26px;align-items:center}
-        .solution-scale-intro .eyebrow{color:#4a796e!important}
-        .solution-scale-intro h2{margin:4px 0 8px;color:#263d37;font-size:clamp(1.35rem,2.6vw,2rem)}
-        .solution-scale-intro p{margin:0;color:#596a63;font-size:.8rem;line-height:1.55}
-        .solution-scale-section .scale-selector{padding:16px;border:1px solid rgba(80,132,132,.16);border-radius:20px;background:#fff;box-shadow:0 14px 30px rgba(44,72,65,.08)}
-        .solution-scale-section .scale-selector>.eyebrow{display:none}
-        .solution-scale-section .scale-selector h2{margin:0 0 8px;color:#263d37!important;font-size:.9rem}
-        .scale-options{gap:7px;margin-top:7px}.scale-option{min-height:70px!important;padding:8px!important;font-size:.61rem;color:#354a43!important}.scale-option img{width:40px;height:40px;object-fit:contain}.scale-note{margin-top:8px!important;padding:9px 10px!important;color:#43544d!important;font-size:.67rem!important;line-height:1.35}
-
-        body .pathway-featured-section{padding:clamp(24px,3vw,34px) 0!important;background:linear-gradient(145deg,#172a31,#294a48)!important;color:#edf5f1!important}
-        .pathway-featured-layout{grid-template-columns:minmax(0,.9fr) minmax(360px,1.1fr);gap:26px;max-width:1080px;margin:auto}
-        .pathway-featured-section .eyebrow{color:#bfe6ce!important}.pathway-featured-section h2{margin:3px 0 8px;color:#fff!important;font-size:clamp(1.55rem,2.8vw,2.25rem)}
-        .pathway-featured-section .body-large{margin:0 0 7px;color:#edf5f1!important;font-size:.88rem}.pathway-featured-section p{color:#c9d8d1!important;font-size:.76rem;line-height:1.5}.pathway-featured-copy .button-row{margin-top:12px}
-        .pathway-featured-visual{display:grid;justify-items:center;gap:12px;padding:18px!important;min-height:230px;border-radius:20px!important}
-        .featured-core{display:grid;place-items:center;width:90px;height:90px;border-radius:20px;background:#fff;box-shadow:0 12px 26px rgba(0,0,0,.18)}
-        .featured-core img{width:70px!important;height:70px!important;object-fit:contain;background:transparent!important}
-        .featured-flow{display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;gap:5px;align-items:center;width:100%}
-        .featured-flow span{display:grid;justify-items:center;gap:3px;padding:8px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.055)}
-        .featured-flow img{width:42px!important;height:42px!important;object-fit:contain;background:transparent!important}.featured-flow strong{color:#fff;font:800 .55rem/1.15 var(--font-heading)}
-        .featured-flow i{position:relative;height:2px;background:linear-gradient(90deg,#508484,#97db4f)}.featured-flow i::after{content:"";position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#97db4f;animation:featuredPulse 2.8s linear infinite}
-        @keyframes featuredPulse{to{left:calc(100% - 7px)}}.pathway-featured-visual>p{margin:0!important;color:#cfe0d8!important;font-size:.62rem!important;text-align:center}
-
-        body #elearning-lifecycle{padding:clamp(24px,3vw,34px) 0!important;background:radial-gradient(circle at 90% 15%,rgba(151,219,79,.07),transparent 18rem),linear-gradient(145deg,#214148,#315d58)!important;color:#edf5f1!important}
-        #elearning-lifecycle .refresh-section-intro{margin-bottom:10px!important}#elearning-lifecycle .refresh-section-intro .eyebrow{color:#bfe6ce!important}#elearning-lifecycle .refresh-section-intro h2{color:#fff!important;font-size:clamp(1.45rem,2.6vw,2rem)}#elearning-lifecycle .refresh-section-intro p{color:#d2dfd8!important;font-size:.78rem}
-        .lifecycle-shell{grid-template-columns:170px minmax(0,1fr);gap:12px;margin-top:14px}.lifecycle-nav{gap:6px;top:92px}.lifecycle-step{padding:9px 10px;border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.92);color:#354a43!important;font-size:.66rem}.lifecycle-step.active{background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-        .lifecycle-pixel-icon{width:31px;height:31px;object-fit:contain;flex:0 0 auto}.lifecycle-detail{min-height:0!important;padding:16px!important;border-radius:20px!important;background:#f8faf8!important;color:#32463f!important}
-        .lifecycle-detail-grid{grid-template-columns:minmax(0,1fr) minmax(260px,.82fr);gap:15px}.lifecycle-heading{gap:10px}.lifecycle-heading .icon-badge{width:44px;height:44px;border-radius:13px}.lifecycle-heading h2{margin:2px 0 4px;color:#263d37!important;font-size:clamp(1.1rem,2vw,1.45rem)}.lifecycle-heading p{color:#596a63!important;font-size:.67rem!important;line-height:1.42}
-        .lifecycle-grid{gap:6px;margin-top:10px}.lifecycle-card{padding:9px 10px;border-radius:11px;background:#eef4f0!important}.lifecycle-card span{margin-bottom:3px;font-size:.54rem}.lifecycle-card p{color:#596a63!important;font-size:.62rem;line-height:1.35}
-        .loop-return{margin-top:9px;font-size:.61rem}.loop-return::before{width:23px;height:23px;font-size:.86rem}.lifecycle-evidence-frame{min-height:250px;padding:9px;border-radius:16px}.lifecycle-evidence-frame img{height:232px}.analyze-motion{inset:9px;padding:13px;grid-template-columns:1fr 62px 1fr}.analyze-source-stack span,.analyze-target{padding:9px;font-size:.5rem}.analyze-target{padding:12px 9px}.analyze-target strong{font-size:.59rem}.analyze-target small{font-size:.48rem}.lifecycle-evidence-overlay{left:18px;right:18px;bottom:16px}.lifecycle-evidence-overlay strong{font-size:.65rem}#lifeEvidenceNote{color:#5c6a64!important;font-size:.6rem;line-height:1.38}
-
-        body .pathway-maintenance-section{padding:22px 0!important;background:linear-gradient(145deg,#172a31,#264746)!important;color:#fff!important}
-        .maintenance-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px;align-items:center}.maintenance-copy .eyebrow{color:#bfe6ce!important}.maintenance-copy h2{margin:2px 0 6px;color:#fff!important;font-size:1.3rem}.maintenance-copy p{margin:0;color:#cbd9d2!important;font-size:.72rem}
-        .maintenance-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.maintenance-signals span{display:grid;justify-items:center;gap:4px;padding:10px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(255,255,255,.055);text-align:center}.maintenance-signals img{width:44px;height:44px;object-fit:contain}.maintenance-signals strong{color:#fff;font:800 .57rem/1.2 var(--font-heading)}
-        @media(max-width:980px){.pathway-hero-grid,.pathway-featured-layout,.lifecycle-detail-grid,.maintenance-layout,.solution-scale-layout{grid-template-columns:1fr}.pathway-hero-map{max-width:560px;width:100%;margin:auto}.lifecycle-shell{grid-template-columns:1fr}.lifecycle-nav{position:static;grid-template-columns:repeat(5,minmax(0,1fr))}.pathway-featured-visual{max-width:680px}}
-        @media(max-width:680px){.pathway-hero-visual .scale-selector{padding:11px}.featured-flow{grid-template-columns:1fr}.featured-flow i{width:2px;height:18px;justify-self:center}.maintenance-signals{grid-template-columns:1fr}.lifecycle-nav{grid-template-columns:1fr 1fr}}
-        @media(prefers-reduced-motion:reduce){.pathway-map-node,.pathway-map-signal,.featured-flow i::after{animation:none!important}}
-
-        /* Landing follow-up polish */
-        body .pathway-featured-section{
-          background:radial-gradient(circle at 88% 16%,rgba(121,201,158,.10),transparent 18rem),linear-gradient(145deg,#fbfcf9,#edf5f0)!important;
-          color:#2e403a!important;
-          border-top:1px solid rgba(80,132,132,.08);
-          border-bottom:1px solid rgba(80,132,132,.08);
-        }
-        .pathway-featured-section .eyebrow{color:#4a796e!important}
-        .pathway-featured-section h2{color:#263d37!important}
-        .pathway-featured-section .body-large{color:#40534c!important}
-        .pathway-featured-section p{color:#5a6963!important}
-        .pathway-featured-visual{
-          border-color:rgba(80,132,132,.16)!important;
-          background:linear-gradient(145deg,#173039,#29504c)!important;
-          box-shadow:0 14px 30px rgba(44,72,65,.10)!important;
-        }
-        .pathway-featured-visual>p{color:#d8e6df!important}
-        .lifecycle-evidence-frame::after{display:none!important}
-        .lifecycle-evidence-overlay{display:none!important}
-        .lifecycle-evidence-frame img{background:#fff!important}
-
-        body .pathway-maintenance-section{
-          padding:clamp(26px,3.4vw,38px) 0!important;
-          background:radial-gradient(circle at 10% 80%,rgba(151,219,79,.08),transparent 17rem),linear-gradient(145deg,#fbfcf9,#edf5f0)!important;
-          color:#2e403a!important;
-          border-top:1px solid rgba(80,132,132,.09);
-        }
-        .maintenance-layout{grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:26px;align-items:center}
-        .maintenance-copy .eyebrow{color:#4a796e!important}
-        .maintenance-copy h2{margin:2px 0 7px;color:#263d37!important;font-size:clamp(1.35rem,2.4vw,1.8rem)}
-        .maintenance-copy p{margin:0;color:#5b6a64!important;font-size:.76rem;line-height:1.5}
-        .maintenance-loop{display:grid;grid-template-columns:auto 1fr auto 1fr auto;gap:7px;align-items:center;margin-top:13px}
-        .maintenance-loop span{padding:5px 7px;border-radius:999px;background:#e6f1ea;color:#315755;font:800 .5rem/1 var(--font-heading);white-space:nowrap}
-        .maintenance-loop i{position:relative;height:2px;border-radius:999px;background:linear-gradient(90deg,#508484,#97db4f)}
-        .maintenance-loop i::after{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;border-radius:50%;transform:translateY(-50%);background:#97db4f;animation:maintenanceSignal 2.8s linear infinite}
-        .maintenance-loop i:nth-of-type(2)::after{animation-delay:.55s}
-        @keyframes maintenanceSignal{to{left:calc(100% - 6px)}}
-        .maintenance-signals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-        .maintenance-signals span{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:9px;align-items:center;justify-items:start;padding:10px 11px;border:1px solid rgba(80,132,132,.14);border-radius:13px;background:#fff;text-align:left;box-shadow:0 8px 18px rgba(44,72,65,.05)}
-        .maintenance-signals img{grid-row:1 / span 2;width:46px;height:46px;object-fit:contain}
-        .maintenance-signals strong{color:#315755!important;font:800 .62rem/1.2 var(--font-heading)}
-        .maintenance-signals small{color:#65736d;font:.55rem/1.35 var(--font-body)}
-        @media(max-width:780px){
-          .maintenance-layout{grid-template-columns:1fr}
-          .maintenance-signals{grid-template-columns:1fr}
-        }
-        @media(prefers-reduced-motion:reduce){.maintenance-loop i::after{animation:none!important}}
-
-        /* Final Solution Scale consistency */
-        .scale-options{align-items:stretch!important}
-        .scale-option,
-        .scale-option.active,
-        .scale-option:hover,
-        .scale-option:focus-visible{
-          box-sizing:border-box!important;
-          min-height:98px!important;
-          height:98px!important;
-          padding:9px 7px 10px!important;
-          align-content:center!important;
-          row-gap:4px!important;
-        }
-        .scale-option.active{transform:none!important}
-        .scale-option:hover,.scale-option:focus-visible{transform:translateY(-2px)}
-        .scale-option img{display:block;width:40px!important;height:40px!important;object-fit:contain}
-        .scale-option span{
-          display:block!important;
-          margin:0!important;
-          color:#354a43!important;
-          font-size:.63rem!important;
-          line-height:1.08!important;
-        }
-        .scale-note{margin-top:10px!important}
-
-        /* Stable eLearning lifecycle frame */
-        @media(min-width:981px){
-          #elearning-lifecycle .lifecycle-shell{align-items:stretch}
-          #elearning-lifecycle .lifecycle-detail{height:420px!important;min-height:420px!important;max-height:420px!important;padding:16px!important}
-          #elearning-lifecycle .lifecycle-detail-grid{height:100%;min-height:0;align-items:stretch}
-          #elearning-lifecycle .lifecycle-copy{min-height:0;max-height:100%;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding-right:7px}
-          #elearning-lifecycle .lifecycle-evidence{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0}
-          #elearning-lifecycle .lifecycle-evidence-frame{height:350px!important;min-height:350px!important;max-height:350px!important}
-          #elearning-lifecycle .lifecycle-evidence-frame img{height:100%!important;max-height:100%!important}
-          #elearning-lifecycle #lifeEvidenceNote{min-height:42px;margin-bottom:0}
-        }
-
-        /* Complete Learning Pathways lifecycle guard: keep tabs compact and only stabilize the detail panel. */
-        #elearning-lifecycle .lifecycle-shell{
-          align-items:start!important;
-          height:auto!important;
-          max-height:none!important;
-          overflow:visible!important;
-        }
-        #elearning-lifecycle .lifecycle-nav{
-          align-self:start!important;
-          align-content:start!important;
-          height:auto!important;
-          max-height:none!important;
-        }
-        #elearning-lifecycle .lifecycle-step{
-          height:auto!important;
-          min-height:48px;
-        }
-        @media(min-width:981px){
-          #elearning-lifecycle .lifecycle-detail{
-            height:420px!important;
-            min-height:420px!important;
-            max-height:420px!important;
-            overflow:hidden!important;
-          }
-          #elearning-lifecycle .lifecycle-detail-grid{
-            height:100%!important;
-            min-height:0!important;
-          }
-          #elearning-lifecycle .lifecycle-copy{
-            min-height:0!important;
-            max-height:100%!important;
-            overflow:auto!important;
-            scrollbar-gutter:stable;
-          }
-          #elearning-lifecycle .lifecycle-evidence{
-            min-height:0!important;
-            max-height:100%!important;
-          }
-        }
-</style>
-    <script defer src="../../../js/portfolio-motion.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How Haley Reeder designs, delivers, administers, supports, and improves complete learning pathways, with a cellular networking sales certification example.">
+  <title>Complete Learning Pathways | Haley Reeder</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
+  <link rel="stylesheet" href="../../../css/phase1-theme.css">
+  <link rel="stylesheet" href="../../../css/phase1-frame.css">
+  <link rel="stylesheet" href="../../../css/complete-learning-pathways.css">
+  <script defer src="../../../js/portfolio-motion.js"></script>
+  <script defer src="../../../js/complete-learning-pathways.js"></script>
 </head>
-<body>
-    <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
-
-    <main>
-        <section class="page-hero refresh-hero"><div class="container"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Complete eLearning Pathways</span></nav><div class="pathway-hero-grid"><div class="pathway-hero-copy"><p class="eyebrow">Instructional Design / eLearning</p><h1>Complete eLearning Pathways</h1><p class="body-large">I design connected eLearning when the work needs more than a single lesson: courses, certifications, assessments, LMS delivery, reporting, and ongoing updates.</p><div class="button-row"><a class="btn btn-primary" href="#elearning-projects">View Certification Example</a><a class="btn btn-secondary" href="#elearning-lifecycle">See the Lifecycle</a></div></div><aside class="pathway-hero-visual" aria-labelledby="scaleSelectorTitle">
-  <div class="pathway-hero-map" aria-hidden="true">
-    <span class="pathway-map-orbit orbit-one"></span>
-    <span class="pathway-map-orbit orbit-two"></span>
-    <span class="pathway-map-center"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span>
-    <span class="pathway-map-node node-course"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Course</small></span>
-    <span class="pathway-map-node node-cert"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""><small>Certification</small></span>
-    <span class="pathway-map-node node-path"><img src="../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><small>Pathway</small></span>
-    <i class="pathway-map-signal"></i>
-  </div>
-</aside></div></div></section>
-
-        <section class="section solution-scale-section" aria-labelledby="scaleSelectorTitle">
-          <div class="container solution-scale-layout">
-            <div class="solution-scale-intro">
-              <p class="eyebrow">Solution Scale</p>
-              <h2>Choose the structure that matches the learning need.</h2>
-              <p>A focused course, a certification, and a connected pathway solve different problems. I scale the architecture only as far as the learner task, assessment requirements, delivery rules, and long-term ownership require.</p>
+<body class="complete-pathways-page">
+  <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
+  <main>
+    <section class="page-hero refresh-hero cp-hero">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Complete eLearning Pathways</span></nav>
+        <div class="cp-hero-grid">
+          <div class="cp-hero-copy">
+            <p class="eyebrow">Instructional Design / Connected Learning</p>
+            <h1>Complete Learning Pathways</h1>
+            <p class="body-large">When learning must build readiness across a larger body of work and completion matters, I design the connected experience, not just its individual courses.</p>
+            <p>Building and maintaining certification pathways has put me close to the whole system: objectives, practice, assessment, LMS delivery, records, reporting, learner support, and revision after launch.</p>
+            <div class="button-row"><a class="btn btn-primary" href="#elearning-projects">View Certification Example</a><a class="btn btn-secondary" href="#elearning-lifecycle">See the Lifecycle</a></div>
+          </div>
+          <div class="cp-hero-scene" role="img" aria-label="Learning content and resources connect to practice, then an assessment gate, a completion record, and a learner or business outcome.">
+            <div class="cp-hero-inputs" aria-hidden="true"><span class="cp-hero-input"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt="">Learning</span><span class="cp-hero-input"><img src="../../../assets/icons/pixel/lms/mini-book.webp" alt="">Resources</span></div>
+            <div class="cp-hero-track" aria-hidden="true"><span class="cp-hero-rail"></span><span class="cp-hero-progress"></span>
+              <span class="cp-hero-step cp-step-practice"><span class="cp-hero-icon"><img src="../../../assets/icons/pixel/lms/mini-user.webp" alt=""></span><strong>Practice</strong></span>
+              <span class="cp-hero-step cp-step-assess"><span class="cp-hero-icon"><img src="../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""></span><strong>Assess</strong></span>
+              <span class="cp-hero-step cp-step-complete"><span class="cp-hero-icon"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span><strong>Complete</strong></span>
             </div>
-              <div class="scale-selector">
-    <p class="eyebrow">Solution Scale</p>
-    <h2 id="scaleSelectorTitle">Course, certification, or connected path?</h2>
-    <div class="scale-options" role="tablist" aria-label="eLearning solution scale">
-      <button class="scale-option active" type="button" data-scale="course" role="tab" aria-selected="true"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt="" aria-hidden="true"><span>Focused Course</span></button>
-      <button class="scale-option" type="button" data-scale="certification" role="tab" aria-selected="false"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt="" aria-hidden="true"><span>Certification</span></button>
-      <button class="scale-option" type="button" role="tab" aria-selected="false" data-scale="pathway"><img src="../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="" aria-hidden="true"><span>Connected Pathway</span></button>
-    </div>
-    <p class="scale-note" id="scaleNote" aria-live="polite">One learning need with content, practice, and assessment tied to the same objective.</p>
-  </div>
-          </div>
-        </section>
-
-        <section class="section pathway-featured-section" id="elearning-projects">
-  <div class="container">
-    <div class="pathway-featured-layout">
-      <div class="pathway-featured-copy">
-        <p class="eyebrow">Featured Project</p>
-        <h2>Cellular Networking Sales Certification</h2>
-        <p class="body-large">A multi-course sales certification for internal sellers and channel partners.</p>
-        <p>I turned sales, product, and technical source material into a connected certification experience, wrote seller-focused objectives and assessments, coordinated review, tested the LMS experience, and supported reporting and ongoing updates.</p>
-        <div class="button-row"><a class="btn btn-primary" href="./enterprise-sales-certification/index.html">View Case Study</a></div>
-      </div>
-      <div class="pathway-featured-visual" aria-label="Animated certification architecture visual">
-        <span class="featured-core"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt="" aria-hidden="true"></span>
-        <div class="featured-flow">
-          <span><img src="../../../assets/icons/pixel/lms/mini-document-list.webp" alt="" aria-hidden="true"><strong>Objectives</strong></span>
-          <i aria-hidden="true"></i>
-          <span><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt="" aria-hidden="true"><strong>Practice</strong></span>
-          <i aria-hidden="true"></i>
-          <span><img src="../../../assets/icons/pixel/lms/mini-analytics.webp" alt="" aria-hidden="true"><strong>Assessment</strong></span>
-        </div>
-        <p>One connected system from seller task to certification evidence.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-        <section class="section" id="elearning-lifecycle"><div class="container"><div class="section-heading refresh-section-intro"><p class="eyebrow">eLearning Lifecycle</p><h2>From source material to launch and maintenance</h2><p class="body-large reading-width">Choose a stage to see the work I handle across a larger eLearning project.</p></div><div class="lifecycle-shell" data-stable-interaction><div class="lifecycle-nav" role="tablist" aria-label="Complete eLearning lifecycle"><button class="lifecycle-step active" type="button" data-life="analyze" role="tab" aria-selected="true"><img class="lifecycle-pixel-icon" src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt="" aria-hidden="true"><span>1. Analyze</span></button><button class="lifecycle-step" type="button" data-life="architect" role="tab" aria-selected="false"><img class="lifecycle-pixel-icon" src="../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="" aria-hidden="true"><span>2. Architect</span></button><button class="lifecycle-step" type="button" data-life="develop" role="tab" aria-selected="false"><img class="lifecycle-pixel-icon" src="../../../assets/icons/pixel/lms/mini-edit.webp" alt="" aria-hidden="true"><span>3. Develop</span></button><button class="lifecycle-step" type="button" data-life="deliver" role="tab" aria-selected="false"><img class="lifecycle-pixel-icon" src="../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt="" aria-hidden="true"><span>4. Deliver</span></button><button class="lifecycle-step" type="button" data-life="improve" role="tab" aria-selected="false"><img class="lifecycle-pixel-icon" src="../../../assets/icons/pixel/lms/mini-analytics.webp" alt="" aria-hidden="true"><span>5. Maintain</span></button></div><div class="lifecycle-detail" role="tabpanel" aria-live="polite">
-  <div class="lifecycle-detail-grid">
-    <div class="lifecycle-copy">
-      <div class="lifecycle-heading">
-        <span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use id="lifeIcon" href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span>
-        <div><p class="eyebrow" id="lifeLabel">Stage 1 / Analyze</p><h2 id="lifeTitle">Define the audience, seller task, source material, and scope.</h2><p id="lifeSummary">I identify what learners need to explain, recognize, compare, or decide and separate that from technical detail or reference content that does not belong in the course.</p></div>
-      </div>
-      <div class="lifecycle-grid">
-        <article class="lifecycle-card"><span>Inputs</span><p id="lifePlan">Audience, sales task, approved source content, existing learning, constraints, stakeholders, and success criteria.</p></article>
-        <article class="lifecycle-card"><span>My decision</span><p id="lifeDecision">Decide whether the need calls for a course, certification, supporting resource, or a smaller intervention.</p></article>
-        <article class="lifecycle-card"><span>Output</span><p id="lifeHandoff">A defined scope and learning target that can be used to design the experience.</p></article>
-      </div>
-      <div class="loop-return">Maintenance and learner evidence feed the next update.</div>
-    </div>
-
-    <aside class="lifecycle-evidence" aria-label="Visual evidence for the selected lifecycle stage">
-      <div class="lifecycle-evidence-frame">
-        <img id="lifeEvidenceImage" src="" alt="" hidden>
-        <div class="analyze-motion" id="analyzeMotion" aria-hidden="true">
-          <div class="analyze-source-stack">
-            <span>Product source</span>
-            <span>Sales input</span>
-            <span>Audience need</span>
-          </div>
-          <div class="analyze-flow"><i></i><b>Scope</b></div>
-          <div class="analyze-target">
-            <strong>Learning target</strong>
-            <small>Explain · recognize · decide · act</small>
+            <div class="cp-hero-outcome" aria-hidden="true"><span class="cp-outcome-mark">✓</span><span><strong>Ready for what is next</strong><small>Learner progress + a usable record</small></span></div>
           </div>
         </div>
-        <div class="lifecycle-evidence-overlay">
-          <span id="lifeEvidenceLabel">Analyze</span>
-          <strong id="lifeEvidenceTitle">Turn source material into a defined learning target</strong>
+      </div>
+    </section>
+
+    <section class="section cp-scale" aria-labelledby="cpScaleTitle">
+      <div class="container cp-section-grid">
+        <div class="cp-section-intro"><p class="eyebrow">Different needs, different solutions</p><h2 id="cpScaleTitle">A pathway is more than a collection of assets.</h2><p>Microlearning, a job aid, a single interaction, and a focused course can each be the right answer. I choose a complete pathway when learners need to progress through connected information, practice, validation, and formal requirements toward readiness or a meaningful completion state.</p></div>
+        <div class="cp-scale-workspace" data-cp-tabs>
+          <div class="cp-tab-row" role="tablist" aria-label="Learning solution scale">
+            <button type="button" class="cp-tab" id="scale-tab-quick" role="tab" aria-controls="scale-panel" aria-selected="false" tabindex="-1" data-cp-tab="quick">Quick intervention</button>
+            <button type="button" class="cp-tab" id="scale-tab-course" role="tab" aria-controls="scale-panel" aria-selected="false" tabindex="-1" data-cp-tab="course">Focused course</button>
+            <button type="button" class="cp-tab is-active" id="scale-tab-pathway" role="tab" aria-controls="scale-panel" aria-selected="true" tabindex="0" data-cp-tab="pathway">Complete pathway</button>
+          </div>
+          <div class="cp-scale-panel" id="scale-panel" role="tabpanel" aria-labelledby="scale-tab-pathway" tabindex="0">
+            <div class="cp-scale-diagram" aria-hidden="true"><span class="cp-scale-unit">Learn</span><span class="cp-scale-join"></span><span class="cp-scale-unit">Practice</span><span class="cp-scale-join"></span><span class="cp-scale-unit">Validate</span><span class="cp-scale-join"></span><span class="cp-scale-unit is-end">Complete</span></div>
+            <div><p class="cp-panel-kicker" id="scaleKicker">Connected progression</p><h3 id="scaleHeading">The journey has a destination.</h3><p id="scaleDescription">Courses, resources, practice, assessments, delivery rules, and completion work together. I have to design not only what learners see, but how they move, qualify, and receive support.</p></div>
+          </div>
         </div>
       </div>
-      <p id="lifeEvidenceNote">The first decision is what belongs in the learning at all, before course structure or development begins.</p>
-    </aside>
-  </div>
-</div></div></div></section>
+    </section>
 
-        <section class="section pathway-maintenance-section" id="maintainability">
-          <div class="container">
-            <div class="maintenance-layout">
-              <div class="maintenance-copy">
-                <p class="eyebrow">Maintenance</p>
-                <h2>Keep the learning editable after launch.</h2>
-                <p>I organize the source files, reusable pieces, ownership, and update history so future changes can be made without rebuilding the pathway from scratch.</p>
-                <div class="maintenance-loop" aria-hidden="true">
-                  <span>Source change</span><i></i><span>Update</span><i></i><span>Republish</span>
-                </div>
-              </div>
-              <div class="maintenance-signals" aria-label="Maintainability practices">
-                <span><img src="../../../assets/icons/pixel/lms/mini-folder.webp" alt="" aria-hidden="true"><strong>Editable sources</strong><small>Organized files make revision faster.</small></span>
-                <span><img src="../../../assets/icons/pixel/lms/mini-sync.webp" alt="" aria-hidden="true"><strong>Reusable components</strong><small>Shared patterns reduce rework across modules.</small></span>
-                <span><img src="../../../assets/icons/pixel/lms/mini-document-list.webp" alt="" aria-hidden="true"><strong>Review history</strong><small>Decisions and approved changes stay traceable.</small></span>
-                <span><img src="../../../assets/icons/pixel/lms/mini-user.webp" alt="" aria-hidden="true"><strong>Ownership + versioning</strong><small>Clear owners and versions support the next release.</small></span>
-              </div>
+    <section class="section cp-anatomy" aria-labelledby="cpAnatomyTitle">
+      <div class="container">
+        <div class="cp-section-head"><p class="eyebrow">Anatomy of a pathway</p><h2 id="cpAnatomyTitle">Several learning pieces become one accountable experience.</h2><p>I have worked with multi-course structures, modules, reference materials, knowledge checks, practice, cumulative assessment, evaluations, learner feedback, reporting, and formal completion. The defining feature is not the number of screens; it is the connected route to a meaningful milestone.</p></div>
+        <div class="cp-anatomy-layout">
+          <div class="cp-learner-demo" data-cp-tabs>
+            <div class="cp-demo-top"><span class="cp-demo-view">Illustrative learner demo</span><span class="cp-demo-progress"><span id="demoProgressFill"></span></span><span id="demoStepCount">01 / 04</span></div>
+            <div class="cp-computer-frame">
+              <div class="cp-computer-bar"><span class="cp-browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong id="demoWindowTitle">Choose a route</strong><span class="cp-browser-user" aria-hidden="true">HR</span></div>
+              <div class="cp-computer-screen" id="learnerScreen" role="tabpanel" aria-labelledby="demo-tab-route" tabindex="0"><div class="cp-learner-ui" id="demoInterface"><p class="cp-ui-kicker">ILLUSTRATIVE LEARNER VIEW</p><h4>Choose your learning route</h4><div class="cp-ui-card"><strong>Seller pathway</strong><span>Build a common foundation, then practice customer conversations.</span><button type="button" class="cp-ui-action" data-next-learner="module">Open seller route <span aria-hidden="true">→</span></button></div><div class="cp-ui-muted">Partner route available for channel learners</div></div></div>
+              <div class="cp-computer-foot" aria-hidden="true"></div>
             </div>
+            <div class="cp-demo-steps" role="tablist" aria-label="Explore a learner pathway">
+              <button type="button" class="cp-demo-step is-active" id="demo-tab-route" role="tab" aria-controls="learnerScreen" aria-selected="true" tabindex="0" data-cp-tab="route"><span>01</span>Choose route</button>
+              <button type="button" class="cp-demo-step" id="demo-tab-module" role="tab" aria-controls="learnerScreen" aria-selected="false" tabindex="-1" data-cp-tab="module"><span>02</span>Learn + practice</button>
+              <button type="button" class="cp-demo-step" id="demo-tab-progress" role="tab" aria-controls="learnerScreen" aria-selected="false" tabindex="-1" data-cp-tab="progress"><span>03</span>Check progress</button>
+              <button type="button" class="cp-demo-step" id="demo-tab-milestone" role="tab" aria-controls="learnerScreen" aria-selected="false" tabindex="-1" data-cp-tab="milestone"><span>04</span>Reach milestone</button>
+            </div>
+            <div class="cp-demo-caption"><strong id="demoCaptionTitle">A route that fits the learner</strong><p id="demoCaption">Role-based entry points connect shared content with what each audience needs to do next.</p></div>
           </div>
-        </section>
-    </main>
+          <div class="cp-anatomy-copy">
+            <div class="cp-anatomy-group"><span class="cp-group-number">01</span><div><h3>Build understanding</h3><p>Courses and modules establish the information, while supporting materials and reference resources give learners somewhere to return when the work becomes real.</p></div></div>
+            <div class="cp-anatomy-group"><span class="cp-group-number">02</span><div><h3>Practice and validate</h3><p>Scenarios, knowledge checks, and cumulative assessments reveal whether learners can use the material, not just recognize it. Evaluation and feedback expose where the path needs revision.</p></div></div>
+            <div class="cp-anatomy-group"><span class="cp-group-number">03</span><div><h3>Record meaningful completion</h3><p>A visible milestone can help learners understand why the path matters and build buy-in. It may be a certificate, badge, credential, qualification, formal record, access requirement, job progression, or authorization to proceed. The completion logic has to match what the organization actually needs to know.</p></div></div>
+            <p class="cp-experience-note">In the Cellular Networking certification, I connected seller-focused objectives, practice, assessment, role and regional routing, and LMS completion into a maintainable experience instead of a set of unrelated courses.</p>
+          </div>
+        </div>
+        <div class="cp-architecture-map" role="img" aria-label="Courses and resources lead to practice, assessment, and a completion milestone. Learner feedback and reporting return to pathway revision.">
+          <div class="cp-architecture-route" aria-hidden="true"><span>Courses + resources</span><i></i><span>Practice</span><i></i><span>Assessment</span><i></i><span>Milestone</span></div>
+          <div class="cp-architecture-return" aria-hidden="true"><span>Feedback + reporting</span><b>↶</b><span>Revise the pathway</span></div>
+        </div>
+      </div>
+    </section>
 
-    <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
+    <section class="section cp-weight" aria-labelledby="cpWeightTitle">
+      <div class="container">
+        <div class="cp-section-head"><p class="eyebrow">Operational and business weight</p><h2 id="cpWeightTitle">The completion state can have consequences beyond learning.</h2><p>Formal programs often affect the next step a person can take. That is why I treat records, delivery rules, support, and reporting as part of the design rather than administrative details to discover after publishing.</p></div>
+        <div class="cp-weight-layout" data-cp-tabs>
+          <div class="cp-weight-options" role="tablist" aria-label="Explore pathway implications">
+            <button type="button" class="cp-weight-tab is-active" id="weight-tab-records" role="tab" aria-controls="weight-panel" aria-selected="true" tabindex="0" data-cp-tab="records"><span class="cp-weight-icon"><img src="../../../assets/icons/pixel/lms/mini-database.webp" alt=""></span><span><strong>Records + compliance</strong><small>What must be retained?</small></span></button>
+            <button type="button" class="cp-weight-tab" id="weight-tab-next" role="tab" aria-controls="weight-panel" aria-selected="false" tabindex="-1" data-cp-tab="next"><span class="cp-weight-icon"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span><span><strong>Next-step readiness</strong><small>What does completion unlock?</small></span></button>
+            <button type="button" class="cp-weight-tab" id="weight-tab-governance" role="tab" aria-controls="weight-panel" aria-selected="false" tabindex="-1" data-cp-tab="governance"><span class="cp-weight-icon"><img src="../../../assets/icons/pixel/lms/mini-org-chart.webp" alt=""></span><span><strong>Governance + delivery</strong><small>Who keeps the path accurate?</small></span></button>
+            <button type="button" class="cp-weight-tab" id="weight-tab-visibility" role="tab" aria-controls="weight-panel" aria-selected="false" tabindex="-1" data-cp-tab="visibility"><span class="cp-weight-icon"><img src="../../../assets/icons/pixel/lms/mini-analytics.webp" alt=""></span><span><strong>Reporting + support</strong><small>What happens after launch?</small></span></button>
+          </div>
+          <div class="cp-weight-panel" id="weight-panel" role="tabpanel" aria-labelledby="weight-tab-records" tabindex="0">
+            <div class="cp-weight-scene" id="weightScene" aria-hidden="true"><div class="cp-record-visual"><span class="cp-record-row"><b>Enrollment</b><i class="is-done"></i></span><span class="cp-record-row"><b>Assessment</b><i class="is-done"></i></span><span class="cp-record-row"><b>Completion</b><i class="is-done"></i></span><span class="cp-record-stamp">VERIFIED RECORD</span></div></div>
+            <div class="cp-weight-copy"><p class="cp-panel-kicker" id="weightKicker">Records + compliance</p><h3 id="weightHeading">Completion must mean something trustworthy.</h3><p id="weightDescription">Some pathways generate records an organization needs to retain, track, audit, or report. Assessment status, completion rules, certification, and LMS data must agree.</p><p class="cp-weight-takeaway" id="weightTakeaway">I design the assessment and delivery logic with that record in mind.</p></div>
+          </div>
+        </div>
+        <p class="cp-weight-footer">Depending on the program, completion can support sales or partner readiness, customer support, compliance, job performance, operational readiness, access, qualification, revenue-related work, or organizational KPIs. It does not make every pathway a compliance program or imply a single metric proves impact.</p>
+      </div>
+    </section>
 
-    <script>
-        const scaleData={course:'One learning need with content, practice, and assessment tied to the same objective.',certification:'Multiple learning components with a defined assessment standard, completion requirements, and certification logic.',pathway:'A connected learner journey across courses, resources, LMS behavior, communications, reporting, and ongoing ownership.'};
-        const scaleButtons=[...document.querySelectorAll('.scale-option')];scaleButtons.forEach((button)=>button.addEventListener('click',()=>{scaleButtons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});document.getElementById('scaleNote').textContent=scaleData[button.dataset.scale];}));
-        const lifecycleData={analyze:{label:'Stage 1 / Analyze',title:'Define the audience, seller task, source material, and scope.',summary:'I identify what learners need to explain, recognize, compare, or decide and separate that from technical detail or reference content that does not belong in the course.',plan:'Audience, sales task, approved source content, existing learning, constraints, stakeholders, and success criteria.',decision:'Decide whether the need calls for a course, certification, supporting resource, or a smaller intervention.',handoff:'A defined scope and learning target that can be used to design the experience.',icon:'../../../assets/icons/portfolio-icons.svg#icon-learning-design',evidence:null,evidenceLabel:'Analyze',evidenceTitle:'Turn source material into a defined learning target',evidenceNote:'The first decision is what belongs in the learning at all, before course structure or development begins.'},architect:{label:'Stage 2 / Architect',title:'Map objectives to content, practice, assessment, and learner flow.',summary:'I organize the source material into a course or pathway structure and decide where learners need explanation, comparison, scenario practice, assessment, or reference support.',plan:'Objectives, course sequence, source library, storyboard, scripts, interactions, assessment map, approvals, and pathway rules.',decision:'Choose what belongs in the learning, what belongs in supporting resources, and what should be left out.',handoff:'A design that development can follow without inventing the learning strategy during the build.',icon:'../../../assets/icons/portfolio-icons.svg#icon-elearning',evidence:'../../../assets/project-images/complete-learning-pathways/path-role-based-pathways.webp',evidenceAlt:'Public-safe role-based learning pathways for sales representatives, sales managers, and channel partners.',evidenceLabel:'Architect',evidenceTitle:'Design different routes around different learner jobs',evidenceNote:'Role-based pathways make the architecture visible before development begins.'},develop:{label:'Stage 3 / Develop',title:'Build, review, and QA the learning.',summary:'I develop in tools such as Rise and Storyline, organize media and reusable components, coordinate SME review, and test the content and interactions.',plan:'Authoring approach, reusable components, media, accessibility, review checkpoints, source-file structure, and technical QA.',decision:'Reuse patterns where they fit and customize interactions only when the learner task justifies it.',handoff:'Reviewed learning with organized source files and tested behavior.',icon:'../../../assets/icons/portfolio-icons.svg#icon-code',evidence:'../../../assets/project-images/complete-learning-pathways/path-module-detail.webp',evidenceAlt:'Public-safe learning module detail screen with objectives, topics, resources, and module launch.',evidenceLabel:'Develop',evidenceTitle:'Build the module around the learner task',evidenceNote:'Module detail connects objectives, content, resources, and practice inside the pathway.'},deliver:{label:'Stage 4 / Deliver',title:'Publish and test the learner path in the LMS.',summary:'I validate launch behavior, enrollment or pathway logic, completion rules, certification behavior, learner communications, and support needs.',plan:'Publishing, LMS configuration, enrollment, prerequisites, completion rules, certification logic, learner communications, and support resources.',decision:'Resolve delivery issues that would make the learning hard to find, launch, complete, or understand.',handoff:'A learner path that works in the delivery environment and can be supported operationally.',icon:'../../../assets/icons/portfolio-icons.svg#icon-lms',evidence:'../../../assets/project-images/complete-learning-pathways/path-certification-milestone.webp',evidenceAlt:'Public-safe certification milestone screen showing completion and certification value.',evidenceLabel:'Deliver',evidenceTitle:'Make the certification endpoint visible and testable',evidenceNote:'Delivery includes the certification rules, milestone, completion behavior, and learner-facing path to the finish line.'},improve:{label:'Stage 5 / Maintain',title:'Update the learning from approved changes and learner evidence.',summary:'I use source updates, assessment results, learner feedback, support issues, analytics, and stakeholder review to decide what needs to change.',plan:'Change log, source updates, assessment data, learner feedback, support trends, ownership, and review cadence.',decision:'Prioritize changes that affect accuracy, learner performance, usability, or delivery rather than preference-only edits.',handoff:'Updated content with documented ownership, editable sources, and a record of what changed.',icon:'../../../assets/icons/portfolio-icons.svg#icon-analytics',evidence:'../../../assets/project-images/complete-learning-pathways/path-learner-progress.webp',evidenceAlt:'Public-safe learner progress dashboard showing completion, next actions, and pathway status.',evidenceLabel:'Maintain',evidenceTitle:'Use learner progress and support signals to guide the next update',evidenceNote:'Progress, support issues, assessment behavior, and stakeholder changes all feed the maintenance cycle.'}};
-        const lifeButtons=[...document.querySelectorAll('.lifecycle-step')];const lifeIcon=document.getElementById('lifeIcon');function selectLifecycle(button){const data=lifecycleData[button.dataset.life];lifeButtons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});document.getElementById('lifeLabel').textContent=data.label;document.getElementById('lifeTitle').textContent=data.title;document.getElementById('lifeSummary').textContent=data.summary;document.getElementById('lifePlan').textContent=data.plan;document.getElementById('lifeDecision').textContent=data.decision;document.getElementById('lifeHandoff').textContent=data.handoff;lifeIcon.setAttribute('href',data.icon);const evidenceImage=document.getElementById('lifeEvidenceImage');const analyzeMotion=document.getElementById('analyzeMotion');document.getElementById('lifeEvidenceLabel').textContent=data.evidenceLabel;document.getElementById('lifeEvidenceTitle').textContent=data.evidenceTitle;document.getElementById('lifeEvidenceNote').textContent=data.evidenceNote;if(data.evidence){evidenceImage.hidden=false;analyzeMotion.hidden=true;evidenceImage.src=data.evidence;evidenceImage.alt=data.evidenceAlt;}else{evidenceImage.hidden=true;analyzeMotion.hidden=false;}}lifeButtons.forEach((button,index)=>{button.addEventListener('click',()=>selectLifecycle(button));button.addEventListener('keydown',(event)=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();let next=index;if(event.key==='Home')next=0;else if(event.key==='End')next=lifeButtons.length-1;else if(event.key==='ArrowDown'||event.key==='ArrowRight')next=(index+1)%lifeButtons.length;else next=(index-1+lifeButtons.length)%lifeButtons.length;lifeButtons[next].focus();selectLifecycle(lifeButtons[next]);});});
-    </script>
+    <section class="section cp-lifecycle" id="elearning-lifecycle" aria-labelledby="cpLifecycleTitle">
+      <div class="container">
+        <div class="cp-section-head"><p class="eyebrow">Beyond content creation</p><h2 id="cpLifecycleTitle">The pathway has an operational lifecycle.</h2><p>Working across design, LMS delivery, assessment, reporting, maintenance, and direct learner support taught me to plan for the whole life of a program. Select a stage to see the work and its practical point of view.</p></div>
+        <div class="cp-lifecycle-workspace" data-cp-tabs>
+          <div class="cp-lifecycle-tabs" role="tablist" aria-label="Operational lifecycle stages">
+            <button type="button" class="cp-life-tab is-active" id="life-tab-design" role="tab" aria-controls="life-panel" aria-selected="true" tabindex="0" data-cp-tab="design"><span>01</span>Design</button>
+            <button type="button" class="cp-life-tab" id="life-tab-delivery" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="delivery"><span>02</span>Delivery</button>
+            <button type="button" class="cp-life-tab" id="life-tab-admin" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="admin"><span>03</span>Administration</button>
+            <button type="button" class="cp-life-tab" id="life-tab-support" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="support"><span>04</span>Support</button>
+            <button type="button" class="cp-life-tab" id="life-tab-reporting" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="reporting"><span>05</span>Reporting</button>
+            <button type="button" class="cp-life-tab" id="life-tab-maintenance" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="maintenance"><span>06</span>Maintenance</button>
+            <button type="button" class="cp-life-tab" id="life-tab-improvement" role="tab" aria-controls="life-panel" aria-selected="false" tabindex="-1" data-cp-tab="improvement"><span>07</span>Improvement</button>
+          </div>
+          <div class="cp-lifecycle-panel" id="life-panel" role="tabpanel" aria-labelledby="life-tab-design" tabindex="0">
+            <div class="cp-lifecycle-copy"><p class="cp-panel-kicker" id="lifeKicker">01 / Design · Learning designer view</p><h3 id="lifeHeading">Start with the job and work backward.</h3><p id="lifeDescription">I define the audience, decisions learners must make, approved sources, role routes, objectives, practice, assessment, and completion standard before the build becomes a collection of screens.</p><div class="cp-life-decision"><span>My move</span><p id="lifeMove">Keep technical depth that is useful as a resource; make required learning follow the seller task.</p></div><p class="cp-life-output"><strong>Working result:</strong> <span id="lifeOutput">A pathway map with clear objectives, audience routes, review points, and validation gates.</span></p></div>
+            <div class="cp-life-visual" id="lifeVisual" aria-live="off"><div class="cp-life-visual-inner cp-scene-design" aria-hidden="true"><div class="cp-design-source"><span>Audience</span><span>Seller task</span><span>Approved source</span></div><div class="cp-design-bridge"></div><div class="cp-design-map"><div class="cp-design-map-head">PATHWAY MAP</div><div><i></i><b>Understand</b></div><div><i></i><b>Practice</b></div><div><i></i><b>Validate</b></div><div><i></i><b>Complete</b></div></div></div></div>
+          </div>
+        </div>
+        <div class="cp-support-callout"><img src="../../../assets/icons/pixel/lms/mini-headset.webp" alt="" aria-hidden="true"><p><strong>Direct learner support belongs in the lifecycle.</strong> When completion affects what someone can do next, an access, enrollment, assessment, navigation, record, or certification-status problem can become a real work blocker.</p></div>
+      </div>
+    </section>
+
+    <section class="section cp-lessons" aria-labelledby="cpLessonsTitle">
+      <div class="container cp-lessons-grid">
+        <div><p class="eyebrow">What the work taught me</p><h2 id="cpLessonsTitle">Publishing is a handoff, not a finish line.</h2><p>Building and maintaining formal certification pathways changed how I design them. I make the content and operating model legible together, so teams can support learners, see where the path breaks, and update the right layer when the business changes.</p></div>
+        <div class="cp-lessons-list">
+          <div><span>01</span><p><strong>Design for the next revision.</strong> Modular sources, reusable patterns, version history, and clear decision ownership make a pathway easier to maintain without reconstructing it.</p></div>
+          <div><span>02</span><p><strong>Watch the learner's real route.</strong> A course can be accurate while enrollment, navigation, completion rules, or certification records still stop someone from progressing.</p></div>
+          <div><span>03</span><p><strong>Let evidence guide improvement.</strong> Support questions, assessment behavior, feedback, reporting, and approved source changes tell me what to diagnose, revise, and verify.</p></div>
+        </div>
+        <div class="cp-improvement-strip" aria-label="Improvement process: observe learner signal, diagnose the issue, revise the responsible layer, and verify the new experience."><span>Observe</span><i></i><span>Diagnose</span><i></i><span>Revise</span><i></i><span>Verify</span></div>
+      </div>
+    </section>
+
+    <section class="section cp-featured" id="elearning-projects" aria-labelledby="cpFeaturedTitle">
+      <div class="container cp-featured-grid"><div class="cp-featured-copy"><p class="eyebrow">Featured project</p><h2 id="cpFeaturedTitle">Cellular Networking Sales Certification</h2><p class="body-large">A multi-course certification for internal sellers and channel partners, rebuilt while the underlying portfolio and messaging were changing.</p><p>I owned the learning architecture, objectives, course structure, practice, assessments, many visual and interactive assets, learner experience, review coordination, and maintenance approach. SMEs and stakeholders validated product truth and business boundaries. The result was a connected pathway that had to work in the LMS and remain editable after launch.</p><div class="button-row"><a class="btn btn-primary" href="./enterprise-sales-certification/index.html">Explore the Case Study</a></div></div><div class="cp-featured-preview" role="img" aria-label="Certification architecture preview: shared learning content connects to practice and a cumulative assessment, which produces a completion milestone."><div class="cp-featured-pill"><img src="../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="">Shared core</div><div class="cp-featured-line"></div><div class="cp-featured-row"><span><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt="">Modules</span><span><img src="../../../assets/icons/pixel/lms/mini-user.webp" alt="">Practice</span><span><img src="../../../assets/icons/pixel/lms/mini-document-list.webp" alt="">Assessment</span></div><div class="cp-featured-line"></div><div class="cp-featured-pill cp-featured-end"><img src="../../../assets/icons/pixel/lms/mini-certificate.webp" alt="">Certification</div><p>One learner journey. Multiple connected responsibilities.</p></div></div>
+    </section>
+    <section class="cp-back"><div class="container"><a href="../index.html">← Back to Instructional Design</a></div></section>
+  </main>
+  <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 </body>
 </html>
