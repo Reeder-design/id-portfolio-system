@@ -41,32 +41,37 @@ Workflows currently includes the structured groupings Design + Development, AI +
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.
 
 Use this authority order:
-1. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
-2. `portfolio-data/component-registry.json` for canonical reusable component IDs, ownership, support level, and intended use.
-3. Structured records under `portfolio-data/` for content fields they explicitly own.
-4. `templates/` + deterministic renderers for standard generated pages.
-5. Bespoke public HTML/CSS/JavaScript for custom interactive experiences that are intentionally not template-generated.
-6. Portfolio Manager code for Manager workflow/state behavior.
-7. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override live code/data.
+1. Existing public HTML/CSS/JavaScript under `portfolio/` for the presentation and interaction behavior of an existing page.
+2. Shared current portfolio styles/JavaScript loaded by that page.
+3. `portfolio-data/taxonomy.json` for canonical category labels, IDs, and public paths.
+4. Structured records under `portfolio-data/` for the metadata/content fields they explicitly own.
+5. `portfolio-data/component-registry.json` for reusable component IDs, ownership, support level, and intended use.
+6. `templates/` + deterministic renderers only for creating a new page whose target path does not already exist.
+7. Portfolio Manager code for Manager workflow/state behavior.
+8. Manual documentation describes the current system; it must be updated when the implementation changes, but it does not override the current public implementation.
 
 Generated documentation produced by `scripts/update-docs.py` is output, not an editing source.
 
 Do not revive retired experiments, old UI concepts, temporary workarounds, or superseded architecture merely because they still appear in Git history, old PR descriptions, comments, or versioned filenames. Verify the current live owner first.
 
-## Structured Content and Templates
-Standard project case-study pages should use structured records in `portfolio-data/projects/` and the reusable template in `templates/project-page/` when the shared layout fits the project.
+## Structured Content and New-Page Scaffolding
+Existing public pages are protected from template regeneration. The standard project template is a new-page scaffold only.
 
-For standard project generation, prefer the existing Create Content workflow or `python scripts/new-project.py` rather than manually duplicating project JSON, paths, and rendered HTML.
+For a genuinely new standard project, prefer Portfolio Manager **Create Content** or `python scripts/new-project.py`. Both must fail closed if the intended public page path already exists.
 
-Use `python scripts/render-project.py <project-json>` when intentionally re-rendering an existing generated project page. The renderer fails closed rather than guessing and does not overwrite an existing page without explicit force behavior.
+`python scripts/render-project.py <project-json>` may preview or create a new page only. There is no supported force-overwrite workflow.
 
-Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study template.
+Do not use the template, renderer, structured record, old Git history, or an older PR to rebuild an existing public page. Finished public pages often contain later UAT refinements that the generic scaffold does not know about.
+
+Bespoke interactive demos may remain custom HTML/CSS/JavaScript when their learning interaction requires a custom experience. Do not flatten custom interactions into the standard case-study scaffold.
 
 Before adding another shared stylesheet, script, renderer, helper, or interaction controller, inspect the current stack and extend an existing owner when practical. Avoid multiple implementations competing for the same DOM behavior.
 
-Use `portfolio-data/component-registry.json` to describe reusable interaction/presentation patterns. A recorded `component_refs` value documents intentional design-system usage; it does not imply that Portfolio Manager may inject markup into a bespoke page. Template-supported components may be rendered only by the established deterministic renderer.
+Use `portfolio-data/component-registry.json` to describe reusable interaction/presentation patterns. A recorded `component_refs` value documents intentional design-system usage; it does not imply that Portfolio Manager may inject markup into a bespoke page.
 
-Structured project-to-project connections belong in `related_work`. Manage them through Related References when practical. Deterministic suggestions may use existing taxonomy/skills/tools/graph metadata, but suggestions must remain human-reviewed and must never auto-add a relationship.
+Structured project-to-project connections belong in `related_work` for the internal relationship graph. Manage them through Related References when practical. Relationship metadata does not automatically create a public Related Work section.
+
+Use `docs/portfolio-visual-qa-standard.md` and `docs/portfolio-consistency-audit.md` when building or reviewing future pages.
 
 ## Portfolio Manager Product Boundaries
 Portfolio Manager must remain local-only on `127.0.0.1:5055`.
@@ -176,7 +181,7 @@ Manual architecture documentation must describe the current implementation, not 
 
 ## Development Rules
 When modifying the public portfolio:
-1. Inspect the existing implementation and identify the current owner before adding code.
+1. Inspect the existing implementation and identify the current owner before adding code. For an existing page, the current public page is the presentation authority; do not regenerate it from a template.
 2. Preserve the existing visual system unless a redesign is explicitly requested.
 3. Use shared CSS variables and existing components before creating new styles.
 4. Keep HTML semantic, responsive, and accessible.
