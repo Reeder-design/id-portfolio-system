@@ -34,20 +34,32 @@
     quick: {
       kicker: "Point-of-need support",
       heading: "A precise need can use a precise tool.",
-      description: "A short lesson, job aid, performance-support resource, or single interaction can help someone solve one immediate problem. It does not need a formal path just to feel substantial.",
-      units: ["Need", "Use", "Return"]
+      description: "A job aid puts an approved response or process where someone needs it. The learner finds the answer, uses it, and returns to work without entering a course.",
+      scene: `<div class="cp-mini-app cp-mini-aid"><div class="cp-mini-top"><span>JOB AID</span><span>POINT OF NEED</span></div><div class="cp-mini-search">⌕ <span>Find a response</span></div><div class="cp-mini-aid-card"><strong>Customer asks about handoff delays</strong><span>Start by clarifying where the handoff breaks.</span></div><button type="button" data-mini-action="quick">Open suggested response ↗</button><div class="cp-mini-reveal" hidden role="status">Ask → clarify → use approved answer</div></div>`
+    },
+    micro: {
+      kicker: "One small learning goal",
+      heading: "Microlearning delivers one useful idea.",
+      description: "A short, self-contained learning moment focuses attention on one decision or behavior. The learner can move from a prompt to a key idea and apply it without navigating a larger course.",
+      scene: `<div class="cp-mini-app cp-mini-micro"><div class="cp-mini-top"><span>MICROLEARNING</span><span id="miniMicroCount">01 / 02</span></div><div class="cp-mini-micro-card"><span class="cp-mini-micro-icon">?</span><div><small id="miniMicroLabel">QUICK PROMPT</small><strong id="miniMicroTitle">What is the first move?</strong><p id="miniMicroBody">A customer reports delays between teams.</p></div></div><div class="cp-mini-micro-dots"><i class="is-current"></i><i></i></div><button type="button" data-mini-action="micro">Reveal one useful idea →</button><div class="cp-mini-reveal" hidden role="status">Ask where the handoff breaks before proposing a solution.</div></div>`
+    },
+    interaction: {
+      kicker: "One decision to practice",
+      heading: "An interaction can rehearse a choice.",
+      description: "A standalone scenario lets someone try a decision and see its consequence. It does not need modules or a formal completion record when the goal is focused practice.",
+      scene: `<div class="cp-mini-app cp-mini-interaction"><div class="cp-mini-top"><span>DECISION PRACTICE</span><span>ONE SCENARIO</span></div><div class="cp-mini-scenario"><span>Customer cue</span><strong>“Our handoffs keep slowing us down.”</strong></div><div class="cp-mini-choice"><button type="button" data-mini-choice="ask">Ask where the delay occurs</button><button type="button" data-mini-choice="promise">Promise a fix immediately</button></div><div class="cp-mini-reveal" hidden role="status"></div></div>`
     },
     course: {
       kicker: "Focused learning experience",
       heading: "One course can develop one coherent capability.",
       description: "A course brings explanation, examples, practice, and a check around a defined objective. It may stand alone or later become one part of a larger path.",
-      units: ["Learn", "Practice", "Check"]
+      scene: `<div class="cp-mini-app cp-mini-course"><div class="cp-mini-top"><span>COURSE PLAYER</span><span>02 / 03</span></div><div class="cp-mini-lesson"><span class="cp-mini-play">▶</span><div><strong>One focused objective</strong><small>Explain → example → apply</small></div></div><div class="cp-mini-question">A customer raises a new concern. First move?</div><button type="button" data-mini-action="course">Choose: ask a clarifying question</button><div class="cp-mini-reveal" hidden role="status">✓ Practice checked; continue to the next lesson</div></div>`
     },
     pathway: {
       kicker: "Connected progression",
       heading: "The journey has a destination.",
       description: "Courses, resources, practice, assessments, delivery rules, and completion work together. I have to design not only what learners see, but how they move, qualify, and receive support.",
-      units: ["Learn", "Practice", "Validate", "Complete"]
+      scene: `<div class="cp-mini-app cp-mini-pathway"><div class="cp-mini-top"><span>MY LEARNING</span><span>SELLER ROUTE</span></div><div class="cp-mini-route"><span class="is-done" data-stage-index="0">✓<small>Start</small></span><i></i><span class="is-now" data-stage-index="1">▶<small>Practice</small></span><i></i><span data-stage-index="2">○<small>Check</small></span><i></i><span data-stage-index="3">◇<small>Finish</small></span></div><div class="cp-mini-pathway-footer"><span data-mini-progress-label>2 of 4 stages</span><button type="button" data-mini-action="pathway">Complete practice ↗</button></div><div class="cp-mini-reveal" hidden role="status">Customer practice is ready</div></div>`
     }
   };
   const scaleWorkspace = document.querySelector(".cp-scale-workspace");
@@ -57,12 +69,70 @@
     document.getElementById("scaleKicker").textContent = data.kicker;
     document.getElementById("scaleHeading").textContent = data.heading;
     document.getElementById("scaleDescription").textContent = data.description;
-    const diagram = document.querySelector(".cp-scale-diagram");
-    diagram.style.setProperty("--cp-units", data.units.length);
-    diagram.innerHTML = data.units.map((label, index) =>
-      `${index ? '<span class="cp-scale-join"></span>' : ""}<span class="cp-scale-unit ${index === data.units.length - 1 ? "is-end" : ""}">${label}</span>`
-    ).join("");
+    const diagram = document.getElementById("scaleDemo");
+    diagram.dataset.solution = key;
+    diagram.dataset.progressStep = "2";
+    diagram.classList.remove("is-explored");
+    const solutionNames = { quick: "job aid", micro: "microlearning card", interaction: "decision practice", course: "course player", pathway: "pathway dashboard" };
+    diagram.setAttribute("aria-label", `Illustrative ${solutionNames[key]} learner view`);
+    diagram.innerHTML = data.scene;
+    if (key !== "pathway" && key !== "interaction") {
+      const action = diagram.querySelector("[data-mini-action]");
+      const reveal = diagram.querySelector(".cp-mini-reveal");
+      reveal.id = "miniReveal";
+      action.setAttribute("aria-controls", reveal.id);
+      action.setAttribute("aria-expanded", "false");
+    }
+    diagram.querySelectorAll("[data-mini-choice]").forEach((choice) => choice.setAttribute("aria-pressed", "false"));
+    diagram.querySelector("[data-mini-action]")?.addEventListener("click", (event) => {
+      const reveal = diagram.querySelector(".cp-mini-reveal");
+      if (key === "pathway") {
+        const current = Number(diagram.dataset.progressStep || 2);
+        const next = current === 5 ? 2 : current + 1;
+        diagram.dataset.progressStep = String(next);
+        const stages = [...diagram.querySelectorAll("[data-stage-index]")];
+        const symbols = ["✓", "▶", "○", "◇"];
+        stages.forEach((stage, index) => {
+          stage.classList.toggle("is-done", index < next - 1 || next === 5);
+          stage.classList.toggle("is-now", index === next - 1 && next !== 5);
+          stage.firstChild.textContent = index < next - 1 || next === 5 ? "✓" : index === next - 1 ? "▶" : symbols[index];
+        });
+        const progress = diagram.querySelector("[data-mini-progress-label]");
+        progress.textContent = next === 5 ? "Complete" : `${next} of 4 stages`;
+        const messages = { 2: "Customer practice is ready", 3: "Practice complete; final check unlocked", 4: "Final check complete; confirm the milestone", 5: "Certification complete; record available" };
+        reveal.textContent = messages[next];
+        event.currentTarget.textContent = ({ 2: "Complete practice ↗", 3: "Complete final check ↗", 4: "Confirm completion ↗", 5: "Replay pathway ↺" })[next];
+        reveal.hidden = false;
+        diagram.classList.toggle("is-explored", next > 2);
+        return;
+      }
+      if (key === "micro") {
+        const next = !diagram.classList.contains("is-explored");
+        diagram.classList.toggle("is-explored", next);
+        diagram.querySelector("#miniMicroCount").textContent = next ? "02 / 02" : "01 / 02";
+        diagram.querySelector("#miniMicroLabel").textContent = next ? "KEY IDEA" : "QUICK PROMPT";
+        diagram.querySelector("#miniMicroTitle").textContent = next ? "Clarify the gap first" : "What is the first move?";
+        diagram.querySelector("#miniMicroBody").textContent = next ? "Ask where the handoff breaks before proposing a solution." : "A customer reports delays between teams.";
+        event.currentTarget.textContent = next ? "Back to prompt ↶" : "Reveal one useful idea →";
+        event.currentTarget.setAttribute("aria-expanded", String(next));
+        reveal.hidden = !next;
+        return;
+      }
+      reveal.hidden = false;
+      event.currentTarget.setAttribute("aria-expanded", "true");
+      diagram.classList.add("is-explored");
+    });
+    diagram.querySelectorAll("[data-mini-choice]").forEach((button) => button.addEventListener("click", () => {
+      diagram.querySelectorAll("[data-mini-choice]").forEach((choice) => {
+        choice.classList.toggle("is-chosen", choice === button);
+        choice.setAttribute("aria-pressed", String(choice === button));
+      });
+      const reveal = diagram.querySelector(".cp-mini-reveal");
+      reveal.hidden = false;
+      reveal.textContent = button.dataset.miniChoice === "ask" ? "Good decision: clarify the need before positioning." : "Try the discovery question first; the solution fit is not known yet.";
+    }));
   });
+  if (scaleWorkspace) scaleWorkspace.querySelector('[data-cp-tab="pathway"]').click();
 
   const learner = {
     route: {
@@ -260,6 +330,7 @@
     document.getElementById("lifeMove").textContent = data.move;
     document.getElementById("lifeOutput").textContent = data.output;
     const visual = document.getElementById("lifeVisual");
+    lifecycle.style.setProperty("--cp-stage-width", `${[...lifecycle.querySelectorAll(".cp-life-tab")].indexOf(tab) * 14.33}%`);
     visual.innerHTML = data.scene;
     const action = visual.querySelector("[data-pov-action]");
     action?.addEventListener("click", () => {
@@ -277,6 +348,33 @@
       if (key === "admin") visual.querySelector(".cp-admin-toggle").classList.add("is-verified");
     });
   });
+
+  const practices = {
+    revision: {
+      heading: "Design for the next revision.",
+      description: "I keep sources modular, reusable patterns organized, decisions traceable, and reviewers clear. A product change can then reach the right pieces without rebuilding the pathway.",
+      scene: `<div class="cp-practice-version"><div class="cp-practice-source"><span>SOURCE UPDATE</span><strong>New positioning</strong></div><div class="cp-practice-version-branches"><i></i><span>Module</span><span>Resource</span><span>Question</span></div><div class="cp-practice-version-check">✓ One reviewed change set</div></div>`
+    },
+    route: {
+      heading: "Walk the learner's real route.",
+      description: "Accuracy is not enough if enrollment, navigation, completion rules, or certificate status blocks progress. I test the actual learner journey and trace a blocker to the responsible layer.",
+      scene: `<div class="cp-practice-route"><div class="cp-practice-route-rail"></div><span>Enrolled</span><span>Module</span><span class="cp-practice-route-alert">Rule <b>!</b></span><span>Record</span><div class="cp-practice-route-callout">Trace the blocker at the rule</div></div>`
+    },
+    evidence: {
+      heading: "Let evidence guide improvement.",
+      description: "I compare support questions, assessment behavior, learner feedback, reporting, and approved source changes before I diagnose the gap, revise a design layer, and verify the result.",
+      scene: `<div class="cp-practice-evidence"><div class="cp-practice-signals"><span><b>?</b> Support</span><span><b>◫</b> Assessment</span><span><b>↗</b> Reporting</span></div><div class="cp-practice-evidence-focus"><span>◆</span><strong>Diagnose</strong></div><div class="cp-practice-evidence-result"><span>Revise</span><i></i><span>Verify</span></div></div>`
+    }
+  };
+  const practiceWorkspace = document.querySelector(".cp-practice-workspace");
+  if (practiceWorkspace) bindTabs(practiceWorkspace, (key, tab) => {
+    const data = practices[key];
+    document.getElementById("practice-panel").setAttribute("aria-labelledby", tab.id);
+    document.getElementById("practiceHeading").textContent = data.heading;
+    document.getElementById("practiceDescription").textContent = data.description;
+    document.getElementById("practiceScene").innerHTML = data.scene;
+  });
+  if (practiceWorkspace) practiceWorkspace.querySelector('[data-cp-tab="revision"]').click();
 
   const featured = document.querySelector(".cp-featured-preview");
   if (featured && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

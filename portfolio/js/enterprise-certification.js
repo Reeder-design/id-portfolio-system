@@ -1,28 +1,38 @@
 (() => {
+  const linkTabPanel = (buttons, panel, prefix) => {
+    if (!panel) return;
+    if (!panel.id) panel.id = `${prefix}-panel`;
+    buttons.forEach((button, index) => {
+      button.id = `${prefix}-tab-${index}`;
+      button.setAttribute('aria-controls', panel.id);
+    });
+    const selected = buttons.find((button) => button.getAttribute('aria-selected') === 'true') || buttons[0];
+    if (selected) panel.setAttribute('aria-labelledby', selected.id);
+  };
   const overviewData = {
     inherit: {
       label: '01 / Origin',
       title: 'Two historic lines and a new third line needed one pathway.',
       text: 'The original lines came from separate business operations that were merging. The new line had to join the broader portfolio without erasing meaningful distinctions for sellers.',
-      motion: `<div class="cert-origin-visual" aria-hidden="true"><div class="cert-origin-sources"><span><b>Historic operation A</b><small>Product line 1</small></span><span><b>Historic operation B</b><small>Product line 2</small></span><span><b>New portfolio line</b><small>Product line 3</small></span></div><div class="cert-origin-merge"><i></i><strong>One certification architecture</strong></div></div>`
+      motion: `<div class="cert-origin-visual" aria-hidden="true"><div class="cert-origin-routes"><span class="cert-origin-route"><i></i><b>Line A</b></span><span class="cert-origin-route"><i></i><b>Line B</b></span><span class="cert-origin-route"><i></i><b>Line C</b></span></div><div class="cert-origin-hub"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""></span><b>One pathway</b></div><div class="cert-origin-output"><i></i><i></i><i></i><small>Shared core<br>Distinct context</small></div></div>`
     },
     change: {
       label: '02 / Change',
       title: 'The underlying information changed on several fronts at once.',
       text: 'I reconciled names, features, terminology, messaging, target verticals, positioning, go-to-market routes, brand, assessment, and delivery so a learner still encountered one coherent journey.',
-      motion: `<div class="cert-change-visual" aria-hidden="true"><div class="cert-change-before"><span>Names + features</span><span>Markets + messaging</span><span>Brand + ownership</span></div><div class="cert-change-transform">Reconcile<br>and structure</div><div class="cert-change-after"><b>Seller pathway</b><small>Consistent learning decisions</small></div></div>`
+      motion: `<div class="cert-change-visual" aria-hidden="true"><div class="cert-change-dials"><span><i></i>Names</span><span><i></i>Messaging</span><span><i></i>Markets</span><span><i></i>Brand</span></div><div class="cert-change-focus"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""></span><b>Reconcile</b></div><div class="cert-change-path"><i></i><i></i><i></i><strong>Stable seller path</strong></div></div>`
     },
     sources: {
       label: '03 / Sources',
       title: 'Decision continuity mattered as much as collecting comments.',
       text: 'Source teams were still partly separated by historic business lines. I tracked who owned each fact, recorded changes and rationale, and kept review packages aligned as authority and scope evolved.',
-      motion: `<div class="cert-source-visual" aria-hidden="true"><div class="cert-source-files"><span>SME input</span><span>Product source</span><span>Business decision</span></div><div class="cert-source-ledger"><b>Decision record</b><span>Owner <i>confirmed</i></span><span>Terminology <i>current</i></span><span>Revision <i>tracked</i></span></div></div>`
+      motion: `<div class="cert-source-visual" aria-hidden="true"><div class="cert-source-stamps"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""></span><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""></span><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""></span></div><div class="cert-source-ledger"><b>Decision record</b><span><i>✓</i>Owner</span><span><i>✓</i>Rationale</span><span><i>✓</i>Version</span></div><div class="cert-source-tail">Traceable<br>revision</div></div>`
     },
     timeline: {
       label: '04 / Delivery',
       title: 'The target moved from about ten months to about four.',
       text: 'I reprioritized, used reusable structures, planned parallel development and review, and protected essential learning and validation gates rather than treating the shorter window as permission to strip out the system.',
-      motion: `<div class="cert-timeline-visual" aria-hidden="true"><small class="cert-timeline-key">Same scale: each segment represents about one month</small><div class="cert-timeline-row"><b>Original plan</b><span class="cert-timeline-track long"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~10 months</strong></div><div class="cert-timeline-row"><b>Replanned</b><span class="cert-timeline-track short"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~4 months</strong></div><div class="cert-timeline-phases">Design · parallel build + review · UAT · release</div></div>`
+      motion: `<div class="cert-timeline-visual" aria-hidden="true"><small class="cert-timeline-key">One cell ≈ one month</small><div class="cert-timeline-row"><b>Original</b><span class="cert-timeline-track long"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~10</strong></div><div class="cert-timeline-row"><b>Replanned</b><span class="cert-timeline-track short"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~4</strong></div><div class="cert-timeline-phases"><span>Design</span><span>Parallel build + review</span><span>UAT</span><span>Release</span></div></div>`
     }
   };
   const overviewButtons = [...document.querySelectorAll('[data-overview]')];
@@ -65,23 +75,49 @@
   });
   if (overviewMotion) overviewMotion.innerHTML = overviewData.inherit.motion;
 
+  const ownershipInteraction = document.querySelector('.cert-ownership-interaction');
+  const ownershipPanel = document.getElementById('ownershipPanel');
+  const ownershipButtons = [...document.querySelectorAll('[data-ownership-view]')];
+  const ownershipViews = {
+    source: ['Keep product truth with its owners', 'Source teams and SMEs validated features, terminology, technical boundaries, portfolio distinctions, and business direction. I tracked who could confirm each decision as the organizations consolidated.'],
+    design: ['From facts to learner decisions', 'I designed objectives, structure, practice, assessment, visuals, LMS behavior, support, and a revision strategy. I documented decisions so a changing portfolio would not fragment the learner experience.']
+  };
+  ownershipButtons.forEach((button, index) => {
+    button.tabIndex = index === 1 ? 0 : -1;
+    const activate = () => {
+      const key = button.dataset.ownershipView;
+      ownershipButtons.forEach((item) => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+      ownershipInteraction.dataset.ownership = key;
+      ownershipPanel.setAttribute('aria-labelledby', button.id);
+      ownershipPanel.querySelector('strong').textContent = ownershipViews[key][0];
+      ownershipPanel.querySelector('p').textContent = ownershipViews[key][1];
+    };
+    button.addEventListener('click', activate);
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? ownershipButtons.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + ownershipButtons.length) % ownershipButtons.length;
+      ownershipButtons[next].focus(); ownershipButtons[next].click();
+    });
+  });
+
   const blueprintData = {
     pathway: {
       title: 'Connect the full certification around decisions sellers make.',
       text: 'Multiple courses formed a shared core. Resources, practice, knowledge checks, a cumulative assessment, formal completion, learner feedback, reporting, and support made it an operating pathway.',
       html: `
-        <div class="cert-architecture" aria-label="Certification architecture">
-          <div class="cert-architecture-row cert-course-row"><span>Portfolio context</span><span>Customer use cases</span><span>Solution positioning</span><span>Handoff + resources</span></div>
-          <div class="cert-architecture-row cert-practice-row"><span>Practice</span><span>Knowledge checks</span><span>Cumulative assessment</span><span>Learner evaluation</span><span>Completion</span></div>
-          <div class="cert-architecture-base"><span>LMS + support</span><span>Reporting</span><span>Feedback</span></div>
-          <div class="cert-architecture-loop"><span>Feedback + reporting</span><i aria-hidden="true"></i><strong>Revise the course map ↑</strong></div>
+        <div class="cert-architecture" aria-label="A certification map moves from four course topics through practice, checks, assessment, and completion, supported by LMS delivery and a feedback return loop.">
+          <div class="cert-map-rail"><span><b>01</b>Context</span><span><b>02</b>Use cases</span><span><b>03</b>Positioning</span><span><b>04</b>Handoff</span></div>
+          <div class="cert-map-transfer"><span>Learn</span><i></i><span>Apply</span><i></i><span>Prove</span></div>
+          <div class="cert-map-gates"><span>Practice</span><span>Checks</span><span>Assessment</span><span>Credential</span></div>
+          <div class="cert-map-foundation"><span>LMS + support</span><span>Reporting + feedback ↶</span></div>
         </div>
         <p class="cert-panel-takeaway">The seller job defined the scope: recognize a situation, ask useful discovery questions, distinguish approaches, explain value, and know the next step—not become an implementation engineer.</p>`
     },
     audience: {
       title: 'Route one shared core to learners with different starting points.',
       text: 'Internal sellers, external partners, new populations, and different roles did not have equal product knowledge or LMS familiarity. I adjusted pacing, terminology, resources, assessment preparation, access, and support around that reality.',
-      html: `<div class="cert-audience-map" aria-label="Audience routing"><div class="cert-audience-entry"><span>Internal sellers</span><span>Channel partners</span><span>New learners</span></div><div class="cert-audience-core">Shared seller core<br><small>Discovery · fit · value · next step</small></div><div class="cert-audience-routes"><span>Global common path</span><span>U.S. neutral-host context</span><span>Optional technical foundations</span></div></div><p class="cert-panel-takeaway">Specialized material branched only when it changed the learner's decision or requirement. Optional technical foundations stayed available without inflating the required core.</p>`
+      html: `<div class="cert-audience-map" aria-label="Three learner entrances feed a shared seller core, with regional and optional technical branches after the core."><div class="cert-audience-entry"><span>Internal</span><span>Partner</span><span>New</span></div><div class="cert-audience-core"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt=""></span><strong>Shared seller core</strong><small>Discovery · fit · value</small></div><div class="cert-audience-routes"><span>Common route</span><span>Regional context</span><span>Optional depth</span></div></div><p class="cert-panel-takeaway">Specialized material branched only when it changed the learner's decision or requirement. Optional technical foundations stayed available without inflating the required core.</p>`
     },
     alignment: {
       title: 'Make the relationship between objective, content, practice, and assessment visible.',
@@ -92,10 +128,10 @@
       title: 'Design the operating layer alongside the learning.',
       text: 'Access, learner routes, assessments, completion validity, certification status, support, reporting, and updates had to work after a course file was published.',
       html: `
-        <div class="cert-operating-visual" aria-label="Operational certification layers">
-          <div class="cert-operating-learner"><b>Learner-facing</b><span>Course path</span><span>Practice + checks</span><span>Assessment</span></div>
-          <div class="cert-operating-admin"><b>Administrator-facing</b><span>Access + routes</span><span>Completion record</span><span>Support + reporting</span></div>
-          <div class="cert-operating-link">One valid certification journey</div>
+        <div class="cert-operating-visual" aria-label="Learner and administrator screens share a central valid certification record. Learner activity and administrator access, completion, and support must both resolve.">
+          <div class="cert-operating-learner"><b>Learner view</b><div class="cert-operating-window"><span>Course path</span><span>Practice</span><span>Assessment</span></div></div>
+          <div class="cert-operating-record"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span><strong>Valid record</strong></div>
+          <div class="cert-operating-admin"><b>Admin view</b><div class="cert-operating-window"><span>Access</span><span>Completion</span><span>Support</span></div></div>
         </div>
         <p class="cert-panel-takeaway">A polished module was not enough if the assigned learner could not enter it, finish it, receive a valid record, or get help when a system rule blocked progress.</p>`
     }
@@ -214,11 +250,14 @@
 
   const blueprintPanel = document.getElementById('blueprintPanel');
   const blueprintButtons = [...document.querySelectorAll('[data-blueprint]')];
+  linkTabPanel(blueprintButtons, blueprintPanel, 'cert-blueprint');
 
   const renderBlueprint = (key, animate = false) => {
     const data = blueprintData[key];
     if (!data || !blueprintPanel) return;
     const update = () => {
+      const selected = blueprintButtons.find((button) => button.dataset.blueprint === key);
+      if (selected) blueprintPanel.setAttribute('aria-labelledby', selected.id);
       blueprintPanel.dataset.mode = key;
       blueprintPanel.innerHTML = `<h3>${data.title}</h3><p>${data.text}</p>${data.html}`;
       if (key === 'alignment') initAlignmentReveal();
@@ -445,6 +484,7 @@
 
   const deliveryPanel = document.getElementById('deliveryPanel');
   const deliveryButtons = [...document.querySelectorAll('[data-delivery]')];
+  linkTabPanel(deliveryButtons, deliveryPanel, 'cert-delivery');
   const adminActionLabels = {
     build: ['Align objective', 'Objective aligned'],
     review: ['Confirm source', 'Source confirmed'],
@@ -457,6 +497,12 @@
     const data = deliveryData[key];
     if (!data || !deliveryPanel) return;
     const update = () => {
+      const selected = deliveryButtons.find((button) => button.dataset.delivery === key);
+      if (selected) deliveryPanel.setAttribute('aria-labelledby', selected.id);
+      const flight = document.getElementById('certLaunchFlight');
+      if (flight) flight.dataset.stage = key;
+      const stageLabel = document.getElementById('launchStageLabel');
+      if (stageLabel) stageLabel.textContent = data.label;
       deliveryPanel.innerHTML = `
         <div class="cert-ops-copy"><p class="delivery-panel-label">${data.label}</p><h3>${data.title}</h3><p>${data.action}</p></div>
         <div class="cert-ops-device" aria-label="Public-safe administrator interface reconstruction for ${data.label}"><div class="cert-ops-device-bar"><i></i><i></i><i></i><span>portfolio-safe interface example</span></div>${data.view}</div>`;
@@ -518,9 +564,10 @@
   const historicalSignals = [
     {
       label: 'Assessment integrity',
-      signal: 'A partner reported contradictory questions or an answer marked incorrect on the final assessment.',
+      signal: 'Two partners raised separate assessment concerns: contradictory questions and a final-exam answer marked incorrect.',
       revealed: 'Confidence in the credential depends on defensible answer keys and unambiguous wording.',
       context: 'Source facts and terminology were changing while assessment items were being reviewed.',
+      plan: 'Trace each reported item to its objective and approved source, compare the intended answer with the learner-facing wording, and involve the right source reviewer.',
       response: 'I treated the report as an assessment-integrity issue: trace the item to its source, check the intended objective and answer key with reviewers, revise where validated, and retest the learner path.',
       change: 'Assessment review became more explicit about ambiguity, answer-key integrity, and a decision trail for future updates.'
     },
@@ -529,6 +576,7 @@
       signal: 'A partner found parts of the earlier material text-heavy or repetitive and asked for more audio or video.',
       revealed: 'The experience needed more selective explanation and practice, not simply more source content.',
       context: 'Several evolving product lines and a compressed schedule put pressure on how much information the core path carried.',
+      plan: 'Separate required seller decisions from optional depth; choose visuals, interaction, or multimedia only when it clarifies the task.',
       response: 'I reviewed the information hierarchy, separated required decisions from optional depth, and considered visuals, interactions, or multimedia where they would clarify the task.',
       change: 'The maintenance approach put more weight on applied seller decisions and controlled content depth rather than adding a new modality by default.'
     },
@@ -537,6 +585,7 @@
       signal: 'A partner without a technical background found IT acronyms hard to follow.',
       revealed: 'A shared certification needed to support learners with different starting knowledge.',
       context: 'The original audience mix and approved scope did not always allow a full foundational enablement layer inside the required training.',
+      plan: 'Define essential terms in the required route and keep deeper technical foundations available without making every learner take the same path.',
       response: 'I reviewed terminology in the core, added context and resources within scope, and differentiated optional technical foundations from required seller decisions.',
       change: 'The design approach recognized distinct entry points without requiring every learner to take the same technical depth.'
     },
@@ -545,46 +594,133 @@
       signal: 'A partner said earlier course-time estimates felt too low.',
       revealed: 'The published time should reflect the work learners actually do, including reading, practice, and assessment.',
       context: 'Different levels of prior knowledge made one estimate especially easy to understate.',
+      plan: 'Review the estimate against reading, interaction, practice, assessment, and the range of learner starting knowledge.',
       response: 'I reviewed pacing and learner effort against the intended pathway, then flagged estimates or content scope for recalibration where warranted.',
       change: 'Time guidance became an explicit maintenance check, accounting for reading, practice, assessment, and different starting knowledge.'
     }
   ];
-  const feedbackPanel = document.getElementById('certFeedbackPanel');
-  const feedbackTabs = [...document.querySelectorAll('[data-feedback-view]')];
-  let activeHistorical = 0;
-  const renderHistorical = () => {
-    const signal = historicalSignals[activeHistorical];
-    if (!feedbackPanel) return;
-    feedbackPanel.innerHTML = `<div class="cert-signal-picker" role="tablist" aria-label="Historical feedback themes">${historicalSignals.map((item, index) => `<button type="button" role="tab" aria-selected="${index === activeHistorical}" class="${index === activeHistorical ? 'active' : ''}" data-signal="${index}">${item.label}</button>`).join('')}</div><div class="cert-signal-case"><h3>${signal.label}</h3><div class="cert-signal-stages"><div><small>Partner signal</small><p>${signal.signal}</p></div><div><small>What it revealed</small><p>${signal.revealed}</p></div><div><small>Context</small><p>${signal.context}</p></div><div><small>My response</small><p>${signal.response}</p></div><div><small>What changed</small><p>${signal.change}</p></div></div></div>`;
-    const choices = [...feedbackPanel.querySelectorAll('[data-signal]')];
-    choices.forEach((button, index) => {
-      button.tabIndex = index === activeHistorical ? 0 : -1;
-      button.addEventListener('click', () => { activeHistorical = index; renderHistorical(); });
-      button.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-        event.preventDefault();
-        activeHistorical = event.key === 'Home' ? 0 : event.key === 'End' ? choices.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + choices.length) % choices.length;
-        renderHistorical(); feedbackPanel.querySelector(`[data-signal="${activeHistorical}"]`)?.focus();
-      });
+  const positiveReactions = [
+    {
+      type: 'Verbatim excerpt',
+      words: '“Exceptionally prepared, presented and structured”',
+      insight: 'The partner also called out reference tools, case studies, whitepapers, and support materials as useful for customer conversations.'
+    },
+    {
+      type: 'Verbatim excerpt',
+      words: '“Very good overview with many opportunities to dive in deeper.”',
+      insight: 'A shared overview and optional depth can work together without making every learner take the same technical route.'
+    },
+    {
+      type: 'Feedback summary · not a quotation',
+      words: 'Partners described the material as relevant and easy to follow, with practical use cases.',
+      insight: 'That signal supports keeping customer situations and seller decisions close to the explanation.'
+    },
+    {
+      type: 'Feedback summary · not a quotation',
+      words: 'Partners responded positively to the learning experience, course flow, system capabilities, and overall training quality.',
+      insight: 'The response reflects several parts of the pathway working together, not a single screen or asset.'
+    }
+  ];
+  const voiceStage = document.getElementById('certVoiceStage');
+  const voiceCount = document.getElementById('certVoiceCount');
+  const voiceTabs = [...document.querySelectorAll('[data-positive]')];
+  let activeVoice = 0;
+  const renderVoice = (index) => {
+    if (!voiceStage) return;
+    activeVoice = index;
+    const reaction = positiveReactions[index];
+    voiceTabs.forEach((button, buttonIndex) => {
+      const active = buttonIndex === index;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
     });
+    voiceStage.setAttribute('aria-labelledby', voiceTabs[index].id);
+    voiceCount.textContent = `${String(index + 1).padStart(2, '0')} / 04`;
+    const message = reaction.type === 'Verbatim excerpt'
+      ? `<blockquote>${reaction.words}</blockquote>`
+      : `<p class="cert-voice-summary">${reaction.words}</p>`;
+    voiceStage.innerHTML = `<div class="cert-voice-person"><span class="cert-voice-avatar"><img src="../../../../assets/icons/pixel/lms/mini-user.webp" alt=""></span><span><strong>Partner voice</strong><small>Anonymous qualitative feedback</small></span></div><div class="cert-voice-message"><span class="cert-voice-kind">${reaction.type}</span>${message}</div><p class="cert-voice-insight"><strong>What I heard:</strong> ${reaction.insight}</p>`;
+    voiceStage.classList.remove('is-entering');
+    void voiceStage.offsetWidth;
+    voiceStage.classList.add('is-entering');
   };
-  const renderFeedback = (view) => {
-    if (!feedbackPanel) return;
-    feedbackTabs.forEach((tab) => { const active = tab.dataset.feedbackView === view; tab.classList.toggle('active', active); tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
-    if (view === 'historical') { renderHistorical(); return; }
-    feedbackPanel.innerHTML = `<div class="cert-positive-stage"><div class="cert-positive-main"><span>Partner feedback</span><blockquote>“Exceptionally prepared, presented and structured”</blockquote><p>Partners also valued the reference tools, case studies, whitepapers, and supporting material they could return to in customer conversations.</p></div><div class="cert-positive-secondary"><span>Partner feedback</span><blockquote>“Very good overview with many opportunities to dive in deeper.”</blockquote><p>Other responses described practical use cases, a relevant and easy-to-follow flow, and a positive overall learning experience.</p></div></div><p class="cert-feedback-caveat">Anonymous partner comments; qualitative signals, not representative satisfaction or outcome metrics.</p>`;
-  };
-  feedbackTabs.forEach((tab, index) => {
-    tab.tabIndex = index === 0 ? 0 : -1;
-    tab.addEventListener('click', () => renderFeedback(tab.dataset.feedbackView));
-    tab.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+  voiceTabs.forEach((button, index) => {
+    button.addEventListener('click', () => renderVoice(index));
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? feedbackTabs.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + feedbackTabs.length) % feedbackTabs.length;
-      feedbackTabs[next].focus(); renderFeedback(feedbackTabs[next].dataset.feedbackView);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? voiceTabs.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + voiceTabs.length) % voiceTabs.length;
+      voiceTabs[next].focus();
+      renderVoice(next);
     });
   });
-  renderFeedback('positive');
+  document.getElementById('certVoiceNext')?.addEventListener('click', () => renderVoice((activeVoice + 1) % positiveReactions.length));
+  renderVoice(0);
+
+  const historicalStages = ['receive', 'diagnose', 'plan', 'execute', 'observe'];
+  const historicalHeadings = {
+    receive: 'Listen before choosing a fix.',
+    diagnose: 'Find the issue beneath the comment.',
+    plan: 'Choose a bounded, testable change.',
+    execute: 'Make and verify the edit.',
+    observe: 'Bring the next signal back into review.'
+  };
+  const historyThemeTabs = [...document.querySelectorAll('[data-history-theme]')];
+  const historyStageTabs = [...document.querySelectorAll('[data-history-stage]')];
+  const historyDetail = document.getElementById('certHistoryDetail');
+  let activeHistoryTheme = 0;
+  let activeHistoryStage = 'receive';
+  const renderHistory = () => {
+    if (!historyDetail) return;
+    const signal = historicalSignals[activeHistoryTheme];
+    const step = historicalStages.indexOf(activeHistoryStage);
+    historyThemeTabs.forEach((button, index) => {
+      const active = index === activeHistoryTheme;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+    });
+    historyStageTabs.forEach((button) => {
+      const active = button.dataset.historyStage === activeHistoryStage;
+      button.classList.toggle('active', active);
+      button.classList.toggle('is-past', historicalStages.indexOf(button.dataset.historyStage) < step);
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+    });
+    const copy = {
+      receive: signal.signal,
+      diagnose: `${signal.revealed} ${signal.context}`,
+      plan: signal.plan,
+      execute: signal.response,
+      observe: signal.change
+    };
+    const note = activeHistoryStage === 'receive' ? 'Historical partner signal, paraphrased.'
+      : activeHistoryStage === 'observe' ? 'A maintenance-practice change—not a claim of improved scores or satisfaction.'
+      : 'The approved scope and source authority shaped the response.';
+    historyDetail.setAttribute('aria-labelledby', `cert-history-theme-${activeHistoryTheme} cert-history-stage-${activeHistoryStage}`);
+    document.getElementById('certHistoryKicker').textContent = `${String(step + 1).padStart(2, '0')} / 05 · ${signal.label}`;
+    document.getElementById('certHistoryTitle').textContent = historicalHeadings[activeHistoryStage];
+    document.getElementById('certHistoryCopy').textContent = copy[activeHistoryStage];
+    document.getElementById('certHistoryNote').textContent = note;
+    historyDetail.classList.remove('is-entering');
+    void historyDetail.offsetWidth;
+    historyDetail.classList.add('is-entering');
+  };
+  const bindHistoryTabs = (buttons, property) => buttons.forEach((button, index) => {
+    button.addEventListener('click', () => { if (property === 'theme') { activeHistoryTheme = index; activeHistoryStage = 'receive'; } else activeHistoryStage = button.dataset.historyStage; renderHistory(); });
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 1) + buttons.length) % buttons.length;
+      buttons[next].focus();
+      if (property === 'theme') { activeHistoryTheme = next; activeHistoryStage = 'receive'; } else activeHistoryStage = buttons[next].dataset.historyStage;
+      renderHistory();
+    });
+  });
+  bindHistoryTabs(historyThemeTabs, 'theme');
+  bindHistoryTabs(historyStageTabs, 'stage');
+  renderHistory();
 
   const changeData = {
     terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA' },
@@ -593,10 +729,13 @@
   };
   const changeButtons = [...document.querySelectorAll('[data-change]')];
   const changeDisplay = document.getElementById('certChangeDisplay');
+  linkTabPanel(changeButtons, changeDisplay, 'cert-change');
   const renderChange = (key) => {
     const data = changeData[key]; if (!data || !changeDisplay) return;
     changeButtons.forEach((button) => { const active = button.dataset.change === key; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); button.tabIndex = active ? 0 : -1; });
-    changeDisplay.innerHTML = `<div class="cert-change-input"><small>Change arrives</small><strong>${data.source}</strong></div><div class="cert-change-impact"><small>Bounded update</small><strong>${data.affected}</strong><span>${data.action}</span></div><div class="cert-change-stable"><small>Structure retained</small><strong>${data.stable}</strong></div>`;
+    const selected = changeButtons.find((button) => button.dataset.change === key);
+    if (selected) changeDisplay.setAttribute('aria-labelledby', selected.id);
+    changeDisplay.innerHTML = `<div class="cert-redesign-cycle" aria-label="Change is traced, revised, reviewed, released, and monitored before the next change"><div class="cert-cycle-ring" aria-hidden="true"><span class="cert-cycle-step step-one">Trace</span><span class="cert-cycle-step step-two">Revise</span><span class="cert-cycle-step step-three">Review</span><span class="cert-cycle-step step-four">Release</span><span class="cert-cycle-step step-five">Monitor</span><span class="cert-cycle-center"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><b>Next version</b></span></div></div><div class="cert-cycle-explain"><small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
   };
   changeButtons.forEach((button, index) => {
     button.tabIndex = index === 0 ? 0 : -1;
@@ -611,21 +750,26 @@
   renderChange('terminology');
 
   const curriculumData = {
-    intro:{label:'Introduction',title:"Start with the seller's job, not a technical data dump.",summary:'The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.',behavior:'Explain the business context and recognize when the topic belongs in a customer conversation.',image:'../../../../assets/project-images/cellular-certification/cert-introduction.webp',alt:'Sanitized certification introduction screen.'},
-    market:{label:'Market Opportunity',title:'Teach the market signal before asking for product recall.',summary:'This section gives sellers enough context to spot the business conditions, customer pressures, and opportunity signals that make cellular networking relevant.',behavior:'Recognize customer conditions that justify deeper discovery rather than pitching a product too early.',image:'../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',alt:'Sanitized cellular networking market opportunity screen.'},
-    value:{label:'Need → Value',title:'Translate the customer problem into a credible value conversation.',summary:'The curriculum connects operational challenges to outcomes and value so the seller can move from symptoms to business relevance without overstepping into engineering detail.',behavior:'Connect a customer need to an outcome and explain why the capability matters in business terms.',image:'../../../../assets/project-images/cellular-certification/cert-need-to-value.webp',alt:'Sanitized need-to-value learning screen.'},
-    scenario:{label:'Customer Scenario',title:'Make the learner use the decision logic in context.',summary:'A fictionalized customer situation asks the learner to interpret the evidence, choose the stronger direction, and use feedback before the formal assessment.',behavior:'Apply discovery and solution-fit reasoning to a realistic seller situation.',image:'../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',alt:'Sanitized customer scenario interaction.'},
-    check:{label:'Knowledge Check',title:'Use retrieval to verify the distinction before the final assessment.',summary:'Short checks reinforce the concepts that are easy to confuse and surface misconceptions while feedback can still correct the reasoning.',behavior:'Distinguish between similar options and explain which evidence makes one choice stronger.',image:'../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',alt:'Sanitized cellular networking knowledge check.'},
-    complete:{label:'Completion',title:'Close the module with the next seller action visible.',summary:'The learner leaves with a completed module state and a clear next step in the pathway instead of treating completion as the end of the experience.',behavior:'Carry the decision framework into the next module, customer conversation, or assessment requirement.',image:'../../../../assets/project-images/cellular-certification/cert-module-complete.webp',alt:'Sanitized module completion screen.'}
+    intro:{label:'Introduction',title:"Start with the seller's job, not a technical data dump.",summary:'The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.',behavior:'Explain the business context and recognize when the topic belongs in a customer conversation.',image:'../../../../assets/project-images/cellular-certification/cert-introduction.webp',alt:'Sanitized certification introduction screen.',hotspots:[['Role context','The first screen orients the seller to the job and learning goal.'],['Path cue','The learner can see where this module leads next.']]},
+    market:{label:'Market Opportunity',title:'Teach the market signal before asking for product recall.',summary:'This section gives sellers enough context to spot the business conditions, customer pressures, and opportunity signals that make cellular networking relevant.',behavior:'Recognize customer conditions that justify deeper discovery rather than pitching a product too early.',image:'../../../../assets/project-images/cellular-certification/cert-market-opportunity.webp',alt:'Sanitized cellular networking market opportunity screen.',hotspots:[['Opportunity cue','A market signal becomes a prompt for discovery, not product recall.'],['Customer context','The example translates conditions into a conversation trigger.']]},
+    value:{label:'Need → Value',title:'Translate the customer problem into a credible value conversation.',summary:'The curriculum connects operational challenges to outcomes and value so the seller can move from symptoms to business relevance without overstepping into engineering detail.',behavior:'Connect a customer need to an outcome and explain why the capability matters in business terms.',image:'../../../../assets/project-images/cellular-certification/cert-need-to-value.webp',alt:'Sanitized need-to-value learning screen.',hotspots:[['Customer need','Start with the operational problem the customer experiences.'],['Value bridge','Link the need to a credible business outcome.']]},
+    scenario:{label:'Customer Scenario',title:'Make the learner use the decision logic in context.',summary:'A fictionalized customer situation asks the learner to interpret the evidence, choose the stronger direction, and use feedback before the formal assessment.',behavior:'Apply discovery and solution-fit reasoning to a realistic seller situation.',image:'../../../../assets/project-images/cellular-certification/cert-customer-scenario.webp',alt:'Sanitized customer scenario interaction.',hotspots:[['Situation','The learner interprets a customer situation before choosing.'],['Feedback','Coaching connects the choice back to evidence.']]},
+    check:{label:'Knowledge Check',title:'Use retrieval to verify the distinction before the final assessment.',summary:'Short checks reinforce the concepts that are easy to confuse and surface misconceptions while feedback can still correct the reasoning.',behavior:'Distinguish between similar options and explain which evidence makes one choice stronger.',image:'../../../../assets/project-images/cellular-certification/cert-knowledge-check.webp',alt:'Sanitized cellular networking knowledge check.',hotspots:[['Retrieval','A concise question asks the learner to make a distinction.'],['Correction','Feedback can correct reasoning before the credential gate.']]},
+    complete:{label:'Completion',title:'Close the module with the next seller action visible.',summary:'The learner leaves with a completed module state and a clear next step in the pathway instead of treating completion as the end of the experience.',behavior:'Carry the decision framework into the next module, customer conversation, or assessment requirement.',image:'../../../../assets/project-images/cellular-certification/cert-module-complete.webp',alt:'Sanitized module completion screen.',hotspots:[['Progress','The module closes with a visible completion state.'],['Next action','Completion connects to the next requirement or seller use.']]}
   };
   const curriculumButtons=[...document.querySelectorAll('[data-curriculum]')];
+  const curriculumPlayer=document.querySelector('.curriculum-player');
+  linkTabPanel(curriculumButtons, curriculumPlayer, 'cert-curriculum');
   const curriculumImage=document.getElementById('curriculumImage');
+  const curriculumHotspots=document.getElementById('curriculumHotspots');
+  const curriculumHotspotCaption=document.getElementById('curriculumHotspotCaption');
   const curriculumBack=document.getElementById('curriculumBack');
   const curriculumNext=document.getElementById('curriculumNext');
   const renderCurriculum=(key)=>{
     const data=curriculumData[key]; if(!data||!curriculumImage)return;
     const index=curriculumButtons.findIndex(button=>button.dataset.curriculum===key);
     curriculumButtons.forEach((button,buttonIndex)=>{const active=buttonIndex===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});
+    curriculumPlayer?.setAttribute('aria-labelledby',curriculumButtons[index].id);
     document.getElementById('curriculumProgress').textContent=(index+1)+' / '+curriculumButtons.length;
     document.getElementById('curriculumLabel').textContent=data.label;
     document.getElementById('curriculumTitle').textContent=data.title;
@@ -635,6 +779,22 @@
     curriculumBack.disabled=index===0;
     curriculumNext.textContent=index===curriculumButtons.length-1?'Restart ↺':'Next →';
     curriculumNext.setAttribute('aria-label',index===curriculumButtons.length-1?'Restart learner walkthrough':'Next learner view');
+    if (curriculumHotspots && curriculumHotspotCaption) {
+      curriculumHotspotCaption.textContent = 'Select a marker to inspect a learning decision.';
+      curriculumHotspots.replaceChildren(...data.hotspots.map(([label, detail], hotspotIndex) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `curriculum-hotspot hotspot-${hotspotIndex + 1}`;
+        button.setAttribute('aria-label', `Inspect ${label.toLowerCase()} in ${data.label}`);
+        button.innerHTML = `<span>${hotspotIndex + 1}</span><small>${label}</small>`;
+        button.addEventListener('click', () => {
+          curriculumHotspots.querySelectorAll('button').forEach((item) => item.classList.remove('active'));
+          button.classList.add('active');
+          curriculumHotspotCaption.textContent = detail;
+        });
+        return button;
+      }));
+    }
     curriculumImage.classList.add('is-switching');
     window.setTimeout(()=>{curriculumImage.src=data.image;curriculumImage.alt=data.alt;curriculumImage.classList.remove('is-switching');},100);
   };
@@ -664,6 +824,37 @@
   });
   curriculumButtons.forEach((button,index)=>button.tabIndex=index===0?0:-1);
   renderCurriculum('intro');
+
+  const growthData = {
+    history:['Preserve decision history','When source owners or terminology change, documented rationale protects consistency.'],
+    business:['Understand the business','Portfolio and market context improve learner decisions and future flexibility.'],
+    authority:['Separate authority from design','SMEs validate product truth; I design how learners understand, practice, and demonstrate it.'],
+    feedback:['Interpret feedback in context','A learner signal may point to content, assessment, operations, organizational scope, or a combination.'],
+    lms:['Treat the LMS as design','Access, routing, completion, reporting, and support shape the actual pathway.'],
+    change:['Plan for change','Reusable structure reduces the cost of product, message, and audience revisions.']
+  };
+  const growthWorkbench = document.querySelector('.cert-growth-workbench');
+  const growthButtons = [...document.querySelectorAll('.cert-growth-skills button[data-growth]')];
+  const growthInsight = document.getElementById('certGrowthInsight');
+  linkTabPanel(growthButtons, growthInsight, 'cert-growth');
+  growthButtons.forEach((button, index) => {
+    button.tabIndex = index === 0 ? 0 : -1;
+    const activate = () => {
+      const key = button.dataset.growth;
+      growthWorkbench.dataset.growth = key;
+      growthButtons.forEach((item) => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+      growthInsight.setAttribute('aria-labelledby', button.id);
+      growthInsight.querySelector('strong').textContent = growthData[key][0];
+      growthInsight.querySelector('p').textContent = growthData[key][1];
+    };
+    button.addEventListener('click', activate);
+    button.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? growthButtons.length - 1 : (index + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1) + growthButtons.length) % growthButtons.length;
+      growthButtons[next].focus(); growthButtons[next].click();
+    });
+  });
 
   const revealSections = [...document.querySelectorAll('.flagship-section')];
   revealSections.forEach((section) => section.setAttribute('data-cert-reveal', ''));
