@@ -2,7 +2,7 @@
 
 Portfolio Manager **Create Content** is the normal human-facing workflow for new portfolio work.
 
-The lower-level `scripts/new-project.py` command remains available for deterministic development, maintenance, and testing. It creates a **structured project record by default**. Optional legacy scaffold rendering is explicit and is only for a brand-new public path. It is never a regeneration tool for existing portfolio pages.
+The lower-level `scripts/new-project.py` command remains available for deterministic development, maintenance, and testing. It creates a **structured project record only**. Public-page rendering is not available from this command, so it cannot regenerate an existing portfolio page.
 
 ## Core rule
 
