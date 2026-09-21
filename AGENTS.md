@@ -73,6 +73,14 @@ Structured project-to-project connections belong in `related_work` for the inter
 
 Use `docs/portfolio-visual-qa-standard.md` and `docs/portfolio-consistency-audit.md` when building or reviewing future pages.
 
+
+## Recurring UAT Guardrails
+The repository has a history of recurring visual regressions. Before broad styling, navigation, or interaction work, read `docs/portfolio-uat-guardrails.md` and inspect the current page in the browser/source rather than relying on old template assumptions.
+
+Common regression classes include breadcrumb placement/tone, stale exploration footers, tabs that resize their section, narrow interaction copy, clipped or off-center icons, missing white icon bubbles on busy surfaces, motion paths crossing in front of icons, broken light/dark alternation, unreadable tab states, excessive padding/scrolling, hero overflow, and copy that drifts into hypothetical language instead of describing completed work.
+
+These are audit targets, not permission for automatic portfolio-wide rewrites. Report or fix only what is in scope for the current task, and preserve the approved live design unless the user explicitly asks for a visual change.
+
 ## Portfolio Manager Product Boundaries
 Portfolio Manager must remain local-only on `127.0.0.1:5055`.
 
