@@ -26,8 +26,6 @@ TAXONOMY_PATH = DATA_ROOT / "taxonomy.json"
 NEW_PROJECT_SCRIPT = REPO_ROOT / "scripts" / "new-project.py"
 UPDATE_DOCS_SCRIPT = REPO_ROOT / "scripts" / "update-docs.py"
 
-GENERATED_PAGE_MARKER = "<!-- PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE -->"
-
 content_bp = Blueprint("content", __name__)
 
 
@@ -156,23 +154,7 @@ def load_project(project_id: str) -> tuple[dict, Path]:
     return load_json(path), path
 
 
-def is_generated_page(project: dict) -> bool:
-    page_path = REPO_ROOT / project.get("page_path", "")
-    if not page_path.exists() or not page_path.is_file():
-        return False
-
-    try:
-        html_text = page_path.read_text(encoding="utf-8")
-    except Exception:
-        return False
-
-    return GENERATED_PAGE_MARKER in html_text
-
-
-def custom_page_snapshot(project: dict) -> tuple[Path | None, str | None]:
-    if is_generated_page(project):
-        return None, None
-
+def public_page_snapshot(project: dict) -> tuple[Path | None, str | None]:
     raw_path = str(project.get("page_path", "")).strip()
     if not raw_path:
         return None, None
@@ -210,7 +192,7 @@ def list_projects() -> list[dict]:
             project.get("subcategory"),
             project.get("subcategory") or "",
         )
-        project["_generated_page"] = is_generated_page(project)
+        project["_has_public_page"] = public_page_snapshot(project)[0] is not None
         projects.append(project)
 
     return sorted(projects, key=lambda item: item.get("title", "").lower())
@@ -224,8 +206,7 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
     project, project_path = load_project(project_id)
     original_text = project_path.read_text(encoding="utf-8")
     original_title = str(project.get("title", "")).strip()
-    generated_page = is_generated_page(project)
-    custom_page_path, original_page_html = custom_page_snapshot(project)
+    public_page_path, original_page_html = public_page_snapshot(project)
 
     status = form.get("status", project.get("status", "building"))
     confidentiality = form.get(
@@ -307,7 +288,7 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
         )
 
     custom_title_synced = False
-    if custom_page_path is not None and original_page_html is not None:
+    if public_page_path is not None and original_page_html is not None:
         try:
             updated_page_html = sync_custom_page_title(
                 original_page_html,
@@ -323,30 +304,23 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
             updated_page_html = original_page_html
 
         if updated_page_html != original_page_html:
-            custom_page_path.write_text(updated_page_html, encoding="utf-8")
+            public_page_path.write_text(updated_page_html, encoding="utf-8")
             site_ok, site_output = run_command(
                 [sys.executable, "scripts/check-site.py"]
             )
             if not site_ok:
                 project_path.write_text(original_text, encoding="utf-8")
-                custom_page_path.write_text(original_page_html, encoding="utf-8")
+                public_page_path.write_text(original_page_html, encoding="utf-8")
                 return False, (
                     "The custom page title update failed site validation, so the edit was rolled back."
                     + (f"\n\n{site_output}" if site_output else "")
                 )
             custom_title_synced = True
-    elif project["title"] != original_title and not generated_page:
-        project_path.write_text(original_text, encoding="utf-8")
-        return False, (
-            "The title changed, but Portfolio Manager could not safely locate the custom public page. "
-            "The edit was rolled back."
-        )
-
     docs_ok, docs_output = refresh_docs()
     if not docs_ok:
         project_path.write_text(original_text, encoding="utf-8")
-        if custom_title_synced and custom_page_path is not None and original_page_html is not None:
-            custom_page_path.write_text(original_page_html, encoding="utf-8")
+        if custom_title_synced and public_page_path is not None and original_page_html is not None:
+            public_page_path.write_text(original_page_html, encoding="utf-8")
         refresh_docs()
         return False, (
             "The documentation refresh failed, so the edit was rolled back."
@@ -450,7 +424,7 @@ def project_editor(project_id: str):
         flash(str(exc), "error")
         return redirect(url_for("content.content_manager"))
 
-    project["_generated_page"] = is_generated_page(project)
+    project["_has_public_page"] = public_page_snapshot(project)[0] is not None
     content = project.get("content", {})
     try:
         component_context = project_component_context(project)
