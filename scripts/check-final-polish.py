@@ -211,6 +211,7 @@ def main() -> int:
 
     project_template = PROJECT_TEMPLATE.read_text(encoding="utf-8")
     require("project-template-cta" not in project_template, "New-page scaffold must not use the retired project-template-cta variant.", errors)
+    require('role="tab"' not in project_template, "Default new-page scaffold should not ship with tab interactions.", errors)
     require("Keep Exploring" not in project_template, "New-page scaffold must not recreate the retired Keep Exploring footer.", errors)
     require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "New-page scaffold must not recreate a public Related Work section.", errors)
     for marker in [
