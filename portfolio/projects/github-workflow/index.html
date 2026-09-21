@@ -67,37 +67,50 @@
     .github-ecosystem-section{background:linear-gradient(145deg,#173139,#294d4c);color:#e6efe9}
     .github-ecosystem-section .section-heading .eyebrow{color:#afe1bf!important}
     .github-ecosystem-section .section-heading h2{max-width:1050px;color:#fff!important}
-    .github-ecosystem-section .section-heading p:not(.eyebrow){max-width:1050px;color:#cbdad2!important}
+    .github-ecosystem-section .section-heading p:not(.eyebrow){max-width:1080px;color:#cbdad2!important}
 
-    .github-system-map{margin-top:22px;padding:18px;border:1px solid rgba(255,255,255,.09);border-radius:22px;background:rgba(0,0,0,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
-    .github-system-head{display:grid;grid-template-columns:minmax(210px,.95fr) 52px minmax(250px,1fr) 52px minmax(230px,.95fr);gap:8px;margin-bottom:7px;padding:0 8px}
-    .github-system-head span{color:#92aca1;font:900 .42rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase;text-align:center}
-    .github-system-head span:nth-child(1){grid-column:1}.github-system-head span:nth-child(2){grid-column:3}.github-system-head span:nth-child(3){grid-column:5}
-    .github-system-lanes{display:grid;gap:8px}
-    .github-system-lane{display:grid;grid-template-columns:minmax(210px,.95fr) 52px minmax(250px,1fr) 52px minmax(230px,.95fr);gap:8px;align-items:center;padding:9px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.035)}
-    .system-node{display:grid;grid-template-columns:54px minmax(0,1fr);gap:9px;align-items:center;min-height:70px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.045);text-decoration:none}
-    a.system-node{transition:transform .18s ease,border-color .18s ease,background .18s ease}
-    a.system-node:hover,a.system-node:focus-visible{transform:translateY(-2px);border-color:#97db4f;background:rgba(151,219,79,.08);outline:none}
-    .system-node img{width:52px;height:52px;padding:4px;border-radius:12px;background:#fff;object-fit:contain}
-    .system-node small{display:block;color:#aee1bf;font:800 .4rem/1 var(--font-heading);letter-spacing:.04em;text-transform:uppercase}
-    .system-node strong{display:block;margin-top:3px;color:#fff;font:800 .55rem/1.18 var(--font-heading)}
-    .system-node.repo{background:rgba(121,201,158,.06)}
-    .system-node.output{background:rgba(255,255,255,.06)}
-    .system-connector{position:relative;height:4px;border-radius:999px;background:rgba(121,201,158,.2);overflow:visible}
-    .system-connector::after{content:"";position:absolute;right:-1px;top:-4px;width:9px;height:9px;border-top:3px solid #97db4f;border-right:3px solid #97db4f;transform:rotate(45deg)}
-    .system-connector i{position:absolute;top:-4px;left:0;width:12px;height:12px;border:2px solid #264b48;border-radius:50%;background:#97db4f;box-shadow:0 0 0 4px rgba(151,219,79,.08);animation:systemPacket 3s ease-in-out infinite}
-    .github-system-lane:nth-child(2) .system-connector i{animation-delay:-1s}
-    .github-system-lane:nth-child(3) .system-connector i{animation-delay:-2s}
-    @keyframes systemPacket{0%,100%{left:0;opacity:.25}50%{left:calc(100% - 12px);opacity:1}}
+    .github-lifecycle-map{position:relative;min-height:760px;margin-top:22px;padding:26px 26px 82px;border:1px solid rgba(255,255,255,.09);border-radius:26px;background:radial-gradient(circle at 50% 46%,rgba(121,201,158,.08),transparent 17rem),rgba(0,0,0,.12);overflow:hidden}
+    .github-lifecycle-orbit{position:absolute;left:50%;top:46%;width:600px;height:600px;transform:translate(-50%,-50%);border-radius:50%}
+    .lifecycle-ring{position:absolute;inset:0;border:2px dashed rgba(184,233,201,.19);border-radius:50%}
+    .lifecycle-ring.inner{inset:92px;border:1px solid rgba(255,255,255,.07)}
+    .lifecycle-ring::after{content:"";position:absolute;inset:-5px;border:4px solid transparent;border-top-color:#97db4f;border-right-color:rgba(121,201,158,.82);border-radius:50%;animation:lifecycleSweep 18s linear infinite}
+    .lifecycle-ring.inner::after{display:none}
+    @keyframes lifecycleSweep{to{transform:rotate(360deg)}}
 
-    .github-release-rail{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px;padding:15px 12px 4px}
-    .release-line{position:absolute;left:8%;right:8%;top:35px;height:4px;border-radius:999px;background:rgba(121,201,158,.17)}
-    .release-runner{position:absolute;z-index:2;left:8%;top:29px;width:12px;height:12px;border-radius:50%;background:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.08);animation:releaseRunner 7s ease-in-out infinite}
-    @keyframes releaseRunner{0%,8%{left:8%}30%{left:34%}52%{left:59%}74%,100%{left:84%}}
-    .github-release-rail div{position:relative;z-index:3;display:grid;justify-items:center;gap:4px}
-    .github-release-rail img{width:46px;height:46px;padding:5px;border-radius:12px;background:#fff;object-fit:contain}
-    .github-release-rail b{color:#dce9e2;font:800 .44rem/1 var(--font-heading)}
-    .github-system-note{margin:11px 0 0;color:#9fb5ab;font-size:.51rem;text-align:center}
+    .lifecycle-runner{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border:2px solid #294d4c;border-radius:50%;background:#97db4f;box-shadow:0 0 0 6px rgba(151,219,79,.08),0 0 20px rgba(151,219,79,.48);transform-origin:0 0;animation:lifecycleRunner 10s linear infinite}
+    .lifecycle-runner.runner-one{--radius:300px}
+    .lifecycle-runner.runner-two{--radius:208px;animation-duration:7s;animation-direction:reverse;animation-delay:-2s;background:#79c99e}
+    @keyframes lifecycleRunner{from{transform:rotate(0deg) translateY(calc(var(--radius) * -1))}to{transform:rotate(360deg) translateY(calc(var(--radius) * -1))}}
+
+    .github-lifecycle-center{position:absolute;z-index:4;left:50%;top:46%;width:272px;min-height:272px;transform:translate(-50%,-50%);display:grid;place-items:center;align-content:center;padding:20px;border:1px solid rgba(151,219,79,.34);border-radius:50%;background:linear-gradient(145deg,#fff,#edf6f0);box-shadow:0 22px 48px rgba(0,0,0,.22),0 0 0 12px rgba(255,255,255,.035);text-align:center}
+    .lifecycle-github-icon{display:grid;place-items:center;width:74px;height:74px;margin-bottom:6px;padding:7px;border:1px solid rgba(80,132,132,.14);border-radius:20px;background:#fff;box-shadow:0 8px 18px rgba(43,72,64,.1)}
+    .lifecycle-github-icon img{width:60px;height:60px;object-fit:contain}
+    .github-lifecycle-center .eyebrow{margin:0 0 3px;color:#4a796e!important}
+    .github-lifecycle-center h3{margin:0;color:#263d37;font-size:.95rem}
+    .lifecycle-repos{display:grid;gap:4px;width:100%;margin-top:10px}
+    .lifecycle-repos span{padding:5px 7px;border:1px solid rgba(80,132,132,.12);border-radius:8px;background:#f8fbf9;color:#557068;font:800 .42rem/1 var(--font-heading)}
+    .lifecycle-center-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:100%;margin-top:9px}
+    .lifecycle-center-flow span{display:flex;align-items:center;justify-content:center;gap:3px;padding:5px 4px;border-radius:8px;background:#315755;color:#fff;font:800 .39rem/1 var(--font-heading)}
+    .lifecycle-center-flow img{width:19px;height:19px;object-fit:contain}
+
+    .github-lifecycle-nodes{position:absolute;inset:0;z-index:3;margin:0;padding:0;list-style:none}
+    .github-lifecycle-nodes li{position:absolute;left:50%;top:46%;width:178px;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-302px) rotate(calc(var(--a) * -1))}
+    .lifecycle-node{display:grid;grid-template-columns:58px 1fr;grid-template-rows:auto auto auto;gap:2px 9px;align-items:center;min-height:96px;padding:10px;border:1px solid rgba(121,201,158,.22);border-radius:17px;background:#fff;color:#29463e;text-decoration:none;box-shadow:0 12px 28px rgba(0,0,0,.15);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+    a.lifecycle-node:hover,a.lifecycle-node:focus-visible{transform:translateY(-5px);border-color:#97db4f;box-shadow:0 18px 34px rgba(0,0,0,.2);outline:none}
+    .lifecycle-step{grid-column:2;align-self:end;color:#4a796e;font:900 .4rem/1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+    .lifecycle-icon{grid-row:1/4;display:grid;place-items:center;width:58px;height:58px;padding:5px;border:1px solid rgba(80,132,132,.12);border-radius:15px;background:#edf5f0}
+    .lifecycle-icon img{width:48px;height:48px;object-fit:contain;image-rendering:pixelated}
+    .lifecycle-node strong{grid-column:2;color:#263d37;font:800 .61rem/1.15 var(--font-heading)}
+    .lifecycle-node small{grid-column:2;color:#67766f;font:.46rem/1.28 var(--font-body)}
+    .source-node{border-color:rgba(246,201,91,.4);background:linear-gradient(145deg,#fffdf6,#f8fbf8)}
+
+    .github-handoff-cluster{position:absolute;z-index:5;left:50%;bottom:76px;width:min(760px,82%);transform:translateX(-50%);display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+    .handoff-chip{padding:7px 8px;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:rgba(255,255,255,.045);color:#bfd0c7;font-size:.47rem;line-height:1.28;text-align:center}
+    .handoff-chip b{display:block;margin-bottom:2px;color:#dff0e5;font:800 .43rem/1 var(--font-heading)}
+
+    .github-lifecycle-footer{position:absolute;left:50%;bottom:20px;width:min(780px,85%);transform:translateX(-50%);display:flex;justify-content:center}
+    .github-lifecycle-footer span{display:flex;align-items:center;justify-content:center;gap:7px;padding:7px 10px;border:1px solid rgba(151,219,79,.14);border-radius:999px;background:rgba(151,219,79,.055);color:#c9d8d1;font-size:.49rem;text-align:center}
+    .github-lifecycle-footer img{width:28px;height:28px;object-fit:contain}
 
     .github-project-details-section{background:#f8faf7}
     .github-deep-dive{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,.95fr);gap:26px;align-items:center;margin-top:18px;padding:24px;border-radius:24px;scroll-margin-top:92px}
@@ -237,10 +250,14 @@
       .git-simple-arrow{height:28px}.git-simple-arrow::before{width:3px;height:100%}.git-simple-arrow::after{right:auto;bottom:0;transform:rotate(135deg)}
       .git-simple-arrow i{left:calc(50% - 4px);top:0;animation:gitSimplePacketVertical 2.6s ease-in-out infinite}
       @keyframes gitSimplePacketVertical{0%,100%{top:0;opacity:.25}50%{top:calc(100% - 8px);opacity:1}}
-      .github-system-head{display:none}
-      .github-system-lane{grid-template-columns:1fr 34px 1fr 34px 1fr}
-      .system-node{grid-template-columns:46px minmax(0,1fr)}
-      .system-node img{width:44px;height:44px}
+      .github-lifecycle-map{min-height:0;padding:20px}
+      .github-lifecycle-orbit{display:none}
+      .github-lifecycle-center{position:relative;left:auto;top:auto;width:min(300px,86vw);min-height:0;margin:0 auto 18px;transform:none;border-radius:28px}
+      .github-lifecycle-nodes{position:relative;inset:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+      .github-lifecycle-nodes li{position:relative;left:auto;top:auto;width:auto;transform:none}
+      .lifecycle-node{height:100%}
+      .github-handoff-cluster{position:relative;left:auto;bottom:auto;width:auto;transform:none;margin-top:14px}
+      .github-lifecycle-footer{position:relative;left:auto;bottom:auto;width:auto;transform:none;margin-top:12px}
       .github-deep-dive{grid-template-columns:1fr}
       .github-deep-dive--dark .github-motion-panel{order:2}
       .github-pipeline{grid-template-columns:repeat(3,1fr);gap:14px}
@@ -252,11 +269,8 @@
       .git-tool-strip{grid-template-columns:repeat(3,1fr)}
       .git-simple-status{grid-template-columns:repeat(2,1fr)}
       .github-purpose-grid{grid-template-columns:1fr}
-      .github-system-lane{grid-template-columns:1fr}
-      .system-connector{width:4px;height:28px;justify-self:center;overflow:visible}
-      .system-connector::after{right:-4px;top:auto;bottom:-1px;transform:rotate(135deg)}
-      .system-connector i{left:-4px;top:0;animation:systemPacketVertical 3s ease-in-out infinite}
-      @keyframes systemPacketVertical{0%,100%{top:0;opacity:.25}50%{top:calc(100% - 12px);opacity:1}}
+      .github-lifecycle-nodes{grid-template-columns:1fr}
+      .github-handoff-cluster{grid-template-columns:1fr}
       .github-deep-dive{padding:16px}
       .github-deep-facts span{grid-template-columns:1fr}
       .library-shelf{grid-template-columns:1fr}
@@ -268,12 +282,11 @@
     }
     @media(max-width:460px){
       .git-tool-strip{grid-template-columns:repeat(2,1fr)}
-      .github-release-rail{grid-template-columns:repeat(2,1fr);row-gap:12px}
-      .release-line,.release-runner{display:none}
+      .github-lifecycle-center-flow{grid-template-columns:1fr}
       .github-pipeline{grid-template-columns:1fr}
     }
     @media(prefers-reduced-motion:reduce){
-      .git-simple-arrow i,.system-connector i,.release-runner,.portfolio-motion-packet,.manager-arrow,.library-card,.lm-runner,.workbench-transform span{animation:none!important}
+      .git-simple-arrow i,.lifecycle-ring::after,.lifecycle-runner,.portfolio-motion-packet,.manager-arrow,.library-card,.lm-runner,.workbench-transform span{animation:none!important}
     }
   </style>
   <script defer src="../../js/portfolio-motion.js"></script>
@@ -356,49 +369,99 @@
       <div class="container">
         <div class="section-heading refresh-section-intro">
           <p class="eyebrow">GitHub Project Ecosystem</p>
-          <h2>Local tools feed versioned repositories, which power the public experience.</h2>
-          <p>The systems do different jobs, but they share the same review and release workflow. Follow each lane to see what is maintained locally, what lives in GitHub, and what becomes a public experience.</p>
+          <h2>Content moves through the system, then gets reused somewhere else.</h2>
+          <p>I do not treat each project as a separate endpoint. Source content can become a reusable library asset, a Workbench prototype, a portfolio example, or all three. GitHub keeps the handoffs versioned while the tools support different parts of the lifecycle.</p>
         </div>
 
-        <div class="github-system-map" aria-label="Animated workflow showing Portfolio Manager to portfolio, Library Manager to Learning Content Lab, and source content to Learning Project Workbench through GitHub repositories">
-          <div class="github-system-head" aria-hidden="true"><span>Local / builder layer</span><span>Versioned source</span><span>Public / working experience</span></div>
+        <div class="github-lifecycle-map" aria-label="Circular lifecycle showing source content moving through Library Manager, Learning Content Lab, Learning Project Workbench, Portfolio Manager, and the public Portfolio, with GitHub repositories at the center">
+          <div class="github-lifecycle-orbit" aria-hidden="true">
+            <span class="lifecycle-ring"></span>
+            <span class="lifecycle-ring inner"></span>
+            <span class="lifecycle-runner runner-one"></span>
+            <span class="lifecycle-runner runner-two"></span>
+          </div>
 
-          <div class="github-system-lanes">
-            <div class="github-system-lane lane-portfolio">
-              <a class="system-node tool" href="#portfolio-manager"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><span><small>Local tool</small><strong>Portfolio Manager</strong></span></a>
-              <span class="system-connector"><i></i></span>
-              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>id-portfolio-system</strong></span></span>
-              <span class="system-connector"><i></i></span>
-              <a class="system-node output" href="#portfolio-system"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span><small>Public output</small><strong>Portfolio</strong></span></a>
+          <div class="github-lifecycle-center">
+            <span class="lifecycle-github-icon"><img src="../../assets/icons/pixel/github/github.webp" alt=""></span>
+            <p class="eyebrow">Versioned source of truth</p>
+            <h3>GitHub connects the handoffs.</h3>
+            <div class="lifecycle-repos">
+              <span>id-content-library</span>
+              <span>learning-experience-engine</span>
+              <span>id-portfolio-system</span>
             </div>
-
-            <div class="github-system-lane lane-library">
-              <a class="system-node tool" href="#library-manager"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><span><small>Local tool</small><strong>Library Manager</strong></span></a>
-              <span class="system-connector"><i></i></span>
-              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>id-content-library</strong></span></span>
-              <span class="system-connector"><i></i></span>
-              <a class="system-node output" href="#content-library"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><span><small>Public output</small><strong>Learning Content Lab</strong></span></a>
-            </div>
-
-            <div class="github-system-lane lane-workbench">
-              <span class="system-node tool"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><span><small>Builder input</small><strong>Source + templates</strong></span></span>
-              <span class="system-connector"><i></i></span>
-              <span class="system-node repo"><img src="../../assets/icons/pixel/github/repository.webp" alt=""><span><small>Repository</small><strong>learning-experience-engine</strong></span></span>
-              <span class="system-connector"><i></i></span>
-              <a class="system-node output" href="#learning-workbench"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><span><small>Working prototype</small><strong>Learning Project Workbench</strong></span></a>
+            <div class="lifecycle-center-flow">
+              <span><img src="../../assets/icons/pixel/github/branch.webp" alt="">Branch</span>
+              <span><img src="../../assets/icons/pixel/github/pull-request.webp" alt="">Review</span>
+              <span><img src="../../assets/icons/pixel/github/track-progress.webp" alt="">Validate</span>
             </div>
           </div>
 
-          <div class="github-release-rail">
-            <span class="release-line"></span>
-            <span class="release-runner" aria-hidden="true"></span>
-            <div><img src="../../assets/icons/pixel/github/branch.webp" alt=""><b>Branch</b></div>
-            <div><img src="../../assets/icons/pixel/github/pull-request.webp" alt=""><b>Review</b></div>
-            <div><img src="../../assets/icons/pixel/github/track-progress.webp" alt=""><b>Validate</b></div>
-            <div><img src="../../assets/icons/pixel/tools-tech/deploy.webp" alt=""><b>Deploy</b></div>
+          <ol class="github-lifecycle-nodes">
+            <li style="--a:-90deg">
+              <div class="lifecycle-node source-node">
+                <span class="lifecycle-step">01 · Capture</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""></span>
+                <strong>Source + ideas</strong>
+                <small>Internal work, notes, templates, and reusable patterns.</small>
+              </div>
+            </li>
+
+            <li style="--a:-30deg">
+              <a class="lifecycle-node" href="#library-manager">
+                <span class="lifecycle-step">02 · Organize</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""></span>
+                <strong>Library Manager</strong>
+                <small>Add metadata, preview, QA, and prepare reusable content.</small>
+              </a>
+            </li>
+
+            <li style="--a:30deg">
+              <a class="lifecycle-node" href="#content-library">
+                <span class="lifecycle-step">03 · Reuse</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""></span>
+                <strong>Learning Content Lab</strong>
+                <small>Store public-safe assets, templates, interactions, and prompts.</small>
+              </a>
+            </li>
+
+            <li style="--a:90deg">
+              <a class="lifecycle-node" href="#learning-workbench">
+                <span class="lifecycle-step">04 · Build</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></span>
+                <strong>Learning Project Workbench</strong>
+                <small>Combine source content and reusable patterns into working learning experiences.</small>
+              </a>
+            </li>
+
+            <li style="--a:150deg">
+              <a class="lifecycle-node" href="#portfolio-manager">
+                <span class="lifecycle-step">05 · Package</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></span>
+                <strong>Portfolio Manager</strong>
+                <small>Sanitize, structure, preview, and prepare project evidence for public use.</small>
+              </a>
+            </li>
+
+            <li style="--a:210deg">
+              <a class="lifecycle-node" href="#portfolio-system">
+                <span class="lifecycle-step">06 · Publish</span>
+                <span class="lifecycle-icon"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""></span>
+                <strong>Portfolio</strong>
+                <small>Show the finished work, then feed useful patterns back into the system.</small>
+              </a>
+            </li>
+          </ol>
+
+          <div class="github-handoff-cluster">
+            <span class="handoff-chip library-to-workbench"><b>Library → Workbench</b> templates + reusable interactions</span>
+            <span class="handoff-chip workbench-to-library"><b>Workbench → Library</b> patterns worth reusing</span>
+            <span class="handoff-chip workbench-to-portfolio"><b>Workbench → Portfolio</b> project evidence + examples</span>
           </div>
 
-          <p class="github-system-note">Select a project node to jump to its deeper breakdown below.</p>
+          <div class="github-lifecycle-footer">
+            <span><img src="../../assets/icons/pixel/learning-impact/continuous-learning.webp" alt="">The loop keeps moving as projects generate new reusable assets, examples, and improvements.</span>
+          </div>
         </div>
       </div>
     </section>
