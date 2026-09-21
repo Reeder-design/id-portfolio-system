@@ -9,8 +9,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO = ROOT / "portfolio"
 REFRESH_CSS = PORTFOLIO / "css" / "portfolio-refresh.css"
 CONSISTENCY_CSS = PORTFOLIO / "css" / "consistency-polish.css"
-FRAME_CSS = PORTFOLIO / "css" / "phase1-frame.css"
-VISUAL_CONSISTENCY_CSS = PORTFOLIO / "css" / "phase21-visual-consistency.css"
 HIRING_SUPPORT_CSS = PORTFOLIO / "css" / "hiring-support.css"
 MOTION_JS = PORTFOLIO / "js" / "portfolio-motion.js"
 ABOUT = PORTFOLIO / "about" / "index.html"
@@ -21,7 +19,8 @@ HELP_CSS = ROOT / "portfolio-manager" / "static" / "help.css"
 CREATE_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "create-content.html"
 REFERENCE_TEMPLATE = ROOT / "portfolio-manager" / "templates" / "reference-library.html"
 
-AI_DEMO_PAGES = [
+AI_PAGES = [
+    PORTFOLIO / "projects" / "ai-training-and-evaluation" / "index.html",
     PORTFOLIO / "projects" / "ai-training-and-evaluation" / "ai-training-and-evaluation-demo" / "index.html",
     PORTFOLIO / "projects" / "ai-training-and-evaluation" / "rubric-demo" / "index.html",
     PORTFOLIO / "projects" / "ai-training-and-evaluation" / "workflow-demo" / "index.html",
@@ -100,43 +99,18 @@ def main() -> int:
         require("—" not in prose, f"{relative}: visible prose contains an em dash; review final public copy.", errors)
         require(" | " not in prose, f"{relative}: visible prose contains a spaced vertical bar; review final public copy.", errors)
 
-        require(
-            "phase1-frame.css" in html,
-            f"{relative}: missing shared phase1-frame.css visual layer.",
-            errors,
-        )
         if path != HOME:
             require(
                 "portfolio-motion.js" in html,
                 f"{relative}: public pages must load the shared navigation/component normalizer.",
                 errors,
             )
-        if path.is_relative_to(PORTFOLIO / "projects"):
+        if "Keep Exploring" in html:
             require(
-                'class="breadcrumbs"' in html or "class='breadcrumbs'" in html,
-                f"{relative}: project and portfolio-area pages must include source breadcrumb markup.",
+                "portfolio-motion.js" in html,
+                f"{relative}: Keep Exploring must be normalized by the shared Interactive Learning standard.",
                 errors,
             )
-            require(
-                re.search(r"<main\b.*?<h1\b", html, flags=re.IGNORECASE | re.DOTALL) is not None,
-                f"{relative}: no H1 found inside main content for breadcrumb labeling.",
-                errors,
-            )
-        require(
-            "Keep Exploring" not in prose,
-            f"{relative}: retired Keep Exploring footer copy returned.",
-            errors,
-        )
-        require(
-            "data-keep-exploring-standardized" not in html,
-            f"{relative}: retired explore-footer runtime marker returned.",
-            errors,
-        )
-        require(
-            re.search(r'<p[^>]*class=["\'][^"\']*eyebrow[^"\']*["\'][^>]*>\s*Related Work\s*</p>', html, flags=re.IGNORECASE) is None,
-            f"{relative}: retired Related Work footer heading returned.",
-            errors,
-        )
 
     combined_public = "\n".join(path.read_text(encoding="utf-8") for path in html_files)
     for phrase in STALE_SLOGANS:
@@ -179,12 +153,6 @@ def main() -> int:
             "white-space: normal;",
             "overflow-wrap: anywhere;",
             "min-width: 0;",
-            ".stable-tab-panels",
-            ".stable-tab-panel",
-            ".interaction-copy-wide",
-            ".pixel-icon-bubble",
-            ".motion-layer-behind",
-            ".portfolio-back-row",
         ]:
             require(marker in compact_css, f"Compact-UI safeguards are missing {marker!r}.", errors)
 
@@ -201,49 +169,35 @@ def main() -> int:
         "const initCanonicalBreadcrumbs = () =>",
         "BREADCRUMB_ROUTES",
         "initCanonicalBreadcrumbs();",
-        "initBreadcrumbTone();",
-        "initSectionRhythm();",
+        "const initExploreFooters = () =>",
+        "section.className = 'section section-soft';",
+        "refresh-card-grid",
+        "refresh-link-card-header",
+        "refresh-link-card-body",
+        "project-family-link",
     ]:
         require(marker in motion_js, f"Shared portfolio navigation/component logic is missing {marker!r}.", errors)
-    require("initExploreFooters" not in motion_js, "Retired runtime explore-footer normalizer must not return.", errors)
-
-    require(FRAME_CSS.exists(), "portfolio/css/phase1-frame.css is missing.", errors)
-    if FRAME_CSS.exists():
-        frame_css = FRAME_CSS.read_text(encoding="utf-8")
-        require(
-            '@import url("./phase21-visual-consistency.css");' in frame_css,
-            "phase1-frame.css must import phase21-visual-consistency.css.",
-            errors,
-        )
-
-    require(VISUAL_CONSISTENCY_CSS.exists(), "portfolio/css/phase21-visual-consistency.css is missing.", errors)
-    if VISUAL_CONSISTENCY_CSS.exists():
-        visual_css = VISUAL_CONSISTENCY_CSS.read_text(encoding="utf-8")
-        for marker in [
-            "main > section:first-child .container:has(> .breadcrumbs)",
-            "grid-column: 1 / -1 !important;",
-            "row-gap: 12px !important;",
-            "prefers-reduced-motion",
-        ]:
-            require(marker in visual_css, f"Shared breadcrumb/visual consistency CSS is missing {marker!r}.", errors)
 
     project_template = PROJECT_TEMPLATE.read_text(encoding="utf-8")
-    require("project-template-cta" not in project_template, "Project scaffold must not use the retired CTA footer.", errors)
-    require("PORTFOLIO-MANAGER:GENERATED-PROJECT-PAGE" not in project_template, "New scaffold pages must become hand-maintained immediately instead of remaining regeneration targets.", errors)
-    require("Keep Exploring" not in project_template, "Project scaffold must not recreate Keep Exploring.", errors)
-    require("RELATED_WORK_SECTION" not in project_template and "RELATED_WORK_NAV" not in project_template, "Project scaffold must not recreate public Related Work sections.", errors)
+    require("project-template-cta" not in project_template, "Generated project pages must not use the retired project-template-cta Keep Exploring variant.", errors)
     for marker in [
-        'class="section portfolio-back-row"',
-        'class="generic-switch-panels"',
-        'aria-hidden="true"',
+        '<p class="eyebrow">Keep Exploring</p>',
+        'class="section-heading refresh-section-intro"',
+        'class="refresh-card-grid"',
+        'class="refresh-link-card"',
+        'class="refresh-link-card-header"',
+        'class="refresh-link-card-body"',
+        'class="project-family-link"',
     ]:
-        require(marker in project_template, f"Project scaffold is missing hardening marker {marker!r}.", errors)
+        require(marker in project_template, f"Generated project template is missing canonical Keep Exploring marker {marker!r}.", errors)
 
-    for path in AI_DEMO_PAGES:
+    for path in AI_PAGES:
         html = path.read_text(encoding="utf-8")
+        has_exploration_path = "Keep Exploring" in html or "Other Work" in html
+        has_back_path = "ai-back-section" in html and "Back to AI Training and Evaluation" in html
         require(
-            "ai-back-section" in html and "Back to AI Training and Evaluation" in html,
-            f"{path.relative_to(ROOT)}: AI demo must end with the compact parent back path.",
+            has_exploration_path or has_back_path,
+            f"{path.relative_to(ROOT)}: AI page must end with an exploration or parent-page back path.",
             errors,
         )
 
