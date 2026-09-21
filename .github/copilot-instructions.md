@@ -19,7 +19,7 @@ Use this order:
 2. Shared current portfolio styles/JavaScript loaded by that page.
 3. `portfolio-data/taxonomy.json` for canonical public category labels and paths.
 4. Structured records under `portfolio-data/` for fields they explicitly own.
-5. `templates/` plus deterministic renderers only for creating a new page whose target path does not already exist.
+5. `templates/` plus scaffold-preview tooling only for planning brand-new pages; they do not write public HTML.
 6. Portfolio Manager code for Manager behavior. The private Hiring Guide editorial source lives at runtime under Git-ignored `.portfolio-manager/hiring-guide/`.
 7. Documentation describes the current implementation and must not override the current public page.
 
