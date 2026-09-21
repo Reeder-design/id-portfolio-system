@@ -217,7 +217,7 @@ If that terminal is already running after a Git pull, you can normally just refr
 - `portfolio/` — deployed public website
 - `portfolio-data/` — structured public-content source data, including the canonical reusable `component-registry.json`
 - `portfolio-manager/` — local-only Flask management application
-- `templates/` — reusable standard project templates
+- `templates/` — new-page scaffolds only; never an overwrite source for existing public pages
 - `design-system/` — design-system/development resources
 - `scripts/` — creation, rendering, maintenance, validation, and regression scripts
 - `docs/` — maintenance/reference docs plus generated inventory/map/changelog/version snapshots
@@ -225,29 +225,33 @@ If that terminal is already running after a Git pull, you can normally just refr
 - `.portfolio-manager/` — private local runtime state; never commit
 - `.env` — private local secrets; never commit
 
-## Project Creation and Rendering
+## Project Creation and Page Preservation
 
-The guided Create Content workflow is the normal user path for new work. Lower-level deterministic scripts remain available for development/maintenance.
+The current public files under `portfolio/` are the presentation source of truth for existing pages. Do not rebuild an existing page from the generic project template or a structured record.
 
-Create a standard project:
+The guided Create Content workflow is the normal user path for **new** work. Lower-level deterministic scripts remain available for new-page development and maintenance testing.
+
+Create a new standard project:
 
 ```bash
 python3 scripts/new-project.py
 ```
 
-Preview generation without writing:
+Preview a new project without writing:
 
 ```bash
 python3 scripts/new-project.py --dry-run
 ```
 
-Render an existing structured project:
+Preview the scaffold for a project whose public path does not yet exist:
 
 ```bash
-python3 scripts/render-project.py portfolio-data/projects/pursuit-positioning.json --stdout
+python3 scripts/render-project.py portfolio-data/projects/new-project.json --stdout
 ```
 
-The renderer refuses to overwrite an existing page unless `--force` is explicitly supplied.
+The renderer has no supported force-overwrite mode. If the target public page already exists, edit that current page directly.
+
+See `docs/portfolio-visual-qa-standard.md` for the recurring UAT rules and `docs/portfolio-consistency-audit.md` for the current maintenance audit.
 
 ## Documentation and Versioning
 
