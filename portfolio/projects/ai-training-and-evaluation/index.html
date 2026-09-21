@@ -72,27 +72,68 @@
         <span class="ai-decision-intake" aria-hidden="true"><small>OUTPUT IN</small><img src="../../assets/icons/pixel/ai-evaluation/demo-robot.webp" alt=""></span>
         <span class="ai-decision-pipeline-track" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="ai-decision-packet" aria-hidden="true"><img src="../../assets/icons/pixel/ai-evaluation/workflow-documents.webp" alt=""></span>
-        <button class="ai-quality-button ai-decision-stage active" type="button" role="tab" aria-selected="true" aria-controls="aiDecisionPanel" data-quality-signal="assigned-lens"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""></span><b>01</b><strong>Lens</strong><small>Set the question</small></button>
-        <button class="ai-quality-button ai-decision-stage" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="rubric"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-matrix.webp" alt=""></span><b>02</b><strong>Rubric</strong><small>Define the standard</small></button>
-        <button class="ai-quality-button ai-decision-stage" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="evidence"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/demo-search.webp" alt=""></span><b>03</b><strong>Evidence</strong><small>Find the signal</small></button>
-        <button class="ai-quality-button ai-decision-stage" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="rationale"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt=""></span><b>04</b><strong>Rationale</strong><small>Explain the call</small></button>
-        <button class="ai-quality-button ai-decision-stage" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="calibration"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-balance.webp" alt=""></span><b>05</b><strong>Calibration</strong><small>Check consistency</small></button>
+        <button class="ai-quality-button ai-decision-stage active" id="aiDecisionTabLens" type="button" role="tab" aria-selected="true" aria-controls="aiDecisionPanel" data-quality-signal="assigned-lens"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""></span><b>01</b><strong>Lens</strong><small>Set the question</small></button>
+        <button class="ai-quality-button ai-decision-stage" id="aiDecisionTabRubric" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="rubric"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-matrix.webp" alt=""></span><b>02</b><strong>Rubric</strong><small>Define the standard</small></button>
+        <button class="ai-quality-button ai-decision-stage" id="aiDecisionTabEvidence" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="evidence"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/demo-search.webp" alt=""></span><b>03</b><strong>Evidence</strong><small>Find the signal</small></button>
+        <button class="ai-quality-button ai-decision-stage" id="aiDecisionTabRationale" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="rationale"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt=""></span><b>04</b><strong>Rationale</strong><small>Explain the call</small></button>
+        <button class="ai-quality-button ai-decision-stage" id="aiDecisionTabCalibration" type="button" role="tab" aria-selected="false" aria-controls="aiDecisionPanel" data-quality-signal="calibration"><span class="ai-decision-valve"><i></i><img src="../../assets/icons/pixel/ai-evaluation/rubric-balance.webp" alt=""></span><b>05</b><strong>Calibration</strong><small>Check consistency</small></button>
         <span class="ai-decision-outlet" aria-hidden="true"><img src="../../assets/icons/pixel/ai-evaluation/workflow-finish.webp" alt=""><small>DECISION OUT</small></span>
       </div>
-      <div class="ai-quality-panel" id="aiDecisionPanel" role="tabpanel" aria-live="polite" aria-labelledby="qualitySignalTitle">
+      <div class="ai-quality-panel" id="aiDecisionPanel" role="tabpanel" aria-live="polite" aria-atomic="true" aria-labelledby="aiDecisionTabLens">
         <div class="ai-quality-copy">
           <p class="eyebrow" id="qualitySignalLabel">01 / Assigned lens</p>
           <h3 id="qualitySignalTitle">Start with one question.</h3>
-          <p id="qualitySignalText"></p>
+          <p id="qualitySignalText">Decide what this review owns. An evidence reviewer traces claims; a presentation reviewer checks hierarchy and legibility.</p>
         </div>
-        <div class="ai-quality-motion ai-decision-motion" aria-hidden="true">
-          <span><img id="qualityMotionA" src="../../assets/icons/pixel/ai-evaluation/workflow-documents.webp" alt=""><small id="qualityMotionLabelA">Read task</small></span>
-          <i></i>
-          <span><img id="qualityMotionB" src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""><small id="qualityMotionLabelB">Choose lens</small></span>
-          <i></i>
-          <span><img id="qualityMotionC" src="../../assets/icons/pixel/ai-evaluation/workflow-reviewer.webp" alt=""><small id="qualityMotionLabelC">Review only that job</small></span>
+        <div class="ai-decision-scenes" data-decision-scene="assigned-lens" aria-hidden="true">
+          <section class="ai-decision-scene ai-scope-selector" data-decision-viz="assigned-lens">
+            <header class="ai-scene-heading"><img src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""><span><small>LENS SELECTOR</small><strong>Focus one quality question</strong></span></header>
+            <div class="ai-scope-map">
+              <span class="ai-scope-output"><img src="../../assets/icons/pixel/ai-evaluation/demo-robot.webp" alt=""><b>ONE OUTPUT</b></span>
+              <i class="ai-scope-orbit"></i><i class="ai-scope-reticle"></i>
+              <span class="ai-scope-question ai-scope-task"><img src="../../assets/icons/pixel/ai-evaluation/workflow-checklist.webp" alt=""><b>TASK FIT</b></span>
+              <span class="ai-scope-question ai-scope-evidence"><img src="../../assets/icons/pixel/ai-evaluation/demo-search.webp" alt=""><b>EVIDENCE</b></span>
+              <span class="ai-scope-question ai-scope-experience"><img src="../../assets/icons/pixel/ai-training-evaluation/quality-ensure.webp" alt=""><b>EXPERIENCE</b></span>
+            </div>
+          </section>
+          <section class="ai-decision-scene ai-rubric-blueprint" data-decision-viz="rubric">
+            <header class="ai-scene-heading"><img src="../../assets/icons/pixel/ai-evaluation/rubric-matrix.webp" alt=""><span><small>RUBRIC BLUEPRINT</small><strong>Turn quality into anchored levels</strong></span></header>
+            <div class="ai-anchor-plot">
+              <div class="ai-anchor-criterion"><small>CRITERION</small><strong>Claims match approved evidence</strong></div>
+              <div class="ai-anchor-columns"><span><b>0</b><i></i><small>Unsupported</small></span><span><b>1</b><i></i><small>Major gap</small></span><span><b>2</b><i></i><small>Minor gap</small></span><span><b>3</b><i></i><small>Supported</small></span></div>
+              <em class="ai-anchor-cursor"><img src="../../assets/icons/pixel/ai-evaluation/rubric-rating.webp" alt=""></em>
+            </div>
+          </section>
+          <section class="ai-decision-scene ai-evidence-inspector" data-decision-viz="evidence">
+            <header class="ai-scene-heading"><img src="../../assets/icons/pixel/ai-evaluation/demo-search.webp" alt=""><span><small>EVIDENCE INSPECTOR</small><strong>Find the signal that changes the call</strong></span></header>
+            <div class="ai-evidence-workbench">
+              <div class="ai-output-sheet"><small>MODEL OUTPUT</small><span><i></i><b class="is-supported">01</b></span><span><i></i><b class="is-gap">02</b></span><span><i></i><b class="is-supported">03</b></span><em></em></div>
+              <div class="ai-inspector-lens"><img src="../../assets/icons/pixel/ai-evaluation/demo-search.webp" alt=""><i></i></div>
+              <div class="ai-source-vault"><img src="../../assets/icons/pixel/ai-evaluation/workflow-documents.webp" alt=""><small>APPROVED EVIDENCE</small><span></span><span></span><b>TRACE</b></div>
+              <div class="ai-evidence-status"><span><i></i>SUPPORTED</span><span><i></i>GAP FOUND</span></div>
+            </div>
+          </section>
+          <section class="ai-decision-scene ai-rationale-composer" data-decision-viz="rationale">
+            <header class="ai-scene-heading"><img src="../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt=""><span><small>RATIONALE COMPOSER</small><strong>Connect evidence, impact, and correction</strong></span></header>
+            <div class="ai-rationale-canvas">
+              <article class="ai-rationale-node ai-rationale-evidence"><img src="../../assets/icons/pixel/ai-evaluation/demo-document-chat.webp" alt=""><small>EVIDENCE</small><strong>Unsupported promise</strong></article>
+              <article class="ai-rationale-node ai-rationale-impact"><img src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""><small>IMPACT</small><strong>Misleads the user</strong></article>
+              <article class="ai-rationale-node ai-rationale-action"><img src="../../assets/icons/pixel/ai-training-evaluation/quality-refine.webp" alt=""><small>CORRECTION</small><strong>Restore the limit</strong></article>
+              <svg viewBox="0 0 480 190" preserveAspectRatio="none"><path d="M142 51 C240 4 339 10 383 65"></path><path d="M395 90 C362 168 238 186 132 126"></path><path d="M113 108 C97 90 99 75 119 61"></path></svg>
+              <span class="ai-rationale-pulse"></span>
+            </div>
+          </section>
+          <section class="ai-decision-scene ai-consensus-bench" data-decision-viz="calibration">
+            <header class="ai-scene-heading"><img src="../../assets/icons/pixel/ai-evaluation/rubric-balance.webp" alt=""><span><small>CALIBRATION BENCH</small><strong>Compare judgment against the same anchor</strong></span></header>
+            <div class="ai-consensus-scale">
+              <span class="ai-reviewer-score ai-reviewer-a"><small>REVIEWER A</small><b>3</b></span>
+              <span class="ai-reviewer-score ai-reviewer-b"><small>REVIEWER B</small><b>1</b></span>
+              <div class="ai-benchmark-track"><i></i><i></i><i></i><i></i><span class="ai-benchmark-marker"><img src="../../assets/icons/pixel/ai-evaluation/rubric-target.webp" alt=""><small>BENCHMARK</small></span></div>
+              <div class="ai-consensus-result"><img src="../../assets/icons/pixel/ai-evaluation/workflow-finish.webp" alt=""><span><small>ALIGNED DECISION</small><strong>Evidence + rationale saved</strong></span></div>
+            </div>
+          </section>
         </div>
-        <div class="ai-quality-response"><span>Evaluator move</span><strong id="qualitySignalResponse"></strong></div>
+        <div class="ai-quality-response"><span>Evaluator move</span><strong id="qualitySignalResponse">Name the lens and evidence boundary before looking for a score.</strong></div>
       </div>
     </div>
   </div>
@@ -161,7 +202,7 @@
 
 <section class="section ai-demo-section"><div class="container"><div class="section-heading"><p class="eyebrow">Hands-On, Public-Safe Demos</p><h2>Practice the evaluator work.</h2><p>These fictionalized labs make the reasoning visible: diagnose a text output against its task and source, apply an anchored rubric, then follow the full human QA loop from assignment to calibration.</p></div><div class="ai-demo-grid">
 <a class="ai-demo-card" href="./ai-training-and-evaluation-demo/index.html"><div class="ai-demo-preview"><img src="../../assets/icons/pixel/ai-evaluation/demo-compare-ab.webp" alt=""><span class="ai-demo-route"><span></span><span></span><span></span></span></div><div class="ai-demo-body"><p class="eyebrow">Text + Source Review</p><h3>Evidence-Led Review Lab</h3><p>Review fictional model outputs against a task and approved source, identify the signal, choose severity, then compare your reasoning with a benchmark.</p><span class="ai-demo-link">Open Text Review Lab →</span></div></a>
-<a class="ai-demo-card" href="./rubric-demo/index.html"><div class="ai-demo-preview"><img src="../../assets/icons/pixel/ai-evaluation/rubric-matrix.webp" alt=""><span class="ai-demo-route"><span></span><span></span><span></span></span></div><div class="ai-demo-body"><p class="eyebrow">Rubric + Calibration</p><h3>Anchored Rubric Studio</h3><p>Score a criterion using clear anchors, then compare the score and rationale with a benchmark built for the same evaluation job.</p><span class="ai-demo-link">Open Rubric Studio →</span></div></a>
+<a class="ai-demo-card" href="./rubric-demo/index.html"><div class="ai-demo-preview"><img src="../../assets/icons/pixel/ai-evaluation/rubric-matrix.webp" alt=""><span class="ai-demo-route"><span></span><span></span><span></span></span></div><div class="ai-demo-body"><p class="eyebrow">Rubric + Calibration</p><h3>AI Rubric Demo</h3><p>Score a criterion using clear anchors, then compare the score and rationale with a benchmark built for the same evaluation job.</p><span class="ai-demo-link">Open AI Rubric Demo →</span></div></a>
 <a class="ai-demo-card" href="./workflow-demo/index.html"><div class="ai-demo-preview"><img src="../../assets/icons/pixel/ai-evaluation/workflow-automation.webp" alt=""><span class="ai-demo-route"><span></span><span></span><span></span></span></div><div class="ai-demo-body"><p class="eyebrow">Evaluation Operations</p><h3>Human QA Workflow</h3><p>Move from assignment framing to evidence verification, issue diagnosis, calibrated judgment, and reusable feedback for the next review cycle.</p><span class="ai-demo-link">Open QA Workflow →</span></div></a>
 </div></div></section>
 
