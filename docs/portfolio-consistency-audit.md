@@ -88,4 +88,4 @@ The largest structural risk is not a single visual bug. It is an old generation/
 
 The maintenance standard therefore uses this ownership rule:
 
-**Existing public page first. Current shared styles/behavior second. Structured metadata for content management. Templates only for new-page scaffolding. Never use an old template to rebuild a finished page.**
+**Existing public page first. Current shared styles/behavior second. Structured metadata for content management. Templates only as preview/reference material for brand-new work. Never use an old template to rebuild a finished page.**
