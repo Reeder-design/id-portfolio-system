@@ -418,7 +418,7 @@ def create_project():
             source_material_notes="",
         )
 
-        generator.create_project(record, render=True)
+        generator.create_project(record, render=False)
 
         docs_ok, docs_output = refresh_docs()
         if not docs_ok:
@@ -429,7 +429,7 @@ def create_project():
             )
         else:
             flash(
-                f"Created {record['title']}. Finish its details in the editor.",
+                f"Created structured record for {record['title']}. No public page was generated; build the visible page from the current live portfolio pattern.",
                 "success",
             )
 
