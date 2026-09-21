@@ -60,7 +60,7 @@
 
                     <div class="full-span"><label for="title">Project title</label><input id="title" name="title" type="text" value="{{ project.title }}" required></div>
 
-                    {% if project._generated_page %}
+                    {% if not project._has_public_page %}
                     <div class="full-span"><label for="summary">Structured summary</label><textarea id="summary" name="summary" rows="3" required>{{ project.summary }}</textarea></div>
                     <div class="full-span"><label for="business_need">Challenge / business or learning need</label><textarea id="business_need" name="business_need" rows="4">{{ project.content.business_need }}</textarea></div>
                     <div><label for="audience">Audience</label><textarea id="audience" name="audience" rows="3">{{ project.content.audience }}</textarea></div>
@@ -120,7 +120,7 @@
                             </div>
                             <a class="btn btn-secondary" href="{{ url_for('component_registry.workspace') }}">Browse Registry</a>
                         </div>
-                        <p class="field-help">Detected components reflect the scaffold/structured project metadata. Optional selections document intentional reusable patterns; recording one does not inject or replace public-page markup.</p>
+                        <p class="field-help">Detected components come only from structured project metadata that safely implies a pattern. Visual interaction patterns should be recorded intentionally; recording one does not inject or replace public-page markup.</p>
                         <div class="project-component-grid">
                             {% for component in component_context.components %}
                             {% if component.inferred %}
