@@ -71,7 +71,7 @@ Use `portfolio-data/component-registry.json` to describe reusable interaction/pr
 
 Structured project-to-project connections belong in `related_work` for the internal relationship graph. Manage them through Related References when practical. Relationship metadata does not automatically create a public Related Work section.
 
-Use `docs/portfolio-uat-guardrails.md` and `docs/portfolio-consistency-audit.md` when building or reviewing future pages.
+Use `docs/current-page-patterns.md` to choose the closest current live reference, then use `docs/portfolio-uat-guardrails.md` and `docs/portfolio-consistency-audit.md` when building or reviewing future pages.
 
 
 ## Recurring UAT Guardrails
