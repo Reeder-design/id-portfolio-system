@@ -146,7 +146,11 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    require(generator.create_project.__kwdefaults__.get("render") is False, "new project creation must default to record-only mode", errors)
+    require(
+        "render" not in generator.create_project.__code__.co_varnames,
+        "new project creation must not expose a public-page render switch",
+        errors,
+    )
 
     print("New-project record generator validation passed.")
     return 0
