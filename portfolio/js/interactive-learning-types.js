@@ -3,6 +3,30 @@
     buttons.forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
   };
 
+  const typeTabs = [...document.querySelectorAll('.type-tabs [role="tab"]')];
+  const selectTypeTab = (selected, focus = false) => {
+    typeTabs.forEach(tab => {
+      const active = tab === selected;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    });
+    if (focus) selected.focus();
+  };
+  typeTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTypeTab(tab));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = typeTabs.length - 1;
+      else if (event.key === 'ArrowRight') next = (index + 1) % typeTabs.length;
+      else next = (index - 1 + typeTabs.length) % typeTabs.length;
+      selectTypeTab(typeTabs[next], true);
+    });
+  });
+
   const heroButtons = [...document.querySelectorAll('[data-hero-choice]')];
   const heroResult = document.getElementById('heroChoiceResult');
   heroButtons.forEach(button => button.addEventListener('click', () => {
@@ -175,8 +199,14 @@
     const newer = button.dataset.aiLearner === 'new';
     document.getElementById('aiRouteMiddle').textContent = newer ? 'Guided example' : 'Complex case';
     document.getElementById('aiRouteEnd').textContent = newer ? 'Practice with cues' : 'Open response';
+    document.getElementById('aiLearnerPrompt').textContent = newer
+      ? '“I know the customer is interested. What should I ask next?”'
+      : '“The sponsor supports us, but I am unsure who signs off. How should I test the deal?”';
+    document.getElementById('aiCoachReply').textContent = newer
+      ? '“Ask who can approve the investment, then listen for evidence of the buying process.”'
+      : '“Map the approval path. Which stakeholder can confirm the economic buyer and timing?”';
     document.getElementById('aiPathFeedback').textContent = newer
-      ? 'More scaffolding helps a new learner build the first mental model.'
-      : 'A harder case gives an experienced learner room to explain the judgment.';
+      ? 'The tutor provides a concrete question and guided example for the next attempt.'
+      : 'The tutor challenges the learner to test the approval path in a more complex case.';
   }));
 })();

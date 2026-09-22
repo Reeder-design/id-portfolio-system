@@ -28,9 +28,11 @@
           <h1>Interactive Learning</h1>
           <p class="body-large">Interactive learning turns information into something learners can try. I use realistic decisions, practice screens, revealing visuals, and responsive feedback so people can apply an idea, see what happens, and try again.</p>
           <div class="interactive-tags" aria-label="Interactive learning capabilities">
-            <span>Make a choice</span>
-            <span>See the consequence</span>
-            <span>Try again</span>
+            <span>SCENARIOS</span><span>BRANCHING SIMULATIONS</span><span>ASSESSMENTS</span>
+            <span>INTERACTIVE MEDIA</span><span>SIMULATIONS</span><span>INTERACTIVE GRAPHICS</span>
+            <span>GAMIFICATION</span><span>LEARNER-FACING AI</span><span>AI-LED TRAINING</span>
+            <span>AI TUTORS</span><span>CUSTOMIZED LEARNING PATHS</span><span>USER ENGAGEMENT</span>
+            <span>USER INTERFACES</span><span>USER DESIGN</span><span>USER EXPERIENCE</span>
           </div>
         </div>
         <aside class="interaction-hero-studio" aria-label="Try a short learner decision and see its feedback">
@@ -55,19 +57,28 @@
   <section class="section interaction-types" id="interaction-types">
     <div class="container">
       <div class="type-section-intro">
-        <p class="eyebrow">Interaction design methodology</p>
-        <h2>Choose the interaction by what learners need to do.</h2>
-        <p>Each format creates a different kind of practice. I choose it by the decision, action, or feedback the work calls for, then build the interaction around that purpose.</p>
+        <p class="eyebrow">Interaction types</p>
+        <h2>Explore the interaction that fits the learner task.</h2>
+        <p>Select a tab to try a distinct format. Each interaction is designed around what learners need to decide, explore, practice, or explain.</p>
       </div>
 
-      <article class="type-row" id="branching-scenarios">
+      <div class="type-tabs" role="tablist" aria-label="Interactive learning formats">
+        <button type="button" role="tab" id="tab-branching-scenarios" aria-controls="branching-scenarios" aria-selected="true" tabindex="0">Practice scenarios</button>
+        <button type="button" role="tab" id="tab-knowledge-checks" aria-controls="knowledge-checks" aria-selected="false" tabindex="-1">Assessments</button>
+        <button type="button" role="tab" id="tab-interactive-video" aria-controls="interactive-video" aria-selected="false" tabindex="-1">Interactive media</button>
+        <button type="button" role="tab" id="tab-software-simulations" aria-controls="software-simulations" aria-selected="false" tabindex="-1">UI demos &amp; simulations</button>
+        <button type="button" role="tab" id="tab-click-to-reveal" aria-controls="click-to-reveal" aria-selected="false" tabindex="-1">Interactive graphics &amp; text</button>
+        <button type="button" role="tab" id="tab-gamified-challenges" aria-controls="gamified-challenges" aria-selected="false" tabindex="-1">Gamification</button>
+        <button type="button" role="tab" id="tab-learner-facing-ai" aria-controls="learner-facing-ai" aria-selected="false" tabindex="-1">Learner-facing AI</button>
+      </div>
+      <div class="type-tab-panels">
+      <article class="type-row" id="branching-scenarios" role="tabpanel" aria-labelledby="tab-branching-scenarios" tabindex="0">
         <div class="type-story">
           <div class="type-marker"><span>01</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/scenarios-branching-simulations.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Scenarios and branching simulations</p>
-          <h3>Practice a decision before it counts.</h3>
-          <p>Realistic choices let learners test a judgment and see how a different move changes the outcome. I use this pattern when the challenge is applying criteria in a situation, not recalling a definition.</p>
-          <p class="type-use"><strong>Best fit:</strong> sales conversations, qualification, escalation, or other consequence-driven decisions.</p>
-          <a class="type-project-link" href="./pursuit-positioning/index.html">Open project page: Pursuit Determination Lab <span aria-hidden="true">↗</span></a>
+          <p class="eyebrow">Real-world conversation practice</p>
+          <h3>Practice scenarios</h3>
+          <p>Learners step into a realistic conversation or decision process, choose what to say or do, and see how the next moment changes. A branching customer conversation or escalation can make the consequences of a choice safe to examine and retry.</p>
+          <p class="type-use"><strong>Use for:</strong> customer conversations, coaching moments, service recovery, and decisions under changing conditions.</p>
         </div>
         <div class="type-visual branch-visual" aria-label="Interactive branching decision map">
           <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/branching-map-route.webp" alt="" aria-hidden="true"> Decision map <span>Choose a route</span></div>
@@ -80,14 +91,13 @@
         </div>
       </article>
 
-      <article class="type-row" id="knowledge-checks">
+      <article class="type-row" id="knowledge-checks" role="tabpanel" aria-labelledby="tab-knowledge-checks" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>02</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/quizzes-knowledge-checks.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Quizzes and knowledge checks</p>
-          <h3>Check the distinction that matters.</h3>
-          <p>Matching, labeling, and short questions make a learner retrieve and apply a concept. I use them to expose a misconception early and give a specific explanation rather than a generic right-or-wrong message.</p>
-          <p class="type-use"><strong>Best fit:</strong> terminology, classification, process steps, and knowledge that must be recognized quickly.</p>
-          <a class="type-project-link" href="./meddpicc-practice/index.html">Open project page: MEDDPICC Qualification Lab <span aria-hidden="true">↗</span></a>
+          <p class="eyebrow">Evidence of understanding</p>
+          <h3>Assessments</h3>
+          <p>Interactive assessments can ask learners to classify evidence, apply criteria, sequence steps, or explain a decision. Specific feedback reveals misconceptions early and shows both the learner and designer what needs more practice.</p>
+          <p class="type-use"><strong>Use for:</strong> formative checks, applied scoring, retrieval practice, and confident skill demonstration.</p>
         </div>
         <div class="type-visual quiz-visual" aria-label="Try a short knowledge check">
           <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/multiple-choice-options.webp" alt="" aria-hidden="true"> Knowledge check <span>One question</span></div>
@@ -96,13 +106,13 @@
         </div>
       </article>
 
-      <article class="type-row" id="interactive-video">
+      <article class="type-row" id="interactive-video" role="tabpanel" aria-labelledby="tab-interactive-video" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>03</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/interactive-videos.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Interactive videos</p>
-          <h3>Turn watching into noticing.</h3>
-          <p>A pause, hotspot, or embedded question can ask learners to interpret a moment before the video moves on. I use this when seeing a demonstration matters, but passive viewing would hide the decision behind the action.</p>
-          <p class="type-use"><strong>Best fit:</strong> demonstrations, conversations, safety cues, and observable behaviors.</p>
+          <p class="eyebrow">Audio, video, and active viewing</p>
+          <h3>Interactive media</h3>
+          <p>Voice overs, interactive video, audio cues, and timed prompts help learners listen and look with purpose. They can pause, replay, inspect a moment, or make a choice before the media continues.</p>
+          <p class="type-use"><strong>Use for:</strong> narrated demonstrations, observed behaviors, visual cues, and decisions embedded in media.</p>
         </div>
         <div class="type-visual video-visual" aria-label="Interactive video with clickable moments and a question">
           <div class="video-screen" data-video-frame="0"><span class="video-play" aria-hidden="true">Ⅱ</span><img id="videoFrameArt" src="../../../assets/icons/pixel/interactive-learning/interactive-video-hotspots.webp" alt="" aria-hidden="true"><span class="video-caption" id="videoCaption">Customer describes a slow handoff.</span><button type="button" class="video-hotspot" id="videoHotspot">Inspect the cue +</button></div>
@@ -111,13 +121,13 @@
         </div>
       </article>
 
-      <article class="type-row" id="software-simulations">
+      <article class="type-row" id="software-simulations" role="tabpanel" aria-labelledby="tab-software-simulations" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>04</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/software-system-simulations.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Software and system simulations</p>
-          <h3>Practice the workflow safely.</h3>
-          <p>A simulated interface lets learners try the same sequence they will perform at work, with cues where mistakes are costly. I use this when knowing the screen and the order of actions matter as much as understanding the concept.</p>
-          <p class="type-use"><strong>Best fit:</strong> LMS tasks, reporting workflows, system handoffs, and admin procedures.</p>
+          <p class="eyebrow">Guided platform practice</p>
+          <h3>UI demos &amp; simulations</h3>
+          <p>Step by step UI walkthroughs and simulations let learners rehearse the screens, workflows, and platforms they use. A guided sequence makes the next action visible before they work in a live system.</p>
+          <p class="type-use"><strong>Use for:</strong> LMS tasks, reporting workflows, software navigation, and platform handoffs.</p>
         </div>
         <div class="type-visual software-visual" aria-label="Practice finding a learner and checking their report in a simulated workspace">
           <div class="software-window"><div class="software-bar"><span>Training workspace</span><i aria-hidden="true">● ● ●</i></div><div class="software-body"><div class="software-side"><span>Dashboard</span><button type="button" data-software-control="learners">Learners</button><button type="button" data-software-control="reports">Reports</button></div><div class="software-main"><div class="software-screen-title" id="softwareTitle">Dashboard</div><div class="software-lines"><i></i><i></i><i></i></div><button type="button" class="software-target" id="softwareTarget" data-software-control="status" hidden>Pathway status</button></div></div></div>
@@ -125,13 +135,13 @@
         </div>
       </article>
 
-      <article class="type-row" id="click-to-reveal">
+      <article class="type-row" id="click-to-reveal" role="tabpanel" aria-labelledby="tab-click-to-reveal" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>05</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/hotspots-click-to-reveal-graphics.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Hotspots and click-to-reveal graphics</p>
-          <h3>Explore a visual at the right depth.</h3>
-          <p>Instead of crowding a diagram with labels, I let learners reveal details in context. This is useful when relationships or parts are easier to understand spatially than in a long explanation.</p>
-          <p class="type-use"><strong>Best fit:</strong> product anatomy, process maps, data views, and annotated examples.</p>
+          <p class="eyebrow">Explore, sort, and connect</p>
+          <h3>Interactive graphics &amp; text</h3>
+          <p>Hotspots, click-to-reveal, drag and drop, matching, and expandable text invite learners to work with the information. These interactions can uncover detail in a graphic or help them organize relationships themselves.</p>
+          <p class="type-use"><strong>Use for:</strong> process maps, product visuals, evidence matching, and layered explanations.</p>
         </div>
         <div class="type-visual hotspot-visual" aria-label="Explore three hotspots in a process diagram">
           <div class="hotspot-canvas"><img src="../../../assets/icons/pixel/interactive-learning/visual-hotspot-map.webp" alt="" aria-hidden="true"><button type="button" data-hotspot="signal" aria-label="Reveal signal detail">+</button><button type="button" data-hotspot="decision" aria-label="Reveal decision detail">+</button><button type="button" data-hotspot="outcome" aria-label="Reveal outcome detail">+</button></div>
@@ -139,11 +149,11 @@
         </div>
       </article>
 
-      <article class="type-row" id="gamified-challenges">
+      <article class="type-row" id="gamified-challenges" role="tabpanel" aria-labelledby="tab-gamified-challenges" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>06</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/gamified-challenges.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Gamified challenges</p>
-          <h3>Make progress visible.</h3>
+          <p class="eyebrow">Progressive skill practice</p>
+          <h3>Gamification</h3>
           <p>Points, milestones, and badges can give repeated practice a clear arc. I use them only when they support a meaningful goal, so the reward reinforces useful performance instead of replacing it.</p>
           <p class="type-use"><strong>Best fit:</strong> recurring practice, staged skill-building, and low-stakes challenges.</p>
         </div>
@@ -155,22 +165,42 @@
         </div>
       </article>
 
-      <article class="type-row" id="learner-facing-ai">
+      <article class="type-row" id="learner-facing-ai" role="tabpanel" aria-labelledby="tab-learner-facing-ai" tabindex="0" hidden>
         <div class="type-story">
           <div class="type-marker"><span>07</span><span class="type-icon"><img src="../../../assets/icons/pixel/ai-integrations/use-cases/light/personalized-learning-paths.webp" alt="" aria-hidden="true"></span></div>
           <p class="eyebrow">Learner-facing AI</p>
-          <h3>Make practice fit the person.</h3>
-          <p>An AI-supported experience can adapt a scenario, offer a relevant explanation, or respond to an open question in the moment. I use this design direction when the learner benefits from individualized context or feedback that a small set of scripted paths cannot provide.</p>
-          <p class="type-use"><strong>Best fit:</strong> roleplay, tailored practice paths, tutoring, and deeper feedback on learner responses.</p>
-          <a class="type-project-link" href="./ai-integrations-in-learning/index.html">Open project page: Learner-Facing AI <span aria-hidden="true">↗</span></a>
+          <h3>Learner-facing AI</h3>
+          <p>A bounded AI tutor can respond to a learner’s reasoning, ask a follow-up question, and guide a customized practice path. The experience uses task context and clear constraints so the next step supports the learning goal.</p>
+          <p class="type-use"><strong>Use for:</strong> guided roleplay, AI-led training, tailored practice paths, and specific feedback.</p>
         </div>
-        <div class="type-visual ai-path-visual" aria-label="Compare two personalized learning paths">
-          <div class="ai-path-head"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="" aria-hidden="true"><span>Same goal. Different support.</span></div>
-          <div class="ai-personas"><button type="button" data-ai-learner="new" class="active" aria-pressed="true">New to role</button><button type="button" data-ai-learner="experienced" aria-pressed="false">Experienced</button></div>
+        <div class="type-visual ai-path-visual" aria-label="Compare how an AI tutor responds to learners with different experience levels">
+          <div class="ai-path-head"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="" aria-hidden="true"><span>AI practice studio <small>Task-aware coaching</small></span><span class="ai-status">GUIDED</span></div>
+          <div class="ai-personas" role="group" aria-label="Choose a learner profile"><button type="button" data-ai-learner="new" class="active" aria-pressed="true">New to role</button><button type="button" data-ai-learner="experienced" aria-pressed="false">Experienced</button></div>
+          <div class="ai-conversation"><div class="ai-learner-line"><strong>Learner</strong><span id="aiLearnerPrompt">“I know the customer is interested. What should I ask next?”</span></div><div class="ai-coach-line"><img src="../../../assets/icons/pixel/ai-integrations/use-cases/light/personalized-learning-paths.webp" alt="" aria-hidden="true"><div><strong>AI tutor · scoped to the task</strong><span id="aiCoachReply">“Ask who can approve the investment, then listen for evidence of the buying process.”</span></div></div></div>
           <div class="ai-route" id="aiRoute"><span>Shared goal</span><i aria-hidden="true">→</i><span id="aiRouteMiddle">Guided example</span><i aria-hidden="true">→</i><span id="aiRouteEnd">Practice with cues</span></div>
-          <p class="visual-feedback" id="aiPathFeedback" aria-live="polite">Select a learner to see how the path changes.</p>
+          <p class="visual-feedback" id="aiPathFeedback" aria-live="polite">Select a learner to see how the coaching and path change.</p>
         </div>
       </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section project-spotlight spotlight-ai" aria-labelledby="ai-spotlight-title">
+    <div class="container spotlight-inner">
+      <article class="spotlight-copy"><p class="eyebrow">01 / Project highlight · Learner-facing AI</p><h2 id="ai-spotlight-title">AI that coaches the next move.</h2><p>Explore how guided conversations, responsive assessment feedback, and adaptive practice can support a learner at the moment they need it. The experience keeps the learning objective and human role visible.</p><div class="spotlight-tags"><span>Guided chat</span><span>AI-assisted feedback</span><span>Adaptive practice</span></div><a class="spotlight-link" href="./ai-integrations-in-learning/index.html">Explore Learner-facing AI <span aria-hidden="true">→</span></a></article>
+      <div class="spotlight-art ai-spotlight-art" role="img" aria-label="Learner-facing AI capabilities orbit a central learning icon"><span class="ai-orbit"></span><span class="ai-orbit inner"></span><span class="ai-core"><img src="../../../assets/icons/pixel/ai-integrations/human-ai-learning.webp" alt=""></span><span class="ai-art-chip one"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="">Guided dialogue</span><span class="ai-art-chip two"><img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="">Responsive feedback</span><span class="ai-art-chip three"><img src="../../../assets/icons/pixel/ai-integrations/customize.webp" alt="">Adaptive paths</span></div>
+    </div>
+  </section>
+  <section class="section project-spotlight spotlight-pursuit" aria-labelledby="pursuit-spotlight-title">
+    <div class="container spotlight-inner">
+      <div class="spotlight-art pursuit-art" role="img" aria-label="Pursuit determination matrix with a moving opportunity marker"><div class="pursuit-head"><img src="../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="">Opportunity decision lab</div><div class="pursuit-matrix"><span>Develop fit</span><span>Prioritize</span><span>Deprioritize</span><span>Nurture</span></div><span class="pursuit-marker">◆</span></div>
+      <article class="spotlight-copy"><p class="eyebrow">02 / Project highlight · Decision simulation</p><h2 id="pursuit-spotlight-title">Make the pursuit decision visible.</h2><p>In the Pursuit Determination Lab, learners weigh opportunity evidence, score solution fit and pursuit strength, and see how the recommendation shifts on a live matrix.</p><div class="spotlight-tags"><span>Criterion scoring</span><span>Live matrix</span><span>Calibration</span></div><a class="spotlight-link" href="./pursuit-positioning/index.html">Open Pursuit Determination Lab <span aria-hidden="true">→</span></a></article>
+    </div>
+  </section>
+  <section class="section project-spotlight spotlight-med" aria-labelledby="med-spotlight-title">
+    <div class="container spotlight-inner">
+      <article class="spotlight-copy"><p class="eyebrow">03 / Project highlight · Evidence matching</p><h2 id="med-spotlight-title">Turn discovery evidence into a better question.</h2><p>The MEDDPICC Qualification Lab asks learners to classify concrete discovery details against the framework. Immediate feedback makes the reasoning behind each match visible.</p><div class="spotlight-tags"><span>Evidence classification</span><span>Immediate feedback</span><span>Framework practice</span></div><a class="spotlight-link" href="./meddpicc-practice/index.html">Open MEDDPICC Qualification Lab <span aria-hidden="true">→</span></a></article>
+      <div class="spotlight-art med-art" role="img" aria-label="A discovery evidence card matches a MEDDPICC category and reveals feedback"><div class="med-evidence"><img src="../../../assets/icons/pixel/meddpicc/discover.webp" alt="">“Who can approve the investment?”</div><div class="med-tiles"><span>M</span><span>E</span><span>D</span><span>D</span><span>P</span><span>I</span><span>C</span><span>C</span></div><div class="med-feedback">Match → Economic buyer · Identify the decision maker.</div></div>
     </div>
   </section>
 </main>
