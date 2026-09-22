@@ -17,9 +17,10 @@ Current portfolio version: **1.0.0**
   - **Interactive Learning** — `portfolio/projects/instructional-design/interactive-learning/index.html`
     - MEDDPICC Qualification Lab — `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` (live)
     - Pursuit Determination Lab — `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` (live)
-  - **Microlearning & Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/index.html`
+  - **Microlearning** — `portfolio/projects/instructional-design/microlearning-performance-support/microlearning/index.html`
     - Product Launch Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` (live)
     - Vertical Positioning Microlearning — `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` (live)
+  - **Performance Support** — `portfolio/projects/instructional-design/microlearning-performance-support/performance-support/index.html`
   - **Multimedia Training Content** — `portfolio/projects/instructional-design/multimedia/index.html`
   - **Live Training** — `portfolio/projects/instructional-design/live-training/index.html`
     - Virtual Sales Workshop Facilitation — `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` (live)
@@ -47,7 +48,5 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
 - `portfolio/projects/github-workflow/index.html`
 - `portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html`
-- `portfolio/projects/instructional-design/microlearning-performance-support/microlearning/index.html`
-- `portfolio/projects/instructional-design/microlearning-performance-support/performance-support/index.html`
 
-Total public HTML pages: **32**
+Total public HTML pages: **31**

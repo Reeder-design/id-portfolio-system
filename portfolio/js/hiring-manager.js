@@ -131,9 +131,13 @@
       image: 'assets/project-images/live-training/virtual-training-facilitation.webp',
       type: 'Live Training'
     },
-    'projects/instructional-design/microlearning-performance-support/index.html': {
-      image: 'assets/project-images/microlearning-performance-support/micro-ps-hero.webp',
-      type: 'Microlearning + Performance Support'
+    'projects/instructional-design/microlearning-performance-support/microlearning/index.html': {
+      image: 'assets/project-images/product-launch/product-launch-introduction.webp',
+      type: 'Microlearning'
+    },
+    'projects/instructional-design/microlearning-performance-support/performance-support/index.html': {
+      image: 'assets/icons/pixel/performance-support/tools.webp',
+      type: 'Performance Support'
     },
     'projects/instructional-design/interactive-learning/index.html': {
       image: 'assets/project-images/interactive-learning/interactive-sales-overview.webp',
@@ -326,8 +330,8 @@
     performanceSupport: {
       message: 'Performance support is part of my instructional-design approach when people need a reliable answer during the work, not just more course time. These pages show the method and related examples.',
       evidence: [
-        { title: 'Microlearning and Performance Support', path: 'projects/instructional-design/microlearning-performance-support/index.html', note: 'How I choose focused learning, point-of-need support, or a connected combination.' },
         { title: 'Performance Support', path: 'projects/instructional-design/microlearning-performance-support/performance-support/index.html', note: 'Access, scanability, trust, maintenance, and usable support resources.' },
+        { title: 'Microlearning', path: 'projects/instructional-design/microlearning-performance-support/microlearning/index.html', note: 'Focused learning for one clear learner task before the work.' },
         { title: 'Product Launch Microlearning', path: 'projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html', note: 'Focused launch learning connected to practical next-step support.' }
       ]
     }

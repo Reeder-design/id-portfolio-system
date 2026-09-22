@@ -61,7 +61,8 @@ The schema and validation scripts are authoritative for exact required/optional 
 ### Instructional Design
 
 - Interactive Learning
-- Microlearning & Performance Support
+- Microlearning
+- Performance Support
 - Multimedia Training Content
 - Live Training
 - Complete eLearning Pathways
