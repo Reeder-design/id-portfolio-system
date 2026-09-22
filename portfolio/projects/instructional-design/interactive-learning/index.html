@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive learning work by Haley Reeder, including custom assessments, gamified practice, scoring logic, accessible interactions, and learner-facing AI.">
+  <meta name="description" content="How Haley Reeder chooses interactive learning patterns around learner behavior, evidence, decisions, and meaningful feedback, with two hands-on labs and a learner-facing AI design direction.">
   <title>Interactive Learning | Haley Reeder</title>
   <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -634,13 +634,13 @@
       <div class="interactive-hero-grid">
         <div>
           <h1>Interactive Learning</h1>
-          <p class="body-large">I design interactions around the decision, judgment, or behavior a learner needs to practice. Depending on the task, that can mean a custom assessment, a matching exercise, a scored decision tool, gamified practice, or an AI-supported conversation. The interaction earns its place by making the learner do something useful, not by adding clicks.</p>
+          <p class="body-large">I start with the judgment a learner needs to practice: what should they notice, what evidence should change their decision, and what feedback will help on the next attempt? Building the qualification and pursuit labs below taught me to choose the simplest useful model for that behavior, whether it is classification, a scored decision, or bounded AI-supported response. The interaction earns its place by making the learner do something meaningful, not by adding clicks.</p>
           <div class="interactive-tags" aria-label="Interactive learning capabilities">
-            <span>Assessments</span>
-            <span>Customized</span>
-            <span>Accessible</span>
-            <span>Engagement</span>
-            <span>Gamification</span>
+            <span>Decision Practice</span>
+            <span>Scenario Logic</span>
+            <span>Meaningful Feedback</span>
+            <span>Accessible Interaction</span>
+            <span>Adaptive State</span>
           </div>
         </div>
         <aside class="interaction-flow" aria-label="Animated learning interaction flow from prompt to learner action to feedback">
@@ -674,13 +674,13 @@
             <p class="eyebrow">Interaction Design Methodology</p>
             <h2>The interaction type follows the learning need.</h2>
           </div>
-          <p>I start with the behavior the learner needs to practice. Recognition may call for sorting or classification. Comparison may need side-by-side evidence. Judgment may need a scenario. A complex response may need custom state, scoring, or model-backed feedback. The method comes before the mechanic.</p>
+          <p>I work backward from the learner's task: what should they notice, decide, and explain? I identify the evidence that should affect that choice and the feedback that will improve their reasoning, then choose the interaction model. In the MEDDPICC lab, that meant classifying discovery evidence; in Pursuit, it meant weighing several signals against criteria. I keep scriptable choices deterministic and consider bounded AI-supported practice only when a variable response changes the learning value.</p>
         </div>
         <div class="interaction-method-map" aria-label="Learning needs mapped to interaction approaches">
           <span><b>Recognize</b><small>Sort + classify</small></span>
-          <span><b>Compare</b><small>Reveal + inspect</small></span>
-          <span><b>Decide</b><small>Scenario + consequence</small></span>
-          <span><b>Practice</b><small>Respond + feedback</small></span>
+          <span><b>Compare</b><small>Evidence + criteria</small></span>
+          <span><b>Judge</b><small>Scenario + consequence</small></span>
+          <span><b>Respond</b><small>Bounded context + feedback</small></span>
         </div>
 
         <div class="interaction-learning-flow" role="tablist" aria-label="Interactive learning design flow">
@@ -722,8 +722,8 @@
     <div class="container">
       <div class="section-heading refresh-section-intro">
         <p class="eyebrow">Examples</p>
-        <h2>Two hands-on demos for two different kinds of learner judgment.</h2>
-        <p class="body-large reading-width">These demos show two different interaction patterns: classify evidence against a framework, then weigh opportunity evidence to make a pursuit decision.</p>
+        <h2>Different learner responses call for different interaction models.</h2>
+        <p class="body-large reading-width">The two completed labs let you classify evidence and weigh a pursuit decision. The learner-facing AI page extends that reasoning into a bounded design direction for responses that cannot all be scripted in advance. None of these methods outranks the others; each serves a different practice task.</p>
       </div>
 
       <div class="interactive-example-list">
@@ -745,6 +745,17 @@
             <h3>Pursuit Determination Lab</h3>
             <p>Move from opportunity evidence to criterion scores, then watch solution fit and pursuit strength change the recommended pursuit posture.</p>
             <span class="example-tags"><span>Scoring</span><span>Live Matrix</span><span>Calibration</span></span>
+          </span>
+          <span class="example-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a class="interactive-example example-ai" href="./ai-integrations-in-learning/index.html">
+          <span class="example-art"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="Pixel-art conversational learning interface."></span>
+          <span class="example-copy">
+            <span class="eyebrow">Open response · bounded design direction</span>
+            <h3>Learner-Facing AI</h3>
+            <p>See how I frame variable-response practice around a learner action, approved context, clear limits, feedback, and a source or human fallback.</p>
+            <span class="example-tags"><span>Guided Scenario</span><span>Source Context</span><span>Validation</span></span>
           </span>
           <span class="example-arrow" aria-hidden="true">→</span>
         </a>
