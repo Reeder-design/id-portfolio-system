@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How Haley Reeder chooses interactive learning patterns around learner behavior, evidence, decisions, and meaningful feedback, with two hands-on labs and a learner-facing AI design direction.">
+  <meta name="description" content="Interactive learning design through branching scenarios, knowledge checks, video, system practice, hotspots, games, and learner-facing AI.">
   <title>Interactive Learning | Haley Reeder</title>
   <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,617 +13,9 @@
   <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
   <link rel="stylesheet" href="../../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../../css/phase1-frame.css">
-  <style>
-    body.interactive-landing{background:#fbfaf4}
-    body.interactive-landing .section{padding-block:clamp(21px,2.8vw,30px)!important}
-    body.interactive-landing .refresh-section-intro{margin-bottom:10px}
-
-    .interactive-hero{
-      position:relative;
-      overflow:hidden;
-      padding:20px 0 24px!important;
-      color:#edf5f1;
-      background:
-        radial-gradient(circle at 86% 18%,rgba(151,219,79,.12),transparent 26rem),
-        radial-gradient(circle at 12% 88%,rgba(80,132,132,.22),transparent 28rem),
-        linear-gradient(145deg,#14272e,#28474a);
-    }
-    .interactive-hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      opacity:.09;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
-      background-size:30px 30px;
-    }
-    .interactive-hero .container{position:relative;z-index:1}
-    .interactive-hero .breadcrumbs,
-    .interactive-hero .breadcrumbs a,
-    .interactive-hero .breadcrumbs span{color:rgba(246,250,247,.78)!important;font-weight:500}
-    .interactive-hero .breadcrumbs a:hover,
-    .interactive-hero .breadcrumbs a:focus-visible{color:#fff!important}
-    .interactive-hero-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1.06fr) minmax(330px,.94fr);
-      gap:24px;
-      align-items:center;
-    }
-    .interactive-hero h1{margin-bottom:8px;color:#fff}
-    .interactive-hero .body-large{max-width:700px;margin-bottom:0;color:#d8e5de}
-    .interactive-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-    .interactive-tags span{
-      padding:6px 9px;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:999px;
-      background:rgba(255,255,255,.055);
-      color:#eef7f2;
-      font:800 .61rem/1 var(--font-heading);
-    }
-
-    .interaction-flow{
-      position:relative;
-      min-height:255px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      align-items:center;
-      padding:12px;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:24px;
-      background:
-        radial-gradient(circle at 82% 12%,rgba(151,219,79,.08),transparent 12rem),
-        rgba(8,24,29,.42);
-      box-shadow:0 22px 46px rgba(0,0,0,.16);
-      backdrop-filter:blur(8px);
-    }
-    .interaction-flow-card{
-      position:relative;
-      z-index:2;
-      display:grid;
-      justify-items:center;
-      align-content:center;
-      min-width:0;
-      min-height:164px;
-      padding:11px 9px 10px;
-      border:1px solid rgba(255,255,255,.09);
-      border-radius:18px;
-      background:#10272e;
-      text-align:center;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
-    }
-    .interaction-icon-tile{
-      display:grid;
-      place-items:center;
-      width:100px;
-      height:100px;
-      border:1px solid rgba(80,132,132,.12);
-      border-radius:18px;
-      background:#f7faf8;
-      box-shadow:0 10px 22px rgba(0,0,0,.15);
-    }
-    .interaction-icon-tile img{
-      display:block;
-      width:84px;
-      height:84px;
-      object-fit:contain;
-      filter:none;
-    }
-    .interaction-flow-card strong{
-      display:block;
-      margin-top:7px;
-      color:#fff;
-      font:800 .68rem/1.2 var(--font-heading);
-    }
-    .interaction-flow-card small{
-      display:block;
-      margin-top:3px;
-      color:#bcd0c6;
-      font:.53rem/1.3 var(--font-body);
-    }
-    .interaction-flow-card.action{
-      border-color:rgba(121,201,158,.3);
-      background:linear-gradient(145deg,#16353a,#214a46);
-    }
-    .interaction-flow-card.feedback{
-      border-color:rgba(151,219,79,.24);
-    }
-    .interaction-flow-link{
-      position:absolute;
-      z-index:1;
-      top:62%;
-      width:calc(33.333% - 44px);
-      height:2px;
-      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
-      transform:translateY(-50%);
-      pointer-events:none;
-    }
-    .interaction-flow-link.one{left:calc(33.333% - 11px)}
-    .interaction-flow-link.two{left:calc(66.666% - 11px)}
-    .interaction-flow-link i{
-      position:absolute;
-      left:0;
-      top:50%;
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      transform:translateY(-50%);
-      background:#97db4f;
-      box-shadow:0 0 13px rgba(151,219,79,.58);
-      animation:interactionSignal 2.6s linear infinite;
-    }
-    .interaction-flow-link.two i{animation-delay:1.2s}
-    @keyframes interactionSignal{
-      0%{left:0;opacity:0}
-      14%{opacity:1}
-      86%{opacity:1}
-      100%{left:calc(100% - 8px);opacity:0}
-    }
-    .interaction-approach{
-      background:#fff!important;
-      border-bottom:1px solid rgba(80,132,132,.08);
-    }
-    .interaction-approach-shell{
-      width:min(100%,1060px);
-      margin:0 auto;
-    }
-    .interaction-approach-copy{
-      display:grid;
-      grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
-      gap:24px;
-      align-items:end;
-      margin-bottom:14px;
-    }
-    .interaction-approach-copy .eyebrow{
-      margin-bottom:5px;
-      color:#4a796e!important;
-      font-size:.66rem;
-    }
-    .interaction-approach-copy h2{
-      margin:0;
-      max-width:640px;
-      color:#263d37;
-      font-size:clamp(1.38rem,2.25vw,1.78rem);
-      line-height:1.16;
-    }
-    .interaction-approach-copy p{
-      margin:0;
-      color:#52635c;
-      font-size:.9rem;
-      line-height:1.58;
-    }
-    .interaction-learning-flow{
-      position:relative;
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px;
-      padding:14px;
-      border:1px solid rgba(80,132,132,.13);
-      border-radius:20px;
-      background:
-        radial-gradient(circle at 92% 10%,rgba(151,219,79,.08),transparent 15rem),
-        linear-gradient(145deg,#f8faf8,#edf5f0);
-      box-shadow:0 12px 28px rgba(44,72,65,.06);
-      overflow:hidden;
-    }
-    .interaction-learning-flow::before{
-      content:"";
-      position:absolute;
-      left:8%;
-      right:8%;
-      top:50%;
-      height:3px;
-      transform:translateY(-50%);
-      border-radius:999px;
-      background:linear-gradient(90deg,rgba(80,132,132,.2),rgba(121,201,158,.34),rgba(151,219,79,.28));
-      pointer-events:none;
-    }
-    .learning-flow-step{
-      position:relative;
-      z-index:2;
-      display:grid;
-      justify-items:center;
-      align-content:center;
-      min-height:184px;
-      padding:13px 11px 15px;
-      border:1px solid rgba(80,132,132,.13);
-      border-radius:16px;
-      background:#fff;
-      color:#31463f;
-      font:inherit;
-      text-align:center;
-      cursor:pointer;
-      appearance:none;
-      -webkit-appearance:none;
-      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;
-    }
-    .learning-flow-step:hover,
-    .learning-flow-step:focus-visible,
-    .learning-flow-step.active{
-      transform:translateY(-4px);
-      border-color:rgba(121,201,158,.55);
-      background:#f8fbf8;
-      box-shadow:0 12px 24px rgba(44,72,65,.09);
-      outline:none;
-    }
-    .learning-flow-icon{
-      display:grid;
-      place-items:center;
-      width:88px;
-      height:88px;
-      border:1px solid rgba(80,132,132,.1);
-      border-radius:18px;
-      background:#f5f9f6;
-      box-shadow:0 8px 18px rgba(44,72,65,.08);
-      transition:transform .18s ease;
-    }
-    .learning-flow-icon img{
-      display:block;
-      width:70px;
-      height:70px;
-      max-width:70px;
-      max-height:70px;
-      object-fit:contain;
-      object-position:center;
-    }
-    .learning-flow-step[data-learning-step="notice"] .learning-flow-icon img{
-      width:62px;
-      height:62px;
-      max-width:62px;
-      max-height:62px;
-    }
-    .learning-flow-step strong{
-      display:block;
-      margin-top:9px;
-      color:#315755;
-      font:800 .82rem/1.18 var(--font-heading);
-    }
-    .learning-flow-step small{
-      display:block;
-      margin-top:4px;
-      max-width:190px;
-      color:#596a63;
-      font:.68rem/1.4 var(--font-body);
-    }
-    .learning-flow-step::after{
-      content:"";
-      position:absolute;
-      left:12px;
-      right:12px;
-      bottom:9px;
-      height:4px;
-      border-radius:999px;
-      background:rgba(80,132,132,.08);
-    }
-    .learning-flow-step i{
-      position:absolute;
-      left:12px;
-      bottom:9px;
-      width:0;
-      height:4px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
-    }
-    .learning-flow-step.active i{animation:learningStepFill 3.8s ease-in-out infinite}
-    .interaction-step-detail{
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr);
-      gap:10px;
-      align-items:center;
-      margin-top:10px;
-      padding:12px 14px;
-      border:1px solid rgba(80,132,132,.12);
-      border-radius:13px;
-      background:#f4f8f5;
-    }
-    .interaction-step-detail strong{
-      color:#315755;
-      font:800 .78rem/1.2 var(--font-heading);
-    }
-    .interaction-step-detail p{
-      margin:0;
-      color:#596862;
-      font-size:.77rem;
-      line-height:1.46;
-    }
-
-    @keyframes learningStepFill{
-      0%{width:0;opacity:.35}
-      45%,76%{width:calc(100% - 24px);opacity:1}
-      100%{width:calc(100% - 24px);opacity:.2}
-    }
-
-    .interactive-examples{
-      position:relative;
-      overflow:hidden;
-      color:#edf5f1;
-      background:
-        radial-gradient(circle at 88% 16%,rgba(151,219,79,.08),transparent 18rem),
-        radial-gradient(circle at 10% 88%,rgba(80,132,132,.18),transparent 20rem),
-        linear-gradient(145deg,#162a31,#284948)!important;
-    }
-    .interactive-examples::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      opacity:.07;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-      background-size:30px 30px;
-    }
-    .interactive-examples .container{position:relative;z-index:1}
-    .interactive-examples .refresh-section-intro .eyebrow{color:#bfe6ce!important}
-    .interactive-examples .refresh-section-intro h2{color:#fff!important}
-    .interactive-examples .refresh-section-intro .body-large{color:#d2ded8!important}
-    .interactive-example-list{display:grid;gap:9px;width:min(100%,1040px);margin:10px auto 0}
-    .interactive-example{
-      position:relative;
-      overflow:hidden;
-      display:grid;
-      grid-template-columns:160px minmax(0,1fr) auto;
-      gap:15px;
-      align-items:center;
-      min-height:136px;
-      padding:11px 12px;
-      border:1px solid rgba(121,201,158,.22);
-      border-radius:18px;
-      background:
-        radial-gradient(circle at 90% 15%,rgba(121,201,158,.08),transparent 13rem),
-        linear-gradient(145deg,#f9fbf9,#edf5f0);
-      color:#30473f;
-      text-decoration:none;
-      box-shadow:0 12px 26px rgba(0,0,0,.12);
-      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
-    }
-    .interactive-example:hover,.interactive-example:focus-visible{
-      transform:translateY(-3px);
-      border-color:rgba(151,219,79,.62);
-      box-shadow:0 17px 34px rgba(0,0,0,.16);
-      outline:none;
-    }
-    .example-med{
-      background:
-        radial-gradient(circle at 10% 12%,rgba(151,219,79,.12),transparent 13rem),
-        linear-gradient(145deg,#fbfcf8,#edf5f0);
-    }
-    .example-pursuit{
-      border-color:rgba(151,219,79,.55);
-      background:
-        linear-gradient(90deg,rgba(151,219,79,.08),transparent 24%),
-        radial-gradient(circle at 88% 18%,rgba(80,132,132,.12),transparent 14rem),
-        linear-gradient(145deg,#f7faf7,#e7f2eb);
-      box-shadow:
-        0 0 0 1px rgba(151,219,79,.10),
-        0 14px 30px rgba(0,0,0,.14);
-    }
-    .example-art{
-      display:grid;
-      place-items:center;
-      min-height:108px;
-      border:1px solid rgba(80,132,132,.10);
-      border-radius:14px;
-      background:#fff;
-      overflow:hidden;
-    }
-    .example-art img{display:block;width:96px;height:96px;object-fit:contain;transition:transform .18s ease}
-    .interactive-example:hover .example-art img{transform:translateY(-3px) scale(1.03)}
-    .example-copy .eyebrow{margin-bottom:2px;color:#4d7d71!important;font-size:.52rem}
-    .example-copy h3{margin:0 0 4px;color:#263d37;font-size:.98rem}
-    .example-copy p{margin:0;color:#5a6a64;font-size:.69rem;line-height:1.42}
-    .example-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
-    .example-tags span{
-      padding:4px 7px;
-      border-radius:999px;
-      background:rgba(80,132,132,.09);
-      color:#42635b;
-      font:800 .49rem/1 var(--font-heading);
-    }
-    .example-pursuit .example-copy .eyebrow{color:#3e7668!important}
-    .example-pursuit .example-arrow{
-      background:#97db4f;
-      color:#173028;
-      box-shadow:0 0 0 5px rgba(151,219,79,.09);
-    }
-    .example-arrow{
-      display:grid;
-      place-items:center;
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      background:#315755;
-      color:#fff;
-      font:800 .95rem/1 var(--font-heading);
-      transition:transform .18s ease;
-    }
-    .interactive-example:hover .example-arrow{transform:translateX(4px)}
-
-    .learner-ai-feature{
-      position:relative;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 88% 18%,rgba(80,132,132,.10),transparent 18rem),
-        radial-gradient(circle at 8% 85%,rgba(151,219,79,.08),transparent 16rem),
-        #f8faf7!important;
-    }
-    .learner-ai-feature::before{
-      content:"";
-      position:absolute;
-      width:240px;
-      height:240px;
-      right:-90px;
-      top:-90px;
-      border:1px dashed rgba(80,132,132,.12);
-      border-radius:50%;
-      pointer-events:none;
-    }
-    .learner-ai-feature-grid{
-      position:relative;
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(330px,.82fr);
-      gap:24px;
-      align-items:center;
-      width:min(100%,1060px);
-      margin:0 auto;
-      padding:18px;
-      border:1px solid rgba(80,132,132,.18);
-      border-radius:22px;
-      background:
-        linear-gradient(90deg,rgba(151,219,79,.05),transparent 30%),
-        #fff;
-      box-shadow:0 16px 34px rgba(44,72,65,.09);
-    }
-    .learner-ai-feature-copy{
-      position:relative;
-      padding-left:16px;
-    }
-    .learner-ai-feature-copy::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:2px;
-      bottom:2px;
-      width:4px;
-      border-radius:999px;
-      background:linear-gradient(#508484,#79c99e,#97db4f);
-    }
-    .learner-ai-feature-copy .eyebrow{margin-bottom:4px;color:#4a796e!important}
-    .learner-ai-feature-copy h2{
-      margin:0 0 7px;
-      max-width:690px;
-      color:#263d37;
-      font-size:clamp(1.28rem,2.15vw,1.68rem);
-    }
-    .learner-ai-feature-copy>p{
-      margin:0;
-      max-width:720px;
-      color:#5a6963;
-      font-size:.8rem;
-      line-height:1.55;
-    }
-    .learner-ai-feature-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
-    .learner-ai-feature-tags span{
-      padding:5px 8px;
-      border-radius:999px;
-      background:#e8f1ec;
-      color:#41685e;
-      font:800 .52rem/1 var(--font-heading);
-    }
-    .learner-ai-feature-link{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      margin-top:14px;
-      padding:10px 14px;
-      border:1px solid rgba(49,87,85,.16);
-      border-radius:11px;
-      background:linear-gradient(135deg,#79c99e,#97db4f);
-      color:#173028;
-      text-decoration:none;
-      font:800 .69rem/1.2 var(--font-heading);
-      box-shadow:0 9px 20px rgba(74,112,82,.14);
-      transition:transform .18s ease,box-shadow .18s ease;
-    }
-    .learner-ai-feature-link:hover,
-    .learner-ai-feature-link:focus-visible{
-      transform:translateY(-2px);
-      box-shadow:0 13px 24px rgba(74,112,82,.18);
-      outline:none;
-      text-decoration:none;
-    }
-    .learner-ai-feature-link span{font-size:.9rem}
-    .learner-ai-feature-visual{
-      position:relative;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:8px;
-      padding:12px;
-      border:1px solid rgba(80,132,132,.14);
-      border-radius:18px;
-      background:#eef5f0;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
-    }
-    .learner-ai-feature-node{
-      position:relative;
-      display:grid;
-      place-items:center;
-      min-height:122px;
-      padding:8px;
-      border-radius:13px;
-      background:#fff;
-      overflow:hidden;
-    }
-    .learner-ai-feature-node img{display:block;width:82px;height:82px;object-fit:contain}
-    .learner-ai-feature-node::after{
-      content:"";
-      position:absolute;
-      left:9px;
-      right:9px;
-      bottom:7px;
-      height:3px;
-      border-radius:999px;
-      background:rgba(80,132,132,.08);
-    }
-    .learner-ai-feature-node i{
-      position:absolute;
-      left:9px;
-      bottom:7px;
-      width:34%;
-      height:3px;
-      border-radius:999px;
-      background:linear-gradient(90deg,#508484,#79c99e,#97db4f);
-      animation:aiFeatureProgress 4.5s ease-in-out infinite;
-    }
-    .learner-ai-feature-node:nth-child(2) i{animation-delay:.7s}
-    .learner-ai-feature-node:nth-child(3) i{animation-delay:1.4s}
-    @keyframes aiFeatureProgress{
-      0%,12%{width:0;opacity:.3}
-      35%,72%{width:calc(100% - 18px);opacity:1}
-      90%,100%{width:calc(100% - 18px);opacity:.15}
-    }
-
-    @media(max-width:850px){
-      .interactive-hero-grid,.learner-ai-feature-grid{grid-template-columns:1fr}
-      .interaction-approach-copy{grid-template-columns:1fr}
-      .interaction-flow{max-width:680px;width:100%;margin:auto}
-      .interactive-example{grid-template-columns:145px minmax(0,1fr) auto}
-    }
-    @media(max-width:620px){
-      body.interactive-landing .section{padding-block:20px!important}
-      .interaction-flow{grid-template-columns:1fr;min-height:0;padding:12px}
-      .interaction-flow-card{min-height:126px}
-      .interaction-icon-tile{width:78px;height:78px}
-      .interaction-icon-tile img{width:66px;height:66px}
-      .interaction-flow-link{display:none}
-      .interaction-learning-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .learner-ai-feature-visual{grid-template-columns:repeat(3,minmax(0,1fr))}
-      .interactive-example{grid-template-columns:86px minmax(0,1fr);gap:11px}
-      .example-art{min-height:86px}
-      .example-art img{width:72px;height:72px}
-      .example-arrow{grid-column:2;width:auto;height:auto;justify-self:start;background:transparent!important;color:inherit!important}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .interaction-flow-link i,.learning-flow-step i,.learner-ai-feature-node i{animation:none!important}
-      .interactive-example,.example-art img,.example-arrow,.learning-flow-step,.learning-flow-icon,.learner-ai-feature-link{transition:none}
-    }
-  
-    .interaction-method-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
-    .interaction-method-map span{display:grid;gap:3px;padding:10px 12px;border:1px solid rgba(80,132,132,.13);border-radius:13px;background:#f7faf8}
-    .interaction-method-map b{color:#315755;font:800 .7rem/1.15 var(--font-heading)}.interaction-method-map small{color:#66766f;font:.62rem/1.25 var(--font-body)}
-    @media(max-width:700px){.interaction-method-map{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
-    .interactive-examples .interactive-example .example-arrow,
-    .interactive-examples .example-pursuit .example-arrow{
-      background:#315755!important;
-      color:#fff!important;
-      box-shadow:0 0 0 5px rgba(49,87,85,.08)!important;
-    }
-</style>
+  <link rel="stylesheet" href="../../../css/interactive-learning-types.css">
   <script defer src="../../../js/portfolio-motion.js"></script>
+  <script defer src="../../../js/interactive-learning-types.js"></script>
 </head>
 <body class="interactive-landing">
 <header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
@@ -634,172 +26,154 @@
       <div class="interactive-hero-grid">
         <div>
           <h1>Interactive Learning</h1>
-          <p class="body-large">I start with the judgment a learner needs to practice: what should they notice, what evidence should change their decision, and what feedback will help on the next attempt? Building the qualification and pursuit labs below taught me to choose the simplest useful model for that behavior, whether it is classification, a scored decision, or bounded AI-supported response. The interaction earns its place by making the learner do something meaningful, not by adding clicks.</p>
+          <p class="body-large">Interactive learning turns information into something learners can try. I use realistic decisions, practice screens, revealing visuals, and responsive feedback so people can apply an idea, see what happens, and try again.</p>
           <div class="interactive-tags" aria-label="Interactive learning capabilities">
-            <span>Decision Practice</span>
-            <span>Scenario Logic</span>
-            <span>Meaningful Feedback</span>
-            <span>Accessible Interaction</span>
-            <span>Adaptive State</span>
+            <span>Make a choice</span>
+            <span>See the consequence</span>
+            <span>Try again</span>
           </div>
         </div>
-        <aside class="interaction-flow" aria-label="Animated learning interaction flow from prompt to learner action to feedback">
-          <div class="interaction-flow-card prompt">
-            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/meddpicc/discover.webp" alt="" aria-hidden="true"></span>
-            <strong>Prompt</strong>
-            <small>Give the learner a useful problem.</small>
+        <aside class="interaction-hero-studio" aria-label="Try a short learner decision and see its feedback">
+          <div class="studio-top"><span class="studio-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Practice screen</span><span class="studio-progress">01 / 01</span></div>
+          <div class="studio-case">
+            <span class="studio-avatar"><img src="../../../assets/icons/pixel/interactive-learning/dialogue-branching-conversation.webp" alt="" aria-hidden="true"></span>
+            <p>“Our teams keep losing time during handoffs.”</p>
           </div>
-          <div class="interaction-flow-card action">
-            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/performance-support/decide.webp" alt="" aria-hidden="true"></span>
-            <strong>Learner action</strong>
-            <small>Choose, match, score, or respond.</small>
+          <div class="studio-decision">
+            <span>What would you do next?</span>
+            <div class="studio-options">
+              <button type="button" data-hero-choice="probe">Ask where work stalls</button>
+              <button type="button" data-hero-choice="pitch">Pitch a solution</button>
+            </div>
           </div>
-          <div class="interaction-flow-card feedback">
-            <span class="interaction-icon-tile"><img src="../../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt="" aria-hidden="true"></span>
-            <strong>Feedback</strong>
-            <small>Reinforce the reasoning and next move.</small>
-          </div>
-          <span class="interaction-flow-link one" aria-hidden="true"><i></i></span>
-          <span class="interaction-flow-link two" aria-hidden="true"><i></i></span>
+          <div class="studio-result" id="heroChoiceResult" aria-live="polite">Choose a response to see the next learning moment.</div>
         </aside>
       </div>
     </div>
   </section>
 
-  <section class="section interaction-approach">
+  <section class="section interaction-types" id="interaction-types">
     <div class="container">
-      <div class="interaction-approach-shell">
-        <div class="interaction-approach-copy">
-          <div>
-            <p class="eyebrow">Interaction Design Methodology</p>
-            <h2>The interaction type follows the learning need.</h2>
+      <div class="type-section-intro">
+        <p class="eyebrow">Interaction design methodology</p>
+        <h2>Choose the interaction by what learners need to do.</h2>
+        <p>Each format creates a different kind of practice. I choose it by the decision, action, or feedback the work calls for, then build the interaction around that purpose.</p>
+      </div>
+
+      <article class="type-row" id="branching-scenarios">
+        <div class="type-story">
+          <div class="type-marker"><span>01</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/scenarios-branching-simulations.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Scenarios and branching simulations</p>
+          <h3>Practice a decision before it counts.</h3>
+          <p>Realistic choices let learners test a judgment and see how a different move changes the outcome. I use this pattern when the challenge is applying criteria in a situation, not recalling a definition.</p>
+          <p class="type-use"><strong>Best fit:</strong> sales conversations, qualification, escalation, or other consequence-driven decisions.</p>
+          <a class="type-project-link" href="./pursuit-positioning/index.html">Open project page: Pursuit Determination Lab <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="type-visual branch-visual" aria-label="Interactive branching decision map">
+          <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/branching-map-route.webp" alt="" aria-hidden="true"> Decision map <span>Choose a route</span></div>
+          <div class="branch-map" data-route="none">
+            <div class="branch-start">Customer signal<span>Handoffs are slow</span></div>
+            <div class="branch-paths"><button type="button" data-branch="probe">Probe the cause</button><button type="button" data-branch="pitch">Pitch early</button></div>
+            <div class="branch-results"><span class="branch-good">Clearer need</span><span class="branch-risk">Missed context</span></div>
           </div>
-          <p>I work backward from the learner's task: what should they notice, decide, and explain? I identify the evidence that should affect that choice and the feedback that will improve their reasoning, then choose the interaction model. In the MEDDPICC lab, that meant classifying discovery evidence; in Pursuit, it meant weighing several signals against criteria. I keep scriptable choices deterministic and consider bounded AI-supported practice only when a variable response changes the learning value.</p>
+          <p class="visual-feedback" id="branchFeedback" aria-live="polite">Select a route to reveal its consequence.</p>
         </div>
-        <div class="interaction-method-map" aria-label="Learning needs mapped to interaction approaches">
-          <span><b>Recognize</b><small>Sort + classify</small></span>
-          <span><b>Compare</b><small>Evidence + criteria</small></span>
-          <span><b>Judge</b><small>Scenario + consequence</small></span>
-          <span><b>Respond</b><small>Bounded context + feedback</small></span>
-        </div>
+      </article>
 
-        <div class="interaction-learning-flow" role="tablist" aria-label="Interactive learning design flow">
-          <button class="learning-flow-step active" type="button" role="tab" aria-selected="true" data-learning-step="notice">
-            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/meddpicc/explore.webp" alt="" aria-hidden="true"></span>
-            <strong>Notice</strong>
-            <small>Focus attention on the evidence or signal that matters.</small>
-            <i aria-hidden="true"></i>
-          </button>
-          <button class="learning-flow-step" type="button" role="tab" aria-selected="false" data-learning-step="decide">
-            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt="" aria-hidden="true"></span>
-            <strong>Decide</strong>
-            <small>Choose, match, score, or respond instead of passively reading.</small>
-            <i aria-hidden="true"></i>
-          </button>
-          <button class="learning-flow-step" type="button" role="tab" aria-selected="false" data-learning-step="feedback">
-            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/ai-integrations/ai-assessment.webp" alt="" aria-hidden="true"></span>
-            <strong>Get feedback</strong>
-            <small>Reinforce the reasoning behind the answer or next move.</small>
-            <i aria-hidden="true"></i>
-          </button>
-          <button class="learning-flow-step" type="button" role="tab" aria-selected="false" data-learning-step="apply">
-            <span class="learning-flow-icon"><img src="../../../assets/icons/pixel/microlearning-performance-support/real-world-application.webp" alt="" aria-hidden="true"></span>
-            <strong>Apply</strong>
-            <small>Carry the judgment into the next scenario or real task.</small>
-            <i aria-hidden="true"></i>
-          </button>
+      <article class="type-row" id="knowledge-checks">
+        <div class="type-story">
+          <div class="type-marker"><span>02</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/quizzes-knowledge-checks.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Quizzes and knowledge checks</p>
+          <h3>Check the distinction that matters.</h3>
+          <p>Matching, labeling, and short questions make a learner retrieve and apply a concept. I use them to expose a misconception early and give a specific explanation rather than a generic right-or-wrong message.</p>
+          <p class="type-use"><strong>Best fit:</strong> terminology, classification, process steps, and knowledge that must be recognized quickly.</p>
+          <a class="type-project-link" href="./meddpicc-practice/index.html">Open project page: MEDDPICC Qualification Lab <span aria-hidden="true">↗</span></a>
         </div>
+        <div class="type-visual quiz-visual" aria-label="Try a short knowledge check">
+          <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/multiple-choice-options.webp" alt="" aria-hidden="true"> Knowledge check <span>One question</span></div>
+          <div class="quiz-paper"><p>Which detail is evidence of a business pain?</p><div class="quiz-options"><button type="button" data-quiz-answer="no">A product feature</button><button type="button" data-quiz-answer="yes">Time lost in handoffs</button><button type="button" data-quiz-answer="no">A meeting date</button></div></div>
+          <p class="visual-feedback" id="quizFeedback" aria-live="polite">Choose an answer to see why it fits.</p>
+        </div>
+      </article>
 
-        <div class="interaction-step-detail" role="tabpanel" aria-live="polite">
-          <strong id="learningStepLabel">Notice</strong>
-          <p id="learningStepDetail">Use visual emphasis, evidence, or a scenario cue to direct attention before asking the learner to act.</p>
+      <article class="type-row" id="interactive-video">
+        <div class="type-story">
+          <div class="type-marker"><span>03</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/interactive-videos.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Interactive videos</p>
+          <h3>Turn watching into noticing.</h3>
+          <p>A pause, hotspot, or embedded question can ask learners to interpret a moment before the video moves on. I use this when seeing a demonstration matters, but passive viewing would hide the decision behind the action.</p>
+          <p class="type-use"><strong>Best fit:</strong> demonstrations, conversations, safety cues, and observable behaviors.</p>
         </div>
-      </div>
+        <div class="type-visual video-visual" aria-label="Interactive video with clickable moments and a question">
+          <div class="video-screen" data-video-frame="0"><span class="video-play" aria-hidden="true">Ⅱ</span><img id="videoFrameArt" src="../../../assets/icons/pixel/interactive-learning/interactive-video-hotspots.webp" alt="" aria-hidden="true"><span class="video-caption" id="videoCaption">Customer describes a slow handoff.</span><button type="button" class="video-hotspot" id="videoHotspot">Inspect the cue +</button></div>
+          <div class="video-timeline" aria-label="Video moments"><button type="button" data-video-cue="0" aria-label="Opening cue" aria-pressed="true">1</button><button type="button" data-video-cue="1" aria-label="Decision pause" aria-pressed="false">2</button><button type="button" data-video-cue="2" aria-label="Reflection prompt" aria-pressed="false">3</button></div>
+          <div class="video-moment" id="videoMoment" aria-live="polite"><p>Click the marker in the frame to inspect what the learner should notice.</p><div class="video-moment-options" id="videoMomentOptions" hidden><button type="button" data-video-answer="probe">Ask where work stalls</button><button type="button" data-video-answer="pitch">Pitch a feature</button></div></div>
+        </div>
+      </article>
+
+      <article class="type-row" id="software-simulations">
+        <div class="type-story">
+          <div class="type-marker"><span>04</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/software-system-simulations.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Software and system simulations</p>
+          <h3>Practice the workflow safely.</h3>
+          <p>A simulated interface lets learners try the same sequence they will perform at work, with cues where mistakes are costly. I use this when knowing the screen and the order of actions matter as much as understanding the concept.</p>
+          <p class="type-use"><strong>Best fit:</strong> LMS tasks, reporting workflows, system handoffs, and admin procedures.</p>
+        </div>
+        <div class="type-visual software-visual" aria-label="Practice finding a learner and checking their report in a simulated workspace">
+          <div class="software-window"><div class="software-bar"><span>Training workspace</span><i aria-hidden="true">● ● ●</i></div><div class="software-body"><div class="software-side"><span>Dashboard</span><button type="button" data-software-control="learners">Learners</button><button type="button" data-software-control="reports">Reports</button></div><div class="software-main"><div class="software-screen-title" id="softwareTitle">Dashboard</div><div class="software-lines"><i></i><i></i><i></i></div><button type="button" class="software-target" id="softwareTarget" data-software-control="status" hidden>Pathway status</button></div></div></div>
+          <div class="software-controls"><span id="softwareStep" aria-live="polite">Task 1 of 3: open Learners.</span><button type="button" id="softwareReset">Reset practice</button></div>
+        </div>
+      </article>
+
+      <article class="type-row" id="click-to-reveal">
+        <div class="type-story">
+          <div class="type-marker"><span>05</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/hotspots-click-to-reveal-graphics.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Hotspots and click-to-reveal graphics</p>
+          <h3>Explore a visual at the right depth.</h3>
+          <p>Instead of crowding a diagram with labels, I let learners reveal details in context. This is useful when relationships or parts are easier to understand spatially than in a long explanation.</p>
+          <p class="type-use"><strong>Best fit:</strong> product anatomy, process maps, data views, and annotated examples.</p>
+        </div>
+        <div class="type-visual hotspot-visual" aria-label="Explore three hotspots in a process diagram">
+          <div class="hotspot-canvas"><img src="../../../assets/icons/pixel/interactive-learning/visual-hotspot-map.webp" alt="" aria-hidden="true"><button type="button" data-hotspot="signal" aria-label="Reveal signal detail">+</button><button type="button" data-hotspot="decision" aria-label="Reveal decision detail">+</button><button type="button" data-hotspot="outcome" aria-label="Reveal outcome detail">+</button></div>
+          <div class="hotspot-reveal" id="hotspotReveal" aria-live="polite"><strong>Explore the map</strong><span>Select a marker to reveal a useful detail.</span></div>
+        </div>
+      </article>
+
+      <article class="type-row" id="gamified-challenges">
+        <div class="type-story">
+          <div class="type-marker"><span>06</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/gamified-challenges.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Gamified challenges</p>
+          <h3>Make progress visible.</h3>
+          <p>Points, milestones, and badges can give repeated practice a clear arc. I use them only when they support a meaningful goal, so the reward reinforces useful performance instead of replacing it.</p>
+          <p class="type-use"><strong>Best fit:</strong> recurring practice, staged skill-building, and low-stakes challenges.</p>
+        </div>
+        <div class="type-visual game-visual" aria-label="Answer three practice challenges to unlock a badge" data-score="0">
+          <div class="game-stage"><div class="game-meter" id="gameMeter"><span id="gameCount" aria-live="polite">0 / 3</span></div><div class="game-badge"><img src="../../../assets/icons/pixel/interactive-learning/achievement-medals.webp" alt="" aria-hidden="true"><span id="gameBadge" aria-live="polite">Badge locked</span></div></div>
+          <div class="game-track" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="game-question"><p id="gamePrompt">Which clue describes customer impact?</p><div class="game-choices"><button type="button" data-game-choice="0">Lost time</button><button type="button" data-game-choice="1">Feature list</button></div><p id="gameFeedback" aria-live="polite">Choose an answer to advance.</p></div>
+          <button class="game-button" type="button" id="gameReset" hidden>Reset challenge</button>
+        </div>
+      </article>
+
+      <article class="type-row" id="learner-facing-ai">
+        <div class="type-story">
+          <div class="type-marker"><span>07</span><span class="type-icon"><img src="../../../assets/icons/pixel/ai-integrations/use-cases/light/personalized-learning-paths.webp" alt="" aria-hidden="true"></span></div>
+          <p class="eyebrow">Learner-facing AI</p>
+          <h3>Make practice fit the person.</h3>
+          <p>An AI-supported experience can adapt a scenario, offer a relevant explanation, or respond to an open question in the moment. I use this design direction when the learner benefits from individualized context or feedback that a small set of scripted paths cannot provide.</p>
+          <p class="type-use"><strong>Best fit:</strong> roleplay, tailored practice paths, tutoring, and deeper feedback on learner responses.</p>
+          <a class="type-project-link" href="./ai-integrations-in-learning/index.html">Open project page: Learner-Facing AI <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="type-visual ai-path-visual" aria-label="Compare two personalized learning paths">
+          <div class="ai-path-head"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="" aria-hidden="true"><span>Same goal. Different support.</span></div>
+          <div class="ai-personas"><button type="button" data-ai-learner="new" class="active" aria-pressed="true">New to role</button><button type="button" data-ai-learner="experienced" aria-pressed="false">Experienced</button></div>
+          <div class="ai-route" id="aiRoute"><span>Shared goal</span><i aria-hidden="true">→</i><span id="aiRouteMiddle">Guided example</span><i aria-hidden="true">→</i><span id="aiRouteEnd">Practice with cues</span></div>
+          <p class="visual-feedback" id="aiPathFeedback" aria-live="polite">Select a learner to see how the path changes.</p>
+        </div>
+      </article>
     </div>
   </section>
-
-  <section class="section interactive-examples">
-    <div class="container">
-      <div class="section-heading refresh-section-intro">
-        <p class="eyebrow">Examples</p>
-        <h2>Different learner responses call for different interaction models.</h2>
-        <p class="body-large reading-width">The two completed labs let you classify evidence and weigh a pursuit decision. The learner-facing AI page extends that reasoning into a bounded design direction for responses that cannot all be scripted in advance. None of these methods outranks the others; each serves a different practice task.</p>
-      </div>
-
-      <div class="interactive-example-list">
-        <a class="interactive-example example-med" href="./meddpicc-practice/index.html">
-          <span class="example-art"><img src="../../../assets/icons/pixel/meddpicc/evaluate.webp" alt="Pixel-art MEDDPICC evaluation visual."></span>
-          <span class="example-copy">
-            <span class="eyebrow">Matching + Classification</span>
-            <h3>MEDDPICC Qualification Lab</h3>
-            <p>Connect detailed discovery evidence to the MEDDPICC component it most directly supports, with immediate feedback and visible progress.</p>
-            <span class="example-tags"><span>Matching</span><span>Qualification</span><span>Feedback</span></span>
-          </span>
-          <span class="example-arrow" aria-hidden="true">→</span>
-        </a>
-
-        <a class="interactive-example example-pursuit" href="./pursuit-positioning/index.html">
-          <span class="example-art"><img src="../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="Pixel-art pursuit decision visual."></span>
-          <span class="example-copy">
-            <span class="eyebrow">Scoring + Decision Support</span>
-            <h3>Pursuit Determination Lab</h3>
-            <p>Move from opportunity evidence to criterion scores, then watch solution fit and pursuit strength change the recommended pursuit posture.</p>
-            <span class="example-tags"><span>Scoring</span><span>Live Matrix</span><span>Calibration</span></span>
-          </span>
-          <span class="example-arrow" aria-hidden="true">→</span>
-        </a>
-
-        <a class="interactive-example example-ai" href="./ai-integrations-in-learning/index.html">
-          <span class="example-art"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="Pixel-art conversational learning interface."></span>
-          <span class="example-copy">
-            <span class="eyebrow">Open response · bounded design direction</span>
-            <h3>Learner-Facing AI</h3>
-            <p>See how I frame variable-response practice around a learner action, approved context, clear limits, feedback, and a source or human fallback.</p>
-            <span class="example-tags"><span>Guided Scenario</span><span>Source Context</span><span>Validation</span></span>
-          </span>
-          <span class="example-arrow" aria-hidden="true">→</span>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
-<script>
-const learningSteps={
-  notice:{label:'Notice',detail:'Use visual emphasis, evidence, or a scenario cue to direct attention before asking the learner to act.'},
-  decide:{label:'Decide',detail:'Turn the content into a meaningful choice, match, score, or response so the learner has to use the idea.'},
-  feedback:{label:'Get feedback',detail:'Explain why the response works, where the reasoning breaks down, and what the learner should notice next.'},
-  apply:{label:'Apply',detail:'Carry the judgment into another scenario, decision, or real-world task so the interaction supports transfer.'}
-};
-const learningButtons=[...document.querySelectorAll('[data-learning-step]')];
-function selectLearningStep(button){
-  const data=learningSteps[button.dataset.learningStep];
-  learningButtons.forEach(item=>{
-    const active=item===button;
-    item.classList.toggle('active',active);
-    item.setAttribute('aria-selected',String(active));
-    item.tabIndex=active?0:-1;
-  });
-  document.getElementById('learningStepLabel').textContent=data.label;
-  document.getElementById('learningStepDetail').textContent=data.detail;
-}
-learningButtons.forEach((button,index)=>{
-  button.tabIndex=button.classList.contains('active')?0:-1;
-  button.addEventListener('click',()=>selectLearningStep(button));
-  button.addEventListener('keydown',event=>{
-    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-    event.preventDefault();
-    let next=index;
-    if(event.key==='Home') next=0;
-    else if(event.key==='End') next=learningButtons.length-1;
-    else if(event.key==='ArrowRight') next=(index+1)%learningButtons.length;
-    else next=(index-1+learningButtons.length)%learningButtons.length;
-    learningButtons[next].focus();
-    selectLearningStep(learningButtons[next]);
-  });
-});
-</script>
 </body>
 </html>

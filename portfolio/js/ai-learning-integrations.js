@@ -1,117 +1,216 @@
 (() => {
-  const panel = document.querySelector('[data-ai-scenario-panel]');
-  const tabs = [...document.querySelectorAll('[data-ai-scenario]')];
-  if (panel && tabs.length) {
-    const stages = ['signal', 'probe', 'coach'];
-    const stageLabels = ['Customer cue', 'Learner question', 'Interpret + reflect'];
-    const setScenario = (key) => {
-      const step = stages.indexOf(key);
-      if (step < 0) return;
-      panel.dataset.transitioning = 'true';
-      panel.dataset.step = key;
-      panel.innerHTML = `<div class="ai-customer-header"><div class="ai-customer-avatar">AC</div><div><p>Fictional customer · scripted example</p><h3>Jordan · Operations lead</h3></div><span class="ai-customer-live">Practice concept</span></div><div class="ai-customer-chat"><div class="ai-customer-message"><p>“We have tried to reduce handoffs, but the team still loses time every day.”</p></div>${step >= 1 ? '<div class="ai-learner-message"><span>Where does work wait, and what does that delay change for the customer?</span></div><div class="ai-customer-message ai-customer-reply"><p>“An exception needs two approvals. By the time we respond, the customer has often escalated.”</p></div>' : '<div class="ai-scenario-prompt">What would you ask to understand the delay?</div>'}</div>${step === 2 ? '<div class="ai-scenario-reflection"><strong>Learner reflection</strong><span>Two approvals are the bottleneck. I would ask how often escalation happens and what it costs the customer before suggesting a solution.</span></div>' : ''}<div class="ai-discovery-map">${stageLabels.map((label, index) => `<div class="${index === step ? 'current' : index < step ? 'complete' : 'upcoming'}"><i></i><strong>${label}</strong><span>${index === 0 ? 'Notice the handoff signal' : index === 1 ? 'Probe the customer impact' : 'Explain the next move'}</span></div>`).join('')}</div>`;
-      panel.setAttribute('aria-labelledby', tabs[step].id);
-      window.setTimeout(() => { panel.dataset.transitioning = 'false'; }, 300);
-      tabs.forEach((tab) => {
-        const active = tab.dataset.aiScenario === key;
-        tab.classList.toggle('active', active);
-        tab.setAttribute('aria-selected', String(active));
-        tab.tabIndex = active ? 0 : -1;
-      });
-    };
-    tabs.forEach((tab) => tab.addEventListener('click', () => setScenario(tab.dataset.aiScenario)));
-    tabs.forEach((tab, index) => tab.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-      tabs[next].focus();
-      setScenario(tabs[next].dataset.aiScenario);
-    }));
-    setScenario('signal');
-  }
+  const choose = (buttons, selected) => {
+    buttons.forEach((button) => {
+      const active = button === selected;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  };
 
-  const sourceTabs = [...document.querySelectorAll('[data-ai-source]')];
-  const sourceStage = document.querySelector('[data-ai-source-stage]');
-  if (sourceStage && sourceTabs.length) {
-    const sourceStates = {
-      grounded: {
-        question: 'Learner asks: “How do I uncover the handoff delay?”',
-        status: 'Within scope',
-        title: 'Grounded answer',
-        answer: 'Ask where the handoff waits, then what that delay changes for the customer.',
-        excerpt: '“Ask where the handoff waits and what the delay changes for the customer.”',
-        citation: 'Supported by the illustrated guide excerpt'
+  const animate = (stage) => {
+    if (!stage) return;
+    stage.classList.remove('is-updating');
+    void stage.offsetWidth;
+    stage.classList.add('is-updating');
+  };
+
+  const hero = document.querySelector('.ai-experience-hero');
+  if (hero) {
+    const states = {
+      new: {
+        line: '“Where do you see the handoff slowing us down?”',
+        practice: 'Find the customer signal',
+        next: 'Guided discovery'
       },
-      outside: {
-        question: 'Learner asks: “Which product will solve this customer’s problem?”',
-        status: 'Outside scope',
-        title: 'No supported answer',
-        answer: 'This guide does not establish product fit. Review current product material or ask an SME before making a recommendation.',
-        excerpt: 'No passage in this guide establishes product fit.',
-        citation: 'No supporting passage in the illustrated guide'
+      experienced: {
+        line: '“What would that delay cost across three sites?”',
+        practice: 'Quantify the impact',
+        next: 'Complex customer case'
       }
     };
-    const setSource = (mode) => {
-      const state = sourceStates[mode];
+    const buttons = [...hero.querySelectorAll('[data-ai-hero-role]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const state = states[button.dataset.aiHeroRole];
       if (!state) return;
-      sourceStage.dataset.mode = mode;
-      sourceStage.querySelector('.ai-source-question').textContent = state.question;
-      sourceStage.querySelector('.ai-source-status').textContent = state.status;
-      sourceStage.querySelector('.ai-source-answer strong').textContent = state.title;
-      sourceStage.querySelector('.ai-source-answer p').textContent = state.answer;
-      sourceStage.querySelector('.ai-source-highlight').textContent = state.excerpt;
-      sourceStage.querySelector('.ai-source-citation').textContent = state.citation;
-      sourceTabs.forEach((tab) => {
-        const active = tab.dataset.aiSource === mode;
-        tab.classList.toggle('active', active);
-        tab.setAttribute('aria-selected', String(active));
-        tab.tabIndex = active ? 0 : -1;
-        if (active) sourceStage.setAttribute('aria-labelledby', tab.id);
-      });
-    };
-    sourceTabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => setSource(tab.dataset.aiSource));
-      tab.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-        event.preventDefault();
-        const next = event.key === 'Home' ? 0 : event.key === 'End' ? sourceTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + sourceTabs.length) % sourceTabs.length;
-        sourceTabs[next].focus();
-        setSource(sourceTabs[next].dataset.aiSource);
-      });
-    });
-    setSource('grounded');
+      choose(buttons, button);
+      hero.querySelector('[data-ai-hero-line]').textContent = state.line;
+      hero.querySelector('[data-ai-hero-practice]').textContent = state.practice;
+      hero.querySelector('[data-ai-hero-next]').textContent = state.next;
+      animate(hero);
+    }));
   }
 
-  const demoChoices = [...document.querySelectorAll('[data-ai-demo-choice]')];
-  const demoResult = document.querySelector('[data-ai-demo-result]');
-  const demoFeedback = {
-    features: ['This starts with the product, not the customer need. A better next move makes room for the customer to explain what has changed.', false],
-    need: ['Strong choice. This follow-up invites context and gives the learner a useful starting point for discovery before introducing a solution.', true],
-    pricing: ['Pricing may matter later, but it does not uncover the problem driving the conversation. Start by understanding the current process.', false]
-  };
-  if (demoChoices.length && demoResult) {
-    const selectChoice = (choice) => {
-      const [message, correct] = demoFeedback[choice.dataset.aiDemoChoice];
-      demoChoices.forEach((item) => {
-        const selected = item === choice;
-        item.classList.toggle('selected', selected);
-        item.classList.toggle('correct', selected && correct);
-        item.classList.toggle('incorrect', selected && !correct);
-        item.setAttribute('aria-checked', String(selected));
-        item.tabIndex = selected ? 0 : -1;
-      });
-      demoResult.textContent = message;
-      demoResult.className = `ai-demo-result ${correct ? 'positive' : 'negative'}`;
+  const roleplay = document.querySelector('.ai-roleplay-ui');
+  if (roleplay) {
+    const states = {
+      probe: {
+        reply: '“Our team keeps losing time at handoffs.”',
+        signal: 'Customer opens up',
+        feedback: '“The delay affects every site transfer.” Ask for frequency before proposing a fix.'
+      },
+      pitch: {
+        reply: '“I am not ready to discuss a product yet.”',
+        signal: 'Discovery closes',
+        feedback: 'The learner moved to a solution before understanding the cost of the delay.'
+      }
     };
-    demoChoices.forEach((choice, index) => {
-      choice.addEventListener('click', () => selectChoice(choice));
-      choice.addEventListener('keydown', (event) => {
-        if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-        event.preventDefault();
-        const next = event.key === 'Home' ? 0 : event.key === 'End' ? demoChoices.length - 1 : (index + (['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1) + demoChoices.length) % demoChoices.length;
-        demoChoices[next].focus();
-        selectChoice(demoChoices[next]);
-      });
+    const buttons = [...roleplay.querySelectorAll('[data-ai-roleplay]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const state = states[button.dataset.aiRoleplay];
+      if (!state) return;
+      choose(buttons, button);
+      roleplay.querySelector('[data-ai-roleplay-reply]').textContent = state.reply;
+      roleplay.querySelector('[data-ai-roleplay-signal]').textContent = state.signal;
+      roleplay.querySelector('[data-ai-roleplay-feedback]').textContent = state.feedback;
+      roleplay.dataset.outcome = button.dataset.aiRoleplay;
+      animate(roleplay);
+    }));
+  }
+
+  const adaptive = document.querySelector('.ai-adaptive-ui');
+  if (adaptive) {
+    const buttons = [...adaptive.querySelectorAll('[data-ai-adaptive]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const route = button.dataset.aiAdaptive;
+      choose(buttons, button);
+      adaptive.querySelector('[data-ai-adaptive-result]').textContent = route === 'ready' ? 'Ready to advance' : 'Needs practice';
+      adaptive.querySelectorAll('[data-ai-adaptive-route]').forEach((card) => card.classList.toggle('active', card.dataset.aiAdaptiveRoute === route));
+      animate(adaptive);
+    }));
+  }
+
+  const tutor = document.querySelector('.ai-tutor-ui');
+  if (tutor) {
+    const states = {
+      jargon: {
+        label: 'From the guide',
+        answer: 'A handoff is where responsibility moves from one team to another.',
+        next: 'Open the handoff example in this lesson →'
+      },
+      outside: {
+        label: 'Outside this lesson',
+        answer: 'The guide does not establish a product recommendation for this situation.',
+        next: 'Check current product material or ask an SME →'
+      }
+    };
+    const buttons = [...tutor.querySelectorAll('[data-ai-tutor]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      const state = states[button.dataset.aiTutor];
+      if (!state) return;
+      choose(buttons, button);
+      tutor.querySelector('[data-ai-tutor-label]').textContent = state.label;
+      tutor.querySelector('[data-ai-tutor-answer]').textContent = state.answer;
+      tutor.querySelector('[data-ai-tutor-next]').textContent = state.next;
+      tutor.dataset.answer = button.dataset.aiTutor;
+      animate(tutor);
+    }));
+  }
+
+  const assessButton = document.querySelector('[data-ai-assess]');
+  if (assessButton) {
+    const assessment = assessButton.closest('.ai-assessment-ui');
+    assessButton.addEventListener('click', () => {
+      const reviewed = assessButton.getAttribute('aria-pressed') !== 'true';
+      assessButton.setAttribute('aria-pressed', String(reviewed));
+      assessButton.textContent = reviewed ? 'Reset review' : 'Review response';
+      assessment.classList.toggle('is-reviewed', reviewed);
+      assessment.querySelector('[data-ai-assess-note]').textContent = reviewed
+        ? 'The two approvals are concrete evidence. Next, explain what that delay changes for the customer.'
+        : 'Compare the response with the two visible criteria.';
+      animate(assessment);
     });
+  }
+
+  const video = document.querySelector('.ai-video-ui');
+  if (video) {
+    const captions = {
+      en: '“Let’s review the customer signal.”',
+      es: '“Revisemos la señal del cliente.”'
+    };
+    const buttons = [...video.querySelectorAll('[data-ai-language]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      choose(buttons, button);
+      video.querySelector('[data-ai-caption]').textContent = captions[button.dataset.aiLanguage];
+      animate(video);
+    }));
+  }
+
+  const curriculum = document.querySelector('.ai-curriculum-lab');
+  if (curriculum) {
+    const profiles = {
+      new: {
+        question: 'What would you ask first?',
+        action: 'Identify',
+        feedback: 'Name the cue that matters.'
+      },
+      experienced: {
+        question: 'What evidence would change your recommendation?',
+        action: 'Evaluate',
+        feedback: 'Support the judgment with evidence.'
+      }
+    };
+    const contexts = {
+      handoff: {
+        situation: 'Our work waits when responsibility moves between sites.',
+        practice: 'the handoff delay',
+        next: 'handoff'
+      },
+      expansion: {
+        situation: 'A new region wants the service, but its needs may differ.',
+        practice: 'the expansion tradeoff',
+        next: 'expansion'
+      }
+    };
+    const levels = {
+      guided: {
+        cue: 'Start with one clue.',
+        feedback: 'Use the highlighted clue.',
+        next: 'Guided'
+      },
+      stretch: {
+        cue: 'Consider customer impact and operational risk.',
+        feedback: 'Defend your choice without prompts.',
+        next: 'Advanced'
+      }
+    };
+    let profile = 'new';
+    let context = 'handoff';
+    let level = 'guided';
+    const render = (withMotion = true) => {
+      const learner = profiles[profile];
+      const caseContext = contexts[context];
+      const challenge = levels[level];
+      curriculum.querySelector('[data-ai-curriculum-cue]').textContent = `“${caseContext.situation} ${learner.question} ${challenge.cue}”`;
+      curriculum.querySelector('[data-ai-curriculum-practice]').textContent = `${learner.action} ${caseContext.practice}`;
+      curriculum.querySelector('[data-ai-curriculum-feedback]').textContent = `${learner.feedback} ${challenge.feedback}`;
+      curriculum.querySelector('[data-ai-curriculum-next]').textContent = `${challenge.next} ${caseContext.next} ${level === 'guided' ? 'example' : 'case'}`;
+      const logicInputs = curriculum.querySelectorAll('.ai-curriculum-logic span');
+      logicInputs[0].textContent = profile === 'new' ? 'New seller' : 'Experienced seller';
+      logicInputs[1].textContent = context === 'handoff' ? 'Handoff delay' : 'Expansion decision';
+      logicInputs[2].textContent = level === 'guided' ? 'Guided' : 'Stretch';
+      if (withMotion) {
+        animate(curriculum.querySelector('[data-ai-curriculum-stage]'));
+        animate(curriculum.querySelector('.ai-curriculum-output'));
+      }
+    };
+    const profileButtons = [...curriculum.querySelectorAll('[data-ai-profile]')];
+    const contextButtons = [...curriculum.querySelectorAll('[data-ai-context]')];
+    const levelButtons = [...curriculum.querySelectorAll('[data-ai-level]')];
+    profileButtons.forEach((button) => button.addEventListener('click', () => {
+      profile = button.dataset.aiProfile;
+      choose(profileButtons, button);
+      render();
+    }));
+    contextButtons.forEach((button) => button.addEventListener('click', () => {
+      context = button.dataset.aiContext;
+      choose(contextButtons, button);
+      render();
+    }));
+    levelButtons.forEach((button) => button.addEventListener('click', () => {
+      level = button.dataset.aiLevel;
+      choose(levelButtons, button);
+      render();
+    }));
+    render(false);
   }
 })();
