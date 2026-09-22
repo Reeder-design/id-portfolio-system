@@ -60,10 +60,26 @@
 .ai-v2-roleplay.is-staging .ai-v2-message-reply{animation:ai-v2-message-in .55s ease 1.15s both}
 .ai-v2-roleplay-actions{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
 .ai-v2-roleplay-actions>span{margin-right:3px;color:#cae7d3;font:700 .8rem/1.25 var(--font-heading)}
+.ai-v2-roleplay-sequence{display:flex;align-items:center;gap:5px;min-width:0}
+.ai-v2-roleplay-sequence span{flex:1;min-width:0;padding:7px 5px;border:1px solid rgba(199,239,210,.23);border-radius:7px;background:rgba(255,255,255,.07);color:#ccebd7;font:700 .66rem/1.2 var(--font-heading);text-align:center;transition:background .35s ease,border-color .35s ease,color .35s ease}
+.ai-v2-roleplay-sequence i{flex:none;width:9px;height:2px;background:#83b998}
+.ai-v2-roleplay[data-step="0"] .ai-v2-roleplay-sequence span:nth-of-type(1),
+.ai-v2-roleplay[data-step="1"] .ai-v2-roleplay-sequence span:nth-of-type(2),
+.ai-v2-roleplay[data-step="2"] .ai-v2-roleplay-sequence span:nth-of-type(3),
+.ai-v2-roleplay[data-step="3"] .ai-v2-roleplay-sequence span:nth-of-type(4){border-color:var(--v2-lime);background:var(--v2-lime);color:#18372e}
+.ai-v2-roleplay .ai-v2-message-learner,.ai-v2-roleplay .ai-v2-message-reply,.ai-v2-roleplay .ai-v2-roleplay-coach{opacity:0;visibility:hidden;transform:translateY(7px);transition:opacity .38s ease,transform .38s ease,visibility .38s ease}
+.ai-v2-roleplay[data-step="1"] .ai-v2-message-learner,.ai-v2-roleplay[data-step="2"] .ai-v2-message-learner,.ai-v2-roleplay[data-step="3"] .ai-v2-message-learner,
+.ai-v2-roleplay[data-step="2"] .ai-v2-message-reply,.ai-v2-roleplay[data-step="3"] .ai-v2-message-reply,
+.ai-v2-roleplay[data-step="3"] .ai-v2-roleplay-coach{opacity:1;visibility:visible;transform:none}
 .ai-v2-roleplay-coach{display:flex;flex-wrap:wrap;gap:5px 9px;padding:10px 12px;border-left:3px solid var(--v2-lime);border-radius:0 10px 10px 0;background:rgba(167,231,107,.12);font-size:.82rem;line-height:1.4}
 .ai-v2-roleplay-coach strong{color:#d8f7c8}
 .ai-v2-roleplay[data-choice="pitch"] .ai-v2-roleplay-coach{border-color:#f0ba93;background:rgba(240,186,147,.12)}
 .ai-v2-roleplay[data-choice="pitch"] .ai-v2-roleplay-coach strong{color:#f8d7bc}
+@media(max-width:520px){
+  .ai-v2-roleplay-sequence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+  .ai-v2-roleplay-sequence i{display:none}
+  .ai-v2-roleplay-sequence span{height:100%;padding:6px 3px;font-size:.58rem}
+}
 
 /* The adaptive engine moves answer evidence to the next level of practice. */
 .ai-v2-adaptive-question{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid var(--v2-line);border-radius:14px;background:rgba(255,255,255,.07)}
@@ -205,6 +221,7 @@
 }
 @media(prefers-reduced-motion:reduce){
   .ai-v2 *, .ai-v2 *::before, .ai-v2 *::after{animation:none!important;transition:none!important}
+  .ai-v2-roleplay .ai-v2-message-learner,.ai-v2-roleplay .ai-v2-message-reply,.ai-v2-roleplay .ai-v2-roleplay-coach{opacity:1;visibility:visible;transform:none}
   .ai-v2-avatar.is-generating .ai-v2-avatar-render img{opacity:1;clip-path:none;filter:none}
   .ai-v2-roleplay.is-staging .ai-v2-message-learner,.ai-v2-roleplay.is-staging .ai-v2-message-reply,
   .ai-v2-tutor.is-retrieving .ai-v2-tutor-answer p,.ai-v2-assessment.is-reviewing .ai-v2-assessment-feedback{opacity:1;transform:none}

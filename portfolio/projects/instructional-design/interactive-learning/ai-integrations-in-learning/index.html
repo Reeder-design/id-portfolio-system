@@ -15,16 +15,15 @@
   <link rel="stylesheet" href="../../../../css/phase1-frame.css">
   <link rel="stylesheet" href="../../../../css/ai-learning-integrations.css">
   <link rel="stylesheet" href="../../../../css/ai-learning-showcases-v2.css">
-  <link rel="stylesheet" href="../../../../css/ai-curriculum-v2.css">
   <link rel="stylesheet" href="../../../../css/ai-examples-234-v3.css">
   <link rel="stylesheet" href="../../../../css/ai-avatar-sequence-v3.css">
-  <link rel="stylesheet" href="../../../../css/ai-curriculum-v3.css">
+  <link rel="stylesheet" href="../../../../css/ai-curriculum-motion-v4.css">
   <script defer src="../../../../js/portfolio-motion.js"></script>
   <script defer src="../../../../js/ai-learning-integrations.js"></script>
   <script defer src="../../../../js/ai-learning-showcases-v2.js"></script>
   <script defer src="../../../../js/ai-examples-234-v3.js"></script>
   <script defer src="../../../../js/ai-avatar-sequence-v3.js"></script>
-  <script defer src="../../../../js/ai-curriculum-v3.js"></script>
+  <script defer src="../../../../js/ai-curriculum-motion-v4.js"></script>
 
 </head>
 <body class="ai-learning-page">
@@ -45,8 +44,8 @@
               <div class="ai-experience-avatar"><img src="../../../../assets/icons/pixel/ai-integrations/mindsmith/ai-roleplay-video.webp" alt="Custom pixel illustration of a video roleplay with a customer and AI interface."></div>
               <div class="ai-experience-dialogue"><span>Customer challenge</span><strong data-ai-hero-line>“Where do you see the handoff slowing us down?”</strong></div>
             </div>
-            <div class="ai-experience-controls" role="group" aria-label="Preview a learner profile"><button type="button" class="active" data-ai-hero-role="new" aria-pressed="true">New seller</button><button type="button" data-ai-hero-role="experienced" aria-pressed="false">Experienced seller</button></div>
-            <div class="ai-experience-path" aria-live="polite"><div><small>Practice</small><strong data-ai-hero-practice>Find the customer signal</strong></div><span aria-hidden="true">→</span><div><small>Next step</small><strong data-ai-hero-next>Guided discovery</strong></div></div>
+            <div class="ai-experience-controls" aria-hidden="true"><span class="active" data-ai-hero-role="new">New seller</span><span data-ai-hero-role="experienced">Experienced seller</span></div>
+            <div class="ai-experience-path"><div><small>Practice</small><strong data-ai-hero-practice>Find the customer signal</strong></div><span aria-hidden="true">→</span><div><small>Next step</small><strong data-ai-hero-next>Guided discovery</strong></div></div>
           </aside>
         </div>
       </div>
@@ -54,7 +53,7 @@
 
     <section class="section ai-choice-section"><div class="container"><div class="ai-intro"><p class="eyebrow">When AI earns a place</p><h2>Learning can respond to the person and the work in front of them.</h2><p>One course rarely fits every role, prior experience, customer situation, or question. I use learner-facing AI to design more specific challenges, route learners toward the practice they need, and respond to their reasoning in the moment. This lets a shared curriculum feel more relevant without hand-authoring every possible path.</p></div><div class="ai-value-grid"><article><span class="ai-value-icon"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/conversational-learning.webp" alt=""></span><strong>Relevant scenarios</strong><p>Role and work context shape the conversation or case.</p></article><article><span class="ai-value-icon"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/personalized-learning-paths.webp" alt=""></span><strong>Responsive paths</strong><p>Evidence of understanding shapes the next challenge.</p></article><article><span class="ai-value-icon"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/instant-feedback.webp" alt=""></span><strong>Feedback now</strong><p>The learner can see why a response works while it is fresh.</p></article></div></div></section>
 
-    <section class="section ai-usecases-section"><div class="container"><div class="ai-intro"><p class="eyebrow">Learner-facing AI in practice</p><h2>Five different ways to make the learning respond.</h2><p>Each approach answers a different learning need. The interactions below are portfolio-safe demonstrations of the design patterns, using fictional content and your choice of platform or custom build.</p></div><div class="ai-usecase-list">
+    <section class="section ai-usecases-section"><div class="container"><div class="ai-intro"><p class="eyebrow">Learner-facing AI in practice</p><h2>Five different ways to make the learning respond.</h2><p>Each approach answers a different learning need. These looping visuals use fictional content to illustrate design patterns that can be built on a platform or from scratch.</p></div><div class="ai-usecase-list">
 
       <article class="ai-usecase ai-roleplay-case" id="ai-roleplay">
         <div class="ai-usecase-copy">
@@ -64,7 +63,7 @@
           <p class="ai-usecase-when"><strong>Best for:</strong> sales discovery, coaching conversations, objection handling, and difficult decisions.</p>
           <p class="ai-usecase-platform">Build route: custom experience or a platform such as Mindsmith Conversations.</p>
         </div>
-        <div class="ai-usecase-visual ai-v2 ai-v2-roleplay" data-ai-v2-roleplay aria-label="Illustrative customer roleplay with learner response choices and customer feedback">
+        <div class="ai-usecase-visual ai-v2 ai-v2-roleplay" data-ai-v2-roleplay data-step="0" data-choice="probe" aria-label="Automatically looping customer roleplay: a learner asks a discovery question, the AI customer responds, and coaching feedback appears. A premature pitch leads to a different response and feedback.">
           <div class="ai-v2-chrome"><span><i aria-hidden="true"></i> Harbor Logistics / Practice call</span><span>AI customer · scripted preview</span></div>
           <div class="ai-v2-roleplay-stage">
             <div class="ai-v2-roleplay-person"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/ai-powered-roleplay-simulations.webp" alt="Custom pixel illustration of a person speaking with an AI character."></span><div><strong>Jordan</strong><small>Operations lead</small></div><span class="ai-v2-voice" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
@@ -72,8 +71,8 @@
             <div class="ai-v2-message ai-v2-message-learner"><small>You ask</small><span data-ai-v2-roleplay-learner>“What does that delay change for your customers?”</span></div>
             <div class="ai-v2-message ai-v2-message-reply"><small>Jordan responds</small><span data-ai-v2-roleplay-reply>“A handoff can take two approvals. Customers wait for an answer.”</span></div>
           </div>
-          <div class="ai-v2-roleplay-actions" role="group" aria-label="Choose what to say to the customer"><span>Your response</span><button type="button" class="is-selected" data-ai-v2-roleplay-choice="probe" aria-pressed="true">Ask about impact</button><button type="button" data-ai-v2-roleplay-choice="pitch" aria-pressed="false">Offer a solution</button></div>
-          <div class="ai-v2-roleplay-coach" aria-live="polite"><strong data-ai-v2-roleplay-signal>New detail surfaced</strong><span data-ai-v2-roleplay-feedback>The question revealed the customer consequence. Explore frequency before recommending a fix.</span></div>
+          <div class="ai-v2-roleplay-sequence" aria-hidden="true"><span>Customer cue</span><i></i><span>Learner move</span><i></i><span>AI response</span><i></i><span>Coach note</span></div>
+          <div class="ai-v2-roleplay-coach"><strong data-ai-v2-roleplay-signal>New detail surfaced</strong><span data-ai-v2-roleplay-feedback>The question revealed the customer consequence. Explore frequency before recommending a fix.</span></div>
         </div>
       </article>
       <article class="ai-usecase ai-adaptive-case" id="ai-adaptive">
@@ -87,7 +86,7 @@
         <div class="ai-usecase-visual ai-v2 ai-v3 ai-v3-path" data-ai-v3-path data-step="0" data-choice="advance" aria-label="Animated adaptive practice: a learner answers a question, the answer is analyzed, and one of two practice paths opens while the other stays inactive.">
           <div class="ai-v2-chrome"><span><i aria-hidden="true"></i> Adaptive practice / Lesson 2</span><span>Question → choice → tailored path</span></div>
           <div class="ai-v3-path-question"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/adaptive-question-flow.webp" alt=""></span><div><small>01 / Question</small><strong>What is slowing the site transfer?</strong><span>“Each transfer waits on two approvals.”</span></div></div>
-          <div class="ai-v3-path-choices" role="group" aria-label="Choose an answer in the practice preview"><button type="button" data-ai-v3-choice="support" aria-pressed="false">A new product may be needed</button><button type="button" data-ai-v3-choice="advance" aria-pressed="false">Two approvals create a delay</button></div>
+          <div class="ai-v3-path-choices" aria-hidden="true"><span data-ai-v3-choice="support">A new product may be needed</span><span data-ai-v3-choice="advance">Two approvals create a delay</span></div>
           <div class="ai-v3-path-analysis"><span class="ai-v3-path-pulse" aria-hidden="true"></span><div><small>02 / Strength analysis</small><strong data-ai-v3-path-signal>Answer evidence is being checked</strong></div><span class="ai-v3-path-strength" data-ai-v3-path-strength>Checking</span></div>
           <div class="ai-v3-path-fork" aria-hidden="true"><span></span><i></i><span></span></div>
           <div class="ai-v3-path-routes" aria-label="Possible next practice paths"><div data-ai-v3-route="support"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/adaptive-difficulty.webp" alt=""></span><div><small>Guided path</small><strong>Worked example</strong><span data-ai-v3-reason="support">Opens when the clue is missed</span></div></div><div data-ai-v3-route="advance"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/adaptive-content-paths.webp" alt=""></span><div><small>Stretch path</small><strong>Complex customer case</strong><span data-ai-v3-reason="advance">Opens when the clue is recognized</span></div></div></div>
@@ -105,7 +104,7 @@
           <div class="ai-v2-chrome"><span><i aria-hidden="true"></i> Course module / Handoff signals</span><span>Lesson 2 of 4</span></div>
           <div class="ai-v3-tutor-screen">
             <div class="ai-v3-tutor-lesson"><div class="ai-v3-tutor-lesson-head"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/learner-assistant/trained-on-course-content.webp" alt=""></span><div><small>Current lesson</small><strong>When responsibility changes hands</strong></div></div><p>A handoff happens when one team passes responsibility to another. Delays often hide between the transfer and the next approval.</p><div class="ai-v3-tutor-lesson-example"><small>Site transfer example · §2.1</small><span>Site A → approval → Site B → customer update</span></div><div class="ai-v3-tutor-lesson-footer"><span>Lesson progress</span><i aria-hidden="true"></i><b>2 / 4</b></div></div>
-            <div class="ai-v3-tutor-assistant"><div class="ai-v3-tutor-assistant-head"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/learner-assistant/ai-tutor-reading.webp" alt=""></span><div><small>In-course assistant</small><strong>Ask about this lesson</strong></div><span class="ai-v3-tutor-online">Ready</span></div><div class="ai-v3-tutor-thread"><div class="ai-v3-tutor-launch"><strong>Need an explanation?</strong><span>Ask the assistant beside the lesson.</span></div><div class="ai-v3-tutor-query"><small>Learner asks</small><span>How would this apply if three sites approve one transfer?</span></div><div class="ai-v3-tutor-reply"><small>Course assistant</small><span>Map each approval to the team that owns it. Ask which approval holds the customer update, then propose the next handoff.</span><b>Based on Lesson 2.1 · Site transfer example</b></div></div><div class="ai-v3-tutor-compose"><span>How would this apply if three sites approve one transfer?</span><button type="button" data-ai-v3-tutor-ask>Ask ↗</button></div></div>
+            <div class="ai-v3-tutor-assistant"><div class="ai-v3-tutor-assistant-head"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/learner-assistant/ai-tutor-reading.webp" alt=""></span><div><small>In-course assistant</small><strong>Ask about this lesson</strong></div><span class="ai-v3-tutor-online">Ready</span></div><div class="ai-v3-tutor-thread"><div class="ai-v3-tutor-launch"><strong>Need an explanation?</strong><span>Ask the assistant beside the lesson.</span></div><div class="ai-v3-tutor-query"><small>Learner asks</small><span>How would this apply if three sites approve one transfer?</span></div><div class="ai-v3-tutor-reply"><small>Course assistant</small><span>Map each approval to the team that owns it. Ask which approval holds the customer update, then propose the next handoff.</span><b>Based on Lesson 2.1 · Site transfer example</b></div></div><div class="ai-v3-tutor-compose" aria-hidden="true"><span>How would this apply if three sites approve one transfer?</span><b>Ask ↗</b></div></div>
           </div>
         </div>
       </article>
@@ -119,7 +118,7 @@
         </div>
         <div class="ai-usecase-visual ai-v2 ai-v3 ai-v3-assessment" data-ai-v3-assessment data-step="0" aria-label="Animated assessment screen: a learner submits a response, the system checks two criteria, and specific feedback appears immediately.">
           <div class="ai-v2-chrome"><span><i aria-hidden="true"></i> Skill check / Customer impact</span><span>Assessment preview</span></div>
-          <div class="ai-v3-assessment-window"><div class="ai-v3-assessment-heading"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/automated-assessment-instant-feedback.webp" alt=""></span><div><small>Short response · 1 of 3</small><strong>What does the site transfer delay mean for the customer?</strong></div></div><div class="ai-v3-assessment-response"><small>Your response</small><span>“Two approvals delay each site transfer.”</span></div><div class="ai-v3-assessment-action"><button type="button" data-ai-v3-assessment-submit>Submit response</button><span data-ai-v3-assessment-status>Ready to submit</span></div><div class="ai-v3-assessment-results"><div class="ai-v3-assessment-criteria"><div data-ai-v3-criterion="evidence"><span>Case evidence</span><b>✓</b></div><div data-ai-v3-criterion="impact"><span>Customer impact</span><b>!</b></div></div><div class="ai-v3-assessment-feedback"><small>Instant feedback</small><strong>You identified the two approvals.</strong><span>Now explain how that delay affects the customer’s next decision.</span></div></div></div>
+          <div class="ai-v3-assessment-window"><div class="ai-v3-assessment-heading"><span class="ai-v2-iconbubble"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/automated-assessment-instant-feedback.webp" alt=""></span><div><small>Short response · 1 of 3</small><strong>What does the site transfer delay mean for the customer?</strong></div></div><div class="ai-v3-assessment-response"><small>Your response</small><span>“Two approvals delay each site transfer.”</span></div><div class="ai-v3-assessment-action" aria-hidden="true"><b>Submit response</b><span data-ai-v3-assessment-status>Ready to submit</span></div><div class="ai-v3-assessment-results"><div class="ai-v3-assessment-criteria"><div data-ai-v3-criterion="evidence"><span>Case evidence</span><b>✓</b></div><div data-ai-v3-criterion="impact"><span>Customer impact</span><b>!</b></div></div><div class="ai-v3-assessment-feedback"><small>Instant feedback</small><strong>You identified the two approvals.</strong><span>Now explain how that delay affects the customer’s next decision.</span></div></div></div>
         </div>
       </article>
       <article class="ai-usecase ai-video-case" id="ai-video">
@@ -141,7 +140,7 @@
             </div>
             <div class="ai-v3-avatar-preview" aria-hidden="true">
               <div class="ai-v3-avatar-preview-top"><span class="ai-v3-avatar-stage-label"><b class="is-first">Generating avatar</b><b class="is-second">Building scene</b><b class="is-third">Lesson video ready</b></span><span class="ai-v3-avatar-preview-time">00:18</span></div>
-              <div class="ai-v3-avatar-scene"><div class="ai-v3-avatar-scene-wall"><span>LAUNCH BRIEF</span><i></i><i></i><i></i></div><div class="ai-v3-avatar-portrait"><img src="../../../../assets/icons/pixel/lms-admin/extended-enterprise/customer-support-person.png" alt=""><i class="ai-v3-avatar-sweep"></i></div><div class="ai-v3-avatar-script"><small>Course guide</small><strong>Let’s turn the brief into a clear handoff.</strong></div><span class="ai-v3-avatar-play">▶</span></div>
+              <div class="ai-v3-avatar-scene"><div class="ai-v3-avatar-scene-wall"><span>LAUNCH BRIEF</span><i></i><i></i><i></i></div><div class="ai-v3-avatar-portrait"><img src="../../../../assets/icons/pixel/lms-admin/extended-enterprise/customer-support-person.png" alt=""><i class="ai-v3-avatar-sweep"></i></div><div class="ai-v3-avatar-script"><small>Course guide</small><strong>Let’s turn the brief into a clear handoff.</strong></div></div>
               <div class="ai-v3-avatar-preview-bottom"><span class="ai-v3-avatar-caption">“First, confirm the launch owner and key dates.”</span><span class="ai-v3-avatar-timeline"><i></i></span></div>
             </div>
           </div>
@@ -154,50 +153,50 @@
       <div class="container">
         <div class="ai-intro ai-curriculum-intro">
           <p class="eyebrow">Customized Curriculum</p>
-          <h2>A learning path that changes with the learner.</h2>
-          <p>One learning goal can serve different roles, starting levels, and real work. This course for a fictional makeup retailer shows how a marketing teammate might learn to use Microsoft 365 Copilot across a campaign workflow. The six layers shape their practice, adjust its scope as they demonstrate knowledge, and recommend a simulation and takeaway they can use at work.</p>
+          <h2>One curriculum. Many relevant routes.</h2>
+          <p>Follow one learner through a fictional makeup retailer’s Microsoft 365 Copilot course. Their role, experience, topic, and demonstrated judgment shape the simulation and takeaway. The final map shows the routes the same design can create.</p>
         </div>
-        <div class="ai-curriculum-workbench" aria-label="Interactive six-layer customized curriculum example">
-          <ol class="ai-curriculum-rail" aria-label="Six customization layers">
-            <li class="is-current" data-curriculum-rail="0"><span>01</span><strong>Audience</strong></li>
-            <li data-curriculum-rail="1"><span>02</span><strong>Prior knowledge</strong></li>
-            <li data-curriculum-rail="2"><span>03</span><strong>Training topic</strong></li>
-            <li data-curriculum-rail="3"><span>04</span><strong>Adapt Scope</strong></li>
-            <li data-curriculum-rail="4"><span>05</span><strong>Assessment</strong></li>
-            <li data-curriculum-rail="5"><span>06</span><strong>Takeaway</strong></li>
-          </ol>
-          <div class="ai-curriculum-frame">
-            <div class="ai-curriculum-learner-view">
-              <div class="ai-curriculum-browser-bar"><span class="ai-curriculum-browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong><span class="ai-curriculum-brand">LB</span> Luma Beauty Learning <span class="ai-curriculum-browser-subtitle">/ Copilot for Marketing</span></strong><span data-curriculum-count>1 / 6</span></div>
-              <div class="ai-curriculum-progress" aria-hidden="true"><i data-curriculum-progress></i></div>
-              <div class="ai-curriculum-lesson">
-                <div class="ai-curriculum-lesson-heading">
-                  <span class="ai-curriculum-lesson-icon"><img data-curriculum-icon src="../../../../assets/icons/pixel/ai-integrations/mindsmith/choose-a-role.webp" alt=""></span>
-                  <div><p class="ai-curriculum-kicker" data-curriculum-kicker>01 / Audience</p><h3 data-curriculum-title>What is your role on the launch team?</h3></div>
-                </div>
-                <p class="ai-curriculum-prompt" data-curriculum-prompt>Choose the marketing role you want this Copilot course to support.</p>
-                <div class="ai-curriculum-choice-list" data-curriculum-choices role="group" aria-label="Choose a learner role">
-                  <button type="button" class="is-selected" data-curriculum-choice="coordinator" aria-pressed="true">Marketing coordinator</button>
-                  <button type="button" data-curriculum-choice="lead" aria-pressed="false">Campaign lead</button>
-                </div>
-                <div class="ai-curriculum-stage-visual" data-curriculum-stage aria-live="polite"></div>
-                <div class="ai-curriculum-criteria" data-curriculum-criteria aria-label="Simulation criteria" hidden><span>Check source material</span><span>Review accuracy</span><span>Make a work decision</span></div>
-                <div class="ai-curriculum-learner-response" data-curriculum-response aria-live="polite">Your course will focus on launch handoffs and the decisions a marketing coordinator makes.</div>
-              </div>
-              <div class="ai-curriculum-learner-actions">
-                <span data-curriculum-path-summary>Marketing coordinator path</span>
-                <div class="ai-curriculum-nav-actions"><button type="button" class="ai-curriculum-back" data-curriculum-back hidden>← Back</button><button type="button" data-curriculum-next>Continue <span aria-hidden="true">→</span></button></div>
-              </div>
+        <div class="ai-curriculum-motion" data-ai-curriculum-motion data-stage="0" role="img" aria-label="Automatic learning-path illustration. A marketing coordinator new to Copilot chooses campaign handoff, verifies a draft, receives a stretch simulation and prompt template. A final sixteen-route map compares this selected path with other roles, topics, starting levels, and adaptive scopes.">
+          <div class="ai-curriculum-motion-top"><div class="ai-curriculum-motion-brand"><span>LB</span><strong>Luma Beauty Learning</strong><small>Copilot for Marketing · fictional course</small></div><span class="ai-curriculum-motion-mode">ILLUSTRATIVE PATH</span></div>
+          <div class="ai-curriculum-motion-steps" aria-hidden="true"><span class="is-active" data-motion-step="0"><b>01</b>Audience</span><span data-motion-step="1"><b>02</b>Knowledge</span><span data-motion-step="2"><b>03</b>Topic</span><span data-motion-step="3"><b>04</b>Adapt</span><span data-motion-step="4"><b>05</b>Simulation</span><span data-motion-step="5"><b>06</b>Takeaway</span><span data-motion-step="6"><b>↗</b>Path map</span></div>
+          <div class="ai-curriculum-motion-stage">
+            <div class="ai-curriculum-scene ai-curriculum-scene-audience is-active" data-motion-scene="0">
+              <div class="ai-curriculum-scene-heading"><small>01 / AUDIENCE</small><h3>Whose work is this?</h3></div>
+              <div class="ai-curriculum-option-pair"><div class="ai-curriculum-option is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt=""></span><span><strong>Marketing coordinator</strong><small>Build the handoff</small></span><b>SELECTED</b></div><div class="ai-curriculum-option is-alternate"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/team.webp" alt=""></span><span><strong>Campaign lead</strong><small>Review and approve</small></span></div></div>
+              <div class="ai-curriculum-scene-output"><span>Same goal</span><i aria-hidden="true">→</i><strong>Different job to practice</strong></div>
             </div>
-            <aside class="ai-curriculum-design-view" aria-label="Design logic for the active layer">
-              <div class="ai-curriculum-design-head"><span>DESIGN VIEW</span><strong data-curriculum-design-layer>Layer 01 / Audience</strong></div>
-              <div class="ai-curriculum-logic-visual" aria-hidden="true"><div><span>INPUT</span><strong data-curriculum-logic-input>Marketing coordinator</strong></div><i></i><div><span>DESIGN RULE</span><strong data-curriculum-logic-rule>Set role lens</strong></div><i></i><div><span>LEARNER VIEW</span><strong data-curriculum-logic-output>Launch handoff</strong></div></div>
-              <div class="ai-curriculum-design-copy"><p class="ai-curriculum-design-label">Behind the screen</p><p data-curriculum-design-choice>Audience changes the work product and the level of responsibility, not just a name in a greeting. A shared goal could also serve store teams, agency partners, or customer-support teams.</p><p class="ai-curriculum-design-label">What the learner experiences</p><p data-curriculum-experience>The course starts with the coordinator's campaign tasks and a relevant example.</p></div>
-              <div class="ai-curriculum-route-record"><span>PATH RECORD · FILLS AS THE LEARNER MOVES</span><dl><div><dt>Audience</dt><dd data-curriculum-record-role>Marketing coordinator</dd></div><div><dt>Prior knowledge</dt><dd data-curriculum-record-knowledge>Not set</dd></div><div><dt>Training topic</dt><dd data-curriculum-record-context>Not set</dd></div><div><dt>Adapt Scope</dt><dd data-curriculum-record-performance>Not observed</dd></div><div><dt>Assessment</dt><dd data-curriculum-record-assessment>Not suggested</dd></div><div><dt>Takeaway</dt><dd data-curriculum-record-takeaway>Not selected</dd></div></dl></div>
-            </aside>
+            <div class="ai-curriculum-scene ai-curriculum-scene-knowledge" data-motion-scene="1">
+              <div class="ai-curriculum-scene-heading"><small>02 / PRIOR KNOWLEDGE</small><h3>Set a starting pace.</h3></div>
+              <div class="ai-curriculum-option-pair"><div class="ai-curriculum-option is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/learning-enablement/knowledge.webp" alt=""></span><span><strong>New to Copilot</strong><small>Worked prompt + source check</small></span><b>SELECTED</b></div><div class="ai-curriculum-option is-alternate"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/adaptive-difficulty.webp" alt=""></span><span><strong>Experienced</strong><small>Open-ended workflow</small></span></div></div>
+              <div class="ai-curriculum-scene-output"><span>Start guided</span><i aria-hidden="true">→</i><strong>Later evidence can override it</strong></div>
+            </div>
+            <div class="ai-curriculum-scene ai-curriculum-scene-topic" data-motion-scene="2">
+              <div class="ai-curriculum-scene-heading"><small>03 / TRAINING TOPIC</small><h3>Use the work they do.</h3></div>
+              <div class="ai-curriculum-topic-lanes"><div class="ai-curriculum-topic-lane is-chosen"><strong>Campaign handoff</strong><span><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/teams.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/communication.webp" alt=""></span></span><small>Recap · brief · owner follow-up</small></div><div class="ai-curriculum-topic-lane is-alternate"><strong>Launch reporting</strong><span><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/excel.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/powerpoint.webp" alt=""></span></span><small>Data · insight · update</small></div></div>
+            </div>
+            <div class="ai-curriculum-scene ai-curriculum-scene-adapt" data-motion-scene="3">
+              <div class="ai-curriculum-scene-heading"><small>04 / ADAPT SCOPE</small><h3>Let the work change the path.</h3></div>
+              <div class="ai-curriculum-adapt-flow"><div class="ai-curriculum-draft-card"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><div><small>COPILOT-ASSISTED DRAFT</small><strong>Fall Color handoff brief</strong><i></i><i></i><i></i></div></div><span class="ai-curriculum-adapt-arrow" aria-hidden="true">→</span><div class="ai-curriculum-adapt-branches"><div class="is-chosen"><strong>Checks facts + owners</strong><span>Strong signal → stretch task</span></div><div class="is-alternate"><strong>Shares as-is</strong><span>Review gap → guided retry</span></div></div></div>
+            </div>
+            <div class="ai-curriculum-scene ai-curriculum-scene-assessment" data-motion-scene="4">
+              <div class="ai-curriculum-scene-heading"><small>05 / CUSTOM ASSESSMENT</small><h3>Practice the actual job.</h3></div>
+              <div class="ai-curriculum-simulation-card"><div class="ai-curriculum-simulation-head"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/automated-assessment-instant-feedback.webp" alt=""></span><div><small>COORDINATOR · CAMPAIGN HANDOFF · STRETCH</small><strong>Launch handoff simulation</strong></div></div><div class="ai-curriculum-simulation-flow"><span>Teams recap</span><i>→</i><span>Word brief</span><i>→</i><span>Verify + hand off</span></div><div class="ai-curriculum-simulation-checks"><span>Source</span><span>Accuracy</span><span>Owner</span></div></div>
+            </div>
+            <div class="ai-curriculum-scene ai-curriculum-scene-takeaway" data-motion-scene="5">
+              <div class="ai-curriculum-scene-heading"><small>06 / AFTER TRAINING</small><h3>Bridge to the next task.</h3></div>
+              <div class="ai-curriculum-takeaway-flow"><div class="ai-curriculum-takeaway-card is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><div><small>TAKEAWAY</small><strong>Campaign prompt template</strong><i></i><i></i><i></i></div></div><span aria-hidden="true">→</span><div class="ai-curriculum-work-card"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/planning-projects/projects.webp" alt=""></span><strong>Next launch handoff</strong></div></div>
+            </div>
+            <div class="ai-curriculum-scene ai-curriculum-scene-map" data-motion-scene="6">
+              <div class="ai-curriculum-map-heading"><div><small>AFTER THE SIMULATION</small><h3>One route taken. Sixteen possible.</h3></div><span>YOUR ROUTE <b>●</b></span></div>
+              <div class="ai-curriculum-map-selected"><span>Coordinator</span><i>→</i><span>New</span><i>→</i><span>Handoff</span><i>→</i><span>Strong review</span><i>→</i><strong>Stretch handoff simulation</strong></div>
+              <span class="ai-curriculum-map-scrollhint">Swipe to compare all routes →</span>
+              <div class="ai-curriculum-matrix-scroll"><div class="ai-curriculum-matrix" aria-label="Sixteen route combinations across four role-and-topic outcomes and four starting-level-and-scope combinations"><div class="ai-curriculum-matrix-corner">ROLE + TOPIC <small>changes the task</small></div><div class="ai-curriculum-matrix-col">New <b>Guided</b></div><div class="ai-curriculum-matrix-col">New <b>Stretch</b></div><div class="ai-curriculum-matrix-col">Experienced <b>Guided</b></div><div class="ai-curriculum-matrix-col">Experienced <b>Stretch</b></div><div class="ai-curriculum-matrix-row">Coordinator · Handoff <b>Build brief</b></div><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell is-chosen"><b>THIS PATH</b></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><div class="ai-curriculum-matrix-row">Coordinator · Reporting <b>Channel snapshot</b></div><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><div class="ai-curriculum-matrix-row">Lead · Handoff <b>Approval review</b></div><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><div class="ai-curriculum-matrix-row">Lead · Reporting <b>Decision brief</b></div><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span><span class="ai-curriculum-matrix-cell"></span></div></div>
+              <div class="ai-curriculum-map-foot"><span><b>Rows</b> change the assessment task</span><span><b>Columns</b> change support + challenge</span><span><b>Takeaway</b> Prompt template ✓ · Review checklist</span></div>
+            </div>
           </div>
-          <p class="ai-curriculum-disclosure">Luma Beauty is fictional. This scripted portfolio concept illustrates curriculum logic; it is not a live Copilot integration or a claim of deployment.</p>
+          <div class="ai-curriculum-motion-bottom" aria-hidden="true"><span>LEARNER ROUTE</span><div class="ai-curriculum-motion-progress"><i></i></div><span data-motion-count>01 / 07</span></div>
         </div>
+        <p class="ai-curriculum-disclosure">Luma Beauty is fictional. This automatic visual illustrates curriculum logic; it is not a live Copilot integration or a claim of deployment.</p>
       </div>
     </section>
 

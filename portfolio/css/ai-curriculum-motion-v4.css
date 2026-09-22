@@ -1,0 +1,131 @@
+/* One automatic curriculum story; the branch map is the visual conclusion. */
+.ai-learning-page .ai-curriculum-intro{max-width:none;margin-bottom:20px}
+.ai-learning-page .ai-curriculum-intro h2{max-width:none}
+.ai-learning-page .ai-curriculum-intro>p:not(.eyebrow){max-width:980px}
+.ai-curriculum-motion{--curriculum-line:rgba(188,231,201,.24);position:relative;overflow:hidden;padding:17px;border:1px solid rgba(162,222,179,.47);border-radius:26px;background:radial-gradient(circle at 78% 18%,rgba(126,208,141,.12),transparent 38%),linear-gradient(145deg,#102d34,#1c4140);color:#f5fff6;box-shadow:0 23px 45px rgba(5,22,26,.2)}
+.ai-curriculum-motion::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(90deg,rgba(223,255,231,.13) 1px,transparent 1px),linear-gradient(rgba(223,255,231,.13) 1px,transparent 1px);background-size:42px 42px}
+.ai-curriculum-motion-top,.ai-curriculum-motion-steps,.ai-curriculum-motion-stage,.ai-curriculum-motion-bottom{position:relative;z-index:1}
+.ai-curriculum-motion-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:2px 5px 14px}
+.ai-curriculum-motion-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.ai-curriculum-motion-brand>span{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:8px;background:#ffc7c8;color:#4c2949;font:800 .72rem/1 var(--font-heading)}
+.ai-curriculum-motion-brand strong{font:800 .86rem/1.2 var(--font-heading)}
+.ai-curriculum-motion-brand small{color:#bed9c8;font-size:.69rem}
+.ai-curriculum-motion-mode{padding:5px 8px;border:1px solid var(--curriculum-line);border-radius:6px;color:#c9edcf;font:800 .61rem/1.1 var(--font-heading);letter-spacing:.08em;white-space:nowrap}
+.ai-curriculum-motion-steps{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:10px}
+.ai-curriculum-motion-steps>span{display:flex;gap:6px;align-items:center;min-width:0;min-height:42px;padding:6px;border:1px solid var(--curriculum-line);border-radius:9px;background:rgba(234,254,237,.055);color:#c3dfce;font:800 .69rem/1.15 var(--font-heading);opacity:.55;transition:background .45s,border-color .45s,opacity .45s,color .45s}
+.ai-curriculum-motion-steps b{display:grid;place-items:center;flex:none;width:23px;height:23px;border-radius:5px;background:rgba(220,247,224,.12);color:#d2eed5;font-size:.65rem}
+.ai-curriculum-motion-steps>span.is-complete{opacity:.8}
+.ai-curriculum-motion-steps>span.is-active{border-color:#b0ec89;background:rgba(151,222,111,.17);color:#fff;opacity:1;box-shadow:inset 0 -3px 0 #9fe778}
+.ai-curriculum-motion-steps>span.is-active b{background:#aaeb7b;color:#1b392f}
+.ai-curriculum-motion-stage{height:455px;overflow:hidden;border:1px solid rgba(182,227,195,.22);border-radius:17px;background:radial-gradient(circle at 48% 48%,rgba(90,183,132,.14),transparent 51%),rgba(10,36,41,.6)}
+.ai-curriculum-scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:22px;padding:24px 31px;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .55s ease,visibility .55s ease,transform .55s ease}
+.ai-curriculum-scene.is-active{opacity:1;visibility:visible;transform:none}
+.ai-curriculum-scene-heading{text-align:center}
+.ai-curriculum-scene-heading small,.ai-curriculum-map-heading small{display:block;margin-bottom:4px;color:#b9e9c6;font:800 .68rem/1.2 var(--font-heading);letter-spacing:.1em}
+.ai-curriculum-scene-heading h3,.ai-curriculum-map-heading h3{margin:0;color:#fff;font:800 clamp(1.26rem,2.3vw,1.85rem)/1.15 var(--font-heading)}
+.ai-curriculum-motion-icon{display:grid;place-items:center;flex:none;width:58px;height:58px;border:1px solid #e1f2e7;border-radius:13px;background:#fff;box-shadow:0 8px 21px rgba(1,20,25,.18)}
+.ai-curriculum-motion-icon img{width:48px;height:48px;object-fit:contain;image-rendering:pixelated}
+.ai-curriculum-option-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:min(100%,850px);margin:0 auto}
+.ai-curriculum-option{display:flex;gap:12px;align-items:center;min-height:124px;padding:17px;border:1px solid rgba(184,223,194,.32);border-radius:15px;background:rgba(237,252,242,.07);transition:opacity .4s,border-color .4s,background .4s,box-shadow .4s}
+.ai-curriculum-option.is-chosen,.ai-curriculum-topic-lane.is-chosen,.ai-curriculum-takeaway-card.is-chosen{border-color:#a5ec80;background:rgba(154,220,118,.16);box-shadow:0 0 0 4px rgba(157,229,117,.09)}
+.ai-curriculum-option.is-alternate,.ai-curriculum-topic-lane.is-alternate{opacity:.47}
+.ai-curriculum-option>span:nth-child(2){display:grid;gap:5px;min-width:0}
+.ai-curriculum-option strong{font:800 1rem/1.2 var(--font-heading)}
+.ai-curriculum-option small{color:#d1e7d5;font-size:.78rem}
+.ai-curriculum-option>b{align-self:flex-start;margin-left:auto;color:#c9f5b0;font:800 .61rem/1.1 var(--font-heading);letter-spacing:.06em}
+.ai-curriculum-scene-output{display:flex;gap:11px;align-items:center;justify-content:center;flex-wrap:wrap;color:#ddf5df;font-size:.9rem}
+.ai-curriculum-scene-output span{color:#b6d6be}
+.ai-curriculum-scene-output i{color:#a7ed7b;font-style:normal;font-weight:900}
+.ai-curriculum-scene-output strong{font:800 .91rem/1.2 var(--font-heading)}
+.ai-curriculum-topic-lanes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;width:min(100%,900px);margin:0 auto}
+.ai-curriculum-topic-lane{display:grid;justify-items:center;gap:12px;min-width:0;padding:18px 13px;border:1px solid rgba(184,223,194,.32);border-radius:15px;background:rgba(237,252,242,.07)}
+.ai-curriculum-topic-lane>strong{font:800 .95rem/1.2 var(--font-heading)}
+.ai-curriculum-topic-lane>span{display:flex;gap:8px;align-items:center}
+.ai-curriculum-topic-lane i{color:#aff481;font-style:normal;font-weight:900}
+.ai-curriculum-topic-lane small{color:#d5eedc;font-size:.73rem}
+.ai-curriculum-adapt-flow{display:grid;grid-template-columns:minmax(0,1fr) 45px minmax(0,1.15fr);gap:14px;align-items:center;width:min(100%,930px);margin:0 auto}
+.ai-curriculum-draft-card{display:flex;gap:12px;align-items:center;min-height:180px;padding:17px;border:1px solid rgba(188,231,201,.5);border-radius:14px;background:#f5fff7;color:#244b3d}
+.ai-curriculum-draft-card>div{display:grid;gap:7px;flex:1}
+.ai-curriculum-draft-card small{color:#488361;font:800 .64rem/1.15 var(--font-heading);letter-spacing:.05em}
+.ai-curriculum-draft-card strong{font:800 .98rem/1.2 var(--font-heading)}
+.ai-curriculum-draft-card i,.ai-curriculum-takeaway-card i{display:block;width:92%;height:5px;border-radius:4px;background:#c7dfd0}
+.ai-curriculum-draft-card i:nth-last-child(2),.ai-curriculum-takeaway-card i:nth-last-child(2){width:72%}
+.ai-curriculum-draft-card i:last-child,.ai-curriculum-takeaway-card i:last-child{width:82%}
+.ai-curriculum-adapt-arrow{color:#b9f08c;font:900 2rem/1 var(--font-heading);text-align:center}
+.ai-curriculum-adapt-branches{display:grid;gap:10px}
+.ai-curriculum-adapt-branches>div{display:grid;gap:5px;min-height:83px;padding:14px;border:1px solid var(--curriculum-line);border-radius:11px;background:rgba(241,255,244,.07)}
+.ai-curriculum-adapt-branches>.is-chosen{border-color:#a8ec80;background:rgba(163,230,116,.15)}
+.ai-curriculum-adapt-branches>.is-alternate{opacity:.42}
+.ai-curriculum-adapt-branches strong{font:800 .83rem/1.2 var(--font-heading)}
+.ai-curriculum-adapt-branches span{color:#d2efd8;font-size:.75rem}
+.ai-curriculum-simulation-card{display:grid;gap:14px;width:min(100%,720px);margin:0 auto;padding:20px;border:1px solid #b7ec9c;border-radius:17px;background:linear-gradient(140deg,rgba(208,250,212,.16),rgba(241,255,244,.055))}
+.ai-curriculum-simulation-head{display:flex;gap:13px;align-items:center}
+.ai-curriculum-simulation-head>div{display:grid;gap:6px}
+.ai-curriculum-simulation-head small,.ai-curriculum-takeaway-card small{color:#c2edcd;font:800 .65rem/1.2 var(--font-heading);letter-spacing:.05em}
+.ai-curriculum-simulation-head strong{font:800 1.02rem/1.2 var(--font-heading)}
+.ai-curriculum-simulation-flow{display:flex;gap:9px;align-items:center;justify-content:space-between}
+.ai-curriculum-simulation-flow span{flex:1;padding:11px 8px;border:1px solid rgba(189,233,201,.34);border-radius:8px;background:rgba(240,255,243,.1);font:700 .72rem/1.2 var(--font-heading);text-align:center}
+.ai-curriculum-simulation-flow i{color:#b3e48f;font-style:normal}
+.ai-curriculum-simulation-checks{display:flex;gap:7px;flex-wrap:wrap}
+.ai-curriculum-simulation-checks span{padding:6px 9px;border-radius:20px;background:#dff8d4;color:#22523e;font:800 .66rem/1.2 var(--font-heading)}
+.ai-curriculum-simulation-checks span::before{content:"✓ ";color:#2f8253}
+.ai-curriculum-takeaway-flow{display:grid;grid-template-columns:minmax(0,1fr) 55px minmax(0,.7fr);gap:12px;align-items:center;width:min(100%,860px);margin:0 auto}
+.ai-curriculum-takeaway-flow>span{color:#b8f290;font:900 2rem/1 var(--font-heading);text-align:center}
+.ai-curriculum-takeaway-card,.ai-curriculum-work-card{display:flex;gap:14px;align-items:center;min-height:176px;padding:19px;border:1px solid var(--curriculum-line);border-radius:15px;background:rgba(240,255,243,.08)}
+.ai-curriculum-takeaway-card>div{display:grid;gap:8px;flex:1}
+.ai-curriculum-takeaway-card strong,.ai-curriculum-work-card strong{font:800 .95rem/1.2 var(--font-heading)}
+.ai-curriculum-takeaway-card i{background:#9cca9c}
+.ai-curriculum-work-card{justify-content:center;flex-direction:column;text-align:center}
+.ai-curriculum-scene-map{justify-content:space-between;gap:8px;padding:17px 20px}
+.ai-curriculum-map-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ai-curriculum-map-heading h3{font-size:clamp(1.1rem,1.9vw,1.55rem)}
+.ai-curriculum-map-heading>span{color:#c8ecad;font:800 .65rem/1.2 var(--font-heading);white-space:nowrap}
+.ai-curriculum-map-heading>span b{font-size:1rem}
+.ai-curriculum-map-selected{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid #a9e989;border-radius:9px;background:rgba(149,221,102,.14)}
+.ai-curriculum-map-selected span,.ai-curriculum-map-selected strong{padding:4px 7px;border-radius:5px;background:rgba(222,255,212,.14);font:800 .67rem/1.15 var(--font-heading)}
+.ai-curriculum-map-selected strong{background:#dff8d2;color:#234f39}
+.ai-curriculum-map-selected i{color:#b5ed9a;font-style:normal;font-weight:900}
+.ai-curriculum-map-scrollhint{display:none;color:#c8e8d0;font:700 .62rem/1.1 var(--font-heading)}
+.ai-curriculum-matrix-scroll{overflow-x:auto;scrollbar-color:#7ba78b transparent}
+.ai-curriculum-matrix{display:grid;grid-template-columns:minmax(176px,1.55fr) repeat(4,minmax(107px,1fr));gap:4px;min-width:660px}
+.ai-curriculum-matrix-corner,.ai-curriculum-matrix-col,.ai-curriculum-matrix-row,.ai-curriculum-matrix-cell{display:flex;align-items:center;min-height:42px;padding:5px 8px;border:1px solid var(--curriculum-line);border-radius:6px;background:rgba(229,250,235,.07)}
+.ai-curriculum-matrix-corner{display:grid;gap:2px;color:#c7ecca;font:800 .69rem/1.1 var(--font-heading)}
+.ai-curriculum-matrix-corner small{font-size:.63rem;font-weight:500}
+.ai-curriculum-matrix-col{display:grid;gap:2px;justify-content:center;color:#daf4de;font:700 .68rem/1.1 var(--font-heading);text-align:center}
+.ai-curriculum-matrix-col b{color:#b4e2bf;font-size:.68rem}
+.ai-curriculum-matrix-row{display:grid;gap:2px;color:#ecf9ec;font:700 .7rem/1.1 var(--font-heading)}
+.ai-curriculum-matrix-row b{color:#b5dfbd;font-size:.66rem}
+.ai-curriculum-matrix-cell{position:relative;justify-content:center;overflow:hidden;background:rgba(191,225,200,.07)}
+.ai-curriculum-matrix-cell::before{content:"";width:22px;height:10px;border-radius:3px;background:linear-gradient(90deg,#6aa38d 36%,transparent 36% 44%,#87b699 44% 100%);opacity:.7}
+.ai-curriculum-matrix-cell.is-chosen{border-color:#b6f18c;background:rgba(160,234,117,.24);box-shadow:inset 0 0 0 1px #b6f18c}
+.ai-curriculum-matrix-cell.is-chosen::before{display:none}
+.ai-curriculum-matrix-cell.is-chosen b{color:#f4ffe6;font:900 .67rem/1.1 var(--font-heading);letter-spacing:.04em}
+.ai-curriculum-map-foot{display:flex;gap:7px;justify-content:space-between;flex-wrap:wrap}
+.ai-curriculum-map-foot span{color:#c7e7cf;font-size:.68rem}
+.ai-curriculum-map-foot b{color:#baf39c}
+.ai-curriculum-motion-bottom{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 5px 1px;color:#c2e5cb;font:800 .63rem/1.2 var(--font-heading);letter-spacing:.06em}
+.ai-curriculum-motion-progress{flex:1;height:6px;overflow:hidden;border-radius:9px;background:rgba(219,252,226,.15)}
+.ai-curriculum-motion-progress i{display:block;width:14.28%;height:100%;border-radius:9px;background:linear-gradient(90deg,#83d8aa,#b4ee7c);transition:width .6s ease}
+.ai-curriculum-disclosure{margin:12px 2px 0;color:#d0e8d9;font-size:.74rem;line-height:1.4}
+.ai-curriculum-scene.is-active .ai-curriculum-option.is-chosen{animation:aiCurriculumSelect .75s ease-out both}
+.ai-curriculum-scene-topic.is-active .ai-curriculum-topic-lane.is-chosen .ai-curriculum-motion-icon{animation:aiCurriculumApp .6s ease-out both}
+.ai-curriculum-scene-topic.is-active .ai-curriculum-topic-lane.is-chosen .ai-curriculum-motion-icon:nth-of-type(2){animation-delay:.25s}
+.ai-curriculum-scene-topic.is-active .ai-curriculum-topic-lane.is-chosen .ai-curriculum-motion-icon:nth-of-type(3){animation-delay:.5s}
+.ai-curriculum-scene-adapt.is-active .ai-curriculum-draft-card i{animation:aiCurriculumLine .8s ease-out both}
+.ai-curriculum-scene-adapt.is-active .ai-curriculum-draft-card i:nth-last-child(2){animation-delay:.2s}
+.ai-curriculum-scene-adapt.is-active .ai-curriculum-draft-card i:last-child{animation-delay:.4s}
+.ai-curriculum-scene-adapt.is-active .ai-curriculum-adapt-branches>.is-chosen{animation:aiCurriculumSelect .8s .55s ease-out both}
+.ai-curriculum-scene-assessment.is-active .ai-curriculum-simulation-checks span{animation:aiCurriculumApp .5s ease-out both}
+.ai-curriculum-scene-assessment.is-active .ai-curriculum-simulation-checks span:nth-child(2){animation-delay:.28s}
+.ai-curriculum-scene-assessment.is-active .ai-curriculum-simulation-checks span:nth-child(3){animation-delay:.56s}
+.ai-curriculum-scene-takeaway.is-active .ai-curriculum-work-card{animation:aiCurriculumApp .8s .45s ease-out both}
+.ai-curriculum-scene-map.is-active .ai-curriculum-matrix{animation:aiCurriculumApp .65s ease-out both}
+.ai-curriculum-scene-map.is-active .ai-curriculum-matrix-cell.is-chosen{animation:aiCurriculumSelect 1s .5s ease-out both}
+@keyframes aiCurriculumSelect{from{opacity:.45;transform:scale(.96);box-shadow:none}to{opacity:1;transform:scale(1)}}
+@keyframes aiCurriculumApp{from{opacity:.15;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aiCurriculumLine{from{transform:scaleX(.08);transform-origin:left;opacity:.4}to{transform:scaleX(1);transform-origin:left;opacity:1}}
+@media(max-width:950px){.ai-curriculum-motion-steps{grid-template-columns:repeat(4,minmax(0,1fr))}.ai-curriculum-motion-stage{height:500px}.ai-curriculum-topic-lanes{gap:8px}.ai-curriculum-topic-lane .ai-curriculum-motion-icon{width:47px;height:47px}.ai-curriculum-topic-lane .ai-curriculum-motion-icon img{width:39px;height:39px}}
+@media(max-width:680px){.ai-curriculum-map-scrollhint{display:block}}
+@media(max-width:680px){.ai-curriculum-motion{padding:10px}.ai-curriculum-motion-brand{flex-wrap:wrap}.ai-curriculum-motion-brand small{width:100%;margin-left:39px}.ai-curriculum-motion-mode{font-size:.54rem}.ai-curriculum-motion-steps{grid-template-columns:repeat(4,minmax(0,1fr))}.ai-curriculum-motion-steps>span{min-height:38px;font-size:.6rem}.ai-curriculum-motion-stage{height:535px}.ai-curriculum-scene{padding:17px;gap:16px}.ai-curriculum-option-pair,.ai-curriculum-topic-lanes{grid-template-columns:1fr}.ai-curriculum-option{min-height:88px;padding:10px}.ai-curriculum-motion-icon{width:46px;height:46px}.ai-curriculum-motion-icon img{width:39px;height:39px}.ai-curriculum-topic-lane{gap:5px;padding:9px}.ai-curriculum-topic-lane>span{gap:5px}.ai-curriculum-topic-lane .ai-curriculum-motion-icon{width:39px;height:39px}.ai-curriculum-topic-lane .ai-curriculum-motion-icon img{width:33px;height:33px}.ai-curriculum-adapt-flow{grid-template-columns:1fr;gap:7px}.ai-curriculum-draft-card{min-height:110px}.ai-curriculum-adapt-arrow{transform:rotate(90deg)}.ai-curriculum-adapt-branches{grid-template-columns:1fr 1fr}.ai-curriculum-adapt-branches>div{min-height:105px;padding:9px}.ai-curriculum-takeaway-flow{grid-template-columns:1fr;gap:3px}.ai-curriculum-takeaway-flow>span{transform:rotate(90deg)}.ai-curriculum-takeaway-card,.ai-curriculum-work-card{min-height:105px}.ai-curriculum-work-card{flex-direction:row}.ai-curriculum-scene-map{padding:12px}.ai-curriculum-map-selected{gap:3px}.ai-curriculum-map-selected span,.ai-curriculum-map-selected strong{font-size:.59rem}.ai-curriculum-map-foot{gap:4px}.ai-curriculum-map-foot span{font-size:.6rem}}
+@media(max-width:430px){.ai-curriculum-motion-steps{grid-template-columns:repeat(4,minmax(0,1fr))}.ai-curriculum-motion-steps>span{gap:3px;padding:4px;font-size:.55rem}.ai-curriculum-motion-steps b{width:19px;height:19px;font-size:.54rem}.ai-curriculum-motion-stage{height:585px}.ai-curriculum-option strong{font-size:.81rem}.ai-curriculum-option small{font-size:.66rem}.ai-curriculum-simulation-card{padding:12px}.ai-curriculum-simulation-flow{gap:3px}.ai-curriculum-simulation-flow span{font-size:.59rem}.ai-curriculum-map-heading{align-items:flex-start;flex-direction:column}.ai-curriculum-map-foot{display:grid}}
+@media(prefers-reduced-motion:reduce){.ai-curriculum-motion *,.ai-curriculum-motion *::before,.ai-curriculum-motion *::after{animation:none!important;transition:none!important}}

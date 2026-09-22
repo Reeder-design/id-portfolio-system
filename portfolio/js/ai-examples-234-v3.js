@@ -18,7 +18,7 @@
         render(step);
         return;
       }
-      if (!visible) return;
+      if (!visible || document.hidden) return;
       interval = window.setInterval(() => {
         if (step === lastStep) {
           step = 0;
@@ -29,12 +29,6 @@
         render(step);
       }, duration);
     };
-    const jumpTo = (target) => {
-      step = target;
-      render(step);
-      start();
-    };
-
     render(step);
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
@@ -46,13 +40,13 @@
     } else {
       start();
     }
+    document.addEventListener('visibilitychange', start);
     reduceMotion.addEventListener?.('change', start);
-    return { jumpTo };
   };
 
   const path = document.querySelector('[data-ai-v3-path]');
   if (path) {
-    const choiceButtons = [...path.querySelectorAll('[data-ai-v3-choice]')];
+    const choices = [...path.querySelectorAll('[data-ai-v3-choice]')];
     const routes = [...path.querySelectorAll('[data-ai-v3-route]')];
     const signal = path.querySelector('[data-ai-v3-path-signal]');
     const strength = path.querySelector('[data-ai-v3-path-strength]');
@@ -60,10 +54,9 @@
     const render = (step) => {
       path.dataset.step = String(step);
       path.dataset.choice = choice;
-      choiceButtons.forEach((button) => {
-        const picked = step >= 1 && button.dataset.aiV3Choice === choice;
-        button.classList.toggle('is-picked', picked);
-        button.setAttribute('aria-pressed', String(picked));
+      choices.forEach((option) => {
+        const picked = step >= 1 && option.dataset.aiV3Choice === choice;
+        option.classList.toggle('is-picked', picked);
       });
       signal.textContent = step === 0 ? 'Waiting for the learner choice'
         : step === 1 ? 'Comparing answer with the case'
@@ -81,20 +74,15 @@
       advanceReason.textContent = step !== 3 ? 'Opens when the clue is recognized'
         : choice === 'advance' ? 'Opened: ready for a harder case' : 'Not opened: practice comes first';
     };
-    const loop = playWhileVisible(path, 3, 1550, render, () => {
+    playWhileVisible(path, 3, 1550, render, () => {
       choice = choice === 'advance' ? 'support' : 'advance';
     });
-    choiceButtons.forEach((button) => button.addEventListener('click', () => {
-      choice = button.dataset.aiV3Choice;
-      loop.jumpTo(1);
-    }));
   }
 
   const tutor = document.querySelector('[data-ai-v3-tutor]');
   if (tutor) {
     const render = (step) => { tutor.dataset.step = String(step); };
-    const loop = playWhileVisible(tutor, 3, 2100, render);
-    tutor.querySelector('[data-ai-v3-tutor-ask]')?.addEventListener('click', () => loop.jumpTo(2));
+    playWhileVisible(tutor, 3, 2100, render);
   }
 
   const assessment = document.querySelector('[data-ai-v3-assessment]');
@@ -109,7 +97,6 @@
         'Feedback ready'
       ][step];
     };
-    const loop = playWhileVisible(assessment, 3, 1650, render);
-    assessment.querySelector('[data-ai-v3-assessment-submit]')?.addEventListener('click', () => loop.jumpTo(1));
+    playWhileVisible(assessment, 3, 1650, render);
   }
 })();

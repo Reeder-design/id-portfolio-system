@@ -16,8 +16,8 @@
 .ai-v3-path-question strong{color:#fff;font:700 1rem/1.25 var(--font-heading)}
 .ai-v3-path-question>div>span{color:#dcefe1;font-size:.83rem}
 .ai-v3-path-choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.ai-v3-path-choices button{min-height:58px;text-align:left}
-.ai-v3-path-choices button.is-picked{border-color:var(--v2-lime);background:#e7f8dc;color:#16372e;box-shadow:0 0 0 3px rgba(167,231,107,.16)}
+.ai-v3-path-choices span{display:flex;align-items:center;min-height:58px;padding:8px 12px;border:1px solid rgba(209,238,215,.35);border-radius:10px;background:rgba(255,255,255,.08);color:#f8fff8;font:700 .82rem/1.3 var(--font-heading);text-align:left;transition:background .3s ease,border-color .3s ease,color .3s ease}
+.ai-v3-path-choices span.is-picked{border-color:var(--v2-lime);background:#e7f8dc;color:#16372e;box-shadow:0 0 0 3px rgba(167,231,107,.16)}
 .ai-v3-path-analysis{display:flex;align-items:center;gap:11px;min-height:69px;padding:10px 12px;border:1px solid rgba(198,235,208,.24);border-radius:12px;background:rgba(6,31,36,.53);opacity:.5}
 .ai-v3-path[data-step="2"] .ai-v3-path-analysis,.ai-v3-path[data-step="3"] .ai-v3-path-analysis{opacity:1;border-color:rgba(167,231,107,.6)}
 .ai-v3-path-pulse{display:block;flex:none;width:26px;height:26px;border:3px solid #a7e76b;border-radius:50%;background:#214c44;box-shadow:0 0 0 5px rgba(167,231,107,.1)}
@@ -79,8 +79,7 @@
 .ai-v3-tutor-compose{display:flex;align-items:center;gap:6px;min-width:0;margin-top:auto;padding:5px;border:1px solid #a8cdb7;border-radius:9px;background:#fff}
 .ai-v3-tutor-compose span{display:block;flex:1;min-width:0;overflow:hidden;color:#45685c;font-size:.75rem;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}
 .ai-v3-tutor[data-step="0"] .ai-v3-tutor-compose span{opacity:.35}
-.ai-v3-tutor-compose button{flex:none;min-height:33px;padding:5px 9px;border:0;background:#27674c;color:#fff;font-size:.76rem}
-.ai-v3-tutor-compose button:hover{background:#1d513b;color:#fff}
+.ai-v3-tutor-compose b{display:grid;place-items:center;flex:none;min-height:33px;padding:5px 9px;border-radius:6px;background:#27674c;color:#fff;font:700 .76rem/1.2 var(--font-heading)}
 .ai-v3-tutor[data-step="2"] .ai-v3-tutor-compose,.ai-v3-tutor[data-step="3"] .ai-v3-tutor-compose{opacity:.75}
 
 /* 04: the submitted answer stays visible while criteria and feedback arrive. */
@@ -93,8 +92,7 @@
 .ai-v3-assessment-response{display:grid;gap:4px;min-height:74px;padding:10px 12px;border:1px solid #c3dbc9;border-radius:9px;background:#fff}
 .ai-v3-assessment-response span{color:#2b4a3d;font-size:.86rem;line-height:1.3}
 .ai-v3-assessment-action{display:flex;align-items:center;gap:12px}
-.ai-v3-assessment-action button{min-height:37px;border-color:#246e4a;background:#2a7150;color:#fff}
-.ai-v3-assessment-action button:hover{border-color:#195b3c;background:#1e5a3e;color:#fff}
+.ai-v3-assessment-action b{display:grid;place-items:center;min-height:37px;padding:8px 12px;border:1px solid #246e4a;border-radius:9px;background:#2a7150;color:#fff;font:700 .82rem/1.2 var(--font-heading)}
 .ai-v3-assessment-action>span{color:#527364;font-size:.78rem;font-weight:700}
 .ai-v3-assessment-results{display:grid;grid-template-columns:.76fr 1.24fr;gap:8px;flex:1;min-height:110px}
 .ai-v3-assessment-criteria,.ai-v3-assessment-feedback{display:grid;align-content:start;gap:6px;padding:10px;border:1px solid #cbddd0;border-radius:10px;background:#eef6f0}

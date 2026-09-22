@@ -36,14 +36,12 @@
 .ai-v3-avatar-script{position:absolute;right:12px;bottom:12px;width:54%;padding:9px 11px;border:1px solid rgba(167,231,107,.54);border-radius:9px;background:rgba(8,35,41,.94);opacity:0;transform:translateY(15px);transition:opacity .5s .25s,transform .5s .25s}
 .ai-v3-avatar-script small{display:block;margin-bottom:3px;color:#c8eeba;font-size:.61rem;font-weight:800;text-transform:uppercase}
 .ai-v3-avatar-script strong{font:700 .79rem/1.18 var(--font-heading)}
-.ai-v3-avatar-play{position:absolute;top:50%;left:50%;display:grid;place-items:center;width:48px;height:48px;border:2px solid #fff;border-radius:50%;background:rgba(20,56,57,.85);color:#e5ffce;font-size:1rem;opacity:0;transform:translate(-50%,-50%) scale(.72);transition:opacity .4s,transform .4s;box-shadow:0 0 0 8px rgba(167,231,107,.18)}
 .ai-v3-avatar-preview-bottom{display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:39px;padding:6px 11px;border-top:1px solid rgba(211,239,217,.16);opacity:0;transition:opacity .5s}
 .ai-v3-avatar-caption{font:700 .66rem/1.15 var(--font-heading);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ai-v3-avatar-timeline{height:3px;border-radius:3px;background:rgba(225,244,227,.3)}
 .ai-v3-avatar-timeline i{display:block;width:0;height:100%;border-radius:3px;background:#a7e76b}
 .ai-v3-avatar[data-stage="2"] .ai-v3-avatar-scene-wall,.ai-v3-avatar[data-stage="3"] .ai-v3-avatar-scene-wall,.ai-v3-avatar[data-stage="2"] .ai-v3-avatar-script,.ai-v3-avatar[data-stage="3"] .ai-v3-avatar-script{opacity:1;transform:none}
 .ai-v3-avatar[data-stage="2"] .ai-v3-avatar-portrait,.ai-v3-avatar[data-stage="3"] .ai-v3-avatar-portrait{top:47%;left:14%;width:125px;height:125px;transform:translate(0,-50%)}
-.ai-v3-avatar[data-stage="3"] .ai-v3-avatar-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .ai-v3-avatar[data-stage="3"] .ai-v3-avatar-preview-bottom{opacity:1}
 .ai-v3-avatar[data-stage="3"] .ai-v3-avatar-timeline i{animation:ai-v3-avatar-video-progress 2.9s linear both}
 .ai-v3-avatar-output{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px 8px;font:700 .67rem/1.2 var(--font-heading)}
