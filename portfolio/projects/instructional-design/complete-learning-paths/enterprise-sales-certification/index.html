@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A public-safe case study showing how Haley Reeder designed a cellular networking sales certification, including curriculum architecture, assessment strategy, LMS delivery, and an interactive sample learning experience.">
+  <meta name="description" content="How Haley Reeder rebuilt and maintained a cellular networking sales certification through portfolio consolidation, changing source ownership, accelerated delivery, learner feedback, and LMS operations.">
   <title>Cellular Networking Sales Certification | Haley Reeder</title>
   <link rel="icon" type="image/svg+xml" href="../../../../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,12 +43,12 @@
         <div class="flagship-hero-grid">
           <div class="flagship-hero-copy">
             <h1>Cellular Networking Sales Certification</h1>
-            <p class="body-large">I designed and developed cellular networking sales training for internal sellers and channel partners. The certification turned technical and product source material into a seller-focused pathway covering customer discovery, solution fit, value conversations, next-step decisions, assessment, and LMS delivery.</p>
+            <p class="body-large">I rebuilt a multi-course sales certification as two business operations and product lines came together, a third product line entered the portfolio, and the information behind the learning kept changing. I owned the learning solution: objectives and seller practice, assessment, LMS delivery, support, and later revisions. Source teams validated product truth.</p>
             <div class="tag-row">
               <span class="tag">Content Architecture</span><span class="tag">Scenario Practice</span><span class="tag">Assessment Design</span><span class="tag">Rise + Storyline</span><span class="tag">LMS Delivery</span><span class="tag">Sales Enablement</span>
             </div>
           </div>
-          <aside class="cert-hero-evidence" aria-label="Public-safe cellular networking sales course introduction example">
+          <aside class="cert-hero-evidence" aria-label="Two historic product lines and a new line converge into one certification, shown with a public-safe learner screen">
             <span class="cert-hero-glow" aria-hidden="true"></span>
             <div class="cert-hero-device">
               <div class="cert-hero-device-bar" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
@@ -56,9 +56,7 @@
                 <img src="../../../../assets/project-images/cellular-certification/cert-introduction.webp" alt="Public-safe cellular networking sales course introduction." loading="eager">
               </div>
             </div>
-            <span class="cert-hero-pixel pixel-learning" aria-hidden="true"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span>
-            <span class="cert-hero-pixel pixel-cert" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""></span>
-            <span class="cert-hero-pixel pixel-path" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""></span>
+            <div class="cert-hero-convergence" aria-hidden="true"><span>Historic line A</span><span>Historic line B</span><span>New line C</span><strong>One certification</strong></div>
           </aside>
         </div>
       </div>
@@ -66,16 +64,16 @@
 
     <section class="snapshot-band" aria-label="Project snapshot">
       <div class="container snapshot-grid">
-        <div class="snapshot-item"><span>My Role</span><strong>Lead instructional designer + LMS admin</strong></div>
+        <div class="snapshot-item"><span>My Role</span><strong>Learning architecture, development + LMS administration</strong></div>
         <div class="snapshot-item"><span>Audience</span><strong>Internal sellers + channel partners</strong></div>
         <div class="snapshot-item"><span>Format</span><strong>Multi-course self-paced certification</strong></div>
-        <div class="snapshot-item"><span>Implementation</span><strong>Rise, Storyline, PowerPoint, LMS</strong></div>
+        <div class="snapshot-item"><span>Delivery Window</span><strong>About 10 months planned → about 4 months</strong></div>
       </div>
     </section>
 
     <nav class="case-nav-shell" aria-label="Project sections">
       <div class="container case-nav">
-        <a href="#overview">Overview</a><a href="#blueprint">Design Blueprint</a><a href="#authoring">Content</a><a href="#sample">Sample Interaction</a><a href="#delivery">Delivery + Results</a>
+        <a href="#overview">Transformation</a><a href="#ownership">Ownership</a><a href="#blueprint">Architecture</a><a href="#authoring">Learner View</a><a href="#sample">Practice</a><a href="#delivery">Operations</a><a href="#feedback">Feedback</a><a href="#evolution">Evolution</a>
       </div>
     </nav>
 
@@ -83,56 +81,73 @@
       <div class="container compact-section">
         <div class="overview-intro">
           <div>
-            <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span><p class="eyebrow">Project Overview</p></div>
-            <h2>Turn complex source material into usable sales decisions.</h2>
+            <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span><p class="eyebrow">What I Inherited</p></div>
+            <h2>The business was consolidating. The learning system had to become coherent while its source material moved.</h2>
           </div>
-          <p class="overview-principle-callout"><img src="../../../../assets/icons/pixel/hiring-guide/target.webp" alt=""><span>The curriculum gave sellers enough context to recognize a need, make a credible decision, and know when to involve deeper technical expertise.</span></p>
+          <p class="overview-principle-callout"><img src="../../../../assets/icons/pixel/hiring-guide/target.webp" alt=""><span>This was an informational overhaul, not a course refresh. I had to turn a changing portfolio into a seller pathway people could actually follow.</span></p>
         </div>
 
         <div class="overview-workbench">
           <div class="overview-nav" role="tablist" aria-label="Project overview">
-            <button class="overview-card active" type="button" role="tab" aria-selected="true" data-overview="problem">
+            <button class="overview-card active" id="overview-tab-inherit" type="button" role="tab" aria-selected="true" aria-controls="overviewDetail" data-overview="inherit">
               <img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt="" aria-hidden="true">
-              <span><small>Problem</small><strong>Structure the source</strong></span>
+              <span><small>01 / Origin</small><strong>Three product lines</strong></span>
             </button>
-            <button class="overview-card" type="button" role="tab" aria-selected="false" data-overview="ownership">
+            <button class="overview-card" id="overview-tab-change" type="button" role="tab" aria-selected="false" aria-controls="overviewDetail" data-overview="change">
               <img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="" aria-hidden="true">
-              <span><small>What I owned</small><strong>Connect the system</strong></span>
+              <span><small>02 / Research</small><strong>Research Source Content</strong></span>
             </button>
-            <button class="overview-card" type="button" role="tab" aria-selected="false" data-overview="boundary">
+            <button class="overview-card" id="overview-tab-sources" type="button" role="tab" aria-selected="false" aria-controls="overviewDetail" data-overview="sources">
+              <img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt="" aria-hidden="true">
+              <span><small>03 / Sources</small><strong>Track decisions</strong></span>
+            </button>
+            <button class="overview-card" id="overview-tab-timeline" type="button" role="tab" aria-selected="false" aria-controls="overviewDetail" data-overview="timeline">
               <img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt="" aria-hidden="true">
-              <span><small>Public boundary</small><strong>Sanitize the example</strong></span>
+              <span><small>04 / Delivery</small><strong>Timeline Changes</strong></span>
             </button>
           </div>
 
           <div class="overview-stage">
-            <div class="overview-detail" id="overviewDetail" aria-live="polite">
-              <span class="overview-detail-label" id="overviewDetailLabel">Problem</span>
-              <strong id="overviewDetailTitle">Translate technical source material into seller decisions.</strong>
-              <p id="overviewDetailText">The curriculum needed enough technical context to support credible discovery and solution-fit conversations without turning the pathway into engineering training.</p>
-            </div>
-            <div class="overview-motion overview-motion-problem" id="overviewMotion" aria-hidden="true">
-              <span><img src="../../../../assets/icons/pixel/lms/mini-document.webp" alt=""><small>Source</small></span>
-              <i></i>
-              <span><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""><small>Scope</small></span>
-              <i></i>
-              <span><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><small>Seller decision</small></span>
+            <div class="overview-motion overview-motion-inherit" id="overviewMotion" aria-hidden="true"></div>
+            <div class="overview-detail" id="overviewDetail" role="tabpanel" aria-labelledby="overview-tab-inherit" aria-live="polite">
+              <span class="overview-detail-label" id="overviewDetailLabel">01 / Origin</span>
+              <strong id="overviewDetailTitle">Two historic lines and a new third line needed one pathway.</strong>
+              <p id="overviewDetailText">The original lines came from separate business operations that were merging. The new line had to join the same broader portfolio without erasing meaningful distinctions for sellers.</p>
             </div>
           </div>
         </div>
+        <p class="case-context-note">At the same time, messaging, product features and names, terminology, target verticals, positioning, go-to-market routes, brand themes, visual design, audience strategy, assessment, and LMS delivery all needed reconsideration. The learning experience had to stay consistent while those business decisions evolved.</p>
+      </div>
+    </section>
+
+    <section class="section section-soft flagship-section cert-ownership-section" id="ownership">
+      <div class="container compact-section">
+        <p class="eyebrow">What I Owned</p>
+        <h2>I owned the learning system.</h2>
+        <p class="short-copy">I received a learning need, early source material, and a deadline. Source teams validated product truth; I turned that evolving truth into a pathway sellers could use and administrators could run.</p>
+        <div class="cert-ownership-interaction" data-ownership="design">
+          <div class="cert-ownership-switch" role="tablist" aria-label="Source authority and learning ownership">
+            <button type="button" id="ownership-tab-source" role="tab" aria-selected="false" aria-controls="ownershipPanel" data-ownership-view="source"><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt="" aria-hidden="true"><span>Source authority</span></button>
+            <button type="button" id="ownership-tab-design" role="tab" aria-selected="true" aria-controls="ownershipPanel" data-ownership-view="design" class="active"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="" aria-hidden="true"><span>My design decisions</span></button>
+          </div>
+          <div class="cert-ownership-scene" aria-hidden="true"><div class="cert-ownership-source-lines"><i></i><i></i><i></i></div><div class="cert-ownership-review-node"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Validate</span></div><div class="cert-ownership-design-node"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><span>Design</span></div><div class="cert-ownership-output"><span>One coherent<br>seller pathway</span></div></div>
+          <div class="cert-ownership-panel" id="ownershipPanel" role="tabpanel" aria-labelledby="ownership-tab-design" aria-live="polite"><strong>From facts to learner decisions</strong><p>I designed objectives, structure, practice, assessment, visuals, LMS behavior, support, and a revision strategy. I documented decisions so a changing portfolio would not fragment the learner experience.</p></div>
+        </div>
+        <p class="cert-ownership-footnote">The source teams still spanned historic business operations. I reconciled ownership and interpretations of scope through review packages and a decision trail, rather than claiming authority over product facts.</p>
       </div>
     </section>
 
     <section class="section section-soft flagship-section" id="blueprint">
       <div class="container compact-section">
-        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-assessment"></use></svg></span><p class="eyebrow">Design Blueprint</p></div>
-        <h2>The certification was designed as one learning system, not a stack of courses.</h2>
-        <p class="short-copy">Switch views to see how the pathway, objective alignment, and launch system connect.</p>
+        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""></span><p class="eyebrow">Design Blueprint</p></div>
+        <h2>I rebuilt the certification as one learning and operating system, not a stack of courses.</h2>
+        <p class="short-copy">Select a view to see the learning architecture, audience routes, objective alignment, and operating layer. Each view shows a different design decision.</p>
         <div class="blueprint-shell">
           <div class="blueprint-tabs" role="tablist" aria-label="Certification design blueprint">
             <button class="blueprint-tab active" type="button" role="tab" aria-selected="true" data-blueprint="pathway"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt="" aria-hidden="true"><span>Curriculum</span></button>
+            <button class="blueprint-tab" type="button" role="tab" aria-selected="false" data-blueprint="audience"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt="" aria-hidden="true"><span>Audience Routes</span></button>
             <button class="blueprint-tab" type="button" role="tab" aria-selected="false" data-blueprint="alignment"><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt="" aria-hidden="true"><span>Objective Alignment</span></button>
-            <button class="blueprint-tab" type="button" role="tab" aria-selected="false" data-blueprint="launch"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt="" aria-hidden="true"><span>Launch</span></button>
+            <button class="blueprint-tab" type="button" role="tab" aria-selected="false" data-blueprint="launch"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt="" aria-hidden="true"><span>Operational Layer</span></button>
           </div>
           <div class="blueprint-panel" id="blueprintPanel" role="tabpanel" aria-live="polite"></div>
         </div>
@@ -141,11 +156,11 @@
 
     <section class="section cert-authoring-section flagship-section" id="authoring">
       <div class="container compact-section">
-        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span><p class="eyebrow">Content</p></div>
+        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span><p class="eyebrow">Content</p></div>
         <div class="authoring-heading-grid">
           <div>
             <h2>A sanitized walkthrough of the curriculum I actually built.</h2>
-            <p class="short-copy">Instead of showing isolated screens, this mini course player follows the seller sequence from context to application and assessment.</p>
+            <p class="short-copy">Click through six representative learner views in a course-player frame. They show how I moved from context to customer decisions, practice, checks, and completion. They are not a literal numbered course sequence.</p>
           </div>
         </div>
 
@@ -160,13 +175,18 @@
           </aside>
 
           <div class="curriculum-player" role="tabpanel" aria-live="polite">
-            <div class="curriculum-player-bar"><span><i></i><i></i><i></i></span><strong>Cellular Networking Sales Certification · sanitized sample</strong><small id="curriculumProgress">1 / 6</small></div>
-            <div class="curriculum-screen"><img id="curriculumImage" src="../../../../assets/project-images/cellular-certification/cert-introduction.webp" alt="Sanitized certification introduction screen."></div>
+            <div class="curriculum-player-bar"><span><i></i><i></i><i></i></span><strong>LEARNER VIEW / Cellular Networking Sales Certification</strong><small id="curriculumProgress">1 / 6</small></div>
+            <div class="curriculum-screen"><div class="curriculum-computer"><div class="curriculum-computer-display"><img id="curriculumImage" src="../../../../assets/project-images/cellular-certification/cert-introduction.webp" alt="Sanitized certification introduction screen."><div class="curriculum-screen-hotspots" id="curriculumHotspots" aria-label="Explore this learner screen"></div></div><div class="curriculum-computer-neck" aria-hidden="true"></div><div class="curriculum-computer-base" aria-hidden="true"></div><p class="curriculum-hotspot-caption" id="curriculumHotspotCaption" aria-live="polite">Select Continue in the learner screen.</p></div></div>
             <div class="curriculum-coach interaction-scroll-region">
               <p class="eyebrow" id="curriculumLabel">Introduction</p>
               <h3 id="curriculumTitle">Start with the seller's job, not a technical data dump.</h3>
               <p id="curriculumSummary">The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.</p>
               <div class="curriculum-decision"><span>Seller behavior</span><strong id="curriculumBehavior">Explain the business context and recognize when the topic belongs in a customer conversation.</strong></div>
+              <div class="curriculum-player-controls" aria-label="Course player controls">
+                <button id="curriculumBack" type="button" aria-label="Previous learner view" aria-controls="curriculumImage curriculumTitle curriculumSummary" disabled>← Back</button>
+                <span id="curriculumStepText" aria-live="polite">Introduction · 1 of 6</span>
+                <button id="curriculumNext" type="button" aria-label="Next learner view" aria-controls="curriculumImage curriculumTitle curriculumSummary">Next →</button>
+              </div>
             </div>
           </div>
         </div>
@@ -236,8 +256,10 @@
 
     <section class="section section-soft flagship-section" id="delivery">
       <div class="container compact-section">
-        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Delivery + Results</p></div>
-        <h2>I carried the work beyond course development into release, LMS behavior, reporting, and maintenance.</h2>
+        <div class="section-kicker"><span class="icon-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""></span><p class="eyebrow">Launch + Operations</p></div>
+        <h2>I carried the work through review, LMS release, learner support, reporting, and maintenance.</h2>
+        <p class="short-copy">Select a stage to see the actual kind of learner or administrator decision involved. Publication was a milestone, not the end of the product.</p>
+        <div class="cert-launch-flight" id="certLaunchFlight" data-stage="build" aria-label="Five launch and operating stages: build, review, LMS and UAT, support and reporting, then maintenance. Select a landing spot on the route to move the rocket and inspect its administrator view."><div class="cert-launch-track" aria-hidden="true"><svg aria-hidden="true" class="cert-launch-trajectory" viewBox="0 0 1000 150" preserveAspectRatio="none"><path d="M55 115 C250 113 260 86 500 80 S780 37 945 24"/></svg><span class="cert-launch-stop">Build</span><span class="cert-launch-stop">Review</span><span class="cert-launch-stop">LMS</span><span class="cert-launch-stop">Support</span><span class="cert-launch-stop">Maintain</span><span class="cert-rocket"><svg viewBox="0 0 92 92" focusable="false"><path class="rocket-body" d="M50 12c15 6 25 23 24 43L55 74 27 46c0-21 10-34 23-34Z"/><path class="rocket-window" d="M53 29a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/><path class="rocket-fin" d="m28 44-13 8v16l23-12M63 65l-9 13H38l-1-22"/><path class="rocket-flame" d="m28 61-12 17 18-10"/></svg></span></div><div class="cert-launch-caption"><strong id="launchStageLabel">Build</strong><span>From development to a maintained credential</span></div></div>
         <div class="delivery-workspace">
           <div class="delivery-tabs" role="tablist" aria-label="Delivery and results">
             <button class="delivery-tab active" type="button" role="tab" aria-selected="true" data-delivery="build">
@@ -252,6 +274,10 @@
               <span class="delivery-tab-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-cloud-upload.webp" alt=""></span>
               <span>LMS + UAT</span>
             </button>
+            <button class="delivery-tab" type="button" role="tab" aria-selected="false" data-delivery="support">
+              <span class="delivery-tab-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""></span>
+              <span>Support + Reporting</span>
+            </button>
             <button class="delivery-tab" type="button" role="tab" aria-selected="false" data-delivery="maintain">
               <span class="delivery-tab-icon" aria-hidden="true"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""></span>
               <span>Maintain</span>
@@ -259,11 +285,106 @@
           </div>
           <div class="delivery-panel" id="deliveryPanel" role="tabpanel" aria-live="polite"></div>
         </div>
-        <div class="related-grid">
-          <a class="related-card" href="../../../lms-administration/learning-platform-operations-migration-readiness/index.html"><span class="related-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span><div><h3>LMS Migration Experience</h3><p>Platform configuration, learner-path validation, UAT, support, and launch operations.</p></div></a>
-          <a class="related-card" href="../../../workflows/data-reporting/certification-reporting-automation/index.html"><span class="related-icon" aria-hidden="true"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><div><h3>Certification Reporting Automation</h3><p>Recurring reporting, completion analysis, and exception handling.</p></div></a>
+      </div>
+    </section>
+
+    <section class="section flagship-section cert-feedback-section" id="feedback">
+      <div class="container compact-section">
+        <p class="eyebrow">Partner Voices</p>
+        <h2>What partners valued.</h2>
+        <p class="short-copy">Their comments helped me see which parts of the experience were useful in practice. Explore four qualitative reactions: two short verbatim excerpts and two clearly marked summaries of positive feedback.</p>
+        <div class="cert-voice-workspace">
+          <div class="cert-voice-topline"><span class="cert-voice-topicon"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""></span><div><small>PARTNER FEEDBACK</small><strong>One reaction at a time</strong></div><span class="cert-voice-count" id="certVoiceCount">01 / 04</span></div>
+          <div class="cert-voice-stage" id="certVoiceStage" role="tabpanel" aria-labelledby="cert-voice-tab-0" aria-live="polite"></div>
+          <div class="cert-voice-controls">
+            <div class="cert-voice-tabs" role="tablist" aria-label="Positive partner reactions">
+              <button id="cert-voice-tab-0" type="button" role="tab" aria-controls="certVoiceStage" aria-selected="true" tabindex="0" class="active" data-positive="0">Structure</button>
+              <button id="cert-voice-tab-1" type="button" role="tab" aria-controls="certVoiceStage" aria-selected="false" tabindex="-1" data-positive="1">Depth</button>
+              <button id="cert-voice-tab-2" type="button" role="tab" aria-controls="certVoiceStage" aria-selected="false" tabindex="-1" data-positive="2">Relevance</button>
+              <button id="cert-voice-tab-3" type="button" role="tab" aria-controls="certVoiceStage" aria-selected="false" tabindex="-1" data-positive="3">Experience</button>
+            </div>
+          </div>
         </div>
-        <p class="public-safe-note"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt="" aria-hidden="true"><span><strong>Portfolio-safe reconstruction.</strong> The work and responsibilities are real. Customer details, solution language, learner data, and internal identifiers are sanitized or fictionalized where needed.</span></p>
+        <p class="cert-feedback-caveat">Anonymous partner comments, not a representative score or outcome metric. Summaries preserve the supplied themes but are not direct quotations.</p>
+      </div>
+    </section>
+
+    <section class="section section-soft flagship-section cert-feedback-cycle-section" id="feedback-cycle">
+      <div class="container compact-section">
+        <p class="eyebrow">Historical Feedback → Design Decisions</p>
+        <h2>Follow the signal through the fix.</h2>
+        <p class="short-copy">Earlier improvement feedback became a structured review cycle: receive a partner signal, diagnose the learning or operating issue, plan a bounded change, execute and QA it, then watch the next feedback and support signals. Select a theme and a stage to see the reasoning.</p>
+        <div class="cert-history-workspace">
+          <div class="cert-history-themes" role="tablist" aria-label="Historical feedback themes">
+            <button id="cert-history-theme-0" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="true" tabindex="0" class="active" data-history-theme="0">Assessment integrity</button>
+            <button id="cert-history-theme-1" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-theme="1">Cognitive load</button>
+            <button id="cert-history-theme-2" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-theme="2">Entry knowledge</button>
+            <button id="cert-history-theme-3" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-theme="3">Time expectations</button>
+          </div>
+          <div class="cert-history-layout">
+            <div class="cert-history-route" aria-label="Five-stage feedback review cycle">
+              <strong class="cert-history-theme-label" id="certHistoryThemeLabel">Reviewing: Assessment integrity</strong>
+              <div class="cert-history-stages" role="tablist" aria-label="Feedback review stages">
+                <button id="cert-history-stage-receive" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="true" tabindex="0" class="active" data-history-stage="receive"><span class="cert-history-icon"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""></span><span>Receive</span></button>
+                <button id="cert-history-stage-diagnose" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-stage="diagnose"><span class="cert-history-icon"><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""></span><span>Diagnose</span></button>
+                <button id="cert-history-stage-plan" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-stage="plan"><span class="cert-history-icon"><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""></span><span>Plan</span></button>
+                <button id="cert-history-stage-execute" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-stage="execute"><span class="cert-history-icon"><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""></span><span>Execute + QA</span></button>
+                <button id="cert-history-stage-observe" type="button" role="tab" aria-controls="certHistoryDetail" aria-selected="false" tabindex="-1" data-history-stage="observe"><span class="cert-history-icon"><img src="../../../../assets/icons/pixel/lms/mini-analytics.webp" alt=""></span><span>Observe</span></button>
+              </div>
+              <div class="cert-history-return" aria-hidden="true"><span>Next signal returns to review</span></div>
+            </div>
+            <div class="cert-history-detail" id="certHistoryDetail" role="tabpanel" aria-labelledby="cert-history-theme-0 cert-history-stage-receive" aria-live="polite">
+              <p class="cert-history-detail-kicker" id="certHistoryKicker">01 / Receive · Assessment integrity</p>
+              <h3 id="certHistoryTitle">Listen before choosing a fix.</h3>
+              <p id="certHistoryCopy">Two partners raised separate assessment concerns: contradictory questions and a final-exam answer marked incorrect.</p>
+              <p class="cert-history-detail-note" id="certHistoryNote">Historical partner signal, paraphrased.</p>
+            </div>
+          </div>
+        </div>
+        <p class="cert-feedback-caveat">The examples describe my maintenance process and documented design response; they do not claim every historical issue was resolved by one edit or that later scores improved.</p>
+      </div>
+    </section>
+
+    <section class="section section-soft flagship-section cert-constraint-section" id="constraint">
+      <div class="container compact-section">
+        <p class="eyebrow">An Early Enablement Gap</p>
+        <h2>I could see the enablement gap before I could bridge it.</h2>
+        <p class="short-copy">The approved scope began with training content. I improved the practice, terminology, and support within my control, documented the broader need, and returned to it when the organization and my work connected more directly with enablement.</p>
+        <div class="cert-cliff-scene" aria-label="The original training scope covered course clarity and practice, but a gap remained before full seller enablement: role support, post-training application, and cross-team ownership. Later alignment allowed the need to be revisited."><div class="cert-cliff-side cert-cliff-now"><span class="cert-cliff-flag">Original scope</span><strong>Training</strong><small>Clarity · practice · resources</small></div><div class="cert-cliff-gap"><span class="cert-gap-item">Post-training application</span><span class="cert-gap-item">Role support</span><span class="cert-gap-item">Cross-team ownership</span><div class="cert-cliff-depth"></div></div><div class="cert-cliff-side cert-cliff-next"><span class="cert-cliff-flag">Broader need</span><strong>Enablement</strong><small>Support beyond completion</small></div></div>
+        <p class="cert-cliff-note">I could not unilaterally expand another team’s scope. Keeping the gap visible helped me make bounded improvements first, then act on the larger opportunity when ownership aligned.</p>
+      </div>
+    </section>
+
+    <section class="section flagship-section cert-evolution-section" id="evolution">
+      <div class="container compact-section">
+        <p class="eyebrow">Continuous Redesign</p>
+        <h2>Visible decisions made the certification easier to evolve.</h2>
+        <div class="cert-evolution-layout">
+          <div class="cert-evolution-copy">
+            <p>Product updates, feedback, SME conversations, sales, marketing, and enablement revealed where the portfolio was heading. I kept the structure flexible so names, messages, audiences, and features could be revised in bounded sections.</p>
+            <p>I did not predict every change. I preserved the reasoning behind each decision so new reviewers could revise the pathway without starting over.</p>
+          </div>
+          <div class="cert-change-console" aria-label="Interactive maintainability example">
+            <div class="cert-console-header"><strong>Revision impact</strong><span>SELECT A CHANGE</span></div>
+            <div class="cert-change-controls" role="tablist" aria-label="Changes absorbed by the learning system">
+              <button type="button" role="tab" aria-selected="true" class="active" data-change="terminology">Terminology</button>
+              <button type="button" role="tab" aria-selected="false" data-change="audience">Audience</button>
+              <button type="button" role="tab" aria-selected="false" data-change="product">Product</button>
+            </div>
+            <div class="cert-change-display" id="certChangeDisplay" role="tabpanel" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="cert-alignment-story" aria-label="Separate historic source teams converge through a decision record and clearer review loops into stronger learning and enablement alignment"><div class="cert-alignment-sources"><span>Historic source team A</span><span>Historic source team B</span></div><div class="cert-alignment-ledger"><small>Shared record</small><strong>Decision history</strong></div><div class="cert-alignment-review"><small>Working rhythm</small><strong>Review + ownership</strong></div><div class="cert-alignment-result"><small>More integrated</small><strong>Learning + enablement</strong></div></div>
+        <p class="cert-alignment-caption">I strengthened source traceability, SME coordination, review packages, communication, and handoffs as organizational decisions evolved. The certification became a shared reference point for learning and business teams, not just an LMS item.</p>
+      </div>
+    </section>
+
+    <section class="section section-soft flagship-section cert-lessons-section" id="lessons">
+      <div class="container compact-section">
+        <p class="eyebrow">What This Taught Me</p>
+        <h2>Build the learning system for its next version, not only its first release.</h2>
+        <div class="cert-growth-workbench" data-growth="history"><div class="cert-growth-brain" aria-hidden="true"><svg viewBox="0 0 240 240"><path d="M115 43c-26-25-66-6-66 24-19 7-24 32-10 45-17 19-8 48 15 54-3 24 23 41 45 31 9 13 30 13 39 0 22 10 48-7 45-31 23-6 32-35 15-54 14-13 9-38-10-45 0-30-40-49-66-24Z"/><path d="M119 43v153M83 70c17 2 24 11 27 26M62 115c19-5 37 1 46 17M72 159c13-3 28 2 35 14M155 70c-17 2-24 11-27 26M176 115c-19-5-37 1-46 17M166 159c-13-3-28 2-35 14"/><circle class="growth-node growth-history" cx="83" cy="70" r="7"/><circle class="growth-node growth-business" cx="155" cy="70" r="7"/><circle class="growth-node growth-authority" cx="62" cy="115" r="7"/><circle class="growth-node growth-feedback" cx="176" cy="115" r="7"/><circle class="growth-node growth-lms" cx="72" cy="159" r="7"/><circle class="growth-node growth-change" cx="166" cy="159" r="7"/></svg><span>Growth through<br>the project</span></div><div class="cert-growth-skills" role="tablist" aria-label="What the project taught me"><button class="active" type="button" role="tab" aria-selected="true" data-growth="history">Decision history</button><button type="button" role="tab" aria-selected="false" data-growth="business">Business context</button><button type="button" role="tab" aria-selected="false" data-growth="authority">Source authority</button><button type="button" role="tab" aria-selected="false" data-growth="feedback">Feedback judgment</button><button type="button" role="tab" aria-selected="false" data-growth="lms">LMS thinking</button><button type="button" role="tab" aria-selected="false" data-growth="change">Change-ready design</button></div><div class="cert-growth-insight" id="certGrowthInsight" role="tabpanel" aria-live="polite"><strong>Preserve decision history</strong><p>When source owners or terminology change, documented rationale protects consistency.</p></div></div>
+        <p class="public-safe-note"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt="" aria-hidden="true"><span><strong>Portfolio-safe reconstruction.</strong> The work and responsibilities are real. Customer details, solution language, learner data, and internal identifiers are sanitized or fictionalized where needed. The interface demonstrations illustrate the operating patterns; they are not screenshots of a private LMS.</span></p>
       </div>
     </section>
   </main>
