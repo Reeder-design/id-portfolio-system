@@ -26,7 +26,7 @@
       label: '03 / Sources',
       title: 'Decision continuity mattered as much as collecting comments.',
       text: 'The source teams still reflected historic business lines. I organized questions and decisions from multiple channels into reviewed action plans, concrete edits, and traceable deliverables.',
-      motion: `<div class="cert-communications-visual" aria-hidden="true"><div class="cert-comms-inputs"><span><img src="../../../../assets/icons/pixel/lms/mini-email.webp" alt="">Email</span><span><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt="">SME chat</span><span><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt="">Review notes</span></div><div class="cert-comms-funnel"><i></i><b>Sort + decide</b></div><div class="cert-comms-output"><span>Action plan</span><span>Owner + date</span><span>Deliverable</span></div></div>`
+      motion: `<div class="cert-communications-visual" aria-hidden="true"><div class="cert-comms-inputs"><span><img src="../../../../assets/icons/pixel/lms/mini-email.webp" alt="">Email</span><span><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt="">SME chat</span><span><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt="">Review notes</span></div><div class="cert-comms-funnel"><i></i><b>Review + decide</b></div><div class="cert-comms-output"><span>Action plan</span><span>Owner + date</span><span>Deliverable</span></div></div>`
     },
     timeline: {
       label: '04 / Delivery',
