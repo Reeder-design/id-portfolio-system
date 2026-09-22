@@ -233,7 +233,7 @@
       heading: "A milestone changes what a learner can do.",
       description: "Completion may qualify someone for new responsibilities, access, an opportunity, or the next step in a job process. In sales enablement, it can establish a common foundation for seller and partner conversations.",
       takeaway: "I make the required learning and the completion threshold clear before someone reaches the gate.",
-      scene: `<div class="cp-unlock-visual"><div class="cp-unlock-path"><span>LEARNING</span><span>ASSESSMENT</span><span class="cp-unlock-gate"><img src="${icon("mini-shield")}" alt="">QUALIFIED</span></div><div class="cp-unlock-open"><img src="${icon("mini-certificate")}" alt=""><strong>Next responsibility</strong></div></div>`
+      scene: `<div class="cp-unlock-visual"><div class="cp-unlock-path"><span class="cp-unlock-step">LEARNING</span><span class="cp-unlock-step">ASSESSMENT</span><span class="cp-unlock-step cp-unlock-gate"><img src="${icon("mini-shield")}" alt="">QUALIFIED</span></div><div class="cp-unlock-open"><img src="${icon("mini-certificate")}" alt=""><strong>Next responsibility</strong></div></div>`
     },
     governance: {
       kicker: "Governance + delivery",
@@ -244,10 +244,10 @@
     },
     visibility: {
       kicker: "Reporting + support",
-      heading: "The system needs attention after launch.",
-      description: "Enrollment, progress, assessment performance, certification, feedback, and adoption need continuing visibility. Learners also need direct help when access, navigation, or completion issues block the next step in their role.",
-      takeaway: "Reporting and support signals help me distinguish a content problem from a delivery or record problem.",
-      scene: `<div class="cp-visibility-visual"><div class="cp-visibility-dashboard"><span>PROGRAM VIEW</span><div class="cp-visibility-bars"><i></i><i></i><i></i><i></i></div><div class="cp-visibility-counts"><b>Enrolled</b><b>Progress</b><b>Complete</b></div></div><div class="cp-visibility-ticket"><img src="${icon("mini-headset")}" alt=""><span><strong>Learner blocker</strong><small>Access → resolved</small></span></div></div>`
+      heading: "An incomplete record can block the next step.",
+      description: "Reporting reveals when a learner has not finished a required assessment or when completion fails to record. I investigate the learning, delivery, and support signals before a missing milestone stalls what comes next.",
+      takeaway: "I use reporting and learner support to locate the blocker, then confirm the completion record is accurate.",
+      scene: `<div class="cp-visibility-visual"><div class="cp-visibility-dashboard"><span>PROGRAM VIEW</span><div class="cp-visibility-status"><strong>Learning 2 / 3 complete</strong><span>Assessment pending</span></div><div class="cp-visibility-progress"><i></i></div><div class="cp-visibility-blocked"><span class="cp-visibility-lock" aria-hidden="true"><img src="../../../assets/icons/pixel/lms-admin/general/security-lock.png" alt=""></span><strong>Next step locked</strong><small>Required learning incomplete</small></div></div><div class="cp-visibility-ticket"><img src="${icon("mini-headset")}" alt=""><span><strong>Support investigates</strong><small>Learning or record issue?</small></span></div></div>`
     }
   };
   const weightWorkspace = document.querySelector(".cp-weight-layout");

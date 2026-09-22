@@ -14,25 +14,25 @@
       label: '01 / Origin',
       title: 'Two historic lines and a new third line needed one pathway.',
       text: 'The original lines came from separate business operations that were merging. The new line had to join the broader portfolio without erasing meaningful distinctions for sellers.',
-      motion: `<div class="cert-origin-visual" aria-hidden="true"><div class="cert-origin-routes"><span class="cert-origin-route"><i></i><b>Line A</b></span><span class="cert-origin-route"><i></i><b>Line B</b></span><span class="cert-origin-route"><i></i><b>Line C</b></span></div><div class="cert-origin-hub"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""></span><b>One pathway</b></div><div class="cert-origin-output"><i></i><i></i><i></i><small>Shared core<br>Distinct context</small></div></div>`
+      motion: `<div class="cert-origin-visual" aria-hidden="true"><div class="cert-origin-routes"><span class="cert-origin-route"><i></i><b>Line A</b></span><span class="cert-origin-route"><i></i><b>Line B</b></span><span class="cert-origin-route"><i></i><b>Line C</b></span></div><div class="cert-origin-hub"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""></span><b>One customizable learning path</b></div><div class="cert-origin-hierarchy"><span>Different audiences</span><span>Geographical regions</span><span>Product-information needs</span></div></div>`
     },
     change: {
-      label: '02 / Change',
-      title: 'The underlying information changed on several fronts at once.',
-      text: 'I reconciled names, features, terminology, messaging, target verticals, positioning, go-to-market routes, brand, assessment, and delivery so a learner still encountered one coherent journey.',
-      motion: `<div class="cert-change-visual" aria-hidden="true"><div class="cert-change-dials"><span><i></i>Names</span><span><i></i>Messaging</span><span><i></i>Markets</span><span><i></i>Brand</span></div><div class="cert-change-focus"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-edit.webp" alt=""></span><b>Reconcile</b></div><div class="cert-change-path"><i></i><i></i><i></i><strong>Stable seller path</strong></div></div>`
+      label: '02 / Research',
+      title: 'I researched and sifted the source material before building the pathway.',
+      text: 'Product guides, documents, decks, recordings, and review conversations held different pieces of the story. I scanned for learner-relevant facts, flagged uncertainty, and brought source-owner questions into review.',
+      motion: `<div class="cert-research-visual" aria-hidden="true"><div class="cert-research-sources"><span data-type="PDF">PDF<mark>use case</mark></span><span data-type="DOC">Word<mark>terms</mark></span><span data-type="PPT">Slides<mark>position</mark></span><span data-type="▶">Video<mark>demo</mark></span><span data-type="GUIDE">Guide<mark>limits</mark></span></div><div class="cert-research-scanner"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""></span><b>Scan · select · verify</b></div><div class="cert-research-findings"><i></i><i></i><i></i><strong>Key learning evidence</strong></div></div>`
     },
     sources: {
       label: '03 / Sources',
       title: 'Decision continuity mattered as much as collecting comments.',
-      text: 'Source teams were still partly separated by historic business lines. I tracked who owned each fact, recorded changes and rationale, and kept review packages aligned as authority and scope evolved.',
-      motion: `<div class="cert-source-visual" aria-hidden="true"><div class="cert-source-stamps"><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt=""></span><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""></span><span class="cert-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""></span></div><div class="cert-source-ledger"><b>Decision record</b><span><i>✓</i>Owner</span><span><i>✓</i>Rationale</span><span><i>✓</i>Version</span></div><div class="cert-source-tail">Traceable<br>revision</div></div>`
+      text: 'The source teams still reflected historic business lines. I organized questions and decisions from multiple channels into reviewed action plans, concrete edits, and traceable deliverables.',
+      motion: `<div class="cert-communications-visual" aria-hidden="true"><div class="cert-comms-inputs"><span><img src="../../../../assets/icons/pixel/lms/mini-email.webp" alt="">Email</span><span><img src="../../../../assets/icons/pixel/lms/mini-chat.webp" alt="">SME chat</span><span><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt="">Review notes</span></div><div class="cert-comms-funnel"><i></i><b>Sort + decide</b></div><div class="cert-comms-output"><span>Action plan</span><span>Owner + date</span><span>Deliverable</span></div></div>`
     },
     timeline: {
       label: '04 / Delivery',
       title: 'The target moved from about ten months to about four.',
       text: 'I reprioritized, used reusable structures, planned parallel development and review, and protected essential learning and validation gates rather than treating the shorter window as permission to strip out the system.',
-      motion: `<div class="cert-timeline-visual" aria-hidden="true"><small class="cert-timeline-key">One cell ≈ one month</small><div class="cert-timeline-row"><b>Original</b><span class="cert-timeline-track long"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~10</strong></div><div class="cert-timeline-row"><b>Replanned</b><span class="cert-timeline-track short"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><strong>~4</strong></div><div class="cert-timeline-phases"><span>Design</span><span>Parallel build + review</span><span>UAT</span><span>Release</span></div></div>`
+      motion: `<div class="cert-timeline-shift" aria-hidden="true"><div class="cert-timeline-header"><span>Original plan</span><b>≈ 10 months</b></div><div class="cert-timeline-axis"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="cert-timeline-compress"><span>Reprioritize</span><span>Parallel build + review</span><span>Protect UAT</span></div><div class="cert-timeline-header revised"><span>Replanned release</span><b>≈ 4 months</b></div><div class="cert-timeline-axis revised"><i></i><i></i><i></i><i></i></div><div class="cert-timeline-phases"><span>Design</span><span>Build + review</span><span>UAT</span><span>Release</span></div></div>`
     }
   };
   const overviewButtons = [...document.querySelectorAll('[data-overview]')];
@@ -40,6 +40,7 @@
   const overviewTitle = document.getElementById('overviewDetailTitle');
   const overviewText = document.getElementById('overviewDetailText');
   const overviewMotion = document.getElementById('overviewMotion');
+  let overviewSwitchTimer = 0;
   const selectOverview = (button) => {
     const data = overviewData[button.dataset.overview];
     const detail = document.getElementById('overviewDetail');
@@ -52,7 +53,8 @@
       item.tabIndex = active ? 0 : -1;
     });
     detail.classList.add('is-switching');
-    window.setTimeout(() => {
+    if (overviewSwitchTimer) window.clearTimeout(overviewSwitchTimer);
+    overviewSwitchTimer = window.setTimeout(() => {
       overviewLabel.textContent = data.label;
       overviewTitle.textContent = data.title;
       overviewText.textContent = data.text;
@@ -61,6 +63,7 @@
         overviewMotion.innerHTML = data.motion;
       }
       detail.classList.remove('is-switching');
+      overviewSwitchTimer = 0;
     }, 110);
   };
   overviewButtons.forEach((button, index) => {
@@ -110,7 +113,7 @@
           <div class="cert-map-rail"><span><b>01</b>Context</span><span><b>02</b>Use cases</span><span><b>03</b>Positioning</span><span><b>04</b>Handoff</span></div>
           <div class="cert-map-transfer"><span>Learn</span><i></i><span>Apply</span><i></i><span>Prove</span></div>
           <div class="cert-map-gates"><span>Practice</span><span>Checks</span><span>Assessment</span><span>Credential</span></div>
-          <div class="cert-map-foundation"><span>LMS + support</span><span>Reporting + feedback ↶</span></div>
+          <div class="cert-map-foundation"><span>LMS + support</span><span>Reporting + feedback</span></div>
         </div>
         <p class="cert-panel-takeaway">The seller job defined the scope: recognize a situation, ask useful discovery questions, distinguish approaches, explain value, and know the next step—not become an implementation engineer.</p>`
     },
@@ -498,11 +501,21 @@
     if (!data || !deliveryPanel) return;
     const update = () => {
       const selected = deliveryButtons.find((button) => button.dataset.delivery === key);
-      if (selected) deliveryPanel.setAttribute('aria-labelledby', selected.id);
+      const visibleStage = document.getElementById(`cert-launch-stage-${key}`);
+      if (visibleStage || selected) deliveryPanel.setAttribute('aria-labelledby', visibleStage?.id || selected.id);
       const flight = document.getElementById('certLaunchFlight');
       if (flight) flight.dataset.stage = key;
+      document.querySelectorAll('.cert-launch-stop-button').forEach((stop, stopIndex) => {
+        const active = deliveryButtons[stopIndex]?.dataset.delivery === key;
+        stop.classList.toggle('active', active);
+        stop.setAttribute('aria-current', active ? 'step' : 'false');
+        stop.setAttribute('aria-selected', String(active));
+        stop.tabIndex = active ? 0 : -1;
+      });
       const stageLabel = document.getElementById('launchStageLabel');
       if (stageLabel) stageLabel.textContent = data.label;
+      const stageSummary = flight?.querySelector('.cert-launch-caption span');
+      if (stageSummary) stageSummary.textContent = data.title;
       deliveryPanel.innerHTML = `
         <div class="cert-ops-copy"><p class="delivery-panel-label">${data.label}</p><h3>${data.title}</h3><p>${data.action}</p></div>
         <div class="cert-ops-device" aria-label="Public-safe administrator interface reconstruction for ${data.label}"><div class="cert-ops-device-bar"><i></i><i></i><i></i><span>portfolio-safe interface example</span></div>${data.view}</div>`;
@@ -559,6 +572,35 @@
     });
   });
   deliveryButtons.forEach((button, index) => { button.tabIndex = index === 0 ? 0 : -1; });
+  const launchTrack = document.querySelector('.cert-launch-track');
+  const launchStops = [...document.querySelectorAll('.cert-launch-stop')];
+  const launchFlight = document.getElementById('certLaunchFlight');
+  const deliveryWorkspace = document.querySelector('.delivery-workspace');
+  if (launchFlight && deliveryWorkspace) launchFlight.append(deliveryWorkspace);
+  if (launchTrack) { launchTrack.removeAttribute('aria-hidden'); launchTrack.setAttribute('role','tablist'); launchTrack.setAttribute('aria-label','Launch and operations stages'); }
+  const duplicateDeliveryTabs = document.querySelector('.delivery-tabs');
+  if (duplicateDeliveryTabs) { duplicateDeliveryTabs.hidden = true; duplicateDeliveryTabs.setAttribute('aria-hidden','true'); }
+  launchStops.forEach((stop, index) => {
+    const trigger = document.createElement('button');
+    trigger.className = 'cert-launch-stop-button';
+    trigger.type = 'button';
+    trigger.id = `cert-launch-stage-${deliveryButtons[index]?.dataset.delivery}`;
+    trigger.setAttribute('role','tab');
+    trigger.setAttribute('aria-controls','deliveryPanel');
+    trigger.setAttribute('aria-selected',String(index === 0));
+    trigger.tabIndex = index === 0 ? 0 : -1;
+    trigger.innerHTML = `<span class="cert-launch-dot" aria-hidden="true"></span><span>${stop.textContent}</span><small>Explore</small>`;
+    trigger.setAttribute('aria-label', `Explore ${deliveryButtons[index]?.textContent.trim()} launch stage`);
+    trigger.addEventListener('click', () => deliveryButtons[index]?.click());
+    trigger.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? launchStops.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + launchStops.length) % launchStops.length;
+      const nextStop = launchTrack.querySelectorAll('.cert-launch-stop-button')[next];
+      nextStop?.focus(); nextStop?.click();
+    });
+    stop.replaceWith(trigger);
+  });
   renderDelivery('build');
 
   const historicalSignals = [
@@ -655,7 +697,6 @@
       renderVoice(next);
     });
   });
-  document.getElementById('certVoiceNext')?.addEventListener('click', () => renderVoice((activeVoice + 1) % positiveReactions.length));
   renderVoice(0);
 
   const historicalStages = ['receive', 'diagnose', 'plan', 'execute', 'observe'];
@@ -688,6 +729,9 @@
       button.setAttribute('aria-selected', String(active));
       button.tabIndex = active ? 0 : -1;
     });
+    const themeLabel = document.getElementById('certHistoryThemeLabel');
+    if (themeLabel) themeLabel.textContent = `Reviewing: ${signal.label}`;
+    document.querySelector('.cert-history-route')?.style.setProperty('--history-progress', `${((step + 0.5) / historicalStages.length) * 100}%`);
     const copy = {
       receive: signal.signal,
       diagnose: `${signal.revealed} ${signal.context}`,
@@ -723,9 +767,9 @@
   renderHistory();
 
   const changeData = {
-    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA' },
-    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support' },
-    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest' }
+    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA', visual:'<div class="cert-revision-visual term" aria-hidden="true"><span>Old term</span><i></i><span>Approved term</span><b>2 lessons + 1 check</b></div>' },
+    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support', visual:'<div class="cert-revision-visual audience" aria-hidden="true"><span>Seller</span><span>Partner</span><i></i><b>Shared core</b><em>Route test ✓</em></div>' },
+    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest', visual:'<div class="cert-revision-visual product" aria-hidden="true"><span>Source update</span><i></i><b>Scenario cue</b><em>Retest ✓</em></div>' }
   };
   const changeButtons = [...document.querySelectorAll('[data-change]')];
   const changeDisplay = document.getElementById('certChangeDisplay');
@@ -735,7 +779,8 @@
     changeButtons.forEach((button) => { const active = button.dataset.change === key; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); button.tabIndex = active ? 0 : -1; });
     const selected = changeButtons.find((button) => button.dataset.change === key);
     if (selected) changeDisplay.setAttribute('aria-labelledby', selected.id);
-    changeDisplay.innerHTML = `<div class="cert-redesign-cycle" aria-label="Change is traced, revised, reviewed, released, and monitored before the next change"><div class="cert-cycle-ring" aria-hidden="true"><span class="cert-cycle-step step-one">Trace</span><span class="cert-cycle-step step-two">Revise</span><span class="cert-cycle-step step-three">Review</span><span class="cert-cycle-step step-four">Release</span><span class="cert-cycle-step step-five">Monitor</span><span class="cert-cycle-center"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><b>Next version</b></span></div></div><div class="cert-cycle-explain"><small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
+    changeDisplay.dataset.change = key;
+    changeDisplay.innerHTML = `<div class="cert-redesign-cycle" aria-label="Change is traced, revised, reviewed, released, and monitored before the next change"><div class="cert-cycle-ring" aria-hidden="true"><span class="cert-cycle-step step-one">Trace</span><span class="cert-cycle-step step-two">Revise</span><span class="cert-cycle-step step-three">Review</span><span class="cert-cycle-step step-four">Release</span><span class="cert-cycle-step step-five">Monitor</span><span class="cert-cycle-center"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><b>Next version</b></span></div></div><div class="cert-cycle-explain">${data.visual}<small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
   };
   changeButtons.forEach((button, index) => {
     button.tabIndex = index === 0 ? 0 : -1;
@@ -765,10 +810,35 @@
   const curriculumHotspotCaption=document.getElementById('curriculumHotspotCaption');
   const curriculumBack=document.getElementById('curriculumBack');
   const curriculumNext=document.getElementById('curriculumNext');
+  const curriculumDisplay = document.querySelector('.curriculum-computer-display');
+  let checkedAnswer = false;
+  let selectedAnswer = -1;
+  let completedFromQuiz = false;
+  let quizAdvanceTimer = 0;
+  let lastCurriculumKey = '';
+  const continueInScreen = () => {
+    const index = curriculumButtons.findIndex((button) => button.classList.contains('active'));
+    if (index < curriculumButtons.length - 1) renderCurriculum(curriculumButtons[index + 1].dataset.curriculum);
+    else { checkedAnswer = false; selectedAnswer = -1; renderCurriculum('intro'); }
+    curriculumHotspots?.querySelector('.curriculum-vertical-hotspot,.curriculum-outcome-cover:not(:disabled),.curriculum-quiz-answer,.curriculum-screen-continue')?.focus();
+  };
+  const screenButton = (label, className, action) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = className;
+    button.textContent = label;
+    button.addEventListener('click', action);
+    return button;
+  };
   const renderCurriculum=(key)=>{
     const data=curriculumData[key]; if(!data||!curriculumImage)return;
+    if (quizAdvanceTimer) { window.clearTimeout(quizAdvanceTimer); quizAdvanceTimer = 0; }
+    if (key === 'check' && lastCurriculumKey !== 'check') { selectedAnswer = -1; checkedAnswer = false; }
+    lastCurriculumKey = key;
     const index=curriculumButtons.findIndex(button=>button.dataset.curriculum===key);
     curriculumButtons.forEach((button,buttonIndex)=>{const active=buttonIndex===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;});
+    const completionTab = curriculumButtons.find((button) => button.dataset.curriculum === 'complete');
+    if (completionTab) { completionTab.disabled = !checkedAnswer; completionTab.setAttribute('aria-disabled', String(!checkedAnswer)); }
     curriculumPlayer?.setAttribute('aria-labelledby',curriculumButtons[index].id);
     document.getElementById('curriculumProgress').textContent=(index+1)+' / '+curriculumButtons.length;
     document.getElementById('curriculumLabel').textContent=data.label;
@@ -779,24 +849,118 @@
     curriculumBack.disabled=index===0;
     curriculumNext.textContent=index===curriculumButtons.length-1?'Restart ↺':'Next →';
     curriculumNext.setAttribute('aria-label',index===curriculumButtons.length-1?'Restart learner walkthrough':'Next learner view');
+    curriculumNext.disabled = key === 'check' && !checkedAnswer;
+    curriculumDisplay.dataset.view = key;
     if (curriculumHotspots && curriculumHotspotCaption) {
-      curriculumHotspotCaption.textContent = 'Select a marker to inspect a learning decision.';
-      curriculumHotspots.replaceChildren(...data.hotspots.map(([label, detail], hotspotIndex) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = `curriculum-hotspot hotspot-${hotspotIndex + 1}`;
-        button.setAttribute('aria-label', `Inspect ${label.toLowerCase()} in ${data.label}`);
-        button.innerHTML = `<span>${hotspotIndex + 1}</span><small>${label}</small>`;
-        button.addEventListener('click', () => {
-          curriculumHotspots.querySelectorAll('button').forEach((item) => item.classList.remove('active'));
-          button.classList.add('active');
-          curriculumHotspotCaption.textContent = detail;
+      curriculumHotspots.replaceChildren();
+      if (key === 'market') {
+        const verticals = [
+          ['Manufacturing', 'Fictional use case: connect mobile workstations across a busy production floor.'],
+          ['Transportation', 'Fictional use case: keep dispatch and yard teams connected as vehicles move.'],
+          ['Healthcare', 'Fictional use case: support secure connectivity for mobile clinical workflows.'],
+          ['Education', 'Fictional use case: connect campus operations across buildings and outdoor areas.'],
+          ['Energy & Utilities', 'Fictional use case: reach field crews and connected assets in remote areas.'],
+          ['Public Sector', 'Fictional use case: support reliable communications for distributed service teams.']
+        ];
+        const grid = document.createElement('div');
+        grid.className = 'curriculum-vertical-grid';
+        verticals.forEach(([label, description], tileIndex) => {
+          const tile = screenButton(label, 'curriculum-vertical-hotspot', () => {
+            grid.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === tile));
+            curriculumHotspotCaption.textContent = description;
+          });
+          tile.setAttribute('aria-label', `Explore ${label} cellular use case`);
+          tile.style.setProperty('--tile-index', tileIndex);
+          grid.append(tile);
         });
-        return button;
-      }));
+        curriculumHotspots.append(grid);
+        curriculumHotspotCaption.textContent = 'Select an industry tile to see a fictional cellular use case.';
+      } else if (key === 'value') {
+        const outcomes = ['Supports growth and new use cases', 'Helps protect people, devices, and data', 'Reduces complexity and IT workload'];
+        const covers = document.createElement('div');
+        covers.className = 'curriculum-outcome-covers';
+        outcomes.forEach((outcome) => {
+          const cover = screenButton('Click me', 'curriculum-outcome-cover', () => {
+            cover.classList.add('revealed');
+            cover.disabled = true;
+            curriculumHotspotCaption.textContent = outcome;
+            const nextCover = covers.querySelector('.curriculum-outcome-cover:not(:disabled)');
+            if (nextCover) nextCover.focus();
+            else curriculumHotspots.querySelector('.curriculum-screen-continue')?.focus();
+          });
+          cover.setAttribute('aria-label', `Reveal outcome: ${outcome}`);
+          covers.append(cover);
+        });
+        curriculumHotspots.append(covers);
+        curriculumHotspotCaption.textContent = 'Reveal the three value outcomes, then continue.';
+      } else if (key === 'check') {
+        const quiz = document.createElement('div');
+        quiz.className = 'curriculum-live-quiz';
+        quiz.innerHTML = '<div class="curriculum-quiz-header"><small>KNOWLEDGE CHECK · 05 / 06</small><strong>What’s the Biggest Benefit?</strong><p>Choose the strongest outcome for a customer who needs dependable cellular connectivity.</p></div><div class="curriculum-quiz-answers" role="radiogroup" aria-label="Biggest benefit options"></div><p class="curriculum-quiz-feedback" aria-live="polite">Choose an answer, then check it.</p>';
+        const answers = ['Improved reliability and uptime', 'Lower hardware costs', 'More devices on the network', 'Faster initial setup'];
+        const answerBox = quiz.querySelector('.curriculum-quiz-answers');
+        const feedback = quiz.querySelector('.curriculum-quiz-feedback');
+        answers.forEach((answer, answerIndex) => {
+          const choice = screenButton(answer, 'curriculum-quiz-answer', () => {
+            selectedAnswer = answerIndex;
+            checkedAnswer = false;
+            curriculumNext.disabled = true;
+            if (completionTab) { completionTab.disabled = true; completionTab.setAttribute('aria-disabled','true'); }
+            answerBox.querySelectorAll('button').forEach((item, itemIndex) => {
+              item.classList.toggle('selected', itemIndex === answerIndex);
+              item.classList.remove('incorrect');
+              item.setAttribute('aria-checked', String(itemIndex === answerIndex));
+            });
+            feedback.textContent = 'Ready to check your answer.';
+            feedback.classList.remove('incorrect');
+          });
+          choice.setAttribute('role', 'radio');
+          choice.setAttribute('aria-checked', String(selectedAnswer === answerIndex));
+          if (selectedAnswer === answerIndex) choice.classList.add('selected');
+          answerBox.append(choice);
+        });
+        answerBox.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+          event.preventDefault();
+          const options = [...answerBox.querySelectorAll('button')];
+          const current = options.indexOf(document.activeElement);
+          const target = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1 : (current + (['ArrowLeft','ArrowUp'].includes(event.key) ? -1 : 1) + options.length) % options.length;
+          options[target].focus(); options[target].click();
+        });
+        const check = screenButton('Check Answer', 'curriculum-screen-continue curriculum-quiz-check', () => {
+          if (selectedAnswer < 0) { feedback.textContent = 'Select an answer first.'; return; }
+          if (selectedAnswer !== 0) {
+            answerBox.querySelectorAll('button').forEach((item, itemIndex) => item.classList.toggle('incorrect', itemIndex === selectedAnswer));
+            feedback.textContent = 'Try again. Think about the customer’s core need.';
+            feedback.classList.add('incorrect');
+            return;
+          }
+          checkedAnswer = true;
+          completedFromQuiz = true;
+          feedback.textContent = 'Correct! Reliable service is the central benefit in this example.';
+          quiz.classList.add('correct');
+          quizAdvanceTimer = window.setTimeout(() => { quizAdvanceTimer = 0; renderCurriculum('complete'); curriculumHotspots.querySelector('.curriculum-screen-continue')?.focus(); }, 520);
+        });
+        quiz.append(check);
+        curriculumHotspots.append(quiz);
+        curriculumHotspotCaption.textContent = 'Answer the question to unlock completion.';
+      } else {
+        curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Continue to the next module when ready.' : 'Select Continue in the learner screen.';
+      }
+      if (key !== 'check') {
+        const label = key === 'complete' ? 'Continue to Next Module →' : 'Continue →';
+        curriculumHotspots.append(screenButton(label, 'curriculum-screen-continue', continueInScreen));
+      }
+      if (key === 'complete' && completedFromQuiz) {
+        const celebration = document.createElement('div');
+        celebration.className = 'curriculum-celebration';
+        celebration.setAttribute('aria-hidden', 'true');
+        celebration.innerHTML = '<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>';
+        curriculumHotspots.prepend(celebration);
+        completedFromQuiz = false;
+      }
     }
-    curriculumImage.classList.add('is-switching');
-    window.setTimeout(()=>{curriculumImage.src=data.image;curriculumImage.alt=data.alt;curriculumImage.classList.remove('is-switching');},100);
+    if (key !== 'check') { curriculumImage.src=data.image; curriculumImage.alt=data.alt; }
   };
   curriculumButtons.forEach((button,index)=>{
     button.addEventListener('click',()=>renderCurriculum(button.dataset.curriculum));
@@ -807,6 +971,7 @@
       if(event.key==='Home')next=0; else if(event.key==='End')next=curriculumButtons.length-1;
       else if(event.key==='ArrowDown'||event.key==='ArrowRight')next=(index+1)%curriculumButtons.length;
       else next=(index-1+curriculumButtons.length)%curriculumButtons.length;
+      if (curriculumButtons[next].disabled) { curriculumHotspotCaption.textContent = 'Complete the knowledge check to unlock this screen.'; return; }
       curriculumButtons[next].focus();renderCurriculum(curriculumButtons[next].dataset.curriculum);
     });
   });
@@ -819,7 +984,9 @@
   });
   curriculumNext?.addEventListener('click',()=>{
     const index=curriculumButtons.findIndex((button)=>button.classList.contains('active'));
+    if (index === 4 && !checkedAnswer) return;
     const next=(index+1)%curriculumButtons.length;
+    if (next === 0) { checkedAnswer = false; selectedAnswer = -1; }
     renderCurriculum(curriculumButtons[next].dataset.curriculum);
   });
   curriculumButtons.forEach((button,index)=>button.tabIndex=index===0?0:-1);
@@ -837,11 +1004,36 @@
   const growthButtons = [...document.querySelectorAll('.cert-growth-skills button[data-growth]')];
   const growthInsight = document.getElementById('certGrowthInsight');
   linkTabPanel(growthButtons, growthInsight, 'cert-growth');
+  const growthIcons = ['mini-document-list.webp','mini-analytics.webp','mini-shield.webp','mini-chat.webp','mini-database.webp','mini-sync.webp'];
   growthButtons.forEach((button, index) => {
-    button.tabIndex = index === 0 ? 0 : -1;
+    const bubble = document.createElement('span');
+    bubble.className = 'cert-growth-icon';
+    bubble.setAttribute('aria-hidden','true');
+    bubble.innerHTML = `<img src="../../../../assets/icons/pixel/lms/${growthIcons[index]}" alt="">`;
+    button.prepend(bubble);
+  });
+  const growthClose = document.createElement('button');
+  growthClose.type = 'button';
+  growthClose.className = 'cert-growth-close';
+  growthClose.setAttribute('aria-label', 'Close project insight');
+  growthClose.textContent = '×';
+  growthClose.addEventListener('click', () => {
+    const previouslyActive = growthButtons.find((item) => item.classList.contains('active'));
+    growthInsight.hidden = true;
+    growthWorkbench.dataset.growth = '';
+    growthButtons.forEach((item) => { item.classList.remove('active'); item.setAttribute('aria-selected','false'); item.tabIndex = 0; });
+    previouslyActive?.focus();
+  });
+  growthInsight.prepend(growthClose);
+  growthInsight.hidden = true;
+  growthWorkbench.dataset.growth = '';
+  growthButtons.forEach((button) => { button.classList.remove('active'); button.setAttribute('aria-selected','false'); });
+  growthButtons.forEach((button, index) => {
+    button.tabIndex = 0;
     const activate = () => {
       const key = button.dataset.growth;
       growthWorkbench.dataset.growth = key;
+      growthInsight.hidden = false;
       growthButtons.forEach((item) => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
       growthInsight.setAttribute('aria-labelledby', button.id);
       growthInsight.querySelector('strong').textContent = growthData[key][0];
