@@ -324,7 +324,7 @@
 /* Responsive learner-facing AI examples, using the custom extracted pixel assets. */
 .ai-learning-page .ai-learning-hero .ai-breadcrumbs,
 .ai-learning-page .ai-learning-hero .ai-breadcrumbs a,
-.ai-learning-page .ai-learning-hero .ai-breadcrumbs span{color:#e8f3ec!important;opacity:1!important}
+.ai-learning-page .ai-learning-hero .ai-breadcrumbs span{color:#fff!important;opacity:1!important}
 .ai-learning-page .ai-learning-hero .ai-breadcrumbs a:hover,
 .ai-learning-page .ai-learning-hero .ai-breadcrumbs a:focus-visible{color:#fff!important}
 .ai-experience-hero{display:block;min-height:0;padding:17px;border-radius:25px;background:linear-gradient(150deg,#17343b,#28564f)}
@@ -399,3 +399,35 @@
 .ai-adaptive-routes small,.ai-video-controls>span,.ai-curriculum-avatar span{font-size:.72rem}
 .ai-curriculum-controls>div>span{font-size:.75rem}
 @media(max-width:1040px){.ai-curriculum-fixed .ai-fixed-route{display:flex}}
+
+/* The shared section rhythm is applied after this stylesheet. Keep these two
+   dark showcases legible when it assigns alternating surface classes. */
+body.ai-learning-page .ai-usecases-section,
+body.ai-learning-page .ai-usecases-section.fs-surface-dark{
+  background:linear-gradient(150deg,#1b373b,#2c504c)!important;
+  color:#e8f2eb!important;
+}
+body.ai-learning-page .ai-curriculum-section,
+body.ai-learning-page .ai-curriculum-section.fs-surface-light{
+  background:linear-gradient(150deg,#142d34,#234b47)!important;
+  color:#e8f2eb!important;
+}
+body.ai-learning-page .ai-usecases-section .ai-intro,
+body.ai-learning-page .ai-curriculum-section .ai-intro,
+body.ai-learning-page .ai-usecases-section .ai-intro h2,
+body.ai-learning-page .ai-curriculum-section .ai-intro h2,
+body.ai-learning-page .ai-usecases-section .ai-intro p,
+body.ai-learning-page .ai-curriculum-section .ai-intro p{
+  width:100%;
+  max-width:none;
+}
+body.ai-learning-page .ai-usecases-section .ai-intro h2,
+body.ai-learning-page .ai-curriculum-section .ai-intro h2{
+  color:#fff!important;
+  text-wrap:balance;
+}
+body.ai-learning-page .ai-usecases-section .ai-intro .eyebrow,
+body.ai-learning-page .ai-curriculum-section .ai-intro .eyebrow{color:#bce9ca!important}
+body.ai-learning-page .ai-usecases-section .ai-intro>p:not(.eyebrow),
+body.ai-learning-page .ai-curriculum-section .ai-intro>p:not(.eyebrow){color:#dbe9df!important}
+body.ai-learning-page .ai-curriculum-section.fs-surface-light::after{display:none}

@@ -381,11 +381,12 @@
     if (!match) return;
     const [r,g,b] = match.slice(1,4).map(Number);
     const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
-    const forceLight = Boolean(breadcrumbs.closest('.ai-eval-hero, .ai-demo-hero, .flagship-hero, .cp-hero')) || document.body.classList.contains('ai-eval-page') || document.body.classList.contains('cert-case-page');
+    const forceLight = Boolean(breadcrumbs.closest('.ai-eval-hero, .ai-demo-hero, .flagship-hero, .cp-hero, .ai-learning-hero')) || document.body.classList.contains('ai-eval-page') || document.body.classList.contains('cert-case-page');
     const lightText = forceLight || luminance > 0.58;
-    const primary = lightText ? 'rgba(248,252,249,.84)' : '#40554d';
+    const aiLearningHero = Boolean(breadcrumbs.closest('.ai-learning-hero'));
+    const primary = aiLearningHero ? '#ffffff' : lightText ? 'rgba(248,252,249,.84)' : '#40554d';
     const current = lightText ? '#ffffff' : '#263d37';
-    const separator = lightText ? 'rgba(248,252,249,.56)' : '#7a8781';
+    const separator = aiLearningHero ? '#ffffff' : lightText ? 'rgba(248,252,249,.56)' : '#7a8781';
 
     breadcrumbs.dataset.breadcrumbTone = lightText ? 'light' : 'dark';
     breadcrumbs.querySelectorAll('a').forEach((node) => node.style.setProperty('color', primary, 'important'));
