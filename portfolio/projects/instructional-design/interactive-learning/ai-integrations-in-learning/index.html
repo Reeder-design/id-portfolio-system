@@ -154,39 +154,47 @@
         <div class="ai-intro ai-curriculum-intro">
           <p class="eyebrow">Customized Curriculum</p>
           <h2>One curriculum. Many relevant routes.</h2>
-          <p>Follow one learner through a fictional makeup retailer’s Microsoft 365 Copilot course. Their role, experience, topic, and demonstrated judgment shape the simulation and takeaway. The final map shows the routes the same design can create.</p>
+          <p>Click through one learner’s fictional makeup retailer course on Microsoft 365 Copilot. Their role, experience, topic, and demonstrated judgment shape the simulation and takeaway. The final tab shows the routes the same design can create.</p>
         </div>
-        <div class="ai-curriculum-motion" data-ai-curriculum-motion data-stage="0" role="img" aria-label="Automatic learning-path illustration. A marketing coordinator new to Copilot chooses campaign handoff, verifies a draft, receives a stretch simulation and prompt template. A final sixteen-route map compares this selected path with other roles, topics, starting levels, and adaptive scopes.">
-          <div class="ai-curriculum-motion-top"><div class="ai-curriculum-motion-brand"><span>LB</span><strong>Luma Beauty Learning</strong><small>Copilot for Marketing · fictional course</small></div><span class="ai-curriculum-motion-mode">ILLUSTRATIVE PATH</span></div>
-          <div class="ai-curriculum-motion-steps" aria-hidden="true"><span class="is-active" data-motion-step="0"><b>01</b>Audience</span><span data-motion-step="1"><b>02</b>Knowledge</span><span data-motion-step="2"><b>03</b>Topic</span><span data-motion-step="3"><b>04</b>Adapt</span><span data-motion-step="4"><b>05</b>Simulation</span><span data-motion-step="5"><b>06</b>Takeaway</span><span data-motion-step="6"><b>↗</b>Path map</span></div>
+        <div class="ai-curriculum-motion" data-ai-curriculum-motion data-stage="0" role="region" aria-label="Customized curriculum example: six design layers and a map of sixteen possible learner routes">
+          <div class="ai-curriculum-motion-top"><div class="ai-curriculum-motion-brand"><span>LB</span><strong>Luma Beauty Learning</strong><small>Copilot for Marketing · fictional course</small></div><span class="ai-curriculum-motion-mode">CHOOSE A STAGE</span></div>
+          <div class="ai-curriculum-motion-steps" role="tablist" aria-label="Customized curriculum stages">
+            <button class="is-active" type="button" role="tab" id="ai-curriculum-tab-0" aria-controls="ai-curriculum-panel-0" aria-selected="true" tabindex="0" data-motion-step="0"><b aria-hidden="true">01</b>Audience</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-1" aria-controls="ai-curriculum-panel-1" aria-selected="false" tabindex="-1" data-motion-step="1"><b aria-hidden="true">02</b>Knowledge</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-2" aria-controls="ai-curriculum-panel-2" aria-selected="false" tabindex="-1" data-motion-step="2"><b aria-hidden="true">03</b>Topic</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-3" aria-controls="ai-curriculum-panel-3" aria-selected="false" tabindex="-1" data-motion-step="3"><b aria-hidden="true">04</b>Adapt</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-4" aria-controls="ai-curriculum-panel-4" aria-selected="false" tabindex="-1" data-motion-step="4"><b aria-hidden="true">05</b>Simulation</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-5" aria-controls="ai-curriculum-panel-5" aria-selected="false" tabindex="-1" data-motion-step="5"><b aria-hidden="true">06</b>Takeaway</button>
+            <button type="button" role="tab" id="ai-curriculum-tab-6" aria-controls="ai-curriculum-panel-6" aria-selected="false" tabindex="-1" data-motion-step="6"><b aria-hidden="true">↗</b>Path map</button>
+          </div>
           <div class="ai-curriculum-motion-stage">
-            <div class="ai-curriculum-scene ai-curriculum-scene-audience is-active" data-motion-scene="0">
+            <div class="ai-curriculum-scene ai-curriculum-scene-audience is-active" role="tabpanel" id="ai-curriculum-panel-0" aria-labelledby="ai-curriculum-tab-0" tabindex="0" data-motion-scene="0">
               <div class="ai-curriculum-scene-heading"><small>01 / AUDIENCE</small><h3>Whose work is this?</h3></div>
               <div class="ai-curriculum-option-pair"><div class="ai-curriculum-option is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/lms/mini-audience.webp" alt=""></span><span><strong>Marketing coordinator</strong><small>Build the handoff</small></span><b>SELECTED</b></div><div class="ai-curriculum-option is-alternate"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/team.webp" alt=""></span><span><strong>Campaign lead</strong><small>Review and approve</small></span></div></div>
               <div class="ai-curriculum-scene-output"><span>Same goal</span><i aria-hidden="true">→</i><strong>Different job to practice</strong></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-knowledge" data-motion-scene="1">
+            <div class="ai-curriculum-scene ai-curriculum-scene-knowledge" role="tabpanel" id="ai-curriculum-panel-1" aria-labelledby="ai-curriculum-tab-1" tabindex="-1" aria-hidden="true" data-motion-scene="1">
               <div class="ai-curriculum-scene-heading"><small>02 / PRIOR KNOWLEDGE</small><h3>Set a starting pace.</h3></div>
               <div class="ai-curriculum-option-pair"><div class="ai-curriculum-option is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/learning-enablement/knowledge.webp" alt=""></span><span><strong>New to Copilot</strong><small>Worked prompt + source check</small></span><b>SELECTED</b></div><div class="ai-curriculum-option is-alternate"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/ai-integrations/adaptive-learning/adaptive-difficulty.webp" alt=""></span><span><strong>Experienced</strong><small>Open-ended workflow</small></span></div></div>
               <div class="ai-curriculum-scene-output"><span>Start guided</span><i aria-hidden="true">→</i><strong>Later evidence can override it</strong></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-topic" data-motion-scene="2">
+            <div class="ai-curriculum-scene ai-curriculum-scene-topic" role="tabpanel" id="ai-curriculum-panel-2" aria-labelledby="ai-curriculum-tab-2" tabindex="-1" aria-hidden="true" data-motion-scene="2">
               <div class="ai-curriculum-scene-heading"><small>03 / TRAINING TOPIC</small><h3>Use the work they do.</h3></div>
               <div class="ai-curriculum-topic-lanes"><div class="ai-curriculum-topic-lane is-chosen"><strong>Campaign handoff</strong><span><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/teams.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/communication.webp" alt=""></span></span><small>Recap · brief · owner follow-up</small></div><div class="ai-curriculum-topic-lane is-alternate"><strong>Launch reporting</strong><span><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/excel.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><i>→</i><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/powerpoint.webp" alt=""></span></span><small>Data · insight · update</small></div></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-adapt" data-motion-scene="3">
+            <div class="ai-curriculum-scene ai-curriculum-scene-adapt" role="tabpanel" id="ai-curriculum-panel-3" aria-labelledby="ai-curriculum-tab-3" tabindex="-1" aria-hidden="true" data-motion-scene="3">
               <div class="ai-curriculum-scene-heading"><small>04 / ADAPT SCOPE</small><h3>Let the work change the path.</h3></div>
               <div class="ai-curriculum-adapt-flow"><div class="ai-curriculum-draft-card"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><div><small>COPILOT-ASSISTED DRAFT</small><strong>Fall Color handoff brief</strong><i></i><i></i><i></i></div></div><span class="ai-curriculum-adapt-arrow" aria-hidden="true">→</span><div class="ai-curriculum-adapt-branches"><div class="is-chosen"><strong>Checks facts + owners</strong><span>Strong signal → stretch task</span></div><div class="is-alternate"><strong>Shares as-is</strong><span>Review gap → guided retry</span></div></div></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-assessment" data-motion-scene="4">
+            <div class="ai-curriculum-scene ai-curriculum-scene-assessment" role="tabpanel" id="ai-curriculum-panel-4" aria-labelledby="ai-curriculum-tab-4" tabindex="-1" aria-hidden="true" data-motion-scene="4">
               <div class="ai-curriculum-scene-heading"><small>05 / CUSTOM ASSESSMENT</small><h3>Practice the actual job.</h3></div>
               <div class="ai-curriculum-simulation-card"><div class="ai-curriculum-simulation-head"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/ai-integrations/use-cases/light/automated-assessment-instant-feedback.webp" alt=""></span><div><small>COORDINATOR · CAMPAIGN HANDOFF · STRETCH</small><strong>Launch handoff simulation</strong></div></div><div class="ai-curriculum-simulation-flow"><span>Teams recap</span><i>→</i><span>Word brief</span><i>→</i><span>Verify + hand off</span></div><div class="ai-curriculum-simulation-checks"><span>Source</span><span>Accuracy</span><span>Owner</span></div></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-takeaway" data-motion-scene="5">
+            <div class="ai-curriculum-scene ai-curriculum-scene-takeaway" role="tabpanel" id="ai-curriculum-panel-5" aria-labelledby="ai-curriculum-tab-5" tabindex="-1" aria-hidden="true" data-motion-scene="5">
               <div class="ai-curriculum-scene-heading"><small>06 / AFTER TRAINING</small><h3>Bridge to the next task.</h3></div>
               <div class="ai-curriculum-takeaway-flow"><div class="ai-curriculum-takeaway-card is-chosen"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/work-tools/word.webp" alt=""></span><div><small>TAKEAWAY</small><strong>Campaign prompt template</strong><i></i><i></i><i></i></div></div><span aria-hidden="true">→</span><div class="ai-curriculum-work-card"><span class="ai-curriculum-motion-icon"><img src="../../../../assets/icons/pixel/workflows/planning-projects/projects.webp" alt=""></span><strong>Next launch handoff</strong></div></div>
             </div>
-            <div class="ai-curriculum-scene ai-curriculum-scene-map" data-motion-scene="6">
+            <div class="ai-curriculum-scene ai-curriculum-scene-map" role="tabpanel" id="ai-curriculum-panel-6" aria-labelledby="ai-curriculum-tab-6" tabindex="-1" aria-hidden="true" data-motion-scene="6">
               <div class="ai-curriculum-map-heading"><div><small>AFTER THE SIMULATION</small><h3>One route taken. Sixteen possible.</h3></div><span>YOUR ROUTE <b>●</b></span></div>
               <div class="ai-curriculum-map-selected"><span>Coordinator</span><i>→</i><span>New</span><i>→</i><span>Handoff</span><i>→</i><span>Strong review</span><i>→</i><strong>Stretch handoff simulation</strong></div>
               <span class="ai-curriculum-map-scrollhint">Swipe to compare all routes →</span>
@@ -194,9 +202,10 @@
               <div class="ai-curriculum-map-foot"><span><b>Rows</b> change the assessment task</span><span><b>Columns</b> change support + challenge</span><span><b>Takeaway</b> Prompt template ✓ · Review checklist</span></div>
             </div>
           </div>
+          <div class="ai-curriculum-design-note" id="ai-curriculum-design-note"><span>BEHIND THE LEARNING DESIGN</span><p data-motion-description aria-live="polite">The learning goal stays shared, but the learner’s role determines the work they practice. A coordinator builds the campaign handoff; a lead reviews and approves it.</p></div>
           <div class="ai-curriculum-motion-bottom" aria-hidden="true"><span>LEARNER ROUTE</span><div class="ai-curriculum-motion-progress"><i></i></div><span data-motion-count>01 / 07</span></div>
         </div>
-        <p class="ai-curriculum-disclosure">Luma Beauty is fictional. This automatic visual illustrates curriculum logic; it is not a live Copilot integration or a claim of deployment.</p>
+        <p class="ai-curriculum-disclosure">Luma Beauty is fictional. This scripted interaction illustrates curriculum logic; it is not a live Copilot integration or a claim of deployment.</p>
       </div>
     </section>
 

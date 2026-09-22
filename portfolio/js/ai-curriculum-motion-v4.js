@@ -3,52 +3,58 @@
   if (!motion) return;
 
   const scenes = [...motion.querySelectorAll('[data-motion-scene]')];
-  const steps = [...motion.querySelectorAll('[data-motion-step]')];
+  const tabs = [...motion.querySelectorAll('[data-motion-step]')];
   const count = motion.querySelector('[data-motion-count]');
   const progress = motion.querySelector('.ai-curriculum-motion-progress i');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const durations = [2300, 2300, 2700, 3100, 3000, 2500, 12000];
+  const description = motion.querySelector('[data-motion-description]');
+  if (!scenes.length || scenes.length !== tabs.length || !description) return;
+
+  const designNotes = [
+    'The learning goal stays shared, but the learner’s role determines the work they practice. A coordinator builds the campaign handoff; a lead reviews and approves it.',
+    'A quick experience check sets the starting level of support. Someone new gets a worked prompt and source check; an experienced learner starts with a fuller task. Later performance can change this route.',
+    'The chosen training topic determines which approved examples, tools, and outputs appear. Handoff practice uses a recap, brief, and owner follow-up; reporting uses data, insight, and an update.',
+    'The learner’s response provides evidence of readiness. Checking facts and owners opens a harder simulation; sharing an unreviewed draft triggers a guided source-check and retry, even if the learner started on an experienced route.',
+    'The assessment is shaped by the learner’s role, topic, and demonstrated readiness. This coordinator builds a verified handoff; a campaign lead would review and approve it. Both are checked against the same source, accuracy, and next-action criteria.',
+    'The job aid follows the task and any gap shown in practice. This learner gets a reusable campaign prompt; another route might produce an approval checklist or a targeted refresher.',
+    'Two roles, two topics, two starting levels, and two adaptive scopes create sixteen routes. The highlighted cell is this learner’s path. The task and support vary, while the core learning goal stays the same.'
+  ];
+
   let stage = 0;
-  let timer = null;
-  let visible = !('IntersectionObserver' in window);
-
-  const render = () => {
+  const render = (nextStage) => {
+    stage = nextStage;
     motion.dataset.stage = String(stage);
-    scenes.forEach((scene, index) => scene.classList.toggle('is-active', index === stage));
-    steps.forEach((step, index) => {
-      step.classList.toggle('is-active', index === stage);
-      step.classList.toggle('is-complete', index < stage);
+    scenes.forEach((scene, index) => {
+      const active = index === stage;
+      scene.classList.toggle('is-active', active);
+      scene.setAttribute('aria-hidden', String(!active));
+      scene.tabIndex = active ? 0 : -1;
     });
-    count.textContent = `${String(stage + 1).padStart(2, '0')} / 07`;
-    progress.style.width = `${((stage + 1) / scenes.length) * 100}%`;
-  };
-  const stop = () => {
-    window.clearTimeout(timer);
-    timer = null;
-  };
-  const play = () => {
-    stop();
-    if (reducedMotion.matches) {
-      stage = scenes.length - 1;
-      render();
-      return;
-    }
-    if (!visible || document.hidden) return;
-    render();
-    timer = window.setTimeout(() => {
-      stage = (stage + 1) % scenes.length;
-      play();
-    }, durations[stage]);
+    tabs.forEach((tab, index) => {
+      const active = index === stage;
+      tab.classList.toggle('is-active', active);
+      tab.classList.toggle('is-complete', index < stage);
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    description.textContent = designNotes[stage];
+    if (count) count.textContent = `${String(stage + 1).padStart(2, '0')} / ${String(scenes.length).padStart(2, '0')}`;
+    if (progress) progress.style.width = `${((stage + 1) / scenes.length) * 100}%`;
   };
 
-  render();
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      visible = entries[0].isIntersecting;
-      play();
-    }, { threshold: 0.15 });
-    observer.observe(motion);
-  } else play();
-  document.addEventListener('visibilitychange', play);
-  reducedMotion.addEventListener?.('change', play);
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => render(index));
+    tab.addEventListener('keydown', (event) => {
+      let nextIndex;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') nextIndex = 0;
+      else if (event.key === 'End') nextIndex = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      render(nextIndex);
+      tabs[nextIndex].focus();
+    });
+  });
+
+  render(0);
 })();
