@@ -106,6 +106,8 @@ Use these for:
 - product/change orientation
 - positioning content
 - small scenario or knowledge-check examples
+- guided learner demos paired with actual design and development decisions
+- public-safe branching practice with clear labeling when responses are scripted
 
 Current expectations:
 - explain the instructional strategy, not simply the authoring tool

@@ -1,24 +1,72 @@
 (() => {
-  const heroGrid=document.querySelector('.micro-overview-grid');
-  if(heroGrid&&!heroGrid.querySelector('.breadcrumbs')) heroGrid.insertAdjacentHTML('afterbegin','<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../../index.html">Home</a><span>/</span><a href="../../../index.html">Projects</a><span>/</span><a href="../../index.html">Instructional Design</a><span>/</span><a href="../index.html">Microlearning &amp; Performance Support</a><span>/</span><span>Microlearning</span></nav>');
-  const methods = {
-    change: { label: 'A product or process changed', image: '../../../../assets/icons/pixel/microlearning-performance-support/performance-support.webp', title: 'Give the learner the context they need before the next conversation.', text: 'Cover what changed, what matters, and where to go for the rest.', moves: [['What changed', 'New context'], ['What to carry forward', 'A usable takeaway'], ['Where it goes next', 'Back into the work']] },
-    decision: { label: 'A decision needs practice', image: '../../../../assets/icons/pixel/microlearning-performance-support/practical-tools.webp', title: 'Let the learner try the judgment before the real conversation.', text: 'Use a realistic cue and feedback without turning one decision into a full course.', moves: [['The situation', 'A realistic cue'], ['The decision', 'A response to choose'], ['The feedback', 'Why it fits']] },
-    return: { label: 'A takeaway needs to be easy to find', image: '../../../../assets/icons/pixel/microlearning-performance-support/takeaways.webp', title: 'Connect the short lesson to something useful in the work.', text: 'Point to a guide, job aid, or deeper resource that can be used again later.', moves: [['The takeaway', 'A clear reference'], ['Where it lives', 'Easy to return to'], ['When it helps', 'At the point of need']] },
-    time: { label: 'Not enough time', image: '../../../../assets/icons/pixel/microlearning-performance-support/learn-anytime.webp', title: 'Cut the content to what someone needs to do today.', text: 'When time is limited, teach the piece that makes the next task easier and leave the rest out.', moves: [['The constraint', 'Limited time'], ['The priority', 'One useful point'], ['The outcome', 'Better next move']] }
+  const iconPath = '../../../../assets/icons/portfolio-icons.svg#';
+  const formats = {
+    pathway: {
+      label: 'Broad capability',
+      title: 'Build a connected capability over time.',
+      text: 'A pathway can connect lessons, practice, assessment, and follow-up across several skills. It is the right response when one small learning move cannot meet the goal.',
+      moment: 'Moment: across a longer learning journey',
+      evidence: 'Evidence: performance across several skills',
+      icon: 'icon-learning-design'
+    },
+    micro: {
+      label: 'Focused learning',
+      title: 'Help someone make the next useful move.',
+      text: 'A compact experience teaches one product message, decision, or task and gives enough context or practice to use it.',
+      moment: 'Moment: before the next task',
+      evidence: 'Evidence: one action or takeaway',
+      icon: 'icon-interaction'
+    },
+    support: {
+      label: 'Point-of-need resource',
+      title: 'Put a reliable answer in the workflow.',
+      text: 'A guide, job aid, dashboard, or repository helps someone find or apply information while working. It may follow a lesson, but the resource itself serves the live task.',
+      moment: 'Moment: during the task',
+      evidence: 'Evidence: an answer used in the work',
+      icon: 'icon-feedback'
+    }
   };
-  const setPanel = (key, tabs, panel) => { const item = methods[key]; if (!item) return; panel.dataset.transitioning='true'; panel.innerHTML=`<div class="micro-method-asset" aria-hidden="true"><img src="${item.image}" alt=""></div><div class="micro-method-content"><div class="micro-method-orbit" aria-hidden="true"><i></i><i></i><i></i></div><p class="eyebrow">${item.label}</p><h3>${item.title}</h3><p>${item.text}</p><div class="micro-method-moves"><svg class="micro-method-outline" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><rect x="1" y="1" width="98" height="98" rx="5" ry="5" pathLength="100"></rect></svg>${item.moves.map(([title,text])=>`<div><strong>${title}</strong>${text}</div>`).join('')}</div></div>`; setTimeout(()=>{panel.dataset.transitioning='false';},300); tabs.forEach(tab=>{const active=tab.dataset.microMethod===key;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));}); };
-  const methodTabs=[...document.querySelectorAll('[data-micro-method]')], methodPanel=document.querySelector('[data-micro-method-panel]'); if(methodPanel) methodTabs.forEach(tab=>tab.addEventListener('click',()=>setPanel(tab.dataset.microMethod,methodTabs,methodPanel)));
-  if (methodPanel) setPanel('change', methodTabs, methodPanel);
-  const caseMedia=[
-    ['.micro-launch-icon img','../../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp','Pixel-art interaction icon','micro-icon-media'],
-    ['.micro-vertical-icon img','../../../../assets/project-images/vertical-positioning/smarter-seaports.webp','Sanitized Vertical Positioning module screen','micro-module-media']
-  ];
-  caseMedia.forEach(([selector,src,alt,mediaClass])=>{const image=document.querySelector(selector);if(image){image.src=src;image.alt=alt;image.closest('.micro-case-media')?.classList.add(mediaClass);}});
-  const structures={
-    pathway:{label:'Complete learning pathway',icon:'icon-learning-design',title:'Use a pathway when people need a broader capability over time.',text:'Pathways can connect several lessons, guided practice, and assessment. They are the right choice when the learning goal is more than one quick, contextual need.',good:'Building a durable capability across several skills.',includes:'Courses, practice, assessment, and a learning path.',steps:1},
-    micro:{label:'Microlearning',icon:'icon-interaction',title:'Use microlearning for a fast, useful next step.',text:'It may not include an assessment because it is not trying to certify a full capability. Put simply, they\'re the "TLDR" of eLearning content. They turn a specific moment into a clear takeaway or action.',good:'A focused moment just before someone needs to explain, recognize, decide, or act.',includes:'A short lesson, a concise scenario, or a reusable takeaway.',steps:2},
-    support:{label:'Performance support',icon:'icon-feedback',title:'Use point-of-need support when the answer needs to be at hand.',text:'A job aid, dashboard, reference guide, or repository can support the work directly. It can stand alone or extend a learning experience after the lesson is over.',good:'Finding a reliable answer while the work is happening.',includes:'Job aids, dashboards, one-pagers, guides, and linked resources.',steps:3}
+  const tabs = [...document.querySelectorAll('[data-format]')];
+  const panel = document.querySelector('.micro-format-panel');
+  const fields = {
+    label: document.getElementById('microFormatLabel'),
+    title: document.getElementById('microFormatTitle'),
+    text: document.getElementById('microFormatText'),
+    moment: document.getElementById('microFormatMoment'),
+    evidence: document.getElementById('microFormatEvidence'),
+    icon: document.getElementById('microFormatIcon')
   };
-  const structureTabs=[...document.querySelectorAll('[data-micro-structure]')], structurePanel=document.querySelector('[data-micro-structure-panel]'); if(structurePanel) structureTabs.forEach(tab=>tab.addEventListener('click',()=>{const item=structures[tab.dataset.microStructure];structurePanel.dataset.transitioning='true';structurePanel.innerHTML=`<div class="micro-strategy-visual" aria-hidden="true"><div class="micro-strategy-icon"><svg class="portfolio-icon"><use href="../../../../assets/icons/portfolio-icons.svg#${item.icon}"></use></svg></div><div class="micro-strategy-path">${Array.from({length:3},(_,index)=>`<i class="${index<item.steps?'active':''}"></i>`).join('')}</div></div><p class="eyebrow">${item.label}</p><h3>${item.title}</h3><p>${item.text}</p><dl class="micro-strategy-facts"><div><dt>Good for</dt><dd>${item.good}</dd></div><div><dt>Can include</dt><dd>${item.includes}</dd></div></dl>`;setTimeout(()=>{structurePanel.dataset.transitioning='false';},300);structureTabs.forEach(itemTab=>{const active=itemTab===tab;itemTab.classList.toggle('active',active);itemTab.setAttribute('aria-selected',String(active));});}));
+  if (!tabs.length || !panel) return;
+
+  const activate = (button) => {
+    const data = formats[button.dataset.format];
+    if (!data) return;
+    tabs.forEach((tab) => {
+      const active = tab === button;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    fields.label.textContent = data.label;
+    fields.title.textContent = data.title;
+    fields.text.textContent = data.text;
+    fields.moment.textContent = data.moment;
+    fields.evidence.textContent = data.evidence;
+    fields.icon.setAttribute('href', iconPath + data.icon);
+    panel.classList.remove('is-changing');
+    void panel.offsetWidth;
+    panel.classList.add('is-changing');
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else next = (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[next].focus();
+      activate(tabs[next]);
+    });
+  });
 })();
