@@ -111,6 +111,18 @@
     blackboard:[['A course shell can become a file dump.','Group resources by the learner’s weekly task.','Use a repeatable course pattern rather than extra tools.'],['Discussion volume is not the same as useful reasoning.','Prompt specific evidence and model a strong response.','Use instructor summaries to surface patterns.'],['Late feedback makes the next task harder.','Check grading visibility and release timing.','Use existing rubric and feedback tools consistently.']],
     sharepoint:[['Search quality depends on titles, tags, and permissions.','Test the phrases a user would actually type.','Improve metadata before adding another navigation layer.'],['A use-case library can become stale quickly.','Assign an owner and review date to each resource.','Create task-based entry points to existing content.'],['Page views do not prove the answer was useful.','Pair analytics with support questions and broken-link checks.','Archive stale pages and improve the most-used paths.']]
   };
+  // Each target is positioned over a real control, row, or report region in its specific mockup.
+  // Coordinates and dimensions are percentages of the displayed image, not the outer browser frame.
+  const screenTargets = {
+    docebo:[[['Sales audience',37,48,47,9,0],['Create group',69,15,27,10,1]], [['Sales certification',38,44,55,16,0],['Partner plan',38,61,55,16,2]], [['Partner credential',33,65,43,15,0],['View record',80,68,15,10,1]]],
+    absorb:[[['Department field',70,37,23,9,0],['Partner learner',32,67,56,11,1]], [['Bulk enrollment',58,24,26,10,0],['Enroll users',63,85,28,10,1]], [['Login branding',38,23,20,10,0],['Primary color',33,59,46,14,1]]],
+    cornerstone:[[['Overdue learners',74,22,23,22,0],['At-risk requirement',26,72,68,9,1]], [['Learner selector',31,38,63,11,0],['Due date',58,61,36,11,1]], [['Compliance report',35,42,36,42,0],['Scheduled report',23,83,70,12,1]]],
+    sap:[[['Role + department',36,44,43,24,0],['Profile actions',78,23,18,10,1]], [['Required vs elective',4,40,24,45,0],['Learning result',35,47,58,15,1]], [['At-risk goal',34,57,61,18,0],['Development goal',34,75,61,18,1]]],
+    workday:[[['Assignment rule',60,24,31,11,0],['Overdue learner',27,79,66,14,1]], [['Current learning',30,24,31,12,0],['Resume course',77,41,17,13,1]], [['Report filters',25,26,69,10,0],['Overdue metric',71,40,23,20,1]]],
+    canvas:[[['Weekly sequence',27,28,67,12,0],['Discussion practice',31,62,62,12,1]], [['Due soon view',36,28,18,10,0],['Case study score',29,55,65,13,1]], [['Rubric result',55,45,20,44,0],['Student pattern',31,54,64,12,1]]],
+    blackboard:[[['Course modules',32,57,63,12,0],['Final project',32,86,63,12,1]], [['Discussion prompt',30,38,65,12,0],['Source analysis',30,62,65,12,1]], [['Discussion grade',38,50,56,12,0],['Upcoming work',68,22,23,10,1]]],
+    sharepoint:[[['Search guidance',22,27,55,10,0],['Product category',20,37,17,25,1]], [['Industry filter',23,24,21,11,0],['Manufacturing case',22,34,25,29,1]], [['Usage filter',81,12,15,13,0],['Top content',22,57,44,34,1]]]
+  };
   const write = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value; };
   document.querySelectorAll('[data-platform-category]').forEach(section => {
     const category = section.dataset.platformCategory;
@@ -140,10 +152,30 @@
     const nextView = document.createElement('button');
     nextView.type = 'button';
     nextView.className = 'platform-next-view';
-    nextView.textContent = 'Next screen →';
+    nextView.textContent = 'Continue →';
     imageStage.append(nextView);
     const viewLabel = screen.querySelector('.platform-screen-bar span');
-    const renderViews = (platform, selected = 0) => {
+    const screenCount = screen.querySelector('.platform-screen-bar span:last-child');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let activePlatform = null;
+    let activeView = -1;
+    let transitionTimer;
+    const alignTargets = () => {
+      if (!image.naturalWidth || !imageStage.clientWidth || !imageStage.clientHeight) return;
+      const scale = Math.min(imageStage.clientWidth / image.naturalWidth, imageStage.clientHeight / image.naturalHeight);
+      const width = image.naturalWidth * scale;
+      const height = image.naturalHeight * scale;
+      hotspotLayer.style.left = `${(imageStage.clientWidth - width) / 2}px`;
+      hotspotLayer.style.top = `${(imageStage.clientHeight - height) / 2}px`;
+      hotspotLayer.style.width = `${width}px`;
+      hotspotLayer.style.height = `${height}px`;
+    };
+    image.addEventListener('load', alignTargets);
+    if ('ResizeObserver' in window) new ResizeObserver(alignTargets).observe(imageStage);
+    const renderViews = (platform, selected = 0, animate = true) => {
+      if (activePlatform === platform && activeView === selected) return;
+      clearTimeout(transitionTimer);
+      const commit = () => {
       const views = platformDetails[platform].views;
       viewNav.replaceChildren(...views.map(([label], index) => {
         const control = document.createElement('button');
@@ -151,19 +183,50 @@
         control.textContent = label;
         control.className = index === selected ? 'active' : '';
         control.setAttribute('aria-pressed', String(index === selected));
-        control.addEventListener('click', () => renderViews(platform, index));
+        control.addEventListener('click', () => renderViews(platform, index, true));
         return control;
       }));
       const [label, file, explanation] = views[selected];
       if (image) { image.src = `${base}${file}`; image.alt = `Illustrative ${platform} ${label.toLowerCase()} interface`; }
       viewLabel.textContent = `${examples[platform].screen.split(' · ')[0]} · ${label.toLowerCase()}`;
+      screenCount.textContent = `SCREEN ${selected + 1} / ${views.length}`;
       caption.textContent = explanation;
       hotspotNote.hidden=true;
-      const labels=['Consideration','Best practice','Get more from this LMS'];
-      hotspotLayer.replaceChildren(...labels.map((hotspotLabel,index)=>{
-        const button=document.createElement('button');button.type='button';button.className=`platform-hotspot hotspot-${index+1}`;button.textContent=String(index+1);button.setAttribute('aria-label',`${hotspotLabel}: ${viewNotes[platform][selected][index]}`);button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>{hotspotLayer.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));hotspotNote.querySelector('span').textContent=hotspotLabel;hotspotNote.querySelector('p').textContent=viewNotes[platform][selected][index];hotspotNote.hidden=false;});return button;
+      hotspotLayer.replaceChildren(...screenTargets[platform][selected].map(([targetLabel,x,y,width,height,noteIndex],index)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.className=`platform-hotspot platform-target-${index+1}`;
+        button.style.cssText=`left:${x}%;top:${y}%;width:${width}%;height:${height}%`;
+        button.innerHTML=`<span></span><b aria-hidden="true">+</b>`;
+        button.querySelector('span').textContent=targetLabel;
+        button.setAttribute('aria-label',`${targetLabel}: ${viewNotes[platform][selected][noteIndex]}`);
+        button.setAttribute('aria-pressed','false');
+        button.addEventListener('click',()=>{
+          const wasOpen=button.getAttribute('aria-pressed')==='true';
+          hotspotLayer.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed','false'));
+          button.setAttribute('aria-pressed',String(!wasOpen));
+          hotspotNote.querySelector('span').textContent=targetLabel;
+          hotspotNote.querySelector('p').textContent=viewNotes[platform][selected][noteIndex];
+          hotspotNote.hidden=wasOpen;
+        });
+        return button;
       }));
-      nextView.onclick=()=>renderViews(platform,(selected+1)%views.length);
+      nextView.setAttribute('aria-label',`Continue to ${views[(selected+1)%views.length][0]} screen`);
+      nextView.onclick=()=>renderViews(platform,(selected+1)%views.length,true);
+      activePlatform=platform;
+      activeView=selected;
+      alignTargets();
+      screen.classList.remove('platform-page-leaving');
+      if (animate && !reducedMotion) {
+        screen.classList.add('platform-page-entering');
+        transitionTimer=setTimeout(()=>screen.classList.remove('platform-page-entering'),430);
+      }
+      };
+      if (animate && !reducedMotion && activePlatform) {
+        screen.classList.remove('platform-page-entering');
+        screen.classList.add('platform-page-leaving');
+        transitionTimer=setTimeout(commit,190);
+      } else commit();
     };
     const activate = button => {
       const data = examples[button.dataset.platform];
@@ -174,7 +237,7 @@
         write(`${category}-${field}`, data[key]);
       });
       write(`${category}-context`,`${data.decision} ${data.result}`);
-      renderViews(button.dataset.platform);
+      renderViews(button.dataset.platform,0,activePlatform!==null);
       section.classList.remove('platform-switched');
       void section.offsetWidth;
       section.classList.add('platform-switched');
