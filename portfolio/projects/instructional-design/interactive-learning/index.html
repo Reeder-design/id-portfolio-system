@@ -28,25 +28,26 @@
           <h1>Interactive Learning</h1>
           <p class="body-large">Interactive learning turns information into something learners can try. I use realistic decisions, practice screens, revealing visuals, and responsive feedback so people can apply an idea, see what happens, and try again.</p>
           <div class="interactive-tags" aria-label="Interactive learning capabilities">
-            <span>Make a choice</span>
-            <span>See the consequence</span>
-            <span>Try again</span>
+            <span>SCENARIOS</span><span>BRANCHING SIMULATIONS</span><span>ASSESSMENTS</span>
+            <span>INTERACTIVE MEDIA</span><span>SIMULATIONS</span><span>INTERACTIVE GRAPHICS</span>
+            <span>GAMIFICATION</span><span>LEARNER-FACING AI</span><span>AI-LED TRAINING</span>
+            <span>AI TUTORS</span><span>CUSTOMIZED LEARNING PATHS</span><span>USER ENGAGEMENT</span>
+            <span>USER INTERFACES</span><span>USER DESIGN</span><span>USER EXPERIENCE</span>
           </div>
         </div>
-        <aside class="interaction-hero-studio" aria-label="Try a short learner decision and see its feedback">
-          <div class="studio-top"><span class="studio-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Practice screen</span><span class="studio-progress">01 / 01</span></div>
-          <div class="studio-case">
-            <span class="studio-avatar"><img src="../../../assets/icons/pixel/interactive-learning/dialogue-branching-conversation.webp" alt="" aria-hidden="true"></span>
-            <p>“Our teams keep losing time during handoffs.”</p>
-          </div>
-          <div class="studio-decision">
-            <span>What would you do next?</span>
-            <div class="studio-options">
-              <button type="button" data-hero-choice="probe">Ask where work stalls</button>
-              <button type="button" data-hero-choice="pitch">Pitch a solution</button>
+        <aside class="hero-learning-loop" aria-label="Animated previews of a scenario, video choice, and ordering simulation">
+          <div class="hero-loop-head"><span class="hero-loop-live"><i aria-hidden="true"></i> LIVE LEARNING LOOP</span><span>EXPLORE · ACT · IMPROVE</span></div>
+          <div class="hero-demo" aria-hidden="true">
+            <div class="hero-demo-toolbar"><span>LEARNER PREVIEW</span><span class="hero-demo-dots">● ● ●</span></div>
+            <div class="hero-demo-screens">
+              <div class="hero-mini-screen hero-mini-scenario"><span class="hero-mini-icon icon-bubble"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/browser-conversation.webp" alt=""></span><small>01 · SCENARIO</small><strong>What would you ask?</strong><span class="hero-mini-line">“Our handoffs are slow.”</span><span class="hero-mini-choice">Explore the cause <b>✓</b></span></div>
+              <div class="hero-mini-screen hero-mini-media"><span class="hero-mini-icon icon-bubble"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><small>02 · VIDEO</small><strong>Pause &amp; inspect</strong><span class="hero-mini-video">Ⅱ <i>SELECT THE CLUE</i></span><span class="hero-mini-choice">Time lost <b>✓</b></span></div>
+              <div class="hero-mini-screen hero-mini-order"><span class="hero-mini-icon icon-bubble"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/folder-cursor.webp" alt=""></span><small>03 · SIMULATION</small><strong>Submit an order</strong><span class="hero-mini-line">Catalog → Configure</span><span class="hero-mini-choice">Review order <b>✓</b></span></div>
             </div>
+            <svg class="hero-demo-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg>
+            <div class="hero-demo-status"><span>CLICK</span><span>SEE THE RESULT</span><span>TRY AGAIN</span></div>
           </div>
-          <div class="studio-result" id="heroChoiceResult" aria-live="polite">Choose a response to see the next learning moment.</div>
+          <p class="hero-loop-footer">One learner action changes what happens next.</p>
         </aside>
       </div>
     </div>
@@ -55,122 +56,167 @@
   <section class="section interaction-types" id="interaction-types">
     <div class="container">
       <div class="type-section-intro">
-        <p class="eyebrow">Interaction design methodology</p>
-        <h2>Choose the interaction by what learners need to do.</h2>
-        <p>Each format creates a different kind of practice. I choose it by the decision, action, or feedback the work calls for, then build the interaction around that purpose.</p>
+        <p class="eyebrow">Interaction types</p>
+        <h2>Explore the interaction that fits the learner task.</h2>
+        <p>Select a tab to try a distinct format. Each interaction is designed around what learners need to decide, explore, practice, or explain.</p>
       </div>
 
-      <article class="type-row" id="branching-scenarios">
+      <div class="type-tabs" role="tablist" aria-label="Interactive learning formats">
+        <button type="button" role="tab" id="tab-branching-scenarios" aria-controls="branching-scenarios" aria-selected="true" tabindex="0">Practice scenarios</button>
+        <button type="button" role="tab" id="tab-knowledge-checks" aria-controls="knowledge-checks" aria-selected="false" tabindex="-1">Assessments</button>
+        <button type="button" role="tab" id="tab-interactive-video" aria-controls="interactive-video" aria-selected="false" tabindex="-1">Interactive media</button>
+        <button type="button" role="tab" id="tab-software-simulations" aria-controls="software-simulations" aria-selected="false" tabindex="-1">UI demos &amp; simulations</button>
+        <button type="button" role="tab" id="tab-click-to-reveal" aria-controls="click-to-reveal" aria-selected="false" tabindex="-1">Interactive graphics &amp; text</button>
+        <button type="button" role="tab" id="tab-gamified-challenges" aria-controls="gamified-challenges" aria-selected="false" tabindex="-1">Gamification</button>
+        <button type="button" role="tab" id="tab-learner-facing-ai" aria-controls="learner-facing-ai" aria-selected="false" tabindex="-1">Learner-facing AI</button>
+      </div>
+      <div class="type-tab-panels">
+      <article class="type-row" id="branching-scenarios" role="tabpanel" aria-labelledby="tab-branching-scenarios" tabindex="0">
         <div class="type-story">
-          <div class="type-marker"><span>01</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/scenarios-branching-simulations.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Scenarios and branching simulations</p>
-          <h3>Practice a decision before it counts.</h3>
-          <p>Realistic choices let learners test a judgment and see how a different move changes the outcome. I use this pattern when the challenge is applying criteria in a situation, not recalling a definition.</p>
-          <p class="type-use"><strong>Best fit:</strong> sales conversations, qualification, escalation, or other consequence-driven decisions.</p>
-          <a class="type-project-link" href="./pursuit-positioning/index.html">Open project page: Pursuit Determination Lab <span aria-hidden="true">↗</span></a>
+          <div class="type-marker"><span>01</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/browser-conversation.webp" alt=""></span></div>
+          <p class="eyebrow">Real-world conversation practice</p>
+          <h3>Practice scenarios</h3>
+          <p>Learners step into a realistic conversation or decision process, choose what to say or do, and see how the next moment changes. A branching customer conversation or escalation can make the consequences of a choice safe to examine and retry.</p>
+          <p class="type-use"><strong>Use for:</strong> customer conversations, coaching moments, service recovery, and decisions under changing conditions.</p>
         </div>
-        <div class="type-visual branch-visual" aria-label="Interactive branching decision map">
-          <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/branching-map-route.webp" alt="" aria-hidden="true"> Decision map <span>Choose a route</span></div>
+        <div class="type-visual branch-visual" aria-label="Automatic customer conversation demonstration">
+          <div class="visual-kicker"><span class="icon-bubble kicker-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/dual-chat.webp" alt=""></span> Customer meeting <span>Choose your response</span></div>
           <div class="branch-map" data-route="none">
-            <div class="branch-start">Customer signal<span>Handoffs are slow</span></div>
-            <div class="branch-paths"><button type="button" data-branch="probe">Probe the cause</button><button type="button" data-branch="pitch">Pitch early</button></div>
-            <div class="branch-results"><span class="branch-good">Clearer need</span><span class="branch-risk">Missed context</span></div>
+            <div class="meeting-scene" aria-hidden="true"><div class="meeting-window"><i></i><i></i><i></i></div><div class="meeting-chart"><span>ORDER HANDOFFS</span><b></b><b></b><b></b></div><div class="meeting-table"></div><div class="meeting-person meeting-customer"><img src="../../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""><span class="person-head"></span><span class="person-body"></span><small>CUSTOMER</small></div><div class="meeting-person meeting-advisor"><img src="../../../assets/icons/pixel/hiring-guide/person-man.webp" alt=""><span class="person-head"></span><span class="person-body"></span><small>YOU</small></div></div>
+            <div class="meeting-dialogue"><strong>Customer · Operations lead</strong><span>“We keep losing time when orders move between teams.”</span></div>
+            <div class="branch-paths"><span data-branch="probe"><small>OPTION A</small>Where does the handoff stall?</span><span data-branch="pitch"><small>OPTION B</small>Let me show you our features.</span></div>
+            <svg class="scenario-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg><div class="branch-results" aria-hidden="true"><span class="branch-good">✓ Customer explains the bottleneck</span><span class="branch-risk">! Root cause stays hidden</span></div>
           </div>
-          <p class="visual-feedback" id="branchFeedback" aria-live="polite">Select a route to reveal its consequence.</p>
+          <p class="visual-feedback" id="branchFeedback">Watch how each response changes the customer conversation.</p>
         </div>
       </article>
 
-      <article class="type-row" id="knowledge-checks">
+      <article class="type-row" id="knowledge-checks" role="tabpanel" aria-labelledby="tab-knowledge-checks" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>02</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/quizzes-knowledge-checks.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Quizzes and knowledge checks</p>
-          <h3>Check the distinction that matters.</h3>
-          <p>Matching, labeling, and short questions make a learner retrieve and apply a concept. I use them to expose a misconception early and give a specific explanation rather than a generic right-or-wrong message.</p>
-          <p class="type-use"><strong>Best fit:</strong> terminology, classification, process steps, and knowledge that must be recognized quickly.</p>
-          <a class="type-project-link" href="./meddpicc-practice/index.html">Open project page: MEDDPICC Qualification Lab <span aria-hidden="true">↗</span></a>
+          <div class="type-marker"><span>02</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/checklist-clipboard.webp" alt=""></span></div>
+          <p class="eyebrow">Evidence of understanding</p>
+          <h3>Assessments</h3>
+          <p>Interactive assessments can ask learners to classify evidence, apply criteria, sequence steps, or explain a decision. Specific feedback reveals misconceptions early and shows both the learner and designer what needs more practice.</p>
+          <p class="type-use"><strong>Use for:</strong> formative checks, applied scoring, retrieval practice, and confident skill demonstration.</p>
         </div>
-        <div class="type-visual quiz-visual" aria-label="Try a short knowledge check">
-          <div class="visual-kicker"><img src="../../../assets/icons/pixel/interactive-learning/multiple-choice-options.webp" alt="" aria-hidden="true"> Knowledge check <span>One question</span></div>
-          <div class="quiz-paper"><p>Which detail is evidence of a business pain?</p><div class="quiz-options"><button type="button" data-quiz-answer="no">A product feature</button><button type="button" data-quiz-answer="yes">Time lost in handoffs</button><button type="button" data-quiz-answer="no">A meeting date</button></div></div>
-          <p class="visual-feedback" id="quizFeedback" aria-live="polite">Choose an answer to see why it fits.</p>
+        <div class="type-visual quiz-visual" aria-label="Automatic assessment demonstration">
+          <div class="visual-kicker"><span class="icon-bubble kicker-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/checklist-document.webp" alt=""></span> Knowledge check <span>One question</span></div>
+          <div class="quiz-paper"><div class="quiz-paper-head"><span>APPLIED ASSESSMENT</span><span id="quizScore">QUESTION 01 / 03</span></div><p>Which detail is evidence of a business pain?</p><div class="quiz-options"><span data-quiz-answer="no"><small>OPTION A</small>A product feature</span><span data-quiz-answer="yes"><small>OPTION B</small>Time lost in handoffs</span><span data-quiz-answer="no"><small>OPTION C</small>A meeting date</span></div><svg class="quiz-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <p class="visual-feedback" id="quizFeedback">Watch the answer and feedback appear.</p>
         </div>
       </article>
 
-      <article class="type-row" id="interactive-video">
+      <article class="type-row" id="interactive-video" role="tabpanel" aria-labelledby="tab-interactive-video" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>03</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/interactive-videos.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Interactive videos</p>
-          <h3>Turn watching into noticing.</h3>
-          <p>A pause, hotspot, or embedded question can ask learners to interpret a moment before the video moves on. I use this when seeing a demonstration matters, but passive viewing would hide the decision behind the action.</p>
-          <p class="type-use"><strong>Best fit:</strong> demonstrations, conversations, safety cues, and observable behaviors.</p>
+          <div class="type-marker"><span>03</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span></div>
+          <p class="eyebrow">Audio, video, and active viewing</p>
+          <h3>Interactive media</h3>
+          <p>Voice overs, interactive video, audio cues, and timed prompts help learners listen and look with purpose. They can pause, replay, inspect a moment, or make a choice before the media continues.</p>
+          <p class="type-use"><strong>Use for:</strong> narrated demonstrations, observed behaviors, visual cues, and decisions embedded in media.</p>
         </div>
-        <div class="type-visual video-visual" aria-label="Interactive video with clickable moments and a question">
-          <div class="video-screen" data-video-frame="0"><span class="video-play" aria-hidden="true">Ⅱ</span><img id="videoFrameArt" src="../../../assets/icons/pixel/interactive-learning/interactive-video-hotspots.webp" alt="" aria-hidden="true"><span class="video-caption" id="videoCaption">Customer describes a slow handoff.</span><button type="button" class="video-hotspot" id="videoHotspot">Inspect the cue +</button></div>
-          <div class="video-timeline" aria-label="Video moments"><button type="button" data-video-cue="0" aria-label="Opening cue" aria-pressed="true">1</button><button type="button" data-video-cue="1" aria-label="Decision pause" aria-pressed="false">2</button><button type="button" data-video-cue="2" aria-label="Reflection prompt" aria-pressed="false">3</button></div>
-          <div class="video-moment" id="videoMoment" aria-live="polite"><p>Click the marker in the frame to inspect what the learner should notice.</p><div class="video-moment-options" id="videoMomentOptions" hidden><button type="button" data-video-answer="probe">Ask where work stalls</button><button type="button" data-video-answer="pitch">Pitch a feature</button></div></div>
+        <div class="type-visual video-visual" aria-label="Automatic paused-video evidence demonstration">
+          <div class="video-screen" data-video-frame="0"><div class="video-player-head"><span>FIELD OBSERVATION · 01:24</span><span>Ⅱ PAUSED FOR A CHOICE</span></div><div class="video-room" aria-hidden="true"><div class="video-room-window"><span>RECORDED CUSTOMER CALL</span><i>● LIVE CAPTIONS</i></div><div class="video-customer-asset"><img src="../../../assets/icons/pixel/hiring-guide/conversation-woman-laptop.webp" alt=""></div><div class="video-room-board"><span>Handoff review</span><b>01 · Request received</b><b>02 · Approval delayed</b><b>03 · Order held</b></div><div class="video-room-stat"><strong>18</strong><span>delayed orders</span></div><div class="video-room-cue">CUSTOMER SIGNAL · LOST TIME</div></div><div class="video-question"><small id="videoSceneStep">MOMENT 01 / OBSERVE</small><strong id="videoSceneTitle">What is the customer describing?</strong><span id="videoSceneDetail">Select the detail that signals a real problem.</span><div class="video-on-screen-choices"><span data-video-answer="pitch">New feature request</span><span data-video-answer="probe">Time lost in handoffs</span></div></div><svg class="video-demo-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg><div class="video-player-controls"><span>Ⅱ</span><div><i></i></div><span id="videoCaption">Customer describes a slow handoff.</span></div></div>
         </div>
       </article>
 
-      <article class="type-row" id="software-simulations">
+      <article class="type-row" id="software-simulations" role="tabpanel" aria-labelledby="tab-software-simulations" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>04</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/software-system-simulations.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Software and system simulations</p>
-          <h3>Practice the workflow safely.</h3>
-          <p>A simulated interface lets learners try the same sequence they will perform at work, with cues where mistakes are costly. I use this when knowing the screen and the order of actions matter as much as understanding the concept.</p>
-          <p class="type-use"><strong>Best fit:</strong> LMS tasks, reporting workflows, system handoffs, and admin procedures.</p>
+          <div class="type-marker"><span>04</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/folder-cursor.webp" alt=""></span></div>
+          <p class="eyebrow">Guided platform practice</p>
+          <h3>UI demos &amp; simulations</h3>
+          <p>Step by step UI walkthroughs and simulations let learners rehearse the screens, workflows, and platforms they use. A guided sequence makes the next action visible before they work in a live system.</p>
+          <p class="type-use"><strong>Use for:</strong> product ordering, sales workflows, software navigation, and platform handoffs.</p>
         </div>
-        <div class="type-visual software-visual" aria-label="Practice finding a learner and checking their report in a simulated workspace">
-          <div class="software-window"><div class="software-bar"><span>Training workspace</span><i aria-hidden="true">● ● ●</i></div><div class="software-body"><div class="software-side"><span>Dashboard</span><button type="button" data-software-control="learners">Learners</button><button type="button" data-software-control="reports">Reports</button></div><div class="software-main"><div class="software-screen-title" id="softwareTitle">Dashboard</div><div class="software-lines"><i></i><i></i><i></i></div><button type="button" class="software-target" id="softwareTarget" data-software-control="status" hidden>Pathway status</button></div></div></div>
-          <div class="software-controls"><span id="softwareStep" aria-live="polite">Task 1 of 3: open Learners.</span><button type="button" id="softwareReset">Reset practice</button></div>
+        <div class="type-visual software-visual" aria-label="Automatic sales order platform walkthrough">
+          <div class="software-window"><div class="software-bar"><span><span class="icon-bubble software-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/folder-cursor.webp" alt=""></span>SalesFlow · Order workspace</span><i aria-hidden="true">● ● ●</i></div><div class="software-body"><div class="software-side"><span>SALES DESK</span><span data-software-control="catalog">① Catalog</span><span>② Configure</span><span>③ Submit</span></div><div class="software-main"><div class="software-screen-title" id="softwareTitle">Create customer order</div><div class="order-customer"><span>ACCOUNT</span><strong>Northstar Supply</strong><small id="orderStatus">Order #1048 · Draft</small></div><div class="order-product"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/checklist-document.webp" alt=""></span><div><strong>Team operations suite</strong><small>12 seats · Annual plan</small></div><span>$2,400</span></div><div class="order-progress"><span>Catalog</span><span>Configure</span><span>Submit</span></div><span class="software-target" id="softwareTarget" data-software-control="configure">Configure package →</span><span class="software-submit" data-software-control="submit">Submit order ✓</span></div></div><svg class="software-demo-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="software-controls"><span id="softwareStep">Step 1 of 3: open Catalog.</span></div>
         </div>
       </article>
 
-      <article class="type-row" id="click-to-reveal">
+      <article class="type-row" id="click-to-reveal" role="tabpanel" aria-labelledby="tab-click-to-reveal" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>05</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/hotspots-click-to-reveal-graphics.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Hotspots and click-to-reveal graphics</p>
-          <h3>Explore a visual at the right depth.</h3>
-          <p>Instead of crowding a diagram with labels, I let learners reveal details in context. This is useful when relationships or parts are easier to understand spatially than in a long explanation.</p>
-          <p class="type-use"><strong>Best fit:</strong> product anatomy, process maps, data views, and annotated examples.</p>
+          <div class="type-marker"><span>05</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""></span></div>
+          <p class="eyebrow">Explore, sort, and connect</p>
+          <h3>Interactive graphics &amp; text</h3>
+          <p>Hotspots, click-to-reveal, drag and drop, matching, and expandable text invite learners to work with the information. These interactions can uncover detail in a graphic or help them organize relationships themselves.</p>
+          <p class="type-use"><strong>Use for:</strong> process maps, product visuals, evidence matching, and layered explanations.</p>
         </div>
-        <div class="type-visual hotspot-visual" aria-label="Explore three hotspots in a process diagram">
-          <div class="hotspot-canvas"><img src="../../../assets/icons/pixel/interactive-learning/visual-hotspot-map.webp" alt="" aria-hidden="true"><button type="button" data-hotspot="signal" aria-label="Reveal signal detail">+</button><button type="button" data-hotspot="decision" aria-label="Reveal decision detail">+</button><button type="button" data-hotspot="outcome" aria-label="Reveal outcome detail">+</button></div>
-          <div class="hotspot-reveal" id="hotspotReveal" aria-live="polite"><strong>Explore the map</strong><span>Select a marker to reveal a useful detail.</span></div>
+        <div class="type-visual hotspot-visual" aria-label="Automatic interactive graphic demonstration">
+          <div class="hotspot-canvas"><div class="hotspot-flow"><div class="hotspot-node"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-report-search.webp" alt=""></span><strong>Signal</strong><span>What changed?</span><span data-hotspot="signal">+</span></div><div class="hotspot-node"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/target.webp" alt=""></span><strong>Decision</strong><span>Which move fits?</span><span data-hotspot="decision">+</span></div><div class="hotspot-node"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""></span><strong>Outcome</strong><span>What follows?</span><span data-hotspot="outcome">+</span></div></div><svg class="hotspot-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="hotspot-reveal" id="hotspotReveal"><strong>Explore the map</strong><span>Watch each marker reveal a useful detail.</span></div>
         </div>
       </article>
 
-      <article class="type-row" id="gamified-challenges">
+      <article class="type-row" id="gamified-challenges" role="tabpanel" aria-labelledby="tab-gamified-challenges" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>06</span><span class="type-icon"><img src="../../../assets/icons/pixel/interactive-learning/gamified-challenges.webp" alt="" aria-hidden="true"></span></div>
-          <p class="eyebrow">Gamified challenges</p>
-          <h3>Make progress visible.</h3>
+          <div class="type-marker"><span>06</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/star.webp" alt=""></span></div>
+          <p class="eyebrow">Progressive skill practice</p>
+          <h3>Gamification</h3>
           <p>Points, milestones, and badges can give repeated practice a clear arc. I use them only when they support a meaningful goal, so the reward reinforces useful performance instead of replacing it.</p>
-          <p class="type-use"><strong>Best fit:</strong> recurring practice, staged skill-building, and low-stakes challenges.</p>
+          <p class="type-use"><strong>Best fit:</strong> cybersecurity decisions, recognizing AI-generated phishing cues, and safe reporting habits.</p>
         </div>
-        <div class="type-visual game-visual" aria-label="Answer three practice challenges to unlock a badge" data-score="0">
-          <div class="game-stage"><div class="game-meter" id="gameMeter"><span id="gameCount" aria-live="polite">0 / 3</span></div><div class="game-badge"><img src="../../../assets/icons/pixel/interactive-learning/achievement-medals.webp" alt="" aria-hidden="true"><span id="gameBadge" aria-live="polite">Badge locked</span></div></div>
-          <div class="game-track" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="game-question"><p id="gamePrompt">Which clue describes customer impact?</p><div class="game-choices"><button type="button" data-game-choice="0">Lost time</button><button type="button" data-game-choice="1">Feature list</button></div><p id="gameFeedback" aria-live="polite">Choose an answer to advance.</p></div>
-          <button class="game-button" type="button" id="gameReset" hidden>Reset challenge</button>
+        <div class="type-visual game-visual phishing-visual" aria-label="Three-round automatic AI phishing simulation" data-round="social" data-score="0">
+          <div class="phishing-head"><div><small>AI PHISHING SIMULATION</small><strong>Spot it. Report it. Earn all three stars.</strong></div><div class="phishing-score"><span id="gameStars">☆ ☆ ☆</span><span id="gameCount">3 threats to spot</span></div></div>
+          <div class="phishing-workspace">
+            <section class="phishing-stage phishing-stage-social" aria-label="Round one: suspicious friend request">
+              <div class="phishing-round-label">01 / SOCIAL · FAKE FRIEND REQUEST</div>
+              <div class="phishing-stage-grid"><div class="phishing-social-feed"><div class="phishing-feed-bar">PEOPLE YOU MAY KNOW <span>● ● ●</span></div><div class="phishing-request"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span><div><strong>Alex Morgan</strong><small>New account · 0 mutual connections</small><span>“Connect now to claim your employee reward.”</span></div></div><div class="phishing-request safe"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span><div><strong>Jordan Lee</strong><small>Team directory · 12 mutual connections</small></div></div></div><div class="phishing-target"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-shield.webp" alt=""></span><strong>Report bots</strong><small>Move the suspicious profile here</small></div></div>
+              <span class="phishing-drag-card" aria-hidden="true">Alex Morgan · 0 mutuals</span><svg class="phishing-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg>
+            </section>
+            <section class="phishing-stage phishing-stage-email" aria-label="Round two: phishing email">
+              <div class="phishing-round-label">02 / INBOX · SPOOFED EMAIL</div>
+              <div class="phishing-stage-grid"><div class="phishing-mail"><div class="phishing-mail-bar">INBOX <span>1 unread</span></div><div class="phishing-mail-content"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-email.webp" alt=""></span><div><small>From: Company Verify · outside sender</small><strong>Urgent password reset</strong><span>Verify your account in 10 minutes or lose access.</span><em>Reset now → company-verify.net</em></div></div></div><div class="phishing-target"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-shield.webp" alt=""></span><strong>Report phishing</strong><small>Move the suspicious email here</small></div></div>
+              <span class="phishing-drag-card" aria-hidden="true">Urgent reset email</span><svg class="phishing-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg>
+            </section>
+            <section class="phishing-stage phishing-stage-text" aria-label="Round three: dangerous text message and link">
+              <div class="phishing-round-label">03 / MOBILE · DANGEROUS LINK</div>
+              <div class="phishing-stage-grid"><div class="phishing-phone"><div class="phishing-phone-bar">MESSAGES <span>9:41</span></div><div class="phishing-text-bubble">Delivery failed. Confirm your address now: <strong>parcel-track-help.co</strong></div><div class="phishing-phone-note">Unknown number · shortened tracking link</div></div><div class="phishing-target"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-shield.webp" alt=""></span><strong>Block &amp; report</strong><small>Move the dangerous text here</small></div></div>
+              <span class="phishing-drag-card" aria-hidden="true">Suspicious link message</span><svg class="phishing-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg>
+            </section>
+            <section class="phishing-stage phishing-finish" role="status" aria-label="Phishing simulation completed">
+              <div class="phishing-trophy-icon icon-bubble"><img src="../../../assets/icons/pixel/interactive-learning/completion-trophy.png" alt="Gold completion trophy"></div><small>MISSION COMPLETE</small><strong>Three threats spotted. Three stars earned.</strong><div class="phishing-finish-badges"><span><img src="../../../assets/icons/pixel/hiring-guide/person-man.webp" alt="">Bot request</span><span><img src="../../../assets/icons/pixel/lms/mini-email.webp" alt="">Phishing email</span><span><img src="../../../assets/icons/pixel/lms/mini-chat.webp" alt="">Dangerous text</span></div>
+            </section>
+          </div>
+          <p class="phishing-feedback" id="gameFeedback">Round 1: a new profile requests a connection and links to an employee reward.</p>
         </div>
       </article>
 
-      <article class="type-row" id="learner-facing-ai">
+      <article class="type-row" id="learner-facing-ai" role="tabpanel" aria-labelledby="tab-learner-facing-ai" tabindex="0" hidden>
         <div class="type-story">
-          <div class="type-marker"><span>07</span><span class="type-icon"><img src="../../../assets/icons/pixel/ai-integrations/use-cases/light/personalized-learning-paths.webp" alt="" aria-hidden="true"></span></div>
+          <div class="type-marker"><span>07</span><span class="type-icon" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/ai-evaluation/demo-robot.webp" alt=""></span></div>
           <p class="eyebrow">Learner-facing AI</p>
-          <h3>Make practice fit the person.</h3>
-          <p>An AI-supported experience can adapt a scenario, offer a relevant explanation, or respond to an open question in the moment. I use this design direction when the learner benefits from individualized context or feedback that a small set of scripted paths cannot provide.</p>
-          <p class="type-use"><strong>Best fit:</strong> roleplay, tailored practice paths, tutoring, and deeper feedback on learner responses.</p>
-          <a class="type-project-link" href="./ai-integrations-in-learning/index.html">Open project page: Learner-Facing AI <span aria-hidden="true">↗</span></a>
+          <h3>Learner-facing AI</h3>
+          <p>A bounded AI tutor can respond to a learner’s reasoning, ask a follow-up question, and guide a customized practice path. The experience uses task context and clear constraints so the next step supports the learning goal.</p>
+          <p class="type-use"><strong>Use for:</strong> guided roleplay, AI-led training, tailored practice paths, and specific feedback.</p>
         </div>
-        <div class="type-visual ai-path-visual" aria-label="Compare two personalized learning paths">
-          <div class="ai-path-head"><img src="../../../assets/icons/pixel/ai-integrations/chatbot-interface.webp" alt="" aria-hidden="true"><span>Same goal. Different support.</span></div>
-          <div class="ai-personas"><button type="button" data-ai-learner="new" class="active" aria-pressed="true">New to role</button><button type="button" data-ai-learner="experienced" aria-pressed="false">Experienced</button></div>
-          <div class="ai-route" id="aiRoute"><span>Shared goal</span><i aria-hidden="true">→</i><span id="aiRouteMiddle">Guided example</span><i aria-hidden="true">→</i><span id="aiRouteEnd">Practice with cues</span></div>
-          <p class="visual-feedback" id="aiPathFeedback" aria-live="polite">Select a learner to see how the path changes.</p>
+        <div class="type-visual ai-path-visual" aria-label="Automatic AI tutor demonstration for two learner experience levels">
+          <div class="ai-path-head"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/ai-evaluation/demo-robot.webp" alt=""></span><span>AI practice studio <small>Task-aware coaching</small></span><span class="ai-status">GUIDED</span></div>
+          <div class="ai-personas" role="group" aria-label="Automatically alternating learner profiles"><span data-ai-learner="new" class="active">New to role</span><span data-ai-learner="experienced">Experienced</span><svg class="ai-demo-pointer demo-auto-pointer" viewBox="0 0 28 32" aria-hidden="true"><path d="M3 2v23l6-6 5 11 5-3-5-10 9-1z" fill="#fff" stroke="#123b38" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <div class="ai-context-chips"><span>ROLE · SALES ADVISOR</span><span>GOAL · QUALIFY THE OPPORTUNITY</span><span>BOUNDARY · ASK, THEN GUIDE</span></div><div class="ai-conversation"><div class="ai-learner-line"><strong>Learner</strong><span id="aiLearnerPrompt">“I know the customer is interested. What should I ask next?”</span></div><div class="ai-coach-line"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/dual-chat.webp" alt=""></span><div><strong>AI tutor · scoped to the task</strong><span id="aiCoachReply">“Ask who can approve the investment, then listen for evidence of the buying process.”</span></div></div></div>
+
+          <p class="visual-feedback" id="aiPathFeedback">The AI tutor adapts its prompt and coaching to the learner’s experience.</p>
         </div>
       </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section project-spotlight spotlight-ai" aria-labelledby="ai-spotlight-title">
+    <div class="container spotlight-inner">
+      <article class="spotlight-copy"><p class="eyebrow">01 / Project highlight · Learner-facing AI</p><h2 id="ai-spotlight-title">AI that coaches the next move.</h2><p>Explore how guided conversations, responsive assessment feedback, and adaptive practice can support a learner at the moment they need it. The experience keeps the learning objective and human role visible.</p><div class="spotlight-tags"><span>Guided chat</span><span>AI-assisted feedback</span><span>Adaptive practice</span></div><a class="spotlight-link" href="./ai-integrations-in-learning/index.html">Explore Learner-facing AI <span aria-hidden="true">→</span></a></article>
+      <div class="spotlight-art ai-spotlight-art" role="img" aria-label="Learner-facing AI capabilities orbit a central learning icon"><span class="ai-orbit"></span><span class="ai-orbit inner"></span><span class="ai-core"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/ai-evaluation/demo-robot.webp" alt=""></span></span><span class="ai-art-chip one"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt=""></span>Guided dialogue</span><span class="ai-art-chip two"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/lms/mini-verified.webp" alt=""></span>Responsive feedback</span><span class="ai-art-chip three"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""></span>Adaptive paths</span></div>
+    </div>
+  </section>
+  <section class="section project-spotlight spotlight-pursuit" aria-labelledby="pursuit-spotlight-title">
+    <div class="container spotlight-inner">
+      <div class="spotlight-art pursuit-art" role="img" aria-label="Pursuit determination matrix with a moving opportunity marker"><div class="pursuit-head"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/pursuit-determination/opportunity-intake.webp" alt=""></span>Opportunity decision lab</div><div class="pursuit-matrix"><span>Develop fit</span><span>Prioritize</span><span>Deprioritize</span><span>Nurture</span></div><span class="pursuit-marker">◆</span></div>
+      <article class="spotlight-copy"><p class="eyebrow">02 / Project highlight · Decision simulation</p><h2 id="pursuit-spotlight-title">Make the pursuit decision visible.</h2><p>In the Pursuit Determination Lab, learners weigh opportunity evidence, score solution fit and pursuit strength, and see how the recommendation shifts on a live matrix.</p><div class="spotlight-tags"><span>Criterion scoring</span><span>Live matrix</span><span>Calibration</span></div><a class="spotlight-link" href="./pursuit-positioning/index.html">Open Pursuit Determination Lab <span aria-hidden="true">→</span></a></article>
+    </div>
+  </section>
+  <section class="section project-spotlight spotlight-med" aria-labelledby="med-spotlight-title">
+    <div class="container spotlight-inner">
+      <article class="spotlight-copy"><p class="eyebrow">03 / Project highlight · Evidence matching</p><h2 id="med-spotlight-title">Turn discovery evidence into a better question.</h2><p>The MEDDPICC Qualification Lab asks learners to classify concrete discovery details against the framework. Immediate feedback makes the reasoning behind each match visible.</p><div class="spotlight-tags"><span>Evidence classification</span><span>Immediate feedback</span><span>Framework practice</span></div><a class="spotlight-link" href="./meddpicc-practice/index.html">Open MEDDPICC Qualification Lab <span aria-hidden="true">→</span></a></article>
+      <div class="spotlight-art med-art" role="img" aria-label="A discovery evidence card matches a MEDDPICC category and reveals feedback"><div class="med-evidence"><span class="icon-bubble" aria-hidden="true"><img class="icon-drawing" src="../../../assets/icons/pixel/meddpicc/discover.webp" alt=""></span>“Who can approve the investment?”</div><div class="med-tiles"><span>M</span><span>E</span><span>D</span><span>D</span><span>P</span><span>I</span><span>C</span><span>C</span></div><div class="med-feedback">Match → Economic buyer · Identify the decision maker.</div></div>
     </div>
   </section>
 </main>

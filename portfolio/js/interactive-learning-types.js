@@ -1,182 +1,176 @@
 (() => {
-  const selectOne = (buttons, selected) => {
-    buttons.forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
+  let startPhishingDemo = () => {};
+  let startAiDemo = () => {};
+  const typeTabs = [...document.querySelectorAll('.type-tabs [role="tab"]')];
+  const selectTypeTab = (selected, focus = false) => {
+    typeTabs.forEach(tab => {
+      const active = tab === selected;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    });
+    if (selected.id === 'tab-gamified-challenges') startPhishingDemo();
+    if (selected.id === 'tab-learner-facing-ai') startAiDemo();
+    if (focus) selected.focus();
+  };
+  typeTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTypeTab(tab));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = typeTabs.length - 1;
+      else if (event.key === 'ArrowRight') next = (index + 1) % typeTabs.length;
+      else next = (index - 1 + typeTabs.length) % typeTabs.length;
+      selectTypeTab(typeTabs[next], true);
+    });
+  });
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loop = (render, count, duration, staticPhase = 0) => {
+    let phase = reducedMotion ? staticPhase : 0;
+    render(phase);
+    if (!reducedMotion) window.setInterval(() => {
+      phase = (phase + 1) % count;
+      render(phase);
+    }, duration);
   };
 
-  const heroButtons = [...document.querySelectorAll('[data-hero-choice]')];
-  const heroResult = document.getElementById('heroChoiceResult');
-  heroButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(heroButtons, button);
-    const probe = button.dataset.heroChoice === 'probe';
-    heroResult.classList.toggle('is-risk', !probe);
-    heroResult.textContent = probe
-      ? 'The customer describes the bottleneck. Now the learner has evidence for a useful next question.'
-      : 'The pitch arrives before the need is clear. Try a question that uncovers the bottleneck.';
-  }));
-
-  const branchButtons = [...document.querySelectorAll('[data-branch]')];
   const branchMap = document.querySelector('.branch-map');
   const branchFeedback = document.getElementById('branchFeedback');
-  branchButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(branchButtons, button);
-    const probe = button.dataset.branch === 'probe';
-    branchMap.dataset.route = probe ? 'probe' : 'pitch';
-    branchFeedback.textContent = probe
-      ? 'Probing reveals why the handoff slows. A better decision becomes possible.'
-      : 'Pitching early skips the underlying cause. The next choice has less evidence.';
-  }));
+  loop(phase => {
+    branchMap.dataset.route = phase === 2 ? 'probe' : phase === 3 ? 'pitch' : 'none';
+    branchFeedback.textContent = [
+      'A customer explains that orders are delayed between teams.',
+      'The learner considers two responses.',
+      'Asking where work stalls reveals the bottleneck.',
+      'Pitching early leaves the root cause hidden.'
+    ][phase];
+  }, 4, 1900, 2);
 
-  const quizButtons = [...document.querySelectorAll('[data-quiz-answer]')];
+  const quizAnswers = [...document.querySelectorAll('[data-quiz-answer]')];
   const quizFeedback = document.getElementById('quizFeedback');
-  quizButtons.forEach(button => button.addEventListener('click', () => {
-    quizButtons.forEach(item => item.classList.remove('correct', 'incorrect'));
-    const correct = button.dataset.quizAnswer === 'yes';
-    button.classList.add(correct ? 'correct' : 'incorrect');
-    quizFeedback.textContent = correct
-      ? 'Correct. Lost time is a customer problem, not just product or meeting information.'
-      : 'Not quite. Look for an impact the customer actually experiences.';
-  }));
+  loop(phase => {
+    document.querySelector('.quiz-visual').dataset.phase = String(phase);
+    quizAnswers.forEach(answer => answer.classList.remove('correct', 'incorrect'));
+    if (phase === 1) quizAnswers[0].classList.add('incorrect');
+    if (phase >= 2) quizAnswers[1].classList.add('correct');
+    document.getElementById('quizScore').textContent = ['QUESTION 01 / 03', 'TRY ANOTHER DETAIL', 'EVIDENCE FOUND ✓', 'FEEDBACK APPLIED'][phase];
+    quizFeedback.textContent = [
+      'Which detail shows a problem the customer experiences?',
+      'A product feature is not evidence of customer impact.',
+      'Correct: time lost in handoffs is a business pain.',
+      'Specific feedback explains why the evidence fits.'
+    ][phase];
+  }, 4, 1800, 2);
 
-  const videoCues = [
-    { caption: 'Customer describes a slow handoff.', art: 'interactive-video-hotspots.webp', hotspot: 'Inspect the cue +' },
-    { caption: 'Pause before the next question.', art: 'question-timeline.webp', hotspot: 'Choose a question +' },
-    { caption: 'The response reveals the impact.', art: 'click-to-reveal-image.webp', hotspot: 'See the takeaway +' }
-  ];
-  const videoButtons = [...document.querySelectorAll('[data-video-cue]')];
-  let videoIndex = 0;
-  const videoMoment = document.getElementById('videoMoment');
-  const videoOptions = document.getElementById('videoMomentOptions');
-  videoButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(videoButtons, button);
-    videoIndex = Number(button.dataset.videoCue);
-    const cue = videoCues[videoIndex];
-    const screen = document.querySelector('.video-screen');
-    screen.dataset.videoFrame = String(videoIndex);
-    document.getElementById('videoFrameArt').src = `../../../assets/icons/pixel/interactive-learning/${cue.art}`;
-    document.getElementById('videoCaption').textContent = cue.caption;
-    document.getElementById('videoHotspot').textContent = cue.hotspot;
-    videoOptions.hidden = true;
-    videoMoment.querySelector('p').textContent = 'Click the marker in the frame to inspect this learning moment.';
-  }));
-  document.getElementById('videoHotspot').addEventListener('click', () => {
-    const messages = [
-      'The learner notices lost time in handoffs, not just a feature request.',
-      'Which question will clarify the cost of the delay?',
-      'The learner connects the cue, question, and customer impact before moving on.'
-    ];
-    videoMoment.querySelector('p').textContent = messages[videoIndex];
-    videoOptions.hidden = videoIndex !== 1;
-  });
-  const videoAnswers = [...document.querySelectorAll('[data-video-answer]')];
-  videoAnswers.forEach(button => button.addEventListener('click', () => {
-    selectOne(videoAnswers, button);
-    videoMoment.querySelector('p').textContent = button.dataset.videoAnswer === 'probe'
-      ? 'Good move. Asking where work stalls reveals the impact behind the delay.'
-      : 'Try again. A pitch does not explain how the delay affects the customer.';
-  }));
-
-  let softwareIndex = 0;
-  const softwareControls = [...document.querySelectorAll('[data-software-control]')];
-  const softwareTask = document.getElementById('softwareStep');
+  const softwareWindow = document.querySelector('.software-window');
   const softwareTitle = document.getElementById('softwareTitle');
-  const softwareTarget = document.getElementById('softwareTarget');
-  const softwareExpected = ['learners', 'status', 'reports'];
-  softwareControls.forEach(button => button.addEventListener('click', () => {
-    if (softwareIndex >= softwareExpected.length) return;
-    if (button.dataset.softwareControl !== softwareExpected[softwareIndex]) {
-      softwareTask.textContent = `Not yet. ${['Open Learners first.', 'Open Pathway status next.', 'Open Reports to confirm the record.'][softwareIndex]}`;
-      return;
-    }
-    softwareIndex += 1;
-    softwareControls.forEach(item => item.classList.toggle('active', item === button));
-    if (softwareIndex === 1) {
-      softwareTitle.textContent = 'Learner record';
-      softwareTarget.hidden = false;
-      softwareTask.textContent = 'Task 2 of 3: open Pathway status.';
-    } else if (softwareIndex === 2) {
-      softwareTitle.textContent = 'Pathway status: incomplete';
-      softwareTarget.hidden = true;
-      softwareTask.textContent = 'Task 3 of 3: open Reports.';
-    } else {
-      softwareTitle.textContent = 'Report preview: learning incomplete';
-      softwareTask.textContent = 'Complete: the report makes the blocker visible.';
-    }
-  }));
-  document.getElementById('softwareReset').addEventListener('click', () => {
-    softwareIndex = 0;
-    softwareControls.forEach(item => item.classList.remove('active'));
-    softwareTitle.textContent = 'Dashboard';
-    softwareTarget.hidden = true;
-    softwareTask.textContent = 'Task 1 of 3: open Learners.';
-  });
+  const softwareTask = document.getElementById('softwareStep');
+  loop(phase => {
+    softwareWindow.dataset.step = String(phase);
+    softwareTitle.textContent = [
+      'Create customer order',
+      'Choose a product',
+      'Review the configured order',
+      'Order submitted ✓'
+    ][phase];
+    softwareTask.textContent = [
+      'Step 1 of 3: open Catalog.',
+      'Step 2 of 3: configure the package.',
+      'Step 3 of 3: submit the order.',
+      'Complete: Northstar Supply order #1048 was submitted.'
+    ][phase];
+    document.getElementById('orderStatus').textContent = phase === 3
+      ? 'Order #1048 · Submitted'
+      : 'Order #1048 · Draft';
+  }, 4, 1900, 2);
 
-  const hotspotDetails = {
-    signal: ['Signal', 'Start with the clue the learner should notice.'],
-    decision: ['Decision', 'Reveal what evidence changes the choice.'],
-    outcome: ['Outcome', 'Connect the action to what happens next.']
-  };
-  const hotspotButtons = [...document.querySelectorAll('[data-hotspot]')];
-  hotspotButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(hotspotButtons, button);
-    const [title, detail] = hotspotDetails[button.dataset.hotspot];
-    const reveal = document.getElementById('hotspotReveal');
-    reveal.querySelector('strong').textContent = title;
-    reveal.querySelector('span').textContent = detail;
-  }));
-
-  const gameRounds = [
-    { prompt: 'Which clue describes customer impact?', answers: ['Lost time', 'Feature list'], correct: 0, why: 'Lost time is a consequence the customer experiences.' },
-    { prompt: 'Which question clarifies the need?', answers: ['Where does work stall?', 'Which color do you prefer?'], correct: 0, why: 'The question investigates the bottleneck.' },
-    { prompt: 'What makes feedback useful?', answers: ['Only a score', 'Explain the reasoning'], correct: 1, why: 'Reasoning helps the learner improve the next attempt.' }
+  const hotspotDetails = [
+    ['Signal', 'Start with the clue the learner should notice.'],
+    ['Decision', 'Reveal what evidence changes the choice.'],
+    ['Outcome', 'Connect the action to what happens next.']
   ];
-  let gameScore = 0;
-  const gameVisual = document.querySelector('.game-visual');
-  const gameChoices = [...document.querySelectorAll('[data-game-choice]')];
-  const gamePrompt = document.getElementById('gamePrompt');
+  const hotspotReveal = document.getElementById('hotspotReveal');
+  loop(phase => {
+    document.querySelector('.hotspot-visual').dataset.phase = String(phase);
+    hotspotReveal.querySelector('strong').textContent = hotspotDetails[phase][0];
+    hotspotReveal.querySelector('span').textContent = hotspotDetails[phase][1];
+  }, 3, 2300, 1);
+
+  const phishingVisual = document.querySelector('.phishing-visual');
+  const gameStars = document.getElementById('gameStars');
+  const gameCount = document.getElementById('gameCount');
   const gameFeedback = document.getElementById('gameFeedback');
-  const renderGameRound = () => {
-    gameVisual.dataset.score = String(gameScore);
-    document.getElementById('gameCount').textContent = `${gameScore} / 3`;
-    document.getElementById('gameBadge').textContent = gameScore === 3 ? 'Badge earned' : 'Badge locked';
-    if (gameScore === 3) {
-      gamePrompt.textContent = 'Challenge complete';
-      gameChoices.forEach(button => { button.hidden = true; });
-      document.getElementById('gameReset').hidden = false;
+  const rounds = [
+    { name: 'social', feedback: 'Round 1: the new profile has no mutual connections and links to a reward. Report the bot.' },
+    { name: 'email', feedback: 'Round 2: the email uses a lookalike helpdesk domain and a rushed password request. Report it.' },
+    { name: 'text', feedback: 'Round 3: the delivery text comes from an unknown number and links to an unfamiliar site. Block and report.' }
+  ];
+  let phishingStarted = false;
+  const showRound = index => {
+    if (index === rounds.length) {
+      phishingVisual.dataset.round = 'complete';
+      phishingVisual.dataset.score = '3';
+      gameStars.textContent = '★ ★ ★';
+      gameCount.textContent = 'Mission complete';
+      gameFeedback.textContent = 'All three threats were reported. The finished trophy screen stays open.';
       return;
     }
-    const round = gameRounds[gameScore];
-    gamePrompt.textContent = round.prompt;
-    gameChoices.forEach((button, index) => {
-      button.hidden = false;
-      button.textContent = round.answers[index];
+    phishingVisual.dataset.round = rounds[index].name;
+    phishingVisual.dataset.score = String(index);
+    gameStars.textContent = Array.from({ length: 3 }, (_, star) => star < index ? '★' : '☆').join(' ');
+    gameCount.textContent = `${3 - index} threat${3 - index === 1 ? '' : 's'} to spot`;
+    gameFeedback.textContent = rounds[index].feedback;
+  };
+  startPhishingDemo = () => {
+    if (phishingStarted) return;
+    phishingStarted = true;
+    showRound(0);
+    const roundDuration = reducedMotion ? 2500 : 6000;
+    rounds.forEach((_, index) => {
+      window.setTimeout(() => showRound(index + 1), roundDuration * (index + 1));
     });
   };
-  gameChoices.forEach(button => button.addEventListener('click', () => {
-    const round = gameRounds[gameScore];
-    if (Number(button.dataset.gameChoice) !== round.correct) {
-      gameFeedback.textContent = 'Try again. Look for the action that supports the learning goal.';
-      return;
-    }
-    gameScore += 1;
-    gameFeedback.textContent = gameScore === 3 ? `${round.why} Badge earned.` : `${round.why} Next round unlocked.`;
-    renderGameRound();
-  }));
-  document.getElementById('gameReset').addEventListener('click', event => {
-    gameScore = 0;
-    event.currentTarget.hidden = true;
-    gameFeedback.textContent = 'Choose an answer to advance.';
-    renderGameRound();
-  });
 
-  const aiButtons = [...document.querySelectorAll('[data-ai-learner]')];
-  aiButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(aiButtons, button);
-    aiButtons.forEach(item => item.classList.toggle('active', item === button));
-    const newer = button.dataset.aiLearner === 'new';
-    document.getElementById('aiRouteMiddle').textContent = newer ? 'Guided example' : 'Complex case';
-    document.getElementById('aiRouteEnd').textContent = newer ? 'Practice with cues' : 'Open response';
-    document.getElementById('aiPathFeedback').textContent = newer
-      ? 'More scaffolding helps a new learner build the first mental model.'
-      : 'A harder case gives an experienced learner room to explain the judgment.';
-  }));
+  const aiVisual = document.querySelector('.ai-path-visual');
+  const aiProfiles = [...document.querySelectorAll('[data-ai-learner]')];
+  const aiResponses = [
+    {
+      profile: 'new',
+      prompt: '“I know the customer is interested. What should I ask next?”',
+      reply: '“Ask who can approve the investment, then listen for evidence of the buying process.”',
+      feedback: 'The tutor gives a concrete question and guided example for a new learner.'
+    },
+    {
+      profile: 'experienced',
+      prompt: '“The sponsor supports us, but I am unsure who signs off. How should I test the deal?”',
+      reply: '“Map the approval path. Which stakeholder can confirm the economic buyer and timing?”',
+      feedback: 'The tutor challenges an experienced learner to test the approval path.'
+    }
+  ];
+  let aiStarted = false;
+  const showAiProfile = index => {
+    const response = aiResponses[index];
+    aiVisual.dataset.profile = response.profile;
+    aiProfiles.forEach(profile => profile.classList.toggle('active', profile.dataset.aiLearner === response.profile));
+    document.getElementById('aiLearnerPrompt').textContent = response.prompt;
+    document.getElementById('aiCoachReply').textContent = response.reply;
+    document.getElementById('aiPathFeedback').textContent = response.feedback;
+    aiVisual.classList.remove('ai-refresh');
+    void aiVisual.offsetWidth;
+    aiVisual.classList.add('ai-refresh');
+  };
+  startAiDemo = () => {
+    if (aiStarted) return;
+    aiStarted = true;
+    let index = 0;
+    showAiProfile(index);
+    if (!reducedMotion) window.setInterval(() => {
+      index = (index + 1) % aiResponses.length;
+      showAiProfile(index);
+    }, 5500);
+  };
+
 })();
