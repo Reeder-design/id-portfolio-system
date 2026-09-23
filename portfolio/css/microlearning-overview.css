@@ -136,3 +136,38 @@
 @media(max-width:900px){.micro-example-card,.micro-example-card:nth-child(2){grid-template-columns:1fr}.micro-example-card:nth-child(2) .micro-example-preview,.micro-example-card:nth-child(2) .micro-example-copy{grid-column:auto;grid-row:auto}.micro-example-preview{height:265px;min-height:265px;border-right:0;border-bottom:1px solid #bdd9c7}.micro-example-preview-vertical{border-left:0}.micro-example-copy{padding:26px 29px}.micro-example-card:nth-child(2) .micro-example-copy:before{right:auto;left:0}}
 @media(max-width:700px){.micro-type-demo{height:230px}.micro-example-preview{height:240px;min-height:240px}.micro-example-copy{padding:24px}.micro-example-copy .btn{min-width:0;width:100%}}
 @media(prefers-reduced-motion:reduce){.micro-type,.micro-example-card{transition:none}.micro-type:hover,.micro-example-card:hover{transform:none}}
+
+/* Compact gallery and darker project spotlights. */
+.micro-overview-page main>.section{padding-block:clamp(46px,5vw,74px)!important}
+.micro-overview-page .micro-section-head{margin-bottom:23px}
+.micro-principle{min-height:325px}
+.micro-principle-motion{height:140px;margin-top:10px}
+.micro-principle h3{margin-top:12px}
+.micro-type{min-height:440px;padding:17px}
+.micro-type:after{content:none!important}
+.micro-type-kicker{min-height:37px;margin-bottom:2px}
+.micro-type h3{min-height:0;margin:7px 0 11px}
+.micro-type-demo{height:213px;margin-bottom:10px}
+.micro-type-proof{padding:11px 13px}
+.micro-example-grid{gap:16px}
+.micro-examples-section .micro-example-card{position:relative;min-height:285px;border-color:#5b9f82;background:radial-gradient(circle at 92% 12%,#376e5c,#1b383d 62%)!important;box-shadow:0 24px 46px #173d3460}
+.micro-examples-section .micro-example-card:nth-child(2){background:radial-gradient(circle at 5% 83%,#376d67,#19353e 68%)!important}
+.micro-example-card:after{content:'✦';position:absolute;z-index:1;top:14px;right:18px;color:#bce986;opacity:.8;font:700 1.1rem var(--font-heading);pointer-events:none;animation:micro-spotlight-spark 5s infinite}
+.micro-example-card:nth-child(2):after{right:auto;left:18px;animation-delay:2.5s}
+.micro-examples-section .micro-example-preview{min-height:285px;height:100%;border-color:#538a79;background:radial-gradient(circle at 67% 18%,#398069,#1c4447 75%)!important}
+.micro-examples-section .micro-example-preview-vertical{background:radial-gradient(circle at 40% 18%,#4d8d77,#1b3c43 75%)!important}
+.micro-example-preview:after{content:'';position:absolute;width:220px;height:220px;border:1px dashed #bce98677;border-radius:50%;pointer-events:none;animation:micro-orbit 16s linear infinite}
+.micro-example-preview .micro-preview-window,.micro-example-preview .micro-preview-branches,.micro-example-preview .micro-preview-path,.micro-example-preview .micro-example-badge{z-index:1}
+.micro-example-copy{padding:25px 31px}
+.micro-example-copy:before{top:24px;bottom:24px;background:linear-gradient(#bce986,#79c9a5)}
+.micro-examples-section .micro-example-copy .eyebrow{color:#bce986!important}
+.micro-examples-section .micro-example-copy h3{color:#f6fff6!important}
+.micro-examples-section .micro-example-copy p:not(.eyebrow){color:#d8eadd!important}
+.micro-examples-section .micro-example-meta{margin:14px 0 17px}
+.micro-examples-section .micro-example-meta span{border-color:#77aa8a;background:#315f51;color:#e8f7e9}
+.micro-examples-section .micro-example-badge{border:1px solid #bce986;background:#234940;color:#f3ffe9}
+@keyframes micro-orbit{to{transform:rotate(360deg)}}
+@keyframes micro-spotlight-spark{50%{transform:scale(1.4);opacity:.4}}
+@media(max-width:900px){.micro-examples-section .micro-example-preview{min-height:235px;height:235px}.micro-examples-section .micro-example-copy{padding:23px 27px}.micro-principle,.micro-type{min-height:0}}
+@media(max-width:700px){.micro-overview-page main>.section{padding-block:43px!important}.micro-type-demo{height:218px}.micro-examples-section .micro-example-copy{padding:22px}}
+@media(prefers-reduced-motion:reduce){.micro-example-preview:after,.micro-example-card:after{animation:none!important}}
