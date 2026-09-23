@@ -42,7 +42,7 @@
     const d=operationData[key];if(!d)return;
     set('lmsOperationLabel',d.label);set('lmsOperationTitle',d.title);set('lmsOperationText',d.text);set('lmsOperationOutput',d.output);
     const flow=document.getElementById('lmsOperationFlow');if(flow)flow.innerHTML=d.flow.map((v,i)=>`<span>${v}</span>${i<d.flow.length-1?'<i></i>':''}`).join('');
-    const demo=document.getElementById('lmsOperationDemo');if(demo)demo.innerHTML=operationScreens[key]();
+    const demo=document.getElementById('lmsOperationDemo');if(demo){demo.dataset.operation=key;demo.innerHTML=operationScreens[key]();}
   });
 
   const adminScene=(label,graphic,note)=>`<div class="admin-scene-frame"><div class="admin-scene-bar"><span>● ● ●</span><b>ADMIN WORKSPACE / ${label}</b><small>Portfolio-safe simulation</small></div><div class="admin-scene-body">${graphic}</div><div class="admin-scene-foot"><span>↳</span>${note}</div></div>`;

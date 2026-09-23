@@ -223,6 +223,8 @@ def add_hiring_nav_link(path: Path, text: str) -> str:
 
 def rendered_html(path: Path) -> str:
     source = path.read_text(encoding="utf-8")
+    if is_noindex(source):
+        return source
     clean = strip_existing_block(source)
     clean = add_expertise_footer_link(path, clean)
     clean = add_hiring_nav_link(path, clean)
@@ -231,6 +233,10 @@ def rendered_html(path: Path) -> str:
     if not match:
         raise ValueError(f"{path.relative_to(ROOT)}: cannot inject SEO block without </title>")
     return clean[: match.end()] + "\n" + block + clean[match.end():]
+
+
+def is_noindex(source: str) -> bool:
+    return bool(re.search(r'<meta\b(?=[^>]*\bname\s*=\s*["\']robots["\'])(?=[^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b)[^>]*>', source, flags=re.IGNORECASE))
 
 
 def sitemap_text(html_files: list[Path]) -> str:
@@ -282,7 +288,7 @@ def main() -> int:
 
         sitemap_path = SITE_ROOT / "sitemap.xml"
         robots_path = SITE_ROOT / "robots.txt"
-        expected_sitemap = sitemap_text(html_files)
+        expected_sitemap = sitemap_text([path for path in html_files if not is_noindex(path.read_text(encoding="utf-8"))])
         expected_robots = robots_text()
 
         if args.check:

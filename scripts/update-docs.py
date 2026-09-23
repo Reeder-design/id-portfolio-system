@@ -173,6 +173,10 @@ def generate_map(projects: list[dict], taxonomy: dict, version_data: dict) -> st
     all_html = sorted(
         path.relative_to(ROOT).as_posix()
         for path in (ROOT / "portfolio").rglob("*.html")
+        if not (
+            'name="robots" content="noindex"' in path.read_text(encoding="utf-8")
+            and 'http-equiv="refresh"' in path.read_text(encoding="utf-8")
+        )
     )
     known_paths = {path for _, path in CORE_PAGES}
     known_paths.update(project.get("page_path") for project in projects if project.get("page_path"))

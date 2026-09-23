@@ -488,30 +488,15 @@
   const deliveryPanel = document.getElementById('deliveryPanel');
   const deliveryButtons = [...document.querySelectorAll('[data-delivery]')];
   linkTabPanel(deliveryButtons, deliveryPanel, 'cert-delivery');
-  const adminActionLabels = {
-    build: ['Align objective', 'Objective aligned'],
-    review: ['Confirm source', 'Source confirmed'],
-    lms: ['Validate rule', 'Rule validated'],
-    support: ['Verify record', 'Record verified'],
-    maintain: ['Complete impact review', 'Impact review complete']
-  };
-
+  let deliveryResolveTimer = 0;
   const renderDelivery = (key, animate = false) => {
     const data = deliveryData[key];
     if (!data || !deliveryPanel) return;
     const update = () => {
       const selected = deliveryButtons.find((button) => button.dataset.delivery === key);
-      const visibleStage = document.getElementById(`cert-launch-stage-${key}`);
-      if (visibleStage || selected) deliveryPanel.setAttribute('aria-labelledby', visibleStage?.id || selected.id);
+      if (selected) deliveryPanel.setAttribute('aria-labelledby', selected.id);
       const flight = document.getElementById('certLaunchFlight');
       if (flight) flight.dataset.stage = key;
-      document.querySelectorAll('.cert-launch-stop-button').forEach((stop, stopIndex) => {
-        const active = deliveryButtons[stopIndex]?.dataset.delivery === key;
-        stop.classList.toggle('active', active);
-        stop.setAttribute('aria-current', active ? 'step' : 'false');
-        stop.setAttribute('aria-selected', String(active));
-        stop.tabIndex = active ? 0 : -1;
-      });
       const stageLabel = document.getElementById('launchStageLabel');
       if (stageLabel) stageLabel.textContent = data.label;
       const stageSummary = flight?.querySelector('.cert-launch-caption span');
@@ -519,25 +504,16 @@
       deliveryPanel.innerHTML = `
         <div class="cert-ops-copy"><p class="delivery-panel-label">${data.label}</p><h3>${data.title}</h3><p>${data.action}</p></div>
         <div class="cert-ops-device" aria-label="Public-safe administrator interface reconstruction for ${data.label}"><div class="cert-ops-device-bar"><i></i><i></i><i></i><span>portfolio-safe interface example</span></div>${data.view}</div>`;
-      const target = deliveryPanel.querySelector('[data-demo-target]');
+      window.clearTimeout(deliveryResolveTimer);
       deliveryPanel.classList.remove('is-resolved');
-      const screen = deliveryPanel.querySelector('.cert-admin-screen');
-      const actionButton = document.createElement('button');
-      actionButton.type = 'button';
-      actionButton.className = 'cert-admin-action';
-      actionButton.textContent = adminActionLabels[key][0];
-      actionButton.setAttribute('aria-pressed', 'false');
-      actionButton.addEventListener('click', () => {
-        if (!target?.isConnected || actionButton.getAttribute('aria-pressed') === 'true') return;
-        target.setAttribute('aria-live', 'polite');
+      deliveryResolveTimer = window.setTimeout(() => {
+        const target = deliveryPanel.querySelector('[data-demo-target]');
+        if (!target) return;
         target.textContent = target.dataset.complete;
-        const followup = screen.querySelector('[data-demo-followup]');
+        const followup = deliveryPanel.querySelector('[data-demo-followup]');
         if (followup) followup.textContent = followup.dataset.complete;
-        actionButton.textContent = adminActionLabels[key][1];
-        actionButton.setAttribute('aria-pressed', 'true');
         deliveryPanel.classList.add('is-resolved');
-      });
-      screen.append(actionButton);
+      }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1550);
       deliveryPanel.classList.remove('is-switching');
     };
     if (!animate) {
@@ -577,31 +553,85 @@
   const launchFlight = document.getElementById('certLaunchFlight');
   const deliveryWorkspace = document.querySelector('.delivery-workspace');
   if (launchFlight && deliveryWorkspace) launchFlight.append(deliveryWorkspace);
-  if (launchTrack) { launchTrack.removeAttribute('aria-hidden'); launchTrack.setAttribute('role','tablist'); launchTrack.setAttribute('aria-label','Launch and operations stages'); }
+  launchTrack?.removeAttribute('aria-hidden');
   const duplicateDeliveryTabs = document.querySelector('.delivery-tabs');
   if (duplicateDeliveryTabs) { duplicateDeliveryTabs.hidden = true; duplicateDeliveryTabs.setAttribute('aria-hidden','true'); }
-  launchStops.forEach((stop, index) => {
-    const trigger = document.createElement('button');
-    trigger.className = 'cert-launch-stop-button';
-    trigger.type = 'button';
-    trigger.id = `cert-launch-stage-${deliveryButtons[index]?.dataset.delivery}`;
-    trigger.setAttribute('role','tab');
-    trigger.setAttribute('aria-controls','deliveryPanel');
-    trigger.setAttribute('aria-selected',String(index === 0));
-    trigger.tabIndex = index === 0 ? 0 : -1;
-    trigger.innerHTML = `<span class="cert-launch-dot" aria-hidden="true"></span><span>${stop.textContent}</span><small>Explore</small>`;
-    trigger.setAttribute('aria-label', `Explore ${deliveryButtons[index]?.textContent.trim()} launch stage`);
-    trigger.addEventListener('click', () => deliveryButtons[index]?.click());
-    trigger.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? launchStops.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + launchStops.length) % launchStops.length;
-      const nextStop = launchTrack.querySelectorAll('.cert-launch-stop-button')[next];
-      nextStop?.focus(); nextStop?.click();
+  launchStops.forEach((stop) => { stop.setAttribute('aria-hidden', 'true'); });
+  const rocket = launchTrack?.querySelector('.cert-rocket');
+  if (rocket) {
+    rocket.setAttribute('role', 'button');
+    rocket.setAttribute('tabindex', '0');
+    rocket.setAttribute('aria-label', 'Move rocket to the next launch stage. Drag to choose a stage.');
+    let dragStart = null;
+    let suppressClick = false;
+    const selectStage = (index) => {
+      const button = deliveryButtons[Math.max(0, Math.min(index, deliveryButtons.length - 1))];
+      if (!button) return;
+      launchFlight.dataset.stage = button.dataset.delivery;
+      button.click();
+    };
+    const currentStage = () => deliveryButtons.findIndex((button) => button.classList.contains('active'));
+    const pointOnRoute = (percent) => {
+      const mobile = window.matchMedia('(max-width: 620px)').matches;
+      const positions = mobile ? [[9,55],[29,43],[50,20],[71,-9],[91,-34]] : [[5.5,49],[27,37],[50,14],[73,-15],[94.5,-40]];
+      const x = Math.max(positions[0][0], Math.min(positions.at(-1)[0], percent));
+      const next = positions.findIndex(([stop]) => stop >= x);
+      const right = positions[Math.max(1, next)];
+      const left = positions[Math.max(0, Math.max(1, next) - 1)];
+      const ratio = (x - left[0]) / (right[0] - left[0]);
+      return {left:x, top:left[1] + (right[1] - left[1]) * ratio};
+    };
+    rocket.addEventListener('pointerdown', (event) => {
+      dragStart = {x:event.clientX, y:event.clientY};
+      rocket.setPointerCapture(event.pointerId);
+      rocket.classList.add('is-dragging');
     });
-    stop.replaceWith(trigger);
-  });
+    rocket.addEventListener('pointermove', (event) => {
+      if (!dragStart) return;
+      const bounds = launchTrack.getBoundingClientRect();
+      const point = pointOnRoute((event.clientX - bounds.left) / bounds.width * 100);
+      rocket.style.left = `${point.left}%`;
+      rocket.style.top = `${point.top}px`;
+    });
+    rocket.addEventListener('pointerup', (event) => {
+      if (!dragStart) return;
+      const moved = Math.hypot(event.clientX - dragStart.x, event.clientY - dragStart.y) > 8;
+      dragStart = null;
+      if (moved) {
+        const bounds = launchTrack.getBoundingClientRect();
+        const pct = (event.clientX - bounds.left) / bounds.width * 100;
+        const stops = window.matchMedia('(max-width: 620px)').matches ? [9,29,50,71,91] : [5.5,27,50,73,94.5];
+        const closest = stops.reduce((best, value, index) => Math.abs(value - pct) < Math.abs(stops[best] - pct) ? index : best, 0);
+        suppressClick = true;
+        window.setTimeout(() => { suppressClick = false; }, 300);
+        selectStage(closest);
+      }
+      rocket.classList.remove('is-dragging');
+      window.requestAnimationFrame(() => { rocket.style.left = ''; rocket.style.top = ''; });
+    });
+    rocket.addEventListener('pointercancel', () => { dragStart = null; rocket.classList.remove('is-dragging'); rocket.style.left = ''; rocket.style.top = ''; });
+    rocket.addEventListener('click', () => {
+      if (suppressClick) { suppressClick = false; return; }
+      selectStage((currentStage() + 1) % deliveryButtons.length);
+    });
+    rocket.addEventListener('keydown', (event) => {
+      if (!['Enter', ' ', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === 'Home') selectStage(0);
+      else if (event.key === 'End') selectStage(deliveryButtons.length - 1);
+      else if (event.key === 'ArrowLeft') selectStage((currentStage() - 1 + deliveryButtons.length) % deliveryButtons.length);
+      else selectStage((currentStage() + 1) % deliveryButtons.length);
+    });
+  }
   renderDelivery('build');
+  if (launchFlight && 'IntersectionObserver' in window) {
+    const launchObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      renderDelivery(deliveryButtons.find((button) => button.classList.contains('active'))?.dataset.delivery || 'build');
+      launchObserver.disconnect();
+    }, { threshold: .3 });
+    launchObserver.observe(launchFlight);
+  }
 
   const historicalSignals = [
     {
@@ -699,100 +729,41 @@
   });
   renderVoice(0);
 
-  const historicalStages = ['receive', 'diagnose', 'plan', 'execute', 'observe'];
-  const historicalHeadings = {
-    receive: 'Listen before choosing a fix.',
-    diagnose: 'Find the issue beneath the comment.',
-    plan: 'Choose a bounded, testable change.',
-    execute: 'Make and verify the edit.',
-    observe: 'Bring the next signal back into review.'
-  };
   const historyThemeTabs = [...document.querySelectorAll('[data-history-theme]')];
-  const historyStageTabs = [...document.querySelectorAll('[data-history-stage]')];
   const historyDetail = document.getElementById('certHistoryDetail');
-  let activeHistoryTheme = 0;
-  let activeHistoryStage = 'receive';
-  const renderHistory = () => {
+  const historyLabels = ['Signal', 'Diagnose', 'Design decision', 'Revise + QA', 'Observe'];
+  const historyIcons = ['mini-chat.webp', 'mini-report-search.webp', 'mini-document-list.webp', 'mini-edit.webp', 'mini-analytics.webp'];
+  const renderHistory = (index) => {
     if (!historyDetail) return;
-    const signal = historicalSignals[activeHistoryTheme];
-    const step = historicalStages.indexOf(activeHistoryStage);
-    historyThemeTabs.forEach((button, index) => {
-      const active = index === activeHistoryTheme;
+    const signal = historicalSignals[index];
+    historyThemeTabs.forEach((button, buttonIndex) => {
+      const active = buttonIndex === index;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', String(active));
       button.tabIndex = active ? 0 : -1;
     });
-    historyStageTabs.forEach((button) => {
-      const active = button.dataset.historyStage === activeHistoryStage;
-      button.classList.toggle('active', active);
-      button.classList.toggle('is-past', historicalStages.indexOf(button.dataset.historyStage) < step);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
-    const themeLabel = document.getElementById('certHistoryThemeLabel');
-    if (themeLabel) themeLabel.textContent = `Reviewing: ${signal.label}`;
-    document.querySelector('.cert-history-route')?.style.setProperty('--history-progress', `${((step + 0.5) / historicalStages.length) * 100}%`);
-    const copy = {
-      receive: signal.signal,
-      diagnose: `${signal.revealed} ${signal.context}`,
-      plan: signal.plan,
-      execute: signal.response,
-      observe: signal.change
-    };
-    const note = activeHistoryStage === 'receive' ? 'Historical partner signal, paraphrased.'
-      : activeHistoryStage === 'observe' ? 'A maintenance-practice change—not a claim of improved scores or satisfaction.'
-      : 'The approved scope and source authority shaped the response.';
-    historyDetail.setAttribute('aria-labelledby', `cert-history-theme-${activeHistoryTheme} cert-history-stage-${activeHistoryStage}`);
-    document.getElementById('certHistoryKicker').textContent = `${String(step + 1).padStart(2, '0')} / 05 · ${signal.label}`;
-    document.getElementById('certHistoryTitle').textContent = historicalHeadings[activeHistoryStage];
-    document.getElementById('certHistoryCopy').textContent = copy[activeHistoryStage];
-    document.getElementById('certHistoryNote').textContent = note;
-    historyDetail.classList.remove('is-entering');
-    void historyDetail.offsetWidth;
-    historyDetail.classList.add('is-entering');
+    historyDetail.setAttribute('aria-labelledby', historyThemeTabs[index].id);
+    const steps = [signal.signal, signal.revealed, signal.plan, signal.response, signal.change];
+    historyDetail.innerHTML = `<div class="cert-flow-head"><span>FEEDBACK SIGNAL / ${signal.label}</span><strong>Signal → reviewed change → next signal</strong></div><div class="cert-flow-track" aria-hidden="true"><span class="cert-flow-tracer"></span></div><div class="cert-flow-steps">${steps.map((copy, stepIndex) => `<article class="cert-flow-card" style="--flow-index:${stepIndex}"><img src="../../../../assets/icons/pixel/lms/${historyIcons[stepIndex]}" alt=""><small>${String(stepIndex + 1).padStart(2, '0')} / ${historyLabels[stepIndex]}</small><p>${copy}</p></article>`).join('')}</div><p class="cert-flow-foot">Historical partner signal, paraphrased. The last step defines what to watch after the change.</p>`;
   };
-  const bindHistoryTabs = (buttons, property) => buttons.forEach((button, index) => {
-    button.addEventListener('click', () => { if (property === 'theme') { activeHistoryTheme = index; activeHistoryStage = 'receive'; } else activeHistoryStage = button.dataset.historyStage; renderHistory(); });
-    button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 1) + buttons.length) % buttons.length;
-      buttons[next].focus();
-      if (property === 'theme') { activeHistoryTheme = next; activeHistoryStage = 'receive'; } else activeHistoryStage = buttons[next].dataset.historyStage;
-      renderHistory();
-    });
-  });
-  bindHistoryTabs(historyThemeTabs, 'theme');
-  bindHistoryTabs(historyStageTabs, 'stage');
-  renderHistory();
-
-  const changeData = {
-    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA', visual:'<div class="cert-revision-visual term" aria-hidden="true"><span>Old term</span><i></i><span>Approved term</span><b>2 lessons + 1 check</b></div>' },
-    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support', visual:'<div class="cert-revision-visual audience" aria-hidden="true"><span>Seller</span><span>Partner</span><i></i><b>Shared core</b><em>Route test ✓</em></div>' },
-    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest', visual:'<div class="cert-revision-visual product" aria-hidden="true"><span>Source update</span><i></i><b>Scenario cue</b><em>Retest ✓</em></div>' }
-  };
-  const changeButtons = [...document.querySelectorAll('[data-change]')];
-  const changeDisplay = document.getElementById('certChangeDisplay');
-  linkTabPanel(changeButtons, changeDisplay, 'cert-change');
-  const renderChange = (key) => {
-    const data = changeData[key]; if (!data || !changeDisplay) return;
-    changeButtons.forEach((button) => { const active = button.dataset.change === key; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); button.tabIndex = active ? 0 : -1; });
-    const selected = changeButtons.find((button) => button.dataset.change === key);
-    if (selected) changeDisplay.setAttribute('aria-labelledby', selected.id);
-    changeDisplay.dataset.change = key;
-    changeDisplay.innerHTML = `<div class="cert-redesign-cycle" aria-label="Change is traced, revised, reviewed, released, and monitored before the next change"><div class="cert-cycle-ring" aria-hidden="true"><span class="cert-cycle-step step-one">Trace</span><span class="cert-cycle-step step-two">Revise</span><span class="cert-cycle-step step-three">Review</span><span class="cert-cycle-step step-four">Release</span><span class="cert-cycle-step step-five">Monitor</span><span class="cert-cycle-center"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><b>Next version</b></span></div></div><div class="cert-cycle-explain">${data.visual}<small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
-  };
-  changeButtons.forEach((button, index) => {
-    button.tabIndex = index === 0 ? 0 : -1;
-    button.addEventListener('click', () => renderChange(button.dataset.change));
+  historyThemeTabs.forEach((button, index) => {
+    button.addEventListener('click', () => renderHistory(index));
     button.addEventListener('keydown', (event) => {
       if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
       event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? changeButtons.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + changeButtons.length) % changeButtons.length;
-      changeButtons[next].focus(); renderChange(changeButtons[next].dataset.change);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? historyThemeTabs.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + historyThemeTabs.length) % historyThemeTabs.length;
+      historyThemeTabs[next].focus(); renderHistory(next);
     });
   });
-  renderChange('terminology');
+  renderHistory(0);
+  if (historyDetail && 'IntersectionObserver' in window) {
+    const flowObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      historyDetail.classList.add('is-visible');
+      flowObserver.disconnect();
+    }, { threshold: .3 });
+    flowObserver.observe(historyDetail);
+  } else historyDetail?.classList.add('is-visible');
 
   const curriculumData = {
     intro:{label:'Introduction',title:"Start with the seller's job, not a technical data dump.",summary:'The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.',behavior:'Explain the business context and recognize when the topic belongs in a customer conversation.',image:'../../../../assets/project-images/cellular-certification/cert-introduction.webp',alt:'Sanitized certification introduction screen.',hotspots:[['Role context','The first screen orients the seller to the job and learning goal.'],['Path cue','The learner can see where this module leads next.']]},
@@ -808,8 +779,6 @@
   const curriculumImage=document.getElementById('curriculumImage');
   const curriculumHotspots=document.getElementById('curriculumHotspots');
   const curriculumHotspotCaption=document.getElementById('curriculumHotspotCaption');
-  const curriculumBack=document.getElementById('curriculumBack');
-  const curriculumNext=document.getElementById('curriculumNext');
   const curriculumDisplay = document.querySelector('.curriculum-computer-display');
   let checkedAnswer = false;
   let selectedAnswer = -1;
@@ -820,7 +789,7 @@
     const index = curriculumButtons.findIndex((button) => button.classList.contains('active'));
     if (index < curriculumButtons.length - 1) renderCurriculum(curriculumButtons[index + 1].dataset.curriculum);
     else { checkedAnswer = false; selectedAnswer = -1; renderCurriculum('intro'); }
-    curriculumHotspots?.querySelector('.curriculum-vertical-hotspot,.curriculum-outcome-cover:not(:disabled),.curriculum-quiz-answer,.curriculum-screen-continue')?.focus();
+    curriculumHotspots?.querySelector('.curriculum-vertical-hotspot,.curriculum-outcome-cover:not(:disabled),.curriculum-quiz-answer,.curriculum-screen-continue,.cert-icp-signals button')?.focus();
   };
   const screenButton = (label, className, action) => {
     const button = document.createElement('button');
@@ -829,6 +798,35 @@
     button.textContent = label;
     button.addEventListener('click', action);
     return button;
+  };
+  let curriculumPopoverTrigger = null;
+  const openCurriculumPopover = (anchor, title, copy, image, focusAfter = anchor) => {
+    curriculumHotspots.querySelector('.curriculum-info-popover')?.remove();
+    curriculumPopoverTrigger?.setAttribute('aria-expanded', 'false');
+    curriculumPopoverTrigger = anchor;
+    anchor.setAttribute('aria-expanded', 'true');
+    const popover = document.createElement('div');
+    popover.className = 'curriculum-info-popover';
+    popover.setAttribute('role', 'dialog');
+    popover.setAttribute('aria-label', `${title} detail`);
+    popover.innerHTML = '<button type="button" class="curriculum-info-close" aria-label="Close detail">×</button><img alt=""><strong></strong><p></p>';
+    popover.querySelector('strong').textContent = title;
+    popover.querySelector('p').textContent = copy;
+    if (image) popover.querySelector('img').src = image;
+    else { popover.querySelector('img').remove(); popover.classList.add('no-icon'); }
+    curriculumHotspots.append(popover);
+    const screenRect = curriculumHotspots.getBoundingClientRect();
+    const anchorRect = anchor.getBoundingClientRect();
+    const width = Math.min(300, screenRect.width - 20);
+    popover.style.width = `${width}px`;
+    const left = Math.max(10, Math.min(screenRect.width - width - 10, anchorRect.left - screenRect.left + 8));
+    const top = Math.max(8, Math.min(screenRect.height - popover.offsetHeight - 8, anchorRect.top - screenRect.top + 14));
+    popover.style.left = `${left}px`;
+    popover.style.top = `${top}px`;
+    const close = () => { popover.remove(); anchor.setAttribute('aria-expanded', 'false'); curriculumPopoverTrigger = null; focusAfter?.focus(); };
+    popover.querySelector('.curriculum-info-close').addEventListener('click', close);
+    popover.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+    popover.querySelector('.curriculum-info-close').focus();
   };
   const renderCurriculum=(key)=>{
     const data=curriculumData[key]; if(!data||!curriculumImage)return;
@@ -840,19 +838,19 @@
     const completionTab = curriculumButtons.find((button) => button.dataset.curriculum === 'complete');
     if (completionTab) { completionTab.disabled = !checkedAnswer; completionTab.setAttribute('aria-disabled', String(!checkedAnswer)); }
     curriculumPlayer?.setAttribute('aria-labelledby',curriculumButtons[index].id);
-    document.getElementById('curriculumProgress').textContent=(index+1)+' / '+curriculumButtons.length;
+    const currentProgress=(index+1)+' / '+curriculumButtons.length;
+    document.getElementById('curriculumProgress').textContent=currentProgress;
+    document.getElementById('curriculumScreenProgress').textContent=currentProgress;
+    document.getElementById('curriculumScreenProgressFill').style.width=((index+1)/curriculumButtons.length*100)+'%';
     document.getElementById('curriculumLabel').textContent=data.label;
     document.getElementById('curriculumTitle').textContent=data.title;
     document.getElementById('curriculumSummary').textContent=data.summary;
     document.getElementById('curriculumBehavior').textContent=data.behavior;
-    document.getElementById('curriculumStepText').textContent=`${data.label} · ${index+1} of ${curriculumButtons.length}`;
-    curriculumBack.disabled=index===0;
-    curriculumNext.textContent=index===curriculumButtons.length-1?'Restart ↺':'Next →';
-    curriculumNext.setAttribute('aria-label',index===curriculumButtons.length-1?'Restart learner walkthrough':'Next learner view');
-    curriculumNext.disabled = key === 'check' && !checkedAnswer;
     curriculumDisplay.dataset.view = key;
     if (curriculumHotspots && curriculumHotspotCaption) {
       curriculumHotspots.replaceChildren();
+      curriculumPopoverTrigger = null;
+      curriculumHotspotCaption.hidden = ['market', 'value', 'scenario'].includes(key);
       if (key === 'market') {
         const verticals = [
           ['Manufacturing', 'Fictional use case: connect mobile workstations across a busy production floor.'],
@@ -867,7 +865,7 @@
         verticals.forEach(([label, description], tileIndex) => {
           const tile = screenButton(label, 'curriculum-vertical-hotspot', () => {
             grid.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === tile));
-            curriculumHotspotCaption.textContent = description;
+            openCurriculumPopover(tile, label, description);
           });
           tile.setAttribute('aria-label', `Explore ${label} cellular use case`);
           tile.style.setProperty('--tile-index', tileIndex);
@@ -883,16 +881,78 @@
           const cover = screenButton('Click me', 'curriculum-outcome-cover', () => {
             cover.classList.add('revealed');
             cover.disabled = true;
-            curriculumHotspotCaption.textContent = outcome;
             const nextCover = covers.querySelector('.curriculum-outcome-cover:not(:disabled)');
-            if (nextCover) nextCover.focus();
-            else curriculumHotspots.querySelector('.curriculum-screen-continue')?.focus();
+            openCurriculumPopover(cover, 'Value outcome', outcome, '../../../../assets/icons/pixel/lms/mini-verified.webp', nextCover || curriculumHotspots.querySelector('.curriculum-screen-continue'));
           });
           cover.setAttribute('aria-label', `Reveal outcome: ${outcome}`);
           covers.append(cover);
         });
         curriculumHotspots.append(covers);
         curriculumHotspotCaption.textContent = 'Reveal the three value outcomes, then continue.';
+      } else if (key === 'scenario') {
+        const dashboard = document.createElement('div');
+        dashboard.className = 'cert-icp-demo';
+        dashboard.innerHTML = `<div class="cert-icp-top"><span>CUSTOMER ICP</span><strong>Regional transport hub</strong></div>
+          <div class="cert-icp-signals" aria-label="Explore customer signals">
+            <button type="button" data-icp-info="fleet"><img src="../../../../assets/icons/pixel/lms/transport-fleet.svg" alt=""><span>Moving teams</span><b>↗</b></button>
+            <button type="button" data-icp-info="data"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Sensitive data</span><b>↗</b></button>
+            <button type="button" data-icp-info="growth"><img src="../../../../assets/icons/pixel/lms/expanding-sites.svg" alt=""><span>Expanding sites</span><b>↗</b></button>
+          </div>
+          <div class="cert-icp-match-head"><strong>Match a response to each signal</strong><small>Select an icon, then a signal below</small></div>
+          <div class="cert-icp-options" aria-label="Response icons">
+            <button type="button" data-icp-option="uptime" aria-label="Reliable coverage"><img src="../../../../assets/icons/pixel/lms/reliable-coverage.svg" alt=""><span>Reliable</span></button>
+            <button type="button" data-icp-option="security" aria-label="Protected access"><img src="../../../../assets/icons/pixel/lms/secure-access.svg" alt=""><span>Secure</span></button>
+            <button type="button" data-icp-option="scale" aria-label="Scalable rollout"><img src="../../../../assets/icons/pixel/lms/scalable-rollout.svg" alt=""><span>Scalable</span></button>
+            <button type="button" data-icp-option="cost" aria-label="Lowest hardware cost"><img src="../../../../assets/icons/pixel/lms/lowest-cost.svg" alt=""><span>Cheapest</span></button>
+          </div>
+          <div class="cert-icp-targets" aria-label="Customer signals to match">
+            <button type="button" data-icp-target="fleet"><span>Moving teams</span><b>＋</b></button>
+            <button type="button" data-icp-target="data"><span>Sensitive data</span><b>＋</b></button>
+            <button type="button" data-icp-target="growth"><span>Expanding sites</span><b>＋</b></button>
+          </div>
+          <p class="cert-icp-feedback" role="status">Tap a signal above for context, then match the responses.</p>
+          <button class="cert-icp-next" type="button" disabled>Continue →</button>`;
+        curriculumHotspots.append(dashboard);
+        const info = {
+          fleet: ['Moving teams', 'Vehicles, dispatch, and field teams need dependable connectivity as they move between sites.', 'transport-fleet.svg'],
+          data: ['Sensitive data', 'Operational information must remain protected while people work across locations.', 'mini-shield.webp'],
+          growth: ['Expanding sites', 'New facilities and users make a manageable rollout important.', 'expanding-sites.svg']
+        };
+        dashboard.querySelectorAll('[data-icp-info]').forEach((button) => button.addEventListener('click', () => {
+          const [title, copy, image] = info[button.dataset.icpInfo];
+          openCurriculumPopover(button, title, copy, `../../../../assets/icons/pixel/lms/${image}`);
+        }));
+        let selected = '';
+        const feedback = dashboard.querySelector('.cert-icp-feedback');
+        const correctMap = {fleet:'uptime',data:'security',growth:'scale'};
+        dashboard.querySelectorAll('[data-icp-option]').forEach((button) => button.addEventListener('click', () => {
+          selected = button.dataset.icpOption;
+          dashboard.querySelectorAll('[data-icp-option]').forEach((item) => item.classList.toggle('is-selected', item === button));
+          feedback.classList.remove('is-wrong');
+          feedback.textContent = 'Now choose the customer signal it fits.';
+        }));
+        dashboard.querySelectorAll('[data-icp-target]').forEach((target) => target.addEventListener('click', () => {
+          if (!selected || target.disabled) { feedback.textContent = 'Choose a response icon first.'; return; }
+          const option = dashboard.querySelector(`[data-icp-option="${selected}"]`);
+          if (correctMap[target.dataset.icpTarget] !== selected) {
+            target.classList.add('is-wrong'); option.classList.add('is-wrong');
+            feedback.classList.add('is-wrong'); feedback.textContent = 'That response does not fit this signal. Try another.';
+            window.setTimeout(() => {target.classList.remove('is-wrong');option.classList.remove('is-wrong');},850);
+            return;
+          }
+          target.classList.add('is-matched'); option.classList.add('is-matched');
+          target.disabled = true; option.disabled = true;
+          target.querySelector('b').textContent = '✓';
+          feedback.classList.remove('is-wrong'); feedback.textContent = 'Good match. Connect the next signal.';
+          selected = '';
+          dashboard.querySelectorAll('[data-icp-option]').forEach((item) => item.classList.remove('is-selected'));
+          if ([...dashboard.querySelectorAll('[data-icp-target]')].every((item) => item.disabled)) {
+            feedback.textContent = 'All three needs matched. Continue to the check.';
+            dashboard.querySelector('.cert-icp-next').disabled = false;
+          }
+        }));
+        dashboard.querySelector('.cert-icp-next').addEventListener('click', continueInScreen);
+        curriculumHotspotCaption.textContent = 'Explore the customer signals, match the responses, then continue.';
       } else if (key === 'check') {
         const quiz = document.createElement('div');
         quiz.className = 'curriculum-live-quiz';
@@ -904,7 +964,6 @@
           const choice = screenButton(answer, 'curriculum-quiz-answer', () => {
             selectedAnswer = answerIndex;
             checkedAnswer = false;
-            curriculumNext.disabled = true;
             if (completionTab) { completionTab.disabled = true; completionTab.setAttribute('aria-disabled','true'); }
             answerBox.querySelectorAll('button').forEach((item, itemIndex) => {
               item.classList.toggle('selected', itemIndex === answerIndex);
@@ -945,10 +1004,10 @@
         curriculumHotspots.append(quiz);
         curriculumHotspotCaption.textContent = 'Answer the question to unlock completion.';
       } else {
-        curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Continue to the next module when ready.' : 'Select Continue in the learner screen.';
+        curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Reset the walkthrough when ready.' : 'Select Continue in the learner screen.';
       }
-      if (key !== 'check') {
-        const label = key === 'complete' ? 'Continue to Next Module →' : 'Continue →';
+      if (key !== 'check' && key !== 'scenario') {
+        const label = key === 'complete' ? 'Reset ↺' : 'Continue →';
         curriculumHotspots.append(screenButton(label, 'curriculum-screen-continue', continueInScreen));
       }
       if (key === 'complete' && completedFromQuiz) {
@@ -960,7 +1019,8 @@
         completedFromQuiz = false;
       }
     }
-    if (key !== 'check') { curriculumImage.src=data.image; curriculumImage.alt=data.alt; }
+    if (key === 'scenario') { curriculumImage.removeAttribute('src'); curriculumImage.alt = ''; }
+    else if (key !== 'check') { curriculumImage.src=data.image; curriculumImage.alt=data.alt; }
   };
   curriculumButtons.forEach((button,index)=>{
     button.addEventListener('click',()=>renderCurriculum(button.dataset.curriculum));
@@ -974,20 +1034,6 @@
       if (curriculumButtons[next].disabled) { curriculumHotspotCaption.textContent = 'Complete the knowledge check to unlock this screen.'; return; }
       curriculumButtons[next].focus();renderCurriculum(curriculumButtons[next].dataset.curriculum);
     });
-  });
-  curriculumBack?.addEventListener('click',()=>{
-    const index=curriculumButtons.findIndex((button)=>button.classList.contains('active'));
-    if(index>0){
-      renderCurriculum(curriculumButtons[index-1].dataset.curriculum);
-      if(index===1) curriculumNext.focus();
-    }
-  });
-  curriculumNext?.addEventListener('click',()=>{
-    const index=curriculumButtons.findIndex((button)=>button.classList.contains('active'));
-    if (index === 4 && !checkedAnswer) return;
-    const next=(index+1)%curriculumButtons.length;
-    if (next === 0) { checkedAnswer = false; selectedAnswer = -1; }
-    renderCurriculum(curriculumButtons[next].dataset.curriculum);
   });
   curriculumButtons.forEach((button,index)=>button.tabIndex=index===0?0:-1);
   renderCurriculum('intro');

@@ -112,6 +112,7 @@ def main() -> int:
         return 1
 
     inbound_links: dict[Path, set[Path]] = defaultdict(set)
+    redirect_pages: set[Path] = set()
 
     for html_file in html_files:
         relative = html_file.relative_to(ROOT)
@@ -161,6 +162,19 @@ def main() -> int:
         except Exception as exc:
             errors.append(f"{relative}: HTML parser error: {exc}")
             continue
+
+        # Retired routes can remain as accessible redirects for existing bookmarks.
+        refresh_match = re.search(
+            r'<meta\s+[^>]*http-equiv=["\']refresh["\'][^>]*content=["\']0;\s*url=([^"\']+)["\']',
+            text,
+            flags=re.IGNORECASE,
+        )
+        if refresh_match and re.search(r'<meta\s+[^>]*name=["\']robots["\'][^>]*content=["\']noindex["\']', text, re.IGNORECASE):
+            target = resolve_local_reference(html_file, refresh_match.group(1))
+            if target and target.is_relative_to(SITE_ROOT.resolve()) and target.exists() and target != html_file.resolve():
+                redirect_pages.add(html_file.resolve())
+            else:
+                errors.append(f"{relative}: redirect target is missing or points to itself")
 
         if parser.main_count != 1:
             errors.append(f"{relative}: expected exactly one <main>, found {parser.main_count}")
@@ -234,7 +248,7 @@ def main() -> int:
     home = (SITE_ROOT / "index.html").resolve()
     for html_file in html_files:
         resolved = html_file.resolve()
-        if resolved == home:
+        if resolved == home or resolved in redirect_pages:
             continue
         if not inbound_links.get(resolved):
             errors.append(

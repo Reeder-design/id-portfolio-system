@@ -1,4 +1,9 @@
 (() => {
+  const parentBreadcrumb = document.getElementById('reportingParentBreadcrumb');
+  if (parentBreadcrumb && new URLSearchParams(window.location.search).get('from') === 'lms') {
+    parentBreadcrumb.textContent = 'LMS Administration';
+    parentBreadcrumb.href = '../../../lms-administration/index.html';
+  }
   const stepData = {
     pull: {
       label: 'Browser automation',
@@ -108,11 +113,11 @@
   };
 
   const stageVisuals = {
-    pull: '<div class="stage-pull-files"><span>01</span><span>02</span><span>03</span><span>04</span></div><div class="stage-route"><i></i></div><div class="stage-download"><b>4 exports</b><small>downloaded</small></div>',
-    validate: '<div class="stage-validate-list"><span class="checked"></span><span class="checked"></span><span class="checked"></span><span class="checking"></span></div><div class="stage-scan"></div><div class="stage-badge"><b>Input gate</b><small>complete set required</small></div>',
-    normalize: '<div class="stage-normalize-source"><img src="../../../../assets/icons/pixel/ai-evaluation/workflow-documents.webp" alt=""><small>mixed fields</small></div><div class="stage-normalize-machine"><img src="../../../../assets/icons/pixel/lms/mini-settings.webp" alt=""><i></i></div><div class="stage-normalize-table"><b>standard fields</b><span></span><span></span><span></span></div>',
-    compare: '<div class="stage-compare-source source-activity"><img src="../../../../assets/icons/pixel/lms/mini-analytics.webp" alt=""><small>activity</small></div><div class="stage-compare-source source-certificate"><img src="../../../../assets/icons/pixel/lms/mini-certificate.webp" alt=""><small>certificate</small></div><div class="stage-compare-lens"><img src="../../../../assets/icons/pixel/ai-evaluation/demo-compare-ab.webp" alt=""></div><div class="stage-match"><b>Matched status</b><small>exceptions separated</small></div>',
-    write: '<div class="stage-write-records"><span></span><span></span><span></span><span></span></div><div class="stage-write-split"><i></i></div><div class="stage-workbook"><div><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""><b>Complete</b></div><div><img src="../../../../assets/icons/pixel/lms/mini-document-list.webp" alt=""><b>Incomplete</b></div></div>'
+    pull: `<div class="report-ui-head"><b>Absorb / saved reports</b><span>Export queue · 4 of 4</span></div><div class="report-ui-grid report-ui-queue"><div><small>REPORT</small><strong>Employee activity</strong><em>Downloaded ✓</em></div><div><small>REPORT</small><strong>Partner activity</strong><em>Downloaded ✓</em></div><div><small>REPORT</small><strong>Employee certificates</strong><em>Downloaded ✓</em></div><div><small>REPORT</small><strong>Partner certificates</strong><em>Downloaded ✓</em></div></div><div class="report-ui-progress"><i></i><span>Browser run → expected files present</span></div>`,
+    validate: `<div class="report-ui-head"><b>Input gate / file audit</b><span>Stop on an incomplete set</span></div><div class="report-ui-grid report-ui-audit"><div><strong>01 · Activity / employee</strong><em>✓ Found</em></div><div><strong>02 · Activity / partner</strong><em>✓ Found</em></div><div><strong>03 · Certificates / employee</strong><em>✓ Found</em></div><div><strong>04 · Certificates / partner</strong><em>✓ Found</em></div></div><div class="report-ui-note">Check filename, format, and report count before parsing rows.</div>`,
+    normalize: `<div class="report-ui-head"><b>pandas / field crosswalk</b><span>Consistent comparison keys</span></div><div class="report-ui-map"><div><small>SOURCE FIELDS</small><span>User Name</span><span>Completion Date</span><span>Certificate Status</span></div><div class="report-ui-arrows"><i>→</i><i>→</i><i>→</i></div><div><small>NORMALIZED FIELDS</small><span>username</span><span>completed_at</span><span>certificate_state</span></div></div><div class="report-ui-note">Missing keys are surfaced for review instead of silently dropped.</div>`,
+    compare: `<div class="report-ui-head"><b>Evidence join / username</b><span>Activity + certificate</span></div><div class="report-ui-compare"><div><small>ACTIVITY</small><strong>alex.r · Course complete</strong><strong>sam.p · Course complete</strong></div><i>+</i><div><small>CERTIFICATE</small><strong>alex.r · Awarded</strong><strong>sam.p · Missing</strong></div></div><div class="report-ui-result"><span>alex.r → Complete</span><span>sam.p → Exception review</span></div>`,
+    write: `<div class="report-ui-head"><b>openpyxl / review workbook</b><span>Human-readable output</span></div><div class="report-ui-book"><div class="report-ui-tabs"><span>Complete</span><span>Incomplete</span><span>Exceptions</span></div><div class="report-ui-sheet"><div><b>Username</b><b>Course</b><b>Status</b></div><div><span>alex.r</span><span>Sales cert</span><em>Complete</em></div><div><span>sam.p</span><span>Sales cert</span><em>Review</em></div></div></div><div class="report-ui-note">Review totals and exceptions before sharing the workbook.</div>`
   };
 
   const exceptionVisuals = {
