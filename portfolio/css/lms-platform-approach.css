@@ -37,3 +37,32 @@ body.lms-platform-page #corporate-core .platform-workbench,body.lms-platform-pag
 @media(max-width:950px){body.lms-platform-page .platform-panel{height:auto!important}.platform-screen{height:auto;min-height:610px}.platform-story{max-height:none}.lms-platform-principle nav{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){.lms-platform-principle{top:0}.lms-platform-category{scroll-margin-top:74px}}
 @media(max-width:600px){.lms-platform-principle nav a{font-size:.55rem}.lms-platform-principle nav a span{display:block}.platform-hero-window{height:260px}.platform-screen>img{height:205px;flex-basis:205px}.platform-view-advice{grid-template-columns:1fr}.platform-screen{min-height:0}}
+/* The section rail stays at the viewport edge; the mockup itself carries its admin notes. */
+body.lms-platform-page .lms-platform-principle{top:0;z-index:90;padding:9px 0;background:linear-gradient(100deg,#102b35,#245451 70%,#315b43);box-shadow:0 13px 30px rgba(10,31,35,.28)}
+body.lms-platform-page .lms-platform-principle nav a{border-color:rgba(183,230,205,.28);background:rgba(255,255,255,.09);color:#f1fff4;transition:background .2s,transform .2s}
+body.lms-platform-page .lms-platform-principle nav a:hover{background:rgba(255,255,255,.17);transform:translateY(-1px)}
+body.lms-platform-page .lms-platform-principle nav a.active{border-color:#c1f38f;background:linear-gradient(120deg,#eaffdc,#c8efad);color:#173d35;box-shadow:inset 0 -3px #92d455,0 5px 15px rgba(11,37,29,.2)}
+body.lms-platform-page .lms-platform-category{scroll-margin-top:85px}
+body.lms-platform-page .platform-panel{grid-template-columns:minmax(0,1.55fr) minmax(250px,.45fr);height:600px!important;gap:16px;padding:16px}
+body.lms-platform-page .platform-screen{border:8px solid #102d35;border-radius:16px;background:#f6fbf8;box-shadow:0 15px 35px rgba(7,39,36,.18)}
+body.lms-platform-page .platform-screen-bar{background:#102d35}
+body.lms-platform-page .platform-view-nav{padding:7px 9px;background:#eaf4ed}
+body.lms-platform-page .platform-image-stage{position:relative;order:1;flex:1;min-height:0;overflow:hidden;background:linear-gradient(145deg,#e9f6ee,#fafffc)}
+body.lms-platform-page .platform-image-stage>img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent}
+body.lms-platform-page .screen-caption{order:2;padding:8px 12px;font-size:.68rem}
+body.lms-platform-page .platform-story{display:flex;flex-direction:column;justify-content:center;padding:12px 10px}
+body.lms-platform-page .platform-story h3{font-size:clamp(1.35rem,2vw,2.1rem)}
+body.lms-platform-page .platform-story>p:not(.eyebrow){font-size:.86rem;line-height:1.55}
+body.lms-platform-page .platform-logic{display:none}
+.platform-hotspot-layer{position:absolute;inset:0;pointer-events:none}
+.platform-hotspot{position:absolute;display:grid;place-items:center;width:34px;height:34px;border:2px solid #fff;border-radius:50%;background:#91d54a;color:#123b33;font:900 .7rem/1 var(--font-heading);box-shadow:0 0 0 4px rgba(132,206,87,.25),0 4px 10px rgba(9,42,39,.25);cursor:pointer;pointer-events:auto;animation:platform-hotspot-pulse 2.5s ease-in-out infinite}
+.platform-hotspot:hover,.platform-hotspot:focus-visible,.platform-hotspot[aria-pressed="true"]{background:#fff;outline:3px solid #65bc85;outline-offset:2px;animation:none}
+.platform-hotspot.hotspot-1{top:20%;left:22%}.platform-hotspot.hotspot-2{top:48%;left:51%;animation-delay:.5s}.platform-hotspot.hotspot-3{top:66%;left:78%;animation-delay:1s}
+@keyframes platform-hotspot-pulse{50%{box-shadow:0 0 0 9px rgba(132,206,87,.15),0 4px 10px rgba(9,42,39,.25)}}
+.platform-hotspot-note{position:absolute;right:14px;bottom:56px;left:14px;z-index:3;display:grid;gap:5px;padding:14px 44px 14px 15px;border:1px solid #a7d7b5;border-radius:12px;background:rgba(17,49,51,.96);box-shadow:0 12px 30px rgba(5,33,30,.27)}
+.platform-hotspot-note[hidden]{display:none!important}.platform-hotspot-note>button{position:absolute;top:5px;right:9px;border:0;background:transparent;color:#fff;font-size:1.5rem;cursor:pointer}.platform-hotspot-note span{color:#a7df95;font:800 .58rem/1.2 var(--font-heading);letter-spacing:.08em;text-transform:uppercase}.platform-hotspot-note p{margin:0;color:#fff;font-size:.74rem;line-height:1.4}
+body.lms-platform-page .platform-next-view{position:absolute;right:12px;bottom:12px;z-index:2;margin:0;padding:10px 13px;background:#153e3b;color:#f3fff4;font-size:.64rem;box-shadow:0 5px 12px rgba(15,47,41,.2)}
+body.lms-platform-page .platform-next-view:hover,body.lms-platform-page .platform-next-view:focus-visible{background:#2b684e;color:#fff}
+@media(max-width:950px){body.lms-platform-page .platform-panel{grid-template-columns:1fr;height:auto!important}body.lms-platform-page .platform-screen{height:510px;min-height:0}body.lms-platform-page .platform-story{padding:8px 12px}}
+@media(max-width:600px){body.lms-platform-page .platform-screen{height:370px}.platform-hotspot{width:29px;height:29px}.platform-hotspot-note{bottom:50px}.platform-hotspot-note p{font-size:.66rem}}
+@media(prefers-reduced-motion:reduce){.platform-hotspot{animation:none}}

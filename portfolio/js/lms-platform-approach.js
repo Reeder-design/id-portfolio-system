@@ -101,12 +101,6 @@
       views: [['Find','sharepoint/knowledge-portal.png','Search and topic navigation get people to an answer quickly.'],['Use','sharepoint/use-case-library.png','Use-case resources connect guidance to real work.'],['Maintain','sharepoint/site-analytics.png','Usage and review dates reveal what needs revision.']]
     }
   };
-  const categoryScope = {
-    extended: ['Sales + partner + customer enablement','Audience segmentation','Branded experiences','Commerce when relevant','Engagement + certification','Cross-population reporting'],
-    corporate: ['Employees + managers','HRIS provisioning','Automated enrollment','Compliance + renewals','Audit / e-signatures when relevant','Talent + performance'],
-    academic: ['Students + instructors','Cohort enrollment','Course shells + calendars','Discussion + rubrics','Gradebook feedback','LTI tools when useful'],
-    portal: ['Employees + partners','Searchable job aids','Templates + FAQs','Use-case library','Community knowledge','Ownership + freshness']
-  };
   const viewNotes = {
     docebo:[['A branch is not an audience rule by itself. Check group membership, catalog visibility, and inherited permissions together.','Use one test learner per partner route before publishing.','Reuse the shared course; vary access and plans rather than cloning content.'],['A learning plan can hide prerequisite or version problems until a learner enters it.','Test the full sequence after every course replacement.','Use the plan as the maintained route, not a collection of one-off enrollments.'],['Certificate settings and plan completion may not mean the same thing.','Reconcile the learner record with the certificate rule.','Use exception exports to find misrouted learners before a renewal cycle.']],
     absorb:[['Department and group membership can reflect different business structures.','Document which field controls each audience decision.','Keep reusable courses in a shared catalog where visibility rules permit.'],['Bulk enrollments can amplify a bad match.','Preview matching keys and isolate ambiguous accounts for review.','Use reviewed batches instead of repeated individual placement.'],['Branding can clarify an audience route but does not replace permissions.','Test navigation as employee, partner, and customer.','Improve labels and catalog organization before buying another portal.']],
@@ -120,33 +114,34 @@
   const write = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value; };
   document.querySelectorAll('[data-platform-category]').forEach(section => {
     const category = section.dataset.platformCategory;
-    const scope = document.createElement('div');
-    scope.className = 'platform-scope-chips';
-    scope.setAttribute('aria-label', 'Audience and administrative priorities');
-    scope.replaceChildren(...categoryScope[category].map(label => { const chip = document.createElement('span'); chip.textContent = label; return chip; }));
-    section.querySelector('.category-intro').after(scope);
     const buttons = [...section.querySelectorAll('[data-platform]')];
     const image = document.getElementById(`${category}-image`);
     const screen = section.querySelector('.platform-screen');
     const caption = section.querySelector('.screen-caption');
     const story = section.querySelector('.platform-story');
+    story.querySelector('.platform-logic')?.remove();
     const viewNav = document.createElement('div');
     viewNav.className = 'platform-view-nav';
-    viewNav.setAttribute('aria-label', 'Inspect platform decisions');
+    viewNav.setAttribute('aria-label', 'Screens in this platform walkthrough');
     screen.querySelector('.platform-screen-bar').after(viewNav);
-    const viewAdvice = document.createElement('div');
-    viewAdvice.className = 'platform-view-advice';
-    viewAdvice.innerHTML = '<div><span>Watch for</span><strong></strong></div><div><span>Admin move</span><strong></strong></div><div><span>Get more from the platform</span><strong></strong></div>';
-    caption.after(viewAdvice);
+    const imageStage = document.createElement('div');
+    imageStage.className = 'platform-image-stage';
+    image.parentElement.insertBefore(imageStage,image);
+    imageStage.append(image);
+    const hotspotLayer = document.createElement('div');
+    hotspotLayer.className = 'platform-hotspot-layer';
+    imageStage.append(hotspotLayer);
+    const hotspotNote = document.createElement('div');
+    hotspotNote.className = 'platform-hotspot-note';
+    hotspotNote.hidden = true;
+    hotspotNote.innerHTML = '<button type="button" aria-label="Close admin note">×</button><span></span><p></p>';
+    imageStage.append(hotspotNote);
+    hotspotNote.querySelector('button').addEventListener('click',()=>{hotspotNote.hidden=true;hotspotLayer.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed','false'));});
     const nextView = document.createElement('button');
     nextView.type = 'button';
     nextView.className = 'platform-next-view';
     nextView.textContent = 'Next screen →';
-    viewAdvice.after(nextView);
-    const specifics = document.createElement('div');
-    specifics.className = 'platform-specifics';
-    specifics.innerHTML = '<p><span>Admin priorities</span><strong></strong></p><p><span>Connected systems</span><strong></strong></p><p><span>Learning + business outcome</span><strong></strong></p>';
-    story.append(specifics);
+    imageStage.append(nextView);
     const viewLabel = screen.querySelector('.platform-screen-bar span');
     const renderViews = (platform, selected = 0) => {
       const views = platformDetails[platform].views;
@@ -163,19 +158,22 @@
       if (image) { image.src = `${base}${file}`; image.alt = `Illustrative ${platform} ${label.toLowerCase()} interface`; }
       viewLabel.textContent = `${examples[platform].screen.split(' · ')[0]} · ${label.toLowerCase()}`;
       caption.textContent = explanation;
-      [...viewAdvice.querySelectorAll('strong')].forEach((node,index)=>{node.textContent=viewNotes[platform][selected][index];});
+      hotspotNote.hidden=true;
+      const labels=['Consideration','Best practice','Get more from this LMS'];
+      hotspotLayer.replaceChildren(...labels.map((hotspotLabel,index)=>{
+        const button=document.createElement('button');button.type='button';button.className=`platform-hotspot hotspot-${index+1}`;button.textContent=String(index+1);button.setAttribute('aria-label',`${hotspotLabel}: ${viewNotes[platform][selected][index]}`);button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>{hotspotLayer.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));hotspotNote.querySelector('span').textContent=hotspotLabel;hotspotNote.querySelector('p').textContent=viewNotes[platform][selected][index];hotspotNote.hidden=false;});return button;
+      }));
       nextView.onclick=()=>renderViews(platform,(selected+1)%views.length);
     };
     const activate = button => {
       const data = examples[button.dataset.platform];
       if (!data || data.category !== category) return;
       buttons.forEach(item => { const selected = item === button; item.classList.toggle('active', selected); item.setAttribute('aria-selected', String(selected)); item.tabIndex = selected ? 0 : -1; });
-      ['kicker','title','context','scenario','decision','result','screen-title','caption'].forEach(field => {
+      ['kicker','title','screen-title','caption'].forEach(field => {
         const key = field === 'screen-title' ? 'screen' : field;
         write(`${category}-${field}`, data[key]);
       });
-      const details = platformDetails[button.dataset.platform];
-      [...specifics.querySelectorAll('strong')].forEach((node, index) => { node.textContent = [details.priorities, details.ecosystem, details.outcome][index]; });
+      write(`${category}-context`,`${data.decision} ${data.result}`);
       renderViews(button.dataset.platform);
       section.classList.remove('platform-switched');
       void section.offsetWidth;
