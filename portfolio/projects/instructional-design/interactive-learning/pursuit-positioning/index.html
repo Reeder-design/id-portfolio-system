@@ -453,6 +453,107 @@
     @media(max-width:980px){.evidence-bar{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
     @media(max-width:620px){.evidence-bar{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
+    /* Let the benchmark sit below the matrix without a sticky overlap. */
+    .workbench-section{background:linear-gradient(150deg,#e8f2eb,#f7faf8 62%,#e9f5ed)!important}
+    .workbench-intro{width:min(100%,1120px);margin:0 auto 12px}
+    .solution-summary{display:grid;grid-template-columns:55px minmax(0,1fr);align-items:center;gap:11px;width:min(100%,1120px);margin:0 auto 12px;padding:10px 14px;border:1px solid #b7d8c4;border-left:5px solid #79c99e;border-radius:13px;background:#eaf5ed;box-shadow:0 8px 18px rgba(37,83,66,.06)}
+    .solution-summary-icon{display:grid;place-items:center;width:50px;height:50px;border-radius:11px;background:#fff}
+    .solution-summary-icon img{width:43px;height:43px;object-fit:contain}
+    .solution-summary-label{color:#437862;font:800 .51rem/1.1 var(--font-heading);letter-spacing:.07em}
+    .solution-summary h3{margin:3px 0;color:#213d35;font-size:.8rem}
+    .solution-summary p{margin:0;color:#4a6558;font-size:.64rem;line-height:1.38}
+    .decision-panel{position:static}
+    .decision-actions{position:static;background:none}
+    .matrix{aspect-ratio:1.6}
+    .results-shell{margin-top:3px;scroll-margin-top:82px;grid-template-columns:minmax(0,1fr);gap:11px}
+    .result-card{border-color:#bad9c7;box-shadow:0 9px 19px rgba(34,74,59,.06)}
+    .result-card:first-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.52fr);column-gap:18px;align-content:center;background:linear-gradient(130deg,#19363c,#2b5650);color:#e7f2e9}
+    .result-card:first-child .eyebrow,.result-card:first-child h2,.result-card:first-child>p{grid-column:1}
+    .result-card:first-child .eyebrow{color:#bceaa2!important}
+    .result-card:first-child h2{color:#fff}
+    .result-card:first-child>p{color:#d8e8dd}
+    .result-card:first-child .result-summary{grid-column:2;grid-row:1/span 3;grid-template-columns:1fr;margin:0}
+    .result-card:first-child .result-summary div{background:#ecf7ed}
+    .benchmark-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+    .criterion-stage,.evidence-panel{border-color:#bdd8c9;box-shadow:0 9px 19px rgba(34,74,59,.05)}
+    @media(min-width:761px){.evidence-panel{height:auto;max-height:none;overflow:visible}.evidence-panel-copy,.evidence-list{max-height:none;overflow:visible}.criterion-stage{height:auto;max-height:none;overflow:visible}}
+    @media(max-width:760px){.result-card:first-child{grid-template-columns:1fr}.result-card:first-child .result-summary{grid-column:1;grid-row:auto;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}.benchmark-list{grid-template-columns:repeat(2,minmax(0,1fr))}.solution-summary{grid-template-columns:45px minmax(0,1fr)}.solution-summary-icon{width:43px;height:43px}.solution-summary-icon img{width:37px;height:37px}}
+    @media(max-width:520px){.result-card:first-child .result-summary,.benchmark-list{grid-template-columns:1fr}}
+
+    .criterion-column{display:grid;align-content:start;gap:11px;min-width:0}
+    .benchmark-panel{padding:14px;border:1px solid #bdd8c9;border-radius:17px;background:#fff;box-shadow:0 9px 19px rgba(34,74,59,.05)}
+    .benchmark-panel[hidden],.benchmark-marker[hidden],.benchmark-average[hidden],.score-divider[hidden],.matrix-legend [hidden]{display:none!important}
+    .benchmark-panel .eyebrow{margin:0 0 3px;color:#4a796e!important}
+    .benchmark-panel h3{margin:0;color:#263d37;font-size:.88rem}
+    .benchmark-panel>p:not(.eyebrow){margin:4px 0 11px;color:#52675c;font-size:.61rem;line-height:1.4}
+    .benchmark-panel .benchmark-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .benchmark-panel .benchmark-row{padding:9px 10px;border:1px solid #dcebe2;border-radius:9px;background:#f5faf6}
+    .benchmark-panel .benchmark-row strong{font-size:.59rem}
+    .benchmark-panel .benchmark-row small{display:block;margin-top:5px;color:#5a6c60;font-size:.54rem;line-height:1.35}
+    .benchmark-pair{display:flex;align-items:baseline;gap:6px;margin-top:5px;font:800 .9rem/1 var(--font-heading)}
+    .benchmark-panel .benchmark-pair span{display:inline;margin:0;font-size:inherit;line-height:inherit}
+    .benchmark-panel .benchmark-pair span:first-child{color:#263d37}
+    .benchmark-panel .benchmark-separator{color:#a0afa6}
+    .benchmark-panel .benchmark-separator::before,.matrix-score .score-divider::before{content:"|"}
+    .benchmark-panel .benchmark-value.tone-same{color:#25713e}
+    .benchmark-panel .benchmark-value.tone-close{color:#a36c06}
+    .benchmark-panel .benchmark-value.tone-far{color:#ba4239}
+    .matrix-legend{display:flex;justify-content:center;gap:16px;margin:24px 0 9px;color:#d8e9df;font:800 .52rem/1 var(--font-heading)}
+    .matrix-legend span{display:flex;align-items:center;gap:5px}
+    .matrix-legend i{display:inline-block;width:10px;height:10px;border:2px solid #97db4f;border-radius:50%;background:#4a4238}
+    .matrix-legend #benchmarkLegend i{border-color:#ffdc74;background:#fff;border-radius:2px;transform:rotate(45deg)}
+    .matrix-marker.benchmark-marker{z-index:5;width:18px;height:18px;border:3px solid #ffdc74;border-radius:3px;background:#fff;box-shadow:0 0 0 3px #193b43;transform:translate(-50%,-50%) rotate(45deg)}
+    .matrix-marker.benchmark-marker.tone-same{border-color:#bcf481}
+    .matrix-marker.benchmark-marker.tone-close{border-color:#ffdc74}
+    .matrix-marker.benchmark-marker.tone-far{border-color:#ff9b8b}
+    .score-pair{display:flex;justify-content:center;align-items:baseline;gap:6px;margin-bottom:4px;white-space:nowrap}
+    .matrix-score .score-pair strong{display:inline;margin:0}
+    .matrix-score .score-divider{color:#a9c4b9;font-weight:800}
+    .matrix-score .benchmark-average.tone-same{color:#bcf481}
+    .matrix-score .benchmark-average.tone-close{color:#ffdc74}
+    .matrix-score .benchmark-average.tone-far{color:#ff9b8b}
+    @media(max-width:520px){.benchmark-panel .benchmark-list{grid-template-columns:1fr}}
+
+    .axis-stage-heading .eyebrow{margin:0 0 4px;color:#4a796e!important}
+    .axis-stage-heading h3{margin:0 0 4px;color:#263d37;font-size:.98rem}
+    .axis-stage-heading p:last-child{margin:0;color:#52675c;font-size:.66rem;line-height:1.42}
+    .axis-score-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+    .axis-group{min-width:0;overflow:hidden;border:1px solid #cce2d3;border-radius:12px;background:#f4faf5}
+    .axis-group-y{border-color:#c9dce7;background:#f3f8fb}
+    .axis-group-heading{display:flex;align-items:center;gap:7px;padding:9px;border-bottom:1px solid #d7e7dc;background:#e5f3e8}
+    .axis-group-y .axis-group-heading{border-color:#d3e2ea;background:#e4f0f5}
+    .axis-badge{display:grid;place-items:center;flex:none;width:29px;height:29px;border-radius:8px;background:#2c7450;color:#fff;font:800 .7rem/1 var(--font-heading)}
+    .axis-group-y .axis-badge{background:#416e8a}
+    .axis-group-heading div{min-width:0;flex:1}
+    .axis-group-heading small{display:block;color:#638170;font:800 .44rem/1.1 var(--font-heading);letter-spacing:.06em}
+    .axis-group-y .axis-group-heading small{color:#5b7a8d}
+    .axis-group-heading h4{margin:2px 0 0;color:#21483a;font-size:.7rem}
+    .axis-group-y .axis-group-heading h4{color:#244d65}
+    .axis-group-heading output{flex:none;color:#456e55;font:800 .47rem/1.1 var(--font-heading);text-align:right}
+    .axis-group-y .axis-group-heading output{color:#416e8a}
+    .criterion-list{display:grid;gap:7px;padding:8px}
+    .axis-factor{min-width:0;padding:8px;border:1px solid #d9e8dd;border-radius:9px;background:#fff}
+    .axis-group-y .axis-factor{border-color:#d9e5ed}
+    .axis-factor h5{margin:0;color:#274738;font-size:.7rem;line-height:1.15}
+    .axis-factor p{min-height:32px;margin:3px 0;color:#51675b;font-size:.62rem;line-height:1.28}
+    .axis-evidence{display:inline-block;margin-bottom:6px;color:#56806a;font:800 .54rem/1.1 var(--font-heading)}
+    .axis-group-y .axis-evidence{color:#52798e}
+    .axis-score-buttons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+    .axis-factor .score-button{min-width:0;min-height:34px;padding:0;border-width:1px;border-radius:6px;font-size:.7rem}
+    .axis-group-y .score-button.selected{border-color:#477ca0;background:#dfedf7;color:#244e67}
+    .axis-stage-foot{display:flex;justify-content:space-between;gap:9px;flex-wrap:wrap;margin-top:10px;color:#557166;font-size:.56rem;line-height:1.3}
+    .axis-stage-foot strong{color:#2c654c}
+    @media(min-width:901px){.decision-panel{position:sticky;top:84px}}
+    .matrix-wrap{margin:20px 18px 35px 39px}
+    .axis-label{z-index:6;padding:4px 6px;border-radius:5px;background:#203d41;color:#e7f6ed;font-size:.58rem;letter-spacing:.02em;white-space:nowrap}
+    .axis-x{bottom:-27px}
+    .axis-y{left:-51px}
+    .matrix-marker[hidden]{display:none!important}
+    .matrix-marker{transition:left .45s ease,top .45s ease}
+    .matrix-guide{margin:8px 0 0;color:#b9d3c7;font-size:.53rem;line-height:1.35;text-align:center}
+    .decision-actions button:disabled{cursor:not-allowed;opacity:.5}
+    @media(max-width:680px){.axis-score-grid{grid-template-columns:1fr}.axis-factor p{min-height:0}}
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
@@ -466,7 +567,7 @@
         <div>
           <h1>Pursuit Determination Lab</h1>
           <p class="body-large">Review a fictional opportunity, score the evidence, and separate solution fit from pursuit strength before deciding the next move.</p>
-          <div class="button-row"><a class="btn btn-primary" href="#workbench">Start Evaluation</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
+          <div class="button-row"><a class="btn btn-primary" href="#how-to-demo">Start Evaluation</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
         </div>
         <aside class="pursuit-hero-visual" aria-label="Animated pursuit evaluation visual">
           <span class="pursuit-hero-core"><img src="../../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="Pixel-art pursuit confidence visual."></span>
@@ -481,7 +582,7 @@
     <div class="container">
       <div class="demo-primer-head">
         <div><p class="eyebrow">Pursuit Matrix Quick Start</p><h2>Two questions drive the matrix: is this a fit, and is it worth pursuing now?</h2><p>The main demo asks you to compare the account with the target profile and score the evidence across six decision factors. Use the four-quadrant map below to see how solution fit and pursuit strength combine before you start.</p></div>
-        <a class="btn btn-secondary demo-skip" href="#workbench">I use pursuit matrices · Start the demo</a>
+        <a class="btn btn-secondary demo-skip" href="#how-to-demo">I use pursuit matrices · Start the demo</a>
       </div>
       <div class="pursuit-primer-console" data-stable-interaction>
         <div class="pursuit-primer-chart">
@@ -505,7 +606,7 @@
     </div>
   </section>
 
-  <section class="section pursuit-demo-use">
+  <section class="section pursuit-demo-use" id="how-to-demo">
     <div class="container">
       <div class="pursuit-use-intro">
         <p class="eyebrow">How to Use the Demo</p>
@@ -560,6 +661,10 @@
         <div class="opp-stat"><strong>65/day</strong><span>Portable exams</span></div>
         <div class="opp-stat"><strong>7-10 yrs</strong><span>Fleet age</span></div>
       </div>
+      <div class="solution-summary">
+        <span class="solution-summary-icon"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"></span>
+        <div><span class="solution-summary-label">THE SOLUTION TO EVALUATE</span><h3>VitaTrack Mobile Imaging Cart</h3><p>A fictional portable imaging solution for frequent bedside exams. Compare its intended workflow fit with Harborview’s cart delays, aging fleet, and digital PACS environment; IT and security fit still need validation.</p></div>
+      </div>
 
       <div class="evidence-bar" role="tablist" aria-label="Harborview customer information">
         <button class="evidence-tab active" type="button" role="tab" aria-selected="true" data-evidence="pain"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"><span><strong>Pain</strong><small>What problem is Harborview experiencing?</small></span></button>
@@ -576,34 +681,37 @@
       </div>
 
       <div class="decision-workbench">
+        <div class="criterion-column">
         <section class="criterion-stage">
-          <div class="criterion-progress"><span id="criterionCount">1 of 6</span><div class="criterion-progress-bar" aria-hidden="true"><div class="criterion-progress-fill" id="scoreProgressFill"></div></div></div>
-          <div class="criterion-kicker" id="criterionGroup">Solution Fit</div>
-          <h3 id="criterionTitle">Problem-to-Solution Fit</h3>
-          <p id="criterionPrompt">How directly does VitaTrack address the operational problem Harborview has demonstrated?</p>
-          <div class="criterion-evidence-link" id="criterionEvidenceLink"></div>
-          <div class="score-buttons" id="scoreButtons" aria-label="Score from one to five"></div>
-          <div class="score-labels"><span>Weak evidence</span><span>Strong evidence</span></div>
-          <div class="criterion-note" id="criterionNote">Choose the score best supported by what is known right now.</div>
-          <div class="criterion-nav"><button class="btn btn-secondary" type="button" id="previousCriterion">Previous</button><button class="btn btn-primary" type="button" id="nextCriterion">Next</button></div>
+          <div class="axis-stage-heading"><p class="eyebrow">Score both axes</p><h3 id="axisScoresTitle">Place the opportunity on the matrix.</h3><p>Score three solution-fit factors for X and three pursuit-strength factors for Y. Each axis uses the average of its three scores.</p></div>
+          <div class="axis-score-grid">
+            <section class="axis-group axis-group-x" aria-labelledby="solutionAxisTitle"><div class="axis-group-heading"><span class="axis-badge">X</span><div><small>HORIZONTAL AXIS</small><h4 id="solutionAxisTitle">Solution Fit</h4></div><output id="solutionProgress">0 of 3 scored</output></div><div class="criterion-list" id="solutionCriteria"></div></section>
+            <section class="axis-group axis-group-y" aria-labelledby="pursuitAxisTitle"><div class="axis-group-heading"><span class="axis-badge">Y</span><div><small>VERTICAL AXIS</small><h4 id="pursuitAxisTitle">Pursuit Strength</h4></div><output id="pursuitProgress">0 of 3 scored</output></div><div class="criterion-list" id="pursuitCriteria"></div></section>
+          </div>
+          <div class="axis-stage-foot"><span>1 = weak evidence · 5 = strong evidence</span><strong id="scoreStatus" role="status">Score all six factors to compare with the benchmark.</strong></div>
         </section>
+        <section class="benchmark-panel" id="analysisResults" aria-live="polite" hidden>
+          <p class="eyebrow">Calibration</p>
+          <h3>Your scores and the benchmark</h3>
+          <p>Compare each choice with the example score. Green matches, yellow is close, and red needs a second look.</p>
+          <div class="benchmark-list" id="benchmarkList"></div>
+        </section>
+        </div>
 
         <aside class="decision-panel">
           <p class="eyebrow">Live Decision</p>
           <h3>Pursuit Matrix</h3>
           <div class="matrix-wrap">
-            <div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker"></div></div>
-            <span class="axis-label axis-x">Solution Fit</span><span class="axis-label axis-y">Pursuit Strength</span>
+            <div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker" hidden></div><div class="matrix-marker benchmark-marker" id="benchmarkMarker" hidden></div></div>
+            <span class="axis-label axis-x">X · Solution Fit →</span><span class="axis-label axis-y">Y · Pursuit Strength ↑</span>
           </div>
-          <div class="matrix-scores"><div class="matrix-score"><strong id="solutionAverage">3.0</strong>Solution Fit</div><div class="matrix-score"><strong id="pursuitAverage">3.0</strong>Pursuit Strength</div></div>
-          <div class="quadrant-result">Current position: <strong id="quadrantLabel">Deprioritize</strong></div>
-          <div class="decision-actions"><button class="btn btn-highlight" type="button" id="evaluateButton">Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
+          <div class="matrix-legend"><span><i></i>Your score</span><span id="benchmarkLegend" hidden><i></i>Benchmark</span></div>
+          <div class="matrix-scores"><div class="matrix-score"><div class="score-pair"><strong id="solutionAverage">?</strong><span class="score-divider" hidden></span><strong class="benchmark-average" id="solutionBenchmark" hidden></strong></div>X · Solution Fit</div><div class="matrix-score"><div class="score-pair"><strong id="pursuitAverage">?</strong><span class="score-divider" hidden></span><strong class="benchmark-average" id="pursuitBenchmark" hidden></strong></div>Y · Pursuit Strength</div></div>
+          <p class="matrix-guide">Each axis averages its three factors. The 3.5 line separates the quadrants.</p>
+          <div class="quadrant-result">Current position: <strong id="quadrantLabel">Score both axes</strong></div>
+          <div class="decision-actions"><button class="btn btn-highlight" type="button" id="evaluateButton" disabled>Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
         </aside>
 
-        <section class="results-shell" id="analysisResults" aria-live="polite">
-          <article class="result-card"><p class="eyebrow">Pursuit Analysis</p><h2 id="resultTitle"></h2><p id="resultSummary"></p><div class="result-summary"><div><strong id="resultSolutionScore"></strong>Solution fit</div><div><strong id="resultPursuitScore"></strong>Pursuit strength</div><div><strong id="resultStatus"></strong>Recommended posture</div></div></article>
-          <article class="result-card"><p class="eyebrow">Calibration</p><h3>Your scores vs. the benchmark</h3><div class="benchmark-list" id="benchmarkList"></div></article>
-        </section>
       </div>
     </div>
   </section>
@@ -642,18 +750,17 @@ const evidence={
 };
 
 const criteria=[
-  {id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'How directly does VitaTrack address the operational problem Harborview has demonstrated?',benchmark:5,note:'The imaging volume, cart waits, and workflow disruption all point to strong problem-to-solution fit.',evidence:['pain']},
-  {id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'How clearly has the seller established a customer-valued advantage for VitaTrack over Harborview’s alternatives?',benchmark:3,note:'Harborview has viable alternatives, and a customer-valued preference for VitaTrack has not been established yet.',evidence:['competition']},
-  {id:'operationalFit',group:'Solution Fit',title:'Operational Fit',prompt:'How well does VitaTrack fit Harborview’s current workflow and technical environment?',benchmark:4,note:'The environment looks favorable, but IT and security still need formal validation.',evidence:['environment']},
-  {id:'painUrgency',group:'Pursuit Strength',title:'Urgency',prompt:'How strong is the reason for Harborview to act now?',benchmark:5,note:'Turnaround delays, leadership focus on throughput, and aging carts create clear urgency.',evidence:['urgency']},
-  {id:'stakeholderAccess',group:'Pursuit Strength',title:'Stakeholder Access',prompt:'How well connected is the seller to the people who influence, validate, and approve the purchase?',benchmark:3,note:'Clinical access is strong; IT and final financial authority are still missing.',evidence:['stakeholders']},
-  {id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'How much evidence shows Harborview is progressing toward a real buying decision?',benchmark:3,note:'A capital request shows movement, but funding and the final decision timeline remain unresolved.',evidence:['buying']}
+  {id:'problemFit',group:'Solution Fit',title:'Problem-to-Solution Fit',prompt:'Does VitaTrack address the cart-delay problem?',benchmark:5,note:'The imaging volume, cart waits, and workflow disruption all point to strong problem-to-solution fit.',evidence:['pain']},
+  {id:'differentiation',group:'Solution Fit',title:'Differentiation',prompt:'Is a customer-valued advantage proven?',benchmark:3,note:'Harborview has viable alternatives, and a customer-valued preference for VitaTrack has not been established yet.',evidence:['competition']},
+  {id:'operationalFit',group:'Solution Fit',title:'Operational Fit',prompt:'Will the workflow and technology support it?',benchmark:4,note:'The environment looks favorable, but IT and security still need formal validation.',evidence:['environment']},
+  {id:'painUrgency',group:'Pursuit Strength',title:'Urgency',prompt:'Is there evidence Harborview must act now?',benchmark:5,note:'Turnaround delays, leadership focus on throughput, and aging carts create clear urgency.',evidence:['urgency']},
+  {id:'stakeholderAccess',group:'Pursuit Strength',title:'Stakeholder Access',prompt:'Can the team reach the people who approve?',benchmark:3,note:'Clinical access is strong; IT and final financial authority are still missing.',evidence:['stakeholders']},
+  {id:'buyingMomentum',group:'Pursuit Strength',title:'Buying Momentum',prompt:'Is a funded decision moving forward?',benchmark:3,note:'A capital request shows movement, but funding and the final decision timeline remain unresolved.',evidence:['buying']}
 ];
 
-let currentIndex=0;
-let scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
+let scores=Object.fromEntries(criteria.map(c=>[c.id,null]));
+let benchmarkVisible=false;
 const evidenceButtons=[...document.querySelectorAll('.evidence-tab')];
-const buttonsShell=document.getElementById('scoreButtons');
 
 function showEvidence(key){
   const data=evidence[key];
@@ -672,43 +779,62 @@ function showEvidence(key){
 }
 evidenceButtons.forEach(button=>button.addEventListener('click',()=>showEvidence(button.dataset.evidence)));
 
-function renderCriterion(){
-  const c=criteria[currentIndex];
-  document.getElementById('criterionCount').textContent=(currentIndex+1)+' of '+criteria.length;
-  document.getElementById('scoreProgressFill').style.width=(((currentIndex+1)/criteria.length)*100)+'%';
-  document.getElementById('criterionGroup').textContent=c.group;
-  document.getElementById('criterionTitle').textContent=c.title;
-  document.getElementById('criterionPrompt').textContent=c.prompt;
-  document.getElementById('criterionNote').textContent='Choose the score best supported by what is known right now.';
-
-  evidenceButtons.forEach(button=>button.classList.toggle('related',c.evidence.includes(button.dataset.evidence)));
-  document.getElementById('criterionEvidenceLink').replaceChildren(...c.evidence.map(key=>{
-    const chip=document.createElement('span');
-    chip.textContent='Evidence: '+evidence[key].label;
-    return chip;
-  }));
-
-  showEvidence(c.evidence[0]);
-  buttonsShell.replaceChildren();
-  for(let n=1;n<=5;n++){
-    const button=document.createElement('button');
-    button.type='button';
-    button.className='score-button'+(scores[c.id]===n?' selected':'');
-    button.textContent=n;
-    button.addEventListener('click',()=>{
-      scores[c.id]=n;
-      renderCriterion();
-      updateMatrix();
-      document.getElementById('criterionNote').textContent=c.note;
-    });
-    buttonsShell.appendChild(button);
-  }
-
-  document.getElementById('previousCriterion').disabled=currentIndex===0;
-  document.getElementById('nextCriterion').textContent=currentIndex===criteria.length-1?'Review':'Next';
+const solutionIds=['problemFit','differentiation','operationalFit'];
+const pursuitIds=['painUrgency','stakeholderAccess','buyingMomentum'];
+function renderAxisControls(){
+  criteria.forEach(c=>{
+    const card=document.createElement('article');
+    card.className='axis-factor';
+    const heading=document.createElement('h5');
+    heading.textContent=c.title;
+    const prompt=document.createElement('p');
+    prompt.textContent=c.prompt;
+    const evidenceChip=document.createElement('span');
+    evidenceChip.className='axis-evidence';
+    evidenceChip.textContent='Evidence: '+c.evidence.map(key=>evidence[key].label).join(', ');
+    const choices=document.createElement('div');
+    choices.className='axis-score-buttons';
+    choices.setAttribute('role','group');
+    choices.setAttribute('aria-label',c.title+' score from 1 to 5');
+    for(let n=1;n<=5;n++){
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='score-button';
+      button.dataset.scoreFor=c.id;
+      button.dataset.score=String(n);
+      button.setAttribute('aria-pressed','false');
+      button.setAttribute('aria-label',c.title+': '+n+' out of 5');
+      button.textContent=n;
+      button.addEventListener('click',()=>{
+        scores[c.id]=n;
+        choices.querySelectorAll('button').forEach(option=>{
+          const selected=Number(option.dataset.score)===n;
+          option.classList.toggle('selected',selected);
+          option.setAttribute('aria-pressed',String(selected));
+        });
+        updateMatrix();
+      });
+      choices.appendChild(button);
+    }
+    card.append(heading,prompt,evidenceChip,choices);
+    document.getElementById(c.group==='Solution Fit'?'solutionCriteria':'pursuitCriteria').appendChild(card);
+  });
 }
 
-function avg(ids){return ids.reduce((sum,id)=>sum+scores[id],0)/ids.length}
+const scoreCount=ids=>ids.filter(id=>scores[id]!==null).length;
+function avg(ids){
+  const answered=ids.filter(id=>scores[id]!==null);
+  return answered.length?answered.reduce((sum,id)=>sum+scores[id],0)/answered.length:null;
+}
+function axisPosition(score){
+  const percentage=score<=3.5?((score-1)/2.5)*50:50+((score-3.5)/1.5)*50;
+  return 3+percentage*.94;
+}
+const benchmarkAverage=ids=>ids.reduce((sum,id)=>sum+criteria.find(c=>c.id===id).benchmark,0)/ids.length;
+const comparisonTone=(actual,benchmark)=>{
+  const difference=Math.abs(actual-benchmark);
+  return difference<.05?'same':difference<=1?'close':'far';
+};
 function quadrant(solution,pursuit){
   const threshold=3.5;
   if(solution>=threshold&&pursuit>=threshold)return'Prioritize';
@@ -717,56 +843,89 @@ function quadrant(solution,pursuit){
   return'Deprioritize';
 }
 function updateMatrix(){
-  const solution=avg(['problemFit','differentiation','operationalFit']);
-  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
-  document.getElementById('matrixMarker').style.left=(((solution-1)/4)*100)+'%';
-  document.getElementById('matrixMarker').style.top=(100-(((pursuit-1)/4)*100))+'%';
-  document.getElementById('solutionAverage').textContent=solution.toFixed(1);
-  document.getElementById('pursuitAverage').textContent=pursuit.toFixed(1);
-  document.getElementById('quadrantLabel').textContent=quadrant(solution,pursuit);
+  const solution=avg(solutionIds);
+  const pursuit=avg(pursuitIds);
+  const solutionCount=scoreCount(solutionIds);
+  const pursuitCount=scoreCount(pursuitIds);
+  const ready=solutionCount===3&&pursuitCount===3;
+  document.getElementById('solutionProgress').textContent=solutionCount+' of 3 scored';
+  document.getElementById('pursuitProgress').textContent=pursuitCount+' of 3 scored';
+  document.getElementById('solutionAverage').textContent=solution===null?'?':solution.toFixed(1);
+  document.getElementById('pursuitAverage').textContent=pursuit===null?'?':pursuit.toFixed(1);
+  document.getElementById('evaluateButton').disabled=!ready;
+  const marker=document.getElementById('matrixMarker');
+  marker.hidden=solution===null||pursuit===null;
+  if(!marker.hidden){
+    marker.style.left=axisPosition(solution)+'%';
+    marker.style.top=(100-axisPosition(pursuit))+'%';
+  }
+  document.getElementById('quadrantLabel').textContent=ready?quadrant(solution,pursuit):marker.hidden?'Score both axes':'Provisional placement';
+  document.getElementById('scoreStatus').textContent=ready?'Both axes are complete. Compare your placement with the benchmark.':(solutionCount+pursuitCount)+' of 6 factors scored. Complete both axes to compare.';
+  if(benchmarkVisible)renderBenchmark();
 }
 
-document.getElementById('previousCriterion').addEventListener('click',()=>{if(currentIndex>0){currentIndex--;renderCriterion()}});
-document.getElementById('nextCriterion').addEventListener('click',()=>{if(currentIndex<criteria.length-1){currentIndex++;renderCriterion()}else document.getElementById('evaluateButton').focus()});
-
-document.getElementById('evaluateButton').addEventListener('click',()=>{
-  const solution=avg(['problemFit','differentiation','operationalFit']);
-  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
-  const q=quadrant(solution,pursuit);
-  const rec={
-    Prioritize:['Advance the opportunity, then close the remaining qualification gaps.','The account shows strong fit and enough buying evidence to justify continued investment.'],
-    Nurture:['Keep developing the opportunity before accelerating.','The account looks like a fit, but access and buying momentum are not mature enough yet.'],
-    'Develop Fit':['Validate the solution fit before committing more pursuit effort.','Buying activity exists, but the product-to-problem connection needs stronger evidence.'],
-    Deprioritize:['Limit investment until the evidence improves.','Current fit and buying evidence are not strong enough to justify heavy pursuit effort.']
-  }[q];
-
-  document.getElementById('resultTitle').textContent=rec[0];
-  document.getElementById('resultSummary').textContent=rec[1];
-  document.getElementById('resultSolutionScore').textContent=solution.toFixed(1)+' / 5';
-  document.getElementById('resultPursuitScore').textContent=pursuit.toFixed(1)+' / 5';
-  document.getElementById('resultStatus').textContent=q;
+function renderBenchmark(){
+  const solution=avg(solutionIds);
+  const pursuit=avg(pursuitIds);
+  const solutionBench=benchmarkAverage(solutionIds);
+  const pursuitBench=benchmarkAverage(pursuitIds);
+  const marker=document.getElementById('benchmarkMarker');
+  marker.hidden=false;
+  marker.style.left=axisPosition(solutionBench)+'%';
+  marker.style.top=(100-axisPosition(pursuitBench))+'%';
+  marker.className='matrix-marker benchmark-marker tone-'+comparisonTone(Math.max(Math.abs(solution-solutionBench),Math.abs(pursuit-pursuitBench)),0);
+  document.getElementById('benchmarkLegend').hidden=false;
+  [['solutionBenchmark',solutionBench,solution],['pursuitBenchmark',pursuitBench,pursuit]].forEach(([id,benchmark,actual])=>{
+    const value=document.getElementById(id);
+    value.textContent=benchmark.toFixed(1);
+    value.hidden=false;
+    value.className='benchmark-average tone-'+comparisonTone(actual,benchmark);
+    value.previousElementSibling.hidden=false;
+  });
   document.getElementById('benchmarkList').replaceChildren(...criteria.map(c=>{
     const row=document.createElement('div');
     row.className='benchmark-row';
     const title=document.createElement('strong');
     title.textContent=c.title;
-    const detail=document.createElement('span');
-    detail.textContent='Your score: '+scores[c.id]+' · Benchmark: '+c.benchmark+'. '+c.note;
-    row.append(title,detail);
+    const score=document.createElement('div');
+    score.className='benchmark-pair';
+    const yours=document.createElement('span');
+    yours.textContent=String(scores[c.id]);
+    const separator=document.createElement('span');
+    separator.className='benchmark-separator';
+    const reference=document.createElement('span');
+    reference.textContent=String(c.benchmark);
+    reference.className='benchmark-value tone-'+comparisonTone(scores[c.id],c.benchmark);
+    score.append(yours,separator,reference);
+    const note=document.createElement('small');
+    note.textContent=c.note;
+    row.append(title,score,note);
     return row;
   }));
-  document.getElementById('analysisResults').classList.add('show');
+  document.getElementById('analysisResults').hidden=false;
+}
+
+document.getElementById('evaluateButton').addEventListener('click',()=>{
+  if(scoreCount(solutionIds)+scoreCount(pursuitIds)!==criteria.length)return;
+  benchmarkVisible=true;
+  renderBenchmark();
 });
 
 document.getElementById('resetButton').addEventListener('click',()=>{
-  scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
-  currentIndex=0;
-  document.getElementById('analysisResults').classList.remove('show');
-  renderCriterion();
+  scores=Object.fromEntries(criteria.map(c=>[c.id,null]));
+  benchmarkVisible=false;
+  document.getElementById('analysisResults').hidden=true;
+  document.getElementById('benchmarkMarker').hidden=true;
+  document.getElementById('benchmarkLegend').hidden=true;
+  document.querySelectorAll('.benchmark-average,.score-divider').forEach(el=>el.hidden=true);
+  document.querySelectorAll('[data-score-for]').forEach(button=>{
+    button.classList.remove('selected');
+    button.setAttribute('aria-pressed','false');
+  });
   updateMatrix();
 });
 
-renderCriterion();
+renderAxisControls();
 updateMatrix();
 </script>
 </body>
