@@ -627,3 +627,8 @@ body.complete-pathways-page .cp-hero .breadcrumbs .breadcrumb-separator { color:
   .cp-hero-icon { transform: none; border-color: var(--cp-mint); }
   .cp-step-complete .cp-hero-icon { border-color: var(--cp-lime); }
 }
+
+/* The hero finishes with the learner evidence, not only a success symbol. */
+.cp-hero-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;align-items:stretch;margin-top:-3px}.cp-hero-record>span{display:grid;grid-template-columns:1fr auto;gap:2px 3px;align-content:center;min-height:54px;padding:8px;border:1px solid rgba(187,233,199,.18);border-radius:9px;background:rgba(255,255,255,.06);opacity:.55;color:#e9f6ed;animation:cpRecord 9s ease-in-out forwards}.cp-hero-record>span:nth-child(2){animation-delay:.65s}.cp-hero-record>span:nth-child(3){animation-delay:1.3s}.cp-hero-record b{font:800 .55rem/1.2 var(--font-heading)}.cp-hero-record small{grid-column:1;color:#c4dfca;font:.48rem/1.2 var(--font-body)}.cp-hero-record i{grid-column:2;grid-row:1/3;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#9bdc82;color:#163b32;font:900 .65rem/1 var(--font-heading);font-style:normal}.cp-hero-record>span:nth-child(3){border-color:rgba(171,229,127,.42);background:rgba(151,219,79,.1)}@keyframes cpRecord{0%,50%{opacity:.55;transform:translateY(3px)}70%,100%{opacity:1;transform:none}}
+@media(max-width:600px){.cp-hero-record{grid-template-columns:1fr 1fr 1fr}.cp-hero-record>span{padding:6px}.cp-hero-record b{font-size:.45rem}.cp-hero-record small{font-size:.4rem}.cp-hero-record i{width:16px;height:16px;font-size:.5rem}}
+@media(prefers-reduced-motion:reduce){.cp-hero-record>span{opacity:1;animation:none}}

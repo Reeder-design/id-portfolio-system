@@ -29,7 +29,6 @@ Current portfolio version: **1.0.0**
 - **AI Training and Evaluation** — `portfolio/projects/ai-training-and-evaluation/index.html`
   - AI Training and Evaluation Demo — `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` (live)
 - **LMS Administration** — `portfolio/projects/lms-administration/index.html`
-  - **System Integrations** — `portfolio/projects/lms-administration/system-integrations/index.html`
   - LMS Migration Experience — `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` (live)
   - My Approach for Various LMS Platforms — `portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html` (live)
 - **Workflows** — `portfolio/projects/workflows/index.html`
@@ -49,4 +48,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/github-workflow/index.html`
 - `portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html`
 
-Total public HTML pages: **31**
+Total public HTML pages: **30**

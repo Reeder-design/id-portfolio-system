@@ -120,7 +120,7 @@ Current expectations:
 
 Strong references:
 
-- `portfolio/projects/lms-administration/system-integrations/index.html`
+- `portfolio/projects/lms-administration/index.html#system-integrations`
 - `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html`
 
 Use these for:
