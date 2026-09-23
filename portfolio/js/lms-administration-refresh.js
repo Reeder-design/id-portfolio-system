@@ -38,6 +38,7 @@ const op={
   }
 };tabs('[data-lms-operation]','lmsOperation',key=>{
   const d=op[key];if(!d)return;
+  document.querySelector('.lms-op-panel').dataset.operation=key;
   ['Label','Title','Text','Output'].forEach(part=>set('lmsOperation'+part,d[part.toLowerCase()]));
   document.getElementById('lmsOperationFlow').innerHTML=d.flow.map((x,i)=>'<span>'+x+'</span>'+(i<2?'<i></i>':'')).join('');
   document.getElementById('lmsOperationDemo').innerHTML=d.visual;

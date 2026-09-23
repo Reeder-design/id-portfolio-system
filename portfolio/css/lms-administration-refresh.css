@@ -515,3 +515,40 @@ body.lms-admin-page .admin-project-migrate{background:radial-gradient(circle at 
 .admin-project-link,.admin-project-migrate .admin-project-link{align-self:flex-start;margin:15px 0 0;padding:10px 16px;border:1px solid #5ba479;border-radius:9px;background:radial-gradient(circle at 30% 30%,#c7f7aa44,transparent 60%),repeating-linear-gradient(135deg,#ffffff17 0 2px,transparent 2px 5px),linear-gradient(135deg,#285e4d,#397d59);box-shadow:inset 0 1px #e5ffd85c,0 5px 0 #1b4e3b,0 9px 16px #1643312c;color:#fff!important;font:900 .65rem var(--font-heading);letter-spacing:.01em;transition:transform .18s ease,box-shadow .18s ease}
 .admin-project-card:hover .admin-project-link,.admin-project-card:focus-visible .admin-project-link{transform:translateY(-2px);box-shadow:inset 0 1px #e5ffd85c,0 7px 0 #1b4e3b,0 11px 18px #16433144}
 @media(max-width:550px){.admin-project-card .admin-project-art{min-height:200px;padding:12px}.report-art-board,.migrate-art-board{gap:5px}.report-art-sources{min-width:76px}.report-art-workbook{min-width:126px}.report-art-stream{width:25px}.migrate-art-platform{min-width:91px}.migrate-art-bridge{min-width:42px}.migrate-art-bridge i{width:39px}}
+/* Four operating layers use distinct spatial workflows. */
+body.lms-admin-page .lms-admin-projects .section-heading h2{color:#f7fff8!important}
+body.lms-admin-page .lms-admin-projects .section-heading>p:not(.eyebrow){color:#d7e9dd!important}
+body.lms-admin-page .lms-admin-projects .section-heading .eyebrow{color:#bff4c3!important}
+.op-content-story .op-story-head,.op-report-story .op-story-head,.op-maint-story .op-story-head,.op-content-story .op-story-track,.op-report-story .op-story-track,.op-maint-story .op-story-track{display:none}
+.lms-op-panel[data-operation="content"] .lms-op-flow,.lms-op-panel[data-operation="reporting"] .lms-op-flow,.lms-op-panel[data-operation="governance"] .lms-op-flow{display:none}
+.op-content-story .op-story-grid{grid-template-areas:"intake upload" "intake qa";grid-template-columns:.76fr 1.24fr;grid-template-rows:1fr 1fr;height:calc(100% - 24px)}
+.op-content-story .op-team-intake{grid-area:intake;justify-content:center;background:linear-gradient(160deg,#1f5660,#143f49)}
+.op-content-story .op-lms-upload{grid-area:upload;flex-direction:row;flex-wrap:wrap;align-items:center;background:linear-gradient(145deg,#1c4f46,#123b43)}
+.op-content-story .op-lms-upload>small{width:100%}.op-content-story .op-upload-bay{min-height:90px}.op-content-story .op-upload-progress{width:100%;margin-top:auto}.op-content-story .op-upload-label{width:100%}
+.op-content-story .op-path-qa{grid-area:qa;justify-content:center;background:linear-gradient(145deg,#22564a,#163e42)}
+.op-report-story .op-story-grid{grid-template-areas:"dashboard dashboard" "analysis packets";grid-template-columns:1.15fr .85fr;grid-template-rows:1.15fr .85fr;height:calc(100% - 24px)}
+.op-report-story .op-dashboard{grid-area:dashboard;display:grid;grid-template-columns:1fr 1.5fr;grid-template-rows:auto 1fr;gap:8px;background:linear-gradient(145deg,#184454,#153844)}
+.op-report-story .op-dashboard>small{grid-column:1/-1}.op-report-story .op-dash-metrics{grid-template-columns:1fr;align-content:center}.op-report-story .op-dash-chart{min-height:0}
+.op-report-story .op-analysis{grid-area:analysis}.op-report-story .op-report-packets{grid-area:packets}.op-report-story .op-report-packets>div{padding:5px 4px}
+.op-maint-story .op-story-grid{grid-template-areas:"feedback change" "health health";grid-template-columns:.9fr 1.1fr;grid-template-rows:1.15fr .85fr;height:calc(100% - 24px)}
+.op-maint-story .op-feedback{grid-area:feedback;background:linear-gradient(150deg,#214f59,#163b44)}
+.op-maint-story .op-change-control{grid-area:change}
+.op-maint-story .op-lms-health{grid-area:health;display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:auto 1fr;align-items:center;background:linear-gradient(110deg,#1a534b,#103d43)}
+.op-maint-story .op-lms-health>small{grid-column:1/-1}.op-maint-story .op-health-core{grid-row:2;min-height:0;height:100%}.op-maint-story .op-resolved{grid-row:2;align-self:stretch;align-items:center;gap:3px;padding:8px;border:1px solid #88c5a1;border-radius:7px;margin-left:6px}
+/* Each integration has its own handoff geometry. */
+.ix-auto-identity{grid-template-areas:"event resolver" "preview resolver";grid-template-columns:.92fr 1.08fr;grid-template-rows:1fr 1fr}
+.ix-auto-identity .ix-flow-step:nth-child(1){grid-area:event}.ix-auto-identity .ix-flow-step:nth-child(2){grid-area:resolver;justify-content:center;border-radius:28px;background:radial-gradient(circle at center,#2b675d,#123943 75%)}.ix-auto-identity .ix-flow-step:nth-child(3){grid-area:preview}
+.ix-auto-identity .ix-flow-step{gap:5px;padding:10px}.ix-auto-identity .ix-attribute,.ix-auto-identity .ix-rule-branch{padding:5px}.ix-auto-identity .ix-mini-screen{min-height:0}.ix-auto-identity .ix-mini-screen span{padding:4px}.ix-auto-identity .ix-check-badge{padding:5px}
+.ix-auto-content{grid-template-areas:"package" "test" "record";grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(90px,1fr))}
+.ix-auto-content .ix-flow-step{flex-direction:row;align-items:center;gap:12px}.ix-auto-content .ix-flow-step>small{width:100px;flex:none}.ix-auto-content .ix-package-cube,.ix-auto-content .ix-test-player,.ix-auto-content .ix-transcript-sheet{min-height:0;min-width:180px;flex:1}.ix-auto-content .ix-attribute,.ix-auto-content .ix-event-pills,.ix-auto-content .ix-check-badge{flex:1;margin:0}
+.ix-auto-reporting{grid-template-areas:"files join" "packet packet";grid-template-columns:.9fr 1.1fr;grid-template-rows:1fr 1fr}
+.ix-auto-reporting .ix-flow-step:nth-child(1){grid-area:files}.ix-auto-reporting .ix-flow-step:nth-child(2){grid-area:join}.ix-auto-reporting .ix-flow-step:nth-child(3){grid-area:packet;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;align-items:stretch}
+.ix-auto-reporting .ix-flow-step:nth-child(3)>small{grid-column:1/-1}.ix-auto-reporting .ix-file-stack{grid-template-columns:1fr 1fr}.ix-auto-reporting .ix-join-core{min-height:60px;margin:0}.ix-auto-reporting .ix-report-sheets,.ix-auto-reporting .ix-snapshot{min-height:0}
+.ix-auto-identity::after,.ix-auto-reporting::after{display:none}
+.ix-auto-content::after{top:9%;bottom:9%;left:50%;right:auto;width:3px;height:auto}
+.ix-flow-signal{z-index:1}
+.ix-auto-identity .ix-flow-signal{animation:ixIdentityRoute 9s linear infinite}.ix-auto-content .ix-flow-signal{left:50%;animation:ixContentRoute 9s linear infinite}.ix-auto-reporting .ix-flow-signal{animation:ixReportRoute 9s linear infinite}
+@keyframes ixIdentityRoute{0%,100%{top:20%;left:25%;opacity:0}20%{opacity:1}55%{top:48%;left:70%}85%{top:80%;left:25%;opacity:1}}
+@keyframes ixContentRoute{0%,100%{top:8%;opacity:0}16%,84%{opacity:1}90%{top:88%;opacity:0}}
+@keyframes ixReportRoute{0%,100%{top:25%;left:25%;opacity:0}25%{top:25%;left:72%;opacity:1}80%{top:76%;left:50%;opacity:1}}
+@media(max-width:760px){.op-content-story .op-story-grid,.op-report-story .op-story-grid,.op-maint-story .op-story-grid,.ix-auto-identity,.ix-auto-content,.ix-auto-reporting{display:grid;grid-template-areas:none;grid-template-columns:1fr;grid-template-rows:auto;height:auto}.op-content-story .op-story-card,.op-report-story .op-story-card,.op-maint-story .op-story-card,.ix-auto-identity .ix-flow-step,.ix-auto-content .ix-flow-step,.ix-auto-reporting .ix-flow-step{grid-area:auto!important;min-height:150px}.op-report-story .op-dashboard,.op-maint-story .op-lms-health{display:flex;flex-direction:column}.op-report-story .op-dash-metrics{grid-template-columns:repeat(3,1fr)}.op-maint-story .op-resolved{margin:0}.ix-auto-content .ix-flow-step,.ix-auto-reporting .ix-flow-step:nth-child(3){flex-wrap:wrap}.ix-auto-content .ix-flow-step>small{width:100%}.ix-auto-reporting .ix-flow-step:nth-child(3){display:flex}.ix-auto-content::after{display:none}}
