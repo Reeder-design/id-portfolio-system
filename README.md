@@ -12,4 +12,12 @@
 2. **Explore platform work:** [LMS administration](https://reeder-design.github.io/id-portfolio-system/projects/lms-administration/) and the [LMS demos](https://reeder-design.github.io/id-portfolio-system/projects/lms-administration/my-approach-for-various-lms-platforms/).
 3. **See how the work connects:** [workflows, automation, and reporting](https://reeder-design.github.io/id-portfolio-system/projects/workflows/).
 
-The public website lives in [`portfolio/`](portfolio/). Portfolio Manager is a separate, local-only tool used to maintain it; it is not part of the public site. For setup, architecture, publishing, and validation, see the [repository guide](docs/repository-guide.md).
+## Public portfolio · private workspace
+
+**Public:** The [portfolio](https://reeder-design.github.io/id-portfolio-system/) and its project demos open in a browser without an account.
+
+**Local and password-protected:** Portfolio Manager is my editing, review, and publishing workspace. It runs on my computer; the live portfolio does not expose it.
+
+![Illustrated Portfolio Manager workspace showing content, review, and publishing areas.](docs/assets/readme-manager.svg)
+
+[See how the public sites and local managers connect →](https://reeder-design.github.io/id-portfolio-system/projects/github-workflow/) · [Read the repository guide →](docs/repository-guide.md)
