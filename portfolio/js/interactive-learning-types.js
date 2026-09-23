@@ -4,6 +4,7 @@
   let syncPointers = () => {};
   const typeTabs = [...document.querySelectorAll('.type-tabs [role="tab"]')];
   const selectTypeTab = (selected, focus = false) => {
+    const panel = document.getElementById(selected.getAttribute('aria-controls'));
     typeTabs.forEach(tab => {
       const active = tab === selected;
       tab.setAttribute('aria-selected', String(active));
@@ -12,7 +13,12 @@
     });
     if (selected.id === 'tab-gamified-challenges') startPhishingDemo();
     if (selected.id === 'tab-learner-facing-ai') startAiDemo();
-    window.requestAnimationFrame(syncPointers);
+    const pointers = panel.querySelectorAll('.demo-auto-pointer,.video-demo-pointer,.software-demo-pointer,.ai-demo-pointer');
+    pointers.forEach(pointer => pointer.classList.add('pointer-snap'));
+    window.requestAnimationFrame(() => {
+      syncPointers();
+      window.requestAnimationFrame(() => pointers.forEach(pointer => pointer.classList.remove('pointer-snap')));
+    });
     if (focus) selected.focus();
   };
   typeTabs.forEach((tab, index) => {
@@ -60,10 +66,13 @@
 
     const software = document.querySelector('.software-window');
     const softwareTargets = [software.querySelector('[data-software-control="catalog"]'),
-      software.querySelector('.order-product'), software.querySelector('.software-submit'),
-      software.querySelector('#orderStatus')];
-    placePointer(software, software.querySelector('.software-demo-pointer'),
-      softwareTargets[Number(software.dataset.cursorPhase ?? software.dataset.step ?? 0)]);
+      software.querySelector('.order-product'), software.querySelector('.order-drop-zone'),
+      software.querySelector('.software-submit')];
+    const softwarePhase = Number(software.dataset.cursorPhase ?? software.dataset.step ?? 0);
+    const softwarePointer = software.querySelector('.software-demo-pointer');
+    if (!(software.dataset.step === '1' && softwarePhase === 2)) {
+      placePointer(software, softwarePointer, softwareTargets[softwarePhase]);
+    }
     if (software.getClientRects().length) {
       const source = software.querySelector('.order-product').getBoundingClientRect();
       const destination = software.querySelector('.order-drop-zone').getBoundingClientRect();
@@ -77,6 +86,10 @@
       card.style.top = `${sourceY - card.offsetHeight * .5}px`;
       software.style.setProperty('--order-dx', `${destinationX - sourceX}px`);
       software.style.setProperty('--order-dy', `${destinationY - sourceY}px`);
+      if (software.dataset.step === '2' && softwarePhase === 2) {
+        softwarePointer.style.left = `${destinationX - 3}px`;
+        softwarePointer.style.top = `${destinationY - 2}px`;
+      }
     }
 
     const hotspot = document.querySelector('.hotspot-visual');
@@ -106,17 +119,15 @@
       const destinationY = destinationBox.top - stageBox.top + destinationBox.height * .5;
       card.style.left = `${sourceX - card.offsetWidth * .5}px`;
       card.style.top = `${sourceY - card.offsetHeight * .5}px`;
-      card.style.setProperty('--drag-x', `${destinationX - sourceX}px`);
-      card.style.setProperty('--drag-y', `${destinationY - sourceY}px`);
+      stage.style.setProperty('--carry-x', `${destinationX - sourceX}px`);
+      stage.style.setProperty('--carry-y', `${destinationY - sourceY}px`);
       pointer.style.left = `${sourceX - 3}px`;
       pointer.style.top = `${sourceY - 2}px`;
-      pointer.style.setProperty('--pointer-x', `${destinationX - sourceX}px`);
-      pointer.style.setProperty('--pointer-y', `${destinationY - sourceY}px`);
     }
   };
   window.addEventListener('resize', () => window.requestAnimationFrame(syncPointers));
   document.fonts?.ready.then(() => window.requestAnimationFrame(syncPointers));
-  const loop = (scene, render, count, duration, staticPhase = 0) => {
+  const loop = (scene, render, count, duration, staticPhase = 0, arrivalDelay = 680) => {
     let phase = reducedMotion ? staticPhase : 0;
     scene.dataset.cursorPhase = String(phase);
     render(phase);
@@ -127,7 +138,7 @@
       window.setTimeout(() => {
         phase = next;
         render(phase);
-      }, 680);
+      }, arrivalDelay);
     }, duration);
   };
 
@@ -182,6 +193,15 @@
   const softwareTitle = document.getElementById('softwareTitle');
   const softwareTask = document.getElementById('softwareStep');
   loop(softwareWindow, phase => {
+    if (phase === 2) {
+      const target = softwareWindow.querySelector('.order-drop-zone').getBoundingClientRect();
+      const scene = softwareWindow.getBoundingClientRect();
+      const pointer = softwareWindow.querySelector('.software-demo-pointer');
+      pointer.classList.add('pointer-snap');
+      pointer.style.left = `${target.left - scene.left + target.width * .5 - 3}px`;
+      pointer.style.top = `${target.top - scene.top + target.height * .5 - 2}px`;
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => pointer.classList.remove('pointer-snap')));
+    }
     softwareWindow.dataset.step = String(phase);
     softwareTitle.textContent = [
       'Create customer order',
@@ -191,15 +211,15 @@
     ][phase];
     softwareTask.textContent = [
       'Step 1 of 3: open Catalog.',
-      'Step 2 of 3: configure the package.',
-      'Step 3 of 3: submit the order.',
+      'Step 2 of 3: drag the package into the order.',
+      'Step 3 of 3: review the package, then submit.',
       'Complete: Northstar Supply order #1048 was submitted.'
     ][phase];
     document.getElementById('orderStatus').textContent = phase === 3
       ? 'Order #1048 · Submitted'
       : 'Order #1048 · Draft';
     window.requestAnimationFrame(syncPointers);
-  }, 4, 2500, 2);
+  }, 4, 3600, 2, 1050);
 
   const hotspotDetails = [
     ['Signal', 'Start with the clue the learner should notice.'],
@@ -294,5 +314,7 @@
       window.setTimeout(() => showAiProfile(index), 680);
     }, 5500);
   };
+
+  selectTypeTab(typeTabs.find(tab => tab.getAttribute('aria-selected') === 'true') || typeTabs[0]);
 
 })();

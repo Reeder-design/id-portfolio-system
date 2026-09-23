@@ -601,8 +601,13 @@
 .interactive-landing .video-on-screen-choices span.incorrect { border-color:#cb675c;background:#ffe7df;color:#78362f; }
 .interactive-landing .video-on-screen-choices span.correct { border-color:#49a66a;background:#d9f5df;color:#20523d; }
 .interactive-landing .ai-demo-pointer { animation:none;transition:left .55s ease,top .55s ease; }
-.interactive-landing .phishing-stage .phishing-drag-card { animation:alignedThreatDrag 6s ease-in-out both; }
-.interactive-landing .phishing-stage .phishing-demo-pointer { animation:alignedThreatPointer 6s ease-in-out both; }
+.interactive-landing .pointer-snap { transition:none!important; }
+.interactive-landing .phishing-stage .phishing-drag-card { animation:threatCarry 6s cubic-bezier(.45,0,.18,1) both,threatCardVisibility 6s linear both; }
+.interactive-landing .phishing-stage .phishing-demo-pointer { animation:threatCarry 6s cubic-bezier(.45,0,.18,1) both; }
+.interactive-landing .phishing-stage .phishing-request:not(.safe),
+.interactive-landing .phishing-stage .phishing-mail-content,
+.interactive-landing .phishing-stage .phishing-text-bubble { animation:threatSourceLift 6s linear both; }
+.interactive-landing .phishing-stage .phishing-target { animation:threatTargetConfirm 6s ease both; }
 .interactive-landing .order-drop-zone { margin-top:7px;padding:8px;border:2px dashed #96c5ab;border-radius:8px;background:#edf8ef;color:#47745e;font:800 .53rem/1 var(--font-heading);text-align:center; }
 .interactive-landing .software-window[data-step="1"] .order-drop-zone { border-color:#80c862;background:#def6d7; }
 .interactive-landing .software-window[data-step="2"] .order-drop-zone,
@@ -611,28 +616,20 @@
 .interactive-landing .software-window[data-step="3"] .order-drop-zone::after { content:" · Package added ✓"; }
 .interactive-landing .software-drag-card { position:absolute;z-index:6;display:flex;align-items:center;gap:5px;width:145px;max-width:44%;min-height:36px;padding:4px;border:2px solid #79b992;border-radius:7px;background:#fff;color:#28513d;font:800 .49rem/1.1 var(--font-heading);box-shadow:0 8px 18px #092d364a;opacity:0;pointer-events:none; }
 .interactive-landing .software-drag-card img { width:27px;height:27px;object-fit:contain;image-rendering:pixelated; }
-.interactive-landing .software-demo-pointer { z-index:8; }
-.interactive-landing .software-window[data-step="1"] .software-drag-card { animation:softwareCarry 1.45s ease-in-out both; }
-.interactive-landing .software-window[data-step="1"] .software-demo-pointer { animation:softwareCursorCarry 1.45s ease-in-out both;transition:none; }
-.interactive-landing .software-window[data-step="1"][data-cursor-phase="2"] .software-demo-pointer { animation:none;transition:left .55s ease,top .55s ease,transform .22s ease;transform:none; }
+.interactive-landing .software-demo-pointer { z-index:8;transition:left .95s cubic-bezier(.22,1,.36,1),top .95s cubic-bezier(.22,1,.36,1); }
+.interactive-landing .software-window[data-step="2"] .software-demo-pointer { transform:none; }
+.interactive-landing .software-window[data-step="1"] .software-drag-card { animation:orderCarry 2.25s cubic-bezier(.45,0,.18,1) both,orderCardVisibility 2.25s linear both; }
+.interactive-landing .software-window[data-step="1"] .software-demo-pointer { animation:orderCarry 2.25s cubic-bezier(.45,0,.18,1) both;transition:none; }
 .interactive-landing .software-window .software-target { display:none; }
 .interactive-landing .software-window .software-submit { display:inline-block;opacity:.44; }
 .interactive-landing .software-window[data-step="2"] .software-submit,
 .interactive-landing .software-window[data-step="3"] .software-submit { opacity:1; }
-@keyframes softwareCarry { 0%,12% { opacity:0;transform:translate(0,0) scale(.96); } 20%,35% { opacity:1;transform:translate(0,0); } 78% { opacity:1;transform:translate(var(--order-dx),var(--order-dy)); } 100% { opacity:0;transform:translate(var(--order-dx),var(--order-dy)) scale(.84); } }
-@keyframes softwareCursorCarry { 0%,35% { transform:translate(0,0) scale(.83); } 78%,100% { transform:translate(var(--order-dx),var(--order-dy)) scale(1); } }
-@keyframes alignedThreatDrag {
-  0%,15% { opacity:0;transform:translate(0,0) scale(.9); }
-  23%,35% { opacity:1;transform:translate(0,0) scale(1); }
-  68%,80% { opacity:1;transform:translate(var(--drag-x,0px),var(--drag-y,0px)) scale(.82); }
-  94%,100% { opacity:0;transform:translate(var(--drag-x,0px),var(--drag-y,0px)) scale(.76); }
-}
-@keyframes alignedThreatPointer {
-  0%,20% { transform:translate(0,0) scale(1); }
-  28% { transform:translate(0,0) scale(.8); }
-  70%,83% { transform:translate(var(--pointer-x,0px),var(--pointer-y,0px)) scale(1); }
-  91%,100% { transform:translate(var(--pointer-x,0px),var(--pointer-y,0px)) scale(.8); }
-}
+@keyframes orderCarry { 0%,26% { transform:translate(0,0); } 84%,100% { transform:translate(var(--order-dx,0px),var(--order-dy,0px)); } }
+@keyframes orderCardVisibility { 0%,20% { opacity:0; } 29%,85% { opacity:1; } 100% { opacity:0; } }
+@keyframes threatCarry { 0%,28% { transform:translate(0,0); } 72%,100% { transform:translate(var(--carry-x,0px),var(--carry-y,0px)); } }
+@keyframes threatCardVisibility { 0%,20% { opacity:0; } 28%,82% { opacity:1; } 95%,100% { opacity:0; } }
+@keyframes threatSourceLift { 0%,25% { opacity:1; } 34%,100% { opacity:.34; } }
+@keyframes threatTargetConfirm { 0%,70% { background:#e8f8e9;box-shadow:none; } 78%,100% { background:#c9f3d1;box-shadow:0 0 0 4px #a5e07e; } }
 @media(prefers-reduced-motion:reduce) {
   .interactive-landing .scenario-demo-pointer,
   .interactive-landing .quiz-demo-pointer,
@@ -641,5 +638,11 @@
   .interactive-landing .hotspot-demo-pointer,
   .interactive-landing .ai-demo-pointer { transition:none; }
   .interactive-landing .software-window[data-step="1"] .software-drag-card,
-  .interactive-landing .software-window[data-step="1"] .software-demo-pointer { animation:none; }
+  .interactive-landing .software-window[data-step="1"] .software-demo-pointer,
+  .interactive-landing .phishing-stage .phishing-drag-card,
+  .interactive-landing .phishing-stage .phishing-demo-pointer,
+  .interactive-landing .phishing-stage .phishing-request:not(.safe),
+  .interactive-landing .phishing-stage .phishing-mail-content,
+  .interactive-landing .phishing-stage .phishing-text-bubble,
+  .interactive-landing .phishing-stage .phishing-target { animation:none; }
 }
