@@ -123,8 +123,9 @@
       "keywords": ["lms", "absorb", "docebo", "learning management system", "learning operations", "admin", "learning plan", "certification", "enrollment", "support"],
       "answer": "I have hands-on LMS administration and learning-operations experience across Absorb and Docebo. My work includes course and content setup, learning plans, catalogs, certifications, audience and access rules, enrollment behavior, renewals, learner support, reporting, documentation, and troubleshooting. I think about the full learner path from finding the right content through completion, renewal, and support rather than treating the LMS as only a publishing destination.",
       "evidence": [
-        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Content administration, learning plans, certifications, support, and reporting."},
-        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Absorb-to-Docebo setup, UAT, support, and post-launch operations."}
+        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Content administration, learning plans, certifications, support, and reporting."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Absorb-to-Docebo setup, UAT, support, and post-launch operations."},
+        {"title": "How I Approach Different LMS Platforms", "path": "projects/lms-administration/my-approach-for-various-lms-platforms/index.html", "note": "Audience and platform decisions, with direct Absorb and Docebo work separated from illustrative models."}
       ],
       "followups": ["lms-migration", "measurement-reporting", "coding-automation"]
     },
@@ -164,7 +165,7 @@
       "keywords": ["coding", "code", "python", "selenium", "pandas", "openpyxl", "automation", "javascript", "html", "css", "reporting", "workflow"],
       "answer": "I use code when it removes repetitive operational work or lets me prototype learning interactions that authoring tools do not handle as cleanly. My workflow examples use Python, Selenium, pandas, openpyxl, and Excel for browser automation, LMS reporting, and data analysis. I also use HTML, CSS, and JavaScript to build interactive portfolio and learning prototypes such as sales-practice and evaluation demos.",
       "evidence": [
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Python, Selenium, data workflows, and system handoffs."},
+        {"title": "Workflows", "path": "projects/workflows/index.html", "note": "Python, Selenium, data workflows, and system handoffs."},
         {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Four-report automation and analysis workflow."},
         {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Browser-based interaction prototypes."}
       ],
@@ -184,6 +185,20 @@
         {"title": "AI Evaluation Workflow", "path": "projects/ai-training-and-evaluation/workflow-demo/index.html", "note": "Frame, verify, diagnose, and calibrate review workflow."}
       ],
       "followups": ["coding-automation", "evidence-boundaries", "assessment-design"]
+    },
+    {
+      "id": "learner-facing-ai",
+      "category": "Systems & AI",
+      "short_label": "Learner-facing AI",
+      "prompt": "How do you decide when learner-facing AI belongs in a learning experience?",
+      "featured": false,
+      "keywords": ["learner-facing ai", "ai learning experience", "adaptive learning", "ai scenario", "ai feedback", "course-aware help", "generative ai", "personalization"],
+      "answer": "I would use learner-facing AI when the experience needs to respond to a learner's role, choices, or reasoning, rather than repeat a fixed lesson. I start with the task, define what the system may use, and check whether its feedback helps the learner make a better decision. The Learner-facing AI page illustrates five possible patterns with fictional content. My Hiring Guide is a live, contained example of question routing and evidence linking; it uses reviewed answers rather than a generative model. Those examples show my design approach, not a claim that every pattern shipped in a client program.",
+      "evidence": [
+        {"title": "Learner-facing AI", "path": "projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html", "note": "Five illustrated approaches to scenarios, paths, course-aware help, assessment feedback, and video. The examples use fictional content."},
+        {"title": "Ask Haley — Hiring Manager Guide", "path": "hiring-manager/index.html", "note": "A public example that routes questions to reviewed answers and portfolio evidence without generating new claims."}
+      ],
+      "followups": ["interactive-learning", "ai-evaluation", "assessment-design"]
     },
     {
       "id": "live-facilitation",
@@ -237,8 +252,8 @@
       "answer": "My learning-development stack includes Articulate Rise and Storyline, Review 360, PowerPoint, Adobe creative tools, Camtasia, and browser-based HTML/CSS/JavaScript work. On the learning-operations side I have hands-on experience with Absorb and Docebo. For workflow and reporting work I use Python, Selenium, pandas, openpyxl, and Excel. I choose the tool after the learning or operational need is clear rather than designing the project around a favorite platform.",
       "evidence": [
         {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Authoring and learning-development work."},
-        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Absorb and Docebo operations."},
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Python and workflow tooling."}
+        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Absorb and Docebo operations."},
+        {"title": "Workflows", "path": "projects/workflows/index.html", "note": "Python and workflow tooling."}
       ],
       "followups": ["coding-automation", "multimedia", "lms-experience"]
     },

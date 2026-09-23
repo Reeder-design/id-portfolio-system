@@ -1,11 +1,13 @@
 # Final Stretch Asset Pack
 
-This pack contains production-ready WebP extractions from the uploaded source series.
+The production WebP extractions are installed under `portfolio/assets/`. This folder keeps their source and page-use inventory in `asset-ledger.json`; it does not contain a second copy of the image files.
 
 ## Install destinations
 
-- `icons/<group>/` -> `portfolio/assets/icons/pixel/<group>/`
-- `project-images/<group>/` -> `portfolio/assets/project-images/<group>/`
+- `icons/<group>/` in the ledger -> `portfolio/assets/icons/pixel/<group>/`
+- `project-images/<group>/` in the ledger -> `portfolio/assets/project-images/<group>/`
+
+All 223 ledger entries resolve to installed assets. The installed folders are organized first by asset type, then by page or subject. Upload dates are not used as folder names.
 
 ## Asset rules
 
@@ -15,6 +17,7 @@ This pack contains production-ready WebP extractions from the uploaded source se
 - Use each asset once by default unless reuse is clearly useful.
 - These source sets were explicitly supplied for the public portfolio final-stretch pass.
 - Keep labels/copy in HTML when practical; use raster text only when it is part of a designed visual composition.
+- The 124 unused mascot images under `portfolio/assets/mascot/` are reserved for a later approved animation pass. Do not treat them as installed card icons or silently add them to the current site.
 
 ## Primary page mapping
 

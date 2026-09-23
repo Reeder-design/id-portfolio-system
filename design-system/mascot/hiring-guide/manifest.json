@@ -1,0 +1,428 @@
+{
+  "name": "Hiring Guide mascot frame library",
+  "status": "prepared for visual selection; not connected to the live site",
+  "source_sheet_size": [
+    1254,
+    1254
+  ],
+  "frame_size": [
+    627,
+    627
+  ],
+  "format": "RGBA PNG with transparent background",
+  "method": "Quadrant crop; preserve retained source RGB values; clear baked-in checkerboard/labels and stray cross-quadrant fragments through alpha masking. No redraw or resizing of delivered frames.",
+  "sequences": [
+    {
+      "name": "idle",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_42_20 AM.png",
+      "source_sha256": "f0e272e0836b171557749e39a4725ca850755e5a6d64b223ae0359db184c35f3",
+      "background_treatment": "poster",
+      "frames": [
+        {
+          "file": "frames/idle/frame-01.png",
+          "sha256": "e34e1202827310881fa1c2828e4f3318bf7ae90ba8ada2dbd0e2e26fdb2b11b6"
+        },
+        {
+          "file": "frames/idle/frame-02.png",
+          "sha256": "52887eaba1b1f0ade7b013d930c9654d097a49e8eb5eaf6751fc49a4ebb7b968"
+        },
+        {
+          "file": "frames/idle/frame-03.png",
+          "sha256": "7c43b9a48af6622e525e097d921fe51fb1b093b2de4172e1084c9bf36d56e9bc"
+        },
+        {
+          "file": "frames/idle/frame-04.png",
+          "sha256": "19ed1cb900528a04131c05b35fe293249826fb495f3014c3c842bda990e2bf55"
+        }
+      ]
+    },
+    {
+      "name": "sparkle",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_44_47 AM.png",
+      "source_sha256": "b85b5b8811998d0fbac84424a857e1e074a6c99f9a67dcaedd82396d5bf01909",
+      "background_treatment": "native-alpha",
+      "frames": [
+        {
+          "file": "frames/sparkle/frame-01.png",
+          "sha256": "cfef2e571ff1fb739bfe783a76d7cb4624d817099e56ae2bd83a6a31128bb64d"
+        },
+        {
+          "file": "frames/sparkle/frame-02.png",
+          "sha256": "bfe9f03ff6056941af984a1321a48cc209a51a6e4854d8874cd5fb1067b49289"
+        },
+        {
+          "file": "frames/sparkle/frame-03.png",
+          "sha256": "f17bcc3e3eaad6056055728e4a8eca925427e9d65a0562356693e39094a1104d"
+        },
+        {
+          "file": "frames/sparkle/frame-04.png",
+          "sha256": "157ae6405dd13522acbad41f8e0a4cf53939587b19106ba2a43f96a67e9c8379"
+        }
+      ]
+    },
+    {
+      "name": "wave",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_45_51 AM.png",
+      "source_sha256": "2f13f09f14602197574ad1bf5003516f806b4f200b81a5c3f2d1088905daf55d",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/wave/frame-01.png",
+          "sha256": "3976262d00c88924807b900d22014e20be3fa0b7f32dffa07ce5121aeaf026cd"
+        },
+        {
+          "file": "frames/wave/frame-02.png",
+          "sha256": "96a3c8710a8e2835930e6a7a681659b286b435f4bc5aaaf5e6780ac64c84c502"
+        },
+        {
+          "file": "frames/wave/frame-03.png",
+          "sha256": "150785591c812fbda3cef009dd58b0022b1fda5855bfa3aba1be20c10be7e465"
+        },
+        {
+          "file": "frames/wave/frame-04.png",
+          "sha256": "ee8a22df67de2e9185429c55167f180d0510e173a2039ad168622442a3c05296"
+        }
+      ]
+    },
+    {
+      "name": "conversation",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_46_59 AM.png",
+      "source_sha256": "e22e816242761097abe860d0cb500395836f8fc12280b5c9be2711e96354850c",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/conversation/frame-01.png",
+          "sha256": "28ceb73d5f770dfe5e85dc8d4f4bcdecf153c6863a9f290308d0e3ad225b8057"
+        },
+        {
+          "file": "frames/conversation/frame-02.png",
+          "sha256": "17e5c6999e1ded9fa050286d8f6c46edfd1c412a59163e5470cb0d96936846bf"
+        },
+        {
+          "file": "frames/conversation/frame-03.png",
+          "sha256": "2616c3b0be9cfed8e05e01b1cd435162364abd9f969632a2c94798aca7a785ef"
+        },
+        {
+          "file": "frames/conversation/frame-04.png",
+          "sha256": "8f6fecce1605ae63eed7c97e0f324decd373db00f8fb92e5cb4f971deeb7a540"
+        }
+      ]
+    },
+    {
+      "name": "curious",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_48_22 AM.png",
+      "source_sha256": "10528259baf416647ecda845618726912b3cb46cee9445f2e331f850088eafe3",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/curious/frame-01.png",
+          "sha256": "edcded9c5a6599f302e624d9beb21e895051443e2a17a10a0e16d1890ec2ba8d"
+        },
+        {
+          "file": "frames/curious/frame-02.png",
+          "sha256": "976130f2ce8458191902a35db538a8bb7a2e1b11cf257f6448075ce142108956"
+        },
+        {
+          "file": "frames/curious/frame-03.png",
+          "sha256": "62b1c3de7d8d18d1f63c072707ec121812b90c9d8e8b683e2db6fc9b7b8599ee",
+          "source_limit": "The source cropped the question-mark effect; the partial mark was removed."
+        },
+        {
+          "file": "frames/curious/frame-04.png",
+          "sha256": "81810c995c74f78eb8dad90336b0e23115f3a9674d8e036825852f3fe3f104f4"
+        }
+      ]
+    },
+    {
+      "name": "reading",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_49_52 AM.png",
+      "source_sha256": "7ff3db96956a83271b09435713936cbe26d00db0df0dfe19994878448e00d9ce",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/reading/frame-01.png",
+          "sha256": "186fd6c032bcee1e825a8e768960b70a8caa8e9072d598dd8258a6ab60c9b67b"
+        },
+        {
+          "file": "frames/reading/frame-02.png",
+          "sha256": "652f3b1ba427cad7b4c4ba2091773b4eef9a8a67d0987a7b3255e3f1360db960"
+        },
+        {
+          "file": "frames/reading/frame-03.png",
+          "sha256": "60acca27aca5f34aa82463ec5aa13f502282ebf219f40d54079c736edfcd8d12"
+        },
+        {
+          "file": "frames/reading/frame-04.png",
+          "sha256": "7360e6417d8f64667e0b2ee529b1bdbab9e3d7a589338bbfe76a40a337b3c7d7"
+        }
+      ]
+    },
+    {
+      "name": "working",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_54_17 AM.png",
+      "source_sha256": "d84809cd2e136e2943c0d41981724e25c0608935f0bd281fd6628ab614503fdb",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/working/frame-01.png",
+          "sha256": "ca89edaa5b5177d8fa2b5daf529f583a0e36efaba831e0d10d9b9e71392b0235"
+        },
+        {
+          "file": "frames/working/frame-02.png",
+          "sha256": "b48c1baa85c32f6a28c1674fdc6a223ef974e02677ab96d275eefab07f45d43d"
+        },
+        {
+          "file": "frames/working/frame-03.png",
+          "sha256": "cdc552a61dff5750ea44689e0da0bd434a1d218270669ea0418623b4e870f146"
+        },
+        {
+          "file": "frames/working/frame-04.png",
+          "sha256": "22614d89c2e20fac6a45a3668cb459b071b8731f526fa3f2e888bbb5fdfefef4"
+        }
+      ]
+    },
+    {
+      "name": "analysis",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_56_50 AM.png",
+      "source_sha256": "33fe1cfdad2f125449283ebb4042d28527b099a9587e7c75c570763fac361abc",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/analysis/frame-01.png",
+          "sha256": "a92f6de07c456d1b72a079aadc186c2c7d81dfdf6cb577de5b274a8b5dcf14dc"
+        },
+        {
+          "file": "frames/analysis/frame-02.png",
+          "sha256": "0d832c69c1f1ec4cc0478c4f1dafa4ba3c16a78521b35f2037a0fc758238066c"
+        },
+        {
+          "file": "frames/analysis/frame-03.png",
+          "sha256": "26121667aa345cb5951f4a8aaec602e6384465dabe8a0b4661e12c55bfae80df"
+        },
+        {
+          "file": "frames/analysis/frame-04.png",
+          "sha256": "ea268e17e3a39850106758d127911f7b1017081b8c20305081bf63d891570f2d"
+        }
+      ]
+    },
+    {
+      "name": "crystal-ball",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 02_59_37 AM.png",
+      "source_sha256": "237db4b2777b8ad44d122a15d7f38ff4039250fe94eea55c489df1a3252c79a4",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/crystal-ball/frame-01.png",
+          "sha256": "8ae2fa84b22df82f39ee1b6d4040ef73ef3f057608fa389ffac36b6b93b1fabf"
+        },
+        {
+          "file": "frames/crystal-ball/frame-02.png",
+          "sha256": "4a1671b4700bcdfed8d98297b13836e7898429b05886f18627eb4403cbae13ba"
+        },
+        {
+          "file": "frames/crystal-ball/frame-03.png",
+          "sha256": "3f26b28b01cee0eaf6993f4b0c30eb93ff3654138e4204a14a1903f120fa0a49"
+        },
+        {
+          "file": "frames/crystal-ball/frame-04.png",
+          "sha256": "92904b1819d81572b615f03d78f44aad64cce6e0ab9d6af5a28be1fac60ce8a8"
+        }
+      ]
+    },
+    {
+      "name": "guiding",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_00_24 AM.png",
+      "source_sha256": "a66e4b6bf42a45c56f81d5499c3d6ebe919feb5e2e91dc0ebc6d7d9f6fe583de",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/guiding/frame-01.png",
+          "sha256": "7d6a5ed9c1ef55cf5266fa7c07621e69574229ff5db958aa43412af3c1df9f64"
+        },
+        {
+          "file": "frames/guiding/frame-02.png",
+          "sha256": "5a9baf471f8c5351f97d6f9d04844f9d60bcefb85dfb6f41ae1b4cd42b6f5fce"
+        },
+        {
+          "file": "frames/guiding/frame-03.png",
+          "sha256": "c567693c870bd4d346fc6af21c729d2977a3eba7b9692da7e5667625f5611a95"
+        },
+        {
+          "file": "frames/guiding/frame-04.png",
+          "sha256": "3649af0381514c68cc5e4441e6b23f40189c80815932b453d6de778aa506112f"
+        }
+      ]
+    },
+    {
+      "name": "celebrating",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_01_05 AM.png",
+      "source_sha256": "4aec2fcc5c3024cf378ae994273305f3583f23488dde1ecaf832a7c91fc8308f",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/celebrating/frame-01.png",
+          "sha256": "1b60008162721f96c8438db5641d2cc084b28e9ca5083a3e64e087c781e51454"
+        },
+        {
+          "file": "frames/celebrating/frame-02.png",
+          "sha256": "444c6c19343b218aefef0cdc93cd9b96e5c8d2e495c3d31f194b0f6f4e1f0ad8"
+        },
+        {
+          "file": "frames/celebrating/frame-03.png",
+          "sha256": "890b67b52e1bb98e16db685d1e33a72791c279944968f2776c165cfdaa3df62b"
+        },
+        {
+          "file": "frames/celebrating/frame-04.png",
+          "sha256": "4af388758a6de540e736a23d65e13559cdb3b468365a6594348e41698dac59d6"
+        }
+      ]
+    },
+    {
+      "name": "butterfly",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_02_09 AM.png",
+      "source_sha256": "6ec460f0d58405c8afcfe1202deec920755f65b4c3d47d9fdfe0f90a33160b21",
+      "background_treatment": "native-alpha",
+      "frames": [
+        {
+          "file": "frames/butterfly/frame-01.png",
+          "sha256": "acacaea570024896ee800d0b256ad862c5e255fd2a623fd29af9ee4b4f41dece"
+        },
+        {
+          "file": "frames/butterfly/frame-02.png",
+          "sha256": "3a9ffad82558bae74d9c38bbc6511ce6862643b0b248a9312c975188fe6cd3a4"
+        },
+        {
+          "file": "frames/butterfly/frame-03.png",
+          "sha256": "d8a7883a9dde690cc550173e7f3b97bf9cada730a709baee8d548bbd1a65b21f"
+        },
+        {
+          "file": "frames/butterfly/frame-04.png",
+          "sha256": "415c94de236bfadaf1b953bdb5691a20c8ec85468b09dea211d50630d4f31a3b"
+        }
+      ]
+    },
+    {
+      "name": "alchemy",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_03_18 AM.png",
+      "source_sha256": "7bda21f01012883d3835ef9ffe31b4f010f4129a27f1892b929cfb8c57b080a4",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/alchemy/frame-01.png",
+          "sha256": "5bd02306a5a7c4c9cb3d2a8123d1488fc9f69cb17fce111c9dfdf8796e4779db"
+        },
+        {
+          "file": "frames/alchemy/frame-02.png",
+          "sha256": "1fa36a48b1e06c21c58dd19f73f8ecd1fb468046992c78b36839f23750bc58cf"
+        },
+        {
+          "file": "frames/alchemy/frame-03.png",
+          "sha256": "e09538ef048a61dcde5a32c6d1c6d3cca44f16f314af517a78bf14a73fb5edf6"
+        },
+        {
+          "file": "frames/alchemy/frame-04.png",
+          "sha256": "fcea893d1ec4e9fec67d8ad54ffaac03af885a44776b1c935656a7d292efa97b"
+        }
+      ]
+    },
+    {
+      "name": "cat-companion",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_04_08 AM.png",
+      "source_sha256": "04a77d93d1f4225e1a47f8db2162696a68a8c7c86d7b154afabf286e93467ffb",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/cat-companion/frame-01.png",
+          "sha256": "932b6c049528b3a8e97e5ff8734281109cbd29383af1eb39c66e963c9056a40f"
+        },
+        {
+          "file": "frames/cat-companion/frame-02.png",
+          "sha256": "e47d870c4d74e3f4d90098cc7c0a31b7893558e2dd0517e3a2a7b52c176e6d1e"
+        },
+        {
+          "file": "frames/cat-companion/frame-03.png",
+          "sha256": "6824126ab15a9811c46175234524ec14d0c3221bf9130a031819a4f5e360efb8",
+          "source_limit": "The candle and tabletop extend to the source quadrant edge."
+        },
+        {
+          "file": "frames/cat-companion/frame-04.png",
+          "sha256": "75bd6b2f8058c3bd91a75912c22534b20a57f37da2347185cdcd325e0568d868"
+        }
+      ]
+    },
+    {
+      "name": "hiding",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_04_54 AM.png",
+      "source_sha256": "bb12f004f03b3274de8ed0c81ed1d79d5c680dd1578b909e7bcb68512bf24b5b",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/hiding/frame-01.png",
+          "sha256": "dccc275cad29a62440dd1d00204956de4bcc5f0a5caa1ba8193103edb0fccefd"
+        },
+        {
+          "file": "frames/hiding/frame-02.png",
+          "sha256": "88cc7d0d3fae9a7236c11e28881995dbe0f5315138cd67a419ba970c9683b3e6"
+        },
+        {
+          "file": "frames/hiding/frame-03.png",
+          "sha256": "897720d36a911dc8d9f35b6ad7f4d83c87b5105861d043ac6c5b454e6cc24e89"
+        },
+        {
+          "file": "frames/hiding/frame-04.png",
+          "sha256": "6b62695c5a1bdd4dcaf32f241b0379b1e86aa5556663d8468175db58f4b5b5cf"
+        }
+      ]
+    },
+    {
+      "name": "peekaboo",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_05_55 AM.png",
+      "source_sha256": "5c4a14d40abff9a96f3103b501d2bcdfa38cc1c11a3060d05f51f0453785ac82",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/peekaboo/frame-01.png",
+          "sha256": "d81c61875724c1ec4ff1abd60f2e74cc44a19645208b1a82d1877753606b67bc"
+        },
+        {
+          "file": "frames/peekaboo/frame-02.png",
+          "sha256": "2d1bc2a339765aba7d23652ac76844e5cf3ae445106d2617dcd5cd3bcaf785b1"
+        },
+        {
+          "file": "frames/peekaboo/frame-03.png",
+          "sha256": "d03d2ee297380014efec4dda2916fe7b5d3f52e4e7f9e6a9fadff2b5b76c9fa8"
+        },
+        {
+          "file": "frames/peekaboo/frame-04.png",
+          "sha256": "c427f8d4c79158f3f082e57a8a53357e0f7e6a0d113370566b2e9e7a3088c789"
+        }
+      ]
+    },
+    {
+      "name": "magic",
+      "source_sheet": "ChatGPT Image Sep 23, 2026 at 03_06_56 AM.png",
+      "source_sha256": "43fec464383194000ad9e9abeeaac850a80cdfe88913df04a6e08b62530ddbcf",
+      "background_treatment": "checkerboard-keyed",
+      "frames": [
+        {
+          "file": "frames/magic/frame-01.png",
+          "sha256": "ee482b3f48d7f70bd87efdddf74be122749bedea96ec0aaf18452d80787fa8a5",
+          "source_limit": "The right-hand effect reaches the source quadrant edge."
+        },
+        {
+          "file": "frames/magic/frame-02.png",
+          "sha256": "44a240f34b6153b8c4b31016587e39c75b23e3ab065bd33446e50a175631f56c"
+        },
+        {
+          "file": "frames/magic/frame-03.png",
+          "sha256": "86fa06dd6e1dc114619f9623cb76b2f6039ebb5f3927fa1ec88194bb7a15a594",
+          "source_limit": "A clipped effect fragment at the right edge was removed."
+        },
+        {
+          "file": "frames/magic/frame-04.png",
+          "sha256": "5512ea75f8acd6f78f936af3162b1f67c38043545e8aec9315de88023b8b7e6c"
+        }
+      ]
+    }
+  ]
+}

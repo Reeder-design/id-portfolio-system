@@ -21,8 +21,8 @@
       "keywords": ["needs assessment", "performance gap", "hpi", "human performance improvement", "training not answer", "business problem", "root cause"],
       "answer": "I start by asking what is happening now, what should be happening instead, and what is actually stopping the person from doing it. If the gap is knowledge, confidence, or practice, training may be the right answer. If the issue is a broken process, bad access, missing documentation, unclear ownership, system friction, or an incentive problem, I would rather fix that than build a course nobody needed. I use an HPI mindset because I want to solve the performance problem, not win an argument for more training. I am also continuing to build formal depth in HPI and related certifications because that consulting side of the work is where I want to keep growing.",
       "evidence": [
-        {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Examples where learner support, documentation, system behavior, and reporting sit around the learning itself."},
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Operational fixes and automation used when the problem is bigger than course content."}
+        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Examples where learner support, documentation, system behavior, and reporting sit around the learning itself."},
+        {"title": "Workflows", "path": "projects/workflows/index.html", "note": "Operational fixes and automation used when the problem is bigger than course content."}
       ]
     },
     {
@@ -56,7 +56,7 @@
       "keywords": ["xapi", "tin can", "cmi5", "lrs", "scorm", "learning record store", "custom statements", "javascript trigger", "analytics", "tableau"],
       "answer": "SCORM is fine when all you need is launch, completion, score, and pass or fail. I am interested in the data that explains what happened inside the experience. With xAPI and cmi5, I can think in terms of meaningful events: which decision a learner made, what evidence they selected, where they changed an answer, what path they took, or whether they used a resource before succeeding. I can write custom JavaScript triggers to send those statements and design the statement structure so an LRS, data lake, or BI layer can actually use it. The important part is not tracking everything because you can. It is defining the events that answer a real learning or business question.",
       "evidence": [
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Examples of data flow, structured automation, and system handoffs around learning operations."},
+        {"title": "Workflows", "path": "projects/workflows/index.html", "note": "Examples of data flow, structured automation, and system handoffs around learning operations."},
         {"title": "Interactive Learning", "path": "projects/instructional-design/interactive-learning/index.html", "note": "Decision-based interactions that can support richer event tracking than simple completion."}
       ]
     },
@@ -66,9 +66,9 @@
       "short_label": "Enterprise integrations",
       "prompt": "How comfortable are you with the technical ecosystem around an enterprise LMS?",
       "keywords": ["sso", "saml", "okta", "api", "hris", "workday", "sap", "salesforce", "integration", "lms integration", "crm"],
-      "answer": "I am comfortable thinking past the LMS screen and into the systems around it. I understand SSO and SAML-style identity flows, Okta-based access, HRIS-driven enrollment and offboarding patterns, CRM handoffs with Salesforce, API-based data movement, credentials, reporting, and where an LRS or analytics layer fits. I am not trying to be the identity engineer or backend developer on every implementation. My value is that I can understand the integration logic well enough to design the learner experience, define the right requirements, test the handoffs, spot where the workflow is breaking, and communicate with the technical owners without treating the LMS like an isolated box.",
+      "answer": "My direct integration work is with LMS exports, account matching, migration crosswalks, and learner-path validation. I map what each system sends or expects, identify who owns the rule, and test exceptions before a learner or completion record is trusted. I also understand how identity, CRM or HR data, content tracking, and reporting fit around the LMS, but the System Integrations page labels those broader examples as platform-informed patterns. I work with identity and backend owners on implementation rather than claiming those roles as mine.",
       "evidence": [
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Salesforce-to-learning workflows, automation, reporting, and system handoffs."},
+        {"title": "System Integrations", "path": "projects/lms-administration/system-integrations/index.html", "note": "LMS data handoffs, validation, and clear boundaries between direct work and platform-informed patterns."},
         {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Platform setup, learner-path testing, launch support, and operational validation across a migration."}
       ]
     },
@@ -81,7 +81,7 @@
       "answer": "For me, advanced AI use is not asking a chatbot to write a course and pasting the result. I am much more interested in structured systems: clear agent instructions, reusable prompt patterns, source boundaries, evaluation rubrics, modular generation, human review, and workflows that move content from one stage to the next without losing context. I have built and tested custom-agent style workflows, used AI for evaluation work, and designed processes where the model has a defined job instead of unlimited creative freedom. I also care a lot about privacy and source control, especially when the content is internal or technical. The goal is to make the ID faster and more consistent without outsourcing judgment.",
       "evidence": [
         {"title": "AI Training and Evaluation", "path": "projects/ai-training-and-evaluation/index.html", "note": "Evaluation, rubric scoring, evidence validation, and quality feedback."},
-        {"title": "System Integrations and Workflows", "path": "projects/workflows/index.html", "note": "Structured automation and workflow thinking beyond traditional course authoring."}
+        {"title": "Workflows", "path": "projects/workflows/index.html", "note": "Structured automation and workflow thinking beyond traditional course authoring."}
       ]
     },
     {
@@ -105,7 +105,8 @@
       "answer": "I make the work visible. I break the project into decisions, dependencies, assets, review points, and launch requirements instead of treating 'build the course' like one task. I use tools such as Asana, Smartsheet, Jira, Monday, Trello, Teams, Slack, and Review 360 depending on the environment, but the tool matters less than having clear owners and a clean approval path. I also separate content review from design review when I can, because mixing every kind of feedback into one giant comment cycle is how projects get slow and weird.",
       "evidence": [
         {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Large-scale curriculum, SME review, QA, LMS testing, reporting, and maintenance work."},
-        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Cross-functional setup, UAT, issue retesting, support, documentation, and launch follow-through."}
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Cross-functional setup, UAT, issue retesting, support, documentation, and launch follow-through."},
+        {"title": "GitHub Workflow", "path": "projects/github-workflow/index.html", "note": "My portfolio's branch reviews, validation, content tools, and publishing workflow."}
       ]
     },
     {

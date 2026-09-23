@@ -25,8 +25,8 @@ Current portfolio version: **1.0.0**
 | Virtual Sales Workshop Facilitation | Instructional Design | Live Training | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html` |
 | Product Launch Microlearning | Instructional Design | Microlearning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html` |
 | Vertical Positioning Microlearning | Instructional Design | Microlearning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html` |
+| How I Approach Different LMS Platforms | LMS Administration | — | Live | No | Sanitized / Fictionalized | `portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html` |
 | LMS Migration Experience | LMS Administration | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html` |
-| My Approach for Various LMS Platforms | LMS Administration | — | Live | No | Sanitized / Fictionalized | `portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html` |
 | Certification Reporting Automation | Workflows | Data + Reporting | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` |
 
 ## Source Records

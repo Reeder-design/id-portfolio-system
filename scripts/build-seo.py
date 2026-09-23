@@ -216,6 +216,8 @@ def add_hiring_nav_link(path: Path, text: str) -> str:
     )
 
     body = nav_match.group(2)
+    if re.search(r'<a\b[^>]*class=["\'][^"\']*\bsite-nav-hiring\b', body, flags=re.IGNORECASE):
+        return clean
     return clean[: nav_match.start(2)] + body.rstrip() + "\n        " + link + "\n      " + clean[nav_match.end(2):]
 
 
