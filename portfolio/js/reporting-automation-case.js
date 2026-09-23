@@ -259,6 +259,68 @@
     setText('reportEvidenceCaption', d.caption);
   });
 
+  const reportDemoPaths = {
+    reports: {
+      label:'REPORTING / LMS → WORKBOOK',
+      steps:[
+        {step:'Run',window:'TERMINAL / RUN',source:'SCHEDULED RUN',action:'Start the saved-report workflow.',status:'Browser opening',target:'Expected report set',rows:['Employee activity','Partner activity','Certificate evidence'],check:'Confirm the run scope and saved-report set.',caption:'The run starts with defined inputs and review rules.',image:'terminal-run-reports.png'},
+        {step:'LMS',window:'BROWSER / LMS',source:'ABSORB LMS',action:'Open the saved report views.',status:'Session ready',target:'Report workspace',rows:['Activity reports','Certificate reports','Known filters'],check:'Use the approved report views and scope.',caption:'Browser automation repeats a known navigation route.',image:'scheduled-automated-repeatable.png'},
+        {step:'Export',window:'BROWSER / REPORTS',source:'SAVED REPORTS',action:'Generate and download four exports.',status:'Downloads in progress',target:'Controlled exports',rows:['Employee activity.xlsx','Partner activity.xlsx','Certificates × 2'],check:'Stop if a required export is missing.',caption:'Four files leave the LMS in a consistent order.',image:'exporting-reports.png'},
+        {step:'Files',window:'LOCAL / INPUTS',source:'CSV / XLSX',action:'Collect the report package.',status:'Four files received',target:'Input manifest',rows:['File count: 4','Expected columns','Run date checked'],check:'Reject a partial or unexpected package.',caption:'The file gate protects the analysis from incomplete inputs.',image:'csv-xlsx-files.png'},
+        {step:'Normalize',window:'SCRIPT / DATA',source:'PYTHON + PANDAS',action:'Standardize fields and learner keys.',status:'Records comparable',target:'Normalized tables',rows:['Stable learner key','Consistent labels','Source retained'],check:'Flag a missing or unusable key.',caption:'Normalization makes separate reports comparable.',image:'analysis-script.png'},
+        {step:'Compare',window:'SCRIPT / LOGIC',source:'COURSE + CERTIFICATE',action:'Join completion and certification evidence.',status:'Rules applied',target:'Status classification',rows:['Complete','Incomplete','Needs review'],check:'Investigate unmatched or duplicate evidence.',caption:'A documented comparison produces an inspectable status.',image:'excel-report-data.png'},
+        {step:'Review',window:'QUALITY / QUEUE',source:'EXCEPTION REVIEW',action:'Hold records that need judgment.',status:'Human checkpoint',target:'Review queue',rows:['Missing match','Duplicate candidate','Unexpected state'],check:'A person resolves the case before final use.',caption:'The automated path does not turn uncertainty into a clean claim.',image:'platform-sync-automation.png'},
+        {step:'Workbook',window:'EXCEL / OUTPUT',source:'OPENPYXL',action:'Write the review workbook.',status:'Output created',target:'Complete + Incomplete',rows:['Complete worksheet','Incomplete worksheet','User type included'],check:'Confirm worksheet structure and exceptions.',caption:'The result is organized for operational review.',image:'report-deliverables.png'},
+        {step:'Dashboard',window:'REPORT / VIEW',source:'ANALYTICS',action:'Summarize the review picture.',status:'Summary available',target:'Reporting view',rows:['Completion status','Exceptions visible','Follow-up list'],check:'Trace a summary back to its rows.',caption:'A useful summary keeps detailed evidence available.',image:'analytics-dashboard.png'},
+        {step:'Deliver',window:'DELIVERY / HANDOFF',source:'STAKEHOLDER PACKAGE',action:'Share the reviewed reporting output.',status:'Ready for stakeholder review',target:'Final package',rows:['Workbook','Summary view','Follow-up notes'],check:'Confirm approval and intended recipients.',caption:'The final handoff includes both the result and its review trail.',image:'stakeholder-email.png'}
+      ]
+    },
+    accounts: {
+      label:'ACCOUNT CONTEXT / SALESFORCE → LMS',
+      steps:[
+        {step:'Lookup',window:'BROWSER / SALESFORCE',source:'LEARNER INPUT',action:'Use the learner key to search account context.',status:'Candidate found',target:'Salesforce match',rows:['Fictional learner key','Account candidate','Source link retained'],check:'Do not accept a missing or ambiguous match.',caption:'This is a separate account-setup workflow.',image:'salesforce-login.png'},
+        {step:'Verify',window:'SOURCE / ACCOUNT',source:'SALESFORCE FIELDS',action:'Check the account before mapping.',status:'Match reviewed',target:'Verified context',rows:['Account name','Region or type','Account ID'],check:'A person resolves uncertain account context.',caption:'Only verified source fields enter the mapping path.',image:'platform-sync-automation.png'},
+        {step:'Map',window:'DATA / FIELD MAP',source:'DOCUMENTED RULES',action:'Translate fields into LMS-ready values.',status:'Placement record drafted',target:'LMS-ready record',rows:['Department name','Parent department','Department ID'],check:'Confirm hierarchy and the destination field.',caption:'Field mapping records how source and destination connect.',image:'excel-report-data.png'},
+        {step:'Hold',window:'REVIEW / PLACEMENT',source:'HUMAN CHECKPOINT',action:'Prepare placement for final review.',status:'Not auto-placed',target:'Reviewable handoff',rows:['Verified match','Mapped fields','Placement decision'],check:'Final learner placement remains a reviewed action.',caption:'The automated path stops before consequential placement.',image:'report-deliverables.png'}
+      ]
+    }
+  };
+  const demoShell=document.getElementById('reportDemoShell');
+  if(demoShell){
+    const stageList=document.getElementById('reportDemoSteps');
+    const play=document.getElementById('reportDemoPlay');
+    let mode='reports',index=0,timer=null;
+    const stop=()=>{if(timer)clearInterval(timer);timer=null;play.textContent='Play sequence';};
+    const render=(next,focus=false)=>{
+      const stages=reportDemoPaths[mode].steps;
+      index=(next+stages.length)%stages.length;
+      const stage=stages[index];
+      demoShell.classList.remove('is-changing');void demoShell.offsetWidth;demoShell.classList.add('is-changing');
+      demoShell.dataset.demoMode=mode;
+      [...stageList.children].forEach((button,i)=>{const active=i===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;if(active&&focus)button.focus();});
+      setText('reportDemoPath',reportDemoPaths[mode].label);setText('reportDemoWindowLabel',stage.window);setText('reportDemoSource',stage.source);setText('reportDemoAction',stage.action);setText('reportDemoScreenStatus',stage.status);setText('reportDemoTarget',stage.target);setText('reportDemoRecordOne',stage.rows[0]);setText('reportDemoRecordTwo',stage.rows[1]);setText('reportDemoRecordThree',stage.rows[2]);setText('reportDemoCheckpoint',stage.check);setText('reportDemoCaption',stage.caption);
+      const image=document.getElementById('reportDemoAsset');if(image)image.src='../../../../assets/icons/pixel/lms-admin/reporting-automation/'+stage.image;
+    };
+    const rebuild=()=>{
+      stop();stageList.replaceChildren();
+      reportDemoPaths[mode].steps.forEach((stage,i)=>{
+        const button=document.createElement('button');button.type='button';button.setAttribute('role','tab');button.textContent=`${String(i+1).padStart(2,'0')} ${stage.step}`;
+        button.addEventListener('click',()=>{stop();render(i);});
+        button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();stop();const next=event.key==='Home'?0:event.key==='End'?reportDemoPaths[mode].steps.length-1:event.key==='ArrowRight'||event.key==='ArrowDown'?i+1:i-1;render(next,true);});
+        stageList.append(button);
+      });render(0);
+    };
+    const modeButtons=[...document.querySelectorAll('[data-report-demo-mode]')];
+    const selectMode=(button,focus=false)=>{
+      mode=button.dataset.reportDemoMode;
+      modeButtons.forEach(other=>{const active=other===button;other.classList.toggle('active',active);other.setAttribute('aria-selected',String(active));other.tabIndex=active?0:-1;});
+      rebuild();if(focus)button.focus();
+    };
+    modeButtons.forEach((button,i)=>{button.addEventListener('click',()=>selectMode(button));button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?modeButtons.length-1:event.key==='ArrowRight'?(i+1)%modeButtons.length:(i+modeButtons.length-1)%modeButtons.length;selectMode(modeButtons[next],true);});});
+    play.addEventListener('click',()=>{if(timer){stop();return;}play.textContent='Pause sequence';render(0);timer=setInterval(()=>{if(index>=reportDemoPaths[mode].steps.length-1){stop();play.textContent='Replay sequence';return;}render(index+1);if(index===reportDemoPaths[mode].steps.length-1){stop();play.textContent='Replay sequence';}},2200);});
+    rebuild();
+  }
+
   const navLinks = [...document.querySelectorAll('.case-nav a')];
   const sections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
   if ('IntersectionObserver' in window) {

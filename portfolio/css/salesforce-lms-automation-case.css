@@ -180,3 +180,6 @@
 @media(prefers-reduced-motion:reduce){
   .sf-flow-dot{animation:none!important}
 }
+
+/* Compact return path replaces the retired exploration cards. */
+.case-back-nav{padding:25px 0 35px;background:#f5faf4}.case-back-nav a{color:#275d49;font:850 .85rem/1.2 var(--font-heading);text-decoration:underline;text-underline-offset:4px}.case-back-nav a:focus-visible{outline:3px solid #68ab7d;outline-offset:4px}
