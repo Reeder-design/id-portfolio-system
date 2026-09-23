@@ -799,6 +799,35 @@
     button.addEventListener('click', action);
     return button;
   };
+  let curriculumPopoverTrigger = null;
+  const openCurriculumPopover = (anchor, title, copy, image, focusAfter = anchor) => {
+    curriculumHotspots.querySelector('.curriculum-info-popover')?.remove();
+    curriculumPopoverTrigger?.setAttribute('aria-expanded', 'false');
+    curriculumPopoverTrigger = anchor;
+    anchor.setAttribute('aria-expanded', 'true');
+    const popover = document.createElement('div');
+    popover.className = 'curriculum-info-popover';
+    popover.setAttribute('role', 'dialog');
+    popover.setAttribute('aria-label', `${title} detail`);
+    popover.innerHTML = '<button type="button" class="curriculum-info-close" aria-label="Close detail">×</button><img alt=""><strong></strong><p></p>';
+    popover.querySelector('strong').textContent = title;
+    popover.querySelector('p').textContent = copy;
+    if (image) popover.querySelector('img').src = image;
+    else { popover.querySelector('img').remove(); popover.classList.add('no-icon'); }
+    curriculumHotspots.append(popover);
+    const screenRect = curriculumHotspots.getBoundingClientRect();
+    const anchorRect = anchor.getBoundingClientRect();
+    const width = Math.min(300, screenRect.width - 20);
+    popover.style.width = `${width}px`;
+    const left = Math.max(10, Math.min(screenRect.width - width - 10, anchorRect.left - screenRect.left + 8));
+    const top = Math.max(8, Math.min(screenRect.height - popover.offsetHeight - 8, anchorRect.top - screenRect.top + 14));
+    popover.style.left = `${left}px`;
+    popover.style.top = `${top}px`;
+    const close = () => { popover.remove(); anchor.setAttribute('aria-expanded', 'false'); curriculumPopoverTrigger = null; focusAfter?.focus(); };
+    popover.querySelector('.curriculum-info-close').addEventListener('click', close);
+    popover.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+    popover.querySelector('.curriculum-info-close').focus();
+  };
   const renderCurriculum=(key)=>{
     const data=curriculumData[key]; if(!data||!curriculumImage)return;
     if (quizAdvanceTimer) { window.clearTimeout(quizAdvanceTimer); quizAdvanceTimer = 0; }
@@ -820,6 +849,8 @@
     curriculumDisplay.dataset.view = key;
     if (curriculumHotspots && curriculumHotspotCaption) {
       curriculumHotspots.replaceChildren();
+      curriculumPopoverTrigger = null;
+      curriculumHotspotCaption.hidden = ['market', 'value', 'scenario'].includes(key);
       if (key === 'market') {
         const verticals = [
           ['Manufacturing', 'Fictional use case: connect mobile workstations across a busy production floor.'],
@@ -834,7 +865,7 @@
         verticals.forEach(([label, description], tileIndex) => {
           const tile = screenButton(label, 'curriculum-vertical-hotspot', () => {
             grid.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === tile));
-            curriculumHotspotCaption.textContent = description;
+            openCurriculumPopover(tile, label, description);
           });
           tile.setAttribute('aria-label', `Explore ${label} cellular use case`);
           tile.style.setProperty('--tile-index', tileIndex);
@@ -850,10 +881,8 @@
           const cover = screenButton('Click me', 'curriculum-outcome-cover', () => {
             cover.classList.add('revealed');
             cover.disabled = true;
-            curriculumHotspotCaption.textContent = outcome;
             const nextCover = covers.querySelector('.curriculum-outcome-cover:not(:disabled)');
-            if (nextCover) nextCover.focus();
-            else curriculumHotspots.querySelector('.curriculum-screen-continue')?.focus();
+            openCurriculumPopover(cover, 'Value outcome', outcome, '../../../../assets/icons/pixel/lms/mini-verified.webp', nextCover || curriculumHotspots.querySelector('.curriculum-screen-continue'));
           });
           cover.setAttribute('aria-label', `Reveal outcome: ${outcome}`);
           covers.append(cover);
@@ -865,16 +894,16 @@
         dashboard.className = 'cert-icp-demo';
         dashboard.innerHTML = `<div class="cert-icp-top"><span>CUSTOMER ICP</span><strong>Regional transport hub</strong></div>
           <div class="cert-icp-signals" aria-label="Explore customer signals">
-            <button type="button" data-icp-info="fleet"><img src="../../../../assets/icons/pixel/lms/mini-user.webp" alt=""><span>Moving teams</span><b>↗</b></button>
+            <button type="button" data-icp-info="fleet"><img src="../../../../assets/icons/pixel/lms/transport-fleet.svg" alt=""><span>Moving teams</span><b>↗</b></button>
             <button type="button" data-icp-info="data"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Sensitive data</span><b>↗</b></button>
-            <button type="button" data-icp-info="growth"><img src="../../../../assets/icons/pixel/lms/mini-org-chart.webp" alt=""><span>Expanding sites</span><b>↗</b></button>
+            <button type="button" data-icp-info="growth"><img src="../../../../assets/icons/pixel/lms/expanding-sites.svg" alt=""><span>Expanding sites</span><b>↗</b></button>
           </div>
           <div class="cert-icp-match-head"><strong>Match a response to each signal</strong><small>Select an icon, then a signal below</small></div>
           <div class="cert-icp-options" aria-label="Response icons">
-            <button type="button" data-icp-option="uptime" aria-label="Reliable coverage"><img src="../../../../assets/icons/pixel/lms/mini-analytics.webp" alt=""><span>Reliable</span></button>
-            <button type="button" data-icp-option="security" aria-label="Protected access"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Secure</span></button>
-            <button type="button" data-icp-option="scale" aria-label="Scalable rollout"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><span>Scalable</span></button>
-            <button type="button" data-icp-option="cost" aria-label="Lowest hardware cost"><img src="../../../../assets/icons/pixel/lms/mini-settings.webp" alt=""><span>Cheapest</span></button>
+            <button type="button" data-icp-option="uptime" aria-label="Reliable coverage"><img src="../../../../assets/icons/pixel/lms/reliable-coverage.svg" alt=""><span>Reliable</span></button>
+            <button type="button" data-icp-option="security" aria-label="Protected access"><img src="../../../../assets/icons/pixel/lms/secure-access.svg" alt=""><span>Secure</span></button>
+            <button type="button" data-icp-option="scale" aria-label="Scalable rollout"><img src="../../../../assets/icons/pixel/lms/scalable-rollout.svg" alt=""><span>Scalable</span></button>
+            <button type="button" data-icp-option="cost" aria-label="Lowest hardware cost"><img src="../../../../assets/icons/pixel/lms/lowest-cost.svg" alt=""><span>Cheapest</span></button>
           </div>
           <div class="cert-icp-targets" aria-label="Customer signals to match">
             <button type="button" data-icp-target="fleet"><span>Moving teams</span><b>＋</b></button>
@@ -882,27 +911,17 @@
             <button type="button" data-icp-target="growth"><span>Expanding sites</span><b>＋</b></button>
           </div>
           <p class="cert-icp-feedback" role="status">Tap a signal above for context, then match the responses.</p>
-          <button class="cert-icp-next" type="button" disabled>Continue →</button>
-          <div class="cert-icp-modal" role="dialog" aria-modal="false" aria-label="Customer signal detail" hidden><button type="button" class="cert-icp-close" aria-label="Close customer detail">×</button><img src="" alt=""><strong></strong><p></p></div>`;
+          <button class="cert-icp-next" type="button" disabled>Continue →</button>`;
         curriculumHotspots.append(dashboard);
         const info = {
-          fleet: ['Moving teams', 'Vehicles, dispatch, and field teams need dependable connectivity as they move between sites.', 'mini-user.webp'],
+          fleet: ['Moving teams', 'Vehicles, dispatch, and field teams need dependable connectivity as they move between sites.', 'transport-fleet.svg'],
           data: ['Sensitive data', 'Operational information must remain protected while people work across locations.', 'mini-shield.webp'],
-          growth: ['Expanding sites', 'New facilities and users make a manageable rollout important.', 'mini-org-chart.webp']
+          growth: ['Expanding sites', 'New facilities and users make a manageable rollout important.', 'expanding-sites.svg']
         };
-        const modal = dashboard.querySelector('.cert-icp-modal');
-        let modalTrigger = null;
         dashboard.querySelectorAll('[data-icp-info]').forEach((button) => button.addEventListener('click', () => {
-          modalTrigger = button;
           const [title, copy, image] = info[button.dataset.icpInfo];
-          modal.querySelector('strong').textContent = title;
-          modal.querySelector('p').textContent = copy;
-          modal.querySelector('img').src = `../../../../assets/icons/pixel/lms/${image}`;
-          modal.hidden = false;
-          modal.querySelector('.cert-icp-close').focus();
+          openCurriculumPopover(button, title, copy, `../../../../assets/icons/pixel/lms/${image}`);
         }));
-        modal.querySelector('.cert-icp-close').addEventListener('click', () => { modal.hidden = true; modalTrigger?.focus(); });
-        modal.addEventListener('keydown', (event) => { if (event.key === 'Escape') { modal.hidden = true; modalTrigger?.focus(); } });
         let selected = '';
         const feedback = dashboard.querySelector('.cert-icp-feedback');
         const correctMap = {fleet:'uptime',data:'security',growth:'scale'};
