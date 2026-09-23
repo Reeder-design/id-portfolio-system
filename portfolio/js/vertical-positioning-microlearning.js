@@ -1,5 +1,7 @@
 (() => {
   const iconRoot = '../../../../assets/icons/portfolio-icons.svg#';
+  const pixelRoot = '../../../../assets/icons/pixel/workflows/';
+  const asset = (name) => `<span class="case-asset-bubble" aria-hidden="true"><img src="${pixelRoot}${name}.webp" alt=""></span>`;
   const documentRoot = '../../../../assets/documents/';
   const paths = {
     seaport: {
@@ -52,7 +54,7 @@
   const fields = {
     industryName: el('verticalIndustryName'), progressText: el('verticalProgressText'), progressFill: el('verticalProgressFill'),
     stageIcon: el('verticalStageIcon'), eyebrow: el('verticalStageEyebrow'), title: el('verticalStageTitle'),
-    copy: el('verticalStageCopy'), figure: el('verticalStageFigure'), caption: el('verticalStageCaption'),
+    copy: el('verticalStageCopy'), figure: el('verticalStageFigure'), stageVisual: el('verticalStageVisual'), caption: el('verticalStageCaption'),
     conversation: el('verticalConversation'), customerLine: el('verticalCustomerLine'), responseWrap: el('verticalResponseWrap'), response: el('verticalScenarioResponse'),
     choiceArea: el('verticalChoiceArea'), prompt: el('verticalChoicePrompt'), choices: el('verticalChoices'), feedback: el('verticalFeedback'),
     roi: el('verticalRoi'), roiHandoffs: el('verticalRoiHandoffs'), roiHandoffsValue: el('verticalRoiHandoffsValue'), roiMinutes: el('verticalRoiMinutes'), roiMinutesValue: el('verticalRoiMinutesValue'), roiResult: el('verticalRoiResult'),
@@ -91,9 +93,16 @@
       button.setAttribute('aria-pressed', String(selected === index));
       const letter = document.createElement('span');
       letter.textContent = String.fromCharCode(65 + index);
+      const icon = document.createElement('span');
+      icon.className = 'case-asset-bubble vertical-choice-asset';
+      icon.setAttribute('aria-hidden', 'true');
+      const image = document.createElement('img');
+      image.src = pixelRoot + (stage === 1 ? ['support-resources/information','people-collaboration/communication'][index % 2] : ['people-collaboration/communication','support-resources/guidance','planning-projects/tasks'][index % 3]) + '.webp';
+      image.alt = '';
+      icon.append(image);
       const label = document.createElement('span');
       label.textContent = choice.label;
-      button.append(letter, label);
+      button.append(letter, icon, label);
       button.addEventListener('click', () => { select(index); fields.choices.children[index]?.focus(); });
       fields.choices.append(button);
     });
@@ -108,6 +117,18 @@
     fields.roiHandoffsValue.value = handoffs;
     fields.roiMinutesValue.value = minutes;
     fields.roiResult.textContent = hours + ' hours';
+  }
+
+  function renderStageVisual(data, pain) {
+    if (!fields.stageVisual) return;
+    fields.stageVisual.hidden = stage === 0;
+    fields.stageVisual.dataset.stage = String(stage);
+    fields.stageVisual.dataset.industry = industry;
+    const scene = (icon, label, items, note) => `<div class="vertical-visual-scene"><span class="vertical-visual-place">${asset(icon)} ${label}</span><div class="vertical-visual-transfer">${items.map(([itemIcon, text], index) => `${index ? '<i>→</i>' : ''}<span>${asset(itemIcon)}<b>${text}</b></span>`).join('')}</div><small>${note}</small></div>`;
+    if (stage === 1) fields.stageVisual.innerHTML = scene('strategy-impact/global', `${data.name.toUpperCase()} CUSTOMER CONTEXT`, [['support-resources/information','Listen for friction'],['analytics-insights/insights','Connect value']], painIndex === null ? 'Choose a cue below to set the later scenario.' : `Selected cue: ${pain.label}`);
+    if (stage === 2) fields.stageVisual.innerHTML = scene('analytics-insights/analytics', 'ROI CONVERSATION', [['planning-projects/tasks','Handoffs / week'],['analytics-insights/data','Minutes / handoff'],['people-collaboration/communication','Validate with client']], 'The numbers are prompts for a client conversation, not a product claim.');
+    if (stage === 3) fields.stageVisual.innerHTML = scene('people-collaboration/user-learner', `${data.name.toUpperCase()} CUSTOMER MOMENT`, [['support-resources/information','Customer cue'],['people-collaboration/communication','Your response'],['people-collaboration/feedback','AI coaching']], 'The selected pain point carries into this practice branch.');
+    if (stage === 4) fields.stageVisual.innerHTML = scene('support-resources/resources', `${data.name.toUpperCase()} TAKEAWAY`, [['support-resources/information','Customer cues'],['analytics-insights/insights','Value frame'],['people-collaboration/communication','ROI prompts']], 'A one-page guide carries the conversation back to work.');
   }
 
   function render() {
@@ -128,6 +149,7 @@
     });
     fields.eyebrow.textContent = `0${stage + 1} · ${labels[stage]}`;
     fields.figure.hidden = stage !== 0;
+    renderStageVisual(data, pain);
     fields.choiceArea.hidden = true;
     fields.roi.hidden = stage !== 2;
     fields.conversation.hidden = stage !== 3;
@@ -152,6 +174,8 @@
       document.getElementById('verticalSettingLabel').textContent = data.name.toUpperCase() + ' CONTEXT';
       document.getElementById('verticalSettingTitle').textContent = data.name === 'Seaport' ? 'Coordinate a distributed operation' : 'Coordinate a time-sensitive service network';
       document.getElementById('verticalSettingText').textContent = data.name === 'Seaport' ? 'Field teams and terminals need a clear shared picture of handoffs.' : 'Gate, ramp, and service teams need timely updates at every handoff.';
+      document.getElementById('verticalSettingCueOne').textContent = data.name === 'Seaport' ? 'Field teams' : 'Gate + ramp';
+      document.getElementById('verticalSettingCueTwo').textContent = data.name === 'Seaport' ? 'Current status' : 'Service update';
       fields.caption.textContent = data.caption;
       fields.hint.textContent = 'Review the positioning, then continue.';
       setDesign('I gave sellers a short industry introduction before asking them to make a customer-facing choice.', 'Use one Rise architecture, with separate seaport and airport context so examples do not blur together.', 'Build the vertical sections and keep approved positioning language easy to revise.', 'Rise 360 · vertical introduction');

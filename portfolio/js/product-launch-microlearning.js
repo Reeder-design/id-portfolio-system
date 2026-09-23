@@ -16,9 +16,9 @@
     },
     fit: {
       label: '03 · Product fit', title: 'Show where the offer fits and where it does not.',
-      text: 'The information stays bounded so sellers can position the product accurately without overstating its capabilities.',
+      text: 'This short choice checks whether a seller can describe the product accurately without overstating its capabilities.',
       facts: [['Seller need','Recognize a plausible use case.'],['Design decision','Make the product boundary explicit.'],['Development','Put fit signals next to non-fit signals.']],
-      screen: `<span class="launch-screen-kicker">03 / KNOW THE FIT</span><h3>Lead with the right use case.</h3><div class="launch-screen-fit"><article>${asset('learning-enablement/enablement')}<div><strong>Good fit</strong><p>Draft a customer follow-up from meeting notes for a seller to review.</p></div></article><article>${asset('support-resources/guidance')}<div><strong>Different tool</strong><p>Specialized data analysis or calendar automation needs purpose-built systems.</p></div></article></div><p>The offer supports a bounded writing workflow. It does not replace a seller's judgment, analytics tools, or scheduling systems.</p>`
+      screen: `<span class="launch-screen-kicker">03 / KNOW THE FIT</span><h3>Where does DraftPath fit?</h3><p class="launch-screen-lead">Choose the accurate message to carry into a customer conversation.</p><div class="launch-knowledge-check"><div class="launch-check-head">${asset('planning-projects/goals')}<span><small>YOUR TURN</small><strong>Which statement stays inside the product boundary?</strong></span></div><div class="launch-check-options" role="group" aria-label="Choose the accurate DraftPath positioning line"><button type="button" data-fit-choice="0">A seller reviews a follow-up draft built from meeting notes.</button><button type="button" data-fit-choice="1">DraftPath replaces the team's specialized analytics platform.</button><button type="button" data-fit-choice="2">DraftPath sends every follow-up without seller review.</button></div><p class="launch-check-feedback" id="launchFitFeedback" role="status" aria-live="polite">Select a message to see coaching.</p></div><div class="launch-screen-fit-summary">${asset('support-resources/guidance')}<p><strong>Useful boundary</strong> DraftPath helps start a writing workflow. The seller still checks, personalizes, and approves the message.</p></div>`
     },
     handoff: {
       label: '04 · Work-ready handoff', title: 'Close with a clear next conversation.',
@@ -33,12 +33,39 @@
   const screen = el('launchLearningContent');
   if (!screen) return;
   let activeIndex = 0;
+  let fitChoice = null;
+  const fitFeedback = [
+    'Exactly. DraftPath supports a reviewed first draft; the seller keeps final judgment.',
+    'That describes a different tool. Keep the message tied to the follow-up writing workflow.',
+    'Seller review is part of the workflow. DraftPath does not send messages on its own.'
+  ];
+  const renderFitChoice = () => {
+    const feedback = el('launchFitFeedback');
+    if (!feedback) return;
+    document.querySelectorAll('[data-fit-choice]').forEach(button => {
+      const selected = Number(button.dataset.fitChoice) === fitChoice;
+      button.classList.toggle('selected', selected);
+      button.classList.toggle('correct', selected && fitChoice === 0);
+      button.classList.toggle('retry', selected && fitChoice !== 0);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+    feedback.dataset.result = fitChoice === null ? 'pending' : fitChoice === 0 ? 'correct' : 'retry';
+    feedback.textContent = fitChoice === null ? 'Select a message to see coaching.' : fitFeedback[fitChoice];
+  };
   const render = key => {
     const item = stages[key], index = keys.indexOf(key);
     if (!item || index < 0) return;
     activeIndex = index;
     screen.innerHTML = item.screen;
     screen.dataset.stage = key;
+    if (key === 'fit') {
+      document.querySelectorAll('[data-fit-choice]').forEach(button => button.addEventListener('click', () => {
+        fitChoice = Number(button.dataset.fitChoice);
+        renderFitChoice();
+        el('launchNext').disabled = fitChoice !== 0;
+      }));
+      renderFitChoice();
+    }
     el('launchDemoLabel').textContent = item.label;
     el('launchDemoTitle').textContent = item.title;
     el('launchDemoText').textContent = item.text;
@@ -48,7 +75,7 @@
     document.querySelectorAll('.launch-sim-dots span').forEach((dot, i) => dot.classList.toggle('active', i === index));
     tabs.forEach(tab => { const active = tab.dataset.launchStage === key; tab.classList.toggle('active', active); tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
     el('launchPrev').disabled = index === 0;
-    el('launchNext').disabled = index === keys.length - 1;
+    el('launchNext').disabled = index === keys.length - 1 || (key === 'fit' && fitChoice !== 0);
     el('launchNext').textContent = index === keys.length - 1 ? 'Lesson complete' : 'Continue →';
     el('launchScreenScroll').scrollTop = 0;
   };
@@ -62,7 +89,9 @@
     });
   });
   el('launchPrev').addEventListener('click', () => render(keys[activeIndex - 1]));
-  el('launchNext').addEventListener('click', () => render(keys[activeIndex + 1]));
+  el('launchNext').addEventListener('click', () => {
+    if (!el('launchNext').disabled) render(keys[activeIndex + 1]);
+  });
   render(keys[0]);
   const pipeline = document.querySelector('.launch-pipeline');
   const pipelineStages = {
