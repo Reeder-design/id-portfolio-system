@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
+REPOSITORY_GUIDE = ROOT / "docs" / "repository-guide.md"
 AGENTS = ROOT / "AGENTS.md"
 COPILOT = ROOT / ".github" / "copilot-instructions.md"
 MAINTENANCE = ROOT / "docs" / "maintenance-guide.md"
@@ -43,6 +44,7 @@ def main() -> int:
 
     for path, label in [
         (README, "README"),
+        (REPOSITORY_GUIDE, "repository guide"),
         (AGENTS, "agent guidance"),
         (COPILOT, "Copilot guidance"),
         (MAINTENANCE, "maintenance guide"),
@@ -74,6 +76,7 @@ def main() -> int:
         return 1
 
     readme = README.read_text(encoding="utf-8")
+    repository_guide = REPOSITORY_GUIDE.read_text(encoding="utf-8")
     agents = AGENTS.read_text(encoding="utf-8")
     copilot = COPILOT.read_text(encoding="utf-8")
     maintenance = MAINTENANCE.read_text(encoding="utf-8")
@@ -96,6 +99,12 @@ def main() -> int:
     site_content_routes = SITE_CONTENT_ROUTES.read_text(encoding="utf-8")
     site_content_model = SITE_CONTENT_MODEL.read_text(encoding="utf-8")
 
+    require(
+        "](docs/repository-guide.md)" in readme,
+        "README must link to the detailed repository guide.",
+        errors,
+    )
+
     for phrase in [
         "Manage Content",
         "Create Content",
@@ -112,7 +121,7 @@ def main() -> int:
         "Reusable Component Registry",
         "Related References project graph",
     ]:
-        require(phrase in readme, f"README is missing current architecture/workflow language: {phrase!r}.", errors)
+        require(phrase in repository_guide, f"Repository guide is missing current architecture/workflow language: {phrase!r}.", errors)
 
     for phrase in [
         "Manage Content",
@@ -254,6 +263,7 @@ def main() -> int:
     ]
     combined_docs = "\n".join([
         readme,
+        repository_guide,
         agents,
         copilot,
         maintenance,
