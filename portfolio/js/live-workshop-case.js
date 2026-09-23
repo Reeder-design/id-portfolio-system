@@ -1,57 +1,5 @@
 (() => {
-  const sequence = [...document.querySelectorAll('.workshop-step')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const hero = document.querySelector('.workshop-room-visual');
-  const readout = document.querySelector('.workshop-readout');
-  const readoutStates = [
-    { key: 'ask', status: 'Ask', signal: 'Awaiting response', interpretation: 'No read yet', move: 'Ask + poll' },
-    { key: 'watch', status: 'Watch', signal: 'Mixed answers', interpretation: 'Compare reasons', move: 'Pause + listen' },
-    { key: 'interpret', status: 'Interpret', signal: 'Mixed answers', interpretation: 'Distinction unclear', move: 'Clarify the gap' },
-    { key: 'reframe', status: 'Reframe', signal: 'Mixed answers', interpretation: 'Needs seller context', move: 'Use an example' },
-    { key: 'recheck', status: 'Recheck', signal: 'Response pending', interpretation: 'Awaiting evidence', move: 'Listen again' }
-  ];
-  let sequenceTimer;
-  let activeStep = 0;
-
-  function showStep(index) {
-    activeStep = index;
-    sequence.forEach((step, stepIndex) => {
-      step.classList.toggle('is-active', stepIndex === index);
-      step.classList.toggle('is-complete', stepIndex < index);
-    });
-    const state = readoutStates[index];
-    if (!state) return;
-    if (hero) hero.dataset.heroStep = state.key;
-    const values = {
-      workshopReadoutStatus: state.status,
-      workshopReadoutSignal: state.signal,
-      workshopReadoutInterpretation: state.interpretation,
-      workshopReadoutMove: state.move
-    };
-    Object.entries(values).forEach(([id, value]) => {
-      const element = document.getElementById(id);
-      if (element) element.textContent = value;
-    });
-    if (readout && !reducedMotion.matches) {
-      readout.classList.remove('is-updating');
-      void readout.offsetWidth;
-      readout.classList.add('is-updating');
-    }
-  }
-
-  function syncSequence() {
-    window.clearInterval(sequenceTimer);
-    showStep(0);
-    if (reducedMotion.matches || document.hidden || sequence.length < 2) return;
-    sequenceTimer = window.setInterval(() => showStep((activeStep + 1) % sequence.length), 1700);
-  }
-
-  if (sequence.length) {
-    syncSequence();
-    reducedMotion.addEventListener('change', syncSequence);
-    document.addEventListener('visibilitychange', syncSequence);
-  }
-
   const stages = {
     prepare: {
       label: 'Prepare',
