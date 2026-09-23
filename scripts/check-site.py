@@ -181,6 +181,20 @@ def main() -> int:
         if parser.h1_count != 1:
             errors.append(f"{relative}: expected exactly one <h1>, found {parser.h1_count}")
 
+        main_nav = re.search(
+            r'<nav\b[^>]*class=["\'][^"\']*\bsite-nav\b[^"\']*["\'][^>]*>(.*?)</nav>',
+            text,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if main_nav:
+            hiring_items = re.findall(
+                r'<(?:a|span)\b[^>]*class=["\'][^"\']*\bsite-nav-hiring\b[^"\']*["\']',
+                main_nav.group(1),
+                flags=re.IGNORECASE,
+            )
+            if len(hiring_items) > 1:
+                errors.append(f"{relative}: main navigation contains duplicate Hiring Guide items")
+
         duplicate_ids = sorted({value for value in parser.ids if parser.ids.count(value) > 1})
         for duplicate_id in duplicate_ids:
             errors.append(f"{relative}: duplicate id={duplicate_id!r}")
