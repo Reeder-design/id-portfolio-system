@@ -1,0 +1,88 @@
+/* Animated, image-free explanations for the four About work areas. */
+body.about-primary .about-role-section{scroll-margin-top:78px}
+body.about-primary .role-choice-icon .portfolio-icon{width:25px;height:25px;color:#315755}
+body.about-primary .role-choice[aria-selected="true"] .role-choice-icon{background:#e9f8ec}
+body.about-primary .role-motion-card{
+  position:relative;isolation:isolate;display:flex;flex-direction:column;min-width:0;min-height:390px;
+  overflow:hidden;padding:17px;border:1px solid rgba(146,212,175,.24);border-radius:20px;
+  background:radial-gradient(circle at 82% 12%,rgba(151,219,79,.14),transparent 38%),linear-gradient(145deg,#142b32,#24464a);
+  color:#eff9f2;box-shadow:0 18px 34px rgba(25,59,52,.16)
+}
+body.about-primary .role-motion-card::before{
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.19;pointer-events:none;
+  background-image:linear-gradient(rgba(173,225,197,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(173,225,197,.2) 1px,transparent 1px);
+  background-size:27px 27px
+}
+body.about-primary .role-motion-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:13px;border-bottom:1px solid rgba(205,242,219,.13)}
+body.about-primary .role-motion-toolbar .portfolio-icon{width:22px;height:22px;color:#b2e9c6}
+body.about-primary .role-motion-status{display:flex;align-items:center;gap:8px;color:#c7ebd5;font:800 .65rem/1.2 var(--font-heading);letter-spacing:.09em;text-transform:uppercase}
+body.about-primary .role-motion-status i{width:7px;height:7px;border-radius:50%;background:#a1e368;box-shadow:0 0 0 5px rgba(161,227,104,.1);animation:rolePulse 2.8s ease-in-out infinite}
+body.about-primary .role-motion-caption{margin:auto 0 0;padding-top:13px;border-top:1px solid rgba(205,242,219,.13);color:#d1e5d9;font:700 .7rem/1.35 var(--font-heading)}
+body.about-primary .role-motion-small-label{color:#a6d8b9;font:800 .55rem/1 var(--font-heading);letter-spacing:.1em}
+/* Learning design: source is structured into a practice decision. */
+body.about-primary .role-design-source{position:relative;display:grid;gap:5px;margin:21px auto 16px;width:min(100%,285px);padding:13px 16px;border:1px solid rgba(174,228,197,.18);border-radius:13px;background:#10272e;box-shadow:0 10px 24px rgba(0,0,0,.12)}
+body.about-primary .role-design-source span,body.about-primary .role-ai-reference span,body.about-primary .role-ai-response>span,body.about-primary .role-ai-feedback span,body.about-primary .role-lms-support>span,body.about-primary .role-live-adjust>span{color:#a6d8b9;font:800 .54rem/1 var(--font-heading);letter-spacing:.09em}
+body.about-primary .role-design-source strong{color:#fff;font:800 .79rem/1.25 var(--font-heading)}
+body.about-primary .role-design-source i{display:block;height:4px;border-radius:8px;background:rgba(179,221,198,.23)}
+body.about-primary .role-design-source i:nth-of-type(2){width:82%}body.about-primary .role-design-source i:nth-of-type(3){width:59%}
+body.about-primary .role-design-path{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-bottom:17px}
+body.about-primary .role-design-path::before{content:"";position:absolute;top:17px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,#79c99e,#97db4f);animation:rolePath 5s linear infinite}
+body.about-primary .role-design-path span{position:relative;display:grid;place-items:center;min-height:37px;padding:5px 3px;border:1px solid rgba(177,223,197,.25);border-radius:10px;background:#18373c;color:#e4f3e8;font:800 .53rem/1.2 var(--font-heading);text-align:center;animation:roleStep 5s ease-in-out infinite}
+body.about-primary .role-design-path span:nth-child(2){animation-delay:1.25s}body.about-primary .role-design-path span:nth-child(3){animation-delay:2.5s}body.about-primary .role-design-path span:nth-child(4){animation-delay:3.75s}
+body.about-primary .role-design-action{display:grid;gap:7px;margin:auto auto 17px;width:min(100%,285px);padding:12px 14px;border:1px solid rgba(151,219,79,.42);border-radius:13px;background:#21463f}
+body.about-primary .role-design-action strong{color:#fff;font:800 .78rem/1.2 var(--font-heading)}
+body.about-primary .role-design-action div{display:flex;gap:6px}
+body.about-primary .role-design-action i{display:block;width:33%;height:7px;border-radius:8px;background:rgba(217,240,223,.26)}
+body.about-primary .role-design-action i:nth-child(2){background:#a1e368;box-shadow:0 0 14px rgba(161,227,104,.35);animation:roleDecision 5s ease-in-out infinite}
+/* AI evaluation: a scan compares response claims with approved evidence. */
+body.about-primary .role-ai-reference{display:flex;align-items:center;gap:8px;margin:20px 0 10px;padding:12px;border:1px solid rgba(179,232,201,.2);border-radius:12px;background:#10272e}
+body.about-primary .role-ai-reference strong{margin-left:auto;color:#fff;font:800 .7rem/1.2 var(--font-heading)}
+body.about-primary .role-ai-reference b{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#84d2a6;color:#17352d;font-size:.8rem}
+body.about-primary .role-ai-response{position:relative;display:grid;align-content:start;gap:11px;min-height:128px;overflow:hidden;padding:14px;border:1px solid rgba(179,232,201,.18);border-radius:13px;background:#15333a}
+body.about-primary .role-ai-response>i{display:block;height:7px;border-radius:8px;background:rgba(195,224,208,.3)}
+body.about-primary .role-ai-response>i:nth-of-type(2){width:75%}body.about-primary .role-ai-response>i:nth-of-type(3){width:90%;background:rgba(242,211,106,.66)}body.about-primary .role-ai-response>i:nth-of-type(4){width:63%}
+body.about-primary .role-ai-scan{position:absolute;inset:20px 0 auto;height:2px;background:linear-gradient(90deg,transparent,#a1e368,transparent);box-shadow:0 0 20px #a1e368;animation:roleScan 4.5s ease-in-out infinite}
+body.about-primary .role-ai-findings{display:flex;gap:7px;margin:10px 0}
+body.about-primary .role-ai-findings span{padding:6px 9px;border:1px solid rgba(148,217,176,.25);border-radius:999px;background:rgba(121,201,158,.1);color:#c4eed2;font:800 .56rem/1.2 var(--font-heading)}
+body.about-primary .role-ai-findings span:last-child{border-color:rgba(242,211,106,.36);background:rgba(242,211,106,.08);color:#f5dfa0;animation:roleFlag 4.5s ease-in-out infinite}
+body.about-primary .role-ai-feedback{display:grid;gap:6px;margin:auto 0 15px;padding:12px;border-left:3px solid #97db4f;border-radius:0 10px 10px 0;background:#21443e}
+body.about-primary .role-ai-feedback strong{color:#fff;font:800 .7rem/1.25 var(--font-heading)}
+/* LMS operations: show routing, state checks, and support follow-through. */
+body.about-primary .role-lms-route{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr;align-items:center;gap:4px;margin:24px 0 20px}
+body.about-primary .role-lms-route span{display:grid;place-items:center;min-height:56px;padding:6px;border:1px solid rgba(151,219,79,.28);border-radius:12px;background:#18383b;color:#e7f7ec;font:800 .6rem/1.2 var(--font-heading);text-align:center;animation:roleNode 6s ease-in-out infinite}
+body.about-primary .role-lms-route span:nth-of-type(2){animation-delay:2s}body.about-primary .role-lms-route span:nth-of-type(3){animation-delay:4s}
+body.about-primary .role-lms-route i{height:2px;background:linear-gradient(90deg,#79c99e,#97db4f)}
+body.about-primary .role-lms-records{display:grid;gap:7px}
+body.about-primary .role-lms-records div{display:flex;align-items:center;justify-content:space-between;gap:7px;padding:9px 10px;border:1px solid rgba(179,232,201,.16);border-radius:9px;background:#10272e;animation:roleRecord 6s ease-in-out infinite}
+body.about-primary .role-lms-records div:nth-child(2){animation-delay:2s}body.about-primary .role-lms-records div:nth-child(3){animation-delay:4s}
+body.about-primary .role-lms-records span{color:#c4dfcf;font:800 .55rem/1.2 var(--font-heading);letter-spacing:.05em}
+body.about-primary .role-lms-records b{color:#a1e368;font:800 .6rem/1.2 var(--font-heading)}
+body.about-primary .role-lms-support{display:grid;gap:6px;margin:auto 0 15px;padding:12px;border:1px solid rgba(179,232,201,.2);border-radius:11px;background:#21443e}
+body.about-primary .role-lms-support i{display:block;width:100%;height:3px;border-radius:4px;background:linear-gradient(90deg,#79c99e,#97db4f);transform-origin:left;animation:rolePath 6s ease-in-out infinite}
+body.about-primary .role-lms-support strong{color:#fff;font:800 .67rem/1.25 var(--font-heading)}
+/* Live facilitation: questions change the session signal and pacing. */
+body.about-primary .role-live-screen{display:grid;justify-items:center;align-content:center;gap:8px;min-height:126px;margin:20px 0 10px;border:1px solid rgba(179,232,201,.2);border-radius:13px;background:#10272e}
+body.about-primary .role-live-screen span{color:#b5dcc5;font:800 .55rem/1 var(--font-heading);letter-spacing:.08em}
+body.about-primary .role-live-screen .portfolio-icon{width:39px;height:39px;color:#a1e368}
+body.about-primary .role-live-screen strong{color:#fff;font:800 .7rem/1.2 var(--font-heading)}
+body.about-primary .role-live-audience{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+body.about-primary .role-live-audience span{display:grid;place-items:center;min-height:43px;padding:4px;border:1px solid rgba(179,232,201,.16);border-radius:9px;background:#18373c;color:#cfe9d8;font:800 .52rem/1.2 var(--font-heading);text-align:center}
+body.about-primary .role-live-audience span:nth-child(2){border-color:#f2d36a;color:#f5dfa0;animation:roleQuestion 4.5s ease-in-out infinite}
+body.about-primary .role-live-adjust{display:grid;gap:7px;margin:auto 0 15px;padding:12px;border:1px solid rgba(151,219,79,.3);border-radius:11px;background:#21443e}
+body.about-primary .role-live-adjust strong{color:#fff;font:800 .72rem/1.2 var(--font-heading)}
+body.about-primary .role-live-adjust div{height:5px;overflow:hidden;border-radius:5px;background:rgba(218,242,224,.2)}
+body.about-primary .role-live-adjust i{display:block;width:35%;height:100%;border-radius:5px;background:#a1e368;animation:rolePace 4.5s ease-in-out infinite}
+body.about-primary .role-live-adjust small{color:#b7e5c5;font:800 .58rem/1.2 var(--font-heading)}
+@keyframes rolePulse{50%{box-shadow:0 0 0 8px rgba(161,227,104,.04)}}
+@keyframes rolePath{0%{transform:scaleX(.1);opacity:.3}75%,100%{transform:scaleX(1);opacity:1}}
+@keyframes roleStep{0%,18%,100%{background:#18373c;border-color:rgba(177,223,197,.25)}9%{background:#3b745b;border-color:#a1e368}}
+@keyframes roleDecision{0%,60%{box-shadow:none}80%{box-shadow:0 0 17px rgba(161,227,104,.7)}100%{box-shadow:none}}
+@keyframes roleScan{0%{top:22px;opacity:0}12%,80%{opacity:1}90%,100%{top:115px;opacity:0}}
+@keyframes roleFlag{0%,60%,100%{box-shadow:none}75%{box-shadow:0 0 12px rgba(242,211,106,.4)}}
+@keyframes roleNode{0%,24%,100%{border-color:rgba(151,219,79,.28);background:#18383b}12%{border-color:#a1e368;background:#315d4d}}
+@keyframes roleRecord{0%,24%,100%{background:#10272e}12%{background:#214e42}}
+@keyframes roleQuestion{0%,50%,100%{box-shadow:none}65%{box-shadow:0 0 0 6px rgba(242,211,106,.14)}}
+@keyframes rolePace{0%,45%{width:35%}75%,100%{width:78%}}
+@media(max-width:900px){body.about-primary .role-motion-card{min-height:340px}}
+@media(max-width:600px){body.about-primary .role-motion-card{min-height:360px;padding:15px}body.about-primary .role-choice-icon .portfolio-icon{width:21px;height:21px}}
+@media(prefers-reduced-motion:reduce){body.about-primary .role-motion-card *,body.about-primary .role-motion-card *::before,body.about-primary .role-motion-card *::after{animation:none!important;transition:none!important}body.about-primary .role-design-path::before,body.about-primary .role-lms-support i{transform:none}}

@@ -14,18 +14,10 @@
   <link rel="stylesheet" href="../../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../../css/phase1-frame.css">
   <link rel="stylesheet" href="../../../css/multimedia-showcase.css">
+  <link rel="stylesheet" href="../../../css/multimedia-studio.css">
   <script defer src="../../../js/portfolio-motion.js"></script>
   <script defer src="../../../js/multimedia-showcase.js"></script>
 
-  <style>
-    .media-integration-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
-    .media-integration-grid article{display:grid;justify-items:center;align-content:start;min-height:205px;padding:15px;border:1px solid rgba(80,132,132,.14);border-radius:18px;background:#fff;text-align:center;box-shadow:0 10px 24px rgba(44,72,65,.06)}
-    .media-integration-grid img{width:82px;height:82px;object-fit:contain}.media-integration-grid h3{margin:7px 0 5px;color:#315755;font-size:.9rem}
-    .media-integration-grid p{margin:0;color:#63736c;font-size:.68rem;line-height:1.45}
-    .media-sanitized-note{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;margin-top:14px;padding:12px 14px;border:1px dashed rgba(80,132,132,.22);border-radius:14px;background:#f1f6f2}
-    .media-sanitized-note strong{color:#315755;font:800 .66rem/1.2 var(--font-heading)}.media-sanitized-note span{color:#607069;font-size:.68rem;line-height:1.45}
-    @media(max-width:820px){.media-integration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.media-integration-grid{grid-template-columns:1fr}.media-sanitized-note{grid-template-columns:1fr}}
-  </style>
 </head>
 <body class="multimedia-page">
 <header class="site-header">
@@ -63,38 +55,38 @@
             <span class="tag">AI-Assisted Visuals</span>
           </div>
           <div class="button-row">
-            <a class="btn btn-primary" href="#showcase">Explore the Production Showcase</a>
+            <a class="btn btn-primary" href="#showcase">Explore the Media Studio</a>
           </div>
         </div>
 
-        <aside class="media-flow-visual" aria-label="Motion graphic showing the multimedia production workflow from plan to integration">
+        <aside class="media-flow-visual" aria-label="Motion graphic showing the multimedia production workflow from framing the learning need to release">
           <div class="media-flow-stage" aria-hidden="true">
             <article class="media-flow-node">
               <span>01</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg>
-              <strong>Plan</strong>
-              <small>Script + storyboard</small>
+              <strong>Frame</strong>
+              <small>Learning brief</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>02</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg>
-              <strong>Produce</strong>
-              <small>Video + graphics + audio</small>
+              <strong>Compose</strong>
+              <small>Sequence + preview</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>03</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>
-              <strong>Refine</strong>
-              <small>Edit + caption + QA</small>
+              <strong>Verify</strong>
+              <small>QA + accessibility</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>04</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
-              <strong>Integrate</strong>
-              <small>Course + interaction</small>
+              <strong>Release</strong>
+              <small>LMS launch + access</small>
             </article>
           </div>
           <div class="media-flow-output" aria-hidden="true">
@@ -107,9 +99,8 @@
 
   <nav class="case-nav-shell" aria-label="Page sections">
     <div class="container case-nav">
-      <a href="#showcase">Showcase</a>
+      <a href="#showcase">Media Types</a>
       <a href="#workflow">Production Workflow</a>
-      <a href="#projects">Learning Integration</a>
     </div>
   </nav>
 
@@ -117,34 +108,75 @@
     <div class="container">
       <div class="section-kicker">
         <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
-        <p class="eyebrow">Production Showcase</p>
+        <p class="eyebrow">Media production studio</p>
       </div>
-      <h2>Production capability across the media stack.</h2>
-      <p class="short-copy">Choose a production area to see the kind of work I do, what I am responsible for inside the tool, and the quality checks I use before the media reaches a learner.</p>
+      <h2>Make the medium work for the learner.</h2>
+      <p class="short-copy">Explore how I plan, produce, and check five types of training media. Each production choice starts with what the learner needs to see, hear, or do next.</p>
 
-      <div class="media-evidence-shell">
-        <div class="media-evidence-tabs" role="tablist" aria-label="Multimedia production samples">
-          <button class="media-evidence-tab active" type="button" role="tab" aria-selected="true" data-media-sample="premiere"><span>01</span><strong>Video Editing</strong><small>Premiere Pro workflow</small></button>
-          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="motion"><span>02</span><strong>Motion Graphics</strong><small>After Effects workflow</small></button>
-          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="ai"><span>03</span><strong>AI Visual Ideation</strong><small>Custom learning visuals</small></button>
-          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="audio"><span>04</span><strong>Audio Production</strong><small>Narration cleanup</small></button>
-          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="library"><span>05</span><strong>Asset Library</strong><small>Reusable visual system</small></button>
-          <button class="media-evidence-tab" type="button" role="tab" aria-selected="false" data-media-sample="storyboard"><span>06</span><strong>Storyboard</strong><small>Video planning</small></button>
+      <div class="media-studio-shell">
+        <div class="media-studio-tabs" role="tablist" aria-label="Types of training media I produce">
+          <button class="media-studio-tab active" id="media-tab-video" type="button" role="tab" aria-selected="true" aria-controls="media-studio-panel" tabindex="0" data-media-studio="video"><img src="../../../assets/icons/pixel/multimedia/video-camera.webp" alt=""><span><strong>Video</strong><small>Editing + sequencing</small></span></button>
+          <button class="media-studio-tab" id="media-tab-motion" type="button" role="tab" aria-selected="false" aria-controls="media-studio-panel" tabindex="-1" data-media-studio="motion"><img src="../../../assets/icons/pixel/multimedia/bezier-motion-path.webp" alt=""><span><strong>Motion graphics</strong><small>Ideas in movement</small></span></button>
+          <button class="media-studio-tab" id="media-tab-visuals" type="button" role="tab" aria-selected="false" aria-controls="media-studio-panel" tabindex="-1" data-media-studio="visuals"><img src="../../../assets/icons/pixel/multimedia/image-frame.webp" alt=""><span><strong>Images + graphics</strong><small>Visual explanation</small></span></button>
+          <button class="media-studio-tab" id="media-tab-audio" type="button" role="tab" aria-selected="false" aria-controls="media-studio-panel" tabindex="-1" data-media-studio="audio"><img src="../../../assets/icons/pixel/multimedia/headphones.webp" alt=""><span><strong>Audio</strong><small>Narration + sound</small></span></button>
+          <button class="media-studio-tab" id="media-tab-ai" type="button" role="tab" aria-selected="false" aria-controls="media-studio-panel" tabindex="-1" data-media-studio="ai"><img src="../../../assets/icons/pixel/multimedia/adobe-photoshop-generative-ai.webp" alt=""><span><strong>AI visuals</strong><small>Generate + verify</small></span></button>
         </div>
 
-        <figure class="media-evidence-frame" role="tabpanel" aria-live="polite">
-          <div class="media-evidence-screen">
-            <img id="mediaEvidenceImage" src="../../../assets/project-images/multimedia/multimedia-premiere-editing.webp" alt="Public-safe reconstructed video editing workspace with timeline, footage, graphics, narration, and music tracks.">
-          </div>
-          <div class="media-evidence-detail">
-            <p id="mediaEvidenceText">I use timeline-based editing to combine footage, narration, graphics, on-screen text, and music while controlling pacing and visual hierarchy.</p>
-            <div class="media-evidence-meta">
-              <article><span>My work</span><strong id="mediaEvidenceRole">Sequence, edit, caption, polish</strong></article>
-              <article><span>Quality check</span><strong id="mediaEvidenceQa">Timing, readability, audio balance, export</strong></article>
+        <div class="media-studio-panel" id="media-studio-panel" role="tabpanel" aria-labelledby="media-tab-video" tabindex="0" data-media="video">
+          <div class="media-studio-workbench" aria-label="Animated production environment and media preview">
+            <div class="media-studio-topbar"><span class="media-studio-lights" aria-hidden="true"><i></i><i></i><i></i></span><strong id="mediaStudioWorkspaceLabel">VIDEO EDITOR</strong><span class="media-studio-topbar-state"><i></i> SIMULATION</span></div>
+
+            <div class="media-studio-scene studio-video" data-studio-scene="video" aria-hidden="true">
+              <div class="studio-editor-heading"><img src="../../../assets/icons/pixel/multimedia/storyboard.webp" alt=""><span><b>Sequence 01</b><small>Storyboard → edit → captions</small></span></div>
+              <div class="studio-video-canvas"><div class="studio-video-frame"><span>TRAINING SCENE</span><i></i><i></i><b>▶</b></div></div>
+              <div class="studio-video-timeline"><span>FOOTAGE</span><div><i></i><i></i><i></i></div><span>NARRATION</span><div><i></i><i></i></div><span>CAPTIONS</span><div><i></i><i></i><i></i></div><em class="studio-playhead"></em></div>
+              <div class="studio-preview"><span>MEDIA PREVIEW <b>00:12 / 00:35</b></span><div class="studio-preview-video"><i></i><b>▶</b><em></em></div></div>
+            </div>
+
+            <div class="media-studio-scene studio-motion" data-studio-scene="motion" aria-hidden="true" hidden>
+              <div class="studio-editor-heading"><img src="../../../assets/icons/pixel/multimedia/bezier-motion-path.webp" alt=""><span><b>Composition 01</b><small>Keyframes + visual hierarchy</small></span></div>
+              <div class="studio-motion-canvas"><svg viewBox="0 0 360 170" aria-hidden="true"><path d="M22 126 C95 18 191 152 334 38" fill="none" stroke="#7ccfa3" stroke-width="3" stroke-dasharray="7 6"/><circle cx="22" cy="126" r="7" fill="#a1e368"/><circle cx="334" cy="38" r="7" fill="#a1e368"/></svg><div class="studio-motion-object"><i></i><b>IDEA</b></div><span>Change becomes visible</span></div>
+              <div class="studio-motion-keyframes"><span>POSITION</span><i></i><i></i><i></i><i></i><span>OPACITY</span><i></i><i></i><i></i></div>
+              <div class="studio-preview"><span>MEDIA PREVIEW <b>LOOP</b></span><div class="studio-preview-motion"><i></i><b>01 → 02</b><em></em></div></div>
+            </div>
+
+            <div class="media-studio-scene studio-visuals" data-studio-scene="visuals" aria-hidden="true" hidden>
+              <div class="studio-editor-heading"><img src="../../../assets/icons/pixel/multimedia/media-assets-folder.webp" alt=""><span><b>Visual composition</b><small>Compose + annotate + optimize</small></span></div>
+              <div class="studio-visual-artboard"><div class="studio-visual-image"><i></i><b>FOCUS</b></div><span class="studio-visual-guide guide-one"></span><span class="studio-visual-guide guide-two"></span><span class="studio-visual-label">ANNOTATION</span></div>
+              <div class="studio-visual-controls"><span>COLOR</span><i></i><i></i><i></i><span>CONTRAST</span><b></b></div>
+              <div class="studio-preview"><span>MEDIA PREVIEW <b>FINAL FRAME</b></span><div class="studio-preview-visual"><i></i><b>Clarity first</b></div></div>
+            </div>
+
+            <div class="media-studio-scene studio-audio" data-studio-scene="audio" aria-hidden="true" hidden>
+              <div class="studio-editor-heading"><img src="../../../assets/icons/pixel/multimedia/headphones.webp" alt=""><span><b>Narration session</b><small>Clean + balance + align</small></span></div>
+              <div class="studio-audio-wave"><span>NARRATION · TAKE 02</span><div class="studio-wave-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><em class="studio-audio-cursor"></em></div>
+              <div class="studio-audio-mix"><span>NOISE CLEANUP</span><div><i></i></div><span>LEVELS</span><div><i></i></div></div>
+              <div class="studio-preview"><span>MEDIA PREVIEW <b>PLAYBACK</b></span><div class="studio-preview-audio"><b>▶</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+
+            <div class="media-studio-scene studio-ai" data-studio-scene="ai" aria-hidden="true" hidden>
+              <div class="studio-editor-heading"><img src="../../../assets/icons/pixel/multimedia/adobe-photoshop-generative-ai.webp" alt=""><span><b>Visual ideation</b><small>Prompt + compare + refine</small></span></div>
+              <div class="studio-ai-prompt"><span>VISUAL BRIEF</span><strong>Training scene with a clear decision point</strong><i></i></div>
+              <div class="studio-ai-variants"><div><i></i><span>VARIANT A</span></div><div><i></i><span>VARIANT B</span></div><div><i></i><span>SELECTED</span></div></div>
+              <div class="studio-ai-review"><span>ACCURACY</span><b>✓</b><span>CONSISTENCY</span><b>✓</b><span>ACCESS</span><b>✓</b></div>
+              <div class="studio-preview"><span>MEDIA PREVIEW <b>REFINED</b></span><div class="studio-preview-ai"><i></i><b>✦</b><em></em></div></div>
             </div>
           </div>
-        </figure>
+
+          <div class="media-studio-detail">
+            <p class="eyebrow" id="mediaStudioLabel">VIDEO PRODUCTION</p>
+            <h3 id="mediaStudioTitle">Show a process unfolding.</h3>
+            <p class="media-studio-purpose" id="mediaStudioPurpose">Video helps when a learner needs to see timing, sequence, or a real action before trying it.</p>
+            <div class="media-studio-facts">
+              <div><span>WHAT I PRODUCE</span><p id="mediaStudioMake">Edited footage, screen capture, narration, on-screen text, and captions.</p></div>
+              <div><span>PRODUCTION PATH</span><p id="mediaStudioPath">Script → storyboard → edit → caption</p></div>
+              <div><span>QUALITY LENS</span><p id="mediaStudioQa">Pacing, readability, audio balance, captions, and export.</p></div>
+            </div>
+            <div class="media-studio-tool"><span>TOOL + DELIVERY</span><strong id="mediaStudioTool">Premiere Pro · learning platform</strong></div>
+          </div>
+        </div>
       </div>
+      <div class="media-sanitized-note"><strong>Public portfolio note</strong><span>Client and employer production assets stay private. These animated workspaces illustrate the process without reproducing confidential media.</span></div>
     </div>
   </section>
 
@@ -154,98 +186,59 @@
         <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
         <p class="eyebrow">Production Workflow</p>
       </div>
-      <h2>Media decisions start with the learning need.</h2>
-      <p class="short-copy">I do not add multimedia just to make a course look busy. I choose the medium based on what needs to be explained, demonstrated, reinforced, or remembered.</p>
+      <h2>From learner need to release-ready media.</h2>
+      <p class="short-copy">One illustrative brief moves through four checkpoints: define the learner decision, compose the message, correct quality issues, then package and launch the course in an LMS. The same checkpoints apply across still, moving, narrated, and generated media.</p>
 
       <div class="media-workflow-shell">
+        <div class="workflow-example-brief"><span>ILLUSTRATIVE LEARNING BRIEF</span><strong>Help a learner choose a useful response when a customer asks for more time.</strong><small>Recognize the cue → decide what to do next</small></div>
         <div class="media-workflow-tabs" role="tablist" aria-label="Multimedia production workflow">
-          <button class="media-workflow-tab active" type="button" role="tab" aria-selected="true" data-media-workflow="plan"><span>01</span><strong>Plan</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="build"><span>02</span><strong>Build</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="refine"><span>03</span><strong>Refine</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="integrate"><span>04</span><strong>Integrate</strong></button>
+          <button class="media-workflow-tab active" id="workflow-tab-frame" type="button" role="tab" aria-selected="true" aria-controls="media-workflow-panel" data-media-workflow="frame"><span>01 / STRATEGY</span><strong>Frame</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-compose" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="compose"><span>02 / DESIGN</span><strong>Compose</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-verify" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="verify"><span>03 / QUALITY</span><strong>Verify</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-release" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="release"><span>04 / DELIVERY</span><strong>Release</strong></button>
         </div>
 
-        <div class="media-workflow-panel" role="tabpanel" aria-live="polite">
+        <div class="media-workflow-panel" id="media-workflow-panel" role="tabpanel" aria-labelledby="workflow-tab-frame" tabindex="0" aria-live="polite">
           <div class="media-workflow-detail">
             <div class="media-workflow-copy">
-              <p class="eyebrow" id="mediaWorkflowLabel">Pre-production</p>
-              <h3 id="mediaWorkflowTitle">Plan the message before opening the production tool.</h3>
-              <p id="mediaWorkflowText">I define the purpose, script, storyboard, screen or shot plan, visual hierarchy, and where the finished asset belongs in the learner journey.</p>
+              <p class="eyebrow" id="mediaWorkflowLabel">01 / FRAME THE MOMENT</p>
+              <h3 id="mediaWorkflowTitle">Define the decision the learner must make.</h3>
+              <p id="mediaWorkflowText">I identify the cue the learner needs to notice, the response they need to choose, and the approved source behind it. I set audience, placement, duration, and accessibility needs before choosing a format.</p>
               <div class="media-workflow-grid">
-                <article><span>Decision</span><p id="mediaWorkflowDecision">Choose the medium only when it supports the learning objective or learner task.</p></article>
-                <article><span>Output</span><p id="mediaWorkflowOutput">Script, storyboard, production notes, and a clear role for the asset.</p></article>
-                <article><span>QA lens</span><p id="mediaWorkflowQa">Check scope, length, accessibility needs, and maintenance expectations before production begins.</p></article>
+                <article><span>Decision</span><p id="mediaWorkflowDecision">What needs to be seen, heard, or practiced for the learner to choose well?</p></article>
+                <article><span>Artifact</span><p id="mediaWorkflowOutput">A media brief with source boundaries, content beats, and the intended learner action.</p></article>
+                <article><span>Evidence</span><p id="mediaWorkflowQa">A reviewer can trace each beat to the learning goal and approved content.</p></article>
               </div>
+              <div class="workflow-medium-note"><span>Across formats</span><p id="mediaWorkflowMedium">A still may need a clear reading path; timed media needs pacing; generated visuals need an explicit accuracy boundary.</p></div>
             </div>
 
-            <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-phase="plan" aria-label="Animated demonstration of the selected production phase">
-              <div class="workflow-motion-scene motion-plan" aria-hidden="true">
-                <div class="motion-storyboard">
-                  <span class="story-frame frame-one"><i></i><b></b></span>
-                  <span class="story-frame frame-two"><i></i><b></b></span>
-                  <span class="story-frame frame-three"><i></i><b></b></span>
+            <div class="workflow-canvas-shell">
+              <div class="workflow-canvas-topline"><div><span>PRODUCTION CANVAS</span><strong id="workflowCanvasStage">01 / FRAME</strong></div><div class="workflow-motion-controls"><button id="workflowPause" type="button" aria-pressed="false">Pause motion</button><button id="workflowReplay" type="button">Replay stage</button></div></div>
+              <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-phase="frame" data-paused="false" role="img" aria-label="An illustrative learning brief becomes a structured media sequence, receives quality corrections, and is placed before learner practice.">
+                <div class="workflow-canvas-grid" aria-hidden="true">
+                  <div class="workflow-brief-card"><span>LEARNER ACTION</span><strong>Choose the next response</strong><small>Approved source · audience · decision</small><i class="workflow-brief-seal">BRIEF SET</i></div>
+                  <div class="workflow-preview"><div class="workflow-preview-bar"><span>TRAINING MOMENT / PREVIEW</span><b id="workflowPreviewStatus">WIRE FRAME</b></div><div class="workflow-preview-body"><div class="workflow-customer-bubble"><span>CUSTOMER CUE</span><strong>“I need more time.”</strong></div><div class="workflow-response"><span>LEARNER CHOICE</span><b>Ask what they need</b><b>Repeat the pitch</b></div><div class="workflow-preview-focus"></div><div class="workflow-qa-before">CHECK: cue needs clearer focus</div><div class="workflow-qa-after">FIXED: cue leads into the choice ✓</div><div class="workflow-ready-badge">READY FOR PRACTICE ✓</div></div></div>
+                  <div class="workflow-beat-map"><span>CONTENT BEATS</span><div><b>01 <em>Orient</em></b><i></i><b>02 <em>Notice cue</em></b><i></i><b>03 <em>Decide</em></b></div></div>
+                  <div class="workflow-channel-map"><span>COMPOSITION MAP</span><div><b>FOCUS</b><i><em></em></i></div><div><b>WORDS</b><i><em></em></i></div><div><b>SUPPORT</b><i><em></em></i></div><u class="workflow-playhead"></u></div>
+                  <div class="workflow-gate workflow-gate-frame"><span>FRAME GATE</span><strong>Goal, source, and decision agree.</strong><b>01 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-compose"><span>COMPOSE GATE</span><strong>One clear cue leads to one learner action.</strong><b>02 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-verify"><span>VERIFY GATE</span><strong>Issue found → corrected → checked again.</strong><b>03 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-release">
+                    <div class="release-gate-heading"><span>RELEASE / LMS DEPLOYMENT</span><strong>Package → import → launch</strong></div>
+                    <div class="release-transfer">
+                      <div class="release-course-file"><span class="release-file-icon" aria-hidden="true">▤</span><b>COURSE</b><small>Media + practice</small></div>
+                      <div class="release-transfer-line" aria-hidden="true"><i></i></div>
+                      <div class="release-lms-console"><div class="release-lms-header"><span class="release-lms-mark" aria-hidden="true">▦</span><b>LEARNING PLATFORM</b></div><div class="release-lms-progress"><i></i></div><span class="release-importing">Importing course…</span><span class="release-imported">Import complete ✓</span><span class="release-launch-button">Launch course ↗</span><span class="release-live">LIVE <i>●</i> Learners can access</span></div>
+                    </div>
+                    <small>Playback ✓ &nbsp; Access ✓ &nbsp; Tracking ✓ &nbsp; Editable source saved ✓</small>
+                  </div>
                 </div>
-                <div class="motion-script">
-                  <span></span><span></span><span></span><span></span>
-                  <i class="motion-cursor"></i>
-                </div>
-                <small>Storyboard + script align before production starts.</small>
               </div>
-
-              <div class="workflow-motion-scene motion-build" aria-hidden="true">
-                <div class="motion-preview-window"><span class="preview-object"></span><span class="preview-caption"></span></div>
-                <div class="motion-timeline">
-                  <span class="track track-video"><i></i></span>
-                  <span class="track track-graphic"><i></i></span>
-                  <span class="track track-audio"><i></i></span>
-                  <b class="motion-playhead"></b>
-                </div>
-                <small>Visual, audio, and graphic layers build into one asset.</small>
-              </div>
-
-              <div class="workflow-motion-scene motion-refine" aria-hidden="true">
-                <div class="motion-waveform">
-                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-                </div>
-                <div class="motion-refine-controls">
-                  <span><b></b></span><span><b></b></span>
-                </div>
-                <div class="motion-caption-line"><span>Accessible caption timing</span><i></i></div>
-                <small>Edit, balance, caption, and remove anything that distracts.</small>
-              </div>
-
-              <div class="workflow-motion-scene motion-integrate" aria-hidden="true">
-                <div class="motion-course">
-                  <span class="course-context">Context</span>
-                  <span class="course-media"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
-                  <span class="course-practice">Practice</span>
-                </div>
-                <span class="integration-pulse pulse-one"></span>
-                <span class="integration-pulse pulse-two"></span>
-                <small>The finished asset connects to context and learner action.</small>
-              </div>
+              <p class="workflow-canvas-caption" id="workflowCanvasCaption">The brief sets the learning target before any asset is polished.</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section flagship-section media-projects-section" id="projects">
-    <div class="container">
-      <div class="section-kicker">
-        <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg></span>
-        <p class="eyebrow">Multimedia in the design process</p>
-      </div>
-      <h2>Media supports the learning decision, not the other way around.</h2>
-      <p class="short-copy">Most original media from client and employer work cannot be published in a public portfolio, so I sanitize or remove it from project examples. This section explains how I use multimedia in the design and development process without presenting confidential production assets as public samples.</p>
-      <div class="media-integration-grid">
-        <article><img src="../../../assets/icons/pixel/ai-evaluation/demo-video.webp" alt=""><h3>Explain</h3><p>Use motion, narration, or visual sequencing when they make a complex idea easier to understand than text alone.</p></article>
-        <article><img src="../../../assets/icons/pixel/ai-integrations/content-hero.webp" alt=""><h3>Orient</h3><p>Use short video, presenter media, or branded visuals to establish context before the learner moves into practice.</p></article>
-        <article><img src="../../../assets/icons/pixel/microlearning-performance-support/pointer-interaction.webp" alt=""><h3>Support practice</h3><p>Pair media with a learner action so visuals lead into comparison, scenario work, feedback, or another meaningful decision.</p></article>
-        <article><img src="../../../assets/icons/pixel/ai-evaluation/demo-feedback.webp" alt=""><h3>Refine + maintain</h3><p>Caption, edit, QA, modularize, and retain source files so the media can be updated as the learning changes.</p></article>
-      </div>
-      <div class="media-sanitized-note"><strong>Public portfolio note</strong><span>Project pages may describe the role multimedia played or show reconstructed and sanitized visuals. They do not reproduce confidential source media.</span></div>
     </div>
   </section>
 

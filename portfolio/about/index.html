@@ -340,6 +340,8 @@
           box-shadow:0 10px 24px rgba(42,71,63,.08)!important;
         }
         @media(max-width:980px){
+          body.about-primary .about-experience-panel{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+          body.about-primary .about-experience-copy{min-width:0}
           body.about-primary .about-role-section .refresh-section-intro{grid-template-columns:1fr}
           body.about-primary .adapt-lab-heading{align-items:start}
           body.about-primary .adapt-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -357,49 +359,54 @@
         }
 
 
-        body.about-primary .role-accordion-stack{display:grid;gap:12px;margin-top:24px}
-        body.about-primary .role-accordion{overflow:hidden;border:1px solid rgba(80,132,132,.16);border-radius:22px;background:#fff;box-shadow:0 12px 28px rgba(43,72,64,.065)}
-        body.about-primary .role-accordion summary{display:grid;grid-template-columns:34px 62px minmax(0,1fr) auto 34px;gap:12px;align-items:center;min-height:92px;padding:13px 16px;cursor:pointer;list-style:none;background:linear-gradient(145deg,#fbfcfa,#f1f7f3)}
-        body.about-primary .role-accordion summary::-webkit-details-marker{display:none}
-        body.about-primary .role-accordion summary:hover{background:linear-gradient(145deg,#f5faf6,#eaf4ee)}
-        body.about-primary .role-accordion[open] summary{background:linear-gradient(145deg,#20383e,#315755);color:#fff}
-        body.about-primary .role-accordion-number{color:#82918b;font:900 .52rem/1 var(--font-heading)}
-        body.about-primary .role-accordion[open] .role-accordion-number{color:#b8e9c9}
-        body.about-primary .role-accordion-icon{display:grid;place-items:center;width:58px;height:58px;padding:5px;border:1px solid rgba(80,132,132,.14);border-radius:16px;background:#fff}
-        body.about-primary .role-accordion-icon img{width:48px;height:48px;object-fit:contain}
-        body.about-primary .role-accordion-heading{display:grid;gap:4px}
-        body.about-primary .role-accordion-heading strong{color:#263d37;font:800 .86rem/1.2 var(--font-heading)}
-        body.about-primary .role-accordion-heading small{color:#66766f;font:.68rem/1.35 var(--font-body)}
-        body.about-primary .role-accordion[open] .role-accordion-heading strong{color:#fff}
-        body.about-primary .role-accordion[open] .role-accordion-heading small{color:#d2e2d9}
-        body.about-primary .role-accordion-tags{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}
-        body.about-primary .role-accordion-tags span{padding:5px 7px;border:1px solid rgba(80,132,132,.14);border-radius:999px;background:#fff;color:#47746a;font:800 .48rem/1 var(--font-heading)}
-        body.about-primary .role-accordion[open] .role-accordion-tags span{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:#d9ece0}
-        body.about-primary .role-accordion-toggle{position:relative;width:30px;height:30px;border-radius:9px;background:#e7f1eb}
-        body.about-primary .role-accordion-toggle::before,body.about-primary .role-accordion-toggle::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:2px;border-radius:999px;background:#315755}
-        body.about-primary .role-accordion-toggle::after{transform:rotate(90deg);transition:transform .18s ease}
-        body.about-primary .role-accordion[open] .role-accordion-toggle{background:#97db4f}
-        body.about-primary .role-accordion[open] .role-accordion-toggle::after{transform:rotate(0)}
-        body.about-primary .role-accordion-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px;padding:18px}
-        body.about-primary .role-accordion-copy .eyebrow{color:#4a796e!important}
-        body.about-primary .role-accordion-copy h3{margin:4px 0 6px;color:#263d37;font-size:1.18rem}
-        body.about-primary .role-accordion-copy>p:not(.eyebrow){margin:0;color:#607069;font-size:.76rem;line-height:1.5}
-        body.about-primary .role-responsibility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
-        body.about-primary .role-responsibility-grid article{display:grid;grid-template-columns:28px 1fr;gap:4px 8px;padding:10px;border:1px solid rgba(80,132,132,.12);border-radius:12px;background:#f7faf8}
-        body.about-primary .role-responsibility-grid b{grid-row:1/3;display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:#315755;color:#fff;font:900 .48rem/1 var(--font-heading)}
-        body.about-primary .role-responsibility-grid strong{color:#315755;font:800 .6rem/1.2 var(--font-heading)}
-        body.about-primary .role-responsibility-grid span{color:#6a7972;font-size:.56rem;line-height:1.36}
-        body.about-primary .role-outcome{display:grid;grid-template-columns:90px 1fr;gap:8px;margin-top:10px;padding:9px 11px;border-left:3px solid #79c99e;border-radius:0 10px 10px 0;background:#eef5f1}
-        body.about-primary .role-outcome span{color:#4a796e;font:900 .48rem/1.2 var(--font-heading);text-transform:uppercase}
-        body.about-primary .role-outcome strong{color:#40554e;font:700 .58rem/1.35 var(--font-heading)}
-        body.about-primary .role-evidence-card{display:grid;grid-template-rows:190px auto auto;overflow:hidden;border:1px solid rgba(80,132,132,.13);border-radius:16px;background:#173139}
-        body.about-primary .role-evidence-card img{width:100%;height:190px;object-fit:cover;background:#fff}
-        body.about-primary .role-evidence-card span{padding:10px 12px 2px;color:#aee1bf;font:800 .48rem/1.1 var(--font-heading);text-transform:uppercase}
-        body.about-primary .role-evidence-card strong{padding:0 12px 12px;color:#fff;font:800 .64rem/1.35 var(--font-heading)}
-        @media(max-width:900px){body.about-primary .role-accordion summary{grid-template-columns:30px 54px 1fr 32px}body.about-primary .role-accordion-tags{display:none}body.about-primary .role-accordion-body{grid-template-columns:1fr}body.about-primary .role-responsibility-grid{grid-template-columns:1fr 1fr}}
-        @media(max-width:600px){body.about-primary .role-accordion summary{grid-template-columns:48px 1fr 30px}body.about-primary .role-accordion-number{display:none}body.about-primary .role-accordion-tags{display:none}body.about-primary .role-responsibility-grid{grid-template-columns:1fr}body.about-primary .role-outcome{grid-template-columns:1fr}}
+        body.about-primary .role-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:26px;overflow:hidden;border:1px solid rgba(199,226,209,.85);border-bottom:0;border-radius:24px 24px 0 0;background:#f9fcf9;box-shadow:0 18px 38px rgba(17,45,43,.12)}
+        body.about-primary .role-choice{
+          display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto 1fr;gap:7px 11px;align-items:center;min-width:0;min-height:120px;padding:17px 19px;
+          border:0;border-right:1px solid rgba(80,132,132,.16);border-bottom:4px solid transparent;border-radius:0;
+          background:#f9fcf9;color:#263d37;text-align:left;cursor:pointer;
+          transition:background .2s ease,border-color .2s ease;
+        }
+        body.about-primary .role-choice:last-child{border-right:0}
+        body.about-primary .role-choice:hover{background:#edf7f1}
+        body.about-primary .role-choice:focus-visible{position:relative;z-index:1;outline:3px solid #a1e368;outline-offset:-4px}
+        body.about-primary .role-choice[aria-selected="true"]{border-bottom-color:#97db4f;background:#244345;color:#fff}
+        body.about-primary .role-choice-top{display:contents}
+        body.about-primary .role-choice-number{grid-column:2;grid-row:1;color:#52776a;font:800 .62rem/1.2 var(--font-heading);letter-spacing:.11em}
+        body.about-primary .role-choice-icon{grid-column:1;grid-row:1/3;display:grid;place-items:center;width:44px;height:44px;padding:3px;border:1px solid rgba(80,132,132,.14);border-radius:13px;background:#fff;box-shadow:0 7px 16px rgba(27,65,52,.08)}
+        body.about-primary .role-choice-icon img{display:block;width:37px;height:37px;object-fit:contain}
+        body.about-primary .role-choice-heading{grid-column:2;grid-row:2;display:block;margin:0}
+        body.about-primary .role-choice-heading strong{color:inherit;font:800 .89rem/1.24 var(--font-heading)}
+        body.about-primary .role-choice-heading small{display:none}
+        body.about-primary .role-choice[aria-selected="true"] .role-choice-number{color:#b2e9c6}
+        body.about-primary .role-choice-action{display:none}
+        body.about-primary .role-detail-stage{min-height:445px;margin-top:0;overflow:hidden;border:1px solid rgba(199,226,209,.85);border-radius:0 0 26px 26px;background:#fff;box-shadow:0 22px 50px rgba(15,42,38,.16)}
+        body.about-primary .role-detail-panel[hidden]{display:none}
+        body.about-primary .role-detail-panel:focus-visible{outline:3px solid #86cd8c;outline-offset:-5px}
+        body.about-primary .role-detail-layout{display:grid;grid-template-columns:minmax(0,1.23fr) minmax(280px,.77fr);gap:clamp(20px,3vw,36px);align-items:start;padding:clamp(22px,3vw,34px)}
+        body.about-primary .role-detail-copy .eyebrow{margin:0 0 6px;color:#4a796e!important}
+        body.about-primary .role-detail-copy h3{margin:0 0 10px;color:#263d37;font-size:clamp(1.35rem,2vw,1.85rem);line-height:1.18}
+        body.about-primary .role-detail-copy>p:not(.eyebrow){margin:0;color:#52675f;font-size:.9rem;line-height:1.62}
+        body.about-primary .role-responsibility-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:24px;padding-top:18px;border-top:1px solid rgba(80,132,132,.19)}
+        body.about-primary .role-responsibility-grid article{display:grid;grid-template-columns:30px minmax(0,1fr);align-content:start;gap:5px 8px;min-width:0;padding:0 14px;border-right:1px solid rgba(80,132,132,.15)}
+        body.about-primary .role-responsibility-grid article:first-child{padding-left:0}
+        body.about-primary .role-responsibility-grid article:last-child{padding-right:0;border-right:0}
+        body.about-primary .role-responsibility-grid b{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#315755;color:#fff;font:900 .6rem/1 var(--font-heading)}
+        body.about-primary .role-responsibility-grid strong{color:#315755;font:800 .79rem/1.25 var(--font-heading)}
+        body.about-primary .role-responsibility-grid span{grid-column:2;color:#60746a;font-size:.73rem;line-height:1.4}
+        body.about-primary .role-outcome{display:grid;grid-template-columns:105px minmax(0,1fr);gap:12px;align-items:center;margin-top:24px;padding:15px 17px;border-left:4px solid #79c99e;border-radius:0 12px 12px 0;background:#eef7f1}
+        body.about-primary .role-outcome span{color:#467968;font:900 .64rem/1.2 var(--font-heading);text-transform:uppercase}
+        body.about-primary .role-outcome strong{color:#304b3e;font:700 .82rem/1.45 var(--font-heading)}
+        body.about-primary .role-evidence-card{display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(80,132,132,.17);border-radius:18px;background:#173139;box-shadow:0 14px 28px rgba(25,59,52,.11)}
+        body.about-primary .role-evidence-card img{display:block;width:100%;height:245px;object-fit:cover;background:#edf4f0}
+        body.about-primary .role-evidence-card span{padding:15px 17px 4px;color:#b5e8c8;font:800 .65rem/1.2 var(--font-heading);letter-spacing:.06em;text-transform:uppercase}
+        body.about-primary .role-evidence-card strong{padding:0 17px 18px;color:#fff;font:800 .86rem/1.38 var(--font-heading)}
+        @media(max-width:1100px){body.about-primary .role-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.about-primary .role-choice{min-height:100px}body.about-primary .role-choice:nth-child(2){border-right:0}body.about-primary .role-choice:nth-child(-n+2){border-bottom:1px solid rgba(80,132,132,.16)}body.about-primary .role-choice[aria-selected="true"]{box-shadow:inset 0 -4px #97db4f}}
+        @media(max-width:900px){body.about-primary .role-detail-stage{min-height:0}body.about-primary .role-detail-layout{grid-template-columns:1fr}body.about-primary .role-evidence-card{max-width:620px}}
+        @media(max-width:600px){body.about-primary .role-choice-grid{grid-template-columns:1fr}body.about-primary .role-choice{grid-template-columns:36px minmax(0,1fr);gap:4px 10px;min-height:74px;padding:10px 14px;border-right:0;border-bottom:1px solid rgba(80,132,132,.16)}body.about-primary .role-choice[aria-selected="true"]{box-shadow:inset 4px 0 #97db4f}body.about-primary .role-choice-icon{width:36px;height:36px;border-radius:10px}body.about-primary .role-choice-icon img{width:30px;height:30px}body.about-primary .role-choice-heading strong{font-size:.82rem}body.about-primary .role-responsibility-grid{grid-template-columns:1fr;gap:13px}body.about-primary .role-responsibility-grid article,body.about-primary .role-responsibility-grid article:first-child,body.about-primary .role-responsibility-grid article:last-child{padding:0;border:0}body.about-primary .role-outcome{grid-template-columns:1fr;gap:5px}}
+        @media(prefers-reduced-motion:reduce){body.about-primary .role-choice{transition:none}}
 
 </style>
+    <link rel="stylesheet" href="../css/about-role-motion.css">
     <script defer src="../js/portfolio-motion.js"></script>
     <script defer src="../js/primary-pages.js"></script>
 </head>
@@ -413,7 +420,7 @@
           <div class="about-experience-copy">
             <p class="eyebrow">Background</p>
             <h1>Hi there,</h1>
-            <p class="body-large">I started in high-school classrooms and K-12 curriculum, where Universal Design, the Zone of Proximal Development, and problem-posing education shaped how I think about access, challenge, and learner agency. I now design enterprise learning for adult audiences across eLearning, interactive enablement, facilitation, LMS operations, AI quality evaluation, web and coding work, AI chat experiences, and automated workflows.</p>
+            <p class="body-large">My work began in high-school classrooms and K–12 curriculum, where I learned to design for access, challenge, and learner agency. I bring that foundation to enterprise learning, AI quality, learning platforms, and live facilitation.</p>
             <div class="about-focus-row" aria-label="About page focus areas">
               <span>Background</span>
               <span>Skills</span>
@@ -444,27 +451,76 @@
     </section>
 
     <!-- COMMON THREAD -->
-    <section class="section about-role-section"><div class="container">
-      <div class="section-heading refresh-section-intro"><p class="eyebrow">How I Work</p><h2>How my role changes across the work</h2><p>I work across learning design, AI quality, learning platforms, and facilitation. Each area asks me to own a different part of the problem, so these sections show what I actually do in each kind of work.</p></div>
-      <div class="role-accordion-stack">
-          <details class="role-accordion" name="about-role" open>
-            <summary><span class="role-accordion-number">01</span><span class="role-accordion-icon"><img src="../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span><span class="role-accordion-heading"><strong>Learning Design + Development</strong><small>I turn complex source material into learning people can use.</small></span><span class="role-accordion-tags"><span>Scope</span><span>Design</span><span>Build</span></span><span class="role-accordion-toggle" aria-hidden="true"></span></summary>
-            <div class="role-accordion-body"><div class="role-accordion-copy"><p class="eyebrow">What I Own</p><h3>From learning need to launch-ready experience.</h3><p>I define the learner job, decide what belongs in the experience, organize source material, design the practice and assessment approach, build the content, coordinate SME review, and prepare it for LMS delivery.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Scope the need</strong><span>Audience, performance goal, source material, boundaries, and success evidence.</span></article><article><b>02</b><strong>Design the path</strong><span>Objectives, sequence, scenarios, assessments, resources, and review points.</span></article><article><b>03</b><strong>Build + QA</strong><span>Rise, Storyline, custom interactions, accessibility, review, and delivery testing.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>The learner can explain, recognize, decide, or do something useful after the experience.</strong></div></div><aside class="role-evidence-card"><img src="../assets/project-images/about/elearning-module-example.webp" alt="Public-safe eLearning scenario with coaching feedback."><span>Learning design example</span><strong>Scenario practice built around a real learner decision</strong></aside></div>
-          </details>
-          <details class="role-accordion" name="about-role">
-            <summary><span class="role-accordion-number">02</span><span class="role-accordion-icon"><img src="../assets/icons/pixel/ai-training-evaluation/quality-evaluate.webp" alt=""></span><span class="role-accordion-heading"><strong>AI Training + Evaluation</strong><small>I review model output and turn quality problems into usable feedback.</small></span><span class="role-accordion-tags"><span>Evaluate</span><span>Calibrate</span><span>QA</span></span><span class="role-accordion-toggle" aria-hidden="true"></span></summary>
-            <div class="role-accordion-body"><div class="role-accordion-copy"><p class="eyebrow">What I Own</p><h3>Evidence-based review instead of a general quality check.</h3><p>I compare AI-generated work with the task, approved evidence, scoring guidance, and intended audience. I identify material errors, explain why they matter, and calibrate judgments so evaluation stays consistent.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Frame the review</strong><span>Task, evidence boundary, audience, required output, and quality expectations.</span></article><article><b>02</b><strong>Evaluate the output</strong><span>Instruction following, evidence validation, logic, writing quality, usefulness, and error severity.</span></article><article><b>03</b><strong>Explain + calibrate</strong><span>Specific feedback, rationale, benchmark comparison, and recurring quality patterns.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>The score and feedback can be traced back to the task, approved evidence, and model response.</strong></div></div><aside class="role-evidence-card"><img src="../assets/project-images/ai-training-and-evaluation/nexusai-evaluate-response.webp" alt="Public-safe AI response evaluation interface."><span>AI quality example</span><strong>Structured review of a model response against evidence</strong></aside></div>
-          </details>
-          <details class="role-accordion" name="about-role">
-            <summary><span class="role-accordion-number">03</span><span class="role-accordion-icon"><img src="../assets/icons/pixel/other-work/lms-settings.webp" alt=""></span><span class="role-accordion-heading"><strong>LMS Administration + Learning Operations</strong><small>I make sure the learning system works around the content.</small></span><span class="role-accordion-tags"><span>Absorb</span><span>Docebo</span><span>UAT</span></span><span class="role-accordion-toggle" aria-hidden="true"></span></summary>
-            <div class="role-accordion-body"><div class="role-accordion-copy"><p class="eyebrow">What I Own</p><h3>Access, structure, support, testing, and follow-through.</h3><p>I work with courses, learning plans, certifications, enrollment rules, migration readiness, learner support, reporting, and platform QA. The job is not only publishing content. It is making sure the right learner can find it, complete it, and get help when something goes wrong.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Structure</strong><span>Content organization, learning plans, certifications, audiences, access, and ownership.</span></article><article><b>02</b><strong>Validate</strong><span>Visibility, navigation, completions, renewals, migration results, and learner journeys.</span></article><article><b>03</b><strong>Support + report</strong><span>Troubleshooting, documentation, learner guidance, reporting, and operational handoffs.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>Learners see the right content, follow the intended path, and have a clear route when they need support.</strong></div></div><aside class="role-evidence-card"><img src="../assets/project-images/lms-migration/admin-dashboard.webp" alt="Public-safe LMS administration dashboard."><span>LMS operations example</span><strong>Administration and validation around the learner experience</strong></aside></div>
-          </details>
-          <details class="role-accordion" name="about-role">
-            <summary><span class="role-accordion-number">04</span><span class="role-accordion-icon"><img src="../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><span class="role-accordion-heading"><strong>Live Training + Facilitation</strong><small>I build the session, then adjust it to the people in the room.</small></span><span class="role-accordion-tags"><span>Facilitate</span><span>Practice</span><span>Adapt</span></span><span class="role-accordion-toggle" aria-hidden="true"></span></summary>
-            <div class="role-accordion-body"><div class="role-accordion-copy"><p class="eyebrow">What I Own</p><h3>Preparation matters, but facilitation is responsive.</h3><p>I develop facilitator materials, examples, prompts, activities, and timing for virtual workshops with internal teams and external partners. During delivery, I adjust pacing and explanation based on questions, confidence, and the way the group is responding.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Prepare</strong><span>Objectives, facilitator notes, participant materials, timing, and likely questions.</span></article><article><b>02</b><strong>Facilitate</strong><span>Explanation, discussion, examples, polls, practice, coaching, and pacing changes.</span></article><article><b>03</b><strong>Improve</strong><span>Recurring questions and misconceptions become inputs for future content updates.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>Live time is used for explanation, questions, practice, and coaching instead of slide narration.</strong></div></div><aside class="role-evidence-card"><img src="../assets/project-images/instructional-design/id-live-training.webp" alt="Virtual facilitator leading a live training session."><span>Facilitation example</span><strong>A workshop changes with the questions and confidence in the room</strong></aside></div>
-          </details>
+    <section class="section about-role-section" id="how-i-work">
+      <div class="container">
+        <div class="section-heading refresh-section-intro">
+          <p class="eyebrow">How I Work</p>
+          <h2>How my role changes across the work</h2>
+          <p>I work across learning design, AI quality, learning platforms, and facilitation. Choose a role to see what I own, how I approach it, and an example.</p>
+        </div>
+        <div class="role-choice-grid" role="tablist" aria-label="Explore my work areas">
+          <button class="role-choice is-active" id="role-tab-design" type="button" role="tab" aria-selected="true" aria-controls="role-panel-design" tabindex="0">
+            <span class="role-choice-top"><span class="role-choice-number">01 / 04</span><span class="role-choice-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></span></span>
+            <span class="role-choice-heading"><strong>Learning Design + Development</strong><small>I turn complex source material into learning people can use.</small></span>
+            <span class="role-choice-action" aria-hidden="true"><span>View details</span><span class="role-choice-arrow">↗</span></span>
+          </button>
+          <button class="role-choice" id="role-tab-ai" type="button" role="tab" aria-selected="false" aria-controls="role-panel-ai" tabindex="-1">
+            <span class="role-choice-top"><span class="role-choice-number">02 / 04</span><span class="role-choice-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></span></span>
+            <span class="role-choice-heading"><strong>AI Training + Evaluation</strong><small>I review model output and turn quality problems into usable feedback.</small></span>
+            <span class="role-choice-action" aria-hidden="true"><span>View details</span><span class="role-choice-arrow">↗</span></span>
+          </button>
+          <button class="role-choice" id="role-tab-lms" type="button" role="tab" aria-selected="false" aria-controls="role-panel-lms" tabindex="-1">
+            <span class="role-choice-top"><span class="role-choice-number">03 / 04</span><span class="role-choice-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></span></span>
+            <span class="role-choice-heading"><strong>LMS Administration + Learning Operations</strong><small>I make sure the learning system works around the content.</small></span>
+            <span class="role-choice-action" aria-hidden="true"><span>View details</span><span class="role-choice-arrow">↗</span></span>
+          </button>
+          <button class="role-choice" id="role-tab-facilitation" type="button" role="tab" aria-selected="false" aria-controls="role-panel-facilitation" tabindex="-1">
+            <span class="role-choice-top"><span class="role-choice-number">04 / 04</span><span class="role-choice-icon"><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></span></span>
+            <span class="role-choice-heading"><strong>Live Training + Facilitation</strong><small>I build the session, then adjust it to the people in the room.</small></span>
+            <span class="role-choice-action" aria-hidden="true"><span>View details</span><span class="role-choice-arrow">↗</span></span>
+          </button>
+        </div>
+        <div class="role-detail-stage">
+        <section class="role-detail-panel" id="role-panel-design" role="tabpanel" aria-labelledby="role-tab-design" tabindex="0">
+          <div class="role-detail-layout"><div class="role-detail-copy"><p class="eyebrow">What I Own</p><h3>From learning need to launch-ready experience.</h3><p>I define the learner job, decide what belongs in the experience, organize source material, design the practice and assessment approach, build the content, coordinate SME review, and prepare it for LMS delivery.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Scope the need</strong><span>Audience, performance goal, source material, boundaries, and success evidence.</span></article><article><b>02</b><strong>Design the path</strong><span>Objectives, sequence, scenarios, assessments, resources, and review points.</span></article><article><b>03</b><strong>Build + QA</strong><span>Rise, Storyline, custom interactions, accessibility, review, and delivery testing.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>The learner can explain, recognize, decide, or do something useful after the experience.</strong></div></div><aside class="role-motion-card role-motion-design" role="img" aria-label="Animated learning path: source material becomes a designed sequence, practice decision, and launch-ready experience.">
+            <div class="role-motion-toolbar"><span class="role-motion-status"><i></i> Learning pathway</span><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
+            <div class="role-design-source"><span>INPUT</span><strong>Complex source material</strong><i></i><i></i><i></i></div>
+            <div class="role-design-path"><span>Scope</span><span>Sequence</span><span>Practice</span><span>Launch</span></div>
+            <div class="role-design-action"><span class="role-motion-small-label">LEARNER ACTION</span><strong>Choose the best next step</strong><div><i></i><i></i><i></i></div></div>
+            <p class="role-motion-caption">The path ends in something the learner can do.</p>
+          </aside></div>
+        </section>
+        <section class="role-detail-panel" id="role-panel-ai" role="tabpanel" aria-labelledby="role-tab-ai" tabindex="0" hidden>
+          <div class="role-detail-layout"><div class="role-detail-copy"><p class="eyebrow">What I Own</p><h3>Evidence-based review instead of a general quality check.</h3><p>I compare AI-generated work with the task, approved evidence, scoring guidance, and intended audience. I identify material errors, explain why they matter, and calibrate judgments so evaluation stays consistent.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Frame the review</strong><span>Task, evidence boundary, audience, required output, and quality expectations.</span></article><article><b>02</b><strong>Evaluate the output</strong><span>Instruction following, evidence validation, logic, writing quality, usefulness, and error severity.</span></article><article><b>03</b><strong>Explain + calibrate</strong><span>Specific feedback, rationale, benchmark comparison, and recurring quality patterns.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>The score and feedback can be traced back to the task, approved evidence, and model response.</strong></div></div><aside class="role-motion-card role-motion-ai" role="img" aria-label="Animated AI evaluation: compare a model response with task evidence, flag an issue, and produce specific feedback.">
+            <div class="role-motion-toolbar"><span class="role-motion-status"><i></i> Evaluation lab</span><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-ai-evaluation"></use></svg></div>
+            <div class="role-ai-reference"><span>TASK + EVIDENCE</span><strong>Approved source</strong><b>✓</b></div>
+            <div class="role-ai-response"><span>MODEL RESPONSE</span><i></i><i></i><i></i><i></i><em class="role-ai-scan"></em></div>
+            <div class="role-ai-findings"><span>✓ Supported</span><span>! Needs review</span></div>
+            <div class="role-ai-feedback"><span>FEEDBACK</span><strong>Specific · traceable · calibrated</strong></div>
+            <p class="role-motion-caption">A quality judgment connects back to evidence.</p>
+          </aside></div>
+        </section>
+        <section class="role-detail-panel" id="role-panel-lms" role="tabpanel" aria-labelledby="role-tab-lms" tabindex="0" hidden>
+          <div class="role-detail-layout"><div class="role-detail-copy"><p class="eyebrow">What I Own</p><h3>Access, structure, support, testing, and follow-through.</h3><p>I work with courses, learning plans, certifications, enrollment rules, migration readiness, learner support, reporting, and platform QA. The job is not only publishing content. It is making sure the right learner can find it, complete it, and get help when something goes wrong.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Structure</strong><span>Content organization, learning plans, certifications, audiences, access, and ownership.</span></article><article><b>02</b><strong>Validate</strong><span>Visibility, navigation, completions, renewals, migration results, and learner journeys.</span></article><article><b>03</b><strong>Support + report</strong><span>Troubleshooting, documentation, learner guidance, reporting, and operational handoffs.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>Learners see the right content, follow the intended path, and have a clear route when they need support.</strong></div></div><aside class="role-motion-card role-motion-lms" role="img" aria-label="Animated learning operations flow: assign the right course, validate learner access, and track completion and support.">
+            <div class="role-motion-toolbar"><span class="role-motion-status"><i></i> Learning operations</span><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-lms"></use></svg></div>
+            <div class="role-lms-route"><span>Catalog</span><i></i><span>Learner</span><i></i><span>Completion</span></div>
+            <div class="role-lms-records"><div><span>COURSE ACCESS</span><b>Ready</b></div><div><span>LEARNING PATH</span><b>Assigned</b></div><div><span>PROGRESS</span><b>Verified</b></div></div>
+            <div class="role-lms-support"><span>SUPPORT ROUTE</span><i></i><strong>Issue → resolve → confirm</strong></div>
+            <p class="role-motion-caption">The system works around the learner journey.</p>
+          </aside></div>
+        </section>
+        <section class="role-detail-panel" id="role-panel-facilitation" role="tabpanel" aria-labelledby="role-tab-facilitation" tabindex="0" hidden>
+          <div class="role-detail-layout"><div class="role-detail-copy"><p class="eyebrow">What I Own</p><h3>Preparation matters, but facilitation is responsive.</h3><p>I develop facilitator materials, examples, prompts, activities, and timing for virtual workshops with internal teams and external partners. During delivery, I adjust pacing and explanation based on questions, confidence, and the way the group is responding.</p><div class="role-responsibility-grid"><article><b>01</b><strong>Prepare</strong><span>Objectives, facilitator notes, participant materials, timing, and likely questions.</span></article><article><b>02</b><strong>Facilitate</strong><span>Explanation, discussion, examples, polls, practice, coaching, and pacing changes.</span></article><article><b>03</b><strong>Improve</strong><span>Recurring questions and misconceptions become inputs for future content updates.</span></article></div><div class="role-outcome"><span>Good outcome</span><strong>Live time is used for explanation, questions, practice, and coaching instead of slide narration.</strong></div></div><aside class="role-motion-card role-motion-live" role="img" aria-label="Animated live session: a facilitator presents, a participant asks a question, and the session pace adapts.">
+            <div class="role-motion-toolbar"><span class="role-motion-status"><i></i> Live session</span><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg></div>
+            <div class="role-live-screen"><span>FACILITATOR</span><svg class="portfolio-icon" aria-hidden="true"><use href="../assets/icons/portfolio-icons.svg#icon-live-instruction"></use></svg><strong>Explain → practice</strong></div>
+            <div class="role-live-audience"><span>Participant</span><span>Question</span><span>Participant</span></div>
+            <div class="role-live-adjust"><span>SESSION SIGNAL</span><strong>Question received</strong><div><i></i></div><small>Pace adjusted</small></div>
+            <p class="role-motion-caption">The session responds to the people in the room.</p>
+          </aside></div>
+        </section>
+        </div>
       </div>
-    </div></section>
+    </section>
 
     <section class="section about-toolbox-section" id="toolbox">
       <div class="container">
@@ -516,11 +572,31 @@
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 
 <script>
-const roleAccordions=[...document.querySelectorAll('.role-accordion')];
-roleAccordions.forEach((item)=>{
-  item.addEventListener('toggle',()=>{
-    if(!item.open)return;
-    roleAccordions.forEach((other)=>{if(other!==item)other.open=false;});
+const roleTabs=[...document.querySelectorAll('.role-choice[role="tab"]')];
+const rolePanels=[...document.querySelectorAll('.role-detail-panel[role="tabpanel"]')];
+
+function selectRole(tab,moveFocus=false){
+  roleTabs.forEach((item)=>{
+    const selected=item===tab;
+    item.setAttribute('aria-selected',String(selected));
+    item.tabIndex=selected?0:-1;
+    item.classList.toggle('is-active',selected);
+  });
+  rolePanels.forEach((panel)=>{panel.hidden=panel.id!==tab.getAttribute('aria-controls');});
+  if(moveFocus)tab.focus();
+}
+
+roleTabs.forEach((tab,index)=>{
+  tab.addEventListener('click',()=>selectRole(tab));
+  tab.addEventListener('keydown',(event)=>{
+    let nextIndex;
+    if(event.key==='ArrowRight'||event.key==='ArrowDown')nextIndex=(index+1)%roleTabs.length;
+    else if(event.key==='ArrowLeft'||event.key==='ArrowUp')nextIndex=(index-1+roleTabs.length)%roleTabs.length;
+    else if(event.key==='Home')nextIndex=0;
+    else if(event.key==='End')nextIndex=roleTabs.length-1;
+    else return;
+    event.preventDefault();
+    selectRole(roleTabs[nextIndex],true);
   });
 });
 </script>
