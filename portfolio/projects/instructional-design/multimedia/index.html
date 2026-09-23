@@ -186,11 +186,18 @@
         <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
         <p class="eyebrow">Production Workflow</p>
       </div>
-      <h2>From learner need to release-ready media.</h2>
-      <p class="short-copy">One illustrative brief moves through four checkpoints: define the learner decision, compose the message, correct quality issues, then package and launch the course in an LMS. The same checkpoints apply across still, moving, narrated, and generated media.</p>
+      <h2>How each medium gets made.</h2>
+      <p class="short-copy">Choose a medium and follow Frame → Compose → Verify → Release. The editor shows the production move and next handoff at each stage.</p>
 
       <div class="media-workflow-shell">
-        <div class="workflow-example-brief"><span>ILLUSTRATIVE LEARNING BRIEF</span><strong>Help a learner choose a useful response when a customer asks for more time.</strong><small>Recognize the cue → decide what to do next</small></div>
+        <div class="workflow-media-picker" role="group" aria-label="Choose a media production workflow">
+          <button class="workflow-media-choice active" type="button" data-workflow-format="video" aria-pressed="true"><span><img src="../../../assets/icons/pixel/multimedia/video-camera.webp" alt=""></span><strong>Video</strong></button>
+          <button class="workflow-media-choice" type="button" data-workflow-format="motion" aria-pressed="false"><span><img src="../../../assets/icons/pixel/multimedia/bezier-motion-path.webp" alt=""></span><strong>Motion</strong></button>
+          <button class="workflow-media-choice" type="button" data-workflow-format="images" aria-pressed="false"><span><img src="../../../assets/icons/pixel/multimedia/image-frame.webp" alt=""></span><strong>Images</strong></button>
+          <button class="workflow-media-choice" type="button" data-workflow-format="audio" aria-pressed="false"><span><img src="../../../assets/icons/pixel/multimedia/headphones.webp" alt=""></span><strong>Audio</strong></button>
+          <button class="workflow-media-choice" type="button" data-workflow-format="ai" aria-pressed="false"><span><img src="../../../assets/icons/pixel/multimedia/adobe-photoshop-generative-ai.webp" alt=""></span><strong>AI visuals</strong></button>
+        </div>
+        <div class="workflow-example-brief"><span id="workflowBriefLabel">VIDEO PRODUCTION BRIEF</span><strong id="workflowBriefText">Show a software task clearly enough for a learner to repeat it.</strong><small id="workflowBriefMeta">Screen capture · narration · captions</small></div>
         <div class="media-workflow-tabs" role="tablist" aria-label="Multimedia production workflow">
           <button class="media-workflow-tab active" id="workflow-tab-frame" type="button" role="tab" aria-selected="true" aria-controls="media-workflow-panel" data-media-workflow="frame"><span>01 / STRATEGY</span><strong>Frame</strong></button>
           <button class="media-workflow-tab" id="workflow-tab-compose" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="compose"><span>02 / DESIGN</span><strong>Compose</strong></button>
@@ -201,40 +208,41 @@
         <div class="media-workflow-panel" id="media-workflow-panel" role="tabpanel" aria-labelledby="workflow-tab-frame" tabindex="0" aria-live="polite">
           <div class="media-workflow-detail">
             <div class="media-workflow-copy">
-              <p class="eyebrow" id="mediaWorkflowLabel">01 / FRAME THE MOMENT</p>
-              <h3 id="mediaWorkflowTitle">Define the decision the learner must make.</h3>
-              <p id="mediaWorkflowText">I identify the cue the learner needs to notice, the response they need to choose, and the approved source behind it. I set audience, placement, duration, and accessibility needs before choosing a format.</p>
+              <p class="eyebrow" id="mediaWorkflowLabel">01 / VIDEO · FRAME</p>
+              <h3 id="mediaWorkflowTitle">Map the shots before recording.</h3>
+              <p id="mediaWorkflowText">I script the exact action, identify the screen states to capture, and mark where narration or a callout will help. A short shot list keeps the recording focused on what the learner must repeat.</p>
               <div class="media-workflow-grid">
-                <article><span>Decision</span><p id="mediaWorkflowDecision">What needs to be seen, heard, or practiced for the learner to choose well?</p></article>
-                <article><span>Artifact</span><p id="mediaWorkflowOutput">A media brief with source boundaries, content beats, and the intended learner action.</p></article>
-                <article><span>Evidence</span><p id="mediaWorkflowQa">A reviewer can trace each beat to the learning goal and approved content.</p></article>
+                <article><span>Production move</span><p id="mediaWorkflowDecision">Sequence the cursor action, result, and pause for practice.</p></article>
+                <article><span>Output</span><p id="mediaWorkflowOutput">A script, shot list, and capture plan.</p></article>
+                <article><span>Review check</span><p id="mediaWorkflowQa">Each planned shot shows one necessary learner action.</p></article>
               </div>
-              <div class="workflow-medium-note"><span>Across formats</span><p id="mediaWorkflowMedium">A still may need a clear reading path; timed media needs pacing; generated visuals need an explicit accuracy boundary.</p></div>
+              <div class="workflow-medium-note"><span>Next in production</span><p id="mediaWorkflowMedium">Record the screen and narration against the approved shot list.</p></div>
             </div>
 
             <div class="workflow-canvas-shell">
-              <div class="workflow-canvas-topline"><div><span>PRODUCTION CANVAS</span><strong id="workflowCanvasStage">01 / FRAME</strong></div><div class="workflow-motion-controls"><button id="workflowPause" type="button" aria-pressed="false">Pause motion</button><button id="workflowReplay" type="button">Replay stage</button></div></div>
-              <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-phase="frame" data-paused="false" role="img" aria-label="An illustrative learning brief becomes a structured media sequence, receives quality corrections, and is placed before learner practice.">
-                <div class="workflow-canvas-grid" aria-hidden="true">
-                  <div class="workflow-brief-card"><span>LEARNER ACTION</span><strong>Choose the next response</strong><small>Approved source · audience · decision</small><i class="workflow-brief-seal">BRIEF SET</i></div>
-                  <div class="workflow-preview"><div class="workflow-preview-bar"><span>TRAINING MOMENT / PREVIEW</span><b id="workflowPreviewStatus">WIRE FRAME</b></div><div class="workflow-preview-body"><div class="workflow-customer-bubble"><span>CUSTOMER CUE</span><strong>“I need more time.”</strong></div><div class="workflow-response"><span>LEARNER CHOICE</span><b>Ask what they need</b><b>Repeat the pitch</b></div><div class="workflow-preview-focus"></div><div class="workflow-qa-before">CHECK: cue needs clearer focus</div><div class="workflow-qa-after">FIXED: cue leads into the choice ✓</div><div class="workflow-ready-badge">READY FOR PRACTICE ✓</div></div></div>
-                  <div class="workflow-beat-map"><span>CONTENT BEATS</span><div><b>01 <em>Orient</em></b><i></i><b>02 <em>Notice cue</em></b><i></i><b>03 <em>Decide</em></b></div></div>
-                  <div class="workflow-channel-map"><span>COMPOSITION MAP</span><div><b>FOCUS</b><i><em></em></i></div><div><b>WORDS</b><i><em></em></i></div><div><b>SUPPORT</b><i><em></em></i></div><u class="workflow-playhead"></u></div>
-                  <div class="workflow-gate workflow-gate-frame"><span>FRAME GATE</span><strong>Goal, source, and decision agree.</strong><b>01 / 04</b></div>
-                  <div class="workflow-gate workflow-gate-compose"><span>COMPOSE GATE</span><strong>One clear cue leads to one learner action.</strong><b>02 / 04</b></div>
-                  <div class="workflow-gate workflow-gate-verify"><span>VERIFY GATE</span><strong>Issue found → corrected → checked again.</strong><b>03 / 04</b></div>
-                  <div class="workflow-gate workflow-gate-release">
-                    <div class="release-gate-heading"><span>RELEASE / LMS DEPLOYMENT</span><strong>Package → import → launch</strong></div>
-                    <div class="release-transfer">
-                      <div class="release-course-file"><span class="release-file-icon" aria-hidden="true">▤</span><b>COURSE</b><small>Media + practice</small></div>
-                      <div class="release-transfer-line" aria-hidden="true"><i></i></div>
-                      <div class="release-lms-console"><div class="release-lms-header"><span class="release-lms-mark" aria-hidden="true">▦</span><b>LEARNING PLATFORM</b></div><div class="release-lms-progress"><i></i></div><span class="release-importing">Importing course…</span><span class="release-imported">Import complete ✓</span><span class="release-launch-button">Launch course ↗</span><span class="release-live">LIVE <i>●</i> Learners can access</span></div>
-                    </div>
-                    <small>Playback ✓ &nbsp; Access ✓ &nbsp; Tracking ✓ &nbsp; Editable source saved ✓</small>
+              <div class="workflow-canvas-topline"><div><span>PRODUCTION EDITOR</span><strong id="workflowCanvasStage">VIDEO / 01 FRAME</strong></div><div class="workflow-motion-controls"><button id="workflowPause" type="button" aria-pressed="false">Pause motion</button><button id="workflowReplay" type="button">Replay stage</button></div></div>
+              <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-media="video" data-phase="frame" data-paused="false" role="img" aria-label="Video frame stage: a shot list leads to screen capture and narration.">
+                <div class="workflow-editor" aria-hidden="true">
+                  <div class="workflow-editor-top"><div class="workflow-editor-dots"><i></i><i></i><i></i></div><strong id="workflowEditorName">VIDEO EDITOR</strong><span id="workflowEditorStatus">SHOT LIST</span></div>
+                  <div class="workflow-editor-body">
+                    <div class="workflow-editor-bin"><span id="workflowBinTitle">PROJECT BIN</span><div class="workflow-bin-row"><i></i><b id="workflowBinOne">Script v3</b></div><div class="workflow-bin-row"><i></i><b id="workflowBinTwo">Screen states</b></div><div class="workflow-bin-row"><i></i><b id="workflowBinThree">Caption terms</b></div></div>
+                    <div class="workflow-editor-main"><div class="workflow-editor-preview-head"><span id="workflowPreviewName">SHOT 02 / TASK STEP</span><b id="workflowPreviewStatus">STORYBOARD</b></div><div class="workflow-editor-preview">
+                      <div class="workflow-visual workflow-visual-video"><div class="workflow-video-window"><div class="workflow-video-toolbar"><i></i><i></i><i></i></div><div class="workflow-video-step">Open the settings panel</div><div class="workflow-video-button">Continue →</div><div class="workflow-video-cursor"></div></div><div class="workflow-video-caption">Narration + on-screen action</div></div>
+                      <div class="workflow-visual workflow-visual-motion"><div class="workflow-motion-path"><i></i><i></i><i></i><b></b></div><div class="workflow-motion-object">01</div><div class="workflow-motion-label">See the change → make the choice</div></div>
+                      <div class="workflow-visual workflow-visual-images"><div class="workflow-image-art"><div class="workflow-image-horizon"></div><div class="workflow-image-card"><b>Find</b><i></i><b>Apply</b></div><div class="workflow-image-callout">01 / focus here</div></div><div class="workflow-image-crop"><i></i><i></i><i></i><i></i></div></div>
+                      <div class="workflow-visual workflow-visual-audio"><div class="workflow-audio-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="workflow-audio-transcript">“Start with the learner’s next step…”</div><div class="workflow-audio-level">−16 LUFS <b>●</b></div></div>
+                      <div class="workflow-visual workflow-visual-ai"><div class="workflow-ai-prompt">PROMPT / approved scenario + visual constraints</div><div class="workflow-ai-variants"><div><i></i><b>A</b></div><div class="selected"><i></i><b>B ✓</b></div><div><i></i><b>C</b></div></div><div class="workflow-ai-check">Accuracy review required</div></div>
+                      <div class="workflow-stage-overlay"><span id="workflowOverlayLabel">MAP SHOTS</span><strong id="workflowOverlayDetail">Action → result → pause</strong></div>
+                      <div class="workflow-verify-scan"></div>
+                      <div class="workflow-export"><span id="workflowExportLabel">VIDEO MASTER + CAPTIONS</span><div class="workflow-export-flow"><em>MEDIA</em><i>→</i><em>COURSE</em><i>→</i><em>LMS</em><u></u></div><div class="workflow-export-progress"><i></i></div><strong id="workflowExportTarget">COURSE → LMS</strong><b>LIVE ✓</b></div>
+                    </div></div>
+                    <div class="workflow-editor-inspector"><span id="workflowInspectorTitle">SHOT SETTINGS</span><div><small id="workflowInspectorOneLabel">Action</small><b id="workflowInspectorOneValue">Cursor step</b></div><div><small id="workflowInspectorTwoLabel">Length</small><b id="workflowInspectorTwoValue">00:08</b></div><div><small id="workflowInspectorThreeLabel">Access</small><b id="workflowInspectorThreeValue">Caption cue</b></div></div>
                   </div>
+                  <div class="workflow-editor-tracks"><div class="workflow-track-title"><span id="workflowTrackTitle">SHOT SEQUENCE</span><b id="workflowTrackStatus">PLAN</b></div><div class="workflow-track-row"><span id="workflowTrackOne">SCREEN</span><div><i></i><i></i><i></i></div></div><div class="workflow-track-row"><span id="workflowTrackTwo">VOICE</span><div><i></i><i></i><i></i></div></div><div class="workflow-track-row"><span id="workflowTrackThree">CAPTIONS</span><div><i></i><i></i><i></i></div></div><u class="workflow-editor-playhead"></u></div>
+                  <div class="workflow-editor-handoff"><span>NEXT HANDOFF</span><strong id="workflowEditorHandoff">Record screen and narration</strong><i></i></div>
                 </div>
               </div>
-              <p class="workflow-canvas-caption" id="workflowCanvasCaption">The brief sets the learning target before any asset is polished.</p>
+              <p class="workflow-canvas-caption" id="workflowCanvasCaption">The editor shows how a shot list becomes a captured, captioned learning video.</p>
             </div>
           </div>
         </div>
