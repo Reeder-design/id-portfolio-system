@@ -11,37 +11,25 @@
       scenes: [
         {
           tab: 'Command center', title: 'Find the course that needs attention.',
-          summary: 'I start with an operational dashboard, then narrow the issue before changing a course.',
           kind: 'metrics', heading: 'Admin Dashboard',
           values: [['Active learners', '8,214', 'steady'], ['Enrollments this month', '1,386', '+12%'], ['Courses requiring attention', '03', 'review'], ['Completion rate', '87%', 'current']],
           list: [['Cybersecurity Essentials', 'Package update pending'], ['Product Launch Readiness', 'Enrollment exception'], ['Workplace Safety', 'Owner review due']],
-          action: 'Filter attention queue', outcome: 'Attention queue filtered to three courses with named issues.',
-          decision: 'Separate operational exceptions from healthy courses.', check: 'Open the affected course before updating content or enrollment rules.'
         },
         {
           tab: 'Course operations', title: 'Use contextual actions on the right course.',
-          summary: 'The course register is where content, enrollments, and status become actionable.',
           kind: 'table', heading: 'Courses Report', columns: ['Course', 'Type', 'Enrollments', 'Status'],
           rows: [['Cybersecurity Essentials', 'Online', '2,340', 'Update due'], ['New Manager Foundations', 'Blended', '384', 'Active'], ['Product Launch Readiness', 'Online', '812', 'Active'], ['Workplace Safety', 'Online', '1,140', 'Active']],
-          action: 'Select Cybersecurity Essentials', outcome: 'Actions opened: Edit · Duplicate · Enroll User · Course Enrollments · View Activity Report.',
-          decision: 'Choose the course record before changing its learning objects.', check: 'Confirm enrollment impact and owner before publishing a replacement.'
         },
         {
           tab: 'Course assembly', title: 'Replace a lesson without losing the course route.',
-          summary: 'I treat a package update as a versioned content operation with a learner impact check.',
           kind: 'editor', heading: 'Cybersecurity Essentials / Syllabus',
           blocks: [['01', 'Welcome', 'HTML'], ['02', 'Cybersecurity Basics', 'SCORM 1.2'], ['03', 'Knowledge Check', 'Assessment'], ['04', 'Incident Scenario', 'Scenario'], ['05', 'Course Survey', 'Survey']],
           fields: [['Update mode', 'Replace existing lesson'], ['Source package', 'cybersecurity-v2.zip'], ['Completion rule', 'Assessment passed']],
-          action: 'Preview replacement', outcome: 'New SCORM package staged for lesson 02; completion rule remains attached.',
-          decision: 'Replace the learning object inside the existing syllabus.', check: 'Test launch, bookmarking, and completion on a test enrollment.'
         },
         {
           tab: 'Activity ledger', title: 'Read the record after deployment.',
-          summary: 'A course change is complete when enrollment and learner evidence still reconcile.',
           kind: 'table', heading: 'Course Activity Report', columns: ['Learner', 'Department', 'Progress', 'Score'],
           rows: [['Jamie Chen', 'Operations', 'Complete', '92%'], ['Morgan Lee', 'Sales', '60%', '—'], ['Taylor Reid', 'Support', 'Not started', '—'], ['Alex Rivera', 'Partners', 'Complete', '88%']],
-          action: 'Inspect Morgan Lee', outcome: 'Enrollment detail opened: message learner, view transcript, or reset progress after review.',
-          decision: 'Use the course activity ledger to locate the actual support case.', check: 'Compare course status, score, and transcript before changing a record.'
         }
       ]
     },
@@ -52,39 +40,27 @@
       scenes: [
         {
           tab: 'Architecture', title: 'Give each audience a governed environment.',
-          summary: 'Domains, branches, and catalog rules form one architecture for employees, partners, and customers.',
           kind: 'tree', heading: 'Extended Enterprise',
           nodes: [[0, 'Northstar Learning', 'root'], [1, 'Corporate Learning', 'learn.northstar.example'], [1, 'Partner Academy', 'partners.northstar.example'], [2, 'Distributor Network', 'branch'], [2, 'Solution Partners', 'branch'], [1, 'Customer Academy', 'academy.northstar.example']],
-          action: 'Configure Partner Academy', outcome: 'Partner domain selected with branch and catalog settings ready for review.',
-          decision: 'Separate audience experience from shared course ownership.', check: 'Test one learner from each branch against catalog visibility.'
         },
         {
           tab: 'Experience', title: 'Design the partner navigation and brand together.',
-          summary: 'A relevant menu is as important as a recognizable brand in an external academy.',
           kind: 'designer', heading: 'Partner Academy / Experience designer',
           fields: [['Primary color', 'Deep teal'], ['Header', 'Partner Academy'], ['Audience', 'Branch = Partners']],
           blocks: [['01', 'Home', 'Page'], ['02', 'Certifications', 'Menu'], ['03', 'Sales Enablement', 'Menu'], ['04', 'Product Training', 'Menu'], ['05', 'Support', 'Menu']],
-          action: 'Preview learner site', outcome: 'Partner preview shows Certifications, Sales Enablement, Product Training, and Support.',
-          decision: 'Build a menu for the partner task rather than copying the employee home page.', check: 'Preview as a partner account before publishing.'
         },
         {
           tab: 'Delegated admin', title: 'Scope permissions and resources together.',
-          summary: 'A partner manager should administer only the learners and content they own.',
           kind: 'matrix', heading: 'Power User / Partner Training Manager',
           columns: ['Resource', 'View', 'Create', 'Edit', 'Delete'],
           rows: [['Courses', '✓', '—', '✓', '—'], ['Enrollments', '✓', '✓', '✓', '—'], ['Reports', '✓', '—', '—', '—'], ['Users', '✓', '—', '✓', '—']],
           note: 'Scope: Solution Partners — West · Partner Sales Certification',
-          action: 'Test effective access', outcome: 'Permission + resource scope allows West partner enrollments while other branches remain hidden.',
-          decision: 'Grant the smallest useful permission set and assign matching resources.', check: 'Test the Power User account inside and outside its branch.'
         },
         {
           tab: 'Tenant health', title: 'Monitor the partner academy as its own operation.',
-          summary: 'The shared platform needs audience-specific reporting and exception ownership.',
           kind: 'metrics', heading: 'Partner Academy / Operations',
           values: [['Active partner learners', '2,418', 'current'], ['Certification completion', '81%', '+6%'], ['Overdue assignments', '126', 'review'], ['Active power users', '14', 'scoped']],
           list: [['Distributor Network', '1,106 learners'], ['Solution Partners — West', '714 learners'], ['Solution Partners — East', '598 learners']],
-          action: 'Inspect West branch', outcome: 'West branch view opened with completion, overdue, and Power User scope.',
-          decision: 'Filter by domain and branch before interpreting a metric.', check: 'Reconcile branch totals with the learner and certification reports.'
         }
       ]
     },
@@ -95,38 +71,26 @@
       scenes: [
         {
           tab: 'Risk overview', title: 'See renewal risk before it becomes an audit issue.',
-          summary: 'I would make due-soon and overdue populations visible alongside overall compliance.',
           kind: 'risk', heading: 'Compliance Overview',
           values: [['Compliant', '94.2%', 'current'], ['Expiring in 30 days', '128', 'attention'], ['Overdue assignments', '47', 'review'], ['New-hire gaps', '09', 'review']],
           list: [['Programs in progress', '18 active'], ['Assignment activity', 'Today'], ['Recent reports', 'Audit export ready']],
-          action: 'Open expiring certifications', outcome: 'Filtered to 128 employees whose certification expires within 30 days.',
-          decision: 'Prioritize populations by risk and deadline.', check: 'Check the underlying learner records before intervention.'
         },
         {
           tab: 'Program builder', title: 'Build renewal logic around the learning.',
-          summary: 'The certification is an ongoing requirement, not just a bundle of courses.',
           kind: 'editor', heading: 'Data Privacy Certification',
           blocks: [['01', 'Data Privacy Foundations', 'Required'], ['02', 'Secure Data Handling', 'Required'], ['03', 'Final Assessment', 'Pass 80%']],
           fields: [['Initial completion', '30 days'], ['Recertification', 'Every 365 days'], ['Reminder', '30 days before expiry'], ['Grace period', '14 days']],
-          action: 'Review lifecycle', outcome: 'Certification structure links completion, renewal, reminder, and grace rules.',
-          decision: 'Define renewal and exception logic before mass assignment.', check: 'Test first-time, renewed, and expired learner records.'
         },
         {
           tab: 'Dynamic assignment', title: 'Target a changing workforce population.',
-          summary: 'I would preview eligibility before applying a dynamic learning assignment.',
           kind: 'rules', heading: 'Create Learning Assignment',
           fields: [['Type', 'Dynamic'], ['Training', 'Data Privacy Certification'], ['Division', 'Customer Operations'], ['Employment', 'Active'], ['Location', 'Exclude contractor site'], ['Future matches', 'Included']],
           note: 'Eligible population · 2,418 learners',
-          action: 'Preview population', outcome: '2,418 current learners match; future qualifying users will join the assignment.',
-          decision: 'Use explicit inclusion and exclusion criteria.', check: 'Sample a matched employee and an excluded contractor.'
         },
         {
           tab: 'Intervention', title: 'Move from status to a specific action.',
-          summary: 'I would filter the at-risk group, then choose the least disruptive intervention.',
           kind: 'table', heading: 'Compliance Intervention', columns: ['Population', 'Current', 'Due soon', 'Overdue'],
           rows: [['North America', '1,802', '91', '34'], ['Europe', '1,107', '24', '08'], ['Asia Pacific', '944', '13', '05']],
-          action: 'Review overdue group', outcome: 'North America overdue population selected: send reminder, reassign, or export audit report.',
-          decision: 'Separate overdue learners from exempt or recently assigned employees.', check: 'Preserve an audit trail for the selected intervention.'
         }
       ]
     },
@@ -137,38 +101,26 @@
       scenes: [
         {
           tab: 'Admin intake', title: 'Locate the structure behind the assignment.',
-          summary: 'I would start at the learning object type, then trace the assignment source.',
           kind: 'sap-intake', heading: 'Learning Administration',
           values: [['Users', '14,284', 'active'], ['Items', '681', 'catalog'], ['Curricula', '84', 'managed'], ['Assignment profiles', '46', '4 pending']],
           list: [['Profile sync', '4 require processing'], ['Curriculum review', 'Field Operations Readiness'], ['Recent job', 'Assignment profile executed']],
-          action: 'Open curricula', outcome: 'Curriculum register opened; Field Operations Readiness is ready to inspect.',
-          decision: 'Distinguish an item from a curriculum and an assignment profile.', check: 'Inspect the source object before editing a population rule.'
         },
         {
           tab: 'Curriculum', title: 'Give retraining a durable structure.',
-          summary: 'The curriculum groups required items and their different renewal intervals.',
           kind: 'table', heading: 'Field Operations Readiness', columns: ['Item', 'Type', 'Requirement', 'Retraining'],
           rows: [['Safety Foundations', 'Online', 'Required', '365 days'], ['Equipment Readiness', 'Online', 'Required', '365 days'], ['Incident Response', 'ILT', 'Required', '730 days'], ['Advanced Troubleshooting', 'Online', 'Optional', '—']],
-          action: 'Inspect retraining', outcome: 'Required items retain separate 365-day and 730-day retraining rules.',
-          decision: 'Keep qualification requirements inside the curriculum structure.', check: 'Verify item and curriculum renewal behavior for a returning learner.'
         },
         {
           tab: 'Profile rules', title: 'Let HR attributes form the learner population.',
-          summary: 'I would make each condition visible before running bulk assignment changes.',
           kind: 'rules', heading: 'Assignment Profile / Field Technician — North America',
           fields: [['Job code', 'FIELD_TECH'], ['Region', 'North America'], ['Employee status', 'Active'], ['Assigned curriculum', 'Field Operations Readiness'], ['Annual safety', 'Required']],
           note: 'Preview · 1,846 matching learners',
-          action: 'Preview population', outcome: '1,846 active North American field technicians match the profile.',
-          decision: 'Use authoritative worker attributes with clear AND conditions.', check: 'Inspect mismatches and HR sync timing before execution.'
         },
         {
           tab: 'Processing audit', title: 'Explain why a learner received training.',
-          summary: 'Processing totals and an assignment source make bulk automation supportable.',
           kind: 'sap-audit', heading: 'Assignment Profile Processing',
           values: [['Matched users', '1,846', 'valid'], ['New assignments', '128', 'added'], ['Removed', '17', 'review'], ['Unchanged', '1,701', 'retained']],
           list: [['Job state', 'Processing → Valid'], ['Sample learner', 'Taylor Kim'], ['Assignment source', 'AP_FIELD_TECH_NA']],
-          action: 'Trace Taylor Kim', outcome: 'Field Operations Readiness assigned by AP_FIELD_TECH_NA; source attributes shown.',
-          decision: 'Reconcile added, removed, and unchanged counts.', check: 'Trace one learner to the profile that produced the assignment.'
         }
       ]
     },
@@ -179,38 +131,26 @@
       scenes: [
         {
           tab: 'Task home', title: 'Start a campaign from the work queue.',
-          summary: 'Learning campaigns sit alongside worker populations, tasks, and approvals.',
           kind: 'workday-tasks', heading: 'Learning Operations',
           values: [['Required learning', '89%', 'complete'], ['Campaigns', '07', 'active'], ['Active workers', '14,284', 'current'], ['Approvals', '03', 'awaiting']],
           list: [['Create Learning Campaign', 'Task'], ['Review security audience', 'Approval'], ['Manager Security Awareness', 'Draft']],
-          action: 'Create campaign', outcome: 'Manager Security Awareness campaign opened in Draft.',
-          decision: 'Use a campaign when the audience and follow-up need orchestration.', check: 'Confirm campaign ownership and security before selecting workers.'
         },
         {
           tab: 'Audience', title: 'Build a campaign population from HCM data.',
-          summary: 'The target group should be previewable and reproducible.',
           kind: 'rules', heading: 'Manager Security Awareness / Audience',
           fields: [['Audience source', 'Custom report'], ['Report', 'People Managers — Active'], ['Organization', 'All regions'], ['Worker status', 'Active']],
           note: 'Preview · 3,218 recipients',
-          action: 'Preview recipients', outcome: '3,218 active people managers match the saved audience report.',
-          decision: 'Select an explainable worker source rather than a manual list.', check: 'Sample new and recently transferred managers.'
         },
         {
           tab: 'Orchestration', title: 'Sequence assignment, reminders, and approval.',
-          summary: 'The business process makes the campaign state explicit before delivery.',
           kind: 'timeline', heading: 'Campaign Orchestration',
           steps: [['Assign course', 'Oct 1 · required'], ['Reminder', '7 days after if incomplete'], ['Final reminder', '3 days before due'], ['Approval', 'Awaiting review']],
           note: 'Draft → Awaiting Approval → Approved → Scheduled',
-          action: 'Submit for approval', outcome: 'Campaign moved from Draft to Awaiting Approval; delivery remains unscheduled.',
-          decision: 'Use conditional reminders instead of broadcasting to completers.', check: 'Review audience, dates, and security approval before schedule.'
         },
         {
           tab: 'Analytics', title: 'Measure delivery and learning separately.',
-          summary: 'Opening a message is not the same as finishing the required learning.',
           kind: 'funnel', heading: 'Manager Security Awareness / Analytics',
           values: [['Delivered', '3,218'], ['Opened', '2,901'], ['Started learning', '2,477'], ['Completed', '2,138'], ['Past due', '164']],
-          action: 'Inspect past due', outcome: '164 past-due workers isolated for manager follow-up.',
-          decision: 'Read communications and learning outcomes as different signals.', check: 'Reconcile campaign completion with learning records.'
         }
       ]
     },
@@ -221,35 +161,23 @@
       scenes: [
         {
           tab: 'Institution tree', title: 'Scope administration to the institution.',
-          summary: 'The hierarchy distributes oversight across colleges and departments.',
           kind: 'tree', heading: 'Institutional Hierarchy',
           nodes: [[0, 'Northstar University', 'institution'], [1, 'College of Business', 'college'], [1, 'College of Engineering', 'college'], [2, 'Computer Science', 'department'], [2, 'Mechanical Engineering', 'department'], [1, 'College of Arts', 'college']],
-          action: 'Select Engineering', outcome: 'Engineering scope opened: courses, users, administrators, tools, and integrations.',
-          decision: 'Assign scope at the college or department that owns the work.', check: 'Verify inherited administrator access.'
         },
         {
           tab: 'Term provisioning', title: 'Treat course creation as a monitored batch.',
-          summary: 'A semester import needs exception handling, not just a success toast.',
           kind: 'table', heading: 'Course Management / Fall 2026', columns: ['Batch', 'Courses', 'Successful', 'Exceptions'],
           rows: [['Engineering', '128', '126', '02'], ['Business', '104', '102', '02'], ['Arts', '94', '91', '03'], ['Total', '326', '319', '07']],
-          action: 'Inspect batch exceptions', outcome: 'Seven course records require review before Fall 2026 provisioning closes.',
-          decision: 'Batch create from a reviewed term and course source.', check: 'Resolve failed course records and sample successful shells.'
         },
         {
           tab: 'Shared content', title: 'Maintain institutional resources centrally.',
-          summary: 'Course teams should reference the current policy rather than duplicating old copies.',
           kind: 'tree', heading: 'Content Collection',
           nodes: [[0, 'Institution', 'shared'], [1, 'Policies', '12 resources'], [2, 'Academic Integrity Statement', 'v3.1'], [1, 'Accessibility Resources', '8 resources'], [1, 'Department Templates', '24 resources']],
-          action: 'Trace policy usage', outcome: 'Academic Integrity Statement is referenced by 42 active courses.',
-          decision: 'Govern a shared resource in one institution-level location.', check: 'Confirm affected courses after a policy revision.'
         },
         {
           tab: 'Term close', title: 'Archive courses without losing the record.',
-          summary: 'End-of-term maintenance includes storage, activity, and job logs.',
           kind: 'table', heading: 'System Reporting / Disk Usage', columns: ['Course', 'Term', 'Storage', 'State'],
           rows: [['ENG101-01', 'Spring 2026', '1.8 GB', 'Archive ready'], ['BUS220-03', 'Spring 2026', '940 MB', 'Complete'], ['ART105-02', 'Fall 2025', '2.1 GB', 'Review'], ['CS210-01', 'Spring 2026', '1.2 GB', 'Archive ready']],
-          action: 'Review archive jobs', outcome: 'Course copy and archive jobs completed; one content validation warning remains.',
-          decision: 'Use a documented archive threshold and retain recovery access.', check: 'Read task logs before removing or marking a course complete.'
         }
       ]
     },
@@ -260,38 +188,26 @@
       scenes: [
         {
           tab: 'Account scope', title: 'Make the account tree explain admin scope.',
-          summary: 'Subaccounts can delegate local operations while preserving institution-level control.',
           kind: 'tree', heading: 'Accounts',
           nodes: [[0, 'Northstar University', 'root'], [1, 'College of Business', 'subaccount'], [1, 'College of Engineering', 'subaccount'], [2, 'Computer Science', 'department'], [1, 'Continuing Education', 'subaccount']],
-          action: 'Select Engineering', outcome: 'Engineering account selected; local courses and admin scope are visible.',
-          decision: 'Place courses and admins at the appropriate account level.', check: 'Test a department admin against adjacent subaccounts.'
         },
         {
           tab: 'Permissions', title: 'Separate root access from design support.',
-          summary: 'Institution, college, department, and design roles should not have identical powers.',
           kind: 'matrix', heading: 'Account Roles',
           columns: ['Role', 'Courses', 'Users', 'SIS data', 'Blueprints'],
           rows: [['Root Administrator', '✓', '✓', '✓', '✓'], ['College Administrator', '✓', '✓', '—', '✓'], ['Department Administrator', '✓', '—', '—', '—'], ['ID Administrator', '✓', '—', '—', '✓'], ['Support Administrator', 'View', 'View', '—', '—']],
-          action: 'Inspect ID role', outcome: 'ID Administrator can manage course design and Blueprint content without SIS access.',
-          decision: 'Grant a scoped role for the actual design task.', check: 'Review inherited permissions before a role change.'
         },
         {
           tab: 'Blueprint', title: 'Lock the template attributes that must stay shared.',
-          summary: 'Course teams retain local due dates while central content and points stay governed.',
           kind: 'editor', heading: 'ENG-COURSE-TEMPLATE / Blueprint',
           blocks: [['Pages', 'Content locked', 'Due dates local'], ['Assignments', 'Content + points locked', 'Due dates local'], ['Quizzes', 'Content + points locked', 'Availability local']],
           fields: [['Blueprint status', 'Enabled'], ['Associated courses', '18'], ['Pending changes', '04']],
-          action: 'Preview sync impact', outcome: 'Four Blueprint changes affect 18 associated courses; local due dates remain editable.',
-          decision: 'Lock only attributes that need institutional consistency.', check: 'Preview downstream changes before synchronizing.'
         },
         {
           tab: 'Sync monitor', title: 'Watch deployment into associated courses.',
-          summary: 'A complete sync includes a visible warning path for one conflicting course.',
           kind: 'table', heading: 'Blueprint Sync History', columns: ['Course', 'Changes', 'State', 'Owner'],
           rows: [['ENG101-01', '04', 'Complete', 'Engineering'], ['ENG101-02', '04', 'Complete', 'Engineering'], ['ENG101-03', '03', 'Conflict', 'ID team'], ['ENG101-04', '04', 'Complete', 'Engineering']],
           note: '17 successful · 1 warning',
-          action: 'Inspect conflict', outcome: 'ENG101-03 has a local edit that needs review before the final sync.',
-          decision: 'Treat a sync warning as a change decision, not a silent failure.', check: 'Confirm the associated course after resolving its conflict.'
         }
       ]
     },
@@ -302,43 +218,85 @@
       scenes: [
         {
           tab: 'Site architecture', title: 'Organize knowledge around work.',
-          summary: 'A learning hub connects owned sites without forcing every resource into an LMS course.',
           kind: 'tree', heading: 'SharePoint Admin Center / Active Sites',
           nodes: [[0, 'Learning Hub', 'hub candidate'], [1, 'Sales Enablement', 'communication'], [1, 'Manager Resources', 'team site'], [1, 'Partner Resources', 'communication']],
-          action: 'Preview hub association', outcome: 'Three resource sites connect to Learning Hub with distinct owners.',
-          decision: 'Group related resources under a navigable hub.', check: 'Confirm site owner and association permissions.'
         },
         {
           tab: 'Resource library', title: 'Use metadata and versions to prevent stale guidance.',
-          summary: 'The document library makes audience, owner, review date, and approval visible.',
           kind: 'table', heading: 'Learning Resources', columns: ['Resource', 'Audience', 'Owner', 'State'],
           rows: [['Sales Playbook', 'Sales', 'Enablement', 'Published'], ['Manager Toolkit', 'Managers', 'HR', 'Published'], ['Product Guide', 'Partners', 'Product', 'Review due']],
           note: 'Product Guide · v2.3 Draft · v2.2 Approved · v2.1 Approved',
-          action: 'Open version history', outcome: 'Product Guide version history opened; v2.2 remains the approved reader version.',
-          decision: 'Keep draft and approved versions distinguishable.', check: 'Confirm that published links resolve to the approved resource.'
         },
         {
           tab: 'Access', title: 'Keep site and guest access intentionally scoped.',
-          summary: 'Site permissions and external sharing settings jointly determine access.',
           kind: 'matrix', heading: 'Site Settings / Permissions',
           columns: ['Group', 'Read', 'Edit', 'Manage', 'Share'],
           rows: [['Owners', '✓', '✓', '✓', '✓'], ['Members', '✓', '✓', '—', '—'], ['Visitors', '✓', '—', '—', '—'], ['External guests', '✓', '—', '—', '—']],
           note: 'Site sharing: New and existing guests · Anonymous links disabled',
-          action: 'Test guest access', outcome: 'Guest can read approved Partner Resources; draft and owner controls remain hidden.',
-          decision: 'Use the most restrictive setting appropriate to the resource.', check: 'Test a real guest account and a visitor account.'
         },
         {
           tab: 'Publish', title: 'Move a page through approval into a traceable release.',
-          summary: 'A maintained knowledge page has a review state and version history.',
           kind: 'timeline', heading: 'Manager Resource Center / Page editor',
           steps: [['Draft', 'Hero + quick links'], ['Pending approval', 'Owner reviews'], ['Approved', 'Content checked'], ['Published', 'Version 8.0']],
           note: 'Version 7.0 remains in history',
-          action: 'Submit for approval', outcome: 'Version 8.0 is pending approval; version 7.0 remains available to readers.',
-          decision: 'Publish through a named owner and approval state.', check: 'Verify the page version and links after release.'
         }
       ]
     }
   };
+
+  // Editorial copy is kept separate from the simulated records so guidance never
+  // reads like a claim about the fictional people or counts shown in the UI.
+  const editorial = {
+    absorb: [
+      ['I use the dashboard to spot course exceptions, then trace the issue to its course record before changing anything.','I separate content issues from enrollment and record issues.','I check the affected course and its owner before acting.','I treat an attention tile as a lead, not a diagnosis. I open the course to confirm whether content, enrollment, or reporting caused the alert.'],
+      ['I open the course register to see status, enrollments, and the available actions in one place.','I confirm the correct course before editing its syllabus.','I review current enrollments and downstream learning paths.','I check the course type, active enrollments, and owner before choosing Edit or replacing a learning object.'],
+      ['I stage a package update inside the existing course structure and keep its completion logic visible.','I preserve the learner route while changing the lesson.','I test launch, resume, assessment, and completion with a test learner.','I verify that a replacement package still sends the progress and completion events the course expects.'],
+      ['I use activity and transcript views to understand a learner issue after a content change.','I trace the record before considering a progress reset.','I compare enrollment, launch history, score, and transcript.','I inspect both course activity and the learner transcript before changing progress or asking the learner to retry.']
+    ],
+    docebo: [
+      ['I map branches, catalogs, and extended enterprise clients together so each audience reaches the right experience.','I keep shared content ownership distinct from audience visibility.','I test one learner in each branch and client view.','I check branch membership and catalog visibility together; a branded client alone does not determine what a learner can see.'],
+      ['I shape the partner menu around the tasks learners need to complete, then preview it in their own view.','I connect page navigation to the intended branch and catalog.','I verify the menu and certification route as a partner learner.','I preview the actual learner menu and catalog after changing page or menu visibility, rather than judging the admin configuration alone.'],
+      ['I scope Power User permissions alongside their assigned resources so delegated admins reach only their own audience.','I grant the smallest useful permission and resource set.','I test the account inside and outside its assigned branch.','I review permissions and resource assignments together; either one can expand or restrict a Power User view.'],
+      ['I read partner academy metrics by branch before deciding whether an exception is local or shared.','I filter to the relevant client and branch first.','I reconcile summary counts with learner and certification reports.','I compare branch totals with the underlying learner and certification records before escalating a performance issue.']
+    ],
+    cornerstone: [
+      ['I surface expiring and overdue certifications alongside overall compliance so renewal risk is visible early.','I prioritize by deadline and affected population.','I inspect learner records before sending an intervention.','I check how the certification defines expiry and renewal before acting on an at-risk count.'],
+      ['I configure certification content, renewal timing, reminders, and exceptions as one lifecycle.','I set renewal rules before assigning the certification at scale.','I test new, renewed, and expired learner states.','I confirm that completion, recertification, reminder, and grace settings produce the intended learner timeline.'],
+      ['I preview the population for a dynamic learning assignment before it reaches current or future employees.','I make inclusion and exclusion rules explicit.','I sample both a matched employee and an excluded worker.','I inspect assignment criteria and future-match behavior before releasing a dynamic assignment.'],
+      ['I narrow compliance results to the group that needs action and preserve why that action was taken.','I distinguish overdue records from exemptions and recent assignments.','I keep the selected intervention traceable in reporting.','I validate the learner status and exception history before reminding, reassigning, or escalating.']
+    ],
+    sap: [
+      ['I trace required learning from the item to its curriculum and assignment profile before changing a population.','I keep those three SAP learning objects distinct.','I inspect the source object and recent processing activity.','I identify whether the issue lives in an item, curriculum, or assignment profile before editing a rule.'],
+      ['I use curricula to keep required items and their separate retraining intervals clear over time.','I maintain qualification rules at the curriculum level.','I test the returning learner and each item retraining cycle.','I check required status and retraining intervals at both item and curriculum level so renewal stays coherent.'],
+      ['I build assignment profiles from reliable worker attributes and preview who matches before execution.','I write conditions that explain the intended population.','I account for HR data timing and review mismatches.','I validate source attributes and population preview before executing assignment profile changes.'],
+      ['I read processing results as a change ledger and trace a sample learner to the profile behind the assignment.','I reconcile additions, removals, and unchanged users.','I verify the assignment source after the job completes.','I inspect processing status and a learner trace before treating an assignment job as complete.']
+    ],
+    workday: [
+      ['I start campaign work from the task queue, where audience, approvals, and delivery state meet.','I establish ownership and security before targeting workers.','I review the task state before scheduling delivery.','I confirm who owns the campaign and what approvals are required before promoting learning content.'],
+      ['I use a saved worker report for the campaign audience so the population remains explainable and repeatable.','I keep the HCM source visible in the campaign setup.','I sample new and recently transferred managers.','I inspect the report filters and worker status before accepting a recipient preview.'],
+      ['I sequence assignment, reminders, and approval so incomplete learners receive the right follow-up.','I separate approval from scheduled delivery.','I recheck dates, audience, and conditional reminders.','I review the approval state and reminder conditions before the campaign is scheduled.'],
+      ['I read delivery and learning completion as different signals when evaluating a campaign.','I follow up on learning status, not message opens alone.','I reconcile campaign analytics with learner records.','I compare the delivery funnel with actual learning completions before reporting impact.']
+    ],
+    blackboard: [
+      ['I use institutional hierarchy to place administrative responsibility with the college or department that owns it.','I scope access at the right hierarchy node.','I verify inherited administrator access.','I inspect hierarchy inheritance before granting an administrator access to courses or users.'],
+      ['I treat term course provisioning as a batch with both successful shells and exceptions to review.','I work from a reviewed term and course source.','I resolve failures and sample created courses.','I compare the import log with the source course list and inspect exceptions before closing the batch.'],
+      ['I maintain shared institutional resources centrally so courses can reference current guidance.','I keep policy ownership and usage visible.','I inspect affected courses after a shared update.','I check resource permissions and course references before revising centrally managed content.'],
+      ['I close terms with attention to course storage, archive jobs, and recovery needs.','I use a documented archive threshold.','I read job logs before marking work complete.','I verify archive output and warnings before removing access to an older course.']
+    ],
+    canvas: [
+      ['I use the account tree to give local teams appropriate course access while keeping institution settings governed.','I place courses and admins at the right subaccount.','I test access outside the assigned department.','I verify account placement and inherited scope before adding an admin role.'],
+      ['I separate course design support from root and SIS administration through scoped Canvas roles.','I grant only the permissions needed for the task.','I review inherited access and test the role.','I inspect each permission in context, especially SIS and account-level controls, before assigning a custom role.'],
+      ['I lock only the Blueprint attributes that need to remain shared while allowing intentional local course changes.','I decide what sync controls centrally and what stays local.','I preview changes before synchronizing associated courses.','I inspect locked content, points, and dates separately so a Blueprint sync preserves local teaching needs.'],
+      ['I use sync history to confirm associated courses received the expected change and to investigate warnings.','I treat a warning as a change decision.','I verify the affected course after resolving a conflict.','I review sync history and the associated course before assuming a Blueprint deployment succeeded.']
+    ],
+    sharepoint: [
+      ['I organize job aids around owned sites and clear navigation so people can find current guidance during work.','I associate related sites under a useful hub.','I confirm owners and association permissions.','I check the hub relationship, navigation, and site owner before expanding a knowledge portal.'],
+      ['I use metadata, review dates, and version history to keep approved guidance distinguishable from drafts.','I make content ownership and approval visible.','I test links to the published version.','I inspect version history and approval state before replacing a resource people already use.'],
+      ['I review site membership and external sharing together when resources cross organizational boundaries.','I scope access to the intended audience.','I test both visitor and guest accounts.','I check site permissions and sharing settings together because both affect what a guest can reach.'],
+      ['I move pages through owner review and approval while keeping previous versions recoverable.','I publish through a named owner and review state.','I verify page links and the visible version after release.','I inspect approval status and version history before publishing an updated knowledge page.']
+    ]
+  };
+  Object.entries(editorial).forEach(([id,copy])=>copy.forEach(([summary,decision,check,hotspot],index)=>Object.assign(demos[id].scenes[index],{summary,decision,check,hotspot})));
 
   const esc=value=>String(value==null?'':value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const focusTargets={
@@ -372,9 +330,9 @@
     sharepoint:['Active sites','Libraries','Permissions','Pages']
   };
   const dragCases={
-    'docebo:2':{source:'Reports · view',target:'Solution Partners — West',result:'Effective access: partner manager can see West reports; other branches stay outside the resource scope.'},
-    'workday:1':{source:'People Managers — Active',target:'Campaign audience',result:'Saved HCM report connected to the campaign; 3,218 active managers appear in the preview.'},
-    'canvas:2':{source:'04 pending changes',target:'18 associated courses',result:'Sync preview shows four changes across 18 courses; local due dates remain editable.'}
+    'docebo:2':{source:'Reports · view',target:'Solution Partners — West',result:'I match each Power User permission with its resource scope, then test what that user can actually open.'},
+    'workday:1':{source:'People Managers — Active',target:'Campaign audience',result:'I verify saved report filters and sample worker records before using that report as a campaign audience.'},
+    'canvas:2':{source:'04 pending changes',target:'18 associated courses',result:'I preview the sync against associated courses and confirm which attributes remain locally editable.'}
   };
   let activePrompt='';
   function item(label,kind,index,selected){
@@ -397,22 +355,7 @@
     return '';
   }
   function inspectionDetail(scene,label,preferred){
-    if(label.includes(preferred))return scene.outcome;
-    const row=(scene.rows||[]).find(v=>v[0]===label);
-    if(row)return row.slice(1).map((v,i)=>((scene.columns||[])[i+1]||'Status')+': '+v).join(' · ')+'. '+scene.check;
-    const field=(scene.fields||[]).find(v=>v[0]===label);
-    if(field)return field[0]+': '+field[1]+'. '+scene.check;
-    const block=(scene.blocks||[]).find(v=>v[1]===label);
-    if(block)return block[1]+' · '+block[2]+'. '+scene.check;
-    const metric=(scene.values||[]).find(v=>label===v[0]||label===v[1]+' '+v[0]);
-    if(metric)return metric[0]+': '+metric[1]+(metric[2]?' · '+metric[2]:'')+'. '+scene.check;
-    const entry=(scene.list||[]).find(v=>v[0]===label);
-    if(entry)return entry[0]+': '+entry[1]+'. '+scene.check;
-    const node=(scene.nodes||[]).find(v=>v[1]===label);
-    if(node)return node[1]+' · '+node[2]+'. '+scene.check;
-    const step=(scene.steps||[]).find(v=>v[0]===label);
-    if(step)return step[0]+': '+step[1]+'. '+scene.check;
-    return scene.check;
+    return scene.hotspot;
   }
   function makeWorkbench(root){
     const ids=root.dataset.platforms.split(',');
@@ -434,7 +377,7 @@
         '<div class="pui-guide"><strong>ADMIN TASK</strong><span>'+esc(workflowGuides[platformId][sceneIndex])+'</span></div>'+
         '<div class="pui-body pui-body-'+scene.kind+'">'+renderContent(scene,selected)+(drag?'<div class="pui-drag-lane"><span>TRY A CONFIGURATION MATCH</span><button type="button" data-drag-source draggable="true" class="'+(dragPicked?'picked':'')+'">'+esc(drag.source)+'</button><i>→</i><button type="button" data-drag-target>'+esc(drag.target)+'</button><small>Drag or select both</small></div>':'')+'</div>'+
         '<div class="pui-screen-footer"><span>'+(selected?'Record inspected · ready for next screen':'Select a highlighted record or control')+'</span><button type="button" data-next-screen>'+(sceneIndex===3?'Replay workflow':'Next: '+esc(platform.scenes[sceneIndex+1].tab))+' →</button></div></div></div></div>'+
-        '<aside class="platform-story"><p class="eyebrow">'+esc(platform.label)+' · '+esc(scene.tab)+'</p><h3>'+esc(scene.title)+'</h3><p>'+esc(scene.summary)+'</p><div class="platform-insight"><span>Configuration decision</span><strong>'+esc(scene.decision)+'</strong></div><div class="platform-insight"><span>Before release</span><strong>'+esc(scene.check)+'</strong></div><div class="platform-progress"><i style="width:'+((sceneIndex+1)*25)+'%"></i></div></aside></div>';
+        '<aside class="platform-story"><p class="eyebrow">'+esc(platform.label)+' · '+esc(scene.tab)+'</p><h3>'+esc(scene.title)+'</h3><p>'+esc(scene.summary)+'</p><div class="platform-insight"><span>My approach</span><strong>'+esc(scene.decision)+'</strong></div><div class="platform-insight"><span>What I check</span><strong>'+esc(scene.check)+'</strong></div><div class="platform-progress"><i style="width:'+((sceneIndex+1)*25)+'%"></i></div></aside></div>';
     }
     function closeDetail(){
       selected='';detailOverride='';
@@ -470,7 +413,7 @@
       if(stage){sceneIndex=Number(stage.dataset.scene);selected='';detailOverride='';dragPicked=false;render();return;}
       if(inspect){show(inspect.dataset.inspect,'',inspect);return;}
       const profile=event.target.closest('[data-profile]');
-      if(profile){const details={enrollment:'Enrollment remains active at 60%; the package change did not create a second enrollment.',transcript:'No score or completion event is recorded yet. Compare the learner launch with the LMS transcript before editing progress.'};show('Morgan Lee',details[profile.dataset.profile],profile);return;}
+      if(profile){const details={enrollment:'I compare the enrollment source, status, and course version before changing a learner assignment.',transcript:'I compare launch, score, and completion events with the transcript before editing progress.'};show('Morgan Lee',details[profile.dataset.profile],profile);return;}
       if(event.target.closest('[data-next-screen]')){sceneIndex=(sceneIndex+1)%4;selected='';detailOverride='';dragPicked=false;render();return;}
       if(event.target.closest('[data-close-detail]')){closeDetail();return;}
       if(event.target.closest('[data-drag-source]')){dragPicked=true;root.querySelector('[data-drag-source]').classList.add('picked');return;}
