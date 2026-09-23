@@ -1,34 +1,58 @@
 (() => {
   const diagnoses = {
     knowledge: {
-      signal: 'Repeated question', check: 'New understanding or a reminder?',
-      owner: 'Learning + source owner', route: 'Learning + support',
-      response: 'Teach the principle; keep a verified reference for the live task.'
+      title: 'Knowledge and skill',
+      summary: 'When a task depends on a concept or judgment, I look for the step a person cannot yet explain or perform independently.',
+      signal: 'Repeated questions or inconsistent decisions across similar tasks.',
+      check: 'Can the person apply the rule to a new example, or do they only need a reminder?',
+      improve: 'Build practice for new judgment and a quick reference for stable steps.',
+      route: 'Practice + job aid',
+      response: 'Teach the decision, then put a concise cue beside the real task.'
     },
     access: {
-      signal: 'Cannot reach the answer', check: 'Entry point, label, or permission?',
-      owner: 'Administrator / support', route: 'Guidance + escalation',
-      response: 'Clarify the route; send account or permission changes to the owner.'
+      title: 'Access to guidance',
+      summary: 'An accurate answer has little value if the worker cannot reach it while the task is underway.',
+      signal: 'People search in the wrong place, hit permissions, or abandon the link.',
+      check: 'Follow the worker’s actual entry point, device, search words, and access level.',
+      improve: 'Clarify labels and links; route permission changes to the system owner.',
+      route: 'Findability + access fix',
+      response: 'Place the trusted answer where the work begins and verify that the audience can open it.'
     },
     process: {
-      signal: 'Work stalls at a handoff', check: 'Does the documented step fit the work?',
-      owner: 'Operational owner', route: 'Workflow change',
-      response: 'Review the handoff and update the workflow with its guidance.'
+      title: 'Workflow and handoff',
+      summary: 'A stalled task can reflect an unclear sequence, role boundary, or approval point rather than missing knowledge.',
+      signal: 'Work waits between owners or the documented step does not match practice.',
+      check: 'Walk through a real case and mark where the handoff or rule breaks down.',
+      improve: 'Agree on the next owner and repair the workflow before updating its guide.',
+      route: 'Workflow + guide update',
+      response: 'Make the handoff explicit and support the revised process with a short task aid.'
     },
     source: {
-      signal: 'Answers conflict', check: 'Which source is authoritative?',
-      owner: 'SME / source owner', route: 'Maintained reference',
-      response: 'Validate the answer and name who will keep the reference current.'
+      title: 'Source of truth',
+      summary: 'Conflicting or aging instructions make people hesitate even when a reference exists.',
+      signal: 'Two documents give different answers or users cannot tell which is current.',
+      check: 'Trace the answer to an authoritative source and identify its update owner.',
+      improve: 'Retire duplicates, surface the current answer, and establish a review path.',
+      route: 'Maintained reference',
+      response: 'Publish one answer with a clear source, owner, and update cue.'
     },
     system: {
-      signal: 'Expected path fails', check: 'Setting, mapping, visibility, or data?',
-      owner: 'System administrator', route: 'Configuration fix',
-      response: 'Document the case; update guidance after the fix is verified.'
+      title: 'System and data conditions',
+      summary: 'A tool can block performance through settings, visibility, data flow, or a broken interaction.',
+      signal: 'The expected screen, field, or record does not behave as the guide describes.',
+      check: 'Reproduce the path and inspect permissions, mappings, settings, and data.',
+      improve: 'Fix the underlying condition with its owner; then correct the guidance.',
+      route: 'System fix + support',
+      response: 'Verify the technical change before teaching a workaround or revising the job aid.'
     },
-    exception: {
-      signal: 'Routine route stops', check: 'Judgment, correction, or investigation?',
-      owner: 'SME / support owner', route: 'Human escalation',
-      response: 'Capture context and send the case to the person who can act.'
+    feedback: {
+      title: 'Feedback and reinforcement',
+      summary: 'People improve when they can see whether an action worked and how to adjust the next attempt.',
+      signal: 'The same error recurs after instruction or no clear confirmation follows the task.',
+      check: 'What cue appears at the decision point, and is it specific enough to guide a correction?',
+      improve: 'Add in-work feedback, a worked example, or timely coaching where judgment matters.',
+      route: 'In-work cues + coaching',
+      response: 'Make success visible and give the worker a useful next move, then check whether errors decline.'
     }
   };
 
@@ -42,9 +66,11 @@
       item.classList.toggle('active', selected);
       item.setAttribute('aria-pressed', String(selected));
     });
+    document.getElementById('psFindingTitle').textContent = data.title;
+    document.getElementById('psFindingSummary').textContent = data.summary;
     document.getElementById('psFindingSignal').textContent = data.signal;
     document.getElementById('psDiagnosisCheck').textContent = data.check;
-    document.getElementById('psFindingOwner').textContent = data.owner;
+    document.getElementById('psFindingImprovement').textContent = data.improve;
     document.getElementById('psRouteVisual').textContent = data.route;
     document.getElementById('psDiagnosisResponse').textContent = data.response;
     scenes.forEach(scene => {
