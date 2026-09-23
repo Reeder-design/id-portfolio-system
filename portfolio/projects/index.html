@@ -17,7 +17,10 @@
     <style>
         .featured-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.featured-case-card{display:flex;flex-direction:column;min-width:0;padding:24px;border:1px solid rgba(80,132,132,.18);border-radius:21px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(248,250,248,.84));box-shadow:0 14px 38px rgba(52,74,66,.08)}.featured-case-card .icon-badge{margin-bottom:16px}.featured-case-card h3{margin-bottom:9px;color:var(--pine-blue)}.featured-case-card p:not(.eyebrow){margin-bottom:18px;line-height:1.6}.featured-case-card .case-meta-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.featured-case-card .project-family-link{margin-top:auto}.projects-contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}.refresh-hero-grid{column-gap:clamp(28px,6vw,72px);row-gap:18px}.refresh-hero-grid>.breadcrumbs{margin-bottom:0}.github-workflow-spotlight{background:#173139!important;color:#eef6f1!important}
 .github-workflow-spotlight .container{position:relative}
-.github-workflow-spotlight-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(440px,.9fr);gap:34px;align-items:center;padding:30px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(145deg,#1a3439,#234947)!important;box-shadow:0 20px 46px rgba(0,0,0,.18)}
+.github-workflow-spotlight-card{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(440px,.9fr);gap:34px;align-items:center;overflow:hidden;padding:30px;border:1px solid rgba(121,201,158,.32);border-radius:24px;background:radial-gradient(circle at 87% 14%,rgba(151,219,79,.13),transparent 34%),radial-gradient(circle at 10% 88%,rgba(80,132,132,.23),transparent 38%),linear-gradient(145deg,#1a3439,#234947)!important;box-shadow:0 20px 46px rgba(0,0,0,.18),inset 0 0 0 5px rgba(121,201,158,.035)}
+.github-workflow-spotlight-card::before,.content-library-spotlight-card::before{content:"";position:absolute;z-index:2;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,var(--pine-blue),var(--mint-leaf),var(--yellow-green),var(--mint-leaf),var(--pine-blue))}
+.github-workflow-spotlight-card::after,.content-library-spotlight-card::after{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(121,201,158,.35) 1px,transparent 1.5px);background-size:27px 27px;opacity:.2}
+.github-workflow-spotlight-card>*,.content-library-spotlight-card>*{position:relative;z-index:1}
 .github-workflow-spotlight .eyebrow{color:#afe1bf!important}
 .github-workflow-spotlight h2{max-width:760px;margin:0 0 9px;color:#fff!important}
 .github-workflow-spotlight p:not(.eyebrow){max-width:760px;margin:0;color:#cbdad2!important;line-height:1.52}
@@ -26,7 +29,7 @@
 .github-spotlight-actions{margin-top:16px}
 .github-spotlight-actions .btn{display:inline-flex}
 
-.github-spotlight-workflow{position:relative;padding:20px 20px 18px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:#10272e;overflow:hidden}
+.github-spotlight-workflow{position:relative;padding:20px 20px 18px;border:1px solid rgba(121,201,158,.22);border-radius:20px;background:radial-gradient(circle at 88% 4%,rgba(151,219,79,.1),transparent 37%),#10272e;overflow:hidden}
 .github-spotlight-workflow-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
 .github-spotlight-workflow-header span{color:#afe1bf;font:900 .5rem/1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
 .github-spotlight-workflow-header b{color:#dce9e2;font:800 .48rem/1 var(--font-heading)}
@@ -49,8 +52,32 @@
 .github-spotlight-system-chips span{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:9px 11px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.045);color:#dce9e2;font:800 .49rem/1.2 var(--font-heading);text-align:center}
 .github-spotlight-system-chips img{width:38px;height:38px;padding:4px;border-radius:9px;background:#fff;object-fit:contain}
 
+.content-library-spotlight{position:relative;overflow:hidden;background:radial-gradient(circle at 91% 10%,rgba(151,219,79,.14),transparent 29%),radial-gradient(circle at 12% 90%,rgba(80,132,132,.14),transparent 35%),linear-gradient(150deg,var(--off-white),rgba(121,201,158,.16))!important}
+.content-library-spotlight-card{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,.8fr);gap:clamp(22px,4vw,52px);align-items:center;overflow:hidden;padding:clamp(22px,4vw,42px);border:1px solid rgba(80,132,132,.38);border-radius:22px;background:radial-gradient(circle at 86% 13%,rgba(151,219,79,.16),transparent 34%),radial-gradient(circle at 6% 87%,rgba(121,201,158,.15),transparent 40%),linear-gradient(145deg,var(--white),var(--off-white));box-shadow:0 18px 40px rgba(52,74,66,.12),inset 0 0 0 5px rgba(121,201,158,.07)}
+.content-library-spotlight-card::after{background-image:radial-gradient(circle,rgba(80,132,132,.36) 1px,transparent 1.5px);opacity:.22}
+.content-library-spotlight .eyebrow{color:var(--pine-blue)}
+.content-library-spotlight h2{max-width:700px;margin:9px 0 14px;color:var(--taupe)}
+.content-library-spotlight p:not(.eyebrow){max-width:720px;margin:0;color:var(--charcoal);line-height:1.6}
+.content-library-spotlight .btn{display:inline-flex;margin-top:22px}
+.content-library-preview{position:relative;overflow:hidden;border:1px solid var(--pine-blue);border-radius:14px;background:var(--off-white);box-shadow:8px 9px 0 rgba(80,132,132,.13),0 16px 36px rgba(52,74,66,.12)}
+.content-library-preview::before{content:"";position:absolute;z-index:2;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--pine-blue),var(--mint-leaf),var(--yellow-green),var(--mint-leaf),var(--pine-blue))}
+.content-library-preview-header{display:flex;align-items:center;gap:10px;padding:15px 15px 12px;background:linear-gradient(110deg,var(--pine-blue),var(--charcoal));color:var(--white);font:800 .8rem/1.2 var(--font-heading)}
+.content-library-preview-header img{width:30px;height:30px;padding:4px;border-radius:7px;background:var(--white);object-fit:contain}
+.content-library-preview-body{display:grid;gap:13px;padding:18px;background:radial-gradient(circle at 90% 16%,rgba(151,219,79,.16),transparent 36%),linear-gradient(150deg,var(--off-white),rgba(121,201,158,.13))}
+.content-library-preview-body>div:first-child{display:flex;align-items:center;gap:12px}
+.content-library-preview-body>div:first-child img{width:69px;height:69px;padding:4px;border-radius:10px;background:var(--white);object-fit:contain;image-rendering:pixelated}
+.content-library-preview-body strong{display:block;color:var(--taupe);font:800 1rem/1.2 var(--font-heading)}
+.content-library-preview-body small{color:var(--pine-blue);font-size:.69rem;font-weight:800}
+.content-library-preview-search{padding:10px 12px;border:1px solid rgba(80,132,132,.35);border-radius:7px;background:var(--white);color:var(--charcoal);font-size:.73rem}
+.content-library-preview-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.content-library-preview-items span{min-height:57px;padding:11px 9px 9px;border:1px solid rgba(80,132,132,.3);border-radius:7px;background:var(--white);box-shadow:inset 0 4px 0 var(--pine-blue);color:var(--taupe);font:800 .65rem/1.2 var(--font-heading)}
+.content-library-preview-items span:nth-child(2){box-shadow:inset 0 4px 0 var(--mint-leaf)}
+.content-library-preview-items span:nth-child(3){box-shadow:inset 0 4px 0 var(--yellow-green)}
+
 @media(max-width:900px){.github-workflow-spotlight-card{grid-template-columns:1fr}}
+@media(max-width:900px){.content-library-spotlight-card{grid-template-columns:1fr}.content-library-preview{max-width:660px}}
 @media(max-width:620px){.github-spotlight-rail{grid-template-columns:repeat(2,1fr);row-gap:22px}.github-spotlight-rail::before,.github-spotlight-packet{display:none}.github-spotlight-system-chips{grid-template-columns:1fr}.github-spotlight-stage i{width:88px;height:88px}.github-spotlight-stage img{width:78px;height:78px}.github-spotlight-stage strong{font-size:.58rem}}
+@media(max-width:620px){.content-library-preview-items{grid-template-columns:1fr}.content-library-preview-items span{min-height:0}.content-library-spotlight-card{padding:20px}}
 @media(prefers-reduced-motion:reduce){.github-spotlight-packet{animation:none!important}}@media(max-width:960px){.featured-case-grid{grid-template-columns:1fr}}
     </style>
     <script defer src="../js/portfolio-motion.js"></script>
@@ -94,24 +121,31 @@
 <article class="project-family-card"><div class="project-family-header"><span class="icon-badge project-family-icon" aria-hidden="true"><svg class="portfolio-icon icon-med"><use href="../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">L&D Operations + Automation</p><h2>Workflows</h2><p>Task automation, workflow apps, reporting, agent-assisted work, and cross-functional processes that keep L&D work moving cleanly.</p></div><div class="project-family-body"><ul class="project-family-list"><li>Task + reporting automation</li><li>Workflow apps + reusable processes</li><li>Agents, scripts + cross-functional delivery</li></ul><a class="project-family-link" href="./workflows/index.html">Explore Workflows →</a></div></article>
 </div></div></section>
 
+<section class="section content-library-spotlight" id="content-library-spotlight" aria-labelledby="content-library-title">
+  <div class="container"><div class="content-library-spotlight-card">
+    <div><p class="eyebrow">Content Library · the broader shelf</p><h2 id="content-library-title">The useful stuff that doesn't need a spotlight.</h2><p>The portfolio is my highlight reel: selected projects and work experience with the full story. The Content Library is where I put general-purpose templates, scripts, prompts, interactions, and experiments that are useful even without a full case study.</p><a class="btn btn-primary" href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Browse Content Library ↗</a></div>
+    <div class="content-library-preview" aria-label="Illustration of the Content Library browsing experience"><div class="content-library-preview-header"><img src="../assets/site/content-lab-favicon.svg" alt=""><span>Content Library</span></div><div class="content-library-preview-body"><div><img src="../assets/icons/pixel/github-projects/library.webp" alt=""><div><small>THE BROADER SHELF</small><strong>Find something useful.</strong></div></div><div class="content-library-preview-search">⌕ &nbsp; Search tools, topics, formats…</div><div class="content-library-preview-items"><span>◇ Templates</span><span>✳ Interactions</span><span>⌘ Scripts &amp; prompts</span></div></div></div>
+  </div></div>
+</section>
+
 <section class="section github-workflow-spotlight" id="github-portfolio-workflow">
   <div class="container">
     <div class="github-workflow-spotlight-card">
       <div class="github-spotlight-copy">
-        <p class="eyebrow">Spotlight · GitHub Portfolio Workflow</p>
-        <h2>The systems behind the portfolio are part of the work.</h2>
-        <p>I use GitHub to connect the public portfolio, local management tools, reusable content library, and learning-development prototypes into one versioned workflow.</p>
+        <p class="eyebrow">Spotlight · GitHub Build Lab</p>
+        <h2>I built the stuff behind the stuff.</h2>
+        <p>Meet the portfolio, Content Library, and Learning Content Workbench I designed and coded. Peek at public pages and safe mini demos of the private tools that hold them together.</p>
         <div class="github-spotlight-tags"><span>3 repositories</span><span>5 connected tools</span><span>UAT + CI</span><span>Reusable content</span></div>
-        <div class="github-spotlight-actions"><a class="btn btn-primary" href="./github-workflow/index.html">Explore GitHub Portfolio Workflow →</a></div>
+        <div class="github-spotlight-actions"><a class="btn btn-primary" href="./github-workflow/index.html">Explore my GitHub Build Lab →</a></div>
       </div>
-      <div class="github-spotlight-workflow" aria-label="Simplified GitHub portfolio lifecycle from source content through reuse, build, and publish">
-        <div class="github-spotlight-workflow-header"><span>Portfolio workflow</span><b>capture → reuse → build → publish</b></div>
+      <div class="github-spotlight-workflow" aria-label="Simplified GitHub portfolio lifecycle from source content through optional Workbench preparation, manager review, and public publishing">
+        <div class="github-spotlight-workflow-header"><span>Portfolio workflow</span><b>capture → prepare → review → publish</b></div>
 
         <div class="github-spotlight-rail">
           <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/content-design/content.webp" alt=""></i><small>01 · Capture</small><strong>Source + ideas</strong></span>
-          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/library.webp" alt=""></i><small>02 · Reuse</small><strong>Content Lab</strong></span>
-          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><small>03 · Build</small><strong>Workbench</strong></span>
-          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><small>04 · Publish</small><strong>Portfolio</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></i><small>02 · Prepare</small><strong>Workbench (optional)</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""></i><small>03 · Review</small><strong>Managers</strong></span>
+          <span class="github-spotlight-stage"><i><img src="../assets/icons/pixel/github-projects/portfolio.webp" alt=""></i><small>04 · Publish</small><strong>Public sites</strong></span>
           <span class="github-spotlight-packet" aria-hidden="true"></span>
         </div>
 

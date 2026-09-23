@@ -1,55 +1,146 @@
 (() => {
-  'use strict';
-  const root = document.querySelector('[data-gh-workflow]');
-  if (!root) return;
-  const tabs = [...root.querySelectorAll('[data-gh-stage]')];
-  tabs.forEach(button => { button.id = `gh-stage-${button.dataset.ghStage}`; });
-  const content = {
-    scope: {
-      label:'01 / Scope',title:'Define the visitor-facing change.',text:'I write down the page, intended behavior, affected files, and review criteria before editing.',gate:'The request has a clear outcome and a way to check it.',alt:'Illustrative issue with acceptance checks and affected pages.',window:'ISSUE / 024',status:'Ready to build',scene:`<div class="gh-ui-heading"><strong>Improve the learner route</strong><span class="gh-ui-pill">Open issue</span></div><span class="gh-ui-label">REQUEST</span><div class="gh-ui-card"><strong>Make the pathway easier to follow</strong><p>Audience: hiring managers and learning leaders. Update the first screen and the route to the case study.</p></div><div class="gh-ui-checks"><span>One visible primary action</span><span>Current assets and page theme retained</span><span>Mobile and reduced-motion states checked</span></div><div class="gh-ui-footer"><span>Labels: learning UX · content</span><b>Owner assigned</b></div>`
-    },
-    build: {
-      label:'02 / Build',title:'Make the change in an isolated branch.',text:'I edit the page and related styles or scripts together, then inspect the changed files before requesting review.',gate:'The branch contains the intended change and no unrelated edits.',alt:'Illustrative code branch with changed files and a preview status.',window:'BRANCH / feature/learner-route',status:'Draft changes',scene:`<div class="gh-ui-heading"><strong>Feature branch</strong><span class="gh-ui-pill">3 files changed</span></div><div class="gh-branch-line"><span>main</span><i></i><span>feature/learner-route</span></div><span class="gh-ui-label">CHANGED FILES</span><div class="gh-file-list"><div><span>portfolio/pathway/index.html</span><b>+18 −9</b></div><div><span>portfolio/css/pathway.css</span><b>+43 −12</b></div><div><span>portfolio/js/pathway.js</span><b>+16 −4</b></div></div><div class="gh-ui-footer"><span>Local preview ready</span><b>Diff reviewed ✓</b></div>`
-    },
-    review: {
-      label:'03 / Review',title:'Check the exact version being proposed.',text:'A pull request brings the change, visual review, automated checks, and any overlapping work into one decision point.',gate:'The current branch merges cleanly, the checks pass, and the page is visually reviewed.',alt:'Illustrative pull request showing visual review, link checks, and validation results.',window:'PULL REQUEST / 124',status:'Checks passing',scene:`<div class="gh-ui-heading"><strong>Learning route refresh</strong><span class="gh-ui-pill">Ready for review</span></div><div class="gh-compare"><span>Base<br><b>main</b></span><span>Compare<br><b>feature/learner-route</b></span></div><span class="gh-ui-label" style="margin-top:13px">QUALITY GATES</span><div class="gh-check-row"><span>✓ Content + links</span><b>Passed</b></div><div class="gh-check-row"><span>✓ Responsive preview</span><b>Passed</b></div><div class="gh-check-row"><span>✓ Visual UAT</span><b>Reviewed</b></div><div class="gh-check-row"><span>✓ Current main + overlap</span><b>Clear</b></div><div class="gh-ui-footer"><span>Validated commit: exact PR head</span><b>Review complete</b></div>`
-    },
-    publish: {
-      label:'04 / Publish',title:'Release the reviewed change.',text:'Once approved, the merged version becomes the source for the public site. I confirm the deployed page and its navigation.',gate:'The live page matches the approved version and its links work.',alt:'Illustrative deployment sequence from approved pull request to live public page.',window:'DEPLOYMENT / PAGES',status:'Live',scene:`<div class="gh-ui-heading"><strong>Public release</strong><span class="gh-ui-pill">Published</span></div><div class="gh-publish-track"><span>Approved PR</span><i></i><span>Main</span><i></i><span>GitHub Pages</span></div><div class="gh-live-card"><strong>id-portfolio-system</strong><small>Live site · latest reviewed version</small></div><div class="gh-ui-checks"><span>Homepage and project route open</span><span>Interactive stage responds</span><span>Assets load at mobile width</span></div><div class="gh-ui-footer"><span>Release record retained</span><b>Live check ✓</b></div>`
-    },
-    maintain: {
-      label:'05 / Maintain',title:'Turn findings into the next scoped update.',text:'Broken links, changed content, feedback, and reusable patterns become new tracked work instead of ad hoc edits.',gate:'The issue has an owner, a reproducible check, and a path back through review.',alt:'Illustrative maintenance dashboard with site checks and a new issue queued.',window:'MAINTENANCE / SITE',status:'Monitoring',scene:`<div class="gh-ui-heading"><strong>Release health</strong><span class="gh-ui-pill">Monitoring</span></div><div class="gh-monitor"><span><b>98%</b> link health</span><span><b>0</b> failed checks</span><span><b>2</b> ideas queued</span></div><span class="gh-ui-label">NEW FINDING</span><div class="gh-issue-row">Improve keyboard focus on one learning demo → issue created</div><div class="gh-ui-checks"><span>Record exact page and behavior</span><span>Keep reusable pattern in content library</span><span>Scope the next branch from current main</span></div><div class="gh-ui-footer"><span>Release history available</span><b>Next cycle ready</b></div>`
-    }
-  };
-  const panel = root.querySelector('#gh-stage-panel');
-  const render = key => {
-    const item = content[key];
-    if (!item) return;
-    root.querySelector('#ghStageLabel').textContent = item.label;
-    root.querySelector('#ghStageTitle').textContent = item.title;
-    root.querySelector('#ghStageText').textContent = item.text;
-    root.querySelector('#ghStageGate').textContent = item.gate;
-    const screen = root.querySelector('#ghStageScreen');
-    screen.setAttribute('aria-label', item.alt);
-    screen.innerHTML = `<div class="gh-ui-bar"><span>● ● ●</span><strong>${item.window}</strong><small>${item.status}</small></div><div class="gh-ui-body">${item.scene}</div>`;
-    tabs.forEach(button => {
-      const active = button.dataset.ghStage === key;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
-    panel.dataset.stage = key;
-    panel.setAttribute('aria-labelledby', `gh-stage-${key}`);
-  };
-  tabs.forEach((button, index) => {
-    button.addEventListener('click', () => render(button.dataset.ghStage));
-    button.addEventListener('keydown', event => {
-      if (!['ArrowRight','ArrowLeft','Home','End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : event.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
-      tabs[next].focus();
-      render(tabs[next].dataset.ghStage);
+  const page = document.querySelector('.gh-page');
+  if (!page) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  page.querySelectorAll('[data-scroll-to]').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.getElementById(button.dataset.scrollTo)?.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
     });
   });
-  render('scope');
+
+  const explorer = page.querySelector('[data-live-explorer]');
+  if (explorer) {
+    const tabs = [...explorer.querySelectorAll('[data-live-tab]')];
+    const panels = [...explorer.querySelectorAll('[data-live-panel]')];
+    const selectTab = (tab, focus = false) => {
+      const selected = tab.dataset.liveTab;
+      tabs.forEach((item) => {
+        const active = item === tab;
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      panels.forEach((panel) => { panel.hidden = panel.dataset.livePanel !== selected; });
+      if (focus) tab.focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault();
+        selectTab(tabs[next], true);
+      });
+    });
+
+    page.querySelectorAll('[data-open-demo]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const tab = tabs.find((item) => item.dataset.liveTab === button.dataset.openDemo);
+        if (!tab) return;
+        selectTab(tab);
+        explorer.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        tab.focus({ preventScroll: true });
+      });
+    });
+
+    explorer.querySelectorAll('[data-sample-demo]').forEach((button) => {
+      const result = button.closest('[data-live-panel]')?.querySelector('[data-demo-result]');
+      if (!result) return;
+      const originalLabel = button.textContent;
+      button.addEventListener('click', () => {
+        result.hidden = !result.hidden;
+        button.textContent = result.hidden ? originalLabel : 'Hide sample ↑';
+      });
+    });
+
+    const workbenchDemo = explorer.querySelector('[data-workbench-demo]');
+    if (workbenchDemo) {
+      const choices = [...workbenchDemo.querySelectorAll('[data-workbench-choice]')];
+      const feedback = workbenchDemo.querySelector('[data-workbench-feedback]');
+      const messages = {
+        sanitize: 'Good call. Make a public-safe copy, then review it before anything is shared.',
+        publish: 'Pause here. The example needs a public-safe edit and human review first.'
+      };
+      choices.forEach((choice) => {
+        choice.addEventListener('click', () => {
+          choices.forEach((item) => item.setAttribute('aria-pressed', String(item === choice)));
+          if (feedback) feedback.textContent = messages[choice.dataset.workbenchChoice] || '';
+        });
+      });
+    }
+
+    panels.forEach((panel) => {
+      const launch = panel.querySelector('[data-launch-live]');
+      const frame = panel.querySelector('[data-live-frame]');
+      const cover = panel.querySelector('[data-live-cover]');
+      if (!launch || !frame || !cover) return;
+      launch.addEventListener('click', () => {
+        if (!frame.hidden) {
+          frame.hidden = true;
+          cover.hidden = false;
+          launch.textContent = 'Launch live page in frame ↗';
+          return;
+        }
+        if (frame.dataset.loaded === 'true') {
+          cover.hidden = true;
+          frame.hidden = false;
+          launch.textContent = 'Back to preview ←';
+          return;
+        }
+        launch.textContent = 'Loading live page…';
+        launch.disabled = true;
+        frame.addEventListener('load', () => {
+          frame.dataset.loaded = 'true';
+          cover.hidden = true;
+          frame.hidden = false;
+          launch.textContent = 'Back to preview ←';
+          launch.disabled = false;
+        }, { once: true });
+        frame.src = frame.dataset.src;
+        window.setTimeout(() => {
+          if (!launch.disabled) return;
+          launch.textContent = 'Try live page again ↻';
+          launch.disabled = false;
+        }, 8000);
+      });
+    });
+  }
+
+  const nav = page.querySelector('[data-page-nav]');
+  const marker = page.querySelector('[data-nav-marker]');
+  const spacer = page.querySelector('[data-nav-spacer]');
+  const progress = page.querySelector('[data-nav-progress]');
+  if (nav && marker && spacer && progress) {
+    const links = [...nav.querySelectorAll('[data-section-link]')];
+    const sections = links.map((link) => document.getElementById(link.dataset.sectionLink));
+    const update = () => {
+      const height = nav.offsetHeight;
+      page.style.setProperty('--gh-nav-height', `${height}px`);
+      const pinned = marker.getBoundingClientRect().top <= 0;
+      nav.classList.toggle('is-pinned', pinned);
+      spacer.style.height = pinned ? `${height}px` : '0px';
+
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      progress.style.width = `${Math.min(100, Math.max(0, window.scrollY / maxScroll * 100))}%`;
+      let active = -1;
+      sections.forEach((section, index) => {
+        if (section && section.getBoundingClientRect().top <= height + 105) active = index;
+      });
+      links.forEach((link, index) => {
+        if (index === active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
 })();

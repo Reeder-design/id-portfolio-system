@@ -301,6 +301,7 @@
     ['about', 'About Me'],
     ['contact', 'Contact'],
     ['projects', 'Projects'],
+    ['projects/github-workflow', 'GitHub Build Lab'],
     ['projects/instructional-design', 'Instructional Design'],
     ['projects/instructional-design/complete-learning-paths', 'Complete eLearning Pathways'],
     ['projects/instructional-design/interactive-learning', 'Interactive Learning'],
