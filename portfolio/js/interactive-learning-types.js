@@ -1,8 +1,6 @@
 (() => {
-  const selectOne = (buttons, selected) => {
-    buttons.forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
-  };
-
+  let startPhishingDemo = () => {};
+  let startAiDemo = () => {};
   const typeTabs = [...document.querySelectorAll('.type-tabs [role="tab"]')];
   const selectTypeTab = (selected, focus = false) => {
     typeTabs.forEach(tab => {
@@ -11,6 +9,8 @@
       tab.tabIndex = active ? 0 : -1;
       document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
     });
+    if (selected.id === 'tab-gamified-challenges') startPhishingDemo();
+    if (selected.id === 'tab-learner-facing-ai') startAiDemo();
     if (focus) selected.focus();
   };
   typeTabs.forEach((tab, index) => {
@@ -99,41 +99,78 @@
     hotspotReveal.querySelector('span').textContent = hotspotDetails[phase][1];
   }, 3, 2300, 1);
 
-  const phishingEmails = [
-    { sender: 'IT Helpdesk · external address', subject: 'Urgent: reset your password', cue: 'Unfamiliar sender · rushed deadline', feedback: 'An AI-crafted urgent reset request uses an unfamiliar sender. Report it.' },
-    { sender: 'Executive office · outside domain', subject: 'Buy gift cards before 2 PM', cue: 'Unexpected payment request · urgency', feedback: 'A fake executive asks for gift cards. Report the impersonation.' },
-    { sender: 'Vendor billing · lookalike domain', subject: 'Invoice overdue: open attachment', cue: 'Unexpected attachment · spoofed domain', feedback: 'A lookalike vendor domain and attachment are warning signs. Report it.' }
-  ];
   const phishingVisual = document.querySelector('.phishing-visual');
-  loop(phase => {
-    const cleared = Math.min(phase, 3);
-    const email = phishingEmails[Math.min(phase, 2)];
-    phishingVisual.dataset.score = String(cleared);
-    document.getElementById('gameStars').textContent = Array.from({ length: 3 }, (_, index) => index < cleared ? '★' : '☆').join(' ');
-    document.getElementById('gameCount').textContent = cleared === 3 ? 'All 3 reported' : `${3 - cleared} threat${3 - cleared === 1 ? '' : 's'} to spot`;
-    document.getElementById('phishingSender').textContent = email.sender;
-    document.getElementById('phishingSubject').textContent = email.subject;
-    document.getElementById('phishingCue').textContent = email.cue;
-    document.getElementById('gameFeedback').textContent = phase === 3
-      ? 'Three suspicious emails reported. The simulation restarts for another practice round.'
-      : email.feedback;
-  }, 4, 2850, 1);
+  const gameStars = document.getElementById('gameStars');
+  const gameCount = document.getElementById('gameCount');
+  const gameFeedback = document.getElementById('gameFeedback');
+  const rounds = [
+    { name: 'social', feedback: 'Round 1: the new profile has no mutual connections and links to a reward. Report the bot.' },
+    { name: 'email', feedback: 'Round 2: the email uses a lookalike helpdesk domain and a rushed password request. Report it.' },
+    { name: 'text', feedback: 'Round 3: the delivery text comes from an unknown number and links to an unfamiliar site. Block and report.' }
+  ];
+  let phishingStarted = false;
+  const showRound = index => {
+    if (index === rounds.length) {
+      phishingVisual.dataset.round = 'complete';
+      phishingVisual.dataset.score = '3';
+      gameStars.textContent = '★ ★ ★';
+      gameCount.textContent = 'Mission complete';
+      gameFeedback.textContent = 'All three threats were reported. The finished trophy screen stays open.';
+      return;
+    }
+    phishingVisual.dataset.round = rounds[index].name;
+    phishingVisual.dataset.score = String(index);
+    gameStars.textContent = Array.from({ length: 3 }, (_, star) => star < index ? '★' : '☆').join(' ');
+    gameCount.textContent = `${3 - index} threat${3 - index === 1 ? '' : 's'} to spot`;
+    gameFeedback.textContent = rounds[index].feedback;
+  };
+  startPhishingDemo = () => {
+    if (phishingStarted) return;
+    phishingStarted = true;
+    showRound(0);
+    const roundDuration = reducedMotion ? 2500 : 6000;
+    rounds.forEach((_, index) => {
+      window.setTimeout(() => showRound(index + 1), roundDuration * (index + 1));
+    });
+  };
 
-  const aiButtons = [...document.querySelectorAll('[data-ai-learner]')];
-  aiButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(aiButtons, button);
-    aiButtons.forEach(item => item.classList.toggle('active', item === button));
-    const newer = button.dataset.aiLearner === 'new';
-    document.getElementById('aiRouteMiddle').textContent = newer ? 'Guided example' : 'Complex case';
-    document.getElementById('aiRouteEnd').textContent = newer ? 'Practice with cues' : 'Open response';
-    document.getElementById('aiLearnerPrompt').textContent = newer
-      ? '“I know the customer is interested. What should I ask next?”'
-      : '“The sponsor supports us, but I am unsure who signs off. How should I test the deal?”';
-    document.getElementById('aiCoachReply').textContent = newer
-      ? '“Ask who can approve the investment, then listen for evidence of the buying process.”'
-      : '“Map the approval path. Which stakeholder can confirm the economic buyer and timing?”';
-    document.getElementById('aiPathFeedback').textContent = newer
-      ? 'The tutor provides a concrete question and guided example for the next attempt.'
-      : 'The tutor challenges the learner to test the approval path in a more complex case.';
-  }));
+  const aiVisual = document.querySelector('.ai-path-visual');
+  const aiProfiles = [...document.querySelectorAll('[data-ai-learner]')];
+  const aiResponses = [
+    {
+      profile: 'new',
+      prompt: '“I know the customer is interested. What should I ask next?”',
+      reply: '“Ask who can approve the investment, then listen for evidence of the buying process.”',
+      feedback: 'The tutor gives a concrete question and guided example for a new learner.'
+    },
+    {
+      profile: 'experienced',
+      prompt: '“The sponsor supports us, but I am unsure who signs off. How should I test the deal?”',
+      reply: '“Map the approval path. Which stakeholder can confirm the economic buyer and timing?”',
+      feedback: 'The tutor challenges an experienced learner to test the approval path.'
+    }
+  ];
+  let aiStarted = false;
+  const showAiProfile = index => {
+    const response = aiResponses[index];
+    aiVisual.dataset.profile = response.profile;
+    aiProfiles.forEach(profile => profile.classList.toggle('active', profile.dataset.aiLearner === response.profile));
+    document.getElementById('aiLearnerPrompt').textContent = response.prompt;
+    document.getElementById('aiCoachReply').textContent = response.reply;
+    document.getElementById('aiPathFeedback').textContent = response.feedback;
+    aiVisual.classList.remove('ai-refresh');
+    void aiVisual.offsetWidth;
+    aiVisual.classList.add('ai-refresh');
+  };
+  startAiDemo = () => {
+    if (aiStarted) return;
+    aiStarted = true;
+    let index = 0;
+    showAiProfile(index);
+    if (!reducedMotion) window.setInterval(() => {
+      index = (index + 1) % aiResponses.length;
+      showAiProfile(index);
+    }, 5500);
+  };
+
 })();
