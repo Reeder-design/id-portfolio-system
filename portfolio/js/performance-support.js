@@ -1,46 +1,39 @@
 (() => {
-  const iconRoot = '../../../../assets/icons/pixel/';
   const diagnoses = {
     knowledge: {
-      cause: 'Knowledge', signal: 'Repeated question', check: 'New understanding or a reminder?',
+      signal: 'Repeated question', check: 'New understanding or a reminder?',
       owner: 'Learning + source owner', route: 'Learning + support',
-      response: 'Teach the principle; keep a verified reference for the live task.',
-      icon: 'workflows/learning-enablement/knowledge.webp'
+      response: 'Teach the principle; keep a verified reference for the live task.'
     },
     access: {
-      cause: 'Access', signal: 'Cannot reach the answer', check: 'Entry point, label, or permission?',
+      signal: 'Cannot reach the answer', check: 'Entry point, label, or permission?',
       owner: 'Administrator / support', route: 'Guidance + escalation',
-      response: 'Clarify the route; send account or permission changes to the owner.',
-      icon: 'performance-support/find.webp'
+      response: 'Clarify the route; send account or permission changes to the owner.'
     },
     process: {
-      cause: 'Process', signal: 'Work stalls at a handoff', check: 'Does the documented step fit the work?',
+      signal: 'Work stalls at a handoff', check: 'Does the documented step fit the work?',
       owner: 'Operational owner', route: 'Workflow change',
-      response: 'Review the handoff and update the workflow with its guidance.',
-      icon: 'workflows/planning-projects/tasks.webp'
+      response: 'Review the handoff and update the workflow with its guidance.'
     },
     source: {
-      cause: 'Source', signal: 'Answers conflict', check: 'Which source is authoritative?',
+      signal: 'Answers conflict', check: 'Which source is authoritative?',
       owner: 'SME / source owner', route: 'Maintained reference',
-      response: 'Validate the answer and name who will keep the reference current.',
-      icon: 'performance-support/reference.webp'
+      response: 'Validate the answer and name who will keep the reference current.'
     },
     system: {
-      cause: 'System', signal: 'Expected path fails', check: 'Setting, mapping, visibility, or data?',
+      signal: 'Expected path fails', check: 'Setting, mapping, visibility, or data?',
       owner: 'System administrator', route: 'Configuration fix',
-      response: 'Document the case; update guidance after the fix is verified.',
-      icon: 'workflows/systems-administration/settings.webp'
+      response: 'Document the case; update guidance after the fix is verified.'
     },
     exception: {
-      cause: 'Exception', signal: 'Routine route stops', check: 'Judgment, correction, or investigation?',
+      signal: 'Routine route stops', check: 'Judgment, correction, or investigation?',
       owner: 'SME / support owner', route: 'Human escalation',
-      response: 'Capture context and send the case to the person who can act.',
-      icon: 'workflows/support-resources/support.webp'
+      response: 'Capture context and send the case to the person who can act.'
     }
   };
 
   const buttons = [...document.querySelectorAll('[data-ps-diagnosis]')];
-  const viewfinder = document.querySelector('.ps-viewfinder');
+  const scenes = [...document.querySelectorAll('[data-ps-scene]')];
   function activate(button) {
     const data = diagnoses[button.dataset.psDiagnosis];
     if (!data) return;
@@ -49,18 +42,19 @@
       item.classList.toggle('active', selected);
       item.setAttribute('aria-pressed', String(selected));
     });
-    document.getElementById('psCauseVisual').textContent = data.cause;
     document.getElementById('psFindingSignal').textContent = data.signal;
     document.getElementById('psDiagnosisCheck').textContent = data.check;
     document.getElementById('psFindingOwner').textContent = data.owner;
     document.getElementById('psRouteVisual').textContent = data.route;
     document.getElementById('psDiagnosisResponse').textContent = data.response;
-    document.getElementById('psLensImage').src = iconRoot + data.icon;
-    if (viewfinder && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      viewfinder.classList.remove('is-scanning');
-      void viewfinder.offsetWidth;
-      viewfinder.classList.add('is-scanning');
-    }
+    scenes.forEach(scene => {
+      const selected = scene.dataset.psScene === button.dataset.psDiagnosis;
+      scene.classList.remove('is-active');
+      if (selected) {
+        void scene.offsetWidth;
+        scene.classList.add('is-active');
+      }
+    });
   }
   buttons.forEach(button => button.addEventListener('click', () => activate(button)));
 
@@ -117,5 +111,51 @@
     rows.forEach(row => observer.observe(row));
   } else {
     rows.forEach(row => row.classList.add('is-visible'));
+  }
+
+  const typeNav = document.querySelector('.ps-type-nav');
+  const typeLinks = [...document.querySelectorAll('.ps-type-nav a[href^="#"]')];
+  const typeIndicator = document.querySelector('.ps-type-indicator');
+  const typeRows = typeLinks.map(link => document.getElementById(link.hash.slice(1)));
+  if (typeNav && typeIndicator && typeRows.every(Boolean)) {
+    let activeIndex = -1;
+    let queued = false;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function setActive(index) {
+      const link = typeLinks[index];
+      if (!link) return;
+      typeLinks.forEach((item, itemIndex) => {
+        item.classList.toggle('is-active', itemIndex === index);
+        if (itemIndex === index) item.setAttribute('aria-current', 'location');
+        else item.removeAttribute('aria-current');
+      });
+      typeIndicator.style.width = `${link.offsetWidth}px`;
+      typeIndicator.style.transform = `translateX(${link.offsetLeft}px)`;
+      if (index !== activeIndex) {
+        activeIndex = index;
+        const targetLeft = link.offsetLeft + link.offsetWidth / 2 - typeNav.clientWidth / 2;
+        typeNav.scrollTo({ left: Math.max(0, targetLeft), behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      }
+    }
+    function updateTypeNav() {
+      queued = false;
+      const readingLine = typeNav.getBoundingClientRect().height + window.innerHeight * .34;
+      let index = 0;
+      typeRows.forEach((row, rowIndex) => {
+        if (row.getBoundingClientRect().top <= readingLine) index = rowIndex;
+      });
+      setActive(index);
+    }
+    function queueTypeNav() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(updateTypeNav);
+    }
+    typeLinks.forEach((link, index) => link.addEventListener('click', () => setActive(index)));
+    window.addEventListener('scroll', queueTypeNav, { passive: true });
+    window.addEventListener('resize', queueTypeNav);
+    window.addEventListener('hashchange', queueTypeNav);
+    window.addEventListener('load', queueTypeNav);
+    queueTypeNav();
   }
 })();
