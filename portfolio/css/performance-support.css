@@ -27,9 +27,7 @@ body.performance-support-page .ps-hero .ps-hero-definition{max-width:640px;margi
 
 /* Hero: a request selects an appropriate support route, then reaches an action. */
 .ps-hero-system{min-width:0;margin:0;padding:18px;border:1px solid rgba(205,245,220,.27);border-radius:26px;background:#112f35;box-shadow:0 26px 65px rgba(11,31,33,.26);overflow:hidden}
-.ps-system-top,.ps-system-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#a9dcc0;font:750 .6rem/1.2 var(--font-heading);letter-spacing:.1em}
-.ps-system-live{padding:7px 10px;border:1px solid rgba(177,227,190,.26);border-radius:999px;color:#e6f8eb;letter-spacing:0;text-transform:none}
-.ps-system-main{display:grid;grid-template-columns:minmax(88px,1fr) 26px minmax(178px,1.45fr) 26px minmax(105px,1fr);gap:7px;align-items:center;min-height:290px;margin-top:16px}
+.ps-system-main{display:grid;grid-template-columns:minmax(88px,1fr) 26px minmax(178px,1.45fr) 26px minmax(105px,1fr);gap:7px;align-items:center;min-height:290px}
 .ps-system-request,.ps-system-outcome{display:grid;align-content:center;justify-items:center;min-width:0;min-height:210px;padding:15px 10px;border:1px solid rgba(192,237,205,.2);border-radius:16px;background:#1b4145;text-align:center}
 .ps-system-icon{display:grid;width:62px;height:62px;place-items:center;border-radius:15px;background:#fff}
 .ps-system-icon img{box-sizing:border-box;width:57px;height:57px;padding:5px;object-fit:contain}
@@ -64,8 +62,6 @@ body.performance-support-page .ps-hero .ps-hero-definition{max-width:640px;margi
 .ps-system-outcome strong{margin-top:8px;color:#fff;font:750 .81rem/1.25 var(--font-heading)}
 .ps-outcome-check{display:flex;gap:5px;margin-top:13px}
 .ps-outcome-check i{width:21px;height:4px;border-radius:4px;background:#a6d8b2}
-.ps-system-foot{justify-content:center;margin-top:14px;padding-top:13px;border-top:1px solid rgba(192,237,205,.15);letter-spacing:0;text-transform:none}
-.ps-system-foot i{width:17px;height:1px;background:#85bfa3}
 
 /* Consulting: controlled lenses over a work signal, with findings assembled beside it. */
 body.performance-support-page .ps-consulting-section{background:#f3f8f4;color:#253d37}
@@ -193,9 +189,28 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
 .ps-micro-side{display:grid;gap:8px}.ps-micro-side>div{position:relative;display:grid;grid-template-columns:34px 1fr;gap:6px;align-items:center;padding:8px;border:1px solid #bbd7c4;border-radius:9px;background:#fff}.ps-micro-side img{width:34px;height:34px}.ps-micro-side small{grid-column:1/-1;color:#47725b;font:800 .51rem/1 var(--font-heading)}.ps-micro-audio>span{display:flex;height:26px;align-items:center;gap:3px}.ps-micro-audio>span i{width:3px;height:55%;border-radius:3px;background:#59a171}.ps-micro-audio>span i:nth-child(2n){height:80%}.ps-micro-audio>span i:nth-child(3n){height:35%}.ps-form-row.is-visible .ps-micro-audio>span i{animation:ps-wave .8s ease-in-out infinite alternate}.ps-form-row.is-visible .ps-micro-audio>span i:nth-child(2n){animation-delay:.22s}.ps-form-row.is-visible .ps-micro-audio>span i:nth-child(3n){animation-delay:.44s}@keyframes ps-wave{to{height:18%}}
 .ps-micro-info>div{display:flex;align-items:center;gap:3px;color:#2f7254;font:800 .53rem/1 var(--font-heading)}.ps-micro-info>div i{width:8px;border-top:2px solid #72ac81}.ps-micro-return{position:absolute;right:19px;bottom:10px;left:19px;color:#357253;text-align:right;font:800 .57rem/1 var(--font-heading)}
 
-.ps-app-window{position:relative;z-index:1;display:grid;grid-template-columns:52px 1fr;width:92%;height:214px;margin:15px auto 0;border:1px solid #aacbb5;border-radius:11px;background:#fff;box-shadow:0 13px 27px rgba(34,80,54,.15);overflow:hidden}.ps-app-sidebar{display:grid;align-content:start;justify-items:center;gap:13px;padding:11px 5px;background:#285f53}.ps-app-sidebar img{width:34px;height:34px;padding:4px;border-radius:7px;background:#fff}.ps-app-sidebar i{width:24px;height:5px;border-radius:5px;background:#92c9a7}
-.ps-app-form{padding:12px 14px}.ps-app-title{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-bottom:11px}.ps-app-title strong{color:#2c5d47;font:800 .67rem/1 var(--font-heading)}.ps-app-title span{color:#64856c;font:800 .48rem/1 var(--font-heading)}.ps-app-field{display:grid;grid-template-columns:80px 1fr 19px;gap:8px;align-items:center;margin-top:9px;padding:6px 8px;border:1px solid #dae9de;border-radius:6px;background:#f7faf7}.ps-app-field small{color:#557761;font:700 .54rem/1 var(--font-heading)}.ps-app-field>i{height:5px;border-radius:4px;background:#d0e4d5}.ps-app-field-focus{border-color:#5dab7a;background:#eaf7eb;box-shadow:0 0 0 4px rgba(84,171,112,.12)}.ps-app-field b{display:grid;width:17px;height:17px;place-items:center;border-radius:50%;background:#3d9365;color:#fff;font:.7rem/1 var(--font-heading)}
-.ps-app-tooltip{position:absolute;right:9px;bottom:11px;display:flex;align-items:center;gap:7px;width:56%;padding:9px;border:1px solid #6fae82;border-radius:8px;background:#e4f6e6;box-shadow:0 10px 22px rgba(34,80,54,.18)}.ps-app-tooltip img{width:31px;height:31px;padding:3px;border-radius:6px;background:#fff}.ps-app-tooltip div{flex:1}.ps-app-tooltip strong,.ps-app-tooltip small{display:block}.ps-app-tooltip strong{color:#2b6849;font:800 .55rem/1.1 var(--font-heading)}.ps-app-tooltip small{margin-top:4px;color:#63836c;font-size:.49rem}.ps-app-tooltip>span{color:#2c7751}.ps-form-row.is-visible .ps-app-field-focus{animation:ps-help-pulse 2.5s ease-in-out infinite}@keyframes ps-help-pulse{50%{box-shadow:0 0 0 9px rgba(84,171,112,.16)}}.ps-form-row.is-visible .ps-app-tooltip{animation:ps-card-in .55s .6s both}.ps-app-source{position:absolute;right:18px;bottom:10px;left:18px;color:#3b7758;text-align:center;font:800 .52rem/1 var(--font-heading)}.ps-app-source i{padding:0 4px;font-style:normal}
+.ps-app-window{position:relative;z-index:1;display:grid;grid-template-rows:30px 55px minmax(0,1fr);width:92%;height:214px;margin:15px auto 0;border:1px solid #aacbb5;border-radius:11px;background:#fff;box-shadow:0 13px 27px rgba(34,80,54,.15);overflow:hidden}
+.ps-app-toolbar{display:flex;align-items:center;gap:8px;padding:0 10px;background:#285f53;color:#fff}
+.ps-app-toolbar>span{display:flex;gap:3px}.ps-app-toolbar i{width:5px;height:5px;border-radius:50%;background:#b1e2bd}
+.ps-app-toolbar strong{flex:1;font:800 .55rem/1 var(--font-heading)}.ps-app-toolbar small{color:#c6ebce;font:800 .42rem/1 var(--font-heading);letter-spacing:.08em}
+.ps-app-stepper{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:6px 9px;border-bottom:1px solid #c9dfcf;background:#eef7f0}
+.ps-app-stepper::after{content:"";position:absolute;right:0;bottom:0;left:0;height:3px;background:#4b9d69;transform:scaleX(.33);transform-origin:left}
+.ps-app-step{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;padding:3px 5px;border:1px solid #c6ddce;border-radius:7px;background:#fff;color:#527260;font:800 .52rem/1 var(--font-heading)}
+.ps-app-step:first-child{border-color:#57a879;background:#dcf2e2;color:#245e44}
+.ps-app-step img{width:29px;height:29px;padding:2px;border-radius:5px;background:#fff;object-fit:contain}
+.ps-app-panels{position:relative;min-height:0;margin:7px 10px 9px}
+.ps-app-panel{position:absolute;inset:0;display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;align-items:start;padding:9px 11px;border:1px solid #a9ceb5;border-radius:8px;background:linear-gradient(135deg,#f5fbf6,#e7f5e9);box-shadow:0 5px 12px rgba(34,80,54,.08);opacity:0;overflow:hidden}
+.ps-app-panel:first-child{opacity:1}
+.ps-app-panel::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:#55a36f}
+.ps-app-panel>img{width:46px;height:46px;padding:4px;border-radius:8px;background:#fff;object-fit:contain}
+.ps-app-panel>div{min-width:0}.ps-app-panel small,.ps-app-panel strong,.ps-app-panel em{display:block}
+.ps-app-panel small{color:#3e8260;font:800 .44rem/1.1 var(--font-heading);letter-spacing:.05em}
+.ps-app-panel strong{margin-top:5px;color:#285840;font:800 .63rem/1.12 var(--font-heading)}
+.ps-app-panel em{margin-top:5px;color:#397656;font:750 .48rem/1 var(--font-heading);font-style:normal}
+.ps-app-doc span{display:grid;gap:4px;margin-top:8px}.ps-app-doc span i{display:block;width:89%;height:4px;border-radius:3px;background:#a9d7b5}.ps-app-doc span i:last-child{width:64%;background:#c7e4ce}
+.ps-app-ai{border-color:#a7cfd0;background:linear-gradient(135deg,#f5fbfb,#e6f3f4)}.ps-app-ai::before{background:#4a9698}
+.ps-app-ai span{display:inline-block;margin-top:8px;padding:5px 7px;border:1px solid #a4d3d0;border-radius:6px;background:#fff;color:#2a6b69;font:750 .51rem/1 var(--font-heading)}
+.ps-app-action span{display:block;margin-top:9px;color:#327250;font:800 .5rem/1.1 var(--font-heading)}
 
 .ps-playbook-board{position:relative;z-index:1;display:grid;grid-template-columns:.72fr 1.28fr;gap:9px;width:92%;min-height:225px;margin:16px auto 0}.ps-playbook-cues{display:grid;gap:6px}.ps-playbook-cues>div{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid #b5d8bf;border-radius:7px;background:#fff}.ps-playbook-cues b{display:grid;width:20px;height:20px;flex:none;place-items:center;border-radius:5px;background:#d9efdf;color:#2f7752;font:800 .52rem/1 var(--font-heading)}.ps-playbook-cues span{color:#355f49;font:750 .54rem/1.1 var(--font-heading)}.ps-form-row.is-visible .ps-playbook-cues>div{animation:ps-card-in .45s both}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(2){animation-delay:.2s}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(3){animation-delay:.4s}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(4){animation-delay:.6s}
 .ps-playbook-sheet{padding:10px;border:1px solid #a6cbb2;border-radius:9px;background:#fff;box-shadow:0 11px 25px rgba(34,80,54,.12)}.ps-playbook-sheet>div{display:flex;align-items:center;gap:6px;padding-bottom:7px;border-bottom:1px solid #e2eee5}.ps-playbook-sheet img{width:31px;height:31px}.ps-playbook-sheet strong{color:#2c654c;font:800 .61rem/1.1 var(--font-heading)}.ps-playbook-sheet label{display:block;margin-top:9px;color:#62826d;font:750 .5rem/1 var(--font-heading)}.ps-playbook-sheet label i{display:block;width:100%;height:5px;margin-top:5px;border-radius:4px;background:#deebe0;transform:scaleX(.15);transform-origin:left}.ps-form-row.is-visible .ps-playbook-sheet label i{animation:ps-fill-line .65s .55s forwards}.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(2) i{animation-delay:.85s}.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(3) i{animation-delay:1.15s}.ps-playbook-sheet>span{display:block;margin-top:11px;padding:6px;border-radius:5px;background:#e5f4e7;color:#2a7750;font:800 .49rem/1 var(--font-heading)}.ps-playbook-sheet>span b{float:right}.ps-form-row.is-visible .ps-playbook-sheet>span{animation:ps-card-in .5s 1.4s both}
@@ -265,17 +280,22 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
 .ps-form-row.is-visible .ps-micro-info>div b:nth-of-type(3){animation-delay:6s}
 @keyframes ps-micro-node{0%,8%,39%,100%{color:#2f7254;transform:scale(1)}16%,28%{color:#fff;background:#4d9e6c;border-radius:3px;transform:scale(1.2)}}
 
-/* In-app guidance: the pointer reaches a field, then its source-backed tip appears. */
-.ps-app-cursor{position:absolute;z-index:4;top:66px;left:63%;display:grid;width:32px;height:32px;place-items:center;border:1px solid #9ccaac;border-radius:8px;background:#fff;box-shadow:0 5px 12px rgba(28,73,50,.17);pointer-events:none}
-.ps-app-cursor img{width:27px;height:27px;padding:2px}
-.ps-form-row.is-visible .ps-app-cursor{animation:ps-app-point 8s ease-in-out infinite}
-@keyframes ps-app-point{0%,8%{opacity:0;transform:translate(-26px,-17px) scale(.82)}20%,32%{opacity:1;transform:translate(0,0) scale(1)}44%,62%{opacity:1;transform:translate(28px,26px) scale(1)}78%,100%{opacity:0;transform:translate(34px,31px) scale(.82)}}
-.ps-form-row.is-visible .ps-app-field-focus{animation:ps-app-field-cycle 8s ease-in-out infinite}
-@keyframes ps-app-field-cycle{0%,23%,100%{border-color:#dae9de;background:#f7faf7;box-shadow:none}35%,72%{border-color:#5dab7a;background:#eaf7eb;box-shadow:0 0 0 7px rgba(84,171,112,.15)}}
-.ps-form-row.is-visible .ps-app-tooltip{animation:ps-app-tip-cycle 8s ease-in-out infinite}
-@keyframes ps-app-tip-cycle{0%,35%{opacity:0;transform:translateY(14px) scale(.95)}49%,85%{opacity:1;transform:none}100%{opacity:0;transform:translateY(8px) scale(.98)}}
-.ps-form-row.is-visible .ps-app-source{animation:ps-app-source-cycle 8s ease-in-out infinite}
-@keyframes ps-app-source-cycle{0%,47%{opacity:.5}60%,90%{opacity:1;color:#266e4b}100%{opacity:.5}}
+/* Embedded guidance: documentation, assistant, and action check arrive with the work step. */
+.ps-form-row.is-visible .ps-app-stepper::after{animation:ps-app-rail 9s ease-in-out infinite}
+@keyframes ps-app-rail{0%,9%{transform:scaleX(.33)}34%,42%{transform:scaleX(.66)}68%,92%{transform:scaleX(1)}100%{transform:scaleX(.33)}}
+.ps-form-row.is-visible .ps-app-step{animation:ps-app-step-cycle 9s ease-in-out infinite}
+.ps-form-row.is-visible .ps-app-step:nth-child(2){animation-delay:-3s}
+.ps-form-row.is-visible .ps-app-step:nth-child(3){animation-delay:-6s}
+@keyframes ps-app-step-cycle{0%,27%{border-color:#57a879;background:#dcf2e2;color:#245e44;box-shadow:0 2px 8px rgba(50,125,78,.14)}34%,100%{border-color:#c6ddce;background:#fff;color:#527260;box-shadow:none}}
+.ps-form-row.is-visible .ps-app-panel{animation:ps-app-panel-cycle 9s ease-in-out infinite}
+.ps-form-row.is-visible .ps-app-panel:nth-child(2){animation-delay:-3s}
+.ps-form-row.is-visible .ps-app-panel:nth-child(3){animation-delay:-6s}
+@keyframes ps-app-panel-cycle{0%,27%{opacity:1;transform:none}34%,100%{opacity:0;transform:translateX(8px)}}
+.ps-form-row.is-visible .ps-app-doc span i{animation:ps-app-doc-scan 9s ease-in-out infinite}
+@keyframes ps-app-doc-scan{0%,8%{background:#c7e4ce;transform:scaleX(.6);transform-origin:left}18%,28%{background:#72bc89;transform:scaleX(1)}34%,100%{background:#c7e4ce;transform:scaleX(.6)}}
+.ps-form-row.is-visible .ps-app-ai span{animation:ps-app-answer 9s -3s ease-in-out infinite}
+@keyframes ps-app-answer{0%,5%{opacity:0;transform:translateY(5px)}12%,28%{opacity:1;transform:none}34%,100%{opacity:0;transform:translateY(5px)}}
+.ps-form-row.is-visible .ps-app-action span{animation:ps-app-answer 9s -6s ease-in-out infinite}
 
 /* Playbook: prompts take turns while the worksheet fills and the example is committed. */
 .ps-playbook-cursor{position:absolute;z-index:3;top:25px;right:8px;display:grid;width:31px;height:31px;place-items:center;border:1px solid #9fcbac;border-radius:7px;background:#fff;box-shadow:0 6px 13px rgba(34,80,54,.15);pointer-events:none}
@@ -322,7 +342,6 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
   .ps-system-option{grid-template-columns:31px minmax(0,1fr);gap:5px}
   .ps-system-option img{width:31px;height:31px}
   .ps-system-option i{display:none}
-  .ps-system-foot{flex-wrap:wrap}
   .ps-lens-workspace{padding:11px}
   .ps-lens-selector{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ps-lens-selector button{min-height:50px}
@@ -347,13 +366,17 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
   .ps-decision-canvas{width:98%;margin-top:20px}.ps-decision-branches{gap:7px}.ps-decision-branches>div{padding:8px}.ps-decision-output{padding:8px 7px}.ps-decision-output span{font-size:.42rem}.ps-decision-output strong{font-size:.53rem}
   .ps-knowledge-browser{width:98%;min-height:224px;margin-top:14px;padding:8px}.ps-kb-results{gap:5px}.ps-kb-primary,.ps-kb-glossary{padding:7px}
   .ps-micro-kit{grid-template-columns:1fr;grid-template-rows:137px 71px;gap:6px;height:214px;margin:13px 2px 0}.ps-micro-side{grid-template-columns:1fr 1fr;gap:5px}.ps-micro-side>div{grid-template-columns:28px 1fr;gap:4px;padding:5px}.ps-micro-side img{width:27px;height:27px}.ps-micro-video>.ps-micro-screen{width:52px;height:52px}.ps-micro-play{transform:translate(14px,-50px)}
-  .ps-app-window{width:100%;height:213px;margin-top:12px;grid-template-columns:40px 1fr}.ps-app-sidebar{padding:9px 3px}.ps-app-sidebar img{width:30px;height:30px}.ps-app-form{padding:10px}.ps-app-field{grid-template-columns:69px 1fr 18px;gap:4px}.ps-app-tooltip{width:62%;padding:6px}.ps-app-source{font-size:.45rem}
+  .ps-app-window{width:100%;height:213px;margin-top:12px}
+  .ps-app-stepper{gap:4px;padding:5px}
+  .ps-app-step{gap:2px;padding:3px 2px;font-size:.46rem}.ps-app-step img{width:24px;height:24px}
+  .ps-app-panels{margin:6px 6px 7px}.ps-app-panel{grid-template-columns:37px minmax(0,1fr);gap:6px;padding:7px}
+  .ps-app-panel>img{width:37px;height:37px}.ps-app-panel strong{font-size:.55rem}.ps-app-panel em{font-size:.44rem}
   .ps-playbook-board{width:100%;grid-template-columns:.72fr 1.28fr;gap:5px;margin-top:13px}.ps-playbook-cues>div{padding:5px;gap:4px}.ps-playbook-cues span{font-size:.48rem}.ps-playbook-sheet{padding:7px}.ps-playbook-sheet strong{font-size:.54rem}.ps-playbook-cursor{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   .performance-support-page *, .performance-support-page *::before, .performance-support-page *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .ps-system-connector span,.ps-access-line,.ps-system-pipeline>i,.ps-feedback-flow>i,.ps-job-progress i,.ps-micro-video>i::after,.ps-playbook-sheet label i{transform:none}
   .ps-job-steps i{opacity:1}
-  .ps-job-pointer,.ps-decision-tracer,.ps-app-cursor,.ps-playbook-cursor{display:none}
+  .ps-job-pointer,.ps-decision-tracer,.ps-playbook-cursor{display:none}
   .ps-type-indicator{transition:none}
 }
