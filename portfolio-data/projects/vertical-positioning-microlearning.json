@@ -4,9 +4,9 @@
   "title": "Vertical Positioning Microlearning",
   "slug": "vertical-positioning-microlearning",
   "category": "instructional-design",
-  "subcategory": "microlearning-performance-support",
+  "subcategory": "microlearning",
   "status": "live",
-  "summary": "A sales-enablement microlearning case study built as one Rise module with distinct seaport and airport components, a shared learning architecture, scenario practice, selective multimedia, and specialist review.",
+  "summary": "A sales-enablement microlearning built as one Rise module with distinct seaport and airport paths through positioning, customer pain points, an ROI calculator conversation, learner-facing AI scenario practice, and a takeaway one-pager. The public demo uses scripted branches and fictionalized content.",
   "page_path": "portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html",
   "featured": true,
   "confidentiality": "sanitized",
@@ -17,15 +17,15 @@
       "Recognize the operating context and common priorities within the seaport and airport settings.",
       "Connect customer needs to relevant solution use cases at a sales-ready level.",
       "Practice making a customer-facing decision in a short scenario.",
-      "Locate supporting resources for deeper follow-up instead of overloading the module."
+      "Use the positioning ROI calculator with client-validated assumptions and take away a one-page vertical conversation guide."
     ],
     "role": "Instructional designer and developer responsible for content scoping, learning architecture, Rise build, scenario design, multimedia integration, and review coordination.",
-    "design_approach": "Built one Rise module around a repeatable Context → Use Cases → Practice → Resources pattern. The learner rhythm stays consistent while the customer priorities, examples, and scenario judgment change by vertical.",
+    "design_approach": "Built one Rise module with distinct seaport and airport paths through positioning, customer pain points and relevant differentiators, use of the positioning ROI calculator with clients, learner-facing AI mini scenario practice, and a takeaway one-pager. The learner rhythm stays consistent while the customer priorities, examples, and scenario judgment change by vertical.",
     "development_process": "Scoped approved source material, structured distinct seaport and airport components, built the module in Rise 360, used a short Colossyan presenter segment where narration improved orientation, and coordinated internal QA and specialist review through Review 360 and Asana.",
     "outcomes": [
       "Delivered one focused Rise module with distinct seaport and airport components.",
       "Used a consistent learning pattern that reduced navigation friction without treating the two verticals as interchangeable.",
-      "Kept deeper reference material outside the core microlearning so the experience remained concise and maintainable."
+      "Ended each vertical path with a takeaway one-pager to support later customer conversations."
     ]
   },
   "skills": [
@@ -33,6 +33,7 @@
     "Sales Enablement",
     "Vertical Learning",
     "Scenario-Based Learning",
+    "Learner-Facing AI",
     "Content Scoping",
     "SME Collaboration",
     "QA",
@@ -59,11 +60,21 @@
       "type": "image",
       "path": "portfolio/assets/project-images/vertical-positioning/vertical-use-case-knowledge-check.webp",
       "publish": true
+    },
+    {
+      "type": "document",
+      "path": "portfolio/assets/documents/seaport-positioning-takeaway.pdf",
+      "publish": true
+    },
+    {
+      "type": "document",
+      "path": "portfolio/assets/documents/airport-positioning-takeaway.pdf",
+      "publish": true
     }
   ],
-  "source_material_notes": "Generalized from documented industry-focused sales enablement work. Industry-specific proprietary messaging, internal screenshots, customer details, reviewer comments, dates, links, and source material are intentionally omitted.",
+  "source_material_notes": "Generalized from documented industry-focused sales enablement work and the portfolio owner's confirmation that learner-facing AI branching was part of the real module. The public branching demo uses scripted responses rather than a live model. Industry-specific proprietary messaging, internal screenshots, customer details, reviewer comments, dates, links, and source material are intentionally omitted.",
   "dates": {
     "created": "2026-09-16",
-    "updated": "2026-09-17"
+    "updated": "2026-09-22"
   }
 }

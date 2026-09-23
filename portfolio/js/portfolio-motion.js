@@ -91,7 +91,6 @@
       'projects/instructional-design/complete-learning-paths',
       'projects/instructional-design/interactive-learning',
       'projects/instructional-design/live-training',
-      'projects/instructional-design/microlearning-performance-support',
       'projects/instructional-design/microlearning-performance-support/microlearning',
       'projects/instructional-design/microlearning-performance-support/performance-support',
       'projects/instructional-design/interactive-learning/ai-integrations-in-learning',
@@ -306,7 +305,6 @@
     ['projects/instructional-design/complete-learning-paths', 'Complete eLearning Pathways'],
     ['projects/instructional-design/interactive-learning', 'Interactive Learning'],
     ['projects/instructional-design/live-training', 'Live Training'],
-    ['projects/instructional-design/microlearning-performance-support', 'Microlearning & Performance Support'],
     ['projects/instructional-design/microlearning-performance-support/microlearning', 'Microlearning'],
     ['projects/instructional-design/microlearning-performance-support/performance-support', 'Performance Support'],
     ['projects/instructional-design/interactive-learning/ai-integrations-in-learning', 'Learner-facing AI'],
@@ -331,11 +329,11 @@
     if (relativePath === 'projects/workflows/ai-automation/salesforce-lms-account-automation') {
       ancestors = [['projects','Projects'],['projects/lms-administration','LMS Administration'],['projects/lms-administration/system-integrations','System Integrations']];
     }
-    const breadcrumbParentSkips = new Set();
-    if (relativePath === 'projects/instructional-design/microlearning-performance-support/microlearning' ||
-        relativePath === 'projects/instructional-design/microlearning-performance-support/performance-support') {
-      breadcrumbParentSkips.add('projects/instructional-design/microlearning-performance-support');
+    if (relativePath === 'projects/instructional-design/microlearning-performance-support/product-launch-microlearning' ||
+        relativePath === 'projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning') {
+      ancestors.push(['projects/instructional-design/microlearning-performance-support/microlearning', 'Microlearning']);
     }
+    const breadcrumbParentSkips = new Set();
     if (relativePath === 'projects/instructional-design/interactive-learning/ai-integrations-in-learning') {
       breadcrumbParentSkips.add('projects/instructional-design/interactive-learning');
     }
@@ -381,7 +379,7 @@
     if (!match) return;
     const [r,g,b] = match.slice(1,4).map(Number);
     const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
-    const forceLight = Boolean(breadcrumbs.closest('.ai-eval-hero, .ai-demo-hero, .flagship-hero, .cp-hero, .ai-learning-hero')) || document.body.classList.contains('ai-eval-page') || document.body.classList.contains('cert-case-page');
+    const forceLight = Boolean(breadcrumbs.closest('.ai-eval-hero, .ai-demo-hero, .flagship-hero, .cp-hero, .ai-learning-hero, .micro-hero')) || document.body.classList.contains('ai-eval-page') || document.body.classList.contains('cert-case-page');
     const lightText = forceLight || luminance > 0.58;
     const aiLearningHero = Boolean(breadcrumbs.closest('.ai-learning-hero'));
     const primary = aiLearningHero ? '#ffffff' : lightText ? 'rgba(248,252,249,.84)' : '#40554d';
