@@ -52,3 +52,11 @@ body.lms-admin-page section.integration-use-cases.fs-surface-light{background:li
 body.lms-admin-page section.integration-use-cases .section-heading h2{color:#243e35!important}
 body.lms-admin-page section.integration-use-cases .section-heading .eyebrow{color:#3d7768!important}
 body.lms-admin-page section.integration-use-cases .section-heading p:not(.eyebrow){color:#526b5d!important}
+
+/* Section rhythm may mark this dark operating panel as a light surface. */
+body.lms-admin-page section.integration-practices,
+body.lms-admin-page section.integration-practices.fs-surface-light,
+body.lms-admin-page section.integration-practices.fs-surface-dark{background:linear-gradient(140deg,#15363c,#24534d)!important;color:#e8f3e9!important}
+body.lms-admin-page section.integration-practices .section-heading h2{color:#fff!important}
+body.lms-admin-page section.integration-practices .section-heading .eyebrow{color:#c3efcd!important}
+body.lms-admin-page section.integration-practices .section-heading p:not(.eyebrow){color:#e0eee4!important}
