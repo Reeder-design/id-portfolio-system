@@ -453,6 +453,33 @@
     @media(max-width:980px){.evidence-bar{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
     @media(max-width:620px){.evidence-bar{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
+    /* Let the benchmark sit below the matrix without a sticky overlap. */
+    .workbench-section{background:linear-gradient(150deg,#e8f2eb,#f7faf8 62%,#e9f5ed)!important}
+    .workbench-intro{width:min(100%,1120px);margin:0 auto 12px}
+    .solution-summary{display:grid;grid-template-columns:55px minmax(0,1fr);align-items:center;gap:11px;width:min(100%,1120px);margin:0 auto 12px;padding:10px 14px;border:1px solid #b7d8c4;border-left:5px solid #79c99e;border-radius:13px;background:#eaf5ed;box-shadow:0 8px 18px rgba(37,83,66,.06)}
+    .solution-summary-icon{display:grid;place-items:center;width:50px;height:50px;border-radius:11px;background:#fff}
+    .solution-summary-icon img{width:43px;height:43px;object-fit:contain}
+    .solution-summary-label{color:#437862;font:800 .51rem/1.1 var(--font-heading);letter-spacing:.07em}
+    .solution-summary h3{margin:3px 0;color:#213d35;font-size:.8rem}
+    .solution-summary p{margin:0;color:#4a6558;font-size:.64rem;line-height:1.38}
+    .decision-panel{position:static}
+    .decision-actions{position:static;background:none}
+    .matrix{aspect-ratio:1.6}
+    .results-shell{margin-top:3px;scroll-margin-top:82px;grid-template-columns:minmax(0,1fr);gap:11px}
+    .result-card{border-color:#bad9c7;box-shadow:0 9px 19px rgba(34,74,59,.06)}
+    .result-card:first-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.52fr);column-gap:18px;align-content:center;background:linear-gradient(130deg,#19363c,#2b5650);color:#e7f2e9}
+    .result-card:first-child .eyebrow,.result-card:first-child h2,.result-card:first-child>p{grid-column:1}
+    .result-card:first-child .eyebrow{color:#bceaa2!important}
+    .result-card:first-child h2{color:#fff}
+    .result-card:first-child>p{color:#d8e8dd}
+    .result-card:first-child .result-summary{grid-column:2;grid-row:1/span 3;grid-template-columns:1fr;margin:0}
+    .result-card:first-child .result-summary div{background:#ecf7ed}
+    .benchmark-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+    .criterion-stage,.evidence-panel{border-color:#bdd8c9;box-shadow:0 9px 19px rgba(34,74,59,.05)}
+    @media(min-width:761px){.evidence-panel{height:auto;max-height:none;overflow:visible}.evidence-panel-copy,.evidence-list{max-height:none;overflow:visible}.criterion-stage{height:auto;max-height:none;overflow:visible}}
+    @media(max-width:760px){.result-card:first-child{grid-template-columns:1fr}.result-card:first-child .result-summary{grid-column:1;grid-row:auto;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}.benchmark-list{grid-template-columns:repeat(2,minmax(0,1fr))}.solution-summary{grid-template-columns:45px minmax(0,1fr)}.solution-summary-icon{width:43px;height:43px}.solution-summary-icon img{width:37px;height:37px}}
+    @media(max-width:520px){.result-card:first-child .result-summary,.benchmark-list{grid-template-columns:1fr}}
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
@@ -466,7 +493,7 @@
         <div>
           <h1>Pursuit Determination Lab</h1>
           <p class="body-large">Review a fictional opportunity, score the evidence, and separate solution fit from pursuit strength before deciding the next move.</p>
-          <div class="button-row"><a class="btn btn-primary" href="#workbench">Start Evaluation</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
+          <div class="button-row"><a class="btn btn-primary" href="#how-to-demo">Start Evaluation</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
         </div>
         <aside class="pursuit-hero-visual" aria-label="Animated pursuit evaluation visual">
           <span class="pursuit-hero-core"><img src="../../../../assets/icons/pixel/pursuit-determination/pursue-confidence.webp" alt="Pixel-art pursuit confidence visual."></span>
@@ -481,7 +508,7 @@
     <div class="container">
       <div class="demo-primer-head">
         <div><p class="eyebrow">Pursuit Matrix Quick Start</p><h2>Two questions drive the matrix: is this a fit, and is it worth pursuing now?</h2><p>The main demo asks you to compare the account with the target profile and score the evidence across six decision factors. Use the four-quadrant map below to see how solution fit and pursuit strength combine before you start.</p></div>
-        <a class="btn btn-secondary demo-skip" href="#workbench">I use pursuit matrices · Start the demo</a>
+        <a class="btn btn-secondary demo-skip" href="#how-to-demo">I use pursuit matrices · Start the demo</a>
       </div>
       <div class="pursuit-primer-console" data-stable-interaction>
         <div class="pursuit-primer-chart">
@@ -505,7 +532,7 @@
     </div>
   </section>
 
-  <section class="section pursuit-demo-use">
+  <section class="section pursuit-demo-use" id="how-to-demo">
     <div class="container">
       <div class="pursuit-use-intro">
         <p class="eyebrow">How to Use the Demo</p>
@@ -560,6 +587,10 @@
         <div class="opp-stat"><strong>65/day</strong><span>Portable exams</span></div>
         <div class="opp-stat"><strong>7-10 yrs</strong><span>Fleet age</span></div>
       </div>
+      <div class="solution-summary">
+        <span class="solution-summary-icon"><img src="../../../../assets/icons/pixel/pursuit-determination/evaluate-fit.webp" alt="" aria-hidden="true"></span>
+        <div><span class="solution-summary-label">THE SOLUTION TO EVALUATE</span><h3>VitaTrack Mobile Imaging Cart</h3><p>A fictional portable imaging solution for frequent bedside exams. Compare its intended workflow fit with Harborview’s cart delays, aging fleet, and digital PACS environment; IT and security fit still need validation.</p></div>
+      </div>
 
       <div class="evidence-bar" role="tablist" aria-label="Harborview customer information">
         <button class="evidence-tab active" type="button" role="tab" aria-selected="true" data-evidence="pain"><img src="../../../../assets/icons/pixel/pursuit-determination/identify-risks.webp" alt="" aria-hidden="true"><span><strong>Pain</strong><small>What problem is Harborview experiencing?</small></span></button>
@@ -600,7 +631,7 @@
           <div class="decision-actions"><button class="btn btn-highlight" type="button" id="evaluateButton">Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
         </aside>
 
-        <section class="results-shell" id="analysisResults" aria-live="polite">
+        <section class="results-shell" id="analysisResults" aria-live="polite" tabindex="-1">
           <article class="result-card"><p class="eyebrow">Pursuit Analysis</p><h2 id="resultTitle"></h2><p id="resultSummary"></p><div class="result-summary"><div><strong id="resultSolutionScore"></strong>Solution fit</div><div><strong id="resultPursuitScore"></strong>Pursuit strength</div><div><strong id="resultStatus"></strong>Recommended posture</div></div></article>
           <article class="result-card"><p class="eyebrow">Calibration</p><h3>Your scores vs. the benchmark</h3><div class="benchmark-list" id="benchmarkList"></div></article>
         </section>
@@ -755,7 +786,10 @@ document.getElementById('evaluateButton').addEventListener('click',()=>{
     row.append(title,detail);
     return row;
   }));
-  document.getElementById('analysisResults').classList.add('show');
+  const results=document.getElementById('analysisResults');
+  results.classList.add('show');
+  results.focus({preventScroll:true});
+  results.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
 });
 
 document.getElementById('resetButton').addEventListener('click',()=>{

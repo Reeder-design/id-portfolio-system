@@ -587,3 +587,39 @@
   .phishing-stage .phishing-drag-card,.phishing-stage .phishing-demo-pointer,.phishing-trophy-icon,.ai-demo-pointer,.ai-path-visual.ai-refresh .ai-learner-line,.ai-path-visual.ai-refresh .ai-coach-line { animation:none!important; }
   .phishing-stage .phishing-drag-card { opacity:0; }
 }
+
+/* The script anchors each cursor to its real target at every viewport size. */
+.interactive-landing .scenario-demo-pointer,
+.interactive-landing .quiz-demo-pointer,
+.interactive-landing .video-demo-pointer,
+.interactive-landing .software-demo-pointer,
+.interactive-landing .hotspot-demo-pointer {
+  animation:none;
+  transition:left .55s ease,top .55s ease,transform .22s ease;
+}
+.interactive-landing .video-on-screen-choices span[data-video-answer] { animation:none; }
+.interactive-landing .video-on-screen-choices span.incorrect { border-color:#cb675c;background:#ffe7df;color:#78362f; }
+.interactive-landing .video-on-screen-choices span.correct { border-color:#49a66a;background:#d9f5df;color:#20523d; }
+.interactive-landing .ai-demo-pointer { animation:none;transition:left .55s ease,top .55s ease; }
+.interactive-landing .phishing-stage .phishing-drag-card { animation:alignedThreatDrag 6s ease-in-out both; }
+.interactive-landing .phishing-stage .phishing-demo-pointer { animation:alignedThreatPointer 6s ease-in-out both; }
+@keyframes alignedThreatDrag {
+  0%,15% { opacity:0;transform:translate(0,0) scale(.9); }
+  23%,35% { opacity:1;transform:translate(0,0) scale(1); }
+  68%,80% { opacity:1;transform:translate(var(--drag-x,0px),var(--drag-y,0px)) scale(.82); }
+  94%,100% { opacity:0;transform:translate(var(--drag-x,0px),var(--drag-y,0px)) scale(.76); }
+}
+@keyframes alignedThreatPointer {
+  0%,20% { transform:translate(0,0) scale(1); }
+  28% { transform:translate(0,0) scale(.8); }
+  70%,83% { transform:translate(var(--pointer-x,0px),var(--pointer-y,0px)) scale(1); }
+  91%,100% { transform:translate(var(--pointer-x,0px),var(--pointer-y,0px)) scale(.8); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .interactive-landing .scenario-demo-pointer,
+  .interactive-landing .quiz-demo-pointer,
+  .interactive-landing .video-demo-pointer,
+  .interactive-landing .software-demo-pointer,
+  .interactive-landing .hotspot-demo-pointer,
+  .interactive-landing .ai-demo-pointer { transition:none; }
+}

@@ -1,6 +1,7 @@
 (() => {
   let startPhishingDemo = () => {};
   let startAiDemo = () => {};
+  let syncPointers = () => {};
   const typeTabs = [...document.querySelectorAll('.type-tabs [role="tab"]')];
   const selectTypeTab = (selected, focus = false) => {
     typeTabs.forEach(tab => {
@@ -11,6 +12,7 @@
     });
     if (selected.id === 'tab-gamified-challenges') startPhishingDemo();
     if (selected.id === 'tab-learner-facing-ai') startAiDemo();
+    window.requestAnimationFrame(syncPointers);
     if (focus) selected.focus();
   };
   typeTabs.forEach((tab, index) => {
@@ -28,6 +30,76 @@
   });
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Measure each actual target so the demonstration cursor stays attached as
+  // the tab, viewport, text wrapping, or browser zoom changes.
+  const placePointer = (scene, pointer, target) => {
+    if (!scene || !pointer || !target || !scene.getClientRects().length) return;
+    const sceneBox = scene.getBoundingClientRect();
+    const targetBox = target.getBoundingClientRect();
+    pointer.style.left = `${targetBox.left - sceneBox.left + targetBox.width * .58 - 3}px`;
+    pointer.style.top = `${targetBox.top - sceneBox.top + targetBox.height * .52 - 2}px`;
+  };
+  syncPointers = () => {
+    const branch = document.querySelector('.branch-map');
+    const branchPhase = Number(branch.dataset.phase || 0);
+    placePointer(branch, branch.querySelector('.scenario-demo-pointer'),
+      branchPhase === 0 ? branch.querySelector('.meeting-dialogue') :
+      branch.querySelectorAll('.branch-paths [data-branch]')[branchPhase === 3 ? 1 : 0]);
+
+    const quiz = document.querySelector('.quiz-paper');
+    const quizPhase = Number(document.querySelector('.quiz-visual').dataset.phase || 0);
+    placePointer(quiz, quiz.querySelector('.quiz-demo-pointer'),
+      quizPhase === 0 ? quiz.querySelector('p') :
+      quiz.querySelectorAll('[data-quiz-answer]')[quizPhase === 1 ? 0 : 1]);
+
+    const video = document.querySelector('.video-screen');
+    const videoPhase = Number(video.dataset.phase || 0);
+    placePointer(video, video.querySelector('.video-demo-pointer'),
+      videoPhase === 0 ? video.querySelector('.video-question strong') :
+      video.querySelectorAll('[data-video-answer]')[videoPhase === 1 ? 0 : 1]);
+
+    const software = document.querySelector('.software-window');
+    const softwareTargets = [software.querySelector('[data-software-control="catalog"]'),
+      software.querySelector('.software-target'), software.querySelector('.software-submit'),
+      software.querySelector('#orderStatus')];
+    placePointer(software, software.querySelector('.software-demo-pointer'),
+      softwareTargets[Number(software.dataset.step || 0)]);
+
+    const hotspot = document.querySelector('.hotspot-visual');
+    const canvas = hotspot.querySelector('.hotspot-canvas');
+    placePointer(canvas, canvas.querySelector('.hotspot-demo-pointer'),
+      canvas.querySelectorAll('[data-hotspot]')[Number(hotspot.dataset.phase || 0)]);
+
+    const personas = document.querySelector('.ai-personas');
+    const activePersona = personas.querySelector('[data-ai-learner].active');
+    placePointer(personas, personas.querySelector('.ai-demo-pointer'), activePersona);
+
+    const phishing = document.querySelector('.phishing-visual');
+    const stage = phishing.querySelector(`.phishing-stage-${phishing.dataset.round}`);
+    if (stage && stage.getClientRects().length) {
+      const source = stage.querySelector('.phishing-request:not(.safe),.phishing-mail-content,.phishing-text-bubble');
+      const destination = stage.querySelector('.phishing-target');
+      const card = stage.querySelector('.phishing-drag-card');
+      const pointer = stage.querySelector('.phishing-demo-pointer');
+      const stageBox = stage.getBoundingClientRect();
+      const sourceBox = source.getBoundingClientRect();
+      const destinationBox = destination.getBoundingClientRect();
+      const sourceX = sourceBox.left - stageBox.left + sourceBox.width * .52;
+      const sourceY = sourceBox.top - stageBox.top + sourceBox.height * .5;
+      const destinationX = destinationBox.left - stageBox.left + destinationBox.width * .5;
+      const destinationY = destinationBox.top - stageBox.top + destinationBox.height * .5;
+      card.style.left = `${sourceX - card.offsetWidth * .5}px`;
+      card.style.top = `${sourceY - card.offsetHeight * .5}px`;
+      card.style.setProperty('--drag-x', `${destinationX - sourceX}px`);
+      card.style.setProperty('--drag-y', `${destinationY - sourceY}px`);
+      pointer.style.left = `${sourceX - 3}px`;
+      pointer.style.top = `${sourceY - 2}px`;
+      pointer.style.setProperty('--pointer-x', `${destinationX - sourceX}px`);
+      pointer.style.setProperty('--pointer-y', `${destinationY - sourceY}px`);
+    }
+  };
+  window.addEventListener('resize', () => window.requestAnimationFrame(syncPointers));
+  document.fonts?.ready.then(() => window.requestAnimationFrame(syncPointers));
   const loop = (render, count, duration, staticPhase = 0) => {
     let phase = reducedMotion ? staticPhase : 0;
     render(phase);
@@ -40,6 +112,7 @@
   const branchMap = document.querySelector('.branch-map');
   const branchFeedback = document.getElementById('branchFeedback');
   loop(phase => {
+    branchMap.dataset.phase = String(phase);
     branchMap.dataset.route = phase === 2 ? 'probe' : phase === 3 ? 'pitch' : 'none';
     branchFeedback.textContent = [
       'A customer explains that orders are delayed between teams.',
@@ -47,6 +120,7 @@
       'Asking where work stalls reveals the bottleneck.',
       'Pitching early leaves the root cause hidden.'
     ][phase];
+    window.requestAnimationFrame(syncPointers);
   }, 4, 1900, 2);
 
   const quizAnswers = [...document.querySelectorAll('[data-quiz-answer]')];
@@ -63,7 +137,24 @@
       'Correct: time lost in handoffs is a business pain.',
       'Specific feedback explains why the evidence fits.'
     ][phase];
+    window.requestAnimationFrame(syncPointers);
   }, 4, 1800, 2);
+
+  const videoScreen = document.querySelector('.video-screen');
+  const videoAnswers = [...videoScreen.querySelectorAll('[data-video-answer]')];
+  loop(phase => {
+    videoScreen.dataset.phase = String(phase);
+    videoAnswers.forEach(answer => answer.classList.remove('incorrect', 'correct'));
+    if (phase === 1) videoAnswers[0].classList.add('incorrect');
+    if (phase >= 2) videoAnswers[1].classList.add('correct');
+    document.getElementById('videoSceneStep').textContent =
+      ['MOMENT 01 / OBSERVE', 'MOMENT 02 / CHECK', 'MOMENT 03 / FEEDBACK', 'MOMENT 04 / CONTINUE'][phase];
+    document.getElementById('videoCaption').textContent = [
+      'Customer describes a slow handoff.', 'A feature request misses the clue.',
+      'Lost time is the customer signal.', 'The video continues with context.'
+    ][phase];
+    window.requestAnimationFrame(syncPointers);
+  }, 4, 1750, 2);
 
   const softwareWindow = document.querySelector('.software-window');
   const softwareTitle = document.getElementById('softwareTitle');
@@ -85,6 +176,7 @@
     document.getElementById('orderStatus').textContent = phase === 3
       ? 'Order #1048 · Submitted'
       : 'Order #1048 · Draft';
+    window.requestAnimationFrame(syncPointers);
   }, 4, 1900, 2);
 
   const hotspotDetails = [
@@ -97,6 +189,7 @@
     document.querySelector('.hotspot-visual').dataset.phase = String(phase);
     hotspotReveal.querySelector('strong').textContent = hotspotDetails[phase][0];
     hotspotReveal.querySelector('span').textContent = hotspotDetails[phase][1];
+    window.requestAnimationFrame(syncPointers);
   }, 3, 2300, 1);
 
   const phishingVisual = document.querySelector('.phishing-visual');
@@ -123,6 +216,7 @@
     gameStars.textContent = Array.from({ length: 3 }, (_, star) => star < index ? '★' : '☆').join(' ');
     gameCount.textContent = `${3 - index} threat${3 - index === 1 ? '' : 's'} to spot`;
     gameFeedback.textContent = rounds[index].feedback;
+    window.requestAnimationFrame(syncPointers);
   };
   startPhishingDemo = () => {
     if (phishingStarted) return;
@@ -161,6 +255,7 @@
     aiVisual.classList.remove('ai-refresh');
     void aiVisual.offsetWidth;
     aiVisual.classList.add('ai-refresh');
+    window.requestAnimationFrame(syncPointers);
   };
   startAiDemo = () => {
     if (aiStarted) return;
