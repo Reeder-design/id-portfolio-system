@@ -62,7 +62,7 @@
   </section>
 
   <nav class="case-nav-shell" aria-label="Project sections">
-    <div class="container case-nav"><a href="#need">Need</a><a href="#workflow">Automation Workflow</a><a href="#exceptions">Exception Handling</a><a href="#output">Workbook Output</a><a href="#outcome">Outcome</a></div>
+    <div class="container case-nav"><a href="#need">Need</a><a href="#simulation">System Simulation</a><a href="#workflow">Automation Workflow</a><a href="#exceptions">Exception Handling</a><a href="#output">Workbook Output</a><a href="#outcome">Outcome</a></div>
   </nav>
 
   <section class="section flagship-section reporting-need-section" id="need">
@@ -85,6 +85,26 @@
           <div class="reporting-need-motion" id="reportNeedMotion" data-need-visual="inputs" aria-hidden="true"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section flagship-section reporting-simulation-section" id="simulation">
+    <div class="container">
+      <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><p class="eyebrow">Simulated System Views</p></div>
+      <h2>Follow the run from browser to review package.</h2>
+      <p class="short-copy">These fictional screens show the steps and checkpoints, not private production systems. The certification-report run starts in the LMS. A related Salesforce account lookup is shown separately because it supported a different LMS placement workflow.</p>
+      <div class="report-demo-modes" role="tablist" aria-label="Automation paths"><button type="button" role="tab" aria-selected="true" class="active" data-report-demo-mode="reports">Certification reporting <small>Completed workflow</small></button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-report-demo-mode="accounts">Salesforce account context <small>Related, separate workflow</small></button></div>
+      <div class="report-demo-shell" id="reportDemoShell" data-demo-mode="reports">
+        <div class="report-demo-top"><div><span>PUBLIC-SAFE PRODUCTION SIMULATION</span><strong id="reportDemoPath">REPORTING / LMS → WORKBOOK</strong></div><button type="button" id="reportDemoPlay">Play sequence</button></div>
+        <div class="report-demo-steps" id="reportDemoSteps" role="tablist" aria-label="Selected automation stages"></div>
+        <div class="report-demo-layout" aria-live="polite">
+          <div class="report-demo-browser"><div class="report-demo-browser-bar"><span><i></i><i></i><i></i></span><strong id="reportDemoWindowLabel">TERMINAL / RUN</strong></div><div class="report-demo-screen"><div class="report-demo-art"><img id="reportDemoAsset" src="../../../../assets/icons/pixel/lms-admin/reporting-automation/terminal-run-reports.png" alt=""></div><div class="report-demo-screen-copy"><small id="reportDemoSource">SCHEDULED RUN</small><strong id="reportDemoAction">Start the saved-report workflow.</strong><span id="reportDemoScreenStatus">Browser opening</span></div></div></div>
+          <div class="report-demo-transfer" aria-hidden="true"><i></i><b>→</b></div>
+          <div class="report-demo-record"><span>WORK RECORD</span><strong id="reportDemoTarget">Expected exports</strong><div class="report-demo-record-rows"><div id="reportDemoRecordOne">Employee activity</div><div id="reportDemoRecordTwo">Partner activity</div><div id="reportDemoRecordThree">Certificate evidence</div></div><p><b>CHECKPOINT</b><span id="reportDemoCheckpoint">Confirm the correct saved reports and run scope.</span></p></div>
+        </div>
+        <p class="report-demo-caption" id="reportDemoCaption">The automation begins with a known report set and a defined review path.</p>
+      </div>
+      <p class="report-demo-boundary"><strong>Source boundary:</strong> Salesforce supplied verified account context for a separate LMS placement automation. The four-report certification workflow used LMS exports; this simulation does not claim Salesforce was part of that report script.</p>
     </div>
   </section>
 
@@ -184,6 +204,8 @@
       <p class="public-safe-note"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><strong>Public-safe case study:</strong> course identifiers, report names, learner data, account details, and internal file structures are intentionally omitted.</span></p>
     </div>
   </section>
+
+  <nav class="case-back-nav" aria-label="Back to Workflows"><div class="container"><a href="../../index.html">← Back to Workflows</a></div></nav>
 
 </main>
 
