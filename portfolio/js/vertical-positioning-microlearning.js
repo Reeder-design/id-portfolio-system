@@ -90,6 +90,8 @@
       button.type = 'button';
       button.className = 'vertical-choice';
       button.classList.toggle('selected', selected === index);
+      button.classList.toggle('correct', stage === 3 && selected === index && choice.correct === true);
+      button.classList.toggle('incorrect', stage === 3 && selected === index && choice.correct === false);
       button.setAttribute('aria-pressed', String(selected === index));
       const letter = document.createElement('span');
       letter.textContent = String.fromCharCode(65 + index);

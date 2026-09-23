@@ -1094,3 +1094,9 @@
 @media(max-width:700px){.vertical-need-panel{grid-template-columns:1fr}.vertical-need-options{grid-template-columns:1fr 1fr}.vertical-need-options button{min-height:0;padding:11px}.vertical-need-options button em{font-size:.61rem}.vertical-learner-panel{padding:17px}.vertical-learner-panel>.vertical-demo-controls{margin:13px -17px -17px}.vertical-cue-route{grid-template-columns:1fr 1fr 1fr}.vertical-cue-route>i{display:none}.vertical-roi-dashboard{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.vertical-need-options{grid-template-columns:1fr}.vertical-request-fork{display:none}.vertical-need-options{margin-top:12px}.vertical-learner-panel>.vertical-demo-controls{grid-template-columns:1fr 1fr}.vertical-learner-panel>.vertical-demo-controls>p{grid-column:1/-1;grid-row:1}.vertical-learner-panel>.vertical-demo-controls button{grid-row:2}}
 @media(prefers-reduced-motion:reduce){.vertical-roi-bars i{animation:none!important}}
+/* An incorrect scenario response must read as incorrect at the chosen option. */
+.vertical-demo-section .vertical-choice.selected.incorrect{border-color:#c56561;background:#ffebe9;box-shadow:0 0 0 3px #f2b2ad88;color:#7b302f}
+.vertical-demo-section .vertical-choice.selected.incorrect>span:first-child{background:#b94d49;color:#fff}
+.vertical-demo-section .vertical-choice.selected.incorrect .case-asset-bubble{border-color:#df9a94}
+.vertical-demo-section .vertical-choice.selected.correct{border-color:#418d67;background:#e3f5e5;box-shadow:0 0 0 3px #bce7c6}
+.vertical-demo-section .vertical-feedback[data-result="coach"]{border-left-color:#ba5751;background:#fff0ed;color:#743a35}

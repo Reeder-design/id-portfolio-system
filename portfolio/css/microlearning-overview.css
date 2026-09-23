@@ -171,3 +171,17 @@
 @media(max-width:900px){.micro-examples-section .micro-example-preview{min-height:235px;height:235px}.micro-examples-section .micro-example-copy{padding:23px 27px}.micro-principle,.micro-type{min-height:0}}
 @media(max-width:700px){.micro-overview-page main>.section{padding-block:43px!important}.micro-type-demo{height:218px}.micro-examples-section .micro-example-copy{padding:22px}}
 @media(prefers-reduced-motion:reduce){.micro-example-preview:after,.micro-example-card:after{animation:none!important}}
+
+/* Centered hero demo with one cursor anchored to each actual click target. */
+.micro-overview-page .micro-hero-frame{transform:none;will-change:opacity}
+@keyframes micro-screen-cycle{0%,29%{opacity:1;transform:none}33%,96%{opacity:0;transform:none}100%{opacity:1;transform:none}}
+.micro-ui-option.is-first,.micro-ui-video-picks>span:first-child,.micro-ui-system b{position:relative}
+.micro-ui-cursor{position:absolute;z-index:5;left:50%;top:50%;width:27px;height:34px;color:#fff;pointer-events:none;opacity:0;transform-origin:3px 2px;animation:micro-hero-pointer 15s infinite}
+.micro-ui-cursor svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(2px 3px 2px #143d3abb)}
+.micro-ui-cursor path{fill:#fff;stroke:#193f43;stroke-width:2.3;stroke-linejoin:round}
+.micro-hero-frame-video .micro-ui-cursor,.micro-hero-frame-video .micro-ui-video-picks>span:first-child{animation-delay:5s}
+.micro-hero-frame-system .micro-ui-cursor,.micro-hero-frame-system .micro-ui-system b{animation-delay:10s}
+.micro-ui-option.is-first,.micro-ui-video-picks>span:first-child,.micro-ui-system b{animation-name:micro-hero-target;animation-duration:15s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes micro-hero-pointer{0%,5%{opacity:0;transform:translate(23px,20px)}10%{opacity:1}18%,22%{opacity:1;transform:translate(0,0) scale(1)}24%,27%{opacity:1;transform:translate(0,0) scale(.84)}30%,100%{opacity:0;transform:translate(0,0)}}
+@keyframes micro-hero-target{0%,16%{box-shadow:none;border-color:#b5d2bf}20%,28%{box-shadow:0 0 0 4px #bce98699;border-color:#4ba575;background:#dff4e1}32%,100%{box-shadow:none}}
+@media(prefers-reduced-motion:reduce){.micro-ui-cursor{display:none!important}.micro-overview-page .micro-hero-frame-choice{opacity:1!important;transform:none!important}}
