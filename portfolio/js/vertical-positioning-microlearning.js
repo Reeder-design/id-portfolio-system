@@ -1,39 +1,4 @@
 (() => {
-  const data = window.verticalCaseData || {};
-  const setupTabs = (selector, attr, onActivate) => {
-    const buttons = [...document.querySelectorAll(selector)];
-    buttons.forEach((button, index) => {
-      const activate = () => {
-        buttons.forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
-        onActivate(button.dataset[attr]);
-      };
-      button.addEventListener('click', activate);
-      button.addEventListener('keydown', event => {
-        if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-        event.preventDefault();
-        const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length;
-        buttons[next].focus(); buttons[next].click();
-      });
-    });
-  };
-  setupTabs('[data-vertical-outcome]', 'verticalOutcome', (key) => {
-    const item = data.outcomes?.[key];
-    if (!item) return;
-    const label = document.getElementById('verticalOutcomeLabel');
-    const title = document.getElementById('verticalOutcomeTitle');
-    const text = document.getElementById('verticalOutcomeText');
-    const proof = document.getElementById('verticalOutcomeProof');
-    const icon = document.getElementById('verticalOutcomeIcon');
-    if (label) label.textContent = item.label;
-    if (title) title.textContent = item.title;
-    if (text) text.textContent = item.text;
-    if (proof) proof.textContent = item.proof;
-    if (icon) icon.setAttribute('href', `../../../../assets/icons/portfolio-icons.svg#${item.icon}`);
-  });
-
-})();
-
-(() => {
   const iconRoot = '../../../../assets/icons/portfolio-icons.svg#';
   const documentRoot = '../../../../assets/documents/';
   const paths = {
@@ -244,5 +209,51 @@
   fields.restart.addEventListener('click', reset);
   fields.roiHandoffs.addEventListener('input', updateRoi);
   fields.roiMinutes.addEventListener('input', updateRoi);
+  const needData = {
+    seaport: {
+      label: 'SEAPORT CONTEXT', title: 'Where does a handoff lose visibility?',
+      text: 'Field teams and terminals need a shared view of changing equipment status.',
+      response: 'A concise seaport path that starts with the operating context, then asks sellers to connect a pain point to value.',
+      nodes: ['Terminal teams','Handoff status','Positioning cue']
+    },
+    airport: {
+      label: 'AIRPORT CONTEXT', title: 'Who needs the change first?',
+      text: 'Gate, ramp, and service teams need timely updates when a plan changes.',
+      response: 'An airport path that uses its own customer cues, ROI assumptions, and scenario branches inside the same learning spine.',
+      nodes: ['Gate change','Ramp + service','Positioning cue']
+    }
+  };
+  function renderNeed(key) {
+    const item = needData[key];
+    if (!item) return;
+    const panel = document.querySelector('.vertical-need-panel');
+    if (!panel) return;
+    panel.dataset.context = key;
+    [['verticalNeedLabel',item.label],['verticalNeedTitle',item.title],['verticalNeedText',item.text],['verticalNeedResponse',item.response],['verticalNeedNodeOne',item.nodes[0]],['verticalNeedNodeTwo',item.nodes[1]],['verticalNeedNodeThree',item.nodes[2]]].forEach(([id,value]) => { document.getElementById(id).textContent = value; });
+    document.querySelectorAll('[data-need-context]').forEach(button => {
+      const active = button.dataset.needContext === key;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+  document.querySelectorAll('[data-need-context]').forEach(button => button.addEventListener('click', () => {
+    const key = button.dataset.needContext;
+    document.querySelector(`[data-industry="${key}"]`)?.click();
+    renderNeed(key);
+  }));
+  industryButtons.forEach(button => button.addEventListener('click', () => renderNeed(button.dataset.industry)));
+  const workflowLabels = {
+    scope: ['01 / Scope','Keep only the context a seller needs.'],
+    architect: ['02 / Architect','Keep the learner rhythm consistent.'],
+    build: ['03 / Build','Develop two distinct branches.'],
+    review: ['04 / Validate','Check accuracy and hand off resources.']
+  };
+  document.querySelectorAll('.vertical-build-stages [data-micro-flow]').forEach(button => button.addEventListener('click', () => {
+    const key = button.dataset.microFlow;
+    document.querySelector('.vertical-build-shell').dataset.activeStage = key;
+    document.getElementById('verticalFlowLabel').textContent = workflowLabels[key][0];
+    document.getElementById('verticalFlowTitle').textContent = workflowLabels[key][1];
+  }));
+  renderNeed(industry);
   render();
 })();

@@ -81,15 +81,8 @@
       flow:{
         scope:{decision:'I narrowed the source material to the vertical context sellers actually needed before a discovery or positioning conversation.',output:'A concise content set for seaport and airport rather than a broad industry course.'},
         architect:{decision:'I used one repeatable learning sequence for both verticals while keeping the examples, priorities, and practice specific to each environment.',output:'Positioning → pain points → ROI → AI practice → takeaway as the shared module architecture.'},
-        build:{decision:'I built the experience in Rise and used a short Colossyan presenter segment only where narration improved orientation.',output:'A scannable module with selective multimedia instead of media for its own sake.'},
-        review:{decision:'I coordinated internal QA and specialist review to validate wording, scope, examples, and media choices.',output:'Revisions that kept the two vertical components accurate, distinct, and sales-ready.'}
-      }
-    };
-    window.verticalCaseData={
-      outcomes:{
-        focused:{label:'Focused',title:'Vertical context without a full vertical curriculum.',text:'The module gave sellers enough operating context to make the use cases meaningful, then stopped before the experience became an encyclopedic industry course.',proof:'One concise Rise module with two distinct components',icon:'icon-learning-design'},
-        transferable:{label:'Transferable',title:'A repeatable learning pattern with different customer judgment.',text:'Learners encountered the same instructional sequence in both sections, which reduced navigation friction while preserving the differences between the two customer environments.',proof:'Positioning → pain points → ROI → AI practice → takeaway',icon:'icon-interaction'},
-        maintainable:{label:'Maintainable',title:'Shared architecture made future edits easier to manage.',text:'Because the sections used the same learning pattern, updates could focus on the vertical-specific examples, practice, and resources without redesigning the entire experience.',proof:'Reusable structure + vertical-specific content',icon:'icon-workflow'}
+        build:{decision:'I built the shared Rise sequence, then authored separate seaport and airport cues, ROI conversations, AI practice, and takeaway resources.',output:'Two learner routes with the same navigation pattern and distinct customer situations, responses, and coaching.'},
+        review:{decision:'I coordinated specialist review of vertical terms, positioning, scenario responses, and resource wording, then tracked changes through QA.',output:'A validated Rise module and separate one-pagers sellers could bring to each type of conversation.'}
       }
     };
   </script>
@@ -133,22 +126,22 @@
   </section>
 
   <nav class="case-nav-shell" aria-label="Project sections">
-    <div class="container case-nav"><a href="#need">Design Need</a><a href="#architecture">Learning Architecture</a><a href="#workflow">Build Workflow</a><a href="#media">Media + Review</a><a href="#outcome">Design Outcome</a></div>
+    <div class="container case-nav"><a href="#need">Design Need</a><a href="#architecture">Learning Architecture</a><a href="#workflow">Build Workflow</a></div>
   </nav>
 
-  <section class="section flagship-section" id="need">
+  <section class="section flagship-section vertical-need-section" id="need">
     <div class="container">
-      <div class="section-kicker micro-asset-kicker"><span class="micro-pixel-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/microlearning-performance-support/quick-learning.webp" alt=""></span><p class="eyebrow">Design Need</p></div>
-      <div class="vertical-section-intro">
-        <div>
-          <h2>Teach two vertical contexts without building two courses or flattening them into one generic story.</h2>
-          <p class="short-copy">Seaport and airport environments needed different customer priorities, examples, and practice. I kept them distinct inside one short module while giving learners a consistent structure they did not have to relearn.</p>
+      <div class="section-kicker"><span class="icon-badge vertical-kicker-asset" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/planning-projects/goals.webp" alt=""></span><p class="eyebrow">Design Need</p></div>
+      <div class="vertical-need-intro"><h2>One learning system. Two distinct customer worlds.</h2><p>I had to keep the seller task consistent while changing the customer cues, differentiators, and practice for each vertical. Choose a setting to see the design problem.</p></div>
+      <div class="vertical-need-interactive">
+        <div class="vertical-need-options" role="group" aria-label="Explore the design need by vertical">
+          <button type="button" class="active" data-need-context="seaport" aria-pressed="true"><span class="case-asset-bubble" aria-hidden="true"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ship"></use></svg></span><span><strong>Seaport</strong><small>Distributed terminals</small></span></button>
+          <button type="button" data-need-context="airport" aria-pressed="false"><span class="case-asset-bubble" aria-hidden="true"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-plane"></use></svg></span><span><strong>Airport</strong><small>Time-sensitive handoffs</small></span></button>
         </div>
-      </div>
-      <div class="vertical-need-cards">
-        <article class="vertical-need-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Enough context</h3><p>Give sellers the operating context needed to make positioning and use cases credible.</p></article>
-        <article class="vertical-need-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Real application</h3><p>Move beyond industry facts by asking the learner to make a customer-facing decision.</p></article>
-        <article class="vertical-need-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><h3>Controlled scope</h3><p>Keep deeper technical and reference material available without putting all of it inside the microlearning.</p></article>
+        <div class="vertical-need-panel" data-context="seaport" aria-live="polite">
+          <div class="vertical-need-diagram" aria-hidden="true"><div class="vertical-need-route"></div><span class="vertical-need-node"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/team.webp" alt=""></span><b id="verticalNeedNodeOne">Terminal teams</b></span><span class="vertical-need-node"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/support-resources/information.webp" alt=""></span><b id="verticalNeedNodeTwo">Handoff status</b></span><span class="vertical-need-node"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/analytics-insights/insights.webp" alt=""></span><b id="verticalNeedNodeThree">Positioning cue</b></span></div>
+          <div class="vertical-need-copy"><p class="eyebrow" id="verticalNeedLabel">SEAPORT CONTEXT</p><h3 id="verticalNeedTitle">Where does a handoff lose visibility?</h3><p id="verticalNeedText">Field teams and terminals need a shared view of changing equipment status.</p><div class="vertical-need-response"><span>What I designed</span><strong id="verticalNeedResponse">A concise seaport path that starts with the operating context, then asks sellers to connect a pain point to value.</strong></div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -190,59 +183,30 @@
 
   <section class="section flagship-section vertical-workflow-section" id="workflow">
     <div class="container">
-      <div class="section-kicker micro-asset-kicker"><span class="micro-pixel-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/performance-support/guide.webp" alt=""></span><p class="eyebrow">Build Workflow</p></div>
-      <h2>Scope, architect, build, review.</h2>
-      <p class="short-copy">Select a stage to see the design decision and what it produced.</p>
-      <div class="micro-interaction-cue"><span>Explore the workflow</span><strong>Select each stage to see how I scoped, architected, built, and reviewed the module.</strong></div>
-
-      <div class="micro-flow-grid vertical-flow-grid" role="tablist" aria-label="Vertical microlearning workflow">
-        <button class="micro-flow-step active" type="button" role="tab" aria-selected="true" data-micro-flow="scope"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg><span><strong>01 Scope</strong><small>Control the content depth</small></span></button>
-        <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="architect"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><span><strong>02 Architect</strong><small>Build the shared pattern</small></span></button>
-        <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="build"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg><span><strong>03 Build</strong><small>Rise + selective media</small></span></button>
-        <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="review"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><strong>04 Review</strong><small>QA + specialist validation</small></span></button>
-      </div>
-      <div class="micro-flow-detail vertical-flow-detail" aria-live="polite">
-        <article class="micro-flow-card"><span>Design decision</span><p id="flowDecision">I narrowed the source material to the vertical context sellers actually needed before a discovery or positioning conversation.</p></article>
-        <article class="micro-flow-card"><span>What it produced</span><p id="flowOutput">A concise content set for seaport and airport rather than a broad industry course.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section flagship-section vertical-media-section" id="media">
-    <div class="container">
-      <div class="section-kicker micro-asset-kicker"><span class="micro-pixel-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/microlearning-performance-support/quick-learning.webp" alt=""></span><p class="eyebrow">Media + Review</p></div>
-      <h2>I used multimedia where it helped orientation and review where accuracy mattered.</h2>
-      <p class="short-copy">The module did not need to become a video course. Media supported the learning pattern; specialist review protected the vertical-specific content.</p>
-      <div class="vertical-media-grid">
-        <article class="vertical-media-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><h3>Colossyan orientation</h3><p>I used a short AI-presenter segment where narrated context helped introduce the environment efficiently.</p><span class="vertical-media-label">Selective multimedia</span></article>
-        <article class="vertical-media-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Rise + learner-facing AI practice</h3><p>The core experience stayed scannable in Rise, then asked sellers to rehearse a vertical-specific customer response with AI-supported branching and feedback.</p><span class="vertical-media-label">Application over recall</span></article>
-        <article class="vertical-media-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Review 360 + Asana</h3><p>I coordinated QA and specialist feedback, then tracked revisions to wording, scope, examples, and media choices through the review process.</p><span class="vertical-media-label">Traceable review</span></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section flagship-section" id="outcome">
-    <div class="container">
-      <div class="section-kicker micro-asset-kicker"><span class="micro-pixel-badge" aria-hidden="true"><img src="../../../../assets/icons/pixel/microlearning-performance-support/takeaways.webp" alt=""></span><p class="eyebrow">Design Outcome</p></div>
-      <h2>One concise learning system that kept two verticals distinct.</h2>
-      <p class="short-copy">No invented performance metrics here. The case study focuses on the observable design result and the structure I built.</p>
-      <div class="micro-interaction-cue"><span>Compare outcomes</span><strong>Switch the tabs to see how the shared architecture stayed focused, transferable, and maintainable.</strong></div>
-
-      <div class="vertical-outcome-shell">
-        <div class="vertical-outcome-tabs" role="tablist" aria-label="Vertical microlearning outcomes">
-          <button class="vertical-outcome-tab active" type="button" role="tab" aria-selected="true" data-vertical-outcome="focused">Focused</button>
-          <button class="vertical-outcome-tab" type="button" role="tab" aria-selected="false" data-vertical-outcome="transferable">Transferable</button>
-          <button class="vertical-outcome-tab" type="button" role="tab" aria-selected="false" data-vertical-outcome="maintainable">Maintainable</button>
+      <div class="section-kicker"><span class="icon-badge vertical-kicker-asset" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/planning-projects/projects.webp" alt=""></span><p class="eyebrow">Build Workflow</p></div>
+      <div class="vertical-workflow-intro"><h2>Branch the context. Keep the learning spine.</h2><p>I built one Rise architecture and developed two vertical-specific paths. The diagram shows where the content split, what stayed shared, and how I reviewed each branch.</p></div>
+      <div class="vertical-build-shell" data-active-stage="scope">
+        <div class="vertical-build-map" aria-label="Two vertical content paths connect to one shared learning architecture">
+          <svg class="vertical-build-lines" viewBox="0 0 860 330" preserveAspectRatio="none" aria-hidden="true"><path d="M80 165 L345 165"></path><path d="M345 165 C430 165 420 76 540 76 L620 76 C690 76 690 165 790 165"></path><path d="M345 165 C430 165 420 254 540 254 L620 254 C690 254 690 165 790 165"></path></svg>
+          <div class="vertical-build-source"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/content-creation/content.webp" alt=""></span><span><small>START</small><strong>Approved vertical source</strong></span></div>
+          <div class="vertical-build-branch vertical-build-seaport"><span class="case-asset-bubble" aria-hidden="true"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-ship"></use></svg></span><span><small>SEAPORT</small><strong>Pain points · ROI · AI practice</strong></span></div>
+          <div class="vertical-build-core"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/content-creation/development.webp" alt=""></span><span><small>SHARED SPINE</small><strong>One Rise architecture</strong></span></div>
+          <div class="vertical-build-branch vertical-build-airport"><span class="case-asset-bubble" aria-hidden="true"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-plane"></use></svg></span><span><small>AIRPORT</small><strong>Pain points · ROI · AI practice</strong></span></div>
+          <div class="vertical-build-review"><span class="case-asset-bubble" aria-hidden="true"><img src="../../../../assets/icons/pixel/workflows/people-collaboration/feedback.webp" alt=""></span><span><small>VALIDATE</small><strong>Specialist review + one-pagers</strong></span></div>
+          <span class="vertical-build-packet packet-a" aria-hidden="true"></span><span class="vertical-build-packet packet-b" aria-hidden="true"></span>
         </div>
-        <div class="vertical-outcome-panel" role="tabpanel" aria-live="polite">
-          <div class="vertical-outcome-icon"><svg class="portfolio-icon" aria-hidden="true"><use id="verticalOutcomeIcon" href="../../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg></div>
-          <div><p class="eyebrow" id="verticalOutcomeLabel">Focused</p><h3 id="verticalOutcomeTitle">Vertical context without a full vertical curriculum.</h3><p id="verticalOutcomeText">The module gave sellers enough operating context to make the use cases meaningful, then stopped before the experience became an encyclopedic industry course.</p></div>
-          <div class="vertical-outcome-proof"><span>Design evidence</span><strong id="verticalOutcomeProof">One concise Rise module with two distinct components</strong></div>
+        <div class="vertical-build-stages" role="tablist" aria-label="Vertical microlearning development stages">
+          <button class="micro-flow-step active" type="button" role="tab" aria-selected="true" data-micro-flow="scope"><span>01</span><strong>Scope the two contexts</strong></button>
+          <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="architect"><span>02</span><strong>Architect one path</strong></button>
+          <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="build"><span>03</span><strong>Build the branches</strong></button>
+          <button class="micro-flow-step" type="button" role="tab" aria-selected="false" data-micro-flow="review"><span>04</span><strong>Validate + release</strong></button>
         </div>
+        <div class="vertical-build-detail" aria-live="polite"><div><p class="eyebrow" id="verticalFlowLabel">01 / Scope</p><h3 id="verticalFlowTitle">Keep only the context a seller needs.</h3></div><div><span>My decision</span><p id="flowDecision">I narrowed the source material to the vertical context sellers actually needed before a discovery or positioning conversation.</p></div><div><span>What it produced</span><p id="flowOutput">A concise content set for seaport and airport rather than a broad industry course.</p></div></div>
       </div>
-      <div class="micro-boundary"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><p><strong>Public-safe case study:</strong> proprietary vertical messaging, internal screenshots, customer details, reviewer comments, and source material are intentionally omitted.</p></div>
+      <p class="vertical-workflow-boundary"><strong>Public-safe reconstruction:</strong> this page omits proprietary messaging, internal screenshots, reviewer comments, and customer details. The workflow and responsibilities reflect my completed work.</p>
     </div>
   </section>
+
 
 </main>
 
