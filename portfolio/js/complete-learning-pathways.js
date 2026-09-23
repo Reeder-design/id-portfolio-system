@@ -54,12 +54,6 @@
       heading: "One course can develop one coherent capability.",
       description: "A course brings explanation, examples, practice, and a check around a defined objective. It may stand alone or later become one part of a larger path.",
       scene: `<div class="cp-mini-app cp-mini-course"><div class="cp-mini-top"><span>COURSE PLAYER</span><span>02 / 03</span></div><div class="cp-mini-lesson"><span class="cp-mini-play">▶</span><div><strong>One focused objective</strong><small>Explain → example → apply</small></div></div><div class="cp-mini-question">A customer raises a new concern. First move?</div><button type="button" data-mini-action="course">Choose: ask a clarifying question</button><div class="cp-mini-reveal" hidden role="status">✓ Practice checked; continue to the next lesson</div></div>`
-    },
-    pathway: {
-      kicker: "Connected progression",
-      heading: "The journey has a destination.",
-      description: "Courses, resources, practice, assessments, delivery rules, and completion work together. I have to design not only what learners see, but how they move, qualify, and receive support.",
-      scene: `<div class="cp-mini-app cp-mini-pathway"><div class="cp-mini-top"><span>MY LEARNING</span><span>SELLER ROUTE</span></div><div class="cp-mini-route"><span class="is-done" data-stage-index="0">✓<small>Start</small></span><i></i><span class="is-now" data-stage-index="1">▶<small>Practice</small></span><i></i><span data-stage-index="2">○<small>Check</small></span><i></i><span data-stage-index="3">◇<small>Finish</small></span></div><div class="cp-mini-pathway-footer"><span data-mini-progress-label>2 of 4 stages</span><button type="button" data-mini-action="pathway">Complete practice ↗</button></div><div class="cp-mini-reveal" hidden role="status">Customer practice is ready</div></div>`
     }
   };
   const scaleWorkspace = document.querySelector(".cp-scale-workspace");
@@ -73,10 +67,10 @@
     diagram.dataset.solution = key;
     diagram.dataset.progressStep = "2";
     diagram.classList.remove("is-explored");
-    const solutionNames = { quick: "job aid", micro: "microlearning card", interaction: "decision practice", course: "course player", pathway: "pathway dashboard" };
+    const solutionNames = { quick: "job aid", micro: "microlearning card", interaction: "decision practice", course: "course player" };
     diagram.setAttribute("aria-label", `Illustrative ${solutionNames[key]} learner view`);
     diagram.innerHTML = data.scene;
-    if (key !== "pathway" && key !== "interaction") {
+    if (key !== "interaction") {
       const action = diagram.querySelector("[data-mini-action]");
       const reveal = diagram.querySelector(".cp-mini-reveal");
       reveal.id = "miniReveal";
@@ -86,26 +80,6 @@
     diagram.querySelectorAll("[data-mini-choice]").forEach((choice) => choice.setAttribute("aria-pressed", "false"));
     diagram.querySelector("[data-mini-action]")?.addEventListener("click", (event) => {
       const reveal = diagram.querySelector(".cp-mini-reveal");
-      if (key === "pathway") {
-        const current = Number(diagram.dataset.progressStep || 2);
-        const next = current === 5 ? 2 : current + 1;
-        diagram.dataset.progressStep = String(next);
-        const stages = [...diagram.querySelectorAll("[data-stage-index]")];
-        const symbols = ["✓", "▶", "○", "◇"];
-        stages.forEach((stage, index) => {
-          stage.classList.toggle("is-done", index < next - 1 || next === 5);
-          stage.classList.toggle("is-now", index === next - 1 && next !== 5);
-          stage.firstChild.textContent = index < next - 1 || next === 5 ? "✓" : index === next - 1 ? "▶" : symbols[index];
-        });
-        const progress = diagram.querySelector("[data-mini-progress-label]");
-        progress.textContent = next === 5 ? "Complete" : `${next} of 4 stages`;
-        const messages = { 2: "Customer practice is ready", 3: "Practice complete; final check unlocked", 4: "Final check complete; confirm the milestone", 5: "Certification complete; record available" };
-        reveal.textContent = messages[next];
-        event.currentTarget.textContent = ({ 2: "Complete practice ↗", 3: "Complete final check ↗", 4: "Confirm completion ↗", 5: "Replay pathway ↺" })[next];
-        reveal.hidden = false;
-        diagram.classList.toggle("is-explored", next > 2);
-        return;
-      }
       if (key === "micro") {
         const next = !diagram.classList.contains("is-explored");
         diagram.classList.toggle("is-explored", next);
@@ -132,7 +106,7 @@
       reveal.textContent = button.dataset.miniChoice === "ask" ? "Good decision: clarify the need before positioning." : "Try the discovery question first; the solution fit is not known yet.";
     }));
   });
-  if (scaleWorkspace) scaleWorkspace.querySelector('[data-cp-tab="pathway"]').click();
+  if (scaleWorkspace) scaleWorkspace.querySelector('[data-cp-tab="quick"]').click();
 
   const learner = {
     route: {
@@ -180,6 +154,15 @@
     document.getElementById("demoWindowTitle").textContent = data.title;
     document.getElementById("demoCaptionTitle").textContent = data.caption;
     document.getElementById("demoCaption").textContent = data.copy;
+    const foundations = {
+      route: ["A route that fits the audience", "Role-based entry keeps the experience relevant. Learners see the shared core and a clear next step for their responsibilities, so the pathway feels coherent from the start."],
+      module: ["Practice makes the route useful", "A pathway needs a chance to apply information to the learner's real decisions. Focused feedback lets someone adjust their reasoning before the formal check."],
+      progress: ["Visible progress supports trust", "Clear status and a meaningful assessment gate help learners understand what remains. The check verifies applied judgment and gives the organization more than a screen-view count."],
+      milestone: ["The outcome has to carry forward", "A visible milestone gives the learner a reason to finish and a next step. The LMS record makes completion usable for support, reporting, qualification, or access decisions."]
+    };
+    document.getElementById("anatomyFoundationTitle").textContent = foundations[key][0];
+    document.getElementById("anatomyFoundationCopy").textContent = foundations[key][1];
+    document.querySelectorAll(".cp-anatomy-foundation-rail i").forEach((item, index) => item.classList.toggle("is-current", index === ["route","module","progress","milestone"].indexOf(key)));
     document.getElementById("demoStepCount").textContent = data.count;
     document.getElementById("demoProgressFill").style.width = data.progress;
     screen.querySelectorAll("[data-next-learner]").forEach((button) => button.addEventListener("click", () => {
@@ -277,7 +260,7 @@
       description: "Publishing is only one step. I check course launch, the order of modules, learner communications, prerequisites, assessment behavior, and whether a learner can actually reach the intended completion state.",
       move: "Walk the path as a learner instead of assuming a successful upload means successful delivery.",
       output: "A visible route from enrollment to the milestone, tested in the LMS.",
-      scene: frame("Learner pathway", `<div class="cp-pov-sidebar">HOME<br>MY LEARNING<br>RESOURCES</div><div class="cp-delivery-main"><div class="cp-delivery-top"><span>Sales certification</span><b>IN PROGRESS</b></div><div class="cp-delivery-row is-checked">✓ <span>Portfolio foundation</span></div><div class="cp-delivery-row is-current">▶ <span>Customer situations</span><b>READY</b></div><div class="cp-delivery-row">○ <span>Final assessment</span></div><button type="button" class="cp-pov-action" data-pov-action="delivery">Open current module</button><div class="cp-pov-reveal" hidden role="status">Module opened. Practice is the next required step.</div></div>`)
+      scene: frame("Learner pathway", `<div class="cp-pov-sidebar">HOME<br>MY LEARNING<br>RESOURCES</div><div class="cp-delivery-main"><div class="cp-delivery-top"><span>Sales certification</span><b>IN PROGRESS</b></div><div class="cp-delivery-row is-checked">✓ <span>Portfolio foundation</span></div><div class="cp-delivery-row is-current">▶ <span>Customer situations</span><b>READY</b></div><div class="cp-delivery-row">○ <span>Final assessment</span></div></div>`)
     },
     admin: {
       kicker: "03 / Administration · LMS administrator view",
@@ -285,7 +268,7 @@
       description: "I account for enrollment, audience assignment, sequencing, prerequisites, certification rules, completion logic, LMS integrations, and the data those settings need to produce.",
       move: "Check that the rules reflect the intended learner journey, not only a convenient LMS default.",
       output: "Audience routes and completion records that behave as designed.",
-      scene: frame("Pathway rules", `<div class="cp-admin-grid"><div><small>AUDIENCE</small><strong>Internal sellers + partners</strong></div><div><small>ROUTE</small><strong>Shared core → regional path</strong></div><div><small>ASSESSMENT</small><strong>Required before certificate</strong></div><div class="cp-admin-toggle"><small>COMPLETION RECORD</small><strong>✓ Enabled</strong></div></div><button type="button" class="cp-pov-action cp-pov-action-admin" data-pov-action="admin">Check pathway rules</button><div class="cp-pov-reveal cp-pov-reveal-admin" hidden role="status">Audience, prerequisite, and completion record align.</div>`)
+      scene: frame("Pathway rules", `<div class="cp-admin-grid"><div><small>AUDIENCE</small><strong>Internal sellers + partners</strong></div><div><small>ROUTE</small><strong>Shared core → regional path</strong></div><div><small>ASSESSMENT</small><strong>Required before certificate</strong></div><div class="cp-admin-toggle"><small>COMPLETION RECORD</small><strong>✓ Enabled</strong></div></div>`)
     },
     support: {
       kicker: "04 / Support · Learner and administrator view",
@@ -293,7 +276,7 @@
       description: "I have supported access and enrollment, navigation, assessment questions, completion records, certification status, and other LMS issues that affect the learner's next step.",
       move: "Trace the reported problem from learner screen to underlying rule or record before changing content.",
       output: "A resolved blocker and a documented pattern to prevent recurrence.",
-      scene: frame("Learner support", `<div class="cp-support-ticket"><div class="cp-ticket-head"><span>EXAMPLE ISSUE</span><b class="cp-ticket-status">Open</b></div><p>Assessment complete; certificate not showing.</p><div class="cp-ticket-trace"><span>Assessment ✓</span><span>Completion rule ?</span><span>Record ✓</span></div><button type="button" class="cp-pov-action" data-pov-action="support">Trace the blocker</button><div class="cp-pov-reveal" hidden role="status">Rule mismatch found. Correct the status, then confirm with the learner.</div></div>`)
+      scene: frame("Learner support", `<div class="cp-support-ticket"><div class="cp-ticket-head"><span>EXAMPLE ISSUE</span><b class="cp-ticket-status">Open</b></div><p>Assessment complete; certificate not showing.</p><div class="cp-ticket-trace"><span>Assessment ✓</span><span>Completion rule ?</span><span>Record ✓</span></div></div>`)
     },
     reporting: {
       kicker: "05 / Reporting · Program view",
@@ -301,7 +284,7 @@
       description: "I use enrollment, progress, completions, assessment behavior, certification, learner feedback, and adoption signals to understand whether the path is working and where people stall.",
       move: "Separate a learner-performance signal from an access, assignment, or completion-logic issue.",
       output: "A clearer question for the next review and a visible record of program health.",
-      scene: frame("Example pathway report", `<div class="cp-report-summary"><div><small>ENROLLED</small><strong>▰▰▰▰▰</strong></div><div><small>IN PROGRESS</small><strong>▰▰▰▱▱</strong></div><div><small>COMPLETE</small><strong>▰▰▱▱▱</strong></div></div><div class="cp-report-chart"><span>Module 1</span><i style="--bar:90%"></i><span>Practice</span><i style="--bar:68%"></i><span>Assessment</span><i style="--bar:47%"></i></div><button type="button" class="cp-pov-action" data-pov-action="reporting">Inspect assessment drop-off</button><div class="cp-pov-reveal" hidden role="status">Compare assessment behavior with learner feedback and support tickets before revising.</div>`)
+      scene: frame("Example pathway report", `<div class="cp-report-summary"><div><small>ENROLLED</small><strong>▰▰▰▰▰</strong></div><div><small>IN PROGRESS</small><strong>▰▰▰▱▱</strong></div><div><small>COMPLETE</small><strong>▰▰▱▱▱</strong></div></div><div class="cp-report-chart"><span>Module 1</span><i style="--bar:90%"></i><span>Practice</span><i style="--bar:68%"></i><span>Assessment</span><i style="--bar:47%"></i></div>`)
     },
     maintenance: {
       kicker: "06 / Maintenance · Source-owner view",
@@ -309,7 +292,7 @@
       description: "Product names, technical details, messaging, audience needs, and organizational ownership can change after launch. I keep source files, versions, review history, and reusable patterns organized so revisions stay controlled.",
       move: "Trace a source change through modules, resources, assessments, and LMS-facing labels.",
       output: "A targeted revision with approval history and no stale downstream copy.",
-      scene: frame("Change impact", `<div class="cp-version-compare"><div><small>EXAMPLE SOURCE CHANGE</small><strong>Updated portfolio term</strong></div><span class="cp-version-arrow">→</span><div><small>AFFECTED ITEMS</small><strong>Module · Resource · Question</strong></div></div><button type="button" class="cp-pov-action" data-pov-action="maintenance">Inspect affected items</button><div class="cp-pov-reveal" hidden role="status">Update the three affected items, capture review, then republish.</div>`)
+      scene: frame("Change impact", `<div class="cp-version-compare"><div><small>EXAMPLE SOURCE CHANGE</small><strong>Updated portfolio term</strong></div><span class="cp-version-arrow">→</span><div><small>AFFECTED ITEMS</small><strong>Module · Resource · Question</strong></div></div>`)
     },
     improvement: {
       kicker: "07 / Improvement · Program review view",
@@ -317,7 +300,7 @@
       description: "Learner feedback, assessment patterns, support issues, reporting, and stakeholder review identify what deserves investigation. I translate signals into a testable change and verify the experience again.",
       move: "Name the issue and its likely cause before choosing a new asset or interaction.",
       output: "An improvement with a rationale, owner, and follow-up check.",
-      scene: frame("Improvement review", `<div class="cp-improve-board"><div><small>SIGNAL</small><strong>Repeated learner question</strong></div><div><small>DIAGNOSIS</small><strong>Term lacks context</strong></div><div><small>REVISION</small><strong>Plain-language example</strong></div><div><small>VERIFY</small><strong>Retest + monitor</strong></div></div><button type="button" class="cp-pov-action" data-pov-action="improvement">Review improvement</button><div class="cp-pov-reveal" hidden role="status">The revision has a rationale, owner, and follow-up check.</div>`)
+      scene: frame("Improvement review", `<div class="cp-improve-board"><div><small>SIGNAL</small><strong>Repeated learner question</strong></div><div><small>DIAGNOSIS</small><strong>Term lacks context</strong></div><div><small>REVISION</small><strong>Plain-language example</strong></div><div><small>VERIFY</small><strong>Retest + monitor</strong></div></div>`)
     }
   };
   const lifecycle = document.querySelector(".cp-lifecycle-workspace");
@@ -330,51 +313,27 @@
     document.getElementById("lifeMove").textContent = data.move;
     document.getElementById("lifeOutput").textContent = data.output;
     const visual = document.getElementById("lifeVisual");
-    lifecycle.style.setProperty("--cp-stage-width", `${[...lifecycle.querySelectorAll(".cp-life-tab")].indexOf(tab) * 14.33}%`);
+    const stageIndex = [...lifecycle.querySelectorAll(".cp-life-tab")].indexOf(tab);
+    lifecycle.style.setProperty("--cp-stage-width", `${stageIndex * 14.33}%`);
+    lifecycle.style.setProperty("--cp-progress-pct", `${stageIndex * 100 / 6}%`);
     visual.innerHTML = data.scene;
-    const action = visual.querySelector("[data-pov-action]");
-    action?.addEventListener("click", () => {
-      const reveal = visual.querySelector(".cp-pov-reveal");
-      reveal.hidden = false;
-      action.setAttribute("aria-expanded", "true");
-      action.textContent = "Check complete";
-      if (key === "delivery") {
-        const row = visual.querySelector(".cp-delivery-row.is-current");
-        row.classList.add("is-checked");
-        row.querySelector("b").textContent = "OPENED";
-      }
-      if (key === "support") visual.querySelector(".cp-ticket-status").textContent = "In review";
-      if (key === "reporting") visual.querySelector(".cp-report-chart").classList.add("is-inspected");
-      if (key === "admin") visual.querySelector(".cp-admin-toggle").classList.add("is-verified");
-    });
+    visual.dataset.stage = key;
+    visual.classList.remove("is-playing");
+    void visual.offsetWidth;
+    visual.classList.add("is-playing");
   });
 
-  const practices = {
-    revision: {
-      heading: "Design for the next revision.",
-      description: "I keep sources modular, reusable patterns organized, decisions traceable, and reviewers clear. A product change can then reach the right pieces without rebuilding the pathway.",
-      scene: `<div class="cp-practice-version"><div class="cp-practice-source"><span>SOURCE UPDATE</span><strong>New positioning</strong></div><div class="cp-practice-version-branches"><i></i><span>Module</span><span>Resource</span><span>Question</span></div><div class="cp-practice-version-check">✓ One reviewed change set</div></div>`
-    },
-    route: {
-      heading: "Walk the learner's real route.",
-      description: "Accuracy is not enough if enrollment, navigation, completion rules, or certificate status blocks progress. I test the actual learner journey and trace a blocker to the responsible layer.",
-      scene: `<div class="cp-practice-route"><div class="cp-practice-route-rail"></div><span>Enrolled</span><span>Module</span><span class="cp-practice-route-alert">Rule <b>!</b></span><span>Record</span><div class="cp-practice-route-callout">Trace the blocker at the rule</div></div>`
-    },
-    evidence: {
-      heading: "Let evidence guide improvement.",
-      description: "I compare support questions, assessment behavior, learner feedback, reporting, and approved source changes before I diagnose the gap, revise a design layer, and verify the result.",
-      scene: `<div class="cp-practice-evidence"><div class="cp-practice-signals"><span><b>?</b> Support</span><span><b>◫</b> Assessment</span><span><b>↗</b> Reporting</span></div><div class="cp-practice-evidence-focus"><span>◆</span><strong>Diagnose</strong></div><div class="cp-practice-evidence-result"><span>Revise</span><i></i><span>Verify</span></div></div>`
+  if (lifecycle) {
+    lifecycle.querySelector('[data-cp-tab="design"]').click();
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const lifecycleObserver = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        lifecycle.querySelector('.cp-life-tab.is-active')?.click();
+        lifecycleObserver.disconnect();
+      }, { threshold: .25 });
+      lifecycleObserver.observe(lifecycle);
     }
-  };
-  const practiceWorkspace = document.querySelector(".cp-practice-workspace");
-  if (practiceWorkspace) bindTabs(practiceWorkspace, (key, tab) => {
-    const data = practices[key];
-    document.getElementById("practice-panel").setAttribute("aria-labelledby", tab.id);
-    document.getElementById("practiceHeading").textContent = data.heading;
-    document.getElementById("practiceDescription").textContent = data.description;
-    document.getElementById("practiceScene").innerHTML = data.scene;
-  });
-  if (practiceWorkspace) practiceWorkspace.querySelector('[data-cp-tab="revision"]').click();
+  }
 
   const featured = document.querySelector(".cp-featured-preview");
   if (featured && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

@@ -488,30 +488,15 @@
   const deliveryPanel = document.getElementById('deliveryPanel');
   const deliveryButtons = [...document.querySelectorAll('[data-delivery]')];
   linkTabPanel(deliveryButtons, deliveryPanel, 'cert-delivery');
-  const adminActionLabels = {
-    build: ['Align objective', 'Objective aligned'],
-    review: ['Confirm source', 'Source confirmed'],
-    lms: ['Validate rule', 'Rule validated'],
-    support: ['Verify record', 'Record verified'],
-    maintain: ['Complete impact review', 'Impact review complete']
-  };
-
+  let deliveryResolveTimer = 0;
   const renderDelivery = (key, animate = false) => {
     const data = deliveryData[key];
     if (!data || !deliveryPanel) return;
     const update = () => {
       const selected = deliveryButtons.find((button) => button.dataset.delivery === key);
-      const visibleStage = document.getElementById(`cert-launch-stage-${key}`);
-      if (visibleStage || selected) deliveryPanel.setAttribute('aria-labelledby', visibleStage?.id || selected.id);
+      if (selected) deliveryPanel.setAttribute('aria-labelledby', selected.id);
       const flight = document.getElementById('certLaunchFlight');
       if (flight) flight.dataset.stage = key;
-      document.querySelectorAll('.cert-launch-stop-button').forEach((stop, stopIndex) => {
-        const active = deliveryButtons[stopIndex]?.dataset.delivery === key;
-        stop.classList.toggle('active', active);
-        stop.setAttribute('aria-current', active ? 'step' : 'false');
-        stop.setAttribute('aria-selected', String(active));
-        stop.tabIndex = active ? 0 : -1;
-      });
       const stageLabel = document.getElementById('launchStageLabel');
       if (stageLabel) stageLabel.textContent = data.label;
       const stageSummary = flight?.querySelector('.cert-launch-caption span');
@@ -519,25 +504,16 @@
       deliveryPanel.innerHTML = `
         <div class="cert-ops-copy"><p class="delivery-panel-label">${data.label}</p><h3>${data.title}</h3><p>${data.action}</p></div>
         <div class="cert-ops-device" aria-label="Public-safe administrator interface reconstruction for ${data.label}"><div class="cert-ops-device-bar"><i></i><i></i><i></i><span>portfolio-safe interface example</span></div>${data.view}</div>`;
-      const target = deliveryPanel.querySelector('[data-demo-target]');
+      window.clearTimeout(deliveryResolveTimer);
       deliveryPanel.classList.remove('is-resolved');
-      const screen = deliveryPanel.querySelector('.cert-admin-screen');
-      const actionButton = document.createElement('button');
-      actionButton.type = 'button';
-      actionButton.className = 'cert-admin-action';
-      actionButton.textContent = adminActionLabels[key][0];
-      actionButton.setAttribute('aria-pressed', 'false');
-      actionButton.addEventListener('click', () => {
-        if (!target?.isConnected || actionButton.getAttribute('aria-pressed') === 'true') return;
-        target.setAttribute('aria-live', 'polite');
+      deliveryResolveTimer = window.setTimeout(() => {
+        const target = deliveryPanel.querySelector('[data-demo-target]');
+        if (!target) return;
         target.textContent = target.dataset.complete;
-        const followup = screen.querySelector('[data-demo-followup]');
+        const followup = deliveryPanel.querySelector('[data-demo-followup]');
         if (followup) followup.textContent = followup.dataset.complete;
-        actionButton.textContent = adminActionLabels[key][1];
-        actionButton.setAttribute('aria-pressed', 'true');
         deliveryPanel.classList.add('is-resolved');
-      });
-      screen.append(actionButton);
+      }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1550);
       deliveryPanel.classList.remove('is-switching');
     };
     if (!animate) {
@@ -577,31 +553,68 @@
   const launchFlight = document.getElementById('certLaunchFlight');
   const deliveryWorkspace = document.querySelector('.delivery-workspace');
   if (launchFlight && deliveryWorkspace) launchFlight.append(deliveryWorkspace);
-  if (launchTrack) { launchTrack.removeAttribute('aria-hidden'); launchTrack.setAttribute('role','tablist'); launchTrack.setAttribute('aria-label','Launch and operations stages'); }
+  launchTrack?.removeAttribute('aria-hidden');
   const duplicateDeliveryTabs = document.querySelector('.delivery-tabs');
   if (duplicateDeliveryTabs) { duplicateDeliveryTabs.hidden = true; duplicateDeliveryTabs.setAttribute('aria-hidden','true'); }
-  launchStops.forEach((stop, index) => {
-    const trigger = document.createElement('button');
-    trigger.className = 'cert-launch-stop-button';
-    trigger.type = 'button';
-    trigger.id = `cert-launch-stage-${deliveryButtons[index]?.dataset.delivery}`;
-    trigger.setAttribute('role','tab');
-    trigger.setAttribute('aria-controls','deliveryPanel');
-    trigger.setAttribute('aria-selected',String(index === 0));
-    trigger.tabIndex = index === 0 ? 0 : -1;
-    trigger.innerHTML = `<span class="cert-launch-dot" aria-hidden="true"></span><span>${stop.textContent}</span><small>Explore</small>`;
-    trigger.setAttribute('aria-label', `Explore ${deliveryButtons[index]?.textContent.trim()} launch stage`);
-    trigger.addEventListener('click', () => deliveryButtons[index]?.click());
-    trigger.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? launchStops.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + launchStops.length) % launchStops.length;
-      const nextStop = launchTrack.querySelectorAll('.cert-launch-stop-button')[next];
-      nextStop?.focus(); nextStop?.click();
+  launchStops.forEach((stop) => { stop.setAttribute('aria-hidden', 'true'); });
+  const rocket = launchTrack?.querySelector('.cert-rocket');
+  if (rocket) {
+    rocket.setAttribute('role', 'button');
+    rocket.setAttribute('tabindex', '0');
+    rocket.setAttribute('aria-label', 'Move rocket to the next launch stage. Drag to choose a stage.');
+    let dragStart = null;
+    let suppressClick = false;
+    const selectStage = (index) => deliveryButtons[Math.max(0, Math.min(index, deliveryButtons.length - 1))]?.click();
+    const currentStage = () => deliveryButtons.findIndex((button) => button.classList.contains('active'));
+    rocket.addEventListener('pointerdown', (event) => {
+      dragStart = {x:event.clientX, y:event.clientY};
+      rocket.setPointerCapture(event.pointerId);
+      rocket.classList.add('is-dragging');
     });
-    stop.replaceWith(trigger);
-  });
+    rocket.addEventListener('pointermove', (event) => {
+      if (!dragStart) return;
+      const bounds = launchTrack.getBoundingClientRect();
+      rocket.style.left = `${Math.max(5, Math.min(95, (event.clientX - bounds.left) / bounds.width * 100))}%`;
+    });
+    rocket.addEventListener('pointerup', (event) => {
+      if (!dragStart) return;
+      const moved = Math.hypot(event.clientX - dragStart.x, event.clientY - dragStart.y) > 8;
+      rocket.classList.remove('is-dragging');
+      rocket.style.left = '';
+      dragStart = null;
+      if (moved) {
+        const bounds = launchTrack.getBoundingClientRect();
+        const pct = (event.clientX - bounds.left) / bounds.width * 100;
+        const stops = [5.5, 27, 50, 73, 94.5];
+        const closest = stops.reduce((best, value, index) => Math.abs(value - pct) < Math.abs(stops[best] - pct) ? index : best, 0);
+        suppressClick = true;
+        window.setTimeout(() => { suppressClick = false; }, 300);
+        selectStage(closest);
+      }
+    });
+    rocket.addEventListener('pointercancel', () => { dragStart = null; rocket.classList.remove('is-dragging'); rocket.style.left = ''; });
+    rocket.addEventListener('click', () => {
+      if (suppressClick) { suppressClick = false; return; }
+      selectStage((currentStage() + 1) % deliveryButtons.length);
+    });
+    rocket.addEventListener('keydown', (event) => {
+      if (!['Enter', ' ', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === 'Home') selectStage(0);
+      else if (event.key === 'End') selectStage(deliveryButtons.length - 1);
+      else if (event.key === 'ArrowLeft') selectStage((currentStage() - 1 + deliveryButtons.length) % deliveryButtons.length);
+      else selectStage((currentStage() + 1) % deliveryButtons.length);
+    });
+  }
   renderDelivery('build');
+  if (launchFlight && 'IntersectionObserver' in window) {
+    const launchObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      renderDelivery(deliveryButtons.find((button) => button.classList.contains('active'))?.dataset.delivery || 'build');
+      launchObserver.disconnect();
+    }, { threshold: .3 });
+    launchObserver.observe(launchFlight);
+  }
 
   const historicalSignals = [
     {
@@ -699,100 +712,41 @@
   });
   renderVoice(0);
 
-  const historicalStages = ['receive', 'diagnose', 'plan', 'execute', 'observe'];
-  const historicalHeadings = {
-    receive: 'Listen before choosing a fix.',
-    diagnose: 'Find the issue beneath the comment.',
-    plan: 'Choose a bounded, testable change.',
-    execute: 'Make and verify the edit.',
-    observe: 'Bring the next signal back into review.'
-  };
   const historyThemeTabs = [...document.querySelectorAll('[data-history-theme]')];
-  const historyStageTabs = [...document.querySelectorAll('[data-history-stage]')];
   const historyDetail = document.getElementById('certHistoryDetail');
-  let activeHistoryTheme = 0;
-  let activeHistoryStage = 'receive';
-  const renderHistory = () => {
+  const historyLabels = ['Signal', 'Diagnose', 'Design decision', 'Revise + QA', 'Observe'];
+  const historyIcons = ['mini-chat.webp', 'mini-report-search.webp', 'mini-document-list.webp', 'mini-edit.webp', 'mini-analytics.webp'];
+  const renderHistory = (index) => {
     if (!historyDetail) return;
-    const signal = historicalSignals[activeHistoryTheme];
-    const step = historicalStages.indexOf(activeHistoryStage);
-    historyThemeTabs.forEach((button, index) => {
-      const active = index === activeHistoryTheme;
+    const signal = historicalSignals[index];
+    historyThemeTabs.forEach((button, buttonIndex) => {
+      const active = buttonIndex === index;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', String(active));
       button.tabIndex = active ? 0 : -1;
     });
-    historyStageTabs.forEach((button) => {
-      const active = button.dataset.historyStage === activeHistoryStage;
-      button.classList.toggle('active', active);
-      button.classList.toggle('is-past', historicalStages.indexOf(button.dataset.historyStage) < step);
-      button.setAttribute('aria-selected', String(active));
-      button.tabIndex = active ? 0 : -1;
-    });
-    const themeLabel = document.getElementById('certHistoryThemeLabel');
-    if (themeLabel) themeLabel.textContent = `Reviewing: ${signal.label}`;
-    document.querySelector('.cert-history-route')?.style.setProperty('--history-progress', `${((step + 0.5) / historicalStages.length) * 100}%`);
-    const copy = {
-      receive: signal.signal,
-      diagnose: `${signal.revealed} ${signal.context}`,
-      plan: signal.plan,
-      execute: signal.response,
-      observe: signal.change
-    };
-    const note = activeHistoryStage === 'receive' ? 'Historical partner signal, paraphrased.'
-      : activeHistoryStage === 'observe' ? 'A maintenance-practice change—not a claim of improved scores or satisfaction.'
-      : 'The approved scope and source authority shaped the response.';
-    historyDetail.setAttribute('aria-labelledby', `cert-history-theme-${activeHistoryTheme} cert-history-stage-${activeHistoryStage}`);
-    document.getElementById('certHistoryKicker').textContent = `${String(step + 1).padStart(2, '0')} / 05 · ${signal.label}`;
-    document.getElementById('certHistoryTitle').textContent = historicalHeadings[activeHistoryStage];
-    document.getElementById('certHistoryCopy').textContent = copy[activeHistoryStage];
-    document.getElementById('certHistoryNote').textContent = note;
-    historyDetail.classList.remove('is-entering');
-    void historyDetail.offsetWidth;
-    historyDetail.classList.add('is-entering');
+    historyDetail.setAttribute('aria-labelledby', historyThemeTabs[index].id);
+    const steps = [signal.signal, signal.revealed, signal.plan, signal.response, signal.change];
+    historyDetail.innerHTML = `<div class="cert-flow-head"><span>FEEDBACK SIGNAL / ${signal.label}</span><strong>Signal → reviewed change → next signal</strong></div><div class="cert-flow-track" aria-hidden="true"><span class="cert-flow-tracer"></span></div><div class="cert-flow-steps">${steps.map((copy, stepIndex) => `<article class="cert-flow-card" style="--flow-index:${stepIndex}"><img src="../../../../assets/icons/pixel/lms/${historyIcons[stepIndex]}" alt=""><small>${String(stepIndex + 1).padStart(2, '0')} / ${historyLabels[stepIndex]}</small><p>${copy}</p></article>`).join('')}</div><p class="cert-flow-foot">Historical partner signal, paraphrased. The last step defines what to watch after the change.</p>`;
   };
-  const bindHistoryTabs = (buttons, property) => buttons.forEach((button, index) => {
-    button.addEventListener('click', () => { if (property === 'theme') { activeHistoryTheme = index; activeHistoryStage = 'receive'; } else activeHistoryStage = button.dataset.historyStage; renderHistory(); });
-    button.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 1) + buttons.length) % buttons.length;
-      buttons[next].focus();
-      if (property === 'theme') { activeHistoryTheme = next; activeHistoryStage = 'receive'; } else activeHistoryStage = buttons[next].dataset.historyStage;
-      renderHistory();
-    });
-  });
-  bindHistoryTabs(historyThemeTabs, 'theme');
-  bindHistoryTabs(historyStageTabs, 'stage');
-  renderHistory();
-
-  const changeData = {
-    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA', visual:'<div class="redesign-window-head"><b>CONTENT EDITOR / VERSION 02</b><span>Terminology update</span></div><div class="redesign-term-change"><small>APPROVED SOURCE</small><div><del>Legacy product term</del><i>→</i><strong>Approved portfolio term</strong></div></div><div class="redesign-term-links"><span><b>01</b> Lesson label <em>Updated</em></span><span><b>02</b> Scenario prompt <em>Updated</em></span><span><b>03</b> Knowledge check <em>Updated</em></span></div><div class="redesign-window-foot"><span>Source trace ✓</span><span>SME review ✓</span><span>Language QA ✓</span></div>' },
-    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support', visual:'<div class="redesign-window-head"><b>LMS / AUDIENCE ROUTES</b><span>Rule test</span></div><div class="redesign-audience-entry"><small>LEARNER PROFILE</small><strong>Role + organization</strong><i>↓</i></div><div class="redesign-audience-branches"><div><b>Seller</b><span>Entry guidance A</span></div><div><b>Partner</b><span>Entry guidance B</span></div></div><div class="redesign-shared-core"><span>Shared certification core</span><strong>One curriculum · two routes</strong></div><div class="redesign-window-foot"><span>Visibility ✓</span><span>Enrollment ✓</span><span>Support route ✓</span></div>' },
-    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest', visual:'<div class="redesign-window-head"><b>REVIEW WORKSPACE / VERSION 03</b><span>Product change</span></div><div class="redesign-product-source"><small>SOURCE UPDATE</small><strong>Capability detail changed</strong><span>Owner confirmed · revision noted</span></div><div class="redesign-product-path"><span><b>1</b> Explain</span><i>→</i><span><b>2</b> Scenario cue</span><i>→</i><span><b>3</b> Check</span></div><div class="redesign-product-preview"><b>Scenario preview</b><span>Customer signal → revised response cue</span><em>Retest passed ✓</em></div><div class="redesign-window-foot"><span>Source ✓</span><span>Interaction ✓</span><span>Assessment stable ✓</span></div>' }
-  };
-  const changeButtons = [...document.querySelectorAll('[data-change]')];
-  const changeDisplay = document.getElementById('certChangeDisplay');
-  linkTabPanel(changeButtons, changeDisplay, 'cert-change');
-  const renderChange = (key) => {
-    const data = changeData[key]; if (!data || !changeDisplay) return;
-    changeButtons.forEach((button) => { const active = button.dataset.change === key; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); button.tabIndex = active ? 0 : -1; });
-    const selected = changeButtons.find((button) => button.dataset.change === key);
-    if (selected) changeDisplay.setAttribute('aria-labelledby', selected.id);
-    changeDisplay.dataset.change = key;
-    changeDisplay.innerHTML = `<div class="cert-redesign-scene" data-scene="${key}" role="img" aria-label="${key === 'terminology' ? 'Approved terminology is traced into two lessons and a knowledge check, then reviewed' : key === 'audience' ? 'Seller and partner profiles take separate entry routes into one shared certification core' : 'A product source update moves through the explanation and scenario cue before a retest'}">${data.visual}</div><div class="cert-cycle-explain"><small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
-  };
-  changeButtons.forEach((button, index) => {
-    button.tabIndex = index === 0 ? 0 : -1;
-    button.addEventListener('click', () => renderChange(button.dataset.change));
+  historyThemeTabs.forEach((button, index) => {
+    button.addEventListener('click', () => renderHistory(index));
     button.addEventListener('keydown', (event) => {
       if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
       event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? changeButtons.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + changeButtons.length) % changeButtons.length;
-      changeButtons[next].focus(); renderChange(changeButtons[next].dataset.change);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? historyThemeTabs.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + historyThemeTabs.length) % historyThemeTabs.length;
+      historyThemeTabs[next].focus(); renderHistory(next);
     });
   });
-  renderChange('terminology');
+  renderHistory(0);
+  if (historyDetail && 'IntersectionObserver' in window) {
+    const flowObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      historyDetail.classList.add('is-visible');
+      flowObserver.disconnect();
+    }, { threshold: .3 });
+    flowObserver.observe(historyDetail);
+  } else historyDetail?.classList.add('is-visible');
 
   const curriculumData = {
     intro:{label:'Introduction',title:"Start with the seller's job, not a technical data dump.",summary:'The opening establishes what the seller should be able to recognize and discuss before moving into product or solution detail.',behavior:'Explain the business context and recognize when the topic belongs in a customer conversation.',image:'../../../../assets/project-images/cellular-certification/cert-introduction.webp',alt:'Sanitized certification introduction screen.',hotspots:[['Role context','The first screen orients the seller to the job and learning goal.'],['Path cue','The learner can see where this module leads next.']]},
@@ -808,8 +762,6 @@
   const curriculumImage=document.getElementById('curriculumImage');
   const curriculumHotspots=document.getElementById('curriculumHotspots');
   const curriculumHotspotCaption=document.getElementById('curriculumHotspotCaption');
-  const curriculumBack=document.getElementById('curriculumBack');
-  const curriculumNext=document.getElementById('curriculumNext');
   const curriculumDisplay = document.querySelector('.curriculum-computer-display');
   let checkedAnswer = false;
   let selectedAnswer = -1;
@@ -848,11 +800,6 @@
     document.getElementById('curriculumTitle').textContent=data.title;
     document.getElementById('curriculumSummary').textContent=data.summary;
     document.getElementById('curriculumBehavior').textContent=data.behavior;
-    document.getElementById('curriculumStepText').textContent=`${data.label} · ${index+1} of ${curriculumButtons.length}`;
-    curriculumBack.disabled=index===0;
-    curriculumNext.textContent=index===curriculumButtons.length-1?'Restart ↺':'Next →';
-    curriculumNext.setAttribute('aria-label',index===curriculumButtons.length-1?'Restart learner walkthrough':'Next learner view');
-    curriculumNext.disabled = key === 'check' && !checkedAnswer;
     curriculumDisplay.dataset.view = key;
     if (curriculumHotspots && curriculumHotspotCaption) {
       curriculumHotspots.replaceChildren();
@@ -907,7 +854,6 @@
           const choice = screenButton(answer, 'curriculum-quiz-answer', () => {
             selectedAnswer = answerIndex;
             checkedAnswer = false;
-            curriculumNext.disabled = true;
             if (completionTab) { completionTab.disabled = true; completionTab.setAttribute('aria-disabled','true'); }
             answerBox.querySelectorAll('button').forEach((item, itemIndex) => {
               item.classList.toggle('selected', itemIndex === answerIndex);
@@ -948,10 +894,10 @@
         curriculumHotspots.append(quiz);
         curriculumHotspotCaption.textContent = 'Answer the question to unlock completion.';
       } else {
-        curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Continue to the next module when ready.' : 'Select Continue in the learner screen.';
+        curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Reset the walkthrough when ready.' : 'Select Continue in the learner screen.';
       }
       if (key !== 'check') {
-        const label = key === 'complete' ? 'Continue to Next Module →' : 'Continue →';
+        const label = key === 'complete' ? 'Reset ↺' : 'Continue →';
         curriculumHotspots.append(screenButton(label, 'curriculum-screen-continue', continueInScreen));
       }
       if (key === 'complete' && completedFromQuiz) {
@@ -977,20 +923,6 @@
       if (curriculumButtons[next].disabled) { curriculumHotspotCaption.textContent = 'Complete the knowledge check to unlock this screen.'; return; }
       curriculumButtons[next].focus();renderCurriculum(curriculumButtons[next].dataset.curriculum);
     });
-  });
-  curriculumBack?.addEventListener('click',()=>{
-    const index=curriculumButtons.findIndex((button)=>button.classList.contains('active'));
-    if(index>0){
-      renderCurriculum(curriculumButtons[index-1].dataset.curriculum);
-      if(index===1) curriculumNext.focus();
-    }
-  });
-  curriculumNext?.addEventListener('click',()=>{
-    const index=curriculumButtons.findIndex((button)=>button.classList.contains('active'));
-    if (index === 4 && !checkedAnswer) return;
-    const next=(index+1)%curriculumButtons.length;
-    if (next === 0) { checkedAnswer = false; selectedAnswer = -1; }
-    renderCurriculum(curriculumButtons[next].dataset.curriculum);
   });
   curriculumButtons.forEach((button,index)=>button.tabIndex=index===0?0:-1);
   renderCurriculum('intro');
