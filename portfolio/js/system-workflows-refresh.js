@@ -131,6 +131,10 @@
     ['Communicate & Align', 'I put blockers and status updates where the team can act on them.', 'Blocker → owner → update', 'Team aligned'],
     ['Track & Report', 'I show overdue work and launch risk alongside progress so leaders can intervene.', 'Portfolio → exception → action', 'Risk visible']
   ];
+  const managementTools = {
+    asana: ['Forms + Timeline', 'List + Board', 'Approvals + Proofing', 'Comments + Status', 'Portfolios + Dashboards'],
+    atlassian: ['JSM + Discovery + Confluence', 'Jira + Confluence', 'Confluence + Jira', 'Jira + Confluence', 'Analytics + Dashboards']
+  };
   const managementScenes = {
     asana: [
       () => shell('asana', 'Asana', 'Training request / Form + Timeline', `<div class="wf-split wf-asana-plan"><div class="wf-main">${panel('INTAKE FORM', 'New onboarding request', 'Audience: field team · Goal: better discovery questions')}${row('Source owner', 'Product SME', 'Assigned')}${row('Learning deadline', 'October 20', 'Confirmed')}<div class="wf-submit">Submit → Create project</div></div><aside class="wf-side"><small>TIMELINE + CALENDAR</small>${dots(['Analyze','Design','Develop','Launch'])}${row('Script sign-off', 'Oct 06', 'Milestone')}${row('Voiceover', 'Starts after sign-off', 'Dependent')}</aside></div>`, 'asana'),
@@ -161,9 +165,13 @@
     put('managementRoleAnswer', roles[managementRole]);
     byId('managementCanvas').innerHTML = managementScenes[managementPlatform][managementStage](); animate(demo);
   };
-  managementTabs = stageGroup(byId('managementStageTabs'), managementPillars.map(([label]) => label), (index) => { managementStage = index; showManagement(); });
+  managementTabs = stageGroup(byId('managementStageTabs'), managementPillars.map(([label], index) => `${label}<small>${managementTools.asana[index]}</small>`), (index) => { managementStage = index; showManagement(); });
   const stopManagement = player(byId('managementPlay'), () => managementTabs.buttons);
-  tabGroup('[data-management-platform]', (button) => { stopManagement(); managementPlatform = button.dataset.managementPlatform; managementTabs.select(managementTabs.buttons[0]); });
+  tabGroup('[data-management-platform]', (button) => {
+    stopManagement(); managementPlatform = button.dataset.managementPlatform;
+    managementTabs.buttons.forEach((item, index) => { item.querySelector('small').textContent = managementTools[managementPlatform][index]; });
+    managementTabs.select(managementTabs.buttons[0]);
+  });
   tabGroup('[data-management-role]', (button) => { managementRole = button.dataset.managementRole; showManagement(); });
   showManagement();
 
@@ -173,7 +181,7 @@
     ld: ['L&D reviewer', 'Explain why the discovery question is the best next step.', 'Improve feedback']
   };
   let reviewStage = 0, reviewComment = 'sme';
-  const course = () => `<div class="wf-review-course"><small>INTRODUCTION / PRODUCT CONVERSATIONS</small><h3>Should we recommend a solution yet?</h3><p>Before recommending a product, identify the customer's goal and constraints. Choose the strongest next question.</p><label><i></i> Which outcome matters most to your team?</label><label><i></i> What is the current limitation?</label><label><i></i> Which feature would you like to buy?</label><div class="wf-review-pin">1</div></div>`;
+  const course = () => `<div class="wf-review-course"><small>INTRODUCTION / PRODUCT CONVERSATIONS</small><h3>Should we recommend a solution yet?</h3><p>Before recommending a product, identify the customer's goal and constraints. Choose the strongest next question.</p><label><i></i> Which outcome matters most to your team?</label><label><i></i> What is the current limitation?</label><label><i></i> Which feature would you like to buy?</label></div>`;
   const reviewBar = (title, badge) => `<div class="wf-review-bar"><span>‹</span><b>${title}</b><span class="wf-review-icon"><img src="${root}workflows/people-collaboration/feedback.webp" alt=""></span><em>${badge}</em></div>`;
   const reviewScene = () => {
     const [person, text, action] = comments[reviewComment];
@@ -183,7 +191,7 @@
     return `<div class="wf-review-ui wf-review-history">${reviewBar('Product conversations / Version history', 'REVIEW 360')}<div class="wf-review-versions"><div><small>VERSION 1 · ORIGINAL</small><h3>Ask about the product.</h3><p>The first version used an outdated date and a broad prompt.</p></div><div class="current"><small>VERSION 2 · REVISED</small><h3>Ask about the customer's constraint.</h3><p>The scenario now uses approved 2026 guidance and specific feedback.</p></div></div><div class="wf-review-resolved"><span>✓ Resolved · ${person}</span><p>${text}</p><b>Instructional designer:</b> Updated the text and visual. Republished for final check.</div></div>`;
   };
   const reviewCaptions = [
-    'I publish a reviewable item with a clear version choice before asking for feedback.',
+    '',
     'I ask reviewers to comment on the exact lesson element that needs a change.',
     'I filter unresolved comments, assign the edit, and check the new build before resolving.',
     'I keep the revision and original feedback together so the decision remains traceable.'
@@ -192,6 +200,7 @@
     const demo = byId('reviewDemo'); demo.dataset.stage = String(reviewStage);
     byId('reviewScene').innerHTML = reviewScene();
     byId('reviewCommentPicker').hidden = reviewStage !== 1 && reviewStage !== 2;
+    byId('reviewCaption').hidden = reviewStage === 0;
     put('reviewCaption', reviewCaptions[reviewStage]); animate(demo);
   };
   tabGroup('[data-review-stage]', (button) => { reviewStage = Number(button.dataset.reviewStage); showReview(); });
