@@ -1,184 +1,200 @@
 (() => {
-  const icon = (file) => `../../assets/icons/pixel/work-tools/${file}.webp`;
-  const img = (file) => `<img src="${icon(file)}" alt="">`;
+  const root = '../../assets/icons/pixel/';
+  const workIcon = (name) => `${root}work-tools/${name}.webp`;
+  const image = (name) => `<img src="${workIcon(name)}" alt="">`;
   const byId = (id) => document.getElementById(id);
-  const put = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
-  const picture = (id, src) => { const node = byId(id); if (node) node.src = src; };
+  const put = (id, value) => { byId(id).textContent = value; };
   const animate = (node) => { node.classList.remove('is-changing'); void node.offsetWidth; node.classList.add('is-changing'); };
-  const tabs = (selector, selected) => {
+  const tabGroup = (selector, choose) => {
     const buttons = [...document.querySelectorAll(selector)];
-    const choose = (button, focus = false) => {
-      buttons.forEach((item) => {
-        const active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-selected', String(active));
-        item.tabIndex = active ? 0 : -1;
-      });
-      selected(button);
+    const select = (button, focus = false) => {
+      buttons.forEach((item) => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+      choose(button);
       if (focus) button.focus();
     };
     buttons.forEach((button, index) => {
-      button.addEventListener('click', () => choose(button));
+      button.addEventListener('click', () => select(button));
       button.addEventListener('keydown', (event) => {
         if (!['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
         event.preventDefault();
         const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 :
-          event.key === 'ArrowRight' || event.key === 'ArrowDown' ? (index + 1) % buttons.length : (index + buttons.length - 1) % buttons.length;
-        choose(buttons[next], true);
+          ['ArrowRight', 'ArrowDown'].includes(event.key) ? (index + 1) % buttons.length : (index + buttons.length - 1) % buttons.length;
+        select(buttons[next], true);
       });
     });
-    return { buttons, choose };
+    return { buttons, select };
   };
-  const player = (button, lastIndex, selectStep) => {
-    let timer = null;
-    const stop = () => { if (timer) clearInterval(timer); timer = null; button.textContent = 'Play workflow'; };
+  const stageGroup = (container, labels, onSelect) => {
+    container.innerHTML = labels.map((label, index) => `<button type="button" role="tab" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}" class="${index === 0 ? 'active' : ''}" data-stage-index="${index}">${label}</button>`).join('');
+    return tabGroup(`#${container.id} [data-stage-index]`, (button) => onSelect(Number(button.dataset.stageIndex)));
+  };
+  const player = (button, getButtons) => {
+    let timer;
+    const stop = () => { clearInterval(timer); timer = null; button.textContent = 'Play workflow'; };
     button.addEventListener('click', () => {
       if (timer) { stop(); return; }
-      let index = 0;
-      selectStep(index);
-      button.textContent = 'Pause workflow';
+      const buttons = getButtons(); let index = 0;
+      buttons[index].click(); button.textContent = 'Pause workflow';
       timer = setInterval(() => {
-        if (index >= lastIndex) { stop(); button.textContent = 'Replay workflow'; return; }
-        selectStep(++index);
-        if (index === lastIndex) { stop(); button.textContent = 'Replay workflow'; }
-      }, 3200);
+        index += 1;
+        if (index >= buttons.length) { stop(); button.textContent = 'Replay workflow'; return; }
+        buttons[index].click();
+      }, 3500);
     });
     return stop;
   };
+  const shell = (brand, name, context, content, type = '') => `<div class="wf-app wf-${type}"><div class="wf-appbar">${brand ? image(brand) : '<span class="wf-appmark">◆</span>'}<strong>${name}</strong><span>${context}</span><b>⋯</b></div>${content}</div>`;
+  const panel = (eyebrow, title, body = '') => `<div class="wf-panel"><small>${eyebrow}</small><strong>${title}</strong>${body ? `<p>${body}</p>` : ''}</div>`;
+  const row = (title, detail, state = '') => `<div class="wf-row"><span><strong>${title}</strong><small>${detail}</small></span>${state ? `<em>${state}</em>` : ''}</div>`;
+  const dots = (items) => `<div class="wf-steps">${items.map((item, i) => `<span class="${i === items.length - 1 ? 'current' : ''}">${String(i + 1).padStart(2, '0')} ${item}</span>`).join('')}</div>`;
+  const bars = (values) => `<div class="wf-bars">${values.map((value, i) => `<span style="--w:${value}%;--d:${i * .13}s"></span>`).join('')}</div>`;
 
-  // Each stage renders a distinct, fictional interface rather than repainting one generic flow.
-  const workspaceStages = ['PLAN', 'BUILD', 'REVIEW', 'LAUNCH', 'MEASURE'];
-  const workspaceCaptions = {
+  const workplace = {
+    microsoft: {
+      label: 'Microsoft 365',
+      stages: [
+        ['Communicate', 'Teams', 'I keep the request, SME question, and next owner visible in the team conversation.'],
+        ['Plan', 'Copilot + Planner', 'I turn meeting notes into a dated plan, then check every suggested task and owner.'],
+        ['Build', 'PowerPoint', 'I design the slide around one learner decision and keep source wording in view.'],
+        ['Document', 'SharePoint', 'I store the approved source, working version, and update owner in a shared library.'],
+        ['Analyze', 'Excel', 'I inspect source rows and exceptions before presenting any completion summary.'],
+        ['Measure', 'Power BI', 'I pair the headline metric with its denominator, trend, and follow-up queue.']
+      ]
+    },
+    google: {
+      label: 'Google Workspace',
+      stages: [
+        ['Communicate', 'Gmail', 'I capture the audience, learning need, source owner, and deadline from the request.'],
+        ['Plan', 'Calendar', 'I schedule SME review and launch milestones before the build begins.'],
+        ['Build', 'Slides', 'I build a visual sequence that makes the learner action easy to follow.'],
+        ['Review', 'Docs', 'I resolve suggestions against the approved source and keep the decision in context.'],
+        ['Launch', 'Sites', 'I preview the learning page and test access to every embedded resource before publishing.'],
+        ['Documentation', 'Drive', 'I keep the brief, source assets, and approved release easy to find and update.'],
+        ['Analyze', 'Sheets', 'I filter exceptions and assign follow-up rather than hiding them in an average.'],
+        ['Measure', 'Forms', 'I ask a short performance question and use the responses to guide a revision.']
+      ]
+    }
+  };
+  const workplaceScenes = {
     microsoft: [
-      'A Teams project channel makes the request, owner, and pinned brief visible.',
-      'SharePoint keeps the source files together while the slide asset is assembled.',
-      'A specific version and comment move through a human review decision.',
-      'The approved learning card appears in a tested Teams learning entry point.',
-      'Excel rows become a status view with exceptions still visible for follow-up.'
+      () => shell('teams', 'Teams', 'Training launch / General', `<div class="wf-split wf-teams"><aside class="wf-nav"><b>Teams</b><span>Activity</span><span>Chat</span><span class="selected">Field enablement</span><span>Meetings</span></aside><div class="wf-main"><small>PROJECT CONVERSATION · TODAY</small><div class="wf-bubble">We need a short product update for the field team.</div><div class="wf-bubble outgoing">I will scope the learner action. Who owns the approved facts?</div><div class="wf-meeting">◉ &nbsp; SME alignment meeting <span>Join · 2:00 PM</span></div><div class="wf-chat-compose">Message the team <b>➤</b></div></div></div>`, 'teams'),
+      () => shell(null, 'Microsoft 365 Copilot', 'Meeting recap → checked plan', `<div class="wf-split wf-copilot"><div class="wf-main"><small>MEETING NOTES · PRODUCT UPDATE</small>${row('Decision', 'Practice a discovery question before a recommendation', 'Confirmed')}${row('Open question', 'SME to verify product terminology', 'Needs owner')}<div class="wf-prompt">Summarize milestones and proposed owners <b>✦</b></div></div><aside class="wf-side"><small>PLANNER · DRAFT SCHEDULE</small>${dots(['Brief','SME review','Build','Launch'])}${row('Script sign-off', 'Oct 02 · SME', 'Review')}${row('Slide build', 'Oct 06 · Designer', 'Blocked')}<div class="wf-check">✓ Check dates and owners before sharing</div></aside></div>`, 'copilot'),
+      () => shell('powerpoint', 'PowerPoint', 'Product scenario.pptx', `<div class="wf-ribbon">File &nbsp; Home &nbsp; Insert &nbsp; Design &nbsp; Transitions &nbsp; Review <span>Share</span></div><div class="wf-slide-layout"><aside class="wf-thumbs"><span>01<br>Context</span><span class="active">02<br>Choose</span><span>03<br>Feedback</span></aside><div class="wf-slide"><small>02 / CUSTOMER CONVERSATION</small><h3>Ask before recommending.</h3><div class="wf-slide-objects"><div class="wf-person">◉<br>Customer</div><div class="wf-question">What constraint shapes your decision?</div><div class="wf-arrow">→</div></div><div class="wf-slide-footer">Learner choice → feedback</div></div><aside class="wf-designpane"><small>DESIGN IDEAS</small><div></div><div></div><div></div></aside></div>`, 'powerpoint'),
+      () => shell('sharepoint', 'SharePoint', 'Learning / Product training', `<div class="wf-ribbon">Home &nbsp; Documents &nbsp; Pages &nbsp; Site contents <span>+ New</span></div><div class="wf-library"><aside class="wf-nav"><b>Site navigation</b><span>Overview</span><span class="selected">Documents</span><span>Release notes</span></aside><div class="wf-main"><small>DOCUMENT LIBRARY · PRODUCT UPDATE</small>${row('Approved source.docx', 'SME owned · version 04', 'Approved')}${row('Scenario deck.pptx', 'Designer owned · version 07', 'Working')}${row('Launch package.zip', 'L&D owned · release 01', 'Current')}<div class="wf-file-path">Knowledge base / Product training / Current release</div></div></div>`, 'sharepoint'),
+      () => shell('excel', 'Excel', 'Training status.xlsx', `<div class="wf-ribbon">Home &nbsp; Insert &nbsp; Data &nbsp; Review &nbsp; View <span>Filter: Needs action</span></div><div class="wf-sheet"><div class="wf-cell head">ID</div><div class="wf-cell head">Course</div><div class="wf-cell head">Status</div><div class="wf-cell head">Owner</div><div class="wf-cell">0142</div><div class="wf-cell">Product update</div><div class="wf-cell">Complete</div><div class="wf-cell">L&D</div><div class="wf-cell">0143</div><div class="wf-cell">Product update</div><div class="wf-cell alert">Access issue</div><div class="wf-cell">Admin</div><div class="wf-cell">0144</div><div class="wf-cell">Product update</div><div class="wf-cell alert">No record</div><div class="wf-cell">L&D</div><div class="wf-selection"></div></div><div class="wf-status">2 exceptions · source rows retained</div>`, 'excel'),
+      () => shell(null, 'Power BI', 'Training operations / Overview', `<div class="wf-dashboard"><div class="wf-metric"><small>COMPLETION</small><strong>86%</strong><span>43 / 50 assigned learners</span></div><div class="wf-metric"><small>OPEN EXCEPTIONS</small><strong>7</strong><span>Access, missing record, overdue</span></div><div class="wf-chart"><small>WEEKLY TREND</small>${bars([28,42,56,67,86])}<div class="wf-axis">W1 &nbsp; W2 &nbsp; W3 &nbsp; W4 &nbsp; W5</div></div><div class="wf-queue"><small>FOLLOW-UP QUEUE</small>${row('Access issue', 'Admin · 3 learners', 'Open')}${row('Missing record', 'L&D · 4 learners', 'Check')}</div></div>`, 'powerbi')
     ],
     google: [
-      'A Gmail request becomes a shared Docs brief owned by the team.',
-      'The Shared Drive file set and the working document stay connected.',
-      'A suggested edit is checked against the source before it is accepted.',
-      'A permission check happens before the approved learning link is shared.',
-      'Sheets filters the source rows into a traceable action view.'
+      () => shell('gmail', 'Gmail', 'Inbox / Training request', `<div class="wf-split wf-gmail"><aside class="wf-nav"><b>Compose</b><span class="selected">Inbox</span><span>Starred</span><span>Sent</span></aside><div class="wf-main"><small>FROM · FIELD ENABLEMENT</small><h3>Product training update</h3><p>Can we update the scenario before the field launch?</p>${panel('MY REPLY DRAFT', 'Clarify before building', 'Who is the audience, what decision must change, and who approves the source?')}<div class="wf-send">Send reply →</div></div></div>`, 'gmail'),
+      () => shell('google-drive', 'Google Calendar', 'October / Training launch', `<div class="wf-calendar"><div class="wf-calendar-head"><b>MON</b><b>TUE</b><b>WED</b><b>THU</b><b>FRI</b></div><div class="wf-calendar-days"><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span></span><span class="event">SME source review</span><span></span><span class="event build">Slide build</span><span></span><span></span><span></span><span class="event launch">Learner access test</span><span></span><span></span></div></div>`, 'calendar'),
+      () => shell('google-drive', 'Google Slides', 'Product practice / Slide 02', `<div class="wf-ribbon">File &nbsp; Edit &nbsp; View &nbsp; Insert &nbsp; Slide &nbsp; Format <span>Share</span></div><div class="wf-slide-layout wf-google-slides"><aside class="wf-thumbs"><span>01<br>Set up</span><span class="active">02<br>Decision</span><span>03<br>Feedback</span></aside><div class="wf-slide"><small>SCENARIO 02</small><h3>What would you ask next?</h3><div class="wf-options"><span>Recommend a feature</span><span>Ask about the constraint</span><span>Schedule a demo</span></div></div><aside class="wf-designpane"><small>THEME</small><div></div><div></div></aside></div>`, 'slides'),
+      () => shell('google-docs', 'Google Docs', 'Script / Suggesting mode', `<div class="wf-split wf-docs"><div class="wf-main wf-paper"><small>SCENARIO SCRIPT · VERSION 03</small><h3>Customer discovery</h3><p>Ask the customer about the <del>solution</del> <ins>constraint</ins> before recommending a product.</p><div class="wf-lines"><i></i><i></i><i></i></div></div><aside class="wf-side">${panel('SME SUGGESTION', 'Use source approved wording', 'The need is still being defined at this point.')}<div class="wf-check">✓ Checked against approved brief</div></aside></div>`, 'docs'),
+      () => shell(null, 'Google Sites', 'Field onboarding / Learning hub', `<div class="wf-classroom"><div class="wf-class-head"><small>SITE EDITOR · PRODUCT TRAINING</small><strong>Product conversation practice</strong></div><div class="wf-class-card"><b>PAGE CONTENT</b><span>Scenario introduction · embedded Slides practice · job aid</span><em>Insert from Drive → preview page</em></div><div class="wf-class-preview"><small>LEARNER PREVIEW</small><strong>Open page → Practice → Job aid</strong><div class="wf-access">✓ Site and embedded file permissions checked</div></div></div>`, 'classroom'),
+      () => shell('google-drive', 'Google Drive', 'Shared drive / Training launch', `<div class="wf-library wf-drive"><aside class="wf-nav"><b>+ New</b><span>My Drive</span><span class="selected">Shared drives</span><span>Recent</span></aside><div class="wf-main"><small>TRAINING LAUNCH / SHARED DRIVE</small>${row('01 · Approved sources', 'SME owned', 'View only')}${row('02 · Working scripts', 'Designer owned', 'Edit')}${row('03 · Released assets', 'L&D owned', 'Current')}<div class="wf-file-path">Team owned files · named update owner</div></div></div>`, 'drive'),
+      () => shell('google-sheets', 'Google Sheets', 'Learner tracker / Filter view', `<div class="wf-ribbon">File &nbsp; Edit &nbsp; View &nbsp; Insert &nbsp; Data <span>Filter view</span></div><div class="wf-sheet wf-google-sheet"><div class="wf-cell head">ID</div><div class="wf-cell head">Status</div><div class="wf-cell head">Issue</div><div class="wf-cell head">Owner</div><div class="wf-cell">0142</div><div class="wf-cell">Done</div><div class="wf-cell">—</div><div class="wf-cell">L&D</div><div class="wf-cell">0143</div><div class="wf-cell alert">Check</div><div class="wf-cell">Access</div><div class="wf-cell">Admin</div><div class="wf-cell">0144</div><div class="wf-cell alert">Open</div><div class="wf-cell">No response</div><div class="wf-cell">L&D</div><div class="wf-filter"></div></div><div class="wf-status">Filtered: action needed · 2 rows</div>`, 'sheets'),
+      () => shell(null, 'Google Forms', 'Product practice pulse / Responses', `<div class="wf-forms"><div class="wf-form-question"><small>QUESTION 1 OF 2</small><h3>Which step was hardest to use on the job?</h3><div><i></i> Asking a discovery question</div><div><i></i> Interpreting the answer</div><div><i></i> Choosing the next action</div></div><div class="wf-form-results"><small>RESPONSES · 28</small><strong>Interpreting the answer</strong>${bars([31,62,20])}<p>Revision priority: add a worked example before the next cohort.</p></div></div>`, 'forms')
     ]
   };
-  const msScenes = [
-    () => `<div class="platform-scene scene-ms-plan"><div class="scene-brand">${img('teams')}<span>Teams <small>Training Launch / Project Management</small></span></div><div class="scene-ms-channel"><aside><b>CHANNELS</b><span class="selected"># Project Management</span><span># SME Review</span><span># Launch</span></aside><div class="scene-message-stream"><small>CONVERSATION</small><p class="scene-message">We need a short product-training update for the field team.</p><p class="scene-message">I can own the brief. Who approves the source?</p><div class="scene-route-line" aria-hidden="true"><i></i></div><div class="scene-pinned"><b>PINNED BRIEF</b><strong>Audience · source owner · launch date</strong><em>Owner: L&D lead</em></div></div></div></div>`,
-    () => `<div class="platform-scene scene-ms-build"><div class="scene-brand">${img('sharepoint')}<span>SharePoint <small>Product Training / Working Files</small></span></div><div class="scene-build-grid"><div class="scene-file-list"><b>DOCUMENT LIBRARY</b><span>${img('word')}Approved brief.docx <em>Current</em></span><span>${img('powerpoint')}Scenario storyboard.pptx <em>In build</em></span><span>${img('onedrive')}Voiceover script.docx <em>Source</em></span></div><div class="scene-slide-editor"><div class="scene-slide-toolbar">LAYOUT · SCENARIO <span>v03</span></div><div class="scene-slide-title">Customer conversation</div><div class="scene-build-block block-one">Context</div><div class="scene-build-block block-two">Learner choice</div><div class="scene-build-block block-three">Feedback</div></div></div></div>`,
-    () => `<div class="platform-scene scene-ms-review"><div class="scene-brand">${img('word')}<span>Word + SharePoint <small>Specific version / visible decision</small></span></div><div class="scene-review-grid"><div class="scene-document"><b>SCENARIO SCRIPT · v03</b><p>Ask the learner to identify the <mark>customer's constraint</mark> before making a recommendation.</p><div class="scene-document-lines"><i></i><i></i><i></i></div></div><div class="scene-review-thread"><small>SME COMMENT</small><strong>“Confirm the approved product term.”</strong><span class="scene-comment-resolve">Decision recorded · edit checked</span><em>Reviewer: source owner</em></div></div></div>`,
-    () => `<div class="platform-scene scene-ms-launch"><div class="scene-brand">${img('teams')}<span>Teams <small>Field Enablement / Learning tab</small></span></div><div class="scene-teams-tabs"><span>Posts</span><span>Files</span><span class="active">Learning</span></div><div class="scene-learning-frame"><div class="scene-learning-card">${img('teams')}<span><small>VIVA LEARNING / APPROVED ENTRY</small><strong>Product conversation practice</strong><em>Open the tested learning link</em></span><b>Available</b></div><div class="scene-access-check">✓ Access tested &nbsp; ✓ Current asset &nbsp; ✓ Learner path</div></div></div>`,
-    () => `<div class="platform-scene scene-ms-measure"><div class="scene-brand">${img('excel')}<span>Excel <small>Learning operations / review-ready workbook</small></span></div><div class="scene-measure-grid"><div class="scene-sheet"><div class="scene-sheet-head"><span>LEARNER</span><span>COURSE</span><span>STATUS</span></div><div><span>0142</span><span>Product update</span><b>Complete</b></div><div><span>0143</span><span>Product update</span><b>Review</b></div><div><span>0144</span><span>Product update</span><b>Incomplete</b></div></div><div class="scene-metric"><small>FOLLOW-UP VIEW</small><strong>2 records need action</strong><div class="scene-metric-bar"><i></i></div><p>Each status links back to its source row and exception check.</p></div></div></div>`
-  ];
-  const googleScenes = [
-    () => `<div class="platform-scene scene-google-plan"><div class="scene-brand">${img('gmail')}<span>Gmail <small>Training request / fictional project</small></span></div><div class="scene-google-mail"><div class="scene-inbox"><b>INBOX</b><span class="active">● Product training request</span><span>○ SME availability</span><span>○ Launch notes</span></div><div class="scene-mail-open"><small>FROM: FIELD ENABLEMENT</small><strong>Can we update the training before launch?</strong><p>Audience, goal, source owner, and date need one shared brief.</p><div class="scene-doc-draft">${img('google-docs')}<span>New shared brief <em>Team-owned</em></span></div></div></div></div>`,
-    () => `<div class="platform-scene scene-google-build"><div class="scene-brand">${img('google-drive')}<span>Shared Drive <small>Training Launch / Source Library</small></span></div><div class="scene-drive-build"><div class="scene-drive-files"><b>TEAM FILES</b><span>${img('google-docs')}Learning outline <em>Current</em></span><span>${img('google-drive')}Approved sources <em>Read only</em></span><span>${img('google-sheets')}Review tracker <em>Shared</em></span></div><div class="scene-doc-editor"><small>GOOGLE DOCS · WORKING DRAFT</small><strong>Scenario outline</strong><i class="scene-doc-line"></i><i class="scene-doc-line"></i><i class="scene-doc-line"></i><span class="scene-doc-cursor"></span></div></div></div>`,
-    () => `<div class="platform-scene scene-google-review"><div class="scene-brand">${img('google-docs')}<span>Google Docs <small>Comment + suggestion review</small></span></div><div class="scene-suggestion-grid"><div class="scene-google-doc"><small>SCENARIO OUTLINE · v03</small><p>Ask a question that identifies the <del>solution</del> <ins>constraint</ins> first.</p><div class="scene-document-lines"><i></i><i></i></div></div><div class="scene-suggestion"><small>SUGGESTED EDIT</small><strong>Use the source-approved wording.</strong><span>✓ Accepted after source check</span></div></div></div>`,
-    () => `<div class="platform-scene scene-google-launch"><div class="scene-brand">${img('google-drive')}<span>Google Drive <small>Approved file / sharing controls</small></span></div><div class="scene-share-dialog"><div class="scene-share-file">${img('google-drive')}<span><strong>Product practice · final</strong><small>Approved learning resource</small></span></div><div class="scene-share-row"><b>ACCESS</b><span>Field team · Viewer</span></div><div class="scene-share-row"><b>LINK</b><span>Restricted to approved group</span></div><div class="scene-share-confirm">Permissions checked → Link ready to share</div></div></div>`,
-    () => `<div class="platform-scene scene-google-measure"><div class="scene-brand">${img('google-sheets')}<span>Google Sheets <small>Operational tracker / reviewed rows</small></span></div><div class="scene-sheets-grid"><div class="scene-sheets-table"><div><b>LEARNER</b><b>STATUS</b><b>OWNER</b></div><div><span>0142</span><span>Done</span><span>L&D</span></div><div class="flagged"><span>0143</span><span>Check</span><span>Admin</span></div><div><span>0144</span><span>Open</span><span>SME</span></div></div><div class="scene-filter-panel"><small>FILTER: NEEDS ACTION</small><div class="scene-filter-bar"><i></i></div><strong>2 follow-ups</strong><p>Open records keep an owner and source link.</p></div></div></div>`
-  ];
+  let workspacePlatform = 'microsoft', workspaceStage = 0, workspaceTabs;
   const workspaceDemo = byId('workspaceDemo');
-  let workspacePlatform = 'microsoft', workspaceStage = 0;
   const showWorkspace = () => {
-    workspaceDemo.dataset.platform = workspacePlatform;
-    workspaceDemo.dataset.stage = workspaceStages[workspaceStage].toLowerCase();
-    put('workspaceWindowTitle', `${workspacePlatform === 'microsoft' ? 'Microsoft 365' : 'Google Workspace'} · Training Operations`);
-    byId('workspaceCanvas').innerHTML = (workspacePlatform === 'microsoft' ? msScenes : googleScenes)[workspaceStage]();
-    put('workspaceCaption', workspaceCaptions[workspacePlatform][workspaceStage]);
-    animate(workspaceDemo);
+    const [stage, tool, caption] = workplace[workspacePlatform].stages[workspaceStage];
+    workspaceDemo.dataset.platform = workspacePlatform; workspaceDemo.dataset.stage = stage.toLowerCase();
+    put('workspaceWindowTitle', `${workplace[workspacePlatform].label} · ${tool}`);
+    byId('workspaceCanvas').innerHTML = workplaceScenes[workspacePlatform][workspaceStage]();
+    put('workspaceCaption', caption); animate(workspaceDemo);
   };
-  const workspaceTabs = tabs('[data-workspace-stage]', (button) => { workspaceStage = Number(button.dataset.workspaceStage); showWorkspace(); });
-  const stopWorkspace = player(byId('workspacePlay'), 4, (index) => workspaceTabs.choose(workspaceTabs.buttons[index]));
-  workspaceTabs.buttons.forEach((button) => { button.addEventListener('click', stopWorkspace); button.addEventListener('keydown', (event) => { if (event.key.startsWith('Arrow') || ['Home','End'].includes(event.key)) stopWorkspace(); }); });
-  tabs('[data-workspace-platform]', (button) => { stopWorkspace(); workspacePlatform = button.dataset.workspacePlatform; workspaceTabs.choose(workspaceTabs.buttons[0]); });
+  const setWorkspacePlatform = () => {
+    workspaceStage = 0;
+    const labels = workplace[workspacePlatform].stages.map(([stage, tool]) => `${stage} <small>${tool}</small>`);
+    byId('workspaceStageTabs').setAttribute('aria-label', `${workplace[workspacePlatform].label} workflow stages`);
+    workspaceTabs = stageGroup(byId('workspaceStageTabs'), labels, (index) => { workspaceStage = index; showWorkspace(); });
+    showWorkspace();
+  };
+  const stopWorkspace = player(byId('workspacePlay'), () => workspaceTabs.buttons);
+  tabGroup('[data-workspace-platform]', (button) => { stopWorkspace(); workspacePlatform = button.dataset.workspacePlatform; setWorkspacePlatform(); });
   const hotspotAnswers = {
-    source:'Keep the approved brief and current file in one shared location; chat points people to it rather than becoming the only record.',
-    access:'Name who owns the next action, who may edit the source, and who can approve the release. Test the learner’s access path.',
-    flow:'Teams or Slack can host reminders and cohort conversation. Viva Learning or an approved LMS entry point can surface learning when the organization has configured it.'
+    source: 'My practice: keep the approved brief and current file in one shared location; link to it from chat.',
+    access: 'My practice: name the next owner, editing rights, approver, and learner access path.',
+    flow: 'My practice: bring learning into the work channel only after the source and access path are tested.'
   };
-  const hotspotButtons = [...document.querySelectorAll('[data-workspace-hotspot]')];
-  hotspotButtons.forEach((button) => button.addEventListener('click', () => { hotspotButtons.forEach((item) => item.classList.toggle('active', item === button)); put('workspaceHotspotAnswer', hotspotAnswers[button.dataset.workspaceHotspot]); }));
-  showWorkspace();
+  document.querySelectorAll('[data-workspace-hotspot]').forEach((button) => button.addEventListener('click', () => {
+    document.querySelectorAll('[data-workspace-hotspot]').forEach((item) => item.classList.toggle('active', item === button));
+    put('workspaceHotspotAnswer', hotspotAnswers[button.dataset.workspaceHotspot]);
+  }));
+  setWorkspacePlatform();
 
-  const managementStages = [
-    {label:'INTAKE',title:'The brief becomes an assigned project.',text:'The request is scoped before production tasks receive owners and dates.',state:'Intake',dependency:'Script approval unlocks voiceover.',gate:'Gate visible',caption:'An intake record becomes work with a clear owner and first review gate.'},
-    {label:'BUILD',title:'Production follows approved inputs.',text:'The script, voiceover, and screens move in sequence instead of starting from conflicting drafts.',state:'In progress',dependency:'Voiceover waits for the signed-off script.',gate:'Blocked until approval',caption:'A visible dependency prevents production from outrunning the approved source.'},
-    {label:'REVIEW',title:'Feedback becomes tracked change.',text:'A contextual comment gets an owner, a revision, and a decision before the task closes.',state:'Review',dependency:'SME accuracy check precedes final QA.',gate:'Human decision',caption:'The review card stays open until the edit is checked in the lesson.'},
-    {label:'PUBLISH',title:'Launch with a maintenance owner.',text:'The final file, access check, and next update owner remain attached to the project.',state:'Release ready',dependency:'Final QA and access test precede LMS release.',gate:'Release check',caption:'The project ends with a tested handoff and a named update path.'}
+  const managementPillars = [
+    ['Plan & Scope', 'I turn an intake request into an owned brief, dated milestones, and a visible dependency.', 'Need → scope → schedule', 'Scope agreed'],
+    ['Build & Organize', 'I map ADDIE tasks and assets so every production item has an owner and next step.', 'Script sign-off → voiceover', 'Production tracked'],
+    ['Review & Approve', 'I keep feedback attached to the asset and wait for a clear reviewer decision.', 'Revision → source check', 'Approval visible'],
+    ['Communicate & Align', 'I put blockers and status updates where the team can act on them.', 'Blocker → owner → update', 'Team aligned'],
+    ['Track & Report', 'I show overdue work and launch risk alongside progress so leaders can intervene.', 'Portfolio → exception → action', 'Risk visible']
   ];
-  const managementPlatforms = {asana:{label:'Asana',icon:'asana'},monday:{label:'Monday.com',icon:'monday-com'},jira:{label:'Jira',icon:'jira'}};
-  const roleAnswers = {designer:'My view: source files, blocked production tasks, and the next review decision.',sme:'SME view: the current lesson, the exact accuracy questions, and the approval deadline.',manager:'Program manager view: launch risk, pending approvals, owners, and upcoming milestones.'};
-  const roleCards = {designer:['Clarify learning scope','Build scenario screens','Apply reviewed edit','Package source files'],sme:['Confirm source material','Validate script facts','Resolve accuracy note','Sign off final meaning'],manager:['Set launch milestone','Watch production gate','Review approval risk','Confirm handoff owner']};
-  const focus = (role,stage) => `<span class="scene-role-focus">YOUR FOCUS · ${roleCards[role][stage]}</span>`;
-  const asanaScenes = [
-    (role) => `<div class="platform-scene scene-asana-intake"><div class="scene-asana-head">${img('asana')}<strong>Training Requests</strong><span>FORM → TASK</span></div><div class="scene-asana-form"><div><small>REQUEST FORM</small><label>Audience <b>Field team</b></label><label>Need <b>Product scenario update</b></label><label>Source owner <b>SME assigned</b></label><span class="scene-asana-submit">Submit request</span></div><i class="scene-asana-transfer">→</i><div class="scene-asana-created"><small>NEW TASK · TRAINING LAUNCH</small><strong>Scope product update</strong><p>Owner: instructional designer</p><em>Due date + review milestone added</em></div></div>${focus(role,0)}</div>`,
-    (role) => `<div class="platform-scene scene-asana-build"><div class="scene-asana-head">${img('asana')}<strong>Course Development Board</strong><span>DEPENDENCIES</span></div><div class="scene-asana-kanban"><div><small>READY</small><article>Storyboard approved <b>✓</b></article></div><div><small>IN PROGRESS</small><article class="scene-moving-task">Build scenario screens <b>Designer</b></article></div><div><small>BLOCKED</small><article>Record voiceover <b>Waiting</b></article></div></div><div class="scene-dependency-line"><span>Script sign-off</span><i></i><span>Voiceover unlocks</span></div>${focus(role,1)}</div>`,
-    (role) => `<div class="platform-scene scene-asana-review"><div class="scene-asana-head">${img('asana')}<strong>SME Review Task</strong><span>APPROVAL GATE</span></div><div class="scene-asana-review-grid"><div class="scene-review-source"><small>REVIEW 360 · SCREEN 02</small><strong>“Check the discovery question.”</strong><p>Comment linked to lesson context</p></div><div class="scene-review-action"><small>ASSIGNED CHANGE</small><strong>Revise choice + feedback</strong><span>Owner: instructional designer</span><em class="scene-approval-pulse">SME confirmation required</em></div></div>${focus(role,2)}</div>`,
-    (role) => `<div class="platform-scene scene-asana-publish"><div class="scene-asana-head">${img('asana')}<strong>Launch Timeline</strong><span>MILESTONE VIEW</span></div><div class="scene-asana-timeline"><div><span>Final QA</span><i></i><b>Checked</b></div><div><span>LMS handoff</span><i></i><b>Ready</b></div><div><span>Update owner</span><i></i><b>Assigned</b></div></div>${focus(role,3)}</div>`
-  ];
-  const mondayScenes = [
-    (role) => `<div class="platform-scene scene-monday-intake"><div class="scene-monday-head">${img('monday-com')}<strong>Training Launch Board</strong><span>NEW REQUEST</span></div><div class="scene-monday-table"><div class="head"><b>ITEM</b><b>OWNER</b><b>STATUS</b></div><div><span>Product training update</span><span>L&D lead</span><em class="new-row">New request</em></div><div><span>Audience + source brief</span><span>SME</span><em>Ready</em></div></div>${focus(role,0)}</div>`,
-    (role) => `<div class="platform-scene scene-monday-build"><div class="scene-monday-head">${img('monday-com')}<strong>Production Group</strong><span>DEPENDENCY STATUS</span></div><div class="scene-monday-table"><div class="head"><b>ITEM</b><b>OWNER</b><b>STATUS</b></div><div><span>Approve script</span><span>SME</span><em>Review</em></div><div><span>Record voiceover</span><span>Media</span><em class="blocked">Waiting on script</em></div><div><span>Build screens</span><span>Designer</span><em class="working">Working</em></div></div>${focus(role,1)}</div>`,
-    (role) => `<div class="platform-scene scene-monday-review"><div class="scene-monday-head">${img('monday-com')}<strong>Review Updates</strong><span>ITEM CONVERSATION</span></div><div class="scene-monday-update"><small>SME · UPDATE</small><p>“Please check the source wording on screen 02.”</p><div class="scene-monday-reply">Designer: revised version attached for confirmation.</div><b>Approval pending · source owner</b></div>${focus(role,2)}</div>`,
-    (role) => `<div class="platform-scene scene-monday-publish"><div class="scene-monday-head">${img('monday-com')}<strong>Program Dashboard</strong><span>LAUNCH VIEW</span></div><div class="scene-monday-dashboard"><article><small>FINAL QA</small><strong>Complete</strong><i></i></article><article><small>LMS HANDOFF</small><strong>Ready</strong><i></i></article><article><small>UPDATE OWNER</small><strong>Assigned</strong><i></i></article></div>${focus(role,3)}</div>`
-  ];
-  const jiraScenes = [
-    (role) => `<div class="platform-scene scene-jira-intake"><div class="scene-jira-head">${img('jira')}<strong>Create work item</strong><span>LND-24</span></div><div class="scene-jira-form"><label>SUMMARY <b>Update product scenario lesson</b></label><label>ASSIGNEE <b>Instructional designer</b></label><label>PRIORITY <b>Launch dependency</b></label><div class="scene-jira-created">Issue created → added to training board</div></div>${focus(role,0)}</div>`,
-    (role) => `<div class="platform-scene scene-jira-build"><div class="scene-jira-head">${img('jira')}<strong>Training Delivery Board</strong><span>WORKFLOW</span></div><div class="scene-jira-board"><div><small>TO DO</small><article>LND-24<br><strong>Scenario build</strong></article></div><div><small>IN PROGRESS</small><article class="scene-jira-move">LND-25<br><strong>Script sign-off</strong></article></div><div><small>BLOCKED</small><article>LND-26<br><strong>Voiceover</strong></article></div></div><p class="scene-jira-link">LND-26 is blocked by LND-25</p>${focus(role,1)}</div>`,
-    (role) => `<div class="platform-scene scene-jira-review"><div class="scene-jira-head">${img('jira')}<strong>LND-27 · SME review</strong><span>READY FOR QA</span></div><div class="scene-jira-issue"><div><small>DESCRIPTION</small><p>Confirm screen 02 wording and feedback against the approved source.</p><span>Assignee · SME reviewer</span></div><div><small>CHECKLIST</small><p>☑ Revision attached</p><p>☐ Technical meaning confirmed</p><p>☐ Final QA complete</p></div></div>${focus(role,2)}</div>`,
-    (role) => `<div class="platform-scene scene-jira-publish"><div class="scene-jira-head">${img('jira')}<strong>Release: Product Update</strong><span>VERSION VIEW</span></div><div class="scene-jira-release"><div><small>ISSUES IN RELEASE</small><strong>LND-24 · Scenario</strong><strong>LND-27 · Review</strong></div><div class="scene-jira-release-check"><span>✓ Final QA</span><span>✓ LMS handoff</span><span>✓ Maintenance owner</span></div></div>${focus(role,3)}</div>`
-  ];
-  const managementScenes = {asana:asanaScenes,monday:mondayScenes,jira:jiraScenes};
-  const managementDemo=byId('managementDemo');
-  let managementPlatform='asana',managementStage=0,managementRole='designer';
-  const showManagement=()=>{
-    const platform=managementPlatforms[managementPlatform],stage=managementStages[managementStage];
-    managementDemo.dataset.platform=managementPlatform;managementDemo.dataset.stage=stage.label.toLowerCase();managementDemo.dataset.role=managementRole;
-    put('managementWindowTitle',`${platform.label} · Product training launch`);picture('managementIcon',icon(platform.icon));
-    put('managementStageLabel',`${String(managementStage+1).padStart(2,'0')} · ${stage.label}`);put('managementStageTitle',stage.title);put('managementStageText',stage.text);put('managementStageState',stage.state);
-    put('managementDependency',stage.dependency);put('managementGate',stage.gate);put('managementCaption',stage.caption);put('managementRoleAnswer',roleAnswers[managementRole]);
-    byId('managementCanvas').innerHTML=managementScenes[managementPlatform][managementStage](managementRole);
-    animate(managementDemo);
+  const managementScenes = {
+    asana: [
+      () => shell('asana', 'Asana', 'Training request / Form + Timeline', `<div class="wf-split wf-asana-plan"><div class="wf-main">${panel('INTAKE FORM', 'New onboarding request', 'Audience: field team · Goal: better discovery questions')}${row('Source owner', 'Product SME', 'Assigned')}${row('Learning deadline', 'October 20', 'Confirmed')}<div class="wf-submit">Submit → Create project</div></div><aside class="wf-side"><small>TIMELINE + CALENDAR</small>${dots(['Analyze','Design','Develop','Launch'])}${row('Script sign-off', 'Oct 06', 'Milestone')}${row('Voiceover', 'Starts after sign-off', 'Dependent')}</aside></div>`, 'asana'),
+      () => shell('asana', 'Asana', 'Course development / ADDIE list + Board', `<div class="wf-split"><aside class="wf-side wf-addie"><small>ADDIE SECTIONS</small><span>Analysis · audience</span><span>Design · storyboard</span><span class="active">Development · assets</span><span>Implementation · LMS</span><span>Evaluation · feedback</span></aside><div class="wf-main"><small>PRODUCTION BOARD · ASSET TYPE FIELD</small><div class="wf-kanban"><div><b>READY</b>${panel('PDF', 'Manager guide')}</div><div><b>IN PROGRESS</b>${panel('ELEARNING', 'Scenario module')}</div><div><b>BLOCKED</b>${panel('AUDIO', 'Voiceover waits for script')}</div></div></div></div>`, 'asana'),
+      () => shell('asana', 'Asana', 'Approval + proofing / Scenario screen', `<div class="wf-split wf-proof"><div class="wf-main"><small>VISUAL PROOF · SCREEN 02</small><div class="wf-proof-asset"><h3>Ask before recommending</h3><p>What constraint shapes the customer decision?</p><span>1</span></div></div><aside class="wf-side">${panel('SME COMMENT · PIN 1', 'Check the product term', 'Use the current terminology guide.')}<div class="wf-approval"><b>APPROVAL TASK</b><span>Approve</span><span>Request changes</span></div><div class="wf-check">Rule: Ready for voiceover → assign media developer</div></aside></div>`, 'asana'),
+      () => shell('asana', 'Asana', 'Project update / Comments + Status', `<div class="wf-split"><div class="wf-main"><small>TASK COMMENTS · SCENARIO MODULE</small><div class="wf-comment"><b>Designer</b> @SME Can you confirm the example by Thursday?</div><div class="wf-comment reply"><b>SME</b> I added the approved source in the task.</div><div class="wf-mention">Referenced: Product brief · v04</div></div><aside class="wf-side">${panel('PROJECT STATUS', 'At risk', 'Source approval shifted the media start date.')}<div class="wf-status-progress"><i></i></div><small>Next update: revised timeline to stakeholders</small></aside></div>`, 'asana'),
+      () => shell('asana', 'Asana', 'Portfolio + Dashboard / L&D programs', `<div class="wf-dashboard wf-asana-dashboard"><div class="wf-metric"><small>ACTIVE INITIATIVES</small><strong>3</strong><span>Onboarding · Product · Compliance</span></div><div class="wf-metric"><small>OVERDUE MILESTONES</small><strong>2</strong><span>Both assigned for follow-up</span></div><div class="wf-chart"><small>ASSETS BY STAGE</small>${bars([75,48,22])}<div class="wf-axis">Build &nbsp;&nbsp; Review &nbsp;&nbsp; Launch</div></div><div class="wf-queue"><small>PORTFOLIO HEALTH</small>${row('Product training', 'SME review due', 'At risk')}${row('Onboarding', 'Pilot scheduled', 'On track')}</div></div>`, 'asana')
+    ],
+    atlassian: [
+      () => shell('confluence', 'Atlassian', 'JSM intake → Product Discovery → Confluence', `<div class="wf-split wf-atl-plan"><div class="wf-main">${panel('JIRA SERVICE MANAGEMENT · PORTAL', 'Request a training program', 'Audience: field team · Problem: discovery conversations')}${row('Impact / effort', 'Product Discovery · Q4 priority', 'Prioritized')}</div><aside class="wf-side">${panel('CONFLUENCE · PROJECT POSTER', 'Why this course exists', 'Learner need · source owners · success measure')}${dots(['Request','Prioritize','Scope'])}</aside></div>`, 'atlassian'),
+      () => shell('jira', 'Jira + Confluence', 'Content sprint / Connected page', `<div class="wf-split"><div class="wf-main"><small>JIRA SOFTWARE · CONTENT BOARD</small><div class="wf-kanban"><div><b>TO DO</b>${panel('LND-24', 'Write script')}</div><div><b>IN PROGRESS</b>${panel('LND-25', 'Build quiz')}</div><div><b>REVIEW</b>${panel('LND-26', 'SME check')}</div></div></div><aside class="wf-side">${panel('CONFLUENCE · STORYBOARD', 'Product scenario / Screen 02', 'Script, visual layout, and approved source.')}<div class="wf-smartlink">↗ LND-25 · Build quiz · In progress</div></aside></div>`, 'atlassian'),
+      () => shell('confluence', 'Confluence + Jira', 'Inline comment / Review gate', `<div class="wf-split wf-atl-review"><div class="wf-main wf-paper"><small>CONFLUENCE PAGE · SCRIPT · V03</small><h3>Customer discovery</h3><p>Ask about the <mark>constraint</mark> before presenting a solution.</p><div class="wf-comment-pin">1</div><div class="wf-version">Page history · v02 → v03</div></div><aside class="wf-side">${panel('INLINE COMMENT · SME', 'Confirm technical meaning', 'The example must match the approved product guide.')}<div class="wf-gates"><span>Draft</span><span>SME Review</span><span>Ready for LMS</span></div></aside></div>`, 'atlassian'),
+      () => shell('jira', 'Jira + Confluence', 'Flagged issue / Release announcement', `<div class="wf-split"><div class="wf-main">${panel('JIRA · LND-26', 'Voiceover blocked', 'Waiting for SME approval of the script.')}<div class="wf-flag">⚑ Flagged for the team · owner: SME</div>${row('Next action', 'Review source wording by Thursday', 'Open')}</div><aside class="wf-side">${panel('CONFLUENCE · ANNOUNCEMENT', 'Product training release notes', 'What changed, who is affected, where to find the new resource.')}<div class="wf-publish">Publish after release check →</div></aside></div>`, 'atlassian'),
+      () => shell('jira', 'Atlassian Analytics', 'Jira dashboard + Confluence page analytics', `<div class="wf-dashboard wf-atl-dashboard"><div class="wf-metric"><small>OPEN REQUESTS</small><strong>8</strong><span>JSM intake queue</span></div><div class="wf-metric"><small>LMS ISSUES</small><strong>2</strong><span>Assigned for repair</span></div><div class="wf-chart"><small>CONTENT VELOCITY</small>${bars([35,47,57,70])}<div class="wf-axis">Sprint 1 &nbsp; 2 &nbsp; 3 &nbsp; 4</div></div><div class="wf-queue"><small>CONFLUENCE READINESS</small>${row('Trainer playbook', '18 of 22 viewed', 'Follow up')}${row('Launch guide', 'Current version', 'Ready')}</div></div>`, 'atlassian')
+    ]
   };
-  const managementTabs=tabs('[data-management-stage]',(button)=>{managementStage=Number(button.dataset.managementStage);showManagement();});
-  const stopManagement=player(byId('managementPlay'),3,(index)=>managementTabs.choose(managementTabs.buttons[index]));
-  managementTabs.buttons.forEach((button)=>{button.addEventListener('click',stopManagement);button.addEventListener('keydown',(event)=>{if(event.key.startsWith('Arrow')||['Home','End'].includes(event.key))stopManagement();});});
-  tabs('[data-management-platform]',(button)=>{stopManagement();managementPlatform=button.dataset.managementPlatform;managementTabs.choose(managementTabs.buttons[0]);});
-  tabs('[data-management-role]',(button)=>{managementRole=button.dataset.managementRole;showManagement();});
+  let managementPlatform = 'asana', managementStage = 0, managementRole = 'designer', managementTabs;
+  const roles = { designer: 'My designer view prioritizes source files, blocked production tasks, and the next review decision.', sme: 'My SME view puts the current draft, exact accuracy question, and due date together.', manager: 'My manager view surfaces launch risk, pending approvals, and upcoming milestones.' };
+  const showManagement = () => {
+    const [label, description, dependency, state] = managementPillars[managementStage];
+    const name = managementPlatform === 'asana' ? 'Asana' : 'Atlassian';
+    const iconName = managementPlatform === 'asana' ? 'asana' : 'confluence';
+    const demo = byId('managementDemo'); demo.dataset.platform = managementPlatform; demo.dataset.stage = label.toLowerCase().replace(/[^a-z]+/g, '-'); demo.dataset.role = managementRole;
+    put('managementWindowTitle', `${name} · Product training launch`); byId('managementIcon').src = workIcon(iconName);
+    put('managementStageLabel', `${String(managementStage + 1).padStart(2, '0')} · ${label.toUpperCase()}`);
+    put('managementStageTitle', label); put('managementStageText', description); put('managementStageState', state);
+    put('managementDependency', dependency); put('managementGate', state);
+    put('managementRoleAnswer', roles[managementRole]);
+    byId('managementCanvas').innerHTML = managementScenes[managementPlatform][managementStage](); animate(demo);
+  };
+  managementTabs = stageGroup(byId('managementStageTabs'), managementPillars.map(([label]) => label), (index) => { managementStage = index; showManagement(); });
+  const stopManagement = player(byId('managementPlay'), () => managementTabs.buttons);
+  tabGroup('[data-management-platform]', (button) => { stopManagement(); managementPlatform = button.dataset.managementPlatform; managementTabs.select(managementTabs.buttons[0]); });
+  tabGroup('[data-management-role]', (button) => { managementRole = button.dataset.managementRole; showManagement(); });
   showManagement();
 
-  const reviewStages=[
-    ['AUTHOR','Prepare a reviewable lesson and name what feedback is needed.','Source: approved product brief'],
-    ['L&D QA','Check navigation, practice, accessibility, and missing states.','Decision: ready for SME or return to author'],
-    ['SUBJECT EXPERT','Validate facts and examples in the lesson context.','Decision: correction, clarification, or approval'],
-    ['STAKEHOLDER','Check approved terminology and launch fit.','Decision: align competing requests before edit'],
-    ['L&D + AUTHOR','Confirm required changes in the revised version.','Decision: close only after checking the new build']
+  const comments = {
+    sme: ['Technical SME', 'The regulatory date needs to reflect the approved 2026 guidance.', 'Update source date'],
+    brand: ['Brand reviewer', 'Please use the approved product name on this screen.', 'Check terminology'],
+    ld: ['L&D reviewer', 'Explain why the discovery question is the best next step.', 'Improve feedback']
+  };
+  let reviewStage = 0, reviewComment = 'sme';
+  const course = () => `<div class="wf-review-course"><small>INTRODUCTION / PRODUCT CONVERSATIONS</small><h3>Should we recommend a solution yet?</h3><p>Before recommending a product, identify the customer's goal and constraints. Choose the strongest next question.</p><label><i></i> Which outcome matters most to your team?</label><label><i></i> What is the current limitation?</label><label><i></i> Which feature would you like to buy?</label><div class="wf-review-pin">1</div></div>`;
+  const reviewBar = (title, badge) => `<div class="wf-review-bar"><span>‹</span><b>${title}</b><span class="wf-review-icon"><img src="${root}workflows/people-collaboration/feedback.webp" alt=""></span><em>${badge}</em></div>`;
+  const reviewScene = () => {
+    const [person, text, action] = comments[reviewComment];
+    if (reviewStage === 0) return `<div class="wf-review-ui wf-review-publish">${reviewBar('Rise 360 / Product conversations', 'AUTHORING')}<div class="wf-review-editor"><aside><small>LESSON OUTLINE</small><span>Introduction</span><span class="active">Scenario practice</span><span>Takeaways</span></aside>${course()}<div class="wf-review-publish-menu"><b>Publish ▾</b><strong>Publish to Review 360</strong><div><span>◉ Create a new item</span><span>○ New version of existing item</span></div><em>Publish for feedback →</em></div></div></div>`;
+    if (reviewStage === 1) return `<div class="wf-review-ui wf-review-feedback">${reviewBar('Introduction', 'PREVIEW')}<div class="wf-review-layout">${course()}<aside class="wf-review-sidebar"><small>All Comments ▾</small><div class="wf-review-compose">Add a comment</div><span>Introduction</span><div class="wf-review-card"><b>● &nbsp; ${person}</b><p>${text}</p><small>Screenshot · Screen 02</small><div>Add a reply</div></div><div class="wf-review-card muted"><b>● &nbsp; L&D reviewer</b><p>Can the feedback explain the better choice?</p></div></aside></div></div>`;
+    if (reviewStage === 2) return `<div class="wf-review-ui wf-review-track">${reviewBar('Product conversations / Comments', 'REVIEW 360')}<div class="wf-review-filters"><b>Current Version ▾</b><b>Unresolved Comments ▾</b><span>3 open</span></div><div class="wf-review-track-list"><div class="wf-review-track-item"><small>SCREEN 02 · ${person.toUpperCase()}</small><strong>${text}</strong><span>Owner: instructional designer · ${action}</span><button type="button" aria-label="Illustrative resolve control">✓ Resolve after checking</button></div><div class="wf-review-track-item"><small>SCREEN 03 · L&D REVIEWER</small><strong>Explain the feedback after the learner chooses.</strong><span>Owner: instructional designer · Revise feedback</span><button type="button" aria-label="Illustrative resolve control">✓ Resolve after checking</button></div></div></div>`;
+    return `<div class="wf-review-ui wf-review-history">${reviewBar('Product conversations / Version history', 'REVIEW 360')}<div class="wf-review-versions"><div><small>VERSION 1 · ORIGINAL</small><h3>Ask about the product.</h3><p>The first version used an outdated date and a broad prompt.</p></div><div class="current"><small>VERSION 2 · REVISED</small><h3>Ask about the customer's constraint.</h3><p>The scenario now uses approved 2026 guidance and specific feedback.</p></div></div><div class="wf-review-resolved"><span>✓ Resolved · ${person}</span><p>${text}</p><b>Instructional designer:</b> Updated the text and visual. Republished for final check.</div></div>`;
+  };
+  const reviewCaptions = [
+    'I publish a reviewable item with a clear version choice before asking for feedback.',
+    'I ask reviewers to comment on the exact lesson element that needs a change.',
+    'I filter unresolved comments, assign the edit, and check the new build before resolving.',
+    'I keep the revision and original feedback together so the decision remains traceable.'
   ];
-  const comments={
-    sme:{name:'Technical SME',type:'TECHNICAL ACCURACY',text:'The customer would not know the solution yet. Identify the constraint first.',decision:'Required correction',action:'Revise the choice and feedback, then ask the SME to confirm the meaning.',owner:'Instructional designer',status:'Needs change'},
-    brand:{name:'Brand reviewer',type:'APPROVED TERMINOLOGY',text:'Use the approved product term on this screen and in the facilitator notes.',decision:'Source check',action:'Compare the comment with the current terminology guide before editing both assets.',owner:'Content editor',status:'Check source'},
-    ld:{name:'L&D reviewer',type:'LEARNING + ACCESS',text:'Explain why the discovery question is the better next step.',decision:'Learning design revision',action:'Rewrite the feedback and check focus order and screen-reader language.',owner:'Instructional designer',status:'QA needed'}
+  const showReview = () => {
+    const demo = byId('reviewDemo'); demo.dataset.stage = String(reviewStage);
+    byId('reviewScene').innerHTML = reviewScene();
+    byId('reviewCommentPicker').hidden = reviewStage !== 1 && reviewStage !== 2;
+    put('reviewCaption', reviewCaptions[reviewStage]); animate(demo);
   };
-  const reviewScene = (stage,commentKey) => {
-    const c=comments[commentKey];
-    if(stage===0)return `<div class="platform-scene scene-review-draft"><div class="scene-review-appbar"><strong>Review 360</strong><span>Customer Conversation · draft v03</span><b>Share for review</b></div><div class="scene-review-draft-grid"><div class="scene-course-preview"><small>LESSON SCREEN 02</small><h3>What should the learner ask next?</h3><p>A customer describes a challenge. The goal and constraints are still unclear.</p><div class="scene-course-choice">Ask a discovery question before recommending a solution.</div></div><div class="scene-review-brief"><small>AUTHOR CHECK</small><strong>Review brief attached</strong><p>SME: validate technical meaning.<br>L&D: check practice and access.<br>Brand: check approved terms.</p><span>Draft version: 03</span></div></div></div>`;
-    if(stage===1)return `<div class="platform-scene scene-review-qa"><div class="scene-review-appbar"><strong>Review 360</strong><span>Internal QA · draft v03</span><b>Check before SME</b></div><div class="scene-review-qa-grid"><div class="scene-course-preview"><small>LESSON SCREEN 02</small><h3>Choose the next question</h3><p>Review the practice and feedback before requesting expert time.</p><div class="scene-course-choice">Ask a discovery question first.</div><i class="scene-qa-scan"></i></div><div class="scene-qa-list"><small>INTERNAL QA</small><span>✓ Navigation works</span><span>✓ Choice feedback is present</span><span>✓ Keyboard path checked</span><span class="pending">○ Source language needs SME</span></div></div></div>`;
-    if(stage===2)return `<div class="platform-scene scene-review-comment"><div class="scene-review-appbar"><strong>Review 360</strong><span>SME comments · draft v03</span><b>3 on this screen</b></div><div class="scene-review-comment-grid"><div class="scene-course-preview"><small>LESSON SCREEN 02</small><h3>What should the learner ask next?</h3><p>A customer describes a challenge, but constraints are unclear.</p><div class="scene-course-choice">Ask a discovery question before recommending.</div><span class="scene-pin">${commentKey==='sme'?'1':commentKey==='brand'?'2':'3'}</span></div><div class="scene-review-comment-card"><small>${c.name.toUpperCase()} · ${c.type}</small><blockquote>“${c.text}”</blockquote><strong>${c.decision}</strong><p>${c.action}</p><em>Owner: ${c.owner} · ${c.status}</em></div></div></div>`;
-    if(stage===3)return `<div class="platform-scene scene-review-triage"><div class="scene-review-appbar"><strong>Review 360</strong><span>Stakeholder reconciliation</span><b>Decision needed</b></div><div class="scene-triage-grid"><div class="scene-triage-input"><small>COMMENTS IN CONTEXT</small><p>SME: Identify the constraint.</p><p>Brand: Use approved terminology.</p><p>L&D: Explain the learner decision.</p></div><div class="scene-triage-decision"><small>TRIAGE RECORD</small><strong>${c.decision}</strong><p>${c.action}</p><span>Assigned to ${c.owner}</span></div></div></div>`;
-    return `<div class="platform-scene scene-review-final"><div class="scene-review-appbar"><strong>Review 360</strong><span>Final QA · revision v04</span><b>Checked</b></div><div class="scene-version-compare"><div><small>BEFORE · v03</small><p>Ask a discovery question before recommending a solution.</p></div><span class="scene-version-arrow">→</span><div class="scene-final-version"><small>AFTER · v04</small><p>Ask which constraints are shaping the customer's decision.</p></div></div><div class="scene-final-checks"><span>✓ Technical meaning confirmed</span><span>✓ Terminology checked</span><span>✓ Feedback + access QA</span></div></div>`;
-  };
-  const reviewDemo=byId('reviewDemo');
-  let reviewStage=0,reviewComment='sme';
-  const showReview=()=>{
-    const stage=reviewStages[reviewStage];reviewDemo.dataset.stage=String(reviewStage);
-    put('reviewStageOwner',stage[0]);put('reviewStagePurpose',stage[1]);put('reviewStageBoundary',stage[2]);
-    byId('reviewScene').innerHTML=reviewScene(reviewStage,reviewComment);
-    byId('reviewCommentPicker').hidden=reviewStage!==2&&reviewStage!==3;
-    put('reviewCaption',reviewStage===4?'The revised lesson is compared with the draft and checked before comments are closed.':reviewStage===3?'Different reviewer requests are reconciled into one owned decision.':reviewStage===2?'A comment tied to the lesson screen becomes a specific edit and confirmation task.':reviewStage===1?'Internal QA finds interaction and access issues before SME review.':'The draft and review brief make each reviewer’s job clear.');
-    animate(reviewDemo);
-  };
-  tabs('[data-review-stage]',(button)=>{reviewStage=Number(button.dataset.reviewStage);showReview();});
-  tabs('[data-review-comment]',(button)=>{reviewComment=button.dataset.reviewComment;showReview();});
+  tabGroup('[data-review-stage]', (button) => { reviewStage = Number(button.dataset.reviewStage); showReview(); });
+  tabGroup('[data-review-comment]', (button) => { reviewComment = button.dataset.reviewComment; showReview(); });
   showReview();
 })();
