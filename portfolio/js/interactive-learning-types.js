@@ -52,43 +52,36 @@
   }));
 
   const videoCues = [
-    { caption: 'Customer describes a slow handoff.', step: 'MOMENT 01 / OBSERVE', title: 'Listen for the real obstacle', detail: 'A customer explains why handoffs cost time.', hotspot: 'Inspect the cue +' },
-    { caption: 'Pause before the next question.', step: 'MOMENT 02 / DECIDE', title: 'Choose the next question', detail: 'The learner pauses before responding.', hotspot: 'Choose a question +' },
-    { caption: 'The response reveals the impact.', step: 'MOMENT 03 / REFLECT', title: 'Connect action to impact', detail: 'Feedback explains what the question uncovered.', hotspot: 'See the takeaway +' }
+    { caption: 'Customer describes a slow handoff.', step: 'MOMENT 01 / OBSERVE', title: 'What is the customer describing?', detail: 'Select the detail that signals a real problem.' },
+    { caption: 'Playback paused at a decision.', step: 'MOMENT 02 / DECIDE', title: 'Which detail matters most?', detail: 'Select a clue before the video continues.' },
+    { caption: 'Feedback connects the clue to the task.', step: 'MOMENT 03 / REFLECT', title: 'What would you investigate?', detail: 'Use the feedback to plan the next question.' }
   ];
   const videoButtons = [...document.querySelectorAll('[data-video-cue]')];
   let videoIndex = 0;
   const videoMoment = document.getElementById('videoMoment');
-  const videoOptions = document.getElementById('videoMomentOptions');
+  const videoScreen = document.querySelector('.video-screen');
   videoButtons.forEach(button => button.addEventListener('click', () => {
     selectOne(videoButtons, button);
     videoIndex = Number(button.dataset.videoCue);
     const cue = videoCues[videoIndex];
-    const screen = document.querySelector('.video-screen');
-    screen.dataset.videoFrame = String(videoIndex);
+    videoScreen.dataset.videoFrame = String(videoIndex);
+    videoScreen.classList.remove('has-answer');
+    document.querySelectorAll('[data-video-answer]').forEach(item => item.classList.remove('correct', 'incorrect'));
     document.getElementById('videoSceneStep').textContent = cue.step;
     document.getElementById('videoSceneTitle').textContent = cue.title;
     document.getElementById('videoSceneDetail').textContent = cue.detail;
     document.getElementById('videoCaption').textContent = cue.caption;
-    document.getElementById('videoHotspot').textContent = cue.hotspot;
-    videoOptions.hidden = true;
-    videoMoment.querySelector('p').textContent = 'Click the marker in the frame to inspect this learning moment.';
+    videoMoment.querySelector('p').textContent = 'The video pauses so the learner can select evidence in the scene.';
   }));
-  document.getElementById('videoHotspot').addEventListener('click', () => {
-    const messages = [
-      'The learner notices lost time in handoffs, not just a feature request.',
-      'Which question will clarify the cost of the delay?',
-      'The learner connects the cue, question, and customer impact before moving on.'
-    ];
-    videoMoment.querySelector('p').textContent = messages[videoIndex];
-    videoOptions.hidden = videoIndex !== 1;
-  });
   const videoAnswers = [...document.querySelectorAll('[data-video-answer]')];
   videoAnswers.forEach(button => button.addEventListener('click', () => {
     selectOne(videoAnswers, button);
+    videoScreen.classList.add('has-answer');
+    videoAnswers.forEach(item => item.classList.remove('correct', 'incorrect'));
+    button.classList.add(button.dataset.videoAnswer === 'probe' ? 'correct' : 'incorrect');
     videoMoment.querySelector('p').textContent = button.dataset.videoAnswer === 'probe'
-      ? 'Good move. Asking where work stalls reveals the impact behind the delay.'
-      : 'Try again. A pitch does not explain how the delay affects the customer.';
+      ? 'Correct. Time lost in handoffs is the customer impact visible in this moment.'
+      : 'Try again. A feature request does not explain the time the customer loses.';
   }));
 
   let softwareIndex = 0;
@@ -96,34 +89,41 @@
   const softwareTask = document.getElementById('softwareStep');
   const softwareTitle = document.getElementById('softwareTitle');
   const softwareTarget = document.getElementById('softwareTarget');
-  const softwareExpected = ['learners', 'status', 'reports'];
+  const softwareExpected = ['catalog', 'configure', 'submit'];
+  const softwareSubmit = document.querySelector('[data-software-control="submit"]');
+  const softwareWindow = document.querySelector('.software-window');
   softwareControls.forEach(button => button.addEventListener('click', () => {
     if (softwareIndex >= softwareExpected.length) return;
     if (button.dataset.softwareControl !== softwareExpected[softwareIndex]) {
-      softwareTask.textContent = `Not yet. ${['Open Learners first.', 'Open Pathway status next.', 'Open Reports to confirm the record.'][softwareIndex]}`;
+      softwareTask.textContent = `Not yet. ${['Open Catalog first.', 'Configure the package next.', 'Submit the reviewed order.'][softwareIndex]}`;
       return;
     }
     softwareIndex += 1;
+    softwareWindow.dataset.step = String(softwareIndex);
     softwareControls.forEach(item => item.classList.toggle('active', item === button));
     if (softwareIndex === 1) {
-      softwareTitle.textContent = 'Learner record';
+      softwareTitle.textContent = 'Choose a product';
       softwareTarget.hidden = false;
-      softwareTask.textContent = 'Task 2 of 3: open Pathway status.';
+      softwareTask.textContent = 'Step 2 of 3: configure the package.';
     } else if (softwareIndex === 2) {
-      softwareTitle.textContent = 'Pathway status: incomplete';
+      softwareTitle.textContent = 'Review the configured order';
       softwareTarget.hidden = true;
-      softwareTask.textContent = 'Task 3 of 3: open Reports.';
+      softwareSubmit.hidden = false;
+      softwareTask.textContent = 'Step 3 of 3: submit the order.';
     } else {
-      softwareTitle.textContent = 'Report preview: learning incomplete';
-      softwareTask.textContent = 'Complete: the report makes the blocker visible.';
+      softwareTitle.textContent = 'Order submitted ✓';
+      softwareSubmit.hidden = true;
+      softwareTask.textContent = 'Complete: Northstar Supply order #1048 was submitted.';
     }
   }));
   document.getElementById('softwareReset').addEventListener('click', () => {
     softwareIndex = 0;
+    softwareWindow.dataset.step = '0';
     softwareControls.forEach(item => item.classList.remove('active'));
-    softwareTitle.textContent = 'Dashboard';
+    softwareTitle.textContent = 'Create customer order';
     softwareTarget.hidden = true;
-    softwareTask.textContent = 'Task 1 of 3: open Learners.';
+    softwareSubmit.hidden = true;
+    softwareTask.textContent = 'Step 1 of 3: open Catalog.';
   });
 
   const hotspotDetails = {
@@ -140,48 +140,69 @@
     reveal.querySelector('span').textContent = detail;
   }));
 
-  const gameRounds = [
-    { prompt: 'Which clue describes customer impact?', answers: ['Lost time', 'Feature list'], correct: 0, why: 'Lost time is a consequence the customer experiences.' },
-    { prompt: 'Which question clarifies the need?', answers: ['Where does work stall?', 'Which color do you prefer?'], correct: 0, why: 'The question investigates the bottleneck.' },
-    { prompt: 'What makes feedback useful?', answers: ['Only a score', 'Explain the reasoning'], correct: 1, why: 'Reasoning helps the learner improve the next attempt.' }
-  ];
-  let gameScore = 0;
+  const safetyLabels = { box: 'Loose packaging', spill: 'Floor spill', helmet: 'Missing hard hat' };
+  const safetyActions = { box: 'recycled the packaging', spill: 'sent the spill to cleanup', helmet: 'returned the hard hat to the PPE rack' };
+  const clearedHazards = new Set();
+  let selectedHazard = null;
   const gameVisual = document.querySelector('.game-visual');
-  const gameChoices = [...document.querySelectorAll('[data-game-choice]')];
-  const gamePrompt = document.getElementById('gamePrompt');
+  const hazardButtons = [...document.querySelectorAll('[data-hazard]')];
+  const zoneButtons = [...document.querySelectorAll('[data-zone]')];
   const gameFeedback = document.getElementById('gameFeedback');
-  const renderGameRound = () => {
-    gameVisual.dataset.score = String(gameScore);
-    document.getElementById('gameCount').textContent = `${gameScore} / 3`;
-    document.getElementById('gameBadge').textContent = gameScore === 3 ? 'Badge earned' : 'Badge locked';
-    if (gameScore === 3) {
-      gamePrompt.textContent = 'Challenge complete';
-      gameChoices.forEach(button => { button.hidden = true; });
-      document.getElementById('gameReset').hidden = false;
-      return;
-    }
-    const round = gameRounds[gameScore];
-    gamePrompt.textContent = round.prompt;
-    gameChoices.forEach((button, index) => {
-      button.hidden = false;
-      button.textContent = round.answers[index];
+  const renderSafety = () => {
+    const score = clearedHazards.size;
+    gameVisual.dataset.score = String(score);
+    document.getElementById('gameStars').textContent = Array.from({ length: 3 }, (_, index) => index < score ? '★' : '☆').join(' ');
+    document.getElementById('gameCount').textContent = score === 3 ? 'All hazards cleared' : `${3 - score} hazard${3 - score === 1 ? '' : 's'} left`;
+    hazardButtons.forEach(button => {
+      button.hidden = clearedHazards.has(button.dataset.hazard);
+      button.classList.toggle('selected', selectedHazard === button.dataset.hazard);
+      button.setAttribute('aria-pressed', String(selectedHazard === button.dataset.hazard));
     });
   };
-  gameChoices.forEach(button => button.addEventListener('click', () => {
-    const round = gameRounds[gameScore];
-    if (Number(button.dataset.gameChoice) !== round.correct) {
-      gameFeedback.textContent = 'Try again. Look for the action that supports the learning goal.';
+  const placeHazard = (hazard, zone) => {
+    if (!hazard || clearedHazards.has(hazard)) return;
+    if (hazard !== zone) {
+      gameFeedback.textContent = `${safetyLabels[hazard]} needs a different station. Try another location.`;
       return;
     }
-    gameScore += 1;
-    gameFeedback.textContent = gameScore === 3 ? `${round.why} Badge earned.` : `${round.why} Next round unlocked.`;
-    renderGameRound();
-  }));
-  document.getElementById('gameReset').addEventListener('click', event => {
-    gameScore = 0;
-    event.currentTarget.hidden = true;
-    gameFeedback.textContent = 'Choose an answer to advance.';
-    renderGameRound();
+    clearedHazards.add(hazard);
+    selectedHazard = null;
+    gameFeedback.textContent = clearedHazards.size === 3
+      ? 'All three hazards cleared. Three stars earned!'
+      : `Great work: you ${safetyActions[hazard]}. Keep looking for hazards.`;
+    renderSafety();
+  };
+  hazardButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      selectedHazard = button.dataset.hazard;
+      gameFeedback.textContent = `${safetyLabels[selectedHazard]} selected. Choose its destination.`;
+      renderSafety();
+    });
+    button.addEventListener('dragstart', event => {
+      selectedHazard = button.dataset.hazard;
+      event.dataTransfer.setData('text/plain', selectedHazard);
+      event.dataTransfer.effectAllowed = 'move';
+      renderSafety();
+    });
+  });
+  zoneButtons.forEach(button => {
+    button.addEventListener('click', () => placeHazard(selectedHazard, button.dataset.zone));
+    button.addEventListener('dragover', event => {
+      event.preventDefault();
+      button.classList.add('drag-over');
+    });
+    button.addEventListener('dragleave', () => button.classList.remove('drag-over'));
+    button.addEventListener('drop', event => {
+      event.preventDefault();
+      button.classList.remove('drag-over');
+      placeHazard(event.dataTransfer.getData('text/plain'), button.dataset.zone);
+    });
+  });
+  document.getElementById('gameReset').addEventListener('click', () => {
+    clearedHazards.clear();
+    selectedHazard = null;
+    gameFeedback.textContent = 'Drag a hazard to the right station, or select it and then select a station.';
+    renderSafety();
   });
 
   const aiButtons = [...document.querySelectorAll('[data-ai-learner]')];
