@@ -30,178 +30,146 @@
     });
   }
 
-  const scale = {
-    quick: {
-      kicker: "Point-of-need support",
-      heading: "A precise need can use a precise tool.",
-      description: "A job aid puts an approved response or process where someone needs it. The learner finds the answer, uses it, and returns to work without entering a course.",
-      scene: `<div class="cp-mini-app cp-mini-aid"><div class="cp-mini-top"><span>JOB AID</span><span>POINT OF NEED</span></div><div class="cp-mini-search">⌕ <span>Find a response</span></div><div class="cp-mini-aid-card"><strong>Customer asks about handoff delays</strong><span>Start by clarifying where the handoff breaks.</span></div><button type="button" data-mini-action="quick">Open suggested response ↗</button><div class="cp-mini-reveal" hidden role="status">Ask → clarify → use approved answer</div></div>`
-    },
-    micro: {
-      kicker: "One small learning goal",
-      heading: "Microlearning delivers one useful idea.",
-      description: "A short, self-contained learning moment focuses attention on one decision or behavior. The learner can move from a prompt to a key idea and apply it without navigating a larger course.",
-      scene: `<div class="cp-mini-app cp-mini-micro"><div class="cp-mini-top"><span>MICROLEARNING</span><span id="miniMicroCount">01 / 02</span></div><div class="cp-mini-micro-card"><span class="cp-mini-micro-icon">?</span><div><small id="miniMicroLabel">QUICK PROMPT</small><strong id="miniMicroTitle">What is the first move?</strong><p id="miniMicroBody">A customer reports delays between teams.</p></div></div><div class="cp-mini-micro-dots"><i class="is-current"></i><i></i></div><button type="button" data-mini-action="micro">Reveal one useful idea →</button><div class="cp-mini-reveal" hidden role="status">Ask where the handoff breaks before proposing a solution.</div></div>`
-    },
-    interaction: {
-      kicker: "One decision to practice",
-      heading: "An interaction can rehearse a choice.",
-      description: "A standalone scenario lets someone try a decision and see its consequence. It does not need modules or a formal completion record when the goal is focused practice.",
-      scene: `<div class="cp-mini-app cp-mini-interaction"><div class="cp-mini-top"><span>DECISION PRACTICE</span><span>ONE SCENARIO</span></div><div class="cp-mini-scenario"><span>Customer cue</span><strong>“Our handoffs keep slowing us down.”</strong></div><div class="cp-mini-choice"><button type="button" data-mini-choice="ask">Ask where the delay occurs</button><button type="button" data-mini-choice="promise">Promise a fix immediately</button></div><div class="cp-mini-reveal" hidden role="status"></div></div>`
-    },
-    course: {
-      kicker: "Focused learning experience",
-      heading: "One course can develop one coherent capability.",
-      description: "A course brings explanation, examples, practice, and a check around a defined objective. It may stand alone or later become one part of a larger path.",
-      scene: `<div class="cp-mini-app cp-mini-course"><div class="cp-mini-top"><span>COURSE PLAYER</span><span>02 / 03</span></div><div class="cp-mini-lesson"><span class="cp-mini-play">▶</span><div><strong>One focused objective</strong><small>Explain → example → apply</small></div></div><div class="cp-mini-question">A customer raises a new concern. First move?</div><button type="button" data-mini-action="course">Choose: ask a clarifying question</button><div class="cp-mini-reveal" hidden role="status">✓ Practice checked; continue to the next lesson</div></div>`
-    }
-  };
-  const scaleWorkspace = document.querySelector(".cp-scale-workspace");
-  if (scaleWorkspace) bindTabs(scaleWorkspace, (key, tab) => {
-    const data = scale[key];
-    document.getElementById("scale-panel").setAttribute("aria-labelledby", tab.id);
-    document.getElementById("scaleKicker").textContent = data.kicker;
-    document.getElementById("scaleHeading").textContent = data.heading;
-    document.getElementById("scaleDescription").textContent = data.description;
-    const diagram = document.getElementById("scaleDemo");
-    diagram.dataset.solution = key;
-    diagram.dataset.progressStep = "2";
-    diagram.classList.remove("is-explored");
-    const solutionNames = { quick: "job aid", micro: "microlearning card", interaction: "decision practice", course: "course player" };
-    diagram.setAttribute("aria-label", `Illustrative ${solutionNames[key]} learner view`);
-    diagram.innerHTML = data.scene;
-    if (key !== "interaction") {
-      const action = diagram.querySelector("[data-mini-action]");
-      const reveal = diagram.querySelector(".cp-mini-reveal");
-      reveal.id = "miniReveal";
-      action.setAttribute("aria-controls", reveal.id);
-      action.setAttribute("aria-expanded", "false");
-    }
-    diagram.querySelectorAll("[data-mini-choice]").forEach((choice) => choice.setAttribute("aria-pressed", "false"));
-    diagram.querySelector("[data-mini-action]")?.addEventListener("click", (event) => {
-      const reveal = diagram.querySelector(".cp-mini-reveal");
-      if (key === "micro") {
-        const next = !diagram.classList.contains("is-explored");
-        diagram.classList.toggle("is-explored", next);
-        diagram.querySelector("#miniMicroCount").textContent = next ? "02 / 02" : "01 / 02";
-        diagram.querySelector("#miniMicroLabel").textContent = next ? "KEY IDEA" : "QUICK PROMPT";
-        diagram.querySelector("#miniMicroTitle").textContent = next ? "Clarify the gap first" : "What is the first move?";
-        diagram.querySelector("#miniMicroBody").textContent = next ? "Ask where the handoff breaks before proposing a solution." : "A customer reports delays between teams.";
-        event.currentTarget.textContent = next ? "Back to prompt ↶" : "Reveal one useful idea →";
-        event.currentTarget.setAttribute("aria-expanded", String(next));
-        reveal.hidden = !next;
-        return;
-      }
-      reveal.hidden = false;
-      event.currentTarget.setAttribute("aria-expanded", "true");
-      diagram.classList.add("is-explored");
+  const film = document.getElementById("solutionFilm");
+  if (film) {
+    const filmScenes = [
+      {kind:"POINT OF NEED", title:"Job aid", description:"One answer, exactly where the task happens.", visual:`<div class="cp-film-device cp-film-aid"><div class="cp-film-device-top"><img src="${icon('mini-document')}" alt=""><span>Quick reference</span></div><div class="cp-film-search">⌕ &nbsp; Find the approved answer</div><div class="cp-film-aid-result"><i></i><span>Clarify the handoff</span><b>↗</b></div></div>`},
+      {kind:"ONE LEARNING GOAL", title:"Microlearning", description:"A short prompt builds one useful distinction.", visual:`<div class="cp-film-device cp-film-micro"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Micro lesson</span></div><div class="cp-film-micro-question">What is the first move?</div><div class="cp-film-micro-answer"><img src="${icon('mini-chat')}" alt=""><span>Ask where the delay occurs</span></div></div>`},
+      {kind:"ONE DECISION", title:"Single interaction", description:"A learner tries a choice and sees its consequence.", visual:`<div class="cp-film-device cp-film-decision"><div class="cp-film-device-top"><img src="${icon('mini-user')}" alt=""><span>Decision practice</span></div><div class="cp-film-decision-path"><span>Customer signal</span><i>→</i><span>Choose response</span><i>→</i><span>Feedback</span></div><div class="cp-film-choice-highlight"><img src="${icon('mini-verified')}" alt=""> Ask a discovery question</div></div>`},
+      {kind:"ONE CAPABILITY", title:"Focused course", description:"Explanation, practice, and a check support one objective.", visual:`<div class="cp-film-device cp-film-course"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Course player</span></div><div class="cp-film-course-steps"><span><img src="${icon('mini-document')}" alt="">Explain</span><i>→</i><span><img src="${icon('mini-chat')}" alt="">Practice</span><i>→</i><span><img src="${icon('mini-document-list')}" alt="">Check</span></div></div>`},
+      {kind:"CONNECTED ROUTE", title:"Complete pathway", description:"Multiple experiences, rules, support, and records lead to a meaningful milestone.", visual:`<div class="cp-film-device cp-film-pathway"><div class="cp-film-pathway-top"><img src="${icon('mini-hierarchy')}" alt=""><span>Role-based route</span><b>IN PROGRESS</b></div><div class="cp-film-pathway-stages"><span><img src="${icon('mini-user')}" alt="">Route</span><span><img src="${icon('mini-book')}" alt="">Learn</span><span><img src="${icon('mini-chat')}" alt="">Practice</span><span><img src="${icon('mini-document-list')}" alt="">Validate</span><span><img src="${icon('mini-certificate')}" alt="">Qualify</span></div><div class="cp-film-pathway-base">LMS rules · support · reporting · revision</div></div>`}
+    ];
+    let filmIndex = 0;
+    let filmTimer = 0;
+    let filmPaused = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const motionToggle = document.getElementById("solutionMotionToggle");
+    const updateMotionToggle = () => {
+      motionToggle.textContent = filmPaused ? "Play motion" : "Pause motion";
+      motionToggle.setAttribute("aria-pressed", String(filmPaused));
+    };
+    const renderFilm = (index) => {
+      filmIndex = index;
+      const scene = filmScenes[index];
+      document.getElementById("solutionCount").textContent = `${String(index + 1).padStart(2,"0")} / 05`;
+      document.getElementById("solutionKind").textContent = scene.kind;
+      document.getElementById("solutionTitle").textContent = scene.title;
+      document.getElementById("solutionDescription").textContent = scene.description;
+      document.getElementById("solutionStage").innerHTML = scene.visual;
+      film.querySelectorAll(".cp-film-timeline i").forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === index));
+      film.dataset.scene = String(index);
+    };
+    renderFilm(0);
+    const startFilm = () => {
+      if (filmTimer || filmPaused) return;
+      renderFilm(filmIndex);
+      filmTimer = window.setInterval(() => renderFilm((filmIndex + 1) % filmScenes.length), 4200);
+    };
+    const stopFilm = () => { window.clearInterval(filmTimer); filmTimer = 0; };
+    updateMotionToggle();
+    motionToggle.addEventListener("click", () => {
+      filmPaused = !filmPaused;
+      updateMotionToggle();
+      if (filmPaused) stopFilm();
+      else startFilm();
     });
-    diagram.querySelectorAll("[data-mini-choice]").forEach((button) => button.addEventListener("click", () => {
-      diagram.querySelectorAll("[data-mini-choice]").forEach((choice) => {
-        choice.classList.toggle("is-chosen", choice === button);
-        choice.setAttribute("aria-pressed", String(choice === button));
-      });
-      const reveal = diagram.querySelector(".cp-mini-reveal");
-      reveal.hidden = false;
-      reveal.textContent = button.dataset.miniChoice === "ask" ? "Good decision: clarify the need before positioning." : "Try the discovery question first; the solution fit is not known yet.";
-    }));
-  });
-  if (scaleWorkspace) scaleWorkspace.querySelector('[data-cp-tab="quick"]').click();
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => entries[0].isIntersecting ? startFilm() : stopFilm(), {threshold:.2});
+      observer.observe(film);
+    } else startFilm();
+  }
 
   const learner = {
-    route: {
-      title: "Choose a route",
-      caption: "A route that fits the learner",
-      copy: "Role-based entry points connect shared content with what each audience needs to do next.",
-      count: "01 / 04",
-      progress: "25%",
-      screen: `<div class="cp-learner-ui"><p class="cp-ui-kicker">ILLUSTRATIVE LEARNER VIEW</p><h4>Choose your learning route</h4><p class="cp-ui-intro">Start with the shared foundation, then follow the route for your role.</p><div class="cp-ui-card"><div class="cp-ui-card-top"><span class="cp-ui-symbol">↗</span><strong>Seller pathway</strong></div><span>Build product context and practice customer conversations.</span><button type="button" class="cp-ui-action" data-next-learner="module">Open seller route <span aria-hidden="true">→</span></button></div><div class="cp-ui-muted">Partner route available for channel learners</div></div>`
-    },
-    module: {
-      title: "Open a module",
-      caption: "Content and resources in context",
-      copy: "The learner opens one module with a clear objective, supporting material, and a next action.",
-      count: "02 / 04",
-      progress: "50%",
-      screen: `<div class="cp-learner-ui"><p class="cp-ui-kicker">MODULE 02 / PRACTICE</p><h4>Customer situations</h4><p class="cp-ui-intro">A customer mentions delays between teams. What would you do first?</p><div class="cp-ui-choice-list"><button type="button" data-practice-choice="explore">Ask where the handoff breaks</button><button type="button" data-practice-choice="promise">Promise a solution before discovery</button></div><div class="cp-ui-feedback" id="practiceFeedback" hidden role="status"></div><button type="button" class="cp-ui-action" data-next-learner="progress" hidden id="practiceContinue">Continue to progress <span aria-hidden="true">→</span></button></div>`
-    },
-    progress: {
-      title: "Validate progress",
-      caption: "Practice leads into validation",
-      copy: "A clear record shows what is complete, while the final check confirms whether the learner can apply the material.",
-      count: "03 / 04",
-      progress: "75%",
-      screen: `<div class="cp-learner-ui"><p class="cp-ui-kicker">PATHWAY PROGRESS</p><h4>Ready for the final check</h4><div class="cp-ui-progress-list"><span>✓ Foundation</span><span>✓ Customer situations</span><span class="is-current">○ Final assessment</span></div><button type="button" class="cp-ui-action" data-learner-action="open-assessment">Open final check <span aria-hidden="true">→</span></button><div class="cp-ui-assessment" id="demoAssessment" hidden><p>What should ground a seller's positioning?</p><div class="cp-ui-choice-list"><button type="button" data-assessment-choice="approved">Approved information and the customer's need</button><button type="button" data-assessment-choice="assumed">An unverified product claim</button></div><div class="cp-ui-feedback" id="assessmentFeedback" hidden role="status"></div><button type="button" class="cp-ui-action" data-next-learner="milestone" hidden id="assessmentContinue">View completion <span aria-hidden="true">→</span></button></div></div>`
-    },
-    milestone: {
-      title: "Confirm completion",
-      caption: "Completion with a purpose",
-      copy: "The final state is visible to the learner and should resolve correctly in the LMS record and reporting.",
-      count: "04 / 04",
-      progress: "100%",
-      screen: `<div class="cp-learner-ui cp-ui-completion"><p class="cp-ui-kicker">PATHWAY MILESTONE</p><div class="cp-ui-seal" aria-hidden="true">✓</div><h4>Certification complete</h4><p class="cp-ui-intro">The learner can see the milestone and what to do next.</p><button type="button" class="cp-ui-action" data-learner-action="record">View completion record <span aria-hidden="true">→</span></button><div class="cp-ui-record" id="demoRecord" hidden><strong>Completion recorded</strong><span>Certificate status: available</span></div></div>`
-    }
+    route: {title:"Choose a route", caption:"A route that fits the learner", copy:"Role-based entry points connect shared content with what each audience needs next.", foundation:"A route that fits the audience", why:"Role-based entry keeps the pathway relevant from the first screen. Learners see a clear starting point that fits their responsibilities.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">START / CHOOSE YOUR ROLE</p><h4>Which route fits your work?</h4><div class="cp-route-choices"><button type="button" data-route="seller"><img src="${icon('mini-user')}" alt=""><strong>Seller</strong><span>Customer conversations</span></button><button type="button" data-route="partner"><img src="${icon('mini-audience')}" alt=""><strong>Partner</strong><span>Channel conversations</span></button></div><div class="cp-ui-motion-line" aria-hidden="true"><i></i></div></div>`},
+    module: {title:"Set the priority", caption:"Practice before the check", copy:"A small decision makes the learner apply the concept before assessment.", foundation:"Practice turns information into judgment", why:"Learners make a decision with feedback while the stakes are low. This gives them a reason to use the information instead of only reading it.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">PRACTICE / CUSTOMER SIGNAL</p><h4>Remote teams keep losing service.</h4><div class="cp-priority-scene"><img src="${icon('mini-analytics')}" alt=""><div class="cp-priority-waves" aria-hidden="true"><i></i><i></i><i></i></div><img src="${icon('mini-user')}" alt=""></div><label class="cp-range-label" for="priorityRange">What matters most?</label><div class="cp-range-ends"><span>Fast setup</span><span>Reliable reach</span></div><input id="priorityRange" type="range" min="0" max="100" value="50" aria-label="Slide toward reliable reach for remote teams"><div class="cp-range-meter" aria-hidden="true"><i id="priorityMeter"></i></div><p class="cp-guided-feedback" id="priorityFeedback" role="status">Move the slider toward the stronger priority.</p></div>`},
+    progress: {title:"Match the evidence", caption:"Validation of applied reasoning", copy:"The learner connects a signal to the outcome it supports.", foundation:"Evidence makes the check meaningful", why:"Matching the customer signal to a defensible outcome checks whether the learner can use the idea in context. The result is more informative than completion alone.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">CHECK / MATCH THE SIGNAL</p><h4>Match each signal to an outcome.</h4><div class="cp-match-board"><div class="cp-match-sources"><button type="button" draggable="true" data-match-source="coverage"><img src="${icon('mini-analytics')}" alt=""><span>Dropouts</span></button><button type="button" draggable="true" data-match-source="security"><img src="${icon('mini-shield')}" alt=""><span>Sensitive data</span></button></div><div class="cp-match-connectors" aria-hidden="true"><i></i><i></i></div><div class="cp-match-targets"><button type="button" data-match-target="security"><img src="${icon('mini-database')}" alt=""><span>Protected access</span></button><button type="button" data-match-target="coverage"><img src="${icon('mini-verified')}" alt=""><span>Reliable reach</span></button></div></div><p class="cp-guided-feedback" id="matchFeedback" role="status">Drag an icon to an outcome, or select both.</p></div>`},
+    milestone: {title:"Milestone earned", caption:"Completion with a purpose", copy:"The milestone is visible and the completion record is ready for the next step.", foundation:"Completion carries forward", why:"The learner sees why the route mattered. A trustworthy record makes that milestone usable for support, reporting, qualification, or access decisions.", screen:`<div class="cp-learner-ui cp-guided-ui cp-guided-complete"><p class="cp-ui-kicker">PATHWAY COMPLETE</p><div class="cp-complete-burst" aria-hidden="true"><i></i><i></i><i></i><img src="${icon('mini-certificate')}" alt=""></div><h4>Ready for the next step</h4><div class="cp-complete-record"><img src="${icon('mini-database')}" alt=""><span>Completion recorded</span><b>✓</b></div><button type="button" class="cp-ui-action" data-reset-learner>Reset ↺</button></div>`}
   };
   const demo = document.querySelector(".cp-learner-demo");
-  function renderLearner(key, tab) {
+  let learnerTimer = 0;
+  let selectedMatch = "";
+  const renderLearner = (key) => {
+    if (!demo) return;
+    window.clearTimeout(learnerTimer);
+    selectedMatch = "";
     const data = learner[key];
     const screen = document.getElementById("learnerScreen");
-    screen.setAttribute("aria-labelledby", tab.id);
+    screen.setAttribute("aria-label", data.title);
     screen.classList.remove("is-entering");
     void screen.offsetWidth;
     screen.classList.add("is-entering");
-    document.getElementById("demoInterface").outerHTML = `<div id="demoInterface">${data.screen}</div>`;
+    screen.innerHTML = `<div id="demoInterface">${data.screen}</div>`;
     document.getElementById("demoWindowTitle").textContent = data.title;
     document.getElementById("demoCaptionTitle").textContent = data.caption;
     document.getElementById("demoCaption").textContent = data.copy;
-    const foundations = {
-      route: ["A route that fits the audience", "Role-based entry keeps the experience relevant. Learners see the shared core and a clear next step for their responsibilities, so the pathway feels coherent from the start."],
-      module: ["Practice makes the route useful", "A pathway needs a chance to apply information to the learner's real decisions. Focused feedback lets someone adjust their reasoning before the formal check."],
-      progress: ["Visible progress supports trust", "Clear status and a meaningful assessment gate help learners understand what remains. The check verifies applied judgment and gives the organization more than a screen-view count."],
-      milestone: ["The outcome has to carry forward", "A visible milestone gives the learner a reason to finish and a next step. The LMS record makes completion usable for support, reporting, qualification, or access decisions."]
-    };
-    document.getElementById("anatomyFoundationTitle").textContent = foundations[key][0];
-    document.getElementById("anatomyFoundationCopy").textContent = foundations[key][1];
-    document.querySelectorAll(".cp-anatomy-foundation-rail i").forEach((item, index) => item.classList.toggle("is-current", index === ["route","module","progress","milestone"].indexOf(key)));
-    document.getElementById("demoStepCount").textContent = data.count;
-    document.getElementById("demoProgressFill").style.width = data.progress;
-    screen.querySelectorAll("[data-next-learner]").forEach((button) => button.addEventListener("click", () => {
-      const target = demo.querySelector(`[data-cp-tab="${button.dataset.nextLearner}"]`);
-      if (target) {
-        target.click();
-        screen.querySelector(".cp-ui-choice-list button:not([hidden]), .cp-ui-action:not([hidden])")?.focus();
-      }
-    }));
-    screen.querySelectorAll("[data-practice-choice]").forEach((button) => button.addEventListener("click", () => {
-      const correct = button.dataset.practiceChoice === "explore";
-      screen.querySelectorAll("[data-practice-choice]").forEach((choice) => choice.classList.toggle("is-chosen", choice === button));
-      const feedback = screen.querySelector("#practiceFeedback");
-      feedback.hidden = false;
-      feedback.textContent = correct ? "Good decision. Clarify the handoff before positioning a solution." : "Check the need first. Do not promise a fit before discovery.";
-      screen.querySelector("#practiceContinue").hidden = !correct;
-    }));
-    screen.querySelector('[data-learner-action="open-assessment"]')?.addEventListener("click", (event) => {
-      screen.querySelector("#demoAssessment").hidden = false;
-      event.currentTarget.hidden = true;
-      screen.querySelector("[data-assessment-choice]")?.focus();
+    document.getElementById("anatomyFoundationTitle").textContent = data.foundation;
+    document.getElementById("anatomyFoundationCopy").textContent = data.why;
+    const index = ["route","module","progress","milestone"].indexOf(key);
+    document.getElementById("demoStepCount").textContent = `${String(index+1).padStart(2,"0")} / 04`;
+    document.getElementById("demoProgressFill").style.width = `${(index+1)*25}%`;
+    demo.querySelectorAll("[data-learner-step]").forEach((step, stepIndex) => {
+      step.classList.toggle("is-active", stepIndex === index);
+      step.classList.toggle("is-complete", stepIndex < index);
+      if (stepIndex === index) step.setAttribute("aria-current", "step"); else step.removeAttribute("aria-current");
     });
-    screen.querySelectorAll("[data-assessment-choice]").forEach((button) => button.addEventListener("click", () => {
-      const correct = button.dataset.assessmentChoice === "approved";
-      screen.querySelectorAll("[data-assessment-choice]").forEach((choice) => choice.classList.toggle("is-chosen", choice === button));
-      const feedback = screen.querySelector("#assessmentFeedback");
-      feedback.hidden = false;
-      feedback.textContent = correct ? "Correct. Positioning should use approved information and the customer's stated need." : "An unverified claim cannot support a reliable recommendation.";
-      screen.querySelector("#assessmentContinue").hidden = !correct;
-    }));
-    screen.querySelector('[data-learner-action="record"]')?.addEventListener("click", (event) => {
-      screen.querySelector("#demoRecord").hidden = false;
-      event.currentTarget.setAttribute("aria-expanded", "true");
-    });
-  }
-  if (demo) {
-    bindTabs(demo, renderLearner);
-    renderLearner("route", demo.querySelector('[data-cp-tab="route"]'));
-  }
+    document.querySelectorAll(".cp-anatomy-foundation-rail i").forEach((item, itemIndex) => item.classList.toggle("is-current", itemIndex === index));
+    if (key === "route") {
+      screen.querySelectorAll("[data-route]").forEach((button) => button.addEventListener("click", () => {
+        button.classList.add("is-selected");
+        learnerTimer = window.setTimeout(() => renderLearner("module"), 450);
+      }));
+    }
+    if (key === "module") {
+      const range = screen.querySelector("#priorityRange");
+      const feedback = screen.querySelector("#priorityFeedback");
+      range.addEventListener("input", () => {
+        const value = Number(range.value);
+        screen.querySelector("#priorityMeter").style.width = `${value}%`;
+        feedback.classList.toggle("is-wrong", value < 70);
+        feedback.textContent = value >= 70 ? "Reliable reach fits this need. Moving to the check…" : "Remote teams need dependable coverage. Keep sliding.";
+        window.clearTimeout(learnerTimer);
+        if (value >= 70) learnerTimer = window.setTimeout(() => renderLearner("progress"), 850);
+      });
+    }
+    if (key === "progress") {
+      const feedback = screen.querySelector("#matchFeedback");
+      const match = (source, target) => {
+        if (!source || !target || source.disabled || target.disabled) return;
+        const correct = source.dataset.matchSource === target.dataset.matchTarget;
+        source.classList.toggle("is-wrong", !correct);
+        target.classList.toggle("is-wrong", !correct);
+        if (!correct) {
+          feedback.textContent = "That match does not fit. Try another outcome.";
+          feedback.classList.add("is-wrong");
+          window.setTimeout(() => {source.classList.remove("is-wrong");target.classList.remove("is-wrong");}, 850);
+          return;
+        }
+        feedback.classList.remove("is-wrong");
+        feedback.textContent = "Matched. Find the next connection.";
+        source.classList.add("is-matched"); target.classList.add("is-matched");
+        source.disabled = true; target.disabled = true; selectedMatch = "";
+        if ([...screen.querySelectorAll("[data-match-source]")].every((item) => item.disabled)) {
+          feedback.textContent = "Both connections confirmed. Milestone unlocked…";
+          learnerTimer = window.setTimeout(() => renderLearner("milestone"), 900);
+        }
+      };
+      screen.querySelectorAll("[data-match-source]").forEach((source) => {
+        source.addEventListener("click", () => {
+          selectedMatch = source.dataset.matchSource;
+          screen.querySelectorAll("[data-match-source]").forEach((item) => item.classList.toggle("is-selected", item === source));
+          feedback.textContent = "Now choose the matching outcome.";
+          feedback.classList.remove("is-wrong");
+        });
+        source.addEventListener("dragstart", (event) => event.dataTransfer.setData("text/plain", source.dataset.matchSource));
+      });
+      screen.querySelectorAll("[data-match-target]").forEach((target) => {
+        target.addEventListener("click", () => match(screen.querySelector(`[data-match-source="${selectedMatch}"]`), target));
+        target.addEventListener("dragover", (event) => event.preventDefault());
+        target.addEventListener("drop", (event) => {event.preventDefault();match(screen.querySelector(`[data-match-source="${event.dataTransfer.getData("text/plain")}"]`), target);});
+      });
+    }
+    if (key === "milestone") screen.querySelector("[data-reset-learner]").addEventListener("click", () => renderLearner("route"));
+  };
+  renderLearner("route");
 
   const weight = {
     records: {

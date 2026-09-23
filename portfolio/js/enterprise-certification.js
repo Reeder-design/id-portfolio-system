@@ -564,8 +564,23 @@
     rocket.setAttribute('aria-label', 'Move rocket to the next launch stage. Drag to choose a stage.');
     let dragStart = null;
     let suppressClick = false;
-    const selectStage = (index) => deliveryButtons[Math.max(0, Math.min(index, deliveryButtons.length - 1))]?.click();
+    const selectStage = (index) => {
+      const button = deliveryButtons[Math.max(0, Math.min(index, deliveryButtons.length - 1))];
+      if (!button) return;
+      launchFlight.dataset.stage = button.dataset.delivery;
+      button.click();
+    };
     const currentStage = () => deliveryButtons.findIndex((button) => button.classList.contains('active'));
+    const pointOnRoute = (percent) => {
+      const mobile = window.matchMedia('(max-width: 620px)').matches;
+      const positions = mobile ? [[9,55],[29,43],[50,20],[71,-9],[91,-34]] : [[5.5,49],[27,37],[50,14],[73,-15],[94.5,-40]];
+      const x = Math.max(positions[0][0], Math.min(positions.at(-1)[0], percent));
+      const next = positions.findIndex(([stop]) => stop >= x);
+      const right = positions[Math.max(1, next)];
+      const left = positions[Math.max(0, Math.max(1, next) - 1)];
+      const ratio = (x - left[0]) / (right[0] - left[0]);
+      return {left:x, top:left[1] + (right[1] - left[1]) * ratio};
+    };
     rocket.addEventListener('pointerdown', (event) => {
       dragStart = {x:event.clientX, y:event.clientY};
       rocket.setPointerCapture(event.pointerId);
@@ -574,25 +589,27 @@
     rocket.addEventListener('pointermove', (event) => {
       if (!dragStart) return;
       const bounds = launchTrack.getBoundingClientRect();
-      rocket.style.left = `${Math.max(5, Math.min(95, (event.clientX - bounds.left) / bounds.width * 100))}%`;
+      const point = pointOnRoute((event.clientX - bounds.left) / bounds.width * 100);
+      rocket.style.left = `${point.left}%`;
+      rocket.style.top = `${point.top}px`;
     });
     rocket.addEventListener('pointerup', (event) => {
       if (!dragStart) return;
       const moved = Math.hypot(event.clientX - dragStart.x, event.clientY - dragStart.y) > 8;
-      rocket.classList.remove('is-dragging');
-      rocket.style.left = '';
       dragStart = null;
       if (moved) {
         const bounds = launchTrack.getBoundingClientRect();
         const pct = (event.clientX - bounds.left) / bounds.width * 100;
-        const stops = [5.5, 27, 50, 73, 94.5];
+        const stops = window.matchMedia('(max-width: 620px)').matches ? [9,29,50,71,91] : [5.5,27,50,73,94.5];
         const closest = stops.reduce((best, value, index) => Math.abs(value - pct) < Math.abs(stops[best] - pct) ? index : best, 0);
         suppressClick = true;
         window.setTimeout(() => { suppressClick = false; }, 300);
         selectStage(closest);
       }
+      rocket.classList.remove('is-dragging');
+      window.requestAnimationFrame(() => { rocket.style.left = ''; rocket.style.top = ''; });
     });
-    rocket.addEventListener('pointercancel', () => { dragStart = null; rocket.classList.remove('is-dragging'); rocket.style.left = ''; });
+    rocket.addEventListener('pointercancel', () => { dragStart = null; rocket.classList.remove('is-dragging'); rocket.style.left = ''; rocket.style.top = ''; });
     rocket.addEventListener('click', () => {
       if (suppressClick) { suppressClick = false; return; }
       selectStage((currentStage() + 1) % deliveryButtons.length);
@@ -772,7 +789,7 @@
     const index = curriculumButtons.findIndex((button) => button.classList.contains('active'));
     if (index < curriculumButtons.length - 1) renderCurriculum(curriculumButtons[index + 1].dataset.curriculum);
     else { checkedAnswer = false; selectedAnswer = -1; renderCurriculum('intro'); }
-    curriculumHotspots?.querySelector('.curriculum-vertical-hotspot,.curriculum-outcome-cover:not(:disabled),.curriculum-quiz-answer,.curriculum-screen-continue')?.focus();
+    curriculumHotspots?.querySelector('.curriculum-vertical-hotspot,.curriculum-outcome-cover:not(:disabled),.curriculum-quiz-answer,.curriculum-screen-continue,.cert-icp-signals button')?.focus();
   };
   const screenButton = (label, className, action) => {
     const button = document.createElement('button');
@@ -843,6 +860,80 @@
         });
         curriculumHotspots.append(covers);
         curriculumHotspotCaption.textContent = 'Reveal the three value outcomes, then continue.';
+      } else if (key === 'scenario') {
+        const dashboard = document.createElement('div');
+        dashboard.className = 'cert-icp-demo';
+        dashboard.innerHTML = `<div class="cert-icp-top"><span>CUSTOMER ICP</span><strong>Regional transport hub</strong></div>
+          <div class="cert-icp-signals" aria-label="Explore customer signals">
+            <button type="button" data-icp-info="fleet"><img src="../../../../assets/icons/pixel/lms/mini-user.webp" alt=""><span>Moving teams</span><b>↗</b></button>
+            <button type="button" data-icp-info="data"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Sensitive data</span><b>↗</b></button>
+            <button type="button" data-icp-info="growth"><img src="../../../../assets/icons/pixel/lms/mini-org-chart.webp" alt=""><span>Expanding sites</span><b>↗</b></button>
+          </div>
+          <div class="cert-icp-match-head"><strong>Match a response to each signal</strong><small>Select an icon, then a signal below</small></div>
+          <div class="cert-icp-options" aria-label="Response icons">
+            <button type="button" data-icp-option="uptime" aria-label="Reliable coverage"><img src="../../../../assets/icons/pixel/lms/mini-analytics.webp" alt=""><span>Reliable</span></button>
+            <button type="button" data-icp-option="security" aria-label="Protected access"><img src="../../../../assets/icons/pixel/lms/mini-shield.webp" alt=""><span>Secure</span></button>
+            <button type="button" data-icp-option="scale" aria-label="Scalable rollout"><img src="../../../../assets/icons/pixel/lms/mini-hierarchy.webp" alt=""><span>Scalable</span></button>
+            <button type="button" data-icp-option="cost" aria-label="Lowest hardware cost"><img src="../../../../assets/icons/pixel/lms/mini-settings.webp" alt=""><span>Cheapest</span></button>
+          </div>
+          <div class="cert-icp-targets" aria-label="Customer signals to match">
+            <button type="button" data-icp-target="fleet"><span>Moving teams</span><b>＋</b></button>
+            <button type="button" data-icp-target="data"><span>Sensitive data</span><b>＋</b></button>
+            <button type="button" data-icp-target="growth"><span>Expanding sites</span><b>＋</b></button>
+          </div>
+          <p class="cert-icp-feedback" role="status">Tap a signal above for context, then match the responses.</p>
+          <button class="cert-icp-next" type="button" disabled>Continue →</button>
+          <div class="cert-icp-modal" role="dialog" aria-modal="false" aria-label="Customer signal detail" hidden><button type="button" class="cert-icp-close" aria-label="Close customer detail">×</button><img src="" alt=""><strong></strong><p></p></div>`;
+        curriculumHotspots.append(dashboard);
+        const info = {
+          fleet: ['Moving teams', 'Vehicles, dispatch, and field teams need dependable connectivity as they move between sites.', 'mini-user.webp'],
+          data: ['Sensitive data', 'Operational information must remain protected while people work across locations.', 'mini-shield.webp'],
+          growth: ['Expanding sites', 'New facilities and users make a manageable rollout important.', 'mini-org-chart.webp']
+        };
+        const modal = dashboard.querySelector('.cert-icp-modal');
+        let modalTrigger = null;
+        dashboard.querySelectorAll('[data-icp-info]').forEach((button) => button.addEventListener('click', () => {
+          modalTrigger = button;
+          const [title, copy, image] = info[button.dataset.icpInfo];
+          modal.querySelector('strong').textContent = title;
+          modal.querySelector('p').textContent = copy;
+          modal.querySelector('img').src = `../../../../assets/icons/pixel/lms/${image}`;
+          modal.hidden = false;
+          modal.querySelector('.cert-icp-close').focus();
+        }));
+        modal.querySelector('.cert-icp-close').addEventListener('click', () => { modal.hidden = true; modalTrigger?.focus(); });
+        modal.addEventListener('keydown', (event) => { if (event.key === 'Escape') { modal.hidden = true; modalTrigger?.focus(); } });
+        let selected = '';
+        const feedback = dashboard.querySelector('.cert-icp-feedback');
+        const correctMap = {fleet:'uptime',data:'security',growth:'scale'};
+        dashboard.querySelectorAll('[data-icp-option]').forEach((button) => button.addEventListener('click', () => {
+          selected = button.dataset.icpOption;
+          dashboard.querySelectorAll('[data-icp-option]').forEach((item) => item.classList.toggle('is-selected', item === button));
+          feedback.classList.remove('is-wrong');
+          feedback.textContent = 'Now choose the customer signal it fits.';
+        }));
+        dashboard.querySelectorAll('[data-icp-target]').forEach((target) => target.addEventListener('click', () => {
+          if (!selected || target.disabled) { feedback.textContent = 'Choose a response icon first.'; return; }
+          const option = dashboard.querySelector(`[data-icp-option="${selected}"]`);
+          if (correctMap[target.dataset.icpTarget] !== selected) {
+            target.classList.add('is-wrong'); option.classList.add('is-wrong');
+            feedback.classList.add('is-wrong'); feedback.textContent = 'That response does not fit this signal. Try another.';
+            window.setTimeout(() => {target.classList.remove('is-wrong');option.classList.remove('is-wrong');},850);
+            return;
+          }
+          target.classList.add('is-matched'); option.classList.add('is-matched');
+          target.disabled = true; option.disabled = true;
+          target.querySelector('b').textContent = '✓';
+          feedback.classList.remove('is-wrong'); feedback.textContent = 'Good match. Connect the next signal.';
+          selected = '';
+          dashboard.querySelectorAll('[data-icp-option]').forEach((item) => item.classList.remove('is-selected'));
+          if ([...dashboard.querySelectorAll('[data-icp-target]')].every((item) => item.disabled)) {
+            feedback.textContent = 'All three needs matched. Continue to the check.';
+            dashboard.querySelector('.cert-icp-next').disabled = false;
+          }
+        }));
+        dashboard.querySelector('.cert-icp-next').addEventListener('click', continueInScreen);
+        curriculumHotspotCaption.textContent = 'Explore the customer signals, match the responses, then continue.';
       } else if (key === 'check') {
         const quiz = document.createElement('div');
         quiz.className = 'curriculum-live-quiz';
@@ -896,7 +987,7 @@
       } else {
         curriculumHotspotCaption.textContent = key === 'scenario' ? 'Notice the three key needs, then continue.' : key === 'complete' ? 'Module complete. Reset the walkthrough when ready.' : 'Select Continue in the learner screen.';
       }
-      if (key !== 'check') {
+      if (key !== 'check' && key !== 'scenario') {
         const label = key === 'complete' ? 'Reset ↺' : 'Continue →';
         curriculumHotspots.append(screenButton(label, 'curriculum-screen-continue', continueInScreen));
       }
@@ -909,7 +1000,8 @@
         completedFromQuiz = false;
       }
     }
-    if (key !== 'check') { curriculumImage.src=data.image; curriculumImage.alt=data.alt; }
+    if (key === 'scenario') { curriculumImage.removeAttribute('src'); curriculumImage.alt = ''; }
+    else if (key !== 'check') { curriculumImage.src=data.image; curriculumImage.alt=data.alt; }
   };
   curriculumButtons.forEach((button,index)=>{
     button.addEventListener('click',()=>renderCurriculum(button.dataset.curriculum));
