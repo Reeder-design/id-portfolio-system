@@ -69,7 +69,7 @@
   };
   const platformDetails = {
     docebo: {
-      priorities: 'External groups · learning plans · certification', ecosystem: 'Partner records and LMS reports; CRM/account matching where the data contract supports it.', outcome: 'Scalable partner enablement with fewer manual assignments.',
+      priorities: 'External groups · learning plans · certification', ecosystem: 'Partner records and LMS reports; Salesforce matching or Snowflake / Power BI reporting are possible patterns when the data contract supports them.', outcome: 'Scalable partner enablement with fewer manual assignments.',
       views: [['Audience','docebo/groups-branches.png','Group and branch rules decide which partner can enter each route.'],['Plan','docebo/learning-plans.png','Learning-plan relationships turn a catalog into a sequenced pathway.'],['Record','docebo/certificates-badges.png','Certificate state should agree with the learner’s completed requirements.']]
     },
     absorb: {
