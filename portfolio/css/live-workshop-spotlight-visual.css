@@ -1,0 +1,70 @@
+/* The featured-case card reuses the MEDDPICC case-study hero scene. */
+.lt-case-image .workshop-room-visual{overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:21px;background:#132930;box-shadow:0 24px 58px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.09)}
+.lt-case-image .workshop-meeting-bar{display:flex;align-items:center;gap:10px;min-height:39px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1);color:#ecf7f1}
+.lt-case-image .workshop-meeting-bar strong{font:800 .71rem/1.2 var(--font-heading)}
+.lt-case-image .workshop-window-dots{display:flex;gap:4px}.lt-case-image .workshop-window-dots i{width:6px;height:6px;border-radius:50%;background:#77a99c}.lt-case-image .workshop-window-dots i:nth-child(2){background:#a8c9a9}.lt-case-image .workshop-window-dots i:nth-child(3){background:#d3e2c0}
+.lt-case-image .workshop-live-pill{display:flex;align-items:center;gap:5px;margin-left:auto;padding:4px 7px;border:1px solid #77bf8d;border-radius:100px;background:#244b3e;color:#ebf9e7;font:800 .63rem/1 var(--font-heading);text-transform:uppercase;letter-spacing:.06em}
+.lt-case-image .workshop-live-pill i{width:6px;height:6px;border-radius:50%;background:#a8e372;box-shadow:0 0 0 3px rgba(168,227,114,.16)}
+.lt-case-image .workshop-meeting-layout{display:grid;grid-template-columns:minmax(0,1fr) 111px;gap:8px;min-width:0;padding:9px}
+.lt-case-image .workshop-shared-screen{display:grid;grid-template-rows:30px minmax(0,1fr) 23px;min-width:0;min-height:303px;overflow:hidden;border:1px solid rgba(225,248,227,.18);border-radius:11px;background:#233e43}
+.lt-case-image .workshop-screen-bar,.lt-case-image .workshop-screen-footer{display:flex;align-items:center;gap:6px;min-width:0;padding:4px 8px;color:#e9f4ed;font:800 .62rem/1.15 var(--font-heading)}
+.lt-case-image .workshop-screen-bar>span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lt-case-image .workshop-share-dot{flex:none;width:6px;height:6px;margin-left:auto;border-radius:50%;background:#a7df82}
+.lt-case-image .workshop-hero-icon{display:grid;place-items:center;flex:none;width:25px;height:25px;border-radius:6px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.11)}
+.lt-case-image .workshop-hero-icon img{width:22px;height:22px;object-fit:contain;image-rendering:pixelated}
+.lt-case-image .workshop-slide{position:relative;display:flex;flex-direction:column;justify-content:center;gap:7px;min-width:0;overflow:hidden;padding:15px 15px 12px;background:radial-gradient(circle at 100% 100%,#e3f3e6,transparent 56%),#f7fbf5;color:#243c34}
+.lt-case-image .workshop-slide-kicker{color:#44755b;font:900 .62rem/1.2 var(--font-heading);letter-spacing:.08em;text-transform:uppercase}
+.lt-case-image .workshop-slide>strong{color:#263d35;font:900 clamp(.95rem,1.4vw,1.13rem)/1.2 var(--font-heading)}
+.lt-case-image .workshop-evidence-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px}
+.lt-case-image .workshop-evidence-card{position:relative;display:flex;align-items:center;gap:7px;min-width:0;min-height:73px;padding:7px;border:1px solid #cadece;border-radius:10px;background:#fff;box-shadow:0 4px 10px rgba(18,50,39,.06);color:#254739;font:800 .65rem/1.16 var(--font-heading)}
+.lt-case-image .workshop-evidence-card .workshop-hero-icon{width:38px;height:38px;background:#f5faf5}.lt-case-image .workshop-evidence-card .workshop-hero-icon img{width:32px;height:32px}
+.lt-case-image .workshop-evidence-card i{position:absolute;top:5px;right:6px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:#d9f2d6;color:#23513a;font:900 .62rem/1 var(--font-heading);font-style:normal}
+.lt-case-image .workshop-evidence-open i{background:#f3e5bc;color:#685532}
+.lt-case-image .workshop-slide-underline{height:3px;margin-top:8px;overflow:hidden;border-radius:3px;background:#dcebe1}.lt-case-image .workshop-slide-underline span{display:block;width:35%;height:100%;border-radius:3px;background:#80c698;animation:spotlightWorkshopProgress 9s linear infinite}
+.lt-case-image .workshop-hero-poll{position:absolute;inset:24% 9% 13%;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:13px;border:1px solid #9bcbaa;border-radius:12px;background:#f9fff9;box-shadow:0 11px 23px rgba(31,74,52,.22);opacity:0;transform:translateY(12px) scale(.96);animation:spotlightWorkshopPoll 9s ease-in-out infinite}
+.lt-case-image .workshop-poll-label{color:#49795b;font:900 .6rem/1.1 var(--font-heading);letter-spacing:.07em;text-transform:uppercase}
+.lt-case-image .workshop-hero-poll>strong{color:#203d32;font:900 .85rem/1.15 var(--font-heading)}
+.lt-case-image .workshop-hero-poll>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.lt-case-image .workshop-hero-poll>div span{display:grid;place-items:center;min-height:31px;padding:4px;border:1px solid #bfdcc7;border-radius:6px;background:#eaf4ec;color:#2d5640;text-align:center;font:800 .59rem/1.12 var(--font-heading)}
+.lt-case-image .workshop-hero-poll>div span:first-child{animation:spotlightWorkshopPollChoice 9s ease-in-out infinite}
+.lt-case-image .workshop-screen-footer{justify-content:space-between;background:#20383b;color:#c7dcd0;font-size:.57rem}.lt-case-image .workshop-screen-footer span:first-child{display:flex;align-items:center;gap:5px}.lt-case-image .workshop-screen-footer i{width:6px;height:6px;border-radius:50%;background:#8fdf7c}
+.lt-case-image .workshop-audience-panel{display:grid;grid-template-rows:20px repeat(3,minmax(0,1fr)) 36px;gap:5px;min-width:0;min-height:303px}
+.lt-case-image .workshop-audience-title{color:#c5ddce;font:800 .61rem/1.2 var(--font-heading);text-transform:uppercase;letter-spacing:.08em}
+.lt-case-image .workshop-audience-tile{position:relative;display:grid;align-content:center;justify-items:center;gap:3px;min-width:0;min-height:0;border:1px solid rgba(232,249,234,.16);border-radius:8px;background:#29484b;color:#eff9f0;font:800 .59rem/1.1 var(--font-heading)}
+.lt-case-image .workshop-audience-tile .workshop-hero-icon{width:35px;height:35px}.lt-case-image .workshop-audience-tile .workshop-hero-icon img{width:31px;height:31px}
+.lt-case-image .workshop-audience-tile i{position:absolute;bottom:5px;left:5px;width:3px;height:3px;border-radius:2px;background:#a3d9aa;box-shadow:5px 0 #a3d9aa,10px 0 #a3d9aa}
+.lt-case-image .workshop-audience-facilitator{animation:spotlightWorkshopSpeaker 9s ease-in-out infinite}.lt-case-image .workshop-audience-seller{animation:spotlightWorkshopSpeaker 9s ease-in-out 2.7s infinite}.lt-case-image .workshop-audience-partner{animation:spotlightWorkshopSpeaker 9s ease-in-out 5.4s infinite}
+.lt-case-image .workshop-audience-chat{display:flex;align-items:center;gap:5px;padding:5px;border:1px solid rgba(232,249,234,.14);border-radius:8px;background:#203b3e}.lt-case-image .workshop-audience-chat .workshop-hero-icon{width:22px;height:22px}.lt-case-image .workshop-audience-chat .workshop-hero-icon img{width:19px;height:19px}
+.lt-case-image .workshop-chat-lines{display:grid;gap:3px;flex:1}.lt-case-image .workshop-chat-lines i{height:3px;border-radius:4px;background:#8cb5a2}.lt-case-image .workshop-chat-lines i:last-child{width:66%;animation:spotlightWorkshopChat 9s ease-in-out infinite}
+.lt-case-image .workshop-meeting-footer{display:flex;align-items:center;gap:7px;min-height:37px;padding:6px 10px;border-top:1px solid rgba(255,255,255,.1);color:#d7e9dc}.lt-case-image .workshop-meeting-footer .workshop-hero-icon{width:23px;height:23px}.lt-case-image .workshop-meeting-footer .workshop-hero-icon img{width:20px;height:20px}
+.lt-case-image .workshop-meeting-footer strong{font:800 .66rem/1.1 var(--font-heading)}.lt-case-image .workshop-meeting-footer>span:last-child{margin-left:auto;color:#abc9b7;font:700 .59rem/1.1 var(--font-heading)}
+.lt-case-image .workshop-evidence-known{animation:spotlightWorkshopEvidence 9s ease-in-out infinite}.lt-case-image .workshop-evidence-open{animation:spotlightWorkshopEvidence 9s ease-in-out 1.7s infinite}
+@keyframes spotlightWorkshopEvidence{0%,8%,26%,100%{border-color:#cadece;box-shadow:0 4px 10px rgba(18,50,39,.06)}12%,21%{border-color:#58aa74;box-shadow:0 0 0 3px rgba(88,170,116,.16)}}
+@keyframes spotlightWorkshopProgress{0%{width:0}86%,100%{width:100%}}
+@keyframes spotlightWorkshopPoll{0%,49%,100%{opacity:0;transform:translateY(12px) scale(.96)}56%,88%{opacity:1;transform:none}}
+@keyframes spotlightWorkshopPollChoice{0%,64%,100%{background:#eaf4ec;border-color:#bfdcc7}72%,85%{background:#c9edc6;border-color:#6bab78}}
+@keyframes spotlightWorkshopSpeaker{0%,8%,27%,100%{border-color:rgba(232,249,234,.16);background:#29484b}13%,23%{border-color:#a5dd83;background:#375d50}}
+@keyframes spotlightWorkshopChat{0%,35%{width:12%}60%,91%{width:66%}100%{width:12%}}
+@media(max-width:540px){
+  .lt-case-image .workshop-meeting-layout{grid-template-columns:minmax(0,1fr) 83px;gap:5px;padding:6px}
+  .lt-case-image .workshop-shared-screen,.lt-case-image .workshop-audience-panel{min-height:260px}
+  .lt-case-image .workshop-slide{padding:9px;gap:5px}
+  .lt-case-image .workshop-evidence-card{min-height:58px;padding:5px;gap:4px;font-size:.56rem}
+  .lt-case-image .workshop-evidence-card .workshop-hero-icon{width:30px;height:30px}.lt-case-image .workshop-evidence-card .workshop-hero-icon img{width:26px;height:26px}
+  .lt-case-image .workshop-audience-tile .workshop-hero-icon{width:28px;height:28px}.lt-case-image .workshop-audience-tile .workshop-hero-icon img{width:24px;height:24px}
+  .lt-case-image .workshop-audience-tile{font-size:.64rem}
+  .lt-case-image .workshop-hero-poll{inset:19% 5% 11%;padding:8px}.lt-case-image .workshop-hero-poll>strong{font-size:.76rem}.lt-case-image .workshop-hero-poll>div span{font-size:.64rem}
+  .lt-case-image .workshop-meeting-footer>span:last-child{display:none}
+}
+@media(max-width:400px){
+  .lt-case-image .workshop-meeting-layout{grid-template-columns:minmax(0,1fr) 70px}
+  .lt-case-image .workshop-evidence-card{gap:3px;padding:4px;font-size:.54rem}
+  .lt-case-image .workshop-evidence-card .workshop-hero-icon{width:26px;height:26px}
+  .lt-case-image .workshop-evidence-card .workshop-hero-icon img{width:23px;height:23px}
+  .lt-case-image .workshop-audience-tile{font-size:.56rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .lt-case-image .workshop-room-visual *{animation:none!important;transition:none!important}
+  .lt-case-image .workshop-slide-underline span{width:100%}
+  .lt-case-image .workshop-hero-poll{opacity:0}
+}
