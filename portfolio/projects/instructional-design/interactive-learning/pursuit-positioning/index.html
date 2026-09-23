@@ -480,6 +480,40 @@
     @media(max-width:760px){.result-card:first-child{grid-template-columns:1fr}.result-card:first-child .result-summary{grid-column:1;grid-row:auto;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}.benchmark-list{grid-template-columns:repeat(2,minmax(0,1fr))}.solution-summary{grid-template-columns:45px minmax(0,1fr)}.solution-summary-icon{width:43px;height:43px}.solution-summary-icon img{width:37px;height:37px}}
     @media(max-width:520px){.result-card:first-child .result-summary,.benchmark-list{grid-template-columns:1fr}}
 
+    .criterion-column{display:grid;align-content:start;gap:11px;min-width:0}
+    .benchmark-panel{padding:14px;border:1px solid #bdd8c9;border-radius:17px;background:#fff;box-shadow:0 9px 19px rgba(34,74,59,.05)}
+    .benchmark-panel[hidden],.benchmark-marker[hidden],.benchmark-average[hidden],.score-divider[hidden],.matrix-legend [hidden]{display:none!important}
+    .benchmark-panel .eyebrow{margin:0 0 3px;color:#4a796e!important}
+    .benchmark-panel h3{margin:0;color:#263d37;font-size:.88rem}
+    .benchmark-panel>p:not(.eyebrow){margin:4px 0 11px;color:#52675c;font-size:.61rem;line-height:1.4}
+    .benchmark-panel .benchmark-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .benchmark-panel .benchmark-row{padding:9px 10px;border:1px solid #dcebe2;border-radius:9px;background:#f5faf6}
+    .benchmark-panel .benchmark-row strong{font-size:.59rem}
+    .benchmark-panel .benchmark-row small{display:block;margin-top:5px;color:#5a6c60;font-size:.54rem;line-height:1.35}
+    .benchmark-pair{display:flex;align-items:baseline;gap:6px;margin-top:5px;font:800 .9rem/1 var(--font-heading)}
+    .benchmark-panel .benchmark-pair span{display:inline;margin:0;font-size:inherit;line-height:inherit}
+    .benchmark-panel .benchmark-pair span:first-child{color:#263d37}
+    .benchmark-panel .benchmark-separator{color:#a0afa6}
+    .benchmark-panel .benchmark-separator::before,.matrix-score .score-divider::before{content:"|"}
+    .benchmark-panel .benchmark-value.tone-same{color:#25713e}
+    .benchmark-panel .benchmark-value.tone-close{color:#a36c06}
+    .benchmark-panel .benchmark-value.tone-far{color:#ba4239}
+    .matrix-legend{display:flex;justify-content:center;gap:16px;margin:24px 0 9px;color:#d8e9df;font:800 .52rem/1 var(--font-heading)}
+    .matrix-legend span{display:flex;align-items:center;gap:5px}
+    .matrix-legend i{display:inline-block;width:10px;height:10px;border:2px solid #97db4f;border-radius:50%;background:#4a4238}
+    .matrix-legend #benchmarkLegend i{border-color:#ffdc74;background:#fff;border-radius:2px;transform:rotate(45deg)}
+    .matrix-marker.benchmark-marker{z-index:5;width:18px;height:18px;border:3px solid #ffdc74;border-radius:3px;background:#fff;box-shadow:0 0 0 3px #193b43;transform:translate(-50%,-50%) rotate(45deg)}
+    .matrix-marker.benchmark-marker.tone-same{border-color:#bcf481}
+    .matrix-marker.benchmark-marker.tone-close{border-color:#ffdc74}
+    .matrix-marker.benchmark-marker.tone-far{border-color:#ff9b8b}
+    .score-pair{display:flex;justify-content:center;align-items:baseline;gap:6px;margin-bottom:4px;white-space:nowrap}
+    .matrix-score .score-pair strong{display:inline;margin:0}
+    .matrix-score .score-divider{color:#a9c4b9;font-weight:800}
+    .matrix-score .benchmark-average.tone-same{color:#bcf481}
+    .matrix-score .benchmark-average.tone-close{color:#ffdc74}
+    .matrix-score .benchmark-average.tone-far{color:#ff9b8b}
+    @media(max-width:520px){.benchmark-panel .benchmark-list{grid-template-columns:1fr}}
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
@@ -607,6 +641,7 @@
       </div>
 
       <div class="decision-workbench">
+        <div class="criterion-column">
         <section class="criterion-stage">
           <div class="criterion-progress"><span id="criterionCount">1 of 6</span><div class="criterion-progress-bar" aria-hidden="true"><div class="criterion-progress-fill" id="scoreProgressFill"></div></div></div>
           <div class="criterion-kicker" id="criterionGroup">Solution Fit</div>
@@ -618,23 +653,27 @@
           <div class="criterion-note" id="criterionNote">Choose the score best supported by what is known right now.</div>
           <div class="criterion-nav"><button class="btn btn-secondary" type="button" id="previousCriterion">Previous</button><button class="btn btn-primary" type="button" id="nextCriterion">Next</button></div>
         </section>
+        <section class="benchmark-panel" id="analysisResults" aria-live="polite" hidden>
+          <p class="eyebrow">Calibration</p>
+          <h3>Your scores and the benchmark</h3>
+          <p>Compare each choice with the example score. Green matches, yellow is close, and red needs a second look.</p>
+          <div class="benchmark-list" id="benchmarkList"></div>
+        </section>
+        </div>
 
         <aside class="decision-panel">
           <p class="eyebrow">Live Decision</p>
           <h3>Pursuit Matrix</h3>
           <div class="matrix-wrap">
-            <div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker"></div></div>
+            <div class="matrix"><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker"></div><div class="matrix-marker benchmark-marker" id="benchmarkMarker" hidden></div></div>
             <span class="axis-label axis-x">Solution Fit</span><span class="axis-label axis-y">Pursuit Strength</span>
           </div>
-          <div class="matrix-scores"><div class="matrix-score"><strong id="solutionAverage">3.0</strong>Solution Fit</div><div class="matrix-score"><strong id="pursuitAverage">3.0</strong>Pursuit Strength</div></div>
+          <div class="matrix-legend"><span><i></i>Your score</span><span id="benchmarkLegend" hidden><i></i>Benchmark</span></div>
+          <div class="matrix-scores"><div class="matrix-score"><div class="score-pair"><strong id="solutionAverage">3.0</strong><span class="score-divider" hidden></span><strong class="benchmark-average" id="solutionBenchmark" hidden></strong></div>Solution Fit</div><div class="matrix-score"><div class="score-pair"><strong id="pursuitAverage">3.0</strong><span class="score-divider" hidden></span><strong class="benchmark-average" id="pursuitBenchmark" hidden></strong></div>Pursuit Strength</div></div>
           <div class="quadrant-result">Current position: <strong id="quadrantLabel">Deprioritize</strong></div>
           <div class="decision-actions"><button class="btn btn-highlight" type="button" id="evaluateButton">Compare with Benchmark</button><button class="btn btn-secondary" type="button" id="resetButton">Reset</button></div>
         </aside>
 
-        <section class="results-shell" id="analysisResults" aria-live="polite" tabindex="-1">
-          <article class="result-card"><p class="eyebrow">Pursuit Analysis</p><h2 id="resultTitle"></h2><p id="resultSummary"></p><div class="result-summary"><div><strong id="resultSolutionScore"></strong>Solution fit</div><div><strong id="resultPursuitScore"></strong>Pursuit strength</div><div><strong id="resultStatus"></strong>Recommended posture</div></div></article>
-          <article class="result-card"><p class="eyebrow">Calibration</p><h3>Your scores vs. the benchmark</h3><div class="benchmark-list" id="benchmarkList"></div></article>
-        </section>
       </div>
     </div>
   </section>
@@ -683,6 +722,7 @@ const criteria=[
 
 let currentIndex=0;
 let scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
+let benchmarkVisible=false;
 const evidenceButtons=[...document.querySelectorAll('.evidence-tab')];
 const buttonsShell=document.getElementById('scoreButtons');
 
@@ -740,6 +780,13 @@ function renderCriterion(){
 }
 
 function avg(ids){return ids.reduce((sum,id)=>sum+scores[id],0)/ids.length}
+const solutionIds=['problemFit','differentiation','operationalFit'];
+const pursuitIds=['painUrgency','stakeholderAccess','buyingMomentum'];
+const benchmarkAverage=ids=>ids.reduce((sum,id)=>sum+criteria.find(c=>c.id===id).benchmark,0)/ids.length;
+const comparisonTone=(actual,benchmark)=>{
+  const difference=Math.abs(actual-benchmark);
+  return difference<.05?'same':difference<=1?'close':'far';
+};
 function quadrant(solution,pursuit){
   const threshold=3.5;
   if(solution>=threshold&&pursuit>=threshold)return'Prioritize';
@@ -748,54 +795,73 @@ function quadrant(solution,pursuit){
   return'Deprioritize';
 }
 function updateMatrix(){
-  const solution=avg(['problemFit','differentiation','operationalFit']);
-  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
+  const solution=avg(solutionIds);
+  const pursuit=avg(pursuitIds);
   document.getElementById('matrixMarker').style.left=(((solution-1)/4)*100)+'%';
   document.getElementById('matrixMarker').style.top=(100-(((pursuit-1)/4)*100))+'%';
   document.getElementById('solutionAverage').textContent=solution.toFixed(1);
   document.getElementById('pursuitAverage').textContent=pursuit.toFixed(1);
   document.getElementById('quadrantLabel').textContent=quadrant(solution,pursuit);
+  if(benchmarkVisible)renderBenchmark();
+}
+
+function renderBenchmark(){
+  const solution=avg(solutionIds);
+  const pursuit=avg(pursuitIds);
+  const solutionBench=benchmarkAverage(solutionIds);
+  const pursuitBench=benchmarkAverage(pursuitIds);
+  const marker=document.getElementById('benchmarkMarker');
+  marker.hidden=false;
+  marker.style.left=(((solutionBench-1)/4)*100)+'%';
+  marker.style.top=(100-(((pursuitBench-1)/4)*100))+'%';
+  marker.className='matrix-marker benchmark-marker tone-'+comparisonTone(Math.max(Math.abs(solution-solutionBench),Math.abs(pursuit-pursuitBench)),0);
+  document.getElementById('benchmarkLegend').hidden=false;
+  [['solutionBenchmark',solutionBench,solution],['pursuitBenchmark',pursuitBench,pursuit]].forEach(([id,benchmark,actual])=>{
+    const value=document.getElementById(id);
+    value.textContent=benchmark.toFixed(1);
+    value.hidden=false;
+    value.className='benchmark-average tone-'+comparisonTone(actual,benchmark);
+    value.previousElementSibling.hidden=false;
+  });
+  document.getElementById('benchmarkList').replaceChildren(...criteria.map(c=>{
+    const row=document.createElement('div');
+    row.className='benchmark-row';
+    const title=document.createElement('strong');
+    title.textContent=c.title;
+    const score=document.createElement('div');
+    score.className='benchmark-pair';
+    const yours=document.createElement('span');
+    yours.textContent=String(scores[c.id]);
+    const separator=document.createElement('span');
+    separator.className='benchmark-separator';
+    const reference=document.createElement('span');
+    reference.textContent=String(c.benchmark);
+    reference.className='benchmark-value tone-'+comparisonTone(scores[c.id],c.benchmark);
+    score.append(yours,separator,reference);
+    const note=document.createElement('small');
+    note.textContent=c.note;
+    row.append(title,score,note);
+    return row;
+  }));
+  document.getElementById('analysisResults').hidden=false;
 }
 
 document.getElementById('previousCriterion').addEventListener('click',()=>{if(currentIndex>0){currentIndex--;renderCriterion()}});
 document.getElementById('nextCriterion').addEventListener('click',()=>{if(currentIndex<criteria.length-1){currentIndex++;renderCriterion()}else document.getElementById('evaluateButton').focus()});
 
 document.getElementById('evaluateButton').addEventListener('click',()=>{
-  const solution=avg(['problemFit','differentiation','operationalFit']);
-  const pursuit=avg(['painUrgency','stakeholderAccess','buyingMomentum']);
-  const q=quadrant(solution,pursuit);
-  const rec={
-    Prioritize:['Advance the opportunity, then close the remaining qualification gaps.','The account shows strong fit and enough buying evidence to justify continued investment.'],
-    Nurture:['Keep developing the opportunity before accelerating.','The account looks like a fit, but access and buying momentum are not mature enough yet.'],
-    'Develop Fit':['Validate the solution fit before committing more pursuit effort.','Buying activity exists, but the product-to-problem connection needs stronger evidence.'],
-    Deprioritize:['Limit investment until the evidence improves.','Current fit and buying evidence are not strong enough to justify heavy pursuit effort.']
-  }[q];
-
-  document.getElementById('resultTitle').textContent=rec[0];
-  document.getElementById('resultSummary').textContent=rec[1];
-  document.getElementById('resultSolutionScore').textContent=solution.toFixed(1)+' / 5';
-  document.getElementById('resultPursuitScore').textContent=pursuit.toFixed(1)+' / 5';
-  document.getElementById('resultStatus').textContent=q;
-  document.getElementById('benchmarkList').replaceChildren(...criteria.map(c=>{
-    const row=document.createElement('div');
-    row.className='benchmark-row';
-    const title=document.createElement('strong');
-    title.textContent=c.title;
-    const detail=document.createElement('span');
-    detail.textContent='Your score: '+scores[c.id]+' · Benchmark: '+c.benchmark+'. '+c.note;
-    row.append(title,detail);
-    return row;
-  }));
-  const results=document.getElementById('analysisResults');
-  results.classList.add('show');
-  results.focus({preventScroll:true});
-  results.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  benchmarkVisible=true;
+  renderBenchmark();
 });
 
 document.getElementById('resetButton').addEventListener('click',()=>{
   scores=Object.fromEntries(criteria.map(c=>[c.id,3]));
   currentIndex=0;
-  document.getElementById('analysisResults').classList.remove('show');
+  benchmarkVisible=false;
+  document.getElementById('analysisResults').hidden=true;
+  document.getElementById('benchmarkMarker').hidden=true;
+  document.getElementById('benchmarkLegend').hidden=true;
+  document.querySelectorAll('.benchmark-average,.score-divider').forEach(el=>el.hidden=true);
   renderCriterion();
   updateMatrix();
 });
