@@ -91,8 +91,8 @@
       description: 'If sellers repeatedly ask how to identify the approver, I can save that pattern as a note for the next content pass: add a seller cue and a better next-question example.'
     },
     examples: {
-      title: 'Turn a seller example into safe scenario practice.',
-      description: 'A useful account story can become a fictional choice-and-feedback exercise: preserve the decision the seller faced, remove account details, and let learners practice the next question.'
+      title: 'Let a strong seller question shape the next practice.',
+      description: 'When a seller asks a useful question in the live workshop, I can capture the underlying decision and turn it into a future facilitator prompt or fictional scenario, without carrying over account details.'
     },
     timing: {
       title: 'Simplify background and protect application.',
@@ -133,4 +133,34 @@
       activateFeedback(feedbackButtons[nextIndex]);
     });
   });
+
+  const navLinks = [...document.querySelectorAll('.case-nav a[href^="#"]')];
+  const navSections = navLinks.map((link) => document.getElementById(link.hash.slice(1)));
+  const navShell = document.querySelector('.case-nav-shell');
+  let navUpdateQueued = false;
+  function updateSectionNav() {
+    navUpdateQueued = false;
+    if (!navLinks.length || navSections.some((section) => !section)) return;
+    const readingLine = (navShell?.getBoundingClientRect().height || 0) + window.innerHeight * .24;
+    let currentIndex = 0;
+    navSections.forEach((section, index) => {
+      if (section.getBoundingClientRect().top <= readingLine) currentIndex = index;
+    });
+    navLinks.forEach((link, index) => {
+      const current = index === currentIndex;
+      link.classList.toggle('active', current);
+      if (current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  function queueSectionNavUpdate() {
+    if (navUpdateQueued) return;
+    navUpdateQueued = true;
+    window.requestAnimationFrame(updateSectionNav);
+  }
+  navLinks.forEach((link) => link.addEventListener('click', queueSectionNavUpdate));
+  window.addEventListener('scroll', queueSectionNavUpdate, { passive: true });
+  window.addEventListener('resize', queueSectionNavUpdate);
+  window.addEventListener('hashchange', queueSectionNavUpdate);
+  queueSectionNavUpdate();
 })();
