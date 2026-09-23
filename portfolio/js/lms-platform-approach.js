@@ -107,6 +107,16 @@
     academic: ['Students + instructors','Cohort enrollment','Course shells + calendars','Discussion + rubrics','Gradebook feedback','LTI tools when useful'],
     portal: ['Employees + partners','Searchable job aids','Templates + FAQs','Use-case library','Community knowledge','Ownership + freshness']
   };
+  const viewNotes = {
+    docebo:[['A branch is not an audience rule by itself. Check group membership, catalog visibility, and inherited permissions together.','Use one test learner per partner route before publishing.','Reuse the shared course; vary access and plans rather than cloning content.'],['A learning plan can hide prerequisite or version problems until a learner enters it.','Test the full sequence after every course replacement.','Use the plan as the maintained route, not a collection of one-off enrollments.'],['Certificate settings and plan completion may not mean the same thing.','Reconcile the learner record with the certificate rule.','Use exception exports to find misrouted learners before a renewal cycle.']],
+    absorb:[['Department and group membership can reflect different business structures.','Document which field controls each audience decision.','Keep reusable courses in a shared catalog where visibility rules permit.'],['Bulk enrollments can amplify a bad match.','Preview matching keys and isolate ambiguous accounts for review.','Use reviewed batches instead of repeated individual placement.'],['Branding can clarify an audience route but does not replace permissions.','Test navigation as employee, partner, and customer.','Improve labels and catalog organization before buying another portal.']],
+    cornerstone:[['Recurring requirements need explicit due, renewal, and equivalency rules.','Test a newly assigned learner and one with prior credit.','Use existing assignment logic consistently across roles.'],['Role changes can create duplicate or missing requirements.','Compare HR role changes against assignment history.','Put exception states into an admin review queue.'],['A completion total can conceal overdue and exempt records.','Define statuses and reconcile transcript samples.','Design report filters around decisions, not vanity totals.']],
+    sap:[['HR attributes may be authoritative but can arrive late or incomplete.','Check the source field and sync timing before routing learning.','Use role-based defaults with visible exceptions.'],['Required learning and elective discovery should stay distinct.','Test learner catalog labels and eligibility.','Improve search tags and collections before adding more content.'],['A development goal does not prove course completion.','Keep goal progress and learning evidence separate.','Connect existing learning records to manager conversations.']],
+    workday:[['A hire or role event can trigger learning before profile fields settle.','Validate effective dates and assignment timing.','Use current people-data events to reduce manual onboarding lists.'],['A long list of assigned items obscures the next action.','Sequence mandatory learning and show due dates clearly.','Organize the existing learner view around milestones.'],['Completion needs to return to the right people workflow.','Compare the learner record with manager-visible status.','Build follow-up from existing report fields.']],
+    canvas:[['Module requirements can accidentally lock the next week.','Walk the sequence as a student before release.','Use consistent weekly templates and naming.'],['Due dates alone do not explain success criteria.','Pair each assignment with a rubric and example.','Reuse rubric criteria for faster, clearer feedback.'],['A grade can hide a misconception across a cohort.','Review rubric patterns and late/missing work.','Use native gradebook filters to plan timely intervention.']],
+    blackboard:[['A course shell can become a file dump.','Group resources by the learner’s weekly task.','Use a repeatable course pattern rather than extra tools.'],['Discussion volume is not the same as useful reasoning.','Prompt specific evidence and model a strong response.','Use instructor summaries to surface patterns.'],['Late feedback makes the next task harder.','Check grading visibility and release timing.','Use existing rubric and feedback tools consistently.']],
+    sharepoint:[['Search quality depends on titles, tags, and permissions.','Test the phrases a user would actually type.','Improve metadata before adding another navigation layer.'],['A use-case library can become stale quickly.','Assign an owner and review date to each resource.','Create task-based entry points to existing content.'],['Page views do not prove the answer was useful.','Pair analytics with support questions and broken-link checks.','Archive stale pages and improve the most-used paths.']]
+  };
   const write = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value; };
   document.querySelectorAll('[data-platform-category]').forEach(section => {
     const category = section.dataset.platformCategory;
@@ -123,7 +133,16 @@
     const viewNav = document.createElement('div');
     viewNav.className = 'platform-view-nav';
     viewNav.setAttribute('aria-label', 'Inspect platform decisions');
-    caption.after(viewNav);
+    screen.querySelector('.platform-screen-bar').after(viewNav);
+    const viewAdvice = document.createElement('div');
+    viewAdvice.className = 'platform-view-advice';
+    viewAdvice.innerHTML = '<div><span>Watch for</span><strong></strong></div><div><span>Admin move</span><strong></strong></div><div><span>Get more from the platform</span><strong></strong></div>';
+    caption.after(viewAdvice);
+    const nextView = document.createElement('button');
+    nextView.type = 'button';
+    nextView.className = 'platform-next-view';
+    nextView.textContent = 'Next screen →';
+    viewAdvice.after(nextView);
     const specifics = document.createElement('div');
     specifics.className = 'platform-specifics';
     specifics.innerHTML = '<p><span>Admin priorities</span><strong></strong></p><p><span>Connected systems</span><strong></strong></p><p><span>Learning + business outcome</span><strong></strong></p>';
@@ -144,6 +163,8 @@
       if (image) { image.src = `${base}${file}`; image.alt = `Illustrative ${platform} ${label.toLowerCase()} interface`; }
       viewLabel.textContent = `${examples[platform].screen.split(' · ')[0]} · ${label.toLowerCase()}`;
       caption.textContent = explanation;
+      [...viewAdvice.querySelectorAll('strong')].forEach((node,index)=>{node.textContent=viewNotes[platform][selected][index];});
+      nextView.onclick=()=>renderViews(platform,(selected+1)%views.length);
     };
     const activate = button => {
       const data = examples[button.dataset.platform];
@@ -172,4 +193,17 @@
     });
     activate(buttons[0]);
   });
+  const heroScreens=[
+    ['Docebo','docebo/groups-branches.png','extended-enterprise/docebo-platform.png','Extended enterprise'],
+    ['Absorb','absorb/enrollments.png','extended-enterprise/absorb-platform.png','Audience management'],
+    ['Cornerstone','cornerstone/compliance-management.png','corporate-core/cornerstone-platform.png','Corporate learning'],
+    ['Canvas','canvas/modules.png','academic-cohort/canvas-platform.png','Cohort learning'],
+    ['SharePoint','sharepoint/knowledge-portal.png','knowledge-portal/sharepoint-platform.png','Knowledge portal']
+  ];
+  let heroIndex=0;
+  const showHero=()=>{const [name,file,logo,caption]=heroScreens[heroIndex];write('platformHeroName',name);write('platformHeroCaption',caption);const image=document.getElementById('platformHeroImage'),brand=document.querySelector('#platformHeroLogo img');if(image){image.src=base+file;image.alt=`Illustrative ${name} screen`;}if(brand)brand.src=`../../../assets/icons/pixel/lms-admin/${logo}`;};
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){setInterval(()=>{heroIndex=(heroIndex+1)%heroScreens.length;showHero();},3500);}
+  const navLinks=[...document.querySelectorAll('.lms-platform-principle a')];
+  const observer=new IntersectionObserver((entries)=>{const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!visible)return;navLinks.forEach(link=>{const active=link.hash===`#${visible.target.id}`;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});},{rootMargin:'-22% 0px -60% 0px',threshold:[0,.1,.25]});
+  document.querySelectorAll('[data-platform-category]').forEach(section=>observer.observe(section));
 })();

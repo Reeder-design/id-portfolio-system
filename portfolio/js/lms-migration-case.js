@@ -334,7 +334,12 @@
     document.getElementById('supportOpsLabel').textContent = data.label;
     document.getElementById('supportOpsTitle').textContent = data.title;
     document.getElementById('supportOpsText').textContent = data.text;
-    document.getElementById('supportOpsCards').innerHTML = data.cards.map(([label, body]) => `<article class="transition-lens-card"><span>${label}</span><p>${body}</p></article>`).join('');
+    const demo = {
+      inbox: `<div class="support-demo-top"><span>SUPPORT INBOX</span><strong>3 items · 1 pattern</strong></div><div class="support-demo-body"><div class="support-ticket selected"><b>Access</b><span>Partner cannot see required path</span><small>New · 09:42</small></div><div class="support-ticket"><b>Navigation</b><span>Where is my certificate?</span><small>Open · 10:18</small></div><div class="support-ticket"><b>Access</b><span>Customer catalog not visible</span><small>Open · 10:31</small></div></div><div class="support-demo-action"><span>Notice repeated access questions</span><strong>Check audience rule → route issue</strong></div>`,
+      docs: `<div class="support-demo-top"><span>RESPONSE LIBRARY</span><strong>Draft for review</strong></div><div class="support-demo-body"><div class="support-doc"><b>Common question</b><p>“I finished the course. Where is my certificate?”</p><i></i><b>Reusable guidance</b><p>Open My Activities → Certifications. If status is missing, send the course name and completion date to support.</p></div></div><div class="support-demo-action"><span>Document the fix once</span><strong>Template + escalation owner</strong></div>`,
+      reporting: `<div class="support-demo-top"><span>POST-LAUNCH REVIEW</span><strong>Illustrative issue register</strong></div><div class="support-demo-body"><div class="support-report"><span>Issue</span><span>Owner</span><span>Next check</span><b>Catalog visibility</b><b>Platform admin</b><b>Retest partner route</b><b>Certificate status</b><b>Learning ops</b><b>Compare transcript</b><b>Help article</b><b>Support</b><b>Publish update</b></div></div><div class="support-demo-action"><span>Keep exceptions visible</span><strong>Owner → fix → retest</strong></div>`
+    };
+    document.getElementById('supportOpsDemo').innerHTML = demo[key];
   };
   setupTabs('[data-supportops]', 'supportops', renderSupportOps);
   renderSupportOps('inbox');
