@@ -41,6 +41,42 @@
       });
     });
 
+    page.querySelectorAll('[data-open-demo]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const tab = tabs.find((item) => item.dataset.liveTab === button.dataset.openDemo);
+        if (!tab) return;
+        selectTab(tab);
+        explorer.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        tab.focus({ preventScroll: true });
+      });
+    });
+
+    explorer.querySelectorAll('[data-sample-demo]').forEach((button) => {
+      const result = button.closest('[data-live-panel]')?.querySelector('[data-demo-result]');
+      if (!result) return;
+      const originalLabel = button.textContent;
+      button.addEventListener('click', () => {
+        result.hidden = !result.hidden;
+        button.textContent = result.hidden ? originalLabel : 'Hide sample ↑';
+      });
+    });
+
+    const workbenchDemo = explorer.querySelector('[data-workbench-demo]');
+    if (workbenchDemo) {
+      const choices = [...workbenchDemo.querySelectorAll('[data-workbench-choice]')];
+      const feedback = workbenchDemo.querySelector('[data-workbench-feedback]');
+      const messages = {
+        sanitize: 'Good call. Make a public-safe copy, then review it before anything is shared.',
+        publish: 'Pause here. The example needs a public-safe edit and human review first.'
+      };
+      choices.forEach((choice) => {
+        choice.addEventListener('click', () => {
+          choices.forEach((item) => item.setAttribute('aria-pressed', String(item === choice)));
+          if (feedback) feedback.textContent = messages[choice.dataset.workbenchChoice] || '';
+        });
+      });
+    }
+
     panels.forEach((panel) => {
       const launch = panel.querySelector('[data-launch-live]');
       const frame = panel.querySelector('[data-live-frame]');
