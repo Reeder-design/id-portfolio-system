@@ -58,21 +58,35 @@
   };
 
   const migrationData = {
-    review: {
-      title: 'Map what learners and admins already relied on.',
-      text: 'I reviewed courses, learning plans, certifications, catalogs, and support patterns in Absorb before configuring and testing their Docebo counterparts.'
+    inventory: {
+      phase: 'Inventory · before', title: 'Find what the existing experience depends on.',
+      text: 'I reviewed owned courses, learning plans, certifications, catalogs, and audience relationships in Absorb before the move.',
+      evidence: 'Document the source course and its learner-facing purpose before assigning a destination.'
     },
-    test: {
-      title: 'Configure the Docebo learning setup.',
-      text: 'I helped set up learning plans, content relationships, catalogs, certifications, audience visibility, and learner-facing assets.'
+    crosswalk: {
+      phase: 'Crosswalk · decisions', title: 'Make every source-to-destination decision traceable.',
+      text: 'I helped map Absorb courses and enrollments to Docebo codes and relationships. Duplicate materials, ghost courses, orphaned links, and missing mappings needed explicit review rather than a silent import.',
+      evidence: 'Keep the course crosswalk, exception, decision, and owner together for review.'
     },
-    resolve: {
-      title: 'Test the learner paths and retest fixes.',
-      text: 'I tested employee, partner, and customer experiences, documented problems, supported triage, and checked the fixes once they were ready.'
+    configure: {
+      phase: 'Configure · new structure', title: 'Rebuild the route, not just the content library.',
+      text: 'I helped set up content and learning plans in Docebo, including audience visibility, prerequisites, certification settings, progress, completion, and exam access.',
+      evidence: 'Confirm a configured item has the intended relationship to its plan, audience, and completion rule.'
     },
-    launch: {
-      title: 'Support learners and track what still needed work.',
-      text: 'I helped with inbox support, documentation, reusable customer-support email templates, post-launch reporting, and immediate follow-up actions.'
+    validate: {
+      phase: 'Validate · learner UAT', title: 'Test real learner states and the edge cases.',
+      text: 'I tested employee, partner, and customer routes, documented issues, and retested fixes. The review included inactive profiles, duplicates, partial completions, renewals, and unusual audiences.',
+      evidence: 'Compare expected and observed behavior, then record exception disposition and retest status.'
+    },
+    release: {
+      phase: 'Release · guidance', title: 'Prepare people for the new environment.',
+      text: 'I supported learner-facing guidance, documentation, and reusable support responses so a platform change did not leave learners guessing where to go or how to get help.',
+      evidence: 'Check the published route, support instructions, and known-issue owner before launch.'
+    },
+    sustain: {
+      phase: 'Sustain · after launch', title: 'Treat support signals as system feedback.',
+      text: 'I helped with learner inbox triage, post-launch reporting, issue follow-up, and documentation updates as the migrated experience reached real users.',
+      evidence: 'Connect recurring tickets and report exceptions to a fix, owner, and next validation cycle.'
     }
   };
 
@@ -116,9 +130,9 @@
       ['Support + reporting', 'I supported the learner inbox, documentation and email-template workflows, and immediate post-launch reporting and action planning.']
     ],
     learned: [
-      ['Setup and testing belong together', 'A learning plan can be configured correctly on paper and still fail when a real learner moves through it.'],
-      ['Support questions reveal system problems', 'Repeated inbox questions often pointed to missing guidance, access issues, or a process that needed to change.'],
-      ['Launch is not the finish line', 'Reporting and follow-up made it easier to separate one-off questions from problems that needed continued work.']
+      ['Design for the platform route', 'Migration made me more attentive to how assignment, prerequisites, completion, and records shape instructional design—not only how a course is built.'],
+      ['Test with a learner persona', 'A plan that looks correct in an admin view can still fail for a partner, customer, returning learner, or partial completer.'],
+      ['Keep the decision history', 'Crosswalks, exceptions, support patterns, and reporting provide the reasoning needed to maintain a learning system after launch.']
     ]
   };
 
@@ -306,18 +320,26 @@
 
   const renderMigration = (key) => {
     const data = migrationData[key];
+    if (!data) return;
+    document.getElementById('migrationPhase').textContent = data.phase;
     document.getElementById('migrationTitle').textContent = data.title;
     document.getElementById('migrationText').textContent = data.text;
+    document.getElementById('migrationEvidence').textContent = data.evidence;
   };
   setupTabs('[data-migration]', 'migration', renderMigration);
-  renderMigration('review');
+  renderMigration('inventory');
 
   const renderSupportOps = (key) => {
     const data = supportOpsData[key];
     document.getElementById('supportOpsLabel').textContent = data.label;
     document.getElementById('supportOpsTitle').textContent = data.title;
     document.getElementById('supportOpsText').textContent = data.text;
-    document.getElementById('supportOpsCards').innerHTML = data.cards.map(([label, body]) => `<article class="transition-lens-card"><span>${label}</span><p>${body}</p></article>`).join('');
+    const demo = {
+      inbox: `<div class="support-demo-top"><span>SUPPORT INBOX</span><strong>3 items · 1 pattern</strong></div><div class="support-demo-body"><div class="support-ticket selected"><b>Access</b><span>Partner cannot see required path</span><small>New · 09:42</small></div><div class="support-ticket"><b>Navigation</b><span>Where is my certificate?</span><small>Open · 10:18</small></div><div class="support-ticket"><b>Access</b><span>Customer catalog not visible</span><small>Open · 10:31</small></div></div><div class="support-demo-action"><span>Notice repeated access questions</span><strong>Check audience rule → route issue</strong></div>`,
+      docs: `<div class="support-demo-top"><span>RESPONSE LIBRARY</span><strong>Draft for review</strong></div><div class="support-demo-body"><div class="support-doc"><b>Common question</b><p>“I finished the course. Where is my certificate?”</p><i></i><b>Reusable guidance</b><p>Open My Activities → Certifications. If status is missing, send the course name and completion date to support.</p></div></div><div class="support-demo-action"><span>Document the fix once</span><strong>Template + escalation owner</strong></div>`,
+      reporting: `<div class="support-demo-top"><span>POST-LAUNCH REVIEW</span><strong>Illustrative issue register</strong></div><div class="support-demo-body"><div class="support-report"><span>Issue</span><span>Owner</span><span>Next check</span><b>Catalog visibility</b><b>Platform admin</b><b>Retest partner route</b><b>Certificate status</b><b>Learning ops</b><b>Compare transcript</b><b>Help article</b><b>Support</b><b>Publish update</b></div></div><div class="support-demo-action"><span>Keep exceptions visible</span><strong>Owner → fix → retest</strong></div>`
+    };
+    document.getElementById('supportOpsDemo').innerHTML = demo[key];
   };
   setupTabs('[data-supportops]', 'supportops', renderSupportOps);
   renderSupportOps('inbox');

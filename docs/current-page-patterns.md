@@ -121,7 +121,6 @@ Current expectations:
 Strong references:
 
 - `portfolio/projects/lms-administration/system-integrations/index.html`
-- `portfolio/projects/workflows/ai-automation/salesforce-lms-account-automation/index.html`
 - `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html`
 
 Use these for:

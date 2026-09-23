@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "id": "my-approach-for-various-lms-platforms",
+  "title": "My Approach for Various LMS Platforms",
+  "slug": "my-approach-for-various-lms-platforms",
+  "category": "lms-administration",
+  "subcategory": null,
+  "status": "live",
+  "summary": "Four platform-informed learning-system models across extended enterprise, corporate core, academic cohorts, and just-in-time knowledge support, with direct experience clearly identified for Absorb and Docebo.",
+  "page_path": "portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html",
+  "featured": false,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Show how audience, learning need, business context, platform capability, and connected systems change LMS design decisions.",
+    "audience": "Partners, customers, employees, academic cohorts, and learners needing performance support.",
+    "learning_objectives": [
+      "Distinguish extended-enterprise, corporate-core, cohort, and knowledge-portal operating models.",
+      "Connect audience and learning strategy to platform structure, learner experience, and evidence.",
+      "Identify platform-specific administrative decisions and validation points without overstating direct experience."
+    ],
+    "role": "Portfolio design analysis based on direct Absorb and Docebo administration and migration work, plus platform-informed examples for other systems.",
+    "design_approach": "Use four strategic environments and eight platform-specific, illustrative interfaces to make different administration priorities visible. Tabs change the scenario, decision, outcome, and inspectable screen views.",
+    "development_process": "Mapped source-grounded LMS administration practices to the four audience models; selected illustrative platform mockups and custom pixel assets; separated direct experience from platform-informed design patterns.",
+    "outcomes": [
+      "A clearer comparison of where different learning-system architectures fit.",
+      "Visible decision paths linking configuration to learner and business outcomes.",
+      "A public-safe demonstration with fictional screens and explicit experience boundaries."
+    ]
+  },
+  "detail_sections": [],
+  "skills": ["LMS Administration", "Learning Architecture", "Audience Segmentation", "Learning Paths", "Reporting", "Platform Evaluation"],
+  "tools": ["Absorb LMS", "Docebo LMS", "Cornerstone", "SAP SuccessFactors", "Workday Learning", "Canvas", "Blackboard", "SharePoint Sites"],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/mockups/lms-admin/platforms/docebo/groups-branches.png",
+      "alt": "Illustrative Docebo-style audience administration screen.",
+      "caption": "Portfolio-safe example; not a production screenshot.",
+      "publish": true
+    }
+  ],
+  "source_material_notes": "Absorb and Docebo reflect directly supported work in the LMS background and migration context documents. Other platforms are platform-informed design models. All mockups contain fictional, illustrative content and do not represent implementation claims or production accounts.",
+  "dates": {"created": "2026-09-22", "updated": "2026-09-22"}
+}
