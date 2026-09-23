@@ -88,7 +88,7 @@
   const feedback = {
     questions: {
       title: 'Use recurring questions to shape a decision cue.',
-      description: 'If sellers repeatedly ask how to identify the approver, a future quick reference could pair the customer signal with the exact next question and evidence to listen for.'
+      description: 'If sellers repeatedly ask how to identify the approver, I can save that pattern as a note for the next content pass: add a seller cue and a better next-question example.'
     },
     examples: {
       title: 'Turn a seller example into safe scenario practice.',

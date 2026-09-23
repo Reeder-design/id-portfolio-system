@@ -418,31 +418,6 @@ body.live-training-page {
 .lt-case .btn-primary { margin-top: 6px; background: #b2de64; color: #18302b; }
 .lt-case .btn-primary:hover { background: #cbed8d; color: #18302b; }
 .lt-case-image { margin: 0; padding: 10px; border: 1px solid rgba(255,255,255,.16); border-radius: 20px; background: #102830; box-shadow: 0 22px 45px rgba(0,0,0,.17); }
-.lt-case-workshop-art { min-height: clamp(275px, 30vw, 390px); overflow: hidden; border-radius: 12px; background: #1b3c42; }
-.lt-case-workshop-bar { display: flex; justify-content: space-between; gap: 8px; align-items: center; min-height: 33px; padding: 7px 12px; background: #17313a; color: #e9f8ef; font: 800 .63rem/1.2 var(--font-heading); }
-.lt-case-workshop-bar > span:first-child { display: flex; align-items: center; gap: 5px; }
-.lt-case-workshop-bar i { width: 6px; height: 6px; border-radius: 50%; background: #76afa7; }
-.lt-case-workshop-bar i:last-of-type { margin-right: 5px; }
-.lt-case-workshop-live { color: #c6ecb2; }
-.lt-case-workshop-body { display: grid; grid-template-columns: minmax(0, 1fr) 28%; gap: 9px; min-height: 236px; padding: 11px; }
-.lt-case-workshop-slide { display: grid; align-content: center; justify-items: start; gap: 12px; min-width: 0; padding: clamp(14px,3vw,26px); border-radius: 8px; background: linear-gradient(145deg,#f7fbf3,#dcefe6); }
-.lt-case-workshop-icon { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 14px; background: #fff; box-shadow: 0 5px 18px rgba(25,65,57,.14); }
-.lt-case-workshop-icon img { display: block; width: 47px; height: 47px; object-fit: contain; image-rendering: pixelated; }
-.lt-case-workshop-slide small { color: #3f7863; font: 900 .66rem/1 var(--font-heading); letter-spacing: .05em; text-transform: uppercase; }
-.lt-case-workshop-slide strong { max-width: 360px; color: #23453e; font: 800 clamp(1.05rem,2vw,1.6rem)/1.2 var(--font-heading); }
-.lt-case-workshop-evidence { display: flex; flex-wrap: wrap; gap: 5px; }
-.lt-case-workshop-evidence span { padding: 5px 8px; border: 1px solid #98cfab; border-radius: 5px; background: #eff9ef; color: #315e4b; font: 800 .6rem/1.1 var(--font-heading); }
-.lt-case-workshop-audience { display: grid; grid-template-rows: auto repeat(3,minmax(0,1fr)); gap: 5px; padding: 8px; border-radius: 8px; background: #102b34; color: #cbe8d3; font: 800 .6rem/1.2 var(--font-heading); }
-.lt-case-workshop-audience > span { text-transform: uppercase; letter-spacing: .05em; }
-.lt-case-workshop-tile { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border: 1px solid rgba(183,222,204,.19); border-radius: 5px; background: #2c4c51; }
-.lt-case-workshop-tile i { position: relative; width: 25px; height: 25px; border-radius: 50%; background: #e5bfa4; }
-.lt-case-workshop-tile i::after { content: ''; position: absolute; right: -3px; bottom: -3px; left: -3px; height: 10px; border-radius: 10px 10px 3px 3px; background: #93cbb1; }
-.lt-case-workshop-tile:nth-of-type(2) i::after { background: #85baca; }
-.lt-case-workshop-tile:nth-of-type(3) i::after { background: #d6be8e; }
-.lt-case-workshop-tile b { color: #e9f7ec; font: 700 .61rem/1.15 var(--font-heading); }
-.lt-case-workshop-footer { display: flex; justify-content: space-between; gap: 8px; align-items: center; padding: 5px 11px 11px; color: #d9efe1; font: 700 .62rem/1.25 var(--font-heading); }
-.lt-case-workshop-activity { padding: 6px 8px; border: 1px solid #7bb99b; border-radius: 5px; background: #315b4c; }
-.lt-case-workshop-chat { color: #bde8bb; }
 .lt-case-image figcaption { padding: 10px 4px 2px; color: #cfe4d5; font-size: .75rem; line-height: 1.4; }
 
 /* Shared site rhythm adds surface classes after this page loads. Keep the
@@ -520,13 +495,6 @@ body.live-training-page .lt-case::after { display: none; }
   .lt-hybrid-discuss { display: block; margin-inline: 5px; font-size: .64rem; }
   .lt-hybrid-discuss span { display: block; }
   .lt-hybrid-handoff { font-size: .9rem; }
-  .lt-case-workshop-body { grid-template-columns: minmax(0,1fr) 30%; gap: 5px; padding: 7px; }
-  .lt-case-workshop-slide { gap: 7px; padding: 11px; }
-  .lt-case-workshop-icon { width: 47px; height: 47px; }
-  .lt-case-workshop-icon img { width: 36px; height: 36px; }
-  .lt-case-workshop-tile { flex-direction: column; gap: 3px; }
-  .lt-case-workshop-tile i { width: 20px; height: 20px; }
-  .lt-case-workshop-tile b { font-size: .5rem; }
   .lt-evidence-card { padding: 17px; }
 }
 @media (prefers-reduced-motion: reduce) {
