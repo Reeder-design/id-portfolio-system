@@ -1,5 +1,39 @@
 (() => {
-  const assetRoot = '../../../../assets/project-images/vertical-positioning/';
+  const data = window.verticalCaseData || {};
+  const setupTabs = (selector, attr, onActivate) => {
+    const buttons = [...document.querySelectorAll(selector)];
+    buttons.forEach((button, index) => {
+      const activate = () => {
+        buttons.forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+        onActivate(button.dataset[attr]);
+      };
+      button.addEventListener('click', activate);
+      button.addEventListener('keydown', event => {
+        if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length;
+        buttons[next].focus(); buttons[next].click();
+      });
+    });
+  };
+  setupTabs('[data-vertical-outcome]', 'verticalOutcome', (key) => {
+    const item = data.outcomes?.[key];
+    if (!item) return;
+    const label = document.getElementById('verticalOutcomeLabel');
+    const title = document.getElementById('verticalOutcomeTitle');
+    const text = document.getElementById('verticalOutcomeText');
+    const proof = document.getElementById('verticalOutcomeProof');
+    const icon = document.getElementById('verticalOutcomeIcon');
+    if (label) label.textContent = item.label;
+    if (title) title.textContent = item.title;
+    if (text) text.textContent = item.text;
+    if (proof) proof.textContent = item.proof;
+    if (icon) icon.setAttribute('href', `../../../../assets/icons/portfolio-icons.svg#${item.icon}`);
+  });
+
+})();
+
+(() => {
   const iconRoot = '../../../../assets/icons/portfolio-icons.svg#';
   const documentRoot = '../../../../assets/documents/';
   const paths = {
@@ -53,7 +87,7 @@
   const fields = {
     industryName: el('verticalIndustryName'), progressText: el('verticalProgressText'), progressFill: el('verticalProgressFill'),
     stageIcon: el('verticalStageIcon'), eyebrow: el('verticalStageEyebrow'), title: el('verticalStageTitle'),
-    copy: el('verticalStageCopy'), figure: el('verticalStageFigure'), image: el('verticalStageImage'), caption: el('verticalStageCaption'),
+    copy: el('verticalStageCopy'), figure: el('verticalStageFigure'), caption: el('verticalStageCaption'),
     conversation: el('verticalConversation'), customerLine: el('verticalCustomerLine'), responseWrap: el('verticalResponseWrap'), response: el('verticalScenarioResponse'),
     choiceArea: el('verticalChoiceArea'), prompt: el('verticalChoicePrompt'), choices: el('verticalChoices'), feedback: el('verticalFeedback'),
     roi: el('verticalRoi'), roiHandoffs: el('verticalRoiHandoffs'), roiHandoffsValue: el('verticalRoiHandoffsValue'), roiMinutes: el('verticalRoiMinutes'), roiMinutesValue: el('verticalRoiMinutesValue'), roiResult: el('verticalRoiResult'),
@@ -149,8 +183,10 @@
       fields.stageIcon.setAttribute('href', iconRoot + data.icon);
       fields.title.textContent = 'Start with the vertical, not a generic pitch.';
       fields.copy.textContent = data.intro;
-      fields.image.src = assetRoot + data.image;
-      fields.image.alt = data.alt;
+      document.getElementById('verticalSettingIcon').setAttribute('href', iconRoot + data.icon);
+      document.getElementById('verticalSettingLabel').textContent = data.name.toUpperCase() + ' CONTEXT';
+      document.getElementById('verticalSettingTitle').textContent = data.name === 'Seaport' ? 'Coordinate a distributed operation' : 'Coordinate a time-sensitive service network';
+      document.getElementById('verticalSettingText').textContent = data.name === 'Seaport' ? 'Field teams and terminals need a clear shared picture of handoffs.' : 'Gate, ramp, and service teams need timely updates at every handoff.';
       fields.caption.textContent = data.caption;
       fields.hint.textContent = 'Review the positioning, then continue.';
       setDesign('I gave sellers a short industry introduction before asking them to make a customer-facing choice.', 'Use one Rise architecture, with separate seaport and airport context so examples do not blur together.', 'Build the vertical sections and keep approved positioning language easy to revise.', 'Rise 360 · vertical introduction');

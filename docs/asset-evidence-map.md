@@ -94,7 +94,7 @@ A Storyline-inspired branching interaction using the same fictional launch. The 
 
 **Why the pair matters:** together they visibly demonstrate the design choice `learn → practice`.
 
-**Placement:** Product-Launch Microlearning case study. The public-safe TaskMate AI demo guides visitors through orientation, value, fit, response, and takeaway while pairing each learner step with the real design decision it represents.
+**Placement:** Product-Launch Microlearning case study. The public-safe DraftPath lesson guides visitors through the product promise, customer value, fit, and work-ready handoff, with a separate optional Storyline practice example. The product interface uses native HTML and CSS rather than scaled screenshots.
 
 ---
 

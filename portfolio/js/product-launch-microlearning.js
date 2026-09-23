@@ -1,193 +1,97 @@
 (() => {
-  const asset = '../../../../assets/project-images/product-launch/';
-  const icon = '../../../../assets/icons/portfolio-icons.svg#';
-  const steps = [
-    {
-      name: 'Orient', eyebrow: '01 · Orient', icon: 'icon-elearning',
-      title: 'What does TaskMate AI help a seller do?',
-      copy: 'TaskMate AI helps turn meeting notes into a clear first draft of a customer follow-up. The seller reviews and adapts the draft before sending it.',
-      image: 'product-launch-introduction.webp', alt: 'Sanitized TaskMate AI introduction screen', caption: 'Sanitized learner screen · product promise',
-      action: 'I narrowed approved source material to the customer problem, value, and fit signals a seller needed before the next conversation.',
-      decision: 'Lead with a plain-language promise instead of a feature inventory.',
-      development: 'Use a scannable Rise overview for orientation, with deeper launch detail outside the module.',
-      tool: 'Rise 360 · focused overview'
+  const iconRoot = '../../../../assets/icons/portfolio-icons.svg#';
+  const stages = {
+    promise: {
+      label: '01 · Product promise', title: 'Explain what the offer does.',
+      text: 'I opened with a concise product explanation sellers could use before diving into feature detail.',
+      facts: [['Seller need','Describe the offer in plain language.'],['Design decision','Start with the job it helps with.'],['Development','Use a scannable Rise-style opening.']],
+      screen: `<span class="launch-screen-kicker">01 / MEET THE OFFER</span><h3>Meet DraftPath.</h3><p class="launch-screen-lead">A faster first draft for thoughtful customer follow-up.</p><div class="launch-screen-flow"><span>Meeting notes</span><i>→</i><span>Draft message</span><i>→</i><span>Seller review</span></div><p>DraftPath helps shape a follow-up from notes and highlights what the seller still needs to verify. The seller edits and approves the final message.</p><div class="launch-screen-callout"><strong>The simple promise</strong><span>Spend less time starting from a blank page and more time making the message relevant.</span></div>`
     },
-    {
-      name: 'Connect value', eyebrow: '02 · Connect value', icon: 'icon-feedback',
-      title: 'Connect the capability to customer value.',
-      copy: 'A seller needs more than a list of features. Match the first-draft capability to the outcome a customer would care about.',
-      image: 'product-launch-key-features.webp', alt: 'Sanitized TaskMate AI feature and value screen', caption: 'Sanitized learner screen · features to value',
-      question: 'A team spends too much time drafting follow-ups after meetings. Which value message fits?',
-      choices: [
-        { label: 'Start from a reviewed draft sooner, while the seller keeps control of the final message.', correct: true, feedback: 'Strong connection. It names the customer friction, the useful outcome, and the seller’s review responsibility.' },
-        { label: 'Replace the team’s specialized analytics platform.', correct: false, feedback: 'That promises a different job. The focused launch message is about drafting follow-up text, not analytics.' },
-        { label: 'Automatically run every customer conversation.', correct: false, feedback: 'That overstates the offer. A trustworthy launch module also teaches what the product does not do.' }
-      ],
-      action: 'I converted product detail into a short, sales-ready value story.',
-      decision: 'Connect a capability to the customer problem before asking sellers to recall features.',
-      development: 'Use progressive disclosure in the Rise overview so details appear only when they serve the message.',
-      tool: 'Rise 360 · value framing'
+    value: {
+      label: '02 · Customer value', title: 'Connect capability to a useful outcome.',
+      text: 'I translated product detail into a seller-ready value story that begins with the customer workflow.',
+      facts: [['Seller need','Say why this matters to the buyer.'],['Design decision','Pair capability with the actual work.'],['Development','Reveal detail only as it serves the message.']],
+      screen: `<span class="launch-screen-kicker">02 / SEE THE VALUE</span><h3>Make the next step easier.</h3><p class="launch-screen-lead">The customer need is a timely, accurate follow-up after a conversation.</p><div class="launch-screen-value-grid"><article><span>Without support</span><strong>Notes wait.</strong><p>Someone reconstructs context and starts the message from scratch.</p></article><article><span>With DraftPath</span><strong>A reviewed start.</strong><p>A first draft organizes the key points for seller review.</p></article></div><div class="launch-screen-callout"><strong>What to say</strong><span>“Your team can begin with a structured draft, then check the details and add the judgment only your seller can provide.”</span></div>`
     },
-    {
-      name: 'Recognize fit', eyebrow: '03 · Recognize fit', icon: 'icon-assessment',
-      title: 'Spot a credible use case.',
-      copy: 'Before recommending a product, the seller needs to recognize the task it is suited to support.',
-      image: 'product-launch-use-case-practice.webp', alt: 'Sanitized TaskMate AI use-case practice screen', caption: 'Sanitized learner screen · fit practice',
-      question: 'Which request is the clearest fit for TaskMate AI?',
-      choices: [
-        { label: 'Draft a professional follow-up email from meeting notes.', correct: true, feedback: 'Yes. It is a bounded writing task with a clear human review step.' },
-        { label: 'Run a complex statistical analysis on a specialized dataset.', correct: false, feedback: 'A specialized analytics workflow is a better fit. The scenario helps sellers learn the boundary as well as the opportunity.' },
-        { label: 'Schedule a meeting across several calendars.', correct: false, feedback: 'A calendar tool fits that task better. The useful cue here is a text draft that a person will review.' }
-      ],
-      action: 'I moved the learner from product orientation into a customer-fit judgment.',
-      decision: 'Use a plausible wrong fit so feedback teaches the boundary, not just the correct answer.',
-      development: 'Build the choice and coaching in Storyline as a separate practice asset.',
-      tool: 'Storyline 360 · scenario practice'
+    fit: {
+      label: '03 · Product fit', title: 'Show where the offer fits and where it does not.',
+      text: 'The information stays bounded so sellers can position the product accurately without overstating its capabilities.',
+      facts: [['Seller need','Recognize a plausible use case.'],['Design decision','Make the product boundary explicit.'],['Development','Put fit signals next to non-fit signals.']],
+      screen: `<span class="launch-screen-kicker">03 / KNOW THE FIT</span><h3>Lead with the right use case.</h3><div class="launch-screen-fit"><article><span class="launch-fit-mark">✓</span><div><strong>Good fit</strong><p>Draft a customer follow-up from meeting notes for a seller to review.</p></div></article><article><span class="launch-fit-mark">→</span><div><strong>Different tool</strong><p>Specialized data analysis or calendar automation needs purpose-built systems.</p></div></article></div><p>The offer supports a bounded writing workflow. It does not replace a seller's judgment, analytics tools, or scheduling systems.</p>`
     },
-    {
-      name: 'Respond', eyebrow: '04 · Respond', icon: 'icon-interaction',
-      title: 'Choose the next seller response.',
-      copy: 'A customer asks, “Can TaskMate make every decision for my team?” Choose a response that positions the offer accurately and moves the conversation forward.',
-      image: 'product-launch-use-case-practice.webp', alt: 'Sanitized TaskMate AI applied practice screen', caption: 'Sanitized learner screen · customer response',
-      question: 'What should the seller say next?',
-      choices: [
-        { label: '“It can draft routine follow-ups from notes. Your team reviews the result; we could test it on one workflow.”', correct: true, feedback: 'Strong response. It names a credible use, keeps human review visible, and proposes a bounded next step.' },
-        { label: '“Yes, it can replace your team’s judgment across the whole process.”', correct: false, feedback: 'This overclaims the product. The better response stays within the supported use and keeps people accountable.' },
-        { label: '“I cannot answer until you read every technical document.”', correct: false, feedback: 'The seller can still give a clear, accurate first answer, then point to deeper resources for technical questions.' }
-      ],
-      action: 'I designed the Storyline practice around the live conversation rather than a product fact quiz.',
-      decision: 'Ask for a customer-facing next move and explain why the other responses do not fit.',
-      development: 'Revise scenario wording and feedback with SME and QA comments before release.',
-      tool: 'Storyline 360 · explanatory feedback'
-    },
-    {
-      name: 'Take away', eyebrow: '05 · Take away', icon: 'icon-feedback',
-      title: 'Keep the message short and the resources close.',
-      copy: 'A useful launch microlearning ends with an action the seller can carry into the next conversation, while details that change stay in maintained resources.',
-      image: null,
-      action: 'I kept the overview and scenario modular so each could be updated when launch guidance changed.',
-      decision: 'Finish with a usable message and a clear handoff instead of expanding the module into a product encyclopedia.',
-      development: 'Use Review 360 for in-course feedback and Asana to track ownership, revisions, and completion messaging.',
-      tool: 'Review 360 + Asana · QA and maintenance'
+    handoff: {
+      label: '04 · Work-ready handoff', title: 'Close with a clear next conversation.',
+      text: 'The lesson ends with a usable positioning line and a route to the approved resource, rather than another recall question.',
+      facts: [['Seller need','Carry the message into a conversation.'],['Design decision','End with a usable takeaway.'],['Development','Keep changing details in a maintained resource.']],
+      screen: `<span class="launch-screen-kicker">04 / TAKE IT TO WORK</span><h3>A message you can use.</h3><div class="launch-screen-quote">“DraftPath helps your team turn meeting notes into a first follow-up draft that a seller can review, personalize, and approve.”</div><div class="launch-screen-checklist"><strong>Before the next customer conversation</strong><span>✓ Confirm the current approved positioning.</span><span>✓ Ask how the team handles follow-up today.</span><span>✓ Keep seller review visible in the story.</span></div><p class="launch-screen-end">You have completed the product introduction.</p>`
     }
-  ];
-
-  const el = (id) => document.getElementById(id);
-  const fields = {
-    progressText: el('launchProgressText'), progressFill: el('launchProgressFill'),
-    stageIcon: el('launchStageIcon'), eyebrow: el('launchStageEyebrow'),
-    title: el('launchStageTitle'), copy: el('launchStageCopy'),
-    figure: el('launchStageFigure'), image: el('launchStageImage'),
-    caption: el('launchStageCaption'), choiceArea: el('launchChoiceArea'),
-    question: el('launchChoicePrompt'), options: el('launchChoiceOptions'),
-    feedback: el('launchFeedback'), finish: el('launchFinish'),
-    action: el('launchDesignAction'), decision: el('launchDesignDecision'),
-    development: el('launchDevelopmentMove'), tool: el('launchDesignTool'),
-    hint: el('launchStepHint'), back: el('launchBack'),
-    next: el('launchContinue'), restart: el('launchRestart')
   };
-  if (!fields.next) return;
-  const progressItems = [...document.querySelectorAll('.launch-step-list li')];
-  const learnerPanel = document.querySelector('.launch-learner-panel');
-  const designerPanel = document.querySelector('.launch-designer-panel');
-  const answers = new Map();
-  let current = 0;
-
-  function showFeedback(choice, button) {
-    fields.feedback.textContent = choice.feedback;
-    fields.feedback.dataset.result = choice.correct ? 'strong' : 'coach';
-    fields.feedback.hidden = false;
-    [...fields.options.children].forEach((option) => {
-      const selected = option === button;
-      option.classList.toggle('selected', selected);
-      option.setAttribute('aria-pressed', String(selected));
+  const keys = Object.keys(stages);
+  const tabs = [...document.querySelectorAll('[data-launch-stage]')];
+  const el = id => document.getElementById(id);
+  const screen = el('launchLearningContent');
+  if (!screen) return;
+  let activeIndex = 0;
+  const render = key => {
+    const item = stages[key], index = keys.indexOf(key);
+    if (!item || index < 0) return;
+    activeIndex = index;
+    screen.innerHTML = item.screen;
+    el('launchDemoLabel').textContent = item.label;
+    el('launchDemoTitle').textContent = item.title;
+    el('launchDemoText').textContent = item.text;
+    el('launchDemoPoints').innerHTML = item.facts.map((fact, i) => `<article><svg class="portfolio-icon" aria-hidden="true"><use href="${iconRoot}${['icon-feedback','icon-interaction','icon-learning-design'][i]}"></use></svg><div><strong>${fact[0]}</strong><span>${fact[1]}</span></div></article>`).join('');
+    el('launchStageCount').textContent = `${index + 1} / ${keys.length}`;
+    el('launchProgressFill').style.width = `${(index + 1) / keys.length * 100}%`;
+    document.querySelectorAll('.launch-sim-dots span').forEach((dot, i) => dot.classList.toggle('active', i === index));
+    tabs.forEach(tab => { const active = tab.dataset.launchStage === key; tab.classList.toggle('active', active); tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
+    el('launchPrev').disabled = index === 0;
+    el('launchNext').disabled = index === keys.length - 1;
+    el('launchNext').textContent = index === keys.length - 1 ? 'Lesson complete' : 'Continue →';
+    el('launchScreenScroll').scrollTop = 0;
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => render(tab.dataset.launchStage));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[next].focus(); render(tabs[next].dataset.launchStage);
     });
-    fields.next.disabled = false;
-    fields.hint.textContent = choice.correct ? 'Strong choice. Continue when ready.' : 'Read the coaching, then continue or choose again.';
+  });
+  el('launchPrev').addEventListener('click', () => render(keys[activeIndex - 1]));
+  el('launchNext').addEventListener('click', () => render(keys[activeIndex + 1]));
+  render(keys[0]);
+  const answerButtons = [...document.querySelectorAll('[data-launch-answer]')];
+  answerButtons.forEach(button => button.addEventListener('click', () => {
+    answerButtons.forEach(item => item.classList.toggle('selected', item === button));
+    const feedback = el('launchPracticeFeedback');
+    feedback.classList.add('show');
+    feedback.innerHTML = button.dataset.launchAnswer === 'correct'
+      ? '<strong>Strong fit.</strong> Drafting a follow-up from notes is the bounded writing task this offer supports. The seller still checks and approves the message.'
+      : '<strong>Try another fit.</strong> This task belongs in a specialized analytics or scheduling system. DraftPath helps with a reviewed writing draft.';
+  }));
+  const outcomes = {
+    seller: ['icon-feedback','Seller-ready','Prepare for the conversation, not a technical exam.','The learner could review what the offer solves, recognize fit signals, and rehearse a customer-facing next step without needing implementation-level depth.','Rise overview + separate Storyline practice'],
+    maintain: ['icon-workflow','Maintainable','Keep fast-changing launch guidance modular.','Orientation and practice were separate deliverables, so changes to approved messaging, resources, or scenarios did not require rebuilding the whole experience.','Separate update paths for overview and practice'],
+    review: ['icon-feedback','Reviewable','Separate content feedback from change tracking.','Review 360 supported comments in context while Asana carried ownership and status from observation to revision.','SME + QA review with tracked follow-through']
+  };
+  const outcomeTabs = [...document.querySelectorAll('[data-launch-outcome]')];
+  function renderOutcome(key) {
+    const item = outcomes[key]; if (!item) return;
+    ['Icon','Label','Title','Text','Proof'].forEach((name, i) => {
+      const field = el('launchOutcome' + name);
+      if (name === 'Icon') field.setAttribute('href', iconRoot + item[i]); else field.textContent = item[i];
+    });
+    outcomeTabs.forEach(tab => { const active = tab.dataset.launchOutcome === key; tab.classList.toggle('active', active); tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; });
   }
-
-  function render() {
-    const step = steps[current];
-    [learnerPanel, designerPanel].forEach((panel) => {
-      if (!panel) return;
-      panel.classList.remove('is-entering');
-      void panel.offsetWidth;
-      panel.classList.add('is-entering');
+  outcomeTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => renderOutcome(tab.dataset.launchOutcome));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? outcomeTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + outcomeTabs.length) % outcomeTabs.length;
+      outcomeTabs[next].focus(); renderOutcome(outcomeTabs[next].dataset.launchOutcome);
     });
-    fields.progressText.textContent = 'Step ' + (current + 1) + ' of ' + steps.length + ' · ' + step.name;
-    fields.progressFill.style.width = ((current + 1) / steps.length * 100) + '%';
-    progressItems.forEach((item, index) => {
-      item.classList.toggle('active', index === current);
-      item.classList.toggle('complete', index < current);
-    });
-    fields.stageIcon.setAttribute('href', icon + step.icon);
-    fields.eyebrow.textContent = step.eyebrow;
-    fields.title.textContent = step.title;
-    fields.copy.textContent = step.copy;
-    fields.action.textContent = step.action;
-    fields.decision.textContent = step.decision;
-    fields.development.textContent = step.development;
-    fields.tool.textContent = step.tool;
-    fields.back.disabled = current === 0;
-    fields.next.textContent = current === steps.length - 1 ? 'Restart demo ↺' : current === steps.length - 2 ? 'Finish microlearning →' : 'Continue →';
-    fields.figure.hidden = !step.image;
-    fields.finish.hidden = current !== steps.length - 1;
-    if (step.image) {
-      fields.image.src = asset + step.image;
-      fields.image.alt = step.alt;
-      fields.caption.textContent = step.caption;
-    }
-    fields.choiceArea.hidden = !step.choices;
-    fields.options.replaceChildren();
-    fields.feedback.hidden = true;
-    fields.feedback.textContent = '';
-    if (step.choices) {
-      fields.question.textContent = step.question;
-      step.choices.forEach((choice, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'launch-choice';
-        button.setAttribute('aria-pressed', 'false');
-        const letter = document.createElement('span');
-        letter.textContent = String.fromCharCode(65 + index);
-        const label = document.createElement('span');
-        label.textContent = choice.label;
-        button.append(letter, label);
-        button.addEventListener('click', () => {
-          answers.set(current, index);
-          showFeedback(choice, button);
-        });
-        fields.options.append(button);
-      });
-      const answer = answers.get(current);
-      if (answer !== undefined) {
-        showFeedback(step.choices[answer], fields.options.children[answer]);
-      } else {
-        fields.next.disabled = true;
-        fields.hint.textContent = 'Choose a response to see coaching.';
-      }
-    } else {
-      fields.next.disabled = false;
-      fields.hint.textContent = current === steps.length - 1 ? 'You have completed the microlearning. Restart to try another path.' : 'Read the short introduction, then continue.';
-    }
-  }
-
-  fields.back.addEventListener('click', () => {
-    if (current > 0) { current -= 1; render(); }
   });
-  fields.next.addEventListener('click', () => {
-    if (current === steps.length - 1) {
-      answers.clear();
-      current = 0;
-    } else {
-      current += 1;
-    }
-    render();
-  });
-  fields.restart.addEventListener('click', () => {
-    answers.clear();
-    current = 0;
-    render();
-  });
-  render();
 })();
