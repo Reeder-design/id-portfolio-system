@@ -87,16 +87,12 @@
 
   const feedback = {
     questions: {
-      title: 'Clarify the explanation and reference support.',
-      description: 'A question that keeps returning suggests the next version needs a clearer explanation, a concrete seller example, or a quick reference learners can revisit.'
-    },
-    misconceptions: {
-      title: 'Practice the distinction in a scenario.',
-      description: 'When responses suggest a category distinction is unclear, future scenario choices and feedback could show which evidence fits best and why another interpretation is weaker.'
+      title: 'Use recurring questions to shape a decision cue.',
+      description: 'If sellers repeatedly ask how to identify the approver, a future quick reference could pair the customer signal with the exact next question and evidence to listen for.'
     },
     examples: {
-      title: 'Build practice from credible seller situations.',
-      description: 'Useful examples can inform fictionalized cases that feel relevant across audiences while keeping real customer and opportunity details private.'
+      title: 'Turn a seller example into safe scenario practice.',
+      description: 'A useful account story can become a fictional choice-and-feedback exercise: preserve the decision the seller faced, remove account details, and let learners practice the next question.'
     },
     timing: {
       title: 'Simplify background and protect application.',

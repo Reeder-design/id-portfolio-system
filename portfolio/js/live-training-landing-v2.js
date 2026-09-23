@@ -10,9 +10,9 @@
   const sceneCaptions = {
     room: ['Share one prompt', 'Pairs compare reasoning', 'Listen across tables', 'Reframe for the room'],
     online: ['Share the example', 'Poll for interpretation', 'Read chat explanations', 'Practice in breakouts'],
-    hybrid: ['Share one accessible prompt', 'Connect room and remote', 'Hear both groups', 'Compare one shared view']
+    hybrid: ['Explore the example independently', 'Complete the online check', 'Bring the case into the workshop', 'Compare reasoning and get feedback']
   };
-  const sceneNames = { room: 'in-person', online: 'live online', hybrid: 'hybrid' };
+  const sceneNames = { room: 'in-person', online: 'live online', hybrid: 'hybrid self-paced and live' };
   const sceneState = new Map(scenes.map((scene) => [scene, { step: 0, paused: false }]));
 
   function inView(element) {

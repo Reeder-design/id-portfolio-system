@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="lt-gallery-card lt-gallery-hybrid">
-              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/people-collaboration/team.webp" alt=""></span><span>Hybrid</span><i aria-hidden="true"></i></div>
+              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/people-collaboration/team.webp" alt=""></span><span>Hybrid classroom</span><i aria-hidden="true"></i></div>
               <div class="lt-mini-hybrid" aria-hidden="true">
                 <div class="lt-g-hybrid-room"><span class="lt-g-hybrid-board"></span><span class="lt-g-hybrid-person"></span><span class="lt-g-hybrid-person"></span></div>
                 <span class="lt-g-hybrid-link"></span>
@@ -202,25 +202,27 @@
         </section>
 
         <section class="lt-tab-panel" id="lt-panel-hybrid" role="tabpanel" aria-labelledby="lt-tab-hybrid" tabindex="0" hidden>
-          <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Transferable design and facilitation model</span><h3>Give both audiences access to the same activity.</h3></div><p>This model applies my classroom, virtual, and design experience to a combined room. It does not represent a documented hybrid delivery project.</p></div>
+          <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Transferable design and facilitation model</span><h3>Let self-paced prep lead into live practice.</h3></div><p>Hybrid learning can mix locations, as in the gallery's hybrid classroom, or combine formats over time. This model shows a short self-paced lesson flowing into live practice; it is not a documented hybrid-delivery project.</p></div>
           <div class="lt-panel-body">
             <div class="lt-setting-visual lt-hybrid-visual" data-lt-scene="hybrid" data-step="0">
-              <div class="lt-scene-top"><span>Hybrid design model</span><button type="button" data-scene-toggle aria-label="Pause hybrid simulation">Pause</button></div>
-              <div class="lt-hybrid-scene" role="img" aria-label="A room group and remote group receive the same prompt, contribute through shared audio and a response board, then compare one combined view.">
-                <div class="lt-hybrid-side lt-hybrid-room"><span>Room</span><i aria-hidden="true"></i><i aria-hidden="true"></i></div>
-                <div class="lt-hybrid-shared"><span>Shared board</span><strong>One prompt</strong><small>Room + remote</small></div>
-                <div class="lt-hybrid-side lt-hybrid-remote"><span>Remote</span><i aria-hidden="true"></i><i aria-hidden="true"></i></div>
-                <div class="lt-hybrid-connection lt-hybrid-connection-left" aria-hidden="true"></div>
-                <div class="lt-hybrid-connection lt-hybrid-connection-right" aria-hidden="true"></div>
-                <div class="lt-hybrid-voice lt-hybrid-voice-room">Heard in room</div>
-                <div class="lt-hybrid-voice lt-hybrid-voice-remote">Heard online</div>
-                <div class="lt-hybrid-synthesis">Compare both responses</div>
+              <div class="lt-scene-top"><span>Self-paced + live workshop</span><button type="button" data-scene-toggle aria-label="Pause hybrid simulation">Pause</button></div>
+              <div class="lt-hybrid-scene" role="img" aria-label="Split-screen blended-learning model: a learner completes an online lesson and check, then brings that preparation into a facilitated virtual workshop for discussion and feedback.">
+                <div class="lt-hybrid-pane lt-hybrid-async">
+                  <div class="lt-hybrid-pane-head"><span class="lt-hybrid-mode">01 / Online · self-paced</span><span class="lt-hybrid-status">Lesson</span></div>
+                  <div class="lt-hybrid-course"><div class="lt-hybrid-course-top"><span>Sales conversation</span><span>2 / 3</span></div><div class="lt-hybrid-progress"><i></i></div><div class="lt-hybrid-course-prompt">Which detail changes your next question?</div><div class="lt-hybrid-answer"><span class="lt-hybrid-answer-mark"></span><span>Customer impact</span></div><div class="lt-hybrid-ready">✓ Prep complete</div></div>
+                </div>
+                <div class="lt-hybrid-handoff" aria-hidden="true"><span>→</span></div>
+                <div class="lt-hybrid-pane lt-hybrid-live">
+                  <div class="lt-hybrid-pane-head"><span class="lt-hybrid-mode">02 / Live workshop</span><span class="lt-hybrid-status">Live</span></div>
+                  <div class="lt-hybrid-meeting"><div class="lt-hybrid-slide"><small>Shared case</small><strong>What would you ask next?</strong><div class="lt-hybrid-slide-cue"><i></i><span>Customer impact</span></div></div><div class="lt-hybrid-participants"><span class="lt-hybrid-person lt-hybrid-person-a"></span><span class="lt-hybrid-person lt-hybrid-person-b"></span><span class="lt-hybrid-person lt-hybrid-person-c"></span></div></div>
+                  <div class="lt-hybrid-discuss"><span>Discussion</span><strong>Compare your reasoning</strong></div>
+                </div>
               </div>
-              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share one accessible prompt</strong></div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Explore the example independently</strong></div>
             </div>
             <div class="lt-lenses">
-              <div class="lt-lens"><h4>Build / Design</h4><p>Use accessible shared materials, an audio plan, visible instructions, mixed-group roles, one response board, and a fallback for disconnected participants.</p></div>
-              <div class="lt-lens"><h4>Facilitate / Deliver</h4><p>Alternate who contributes, repeat in-room comments into the mic, monitor remote chat, and check understanding from both audiences before moving on.</p></div>
+              <div class="lt-lens"><h4>Build / Design</h4><p>Put concise context and a short knowledge check in accessible self-paced prep. Carry the same case into a live discussion rather than repeating the lesson.</p></div>
+              <div class="lt-lens"><h4>Facilitate / Deliver</h4><p>Use prework responses to spot a misconception, ask learners to defend a choice, compare reasoning, and give feedback while the decision is fresh.</p></div>
             </div>
           </div>
         </section>
@@ -247,19 +249,19 @@
             <span class="lt-compare-chain"><span>Poll + chat</span><i aria-hidden="true">→</i><span>Read responses</span><i aria-hidden="true">→</i><span>Reframe for practice</span></span>
           </button>
           <button type="button" class="lt-compare-track" data-compare-mode="hybrid" aria-pressed="false">
-            <span class="lt-compare-track-label">Hybrid</span>
-            <span class="lt-compare-chain"><span>Shared prompt</span><i aria-hidden="true">→</i><span>Hear both groups</span><i aria-hidden="true">→</i><span>Compare together</span></span>
+            <span class="lt-compare-track-label">Hybrid: prep + live</span>
+            <span class="lt-compare-chain"><span>Online prep</span><i aria-hidden="true">→</i><span>Read the check</span><i aria-hidden="true">→</i><span>Discuss live</span></span>
           </button>
         </div>
       </div>
       <div class="lt-table-wrap">
         <table class="lt-comparison-table" data-active-mode="room">
           <caption>Comparison of practice, learner signals, and facilitation risks for the same sales-conversation goal</caption>
-          <thead><tr><th scope="col">Design choice</th><th scope="col">In-Person</th><th scope="col">Live Online</th><th scope="col">Hybrid</th></tr></thead>
+          <thead><tr><th scope="col">Design choice</th><th scope="col">In-Person</th><th scope="col">Live Online</th><th scope="col">Hybrid: prep + live</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Practice</th><td>Pairs annotate the example, then explain a choice aloud.</td><td>Poll first, discuss in chat or breakouts, then share reasoning.</td><td>Both audiences use the same prompt and response board.</td></tr>
-            <tr><th scope="row">Signal to read</th><td>Table talk, written work, and who has not contributed.</td><td>Poll patterns, questions, chat, examples, and silence.</td><td>Room contributions and remote responses on one shared view.</td></tr>
-            <tr><th scope="row">Risk to manage</th><td>A few voices dominate or transitions consume practice time.</td><td>Unclear instructions or technical friction obscure understanding.</td><td>Room conversation leaves remote learners out of the exchange.</td></tr>
+            <tr><th scope="row">Practice</th><td>Pairs annotate the example, then explain a choice aloud.</td><td>Poll first, discuss in chat or breakouts, then share reasoning.</td><td>Complete a short online check, then apply the same case in a live workshop.</td></tr>
+            <tr><th scope="row">Signal to read</th><td>Table talk, written work, and who has not contributed.</td><td>Poll patterns, questions, chat, examples, and silence.</td><td>Prework choices alongside live explanations and questions.</td></tr>
+            <tr><th scope="row">Risk to manage</th><td>A few voices dominate or transitions consume practice time.</td><td>Unclear instructions or technical friction obscure understanding.</td><td>Repeating the online lesson in the live session instead of using time for application.</td></tr>
           </tbody>
         </table>
       </div>
@@ -278,7 +280,11 @@
         <a class="btn btn-primary" href="virtual-sales-workshop-facilitation/index.html">Explore the case study <span aria-hidden="true">→</span></a>
       </div>
       <figure class="lt-case-image">
-        <img src="../../../assets/project-images/live-training/virtual-training-facilitation.webp" alt="Illustration of a virtual training session with facilitator, participant grid, and shared learning content." loading="lazy">
+        <div class="lt-case-workshop-art" role="img" aria-label="Illustrative virtual MEDDPICC workshop screen showing a shared discovery-question slide and an audience panel.">
+          <div class="lt-case-workshop-bar"><span><i></i><i></i><i></i> Virtual workshop</span><span class="lt-case-workshop-live">● Live session</span></div>
+          <div class="lt-case-workshop-body"><div class="lt-case-workshop-slide"><span class="lt-case-workshop-icon"><img src="../../../assets/icons/pixel/workflows/analytics-insights/presentation.webp" alt=""></span><small>MEDDPICC / Discovery</small><strong>What evidence changes your next question?</strong><div class="lt-case-workshop-evidence"><span>Metric</span><span>Buyer</span><span>Decision</span></div></div><div class="lt-case-workshop-audience"><span>Audience</span><div class="lt-case-workshop-tile"><i></i><b>Seller</b></div><div class="lt-case-workshop-tile"><i></i><b>Participant</b></div><div class="lt-case-workshop-tile"><i></i><b>Facilitator</b></div></div></div>
+          <div class="lt-case-workshop-footer"><span class="lt-case-workshop-activity">Poll: choose the next question</span><span class="lt-case-workshop-chat">Discussion open</span></div>
+        </div>
         <figcaption>Questions and learner examples create the signals that guide live decisions.</figcaption>
       </figure>
     </div>
