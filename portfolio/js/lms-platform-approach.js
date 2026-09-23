@@ -96,7 +96,7 @@
         {
           tab: 'Risk overview', title: 'See renewal risk before it becomes an audit issue.',
           summary: 'I would make due-soon and overdue populations visible alongside overall compliance.',
-          kind: 'metrics', heading: 'Compliance Overview',
+          kind: 'risk', heading: 'Compliance Overview',
           values: [['Compliant', '94.2%', 'current'], ['Expiring in 30 days', '128', 'attention'], ['Overdue assignments', '47', 'review'], ['New-hire gaps', '09', 'review']],
           list: [['Programs in progress', '18 active'], ['Assignment activity', 'Today'], ['Recent reports', 'Audit export ready']],
           action: 'Open expiring certifications', outcome: 'Filtered to 128 employees whose certification expires within 30 days.',
@@ -138,7 +138,7 @@
         {
           tab: 'Admin intake', title: 'Locate the structure behind the assignment.',
           summary: 'I would start at the learning object type, then trace the assignment source.',
-          kind: 'metrics', heading: 'Learning Administration',
+          kind: 'sap-intake', heading: 'Learning Administration',
           values: [['Users', '14,284', 'active'], ['Items', '681', 'catalog'], ['Curricula', '84', 'managed'], ['Assignment profiles', '46', '4 pending']],
           list: [['Profile sync', '4 require processing'], ['Curriculum review', 'Field Operations Readiness'], ['Recent job', 'Assignment profile executed']],
           action: 'Open curricula', outcome: 'Curriculum register opened; Field Operations Readiness is ready to inspect.',
@@ -164,7 +164,7 @@
         {
           tab: 'Processing audit', title: 'Explain why a learner received training.',
           summary: 'Processing totals and an assignment source make bulk automation supportable.',
-          kind: 'metrics', heading: 'Assignment Profile Processing',
+          kind: 'sap-audit', heading: 'Assignment Profile Processing',
           values: [['Matched users', '1,846', 'valid'], ['New assignments', '128', 'added'], ['Removed', '17', 'review'], ['Unchanged', '1,701', 'retained']],
           list: [['Job state', 'Processing → Valid'], ['Sample learner', 'Taylor Kim'], ['Assignment source', 'AP_FIELD_TECH_NA']],
           action: 'Trace Taylor Kim', outcome: 'Field Operations Readiness assigned by AP_FIELD_TECH_NA; source attributes shown.',
@@ -180,7 +180,7 @@
         {
           tab: 'Task home', title: 'Start a campaign from the work queue.',
           summary: 'Learning campaigns sit alongside worker populations, tasks, and approvals.',
-          kind: 'metrics', heading: 'Learning Operations',
+          kind: 'workday-tasks', heading: 'Learning Operations',
           values: [['Required learning', '89%', 'complete'], ['Campaigns', '07', 'active'], ['Active workers', '14,284', 'current'], ['Approvals', '03', 'awaiting']],
           list: [['Create Learning Campaign', 'Task'], ['Review security audience', 'Approval'], ['Manager Security Awareness', 'Draft']],
           action: 'Create campaign', outcome: 'Manager Security Awareness campaign opened in Draft.',
@@ -346,10 +346,30 @@
     docebo:['Partner Academy','Certifications','Enrollments','Solution Partners — West'],
     cornerstone:['Expiring in 30 days','Final Assessment','Division','North America'],
     sap:['Curricula','Safety Foundations','Job code','Taylor Kim'],
-    workday:['Campaigns','Report','Approval','Past due'],
+    workday:['Create Learning Campaign','Report','Approval','Past due'],
     blackboard:['College of Engineering','Engineering','Academic Integrity Statement','ART105-02'],
     canvas:['College of Engineering','ID Administrator','Pending changes','ENG101-03'],
     sharepoint:['Learning Hub','Product Guide','External guests','Pending approval']
+  };
+  const workflowGuides={
+    absorb:['Select the attention tile to locate the affected course.','Open Cybersecurity Essentials from the course register.','Inspect the lesson being replaced before staging the package.','Open Morgan Lee, then review enrollment and transcript details.'],
+    docebo:['Open Partner Academy in the enterprise tree.','Preview the Certifications menu in the partner site.','Review the Enrollments permission and its branch scope.','Open the West branch to read its own operating signals.'],
+    cornerstone:['Open the expiring population from the compliance overview.','Inspect the final assessment in the certification lifecycle.','Review the division condition before previewing the assignment.','Open North America to plan the overdue intervention.'],
+    sap:['Open Curricula from Learning Administration.','Inspect the required Safety Foundations item.','Review the job code condition in the assignment profile.','Trace Taylor Kim back to the processing job.'],
+    workday:['Open the campaign work queue.','Inspect the saved audience report feeding the campaign.','Review the approval step before scheduling delivery.','Open the past-due segment for follow-up.'],
+    blackboard:['Select the College of Engineering hierarchy node.','Open the Engineering term import batch.','Trace the shared Academic Integrity Statement.','Inspect the course that needs archive review.'],
+    canvas:['Select the College of Engineering subaccount.','Review the ID Administrator role.','Inspect pending Blueprint changes before sync.','Open the course with a sync conflict.'],
+    sharepoint:['Open Learning Hub in the active sites list.','Inspect Product Guide version history.','Review the external guest permission scope.','Open the pending approval step for the page.']
+  };
+  const menuForScene={
+    absorb:['Dashboard','Courses','Courses','Reports'],
+    docebo:['Extended enterprise','Pages & menus','Power users','Reports'],
+    cornerstone:['Compliance','Compliance','Assignments','Reports'],
+    sap:['Learning Admin','Curricula','Assignment Profiles','Assignment Profiles'],
+    workday:['My Tasks','Campaigns','Campaigns','Analytics'],
+    blackboard:['Administrator Panel','Courses','Content Collection','System Reports'],
+    canvas:['Accounts','Permissions','Blueprints','Blueprints'],
+    sharepoint:['Active sites','Libraries','Permissions','Pages']
   };
   const dragCases={
     'docebo:2':{source:'Reports · view',target:'Solution Partners — West',result:'Effective access: partner manager can see West reports; other branches stay outside the resource scope.'},
@@ -361,6 +381,10 @@
     return '<button type="button" class="pui-inspect '+(selected===label?'is-selected':'')+' '+(activePrompt&&label.includes(activePrompt)?'is-target':'')+'" data-inspect="'+esc(label)+'" aria-label="Inspect '+esc(label)+'"><span>'+esc(label)+'</span><i aria-hidden="true">↗</i></button>';
   }
   function renderContent(scene,selected){
+    if(scene.kind==='risk')return '<div class="pui-risk-head"><div><small>COMPLIANCE PULSE</small><strong>'+esc(scene.values[0][1])+'</strong><span>Current certification coverage</span></div><div class="pui-risk-ring" aria-hidden="true"><i></i></div></div><div class="pui-risk-queue"><h5>Renewal and exception queue</h5>'+scene.values.slice(1).map((v,i)=>'<div class="pui-risk-row"><span class="pui-risk-count">'+esc(v[1])+'</span>'+item(v[0],scene.kind,i,selected)+'<small>'+esc(v[2])+'</small></div>').join('')+'</div><div class="pui-risk-footer">'+scene.list.map(v=>'<span><b>'+esc(v[0])+'</b>'+esc(v[1])+'</span>').join('')+'</div>';
+    if(scene.kind==='sap-intake')return '<div class="pui-sap-objects"><h5>Learning object registry</h5><div>'+scene.values.map((v,i)=>'<div class="pui-sap-object"><b>'+String(i+1).padStart(2,'0')+'</b>'+item(v[0],scene.kind,i,selected)+'<strong>'+esc(v[1])+'</strong><small>'+esc(v[2])+'</small></div>').join('')+'</div></div><div class="pui-sap-job"><strong>PROCESSING ACTIVITY</strong>'+scene.list.map(v=>'<span>'+item(v[0],scene.kind,0,selected)+'<b>'+esc(v[1])+'</b></span>').join('')+'</div>';
+    if(scene.kind==='sap-audit')return '<div class="pui-sap-run"><div><small>ASSIGNMENT PROFILE JOB</small><strong>AP_FIELD_TECH_NA</strong><span>Processing → Valid</span></div><div class="pui-sap-run-bar"><i></i></div></div><div class="pui-sap-ledger">'+scene.values.map((v,i)=>'<div><small>'+esc(v[0])+'</small>'+item(v[1]+' '+v[0],scene.kind,i,selected)+'<span>'+esc(v[2])+'</span></div>').join('')+'</div><div class="pui-sap-trace"><b>TRACE ONE LEARNER</b>'+item('Taylor Kim',scene.kind,0,selected)+'<span>Assignment source: AP_FIELD_TECH_NA</span></div>';
+    if(scene.kind==='workday-tasks')return '<div class="pui-workday-head"><div><small>LEARNING OPERATIONS</small><strong>Today’s work</strong><span>Campaigns, worker audiences, and approvals in one queue</span></div><b>03</b></div><div class="pui-workday-queue"><h5>My Tasks</h5>'+scene.list.map((v,i)=>'<div class="pui-workday-task"><b>'+String(i+1).padStart(2,'0')+'</b>'+item(v[0],scene.kind,i,selected)+'<small>'+esc(v[1])+'</small></div>').join('')+'</div><div class="pui-workday-stats">'+scene.values.slice(0,3).map((v,i)=>'<div><small>'+esc(v[0])+'</small><strong>'+esc(v[1])+'</strong><span>'+esc(v[2])+'</span></div>').join('')+'</div>';
     if(scene.kind==='metrics')return '<div class="pui-metrics">'+scene.values.map((v,i)=>'<div class="pui-metric"><small>'+esc(v[0])+'</small>'+item(v[1]+' '+v[0],scene.kind,i,selected)+'<span>'+esc(v[2])+'</span></div>').join('')+'</div><div class="pui-list"><h5>Attention and activity</h5>'+scene.list.map((v,i)=>'<div class="pui-list-row">'+item(v[0],scene.kind,i,selected)+'<b>'+esc(v[1])+'</b></div>').join('')+'</div>';
     if(scene.kind==='table'||scene.kind==='matrix')return '<div class="pui-table-wrap"><table class="pui-table"><thead><tr>'+scene.columns.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+scene.rows.map((row,i)=>'<tr class="'+(selected===row[0]?'is-selected':'')+'">'+row.map((v,j)=>'<td>'+(j===0?item(v,scene.kind,i,selected):esc(v))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'+(scene.note?'<p class="pui-note">'+esc(scene.note)+'</p>':'')+(scene.heading==='Course Activity Report'&&selected==='Morgan Lee'?'<div class="pui-learner-profile"><div><b>ML</b><span><strong>Morgan Lee</strong><small>Sales · Cybersecurity Essentials</small></span></div><p>Current progress: 60% · score not recorded</p><div class="pui-profile-actions"><button type="button" data-profile="enrollment">Enrollment</button><button type="button" data-profile="transcript">Transcript</button><button type="button" data-profile="support">Support action</button></div></div>':'');
     if(scene.kind==='tree')return '<div class="pui-tree">'+scene.nodes.map((node,i)=>'<div class="pui-tree-node depth-'+node[0]+'">'+item(node[1],scene.kind,i,selected)+'<small>'+esc(node[2])+'</small></div>').join('')+'</div>';
@@ -370,6 +394,24 @@
     if(scene.kind==='timeline')return '<div class="pui-timeline">'+scene.steps.map((step,i)=>'<div class="pui-step"><b>'+String(i+1).padStart(2,'0')+'</b>'+item(step[0],scene.kind,i,selected)+'<span>'+esc(step[1])+'</span></div>').join('')+'</div>'+(scene.note?'<p class="pui-note">'+esc(scene.note)+'</p>':'');
     if(scene.kind==='funnel')return '<div class="pui-funnel">'+scene.values.map((v,i)=>'<div class="pui-funnel-row" style="--bar:'+Math.max(30,100-i*12)+'%">'+item(v[0],scene.kind,i,selected)+'<i></i><strong>'+esc(v[1])+'</strong></div>').join('')+'</div>';
     return '';
+  }
+  function inspectionDetail(scene,label,preferred){
+    if(label.includes(preferred))return scene.outcome;
+    const row=(scene.rows||[]).find(v=>v[0]===label);
+    if(row)return row.slice(1).map((v,i)=>((scene.columns||[])[i+1]||'Status')+': '+v).join(' · ')+'. '+scene.check;
+    const field=(scene.fields||[]).find(v=>v[0]===label);
+    if(field)return field[0]+': '+field[1]+'. '+scene.check;
+    const block=(scene.blocks||[]).find(v=>v[1]===label);
+    if(block)return block[1]+' · '+block[2]+'. '+scene.check;
+    const metric=(scene.values||[]).find(v=>label===v[0]||label===v[1]+' '+v[0]);
+    if(metric)return metric[0]+': '+metric[1]+(metric[2]?' · '+metric[2]:'')+'. '+scene.check;
+    const entry=(scene.list||[]).find(v=>v[0]===label);
+    if(entry)return entry[0]+': '+entry[1]+'. '+scene.check;
+    const node=(scene.nodes||[]).find(v=>v[1]===label);
+    if(node)return node[1]+' · '+node[2]+'. '+scene.check;
+    const step=(scene.steps||[]).find(v=>v[0]===label);
+    if(step)return step[0]+': '+step[1]+'. '+scene.check;
+    return scene.check;
   }
   function makeWorkbench(root){
     const ids=root.dataset.platforms.split(',');
@@ -381,15 +423,16 @@
     }
     function render(){
       const platform=demos[platformId],scene=getScene(),preferred=promptTarget(),drag=dragCases[platformId+':'+sceneIndex];
+      const activeMenu=menuForScene[platformId][sceneIndex];
       activePrompt=preferred;
       root.dataset.theme=platform.className;
       root.innerHTML='<div class="platform-tabs" role="tablist" aria-label="Choose a platform">'+ids.map(id=>'<button type="button" role="tab" data-platform="'+id+'" aria-selected="'+(id===platformId)+'" class="platform-tab'+(id===platformId?' active':'')+'"><img src="'+esc(demos[id].icon)+'" alt="">'+esc(demos[id].name)+'</button>').join('')+'</div>'+
         '<div class="platform-scene-nav" role="tablist" aria-label="'+esc(platform.name)+' walkthrough screens">'+platform.scenes.map((s,i)=>'<button type="button" role="tab" data-scene="'+i+'" aria-selected="'+(i===sceneIndex)+'" class="'+(i===sceneIndex?'active':'')+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+esc(s.tab)+'</span></button>').join('')+'</div>'+
-        '<div class="platform-panel" role="tabpanel" aria-live="polite"><div class="platform-screen"><div class="platform-screen-bar"><span class="pui-brand"><img src="'+esc(platform.icon)+'" alt=""><strong>'+esc(platform.name)+'</strong></span><span class="pui-sim-tag">Portfolio-safe simulation</span></div><div class="pui-app"><aside class="pui-sidebar" aria-hidden="true">'+platform.menu.map((v,i)=>'<span class="'+(i===Math.min(sceneIndex,platform.menu.length-1)?'current':'')+'">'+esc(v)+'</span>').join('')+'</aside>'+
-        '<div class="pui-work"><div class="pui-toolbar"><div><small>'+esc(platform.name)+' / administration</small><h4>'+esc(scene.heading)+'</h4></div><span class="pui-scene-count">'+(sceneIndex+1)+' / 4</span></div>'+
-        '<div class="pui-guide"><strong>YOUR TASK</strong><span>Inspect '+esc(preferred)+' in this screen.</span></div>'+
-        '<div class="pui-body pui-'+scene.kind+'">'+renderContent(scene,selected)+(drag?'<div class="pui-drag-lane"><span>TRY A CONFIGURATION MATCH</span><button type="button" data-drag-source draggable="true" class="'+(dragPicked?'picked':'')+'">'+esc(drag.source)+'</button><i>→</i><button type="button" data-drag-target>'+esc(drag.target)+'</button><small>Drag or select both</small></div>':'')+'</div>'+
-        (selected?'<div class="pui-detail" role="status"><button type="button" data-close-detail aria-label="Close detail">×</button><small>INSPECTING / '+esc(selected)+'</small><strong>'+esc(detailOverride|| (selected.includes(preferred)?scene.outcome:'Review '+selected+' in this '+scene.tab.toLowerCase()+' view.'))+'</strong><p>'+esc(scene.check)+'</p></div>':'')+
+        '<div class="platform-panel" role="tabpanel" aria-live="polite"><div class="platform-screen"><div class="platform-screen-bar"><span class="pui-brand"><img src="'+esc(platform.icon)+'" alt=""><strong>'+esc(platform.name)+'</strong></span><span class="pui-sim-tag">Portfolio-safe simulation</span></div><div class="pui-app"><aside class="pui-sidebar" aria-hidden="true">'+platform.menu.map(v=>'<span class="'+(v===activeMenu?'current':'')+'">'+esc(v)+'</span>').join('')+'</aside>'+
+        '<div class="pui-work"><div class="pui-toolbar"><div><small>'+esc(platform.name)+' / '+esc(activeMenu)+'</small><h4>'+esc(scene.heading)+'</h4></div><span class="pui-scene-count">'+(sceneIndex+1)+' / 4</span></div>'+
+        '<div class="pui-guide"><strong>ADMIN TASK</strong><span>'+esc(workflowGuides[platformId][sceneIndex])+'</span></div>'+
+        '<div class="pui-body pui-body-'+scene.kind+'">'+renderContent(scene,selected)+(drag?'<div class="pui-drag-lane"><span>TRY A CONFIGURATION MATCH</span><button type="button" data-drag-source draggable="true" class="'+(dragPicked?'picked':'')+'">'+esc(drag.source)+'</button><i>→</i><button type="button" data-drag-target>'+esc(drag.target)+'</button><small>Drag or select both</small></div>':'')+'</div>'+
+        (selected?'<div class="pui-detail" role="status"><button type="button" data-close-detail aria-label="Close detail">×</button><small>INSPECTING / '+esc(selected)+'</small><strong>'+esc(detailOverride||inspectionDetail(scene,selected,preferred))+'</strong></div>':'')+
         '<div class="pui-screen-footer"><span>'+(selected?'Record inspected · ready for next screen':'Select a highlighted record or control')+'</span><button type="button" data-next-screen>'+(sceneIndex===3?'Replay workflow':'Next: '+esc(platform.scenes[sceneIndex+1].tab))+' →</button></div></div></div></div>'+
         '<aside class="platform-story"><p class="eyebrow">'+esc(platform.label)+' · '+esc(scene.tab)+'</p><h3>'+esc(scene.title)+'</h3><p>'+esc(scene.summary)+'</p><div class="platform-insight"><span>Configuration decision</span><strong>'+esc(scene.decision)+'</strong></div><div class="platform-insight"><span>Before release</span><strong>'+esc(scene.check)+'</strong></div><div class="platform-progress"><i style="width:'+((sceneIndex+1)*25)+'%"></i></div></aside></div>';
     }
