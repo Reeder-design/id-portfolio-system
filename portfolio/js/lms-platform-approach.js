@@ -352,8 +352,11 @@
     if (scene.kind === 'tree') {
       return '<div class="pui-tree">' + scene.nodes.map((node) => '<div class="pui-tree-node depth-' + node[0] + '"><i aria-hidden="true"></i><strong>' + esc(node[1]) + '</strong><small>' + esc(node[2]) + '</small></div>').join('') + '</div>';
     }
-    if (scene.kind === 'editor' || scene.kind === 'designer') {
-      return '<div class="pui-editor"><div class="pui-blocks"><h5>' + (scene.kind === 'designer' ? 'Learner navigation' : 'Course structure') + '</h5>' + scene.blocks.map((block) => '<div class="pui-block"><b>' + esc(block[0]) + '</b><strong>' + esc(block[1]) + '</strong><small>' + esc(block[2]) + '</small></div>').join('') + '</div><div class="pui-fields"><h5>Configuration</h5>' + scene.fields.map((field) => '<div class="pui-field"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong></div>').join('') + '</div></div>';
+    if (scene.kind === 'designer') {
+      return '<div class="pui-designer"><div class="pui-designer-config"><h5>Experience controls</h5>' + scene.fields.map((field) => '<div class="pui-field"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong></div>').join('') + '</div><div class="pui-learner-preview"><div class="pui-preview-header">Partner Academy <small>LEARNER VIEW</small></div><div class="pui-preview-welcome"><b>Welcome back</b><span>Your certification route is ready.</span></div><div class="pui-preview-nav">' + scene.blocks.map((block) => '<span>' + esc(block[1]) + '</span>').join('') + '</div><div class="pui-preview-course"><strong>Partner Sales Certification</strong><small>Continue learning →</small></div></div></div>';
+    }
+    if (scene.kind === 'editor') {
+      return '<div class="pui-editor"><div class="pui-blocks"><h5>Course structure</h5>' + scene.blocks.map((block) => '<div class="pui-block"><b>' + esc(block[0]) + '</b><strong>' + esc(block[1]) + '</strong><small>' + esc(block[2]) + '</small></div>').join('') + '</div><div class="pui-fields"><h5>Configuration</h5>' + scene.fields.map((field) => '<div class="pui-field"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong></div>').join('') + '</div></div>';
     }
     if (scene.kind === 'rules') {
       return '<div class="pui-rules"><div class="pui-rules-list"><h5>Rule conditions</h5>' + scene.fields.map((field, i) => '<div class="pui-rule"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong>' + (i < scene.fields.length - 1 ? '<em>AND</em>' : '') + '</div>').join('') + '</div><div class="pui-rule-result"><span>Population preview</span><strong>' + esc(scene.note) + '</strong><i></i><small>Source attributes → assignment</small></div></div>';
@@ -376,6 +379,7 @@
       const platform = demos[platformId];
       const scene = platform.scenes[sceneIndex];
       root.dataset.theme = platform.className;
+      root.dataset.scene = String(sceneIndex);
       root.innerHTML =
         '<div class="platform-tabs" role="tablist" aria-label="Choose a platform">' +
           ids.map((id) => '<button type="button" role="tab" data-platform="' + id + '" tabindex="' + (id === platformId ? '0' : '-1') + '" aria-selected="' + (id === platformId) + '" class="platform-tab' + (id === platformId ? ' active' : '') + '">' + '<img src="' + esc(demos[id].icon) + '" alt="">' + esc(demos[id].name) + '</button>').join('') +
