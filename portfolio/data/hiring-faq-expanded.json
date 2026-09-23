@@ -40,7 +40,8 @@
       "keywords": ["training need", "performance support", "job aid", "course", "not training", "learning solution", "needs analysis", "microlearning"],
       "answer": "I try not to solve every problem with a course. If someone needs to remember a concept, practice a decision, or build confidence before doing something, training can make sense. If they mainly need a reference at the moment of work, I would rather give them a usable job aid, checklist, searchable resource, or short performance-support asset. I also look for system or process problems before calling something a learning problem. That usually keeps the learning smaller and more useful.",
       "evidence": [
-        {"title": "Microlearning & Performance Support", "path": "projects/instructional-design/microlearning-performance-support/index.html", "note": "Short-form learning and support designed around immediate seller needs."},
+        {"title": "Microlearning", "path": "projects/instructional-design/microlearning-performance-support/microlearning/index.html", "note": "Focused learning for a specific learner need."},
+        {"title": "Performance Support", "path": "projects/instructional-design/microlearning-performance-support/performance-support/index.html", "note": "Point-of-need resources available during the work."},
         {"title": "LMS Administration & System Operations", "path": "projects/lms-administration/index.html", "note": "Examples where support, documentation, reporting, or system changes sit around the learning itself."}
       ],
       "followups": ["tool-choice", "scope-control", "business-problem"]

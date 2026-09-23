@@ -77,7 +77,7 @@ The existing case-study detail flow already communicates much of this, so this s
 
 ### Primary evidence
 
-**A. Launch Overview Mini-Module — BUILD**
+**A. Launch Overview Mini-Module — BUILT**
 
 A short Rise-inspired HTML experience using a fictional product. Include:
 - customer problem
@@ -88,13 +88,13 @@ A short Rise-inspired HTML experience using a fictional product. Include:
 
 Do not imitate proprietary product branding or source content.
 
-**B. Customer Conversation Scenario — BUILD**
+**B. Customer Conversation Scenario — BUILT**
 
 A Storyline-inspired branching interaction using the same fictional launch. The learner should choose a customer-facing response or next step and receive explanatory feedback.
 
 **Why the pair matters:** together they visibly demonstrate the design choice `learn → practice`.
 
-**Placement:** Product-Launch Microlearning case study. Present the two artifacts side-by-side or as a two-step evidence flow.
+**Placement:** Product-Launch Microlearning case study. The public-safe DraftPath lesson guides visitors through the product promise, customer value, fit, and work-ready handoff, while documenting the separate Storyline deliverable in the design workflow. The product interface uses native HTML and CSS rather than scaled screenshots.
 
 ---
 
@@ -104,17 +104,17 @@ A Storyline-inspired branching interaction using the same fictional launch. The 
 
 ### Primary evidence
 
-**A. One Module / Two Views — BUILD**
+**A. One Module / Two Views — BUILT**
 
 Create one interactive microlearning reconstruction with a Seaport / Airport switch. Both views should preserve the same learning pattern:
 
-`Context → customer priorities → use cases → decision practice → resources`
+`Positioning → customer pain points and differentiators → ROI calculator conversation → AI mini scenario → one-page takeaway`
 
 The content should use public, fictionalized examples and generic solution language.
 
 **Why it matters:** proves modularity, content scoping, and deliberate reuse better than two unrelated screenshots.
 
-**Placement:** Vertical-Positioning Microlearning case study.
+**Placement:** Vertical-Positioning Microlearning case study. Visitors choose Seaport or Airport, identify a customer pain point, adjust illustrative ROI assumptions, practice a branching response, and download a vertical-specific one-pager. The case distinguishes the original learner-facing AI work from this scripted portfolio reconstruction, which does not call a live model or reproduce the original ROI calculator.
 
 ### Optional later evidence
 

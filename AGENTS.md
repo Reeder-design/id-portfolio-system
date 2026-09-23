@@ -30,7 +30,8 @@ Current top-level areas are:
 
 Instructional Design currently includes:
 - Interactive Learning
-- Microlearning & Performance Support
+- Microlearning
+- Performance Support
 - Multimedia Training Content
 - Live Training
 - Complete eLearning Pathways
