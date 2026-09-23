@@ -2,15 +2,15 @@
   const dashboard = document.querySelector('[data-room-dashboard]');
   if (!dashboard) return;
 
-  const conditions = { poll: 'mixed', questions: 'none', examples: 'not-yet', time: 'open' };
+  const conditions = { poll: 'low', questions: 'none', examples: 'not-yet', time: 'open' };
   const presets = {
-    poll: { poll: 'mixed', questions: 'none', examples: 'not-yet', time: 'open' },
+    poll: { poll: 'low', questions: 'none', examples: 'not-yet', time: 'open' },
     question: { poll: 'clear', questions: 'repeated', examples: 'not-yet', time: 'open' },
     examples: { poll: 'clear', questions: 'none', examples: 'strong', time: 'open' },
     time: { poll: 'clear', questions: 'none', examples: 'not-yet', time: 'tight' }
   };
   const metrics = {
-    poll: { clear: ['Clear', 88], mixed: ['Split', 54], low: ['Low', 23] },
+    poll: { clear: ['Clear', 88], mixed: ['Mixed', 54], low: ['Low confidence', 23] },
     questions: { none: ['Not repeating', 23], repeated: ['Recurring', 88] },
     examples: { 'not-yet': ['Not yet', 28], strong: ['Relevant', 86] },
     time: { open: ['Available', 82], tight: ['Tight', 25] }

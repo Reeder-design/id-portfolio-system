@@ -44,10 +44,6 @@
           <h1>Live Training</h1>
           <p class="lt-hero-lead">A useful live session has a plan—and room to change it.</p>
           <p class="body-large">I design activities and support materials around a clear learning goal, then use questions, discussion, and practice to see what learners need in the moment. My direct delivery experience spans high-school classrooms and assigned modules in virtual sales workshops.</p>
-          <div class="button-row">
-            <a class="btn btn-primary" href="index.html#environments">Explore the three settings</a>
-            <a class="btn btn-secondary" href="index.html#featured-case">View the virtual workshop</a>
-          </div>
         </div>
         <figure class="lt-route" aria-labelledby="lt-route-title">
           <figcaption>
@@ -71,17 +67,28 @@
   </section>
 
   <section class="section lt-fit" aria-labelledby="fit-title">
-    <div class="container lt-section-grid">
-      <div>
+    <div class="container">
+      <div class="lt-section-intro">
         <p class="eyebrow">Choose the format for the job</p>
-        <h2 id="fit-title">What live time adds</h2>
-        <p>Live learning is useful when people need to test a decision together, explain their reasoning, ask a follow-up question, or hear a peer's approach. The facilitator can use those responses to change the explanation or pace.</p>
+        <h2 id="fit-title">Live training vs. other training types</h2>
+        <p>Different formats serve different moments in learning. The choice depends on what people need to do, and when they need support.</p>
       </div>
-      <div class="lt-fit-list" aria-label="Learning format fit">
-        <div><strong>Live session</strong><span>Discussion, guided practice, clarification, and feedback in the moment.</span></div>
-        <div><strong>eLearning</strong><span>Foundational content and individual practice at a learner's pace.</span></div>
-        <div><strong>Microlearning</strong><span>A focused refresher when one concept needs attention.</span></div>
-        <div><strong>Job aid</strong><span>Steps and reminders available during the work itself.</span></div>
+      <div class="lt-format-compare" aria-label="Comparison of live and self-paced learning">
+        <article class="lt-format-live">
+          <span class="lt-format-label">Facilitator-led / shared time</span>
+          <h3>Live training</h3>
+          <p>Use live time when learners need to explain a decision, hear other reasoning, ask questions, and practice with feedback.</p>
+          <div class="lt-format-line"><span>Discuss a choice</span><span>Hear the signal</span><span>Adjust and practice</span></div>
+        </article>
+        <article class="lt-format-async">
+          <span class="lt-format-label">Self-paced / on demand</span>
+          <h3>Other training types</h3>
+          <dl>
+            <div><dt>eLearning</dt><dd>Foundation and individual practice at the learner's pace.</dd></div>
+            <div><dt>Microlearning</dt><dd>A focused refresher on one concept.</dd></div>
+            <div><dt>Job aid</dt><dd>Steps or reminders at the moment of work.</dd></div>
+          </dl>
+        </article>
       </div>
     </div>
   </section>
@@ -133,10 +140,16 @@
         <section class="lt-tab-panel" id="lt-panel-room" role="tabpanel" aria-labelledby="lt-tab-room" tabindex="0">
           <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Grounded in direct classroom teaching</span><h3>Design for what the room can show you.</h3></div><p>Physical materials and face-to-face conversation make thinking visible, but every learner still needs a way into the activity.</p></div>
           <div class="lt-panel-body">
-            <div class="lt-setting-visual lt-room-visual" role="img" aria-label="In-person layout: shared prompt at the front, paired discussion around tables, and a facilitator who can circulate and listen.">
-              <div class="lt-room-board"><span>Shared prompt</span><strong>Which evidence matters?</strong></div>
-              <div class="lt-room-floor"><div class="lt-room-table">Pair talk</div><div class="lt-room-table">Compare</div><div class="lt-room-table">Share back</div></div>
-              <div class="lt-room-facilitator">Facilitator listens across groups</div>
+            <div class="lt-setting-visual lt-room-visual" data-lt-scene="room" data-step="0">
+              <div class="lt-scene-top"><span>In-person session</span><button type="button" data-scene-toggle aria-label="Pause in-person simulation">Pause</button></div>
+              <div class="lt-room-scene" role="img" aria-label="A facilitator shares one prompt, pairs compare reasoning at tables, the facilitator listens, then reframes the question for the room.">
+                <div class="lt-room-board"><span>Shared prompt</span><strong>Which evidence?</strong></div>
+                <div class="lt-room-desks" aria-hidden="true"><span class="lt-room-desk"><i></i><i></i></span><span class="lt-room-desk"><i></i><i></i></span><span class="lt-room-desk"><i></i><i></i></span></div>
+                <div class="lt-room-guide" aria-hidden="true">F</div>
+                <div class="lt-room-signal">Different reasons</div>
+                <div class="lt-room-reframe">Compare why</div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share one prompt</strong></div>
             </div>
             <div class="lt-lenses">
               <div class="lt-lens"><h4>Build / Design</h4><p>Prepare a visible prompt, handouts, grouping, timed pair discussion, a share-back, and a backup route if materials or space change.</p></div>
@@ -148,10 +161,16 @@
         <section class="lt-tab-panel" id="lt-panel-online" role="tabpanel" aria-labelledby="lt-tab-online" tabindex="0" hidden>
           <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Direct virtual facilitation</span><h3>Make thinking visible through the interface.</h3></div><p>Prompts, polls, chat, and participant examples give a remote facilitator signals to interpret while keeping application time intact.</p></div>
           <div class="lt-panel-body">
-            <div class="lt-setting-visual lt-online-visual" role="img" aria-label="Online session interface: shared fictional evidence, poll, chat, and breakout practice give the facilitator visible signals.">
-              <div class="lt-online-top"><span>Live session</span><span>Shared screen</span></div>
-              <div class="lt-online-screen"><span>Fictional discovery note</span><strong>What is the strongest evidence?</strong></div>
-              <div class="lt-online-tools"><span>Poll: interpret</span><span>Chat: explain why</span><span>Breakout: next question</span></div>
+            <div class="lt-setting-visual lt-online-visual" data-lt-scene="online" data-step="0">
+              <div class="lt-scene-top"><span>Live online session</span><button type="button" data-scene-toggle aria-label="Pause live online simulation">Pause</button></div>
+              <div class="lt-online-scene" role="img" aria-label="A shared screen presents fictional evidence, a poll surfaces interpretations, chat reveals reasoning, then breakout pairs practice a next question.">
+                <div class="lt-online-chrome"><span>Session view</span><span>Shared screen</span></div>
+                <div class="lt-online-share"><span>Fictional discovery note</span><strong>Which evidence matters?</strong><i></i><i></i></div>
+                <div class="lt-online-poll"><strong>Poll</strong><span><i></i></span><span><i></i></span><span><i></i></span></div>
+                <div class="lt-online-chat"><strong>Chat</strong><span>Why?</span><span>What is missing?</span></div>
+                <div class="lt-online-breakout"><strong>Breakout pairs</strong><span>Choose a next question</span></div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share the example</strong></div>
             </div>
             <div class="lt-lenses">
               <div class="lt-lens"><h4>Build / Design</h4><p>Plan a screen-first sequence, short instructions, a poll and chat prompt, breakout practice, technical transitions, and a backup if a tool fails.</p></div>
@@ -163,10 +182,19 @@
         <section class="lt-tab-panel" id="lt-panel-hybrid" role="tabpanel" aria-labelledby="lt-tab-hybrid" tabindex="0" hidden>
           <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Transferable design and facilitation model</span><h3>Give both audiences access to the same activity.</h3></div><p>This model applies my classroom, virtual, and design experience to a combined room. It does not represent a documented hybrid delivery project.</p></div>
           <div class="lt-panel-body">
-            <div class="lt-setting-visual lt-hybrid-visual" role="img" aria-label="Hybrid layout: people in a room and remote participants use the same prompt and shared response board, connected through clear audio.">
-              <div class="lt-hybrid-audience"><span>In-room group</span><strong>Discuss at tables</strong></div>
-              <div class="lt-hybrid-center"><span>Shared prompt + board</span><strong>One decision to compare</strong><small>Audio reaches both sides</small></div>
-              <div class="lt-hybrid-audience"><span>Remote group</span><strong>Respond in chat or aloud</strong></div>
+            <div class="lt-setting-visual lt-hybrid-visual" data-lt-scene="hybrid" data-step="0">
+              <div class="lt-scene-top"><span>Hybrid design model</span><button type="button" data-scene-toggle aria-label="Pause hybrid simulation">Pause</button></div>
+              <div class="lt-hybrid-scene" role="img" aria-label="A room group and remote group receive the same prompt, contribute through shared audio and a response board, then compare one combined view.">
+                <div class="lt-hybrid-side lt-hybrid-room"><span>Room</span><i aria-hidden="true"></i><i aria-hidden="true"></i></div>
+                <div class="lt-hybrid-shared"><span>Shared board</span><strong>One prompt</strong><small>Room + remote</small></div>
+                <div class="lt-hybrid-side lt-hybrid-remote"><span>Remote</span><i aria-hidden="true"></i><i aria-hidden="true"></i></div>
+                <div class="lt-hybrid-connection lt-hybrid-connection-left" aria-hidden="true"></div>
+                <div class="lt-hybrid-connection lt-hybrid-connection-right" aria-hidden="true"></div>
+                <div class="lt-hybrid-voice lt-hybrid-voice-room">Heard in room</div>
+                <div class="lt-hybrid-voice lt-hybrid-voice-remote">Heard online</div>
+                <div class="lt-hybrid-synthesis">Compare both responses</div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share one accessible prompt</strong></div>
             </div>
             <div class="lt-lenses">
               <div class="lt-lens"><h4>Build / Design</h4><p>Use accessible shared materials, an audio plan, visible instructions, mixed-group roles, one response board, and a fallback for disconnected participants.</p></div>
@@ -185,8 +213,25 @@
         <h2 id="comparison-title">What changes across the settings</h2>
         <p>In every version, learners justify an evidence-based decision and choose a next question. The design changes so the facilitator can hear their reasoning and respond.</p>
       </div>
+      <div class="lt-compare-motion" data-active-mode="room">
+        <div class="lt-compare-motion-head"><span>One goal / three delivery paths</span><button type="button" data-compare-toggle aria-label="Pause comparison animation">Pause</button></div>
+        <div class="lt-compare-tracks" role="group" aria-label="Select a delivery path to inspect">
+          <button type="button" class="lt-compare-track is-active" data-compare-mode="room" aria-pressed="true">
+            <span class="lt-compare-track-label">In-Person</span>
+            <span class="lt-compare-chain"><span>Pair annotation</span><i aria-hidden="true">→</i><span>Hear reasoning</span><i aria-hidden="true">→</i><span>Adjust discussion</span></span>
+          </button>
+          <button type="button" class="lt-compare-track" data-compare-mode="online" aria-pressed="false">
+            <span class="lt-compare-track-label">Live Online</span>
+            <span class="lt-compare-chain"><span>Poll + chat</span><i aria-hidden="true">→</i><span>Read responses</span><i aria-hidden="true">→</i><span>Reframe for practice</span></span>
+          </button>
+          <button type="button" class="lt-compare-track" data-compare-mode="hybrid" aria-pressed="false">
+            <span class="lt-compare-track-label">Hybrid</span>
+            <span class="lt-compare-chain"><span>Shared prompt</span><i aria-hidden="true">→</i><span>Hear both groups</span><i aria-hidden="true">→</i><span>Compare together</span></span>
+          </button>
+        </div>
+      </div>
       <div class="lt-table-wrap">
-        <table class="lt-comparison-table">
+        <table class="lt-comparison-table" data-active-mode="room">
           <caption>Comparison of practice, learner signals, and facilitation risks for the same sales-conversation goal</caption>
           <thead><tr><th scope="col">Design choice</th><th scope="col">In-Person</th><th scope="col">Live Online</th><th scope="col">Hybrid</th></tr></thead>
           <tbody>

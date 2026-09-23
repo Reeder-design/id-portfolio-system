@@ -26,21 +26,21 @@
 .room-state-badge{flex:none;padding:10px 13px;border:1px solid var(--room-accent);border-radius:999px;background:var(--room-soft);color:#fff;font:800 .76rem/1 var(--font-heading);white-space:nowrap;transition:background .35s,border-color .35s}
 .room-state-badge::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:2px;background:var(--room-accent);vertical-align:1px;transition:background .35s}
 .room-dashboard-presets{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0;padding:10px;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:rgba(5,24,29,.24)}
-.room-dashboard-presets>span{margin-right:7px}
+.room-dashboard-presets>span{width:100%;margin:0 0 4px 2px}
 .room-preset,.room-choice{appearance:none;border:1px solid rgba(225,248,231,.2);background:rgba(234,252,238,.07);color:#e1efe6;font:700 .73rem/1.2 var(--font-heading);cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
-.room-preset{padding:7px 10px;border-radius:8px}
+.room-preset{display:flex;align-items:center;gap:8px;flex:1 1 150px;min-height:48px;padding:7px 10px;border-radius:9px;text-align:left}
+.room-preset-icon{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:8px;background:#fff}
+.room-preset-icon img{width:25px;height:25px;object-fit:contain;image-rendering:pixelated}
 .room-preset:hover,.room-choice:hover{background:rgba(225,248,231,.17);border-color:rgba(225,248,231,.58)}
 .room-preset[aria-pressed="true"]{border-color:#b5e58d;background:#e3f5d5;color:#1a4037}
 .room-preset:focus-visible,.room-choice:focus-visible{outline:3px solid #d6f6b5;outline-offset:2px}
-.room-dashboard-grid{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(0,1.18fr);gap:15px;align-items:stretch}
 .room-input-panel,.room-monitor{min-width:0;padding:17px;border:1px solid rgba(234,252,238,.13);border-radius:17px;background:rgba(8,30,36,.5)}
-.room-input-panel{display:grid;gap:13px;align-content:start}
+.room-input-panel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;align-content:start}
 .room-control{min-width:0;margin:0;padding:0;border:0}
 .room-control legend{display:block;width:100%;margin-bottom:6px;color:#d5ebdb}
 .room-control-options{display:flex;gap:5px;flex-wrap:wrap}
 .room-choice{padding:8px 11px;border-radius:8px}
 .room-choice[aria-pressed="true"]{border-color:#b5e58d;background:#ddf3d5;color:#204537}
-.room-input-note{margin:2px 0 0;color:#b9cec3;font-size:.7rem;line-height:1.45}
 .room-monitor{display:grid;gap:15px;align-content:start}
 .room-temperature{display:grid;gap:8px}
 .room-temperature-track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);height:13px;border-radius:20px;background:#35554f}
@@ -57,6 +57,7 @@
 .room-metric>strong{display:block;min-height:30px;margin:5px 0 7px;color:#fff;font:800 .75rem/1.18 var(--font-heading)}
 .room-metric-track{height:5px;overflow:hidden;border-radius:9px;background:rgba(230,247,233,.16)}
 .room-metric-track i{display:block;height:100%;width:var(--room-fill,50%);border-radius:9px;background:var(--room-accent);transition:width .55s ease,background .35s}
+.room-meter-note{margin:-8px 0 0;color:#b9cec3;font-size:.7rem;line-height:1.4}
 .room-reasoning{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
 .room-reasoning li{min-width:0;min-height:110px;padding:11px;border:1px solid rgba(237,255,243,.14);border-radius:11px;background:rgba(236,255,241,.06)}
 .room-reasoning li:nth-child(2){border-color:var(--room-accent);background:var(--room-soft);transition:background .35s,border-color .35s}
@@ -68,8 +69,16 @@
 .room-dashboard.is-updating .room-reasoning li:nth-child(2){animation-delay:.08s}
 .room-dashboard.is-updating .room-reasoning li:nth-child(3){animation-delay:.16s}
 .room-dashboard.is-updating .room-next{animation-delay:.24s}
+.room-customize{margin-top:12px;border:1px solid rgba(234,252,238,.17);border-radius:12px;background:rgba(5,24,29,.2)}
+.room-customize summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;color:#e9f7ee;font:800 .75rem/1.3 var(--font-heading);cursor:pointer;list-style:none}
+.room-customize summary::-webkit-details-marker{display:none}
+.room-customize summary::after{content:"+";margin-left:auto;color:#b5e58d;font-size:1rem}
+.room-customize[open] summary::after{content:"−"}
+.room-customize summary span{margin-left:auto;color:#bbd2c6;font:700 .65rem/1 var(--font-heading);text-transform:uppercase;letter-spacing:.05em}
+.room-customize summary:focus-visible{outline:3px solid #d6f6b5;outline-offset:2px;border-radius:10px}
+.room-customize .room-input-panel{margin:0 10px 10px;padding:13px;background:rgba(8,30,36,.38)}
 .room-announcement{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @keyframes roomDecisionUpdate{from{opacity:.48;transform:translateY(5px)}to{opacity:1;transform:none}}
-@media(max-width:900px){.room-dashboard-grid{grid-template-columns:1fr}.room-input-panel{grid-template-columns:repeat(2,minmax(0,1fr))}.room-input-note{grid-column:1/-1}}
-@media(max-width:600px){.room-dashboard{padding:12px}.room-dashboard-head{align-items:flex-start;flex-direction:column}.room-dashboard-presets{align-items:flex-start}.room-dashboard-presets>span{width:100%}.room-input-panel{grid-template-columns:1fr}.room-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.room-reasoning{grid-template-columns:1fr}.room-reasoning li{min-height:0}.room-next{align-items:flex-start;flex-direction:column;gap:4px}}
+@media(max-width:900px){.room-input-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.room-dashboard{padding:12px}.room-dashboard-head{align-items:flex-start;flex-direction:column}.room-dashboard-presets{align-items:flex-start}.room-preset{flex-basis:calc(50% - 4px)}.room-input-panel{grid-template-columns:1fr}.room-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.room-reasoning{grid-template-columns:1fr}.room-reasoning li{min-height:0}.room-next{align-items:flex-start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){.room-dashboard *{animation:none!important;transition:none!important}}
