@@ -196,7 +196,7 @@ Recurring regressions have appeared across:
 - Instructional Design landing and project examples
 - Interactive Learning
 - Complete eLearning Pathways
-- Microlearning and Performance Support
+- Microlearning; Performance Support
 - Live Training / Virtual Sales Workshop
 - Multimedia
 - AI Training and Evaluation and its three demos

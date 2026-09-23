@@ -1,10 +1,110 @@
 (() => {
-  const methods={
-    find:{label:'Access',title:'Put the resource where the work already happens.',text:'Performance support loses value when people have to remember where it lives. I reduce searching by placing links, references, and entry points in the workflow they already use.',when:'Where will someone look first while doing the task?',formats:'Entry points, labels, permissions, navigation, and device context.',image:'../../../../assets/icons/pixel/performance-support/find.webp'},
-    decide:{label:'Scan',title:'Make the answer faster to scan than to reconstruct from memory.',text:'I structure the resource around the decision, task, or question the user has in the moment. Strong hierarchy, concise language, and visible next actions matter more than adding more content.',when:'What must the user recognize in the first few seconds?',formats:'Chunking, labels, visual hierarchy, progressive detail, and clear actions.',image:'../../../../assets/icons/pixel/performance-support/decide.webp'},
-    monitor:{label:'Trust',title:'Make the source, owner, and current state obvious.',text:'People stop using support when they cannot tell whether it is current. I design for source authority, version clarity, exceptions, and ownership so the resource remains dependable.',when:'How will the user know this is the current answer?',formats:'Ownership, source links, dates, exception notes, and version cues.',image:'../../../../assets/icons/pixel/performance-support/monitor.webp'},
-    extend:{label:'Maintain',title:'Design updates into the support system from the beginning.',text:'Performance support is operational content. I plan who maintains it, what changes are likely, how updates propagate, and how feedback or recurring friction gets back into the next revision.',when:'Who owns the resource after launch, and what triggers an update?',formats:'Maintenance cadence, feedback loop, reusable source files, and change points.',image:'../../../../assets/icons/pixel/performance-support/extend.webp'}
+  const imageRoot = '../../../../assets/icons/pixel/performance-support/';
+  const methods = {
+    find: {
+      label: 'Access', title: 'Place the answer where the work begins.',
+      text: 'A useful answer can still fail when the link is hard to find or the person lacks permission. I check the likely entry point before creating another resource.',
+      when: 'Where will someone look while doing this task?',
+      formats: 'Labels, navigation, permissions, device context, and workflow location.',
+      image: 'find.webp'
+    },
+    decide: {
+      label: 'Scan', title: 'Organize for the decision in front of the person.',
+      text: 'When someone is in the middle of a task, I make triggers, decisions, actions, and next steps visible before background explanation.',
+      when: 'What must they recognize or do first?',
+      formats: 'Issue categories, short labels, decision prompts, and clear next actions.',
+      image: 'decide.webp'
+    },
+    monitor: {
+      label: 'Trust', title: 'Show why this is the current answer.',
+      text: 'A reusable response needs a dependable source. I make the source owner, currency, and route for uncertain cases clear.',
+      when: 'Who validates this guidance, and where does uncertainty go?',
+      formats: 'Source links, owner, version cues, and escalation route.',
+      image: 'monitor.webp'
+    },
+    extend: {
+      label: 'Maintain', title: 'Plan for the next change and the old version.',
+      text: 'I define who updates the resource, what events trigger review, and how to replace or retire guidance that no longer applies.',
+      when: 'What change should trigger an update?',
+      formats: 'Owner, review trigger, version expectation, replacement, and retirement.',
+      image: 'extend.webp'
+    }
   };
-  const buttons=[...document.querySelectorAll('[data-ps-method]')];
-  buttons.forEach((button)=>button.addEventListener('click',()=>{const data=methods[button.dataset.psMethod];buttons.forEach((item)=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});document.getElementById('psMethodLabel').textContent=data.label;document.getElementById('psMethodTitle').textContent=data.title;document.getElementById('psMethodText').textContent=data.text;document.getElementById('psMethodWhen').textContent=data.when;document.getElementById('psMethodFormats').textContent=data.formats;document.getElementById('psMethodImage').src=data.image;}));
+  const methodButtons = [...document.querySelectorAll('[data-ps-method]')];
+  const methodPanel = document.getElementById('psMethodPanel');
+  function activateMethod(button) {
+    const data = methods[button.dataset.psMethod];
+    if (!data) return;
+    methodButtons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+      item.tabIndex = active ? 0 : -1;
+    });
+    methodPanel.setAttribute('aria-labelledby', button.id);
+    document.getElementById('psMethodLabel').textContent = data.label;
+    document.getElementById('psMethodTitle').textContent = data.title;
+    document.getElementById('psMethodText').textContent = data.text;
+    document.getElementById('psMethodWhen').textContent = data.when;
+    document.getElementById('psMethodFormats').textContent = data.formats;
+    document.getElementById('psMethodImage').src = imageRoot + data.image;
+  }
+  methodButtons.forEach((button, index) => {
+    button.addEventListener('click', () => activateMethod(button));
+    button.addEventListener('keydown', event => {
+      if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowUp' || event.key === 'ArrowLeft' ? -1 : 1;
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? methodButtons.length - 1 : (index + direction + methodButtons.length) % methodButtons.length;
+      methodButtons[next].focus();
+      activateMethod(methodButtons[next]);
+    });
+  });
+
+  const diagnoses = {
+    knowledge: {
+      cause: 'Knowledge', route: 'Learning + support',
+      check: 'Does the person need a new mental model or practice, or only a reliable reminder?',
+      response: 'Teach the principle and keep a maintained reference for repeated use; validate it with the source owner.'
+    },
+    access: {
+      cause: 'Access', route: 'Guidance + escalation',
+      check: 'Is the answer available, but hidden by permissions, labels, navigation, or an entry point?',
+      response: 'Clarify the route to access; send permission changes or account problems to the administrator or support owner.'
+    },
+    process: {
+      cause: 'Process', route: 'Workflow change',
+      check: 'Does the documented step match how the work actually moves between people?',
+      response: 'Review the handoff with operational owners; adjust the workflow and its point-of-need guidance together.'
+    },
+    source: {
+      cause: 'Source / owner', route: 'Performance support',
+      check: 'Are different references giving different answers, or is no one responsible for the current answer?',
+      response: 'Find the authoritative source with the right SME or operational owner, then build guidance with a named maintainer.'
+    },
+    system: {
+      cause: 'System', route: 'Configuration fix',
+      check: 'Is a setting, mapping, visibility rule, or data state causing the issue?',
+      response: 'Document the case for the system or administration owner; update support guidance after the fix is validated.'
+    },
+    exception: {
+      cause: 'Exception', route: 'Human escalation',
+      check: 'Does this case require judgment, investigation, data correction, or action beyond the routine path?',
+      response: 'Give a clear escalation route and the context the next owner needs. Do not imply the resource can resolve it alone.'
+    }
+  };
+  const diagnosisButtons = [...document.querySelectorAll('[data-ps-diagnosis]')];
+  diagnosisButtons.forEach(button => button.addEventListener('click', () => {
+    const data = diagnoses[button.dataset.psDiagnosis];
+    if (!data) return;
+    diagnosisButtons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+    document.getElementById('psCauseVisual').textContent = data.cause;
+    document.getElementById('psRouteVisual').textContent = data.route;
+    document.getElementById('psDiagnosisCheck').textContent = data.check;
+    document.getElementById('psDiagnosisResponse').textContent = data.response;
+  }));
 })();
