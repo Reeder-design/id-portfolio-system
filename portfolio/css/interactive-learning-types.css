@@ -483,7 +483,7 @@
 .quiz-options span[data-quiz-answer] { display:flex; align-items:center; gap:12px; min-height:48px; padding:10px 12px; border:1px solid #d4e5da; border-radius:9px; background:#fff; color:#315547; text-align:left; font:700 .78rem/1.2 var(--font-body); }
 .quiz-options span[data-quiz-answer] small { min-width:56px; color:#578669; font:800 .58rem/1 var(--font-heading); letter-spacing:.06em; }
 .quiz-options span.incorrect { border-color:#d5795f; background:#ffebe3; }.quiz-options span.correct { border-color:#48a06a; background:#dcf4e4; }
-@keyframes quizAutoPointer { 0%,20% { left:68%; top:42%; transform:scale(1); } 27%,43% { left:71%; top:54%; transform:scale(1); } 33% { transform:scale(.8); } 51%,70% { left:71%; top:71%; transform:scale(1); } 57% { transform:scale(.8); } 78%,100% { left:68%; top:71%; } }
+@keyframes quizAutoPointer { 0%,20% { left:68%; top:25%; transform:scale(1); } 27%,43% { left:71%; top:39%; transform:scale(1); } 33% { transform:scale(.8); } 51%,70% { left:71%; top:61%; transform:scale(1); } 57% { transform:scale(.8); } 78%,100% { left:68%; top:61%; } }
 
 /* The video is one self-running scene with no timeline or clickable choices. */
 .video-visual { justify-content:center; }.video-screen { width:100%; min-height:338px; }
@@ -502,10 +502,11 @@
 .software-window .software-target,.software-window .software-submit { display:none; cursor:default; }
 .software-window[data-step="1"] .software-target,.software-window[data-step="2"] .software-submit { display:inline-block; }
 .software-demo-pointer { left:12%; top:53%; animation:none; transition:left .65s ease,top .65s ease,transform .2s ease; }
-.software-window[data-step="0"] .software-demo-pointer { left:12%; top:53%; }
-.software-window[data-step="1"] .software-demo-pointer { left:57%; top:75%; }
-.software-window[data-step="2"] .software-demo-pointer { left:59%; top:80%; }
-.software-window[data-step="3"] .software-demo-pointer { display:block; left:70%; top:81%; }
+.software-window[data-step="0"] .software-demo-pointer { left:12%; top:34%; }
+.software-window[data-step="0"] .software-side span[data-software-control="catalog"] { background:transparent; color:#315b47; }
+.software-window[data-step="1"] .software-demo-pointer { left:38%; top:79%; transform:scale(.8); }
+.software-window[data-step="2"] .software-demo-pointer { left:43%; top:79%; transform:scale(.8); }
+.software-window[data-step="3"] .software-demo-pointer { display:block; left:77%; top:40%; transform:scale(1); }
 .software-auto-label { padding:6px 9px; border:1px solid #92c9a5; border-radius:7px; color:#def6d8; font:800 .52rem/1 var(--font-heading); letter-spacing:.04em; white-space:nowrap; }
 
 /* The graphic markers and reveal card advance together. */
