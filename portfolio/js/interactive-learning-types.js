@@ -27,17 +27,6 @@
     });
   });
 
-  const heroButtons = [...document.querySelectorAll('[data-hero-choice]')];
-  const heroResult = document.getElementById('heroChoiceResult');
-  heroButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(heroButtons, button);
-    const probe = button.dataset.heroChoice === 'probe';
-    heroResult.classList.toggle('is-risk', !probe);
-    heroResult.textContent = probe
-      ? 'The customer describes the bottleneck. Now the learner has evidence for a useful next question.'
-      : 'The pitch arrives before the need is clear. Try a question that uncovers the bottleneck.';
-  }));
-
   const branchButtons = [...document.querySelectorAll('[data-branch]')];
   const branchMap = document.querySelector('.branch-map');
   const branchFeedback = document.getElementById('branchFeedback');
@@ -56,15 +45,16 @@
     quizButtons.forEach(item => item.classList.remove('correct', 'incorrect'));
     const correct = button.dataset.quizAnswer === 'yes';
     button.classList.add(correct ? 'correct' : 'incorrect');
+    document.getElementById('quizScore').textContent = correct ? 'EVIDENCE FOUND ✓' : 'TRY ANOTHER DETAIL';
     quizFeedback.textContent = correct
       ? 'Correct. Lost time is a customer problem, not just product or meeting information.'
       : 'Not quite. Look for an impact the customer actually experiences.';
   }));
 
   const videoCues = [
-    { caption: 'Customer describes a slow handoff.', art: 'interactive-video-hotspots.webp', hotspot: 'Inspect the cue +' },
-    { caption: 'Pause before the next question.', art: 'question-timeline.webp', hotspot: 'Choose a question +' },
-    { caption: 'The response reveals the impact.', art: 'click-to-reveal-image.webp', hotspot: 'See the takeaway +' }
+    { caption: 'Customer describes a slow handoff.', step: 'MOMENT 01 / OBSERVE', title: 'Listen for the real obstacle', detail: 'A customer explains why handoffs cost time.', hotspot: 'Inspect the cue +' },
+    { caption: 'Pause before the next question.', step: 'MOMENT 02 / DECIDE', title: 'Choose the next question', detail: 'The learner pauses before responding.', hotspot: 'Choose a question +' },
+    { caption: 'The response reveals the impact.', step: 'MOMENT 03 / REFLECT', title: 'Connect action to impact', detail: 'Feedback explains what the question uncovered.', hotspot: 'See the takeaway +' }
   ];
   const videoButtons = [...document.querySelectorAll('[data-video-cue]')];
   let videoIndex = 0;
@@ -76,7 +66,9 @@
     const cue = videoCues[videoIndex];
     const screen = document.querySelector('.video-screen');
     screen.dataset.videoFrame = String(videoIndex);
-    document.getElementById('videoFrameArt').src = `../../../assets/icons/pixel/interactive-learning/${cue.art}`;
+    document.getElementById('videoSceneStep').textContent = cue.step;
+    document.getElementById('videoSceneTitle').textContent = cue.title;
+    document.getElementById('videoSceneDetail').textContent = cue.detail;
     document.getElementById('videoCaption').textContent = cue.caption;
     document.getElementById('videoHotspot').textContent = cue.hotspot;
     videoOptions.hidden = true;
