@@ -1,110 +1,176 @@
 (() => {
-  const asset = (group, file) => `../../assets/icons/pixel/${group}/${file}`;
-  const ms = [
-    {step:'Request', source:'OUTLOOK / TEAMS', input:'A learner access question arrives.', meta:'Owner: support team', target:'REQUEST QUEUE', action:'Confirm the issue and next owner.', icon:asset('work-tools','outlook.webp'), status:'New request', caption:'Communication becomes a visible request, not an untracked message.'},
-    {step:'Document', source:'ISSUE PATTERN', input:'The current access path is checked.', meta:'Reference: approved guidance', target:'SHARED DOCUMENT', action:'Update a reusable answer and source note.', icon:asset('work-tools','word.webp'), status:'Draft for review', caption:'A shared document carries the durable answer and its source.'},
-    {step:'Review', source:'SHARED FILE', input:'A reviewer checks the guidance.', meta:'Owner: source or support lead', target:'REVIEW RECORD', action:'Record a correction or approval.', icon:asset('work-tools','sharepoint.webp'), status:'Decision visible', caption:'A version and decision trail reduce conflicting answers.'},
-    {step:'Handoff', source:'APPROVED GUIDANCE', input:'The updated response is ready.', meta:'Location: shared workspace', target:'DELIVERABLE', action:'Send the response and retain the reference.', icon:asset('work-tools','outlook.webp'), status:'Ready to reuse', caption:'The handoff connects the message, final file, and follow-up.'}
+  const icon = (file) => `../../assets/icons/pixel/work-tools/${file}.webp`;
+  const byId = (id) => document.getElementById(id);
+  const put = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+  const picture = (id, src) => { const node = byId(id); if (node) node.src = src; };
+  const animate = (node) => { node.classList.remove('is-changing'); void node.offsetWidth; node.classList.add('is-changing'); };
+  const tabs = (selector, selected) => {
+    const buttons = [...document.querySelectorAll(selector)];
+    const choose = (button, focus = false) => {
+      buttons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      selected(button);
+      if (focus) button.focus();
+    };
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => choose(button));
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 :
+          event.key === 'ArrowRight' || event.key === 'ArrowDown' ? (index + 1) % buttons.length : (index + buttons.length - 1) % buttons.length;
+        choose(buttons[next], true);
+      });
+    });
+    return { buttons, choose };
+  };
+  const player = (button, lastIndex, selectStep) => {
+    let timer = null;
+    const stop = () => { if (timer) clearInterval(timer); timer = null; button.textContent = 'Play workflow'; };
+    button.addEventListener('click', () => {
+      if (timer) { stop(); return; }
+      let index = 0;
+      selectStep(index);
+      button.textContent = 'Pause workflow';
+      timer = setInterval(() => {
+        if (index >= lastIndex) { stop(); button.textContent = 'Replay workflow'; return; }
+        selectStep(++index);
+        if (index === lastIndex) { stop(); button.textContent = 'Replay workflow'; }
+      }, 2500);
+    });
+    return stop;
+  };
+
+  // One fictional launch, shown through two different workplace ecosystems.
+  const workspace = {
+    microsoft: {
+      label: 'Microsoft 365', rail: [['teams','Teams'],['outlook','Outlook'],['sharepoint','SharePoint'],['excel','Excel']],
+      steps: [
+        {label:'PLAN',title:'Turn a request into a trackable plan.',text:'Capture the audience, learning need, source owner, and launch date before the conversation scatters.',from:'OUTLOOK',fromIcon:'outlook',fromText:'New training request',to:'TEAMS',toIcon:'teams',toText:'Project channel + owner',status:'Tracked',reason:'The next person can find the request and its decision.',owner:'L&D lead',source:'Approved intake',check:'Confirm scope',caption:'The request becomes visible work before production starts.'},
+        {label:'BUILD',title:'Keep production files connected.',text:'A shared outline, slide system, and source folder give designers one current place to build from.',from:'WORD',fromIcon:'word',fromText:'Approved learning outline',to:'SHAREPOINT',toIcon:'sharepoint',toText:'Versioned asset library',status:'In production',reason:'Production can continue without guessing which file is current.',owner:'Designer',source:'Shared library',check:'Name the version',caption:'The production handoff carries the approved source into the build.'},
+        {label:'REVIEW',title:'Make feedback a decision.',text:'A reviewer responds to a specific version; the owner records what changed and what still needs approval.',from:'TEAMS',fromIcon:'teams',fromText:'SME review thread',to:'SHAREPOINT',toIcon:'sharepoint',toText:'Approved revision',status:'Human check',reason:'A visible decision is more useful than an unresolved comment.',owner:'SME + designer',source:'Review record',check:'Resolve comments',caption:'Feedback moves through a human checkpoint before release.'},
+        {label:'LAUNCH',title:'Surface learning where people work.',text:'The approved resource can be linked from a team channel or, where configured, discovered through a learning hub.',from:'SHAREPOINT',fromIcon:'sharepoint',fromText:'Approved resource',to:'TEAMS / VIVA',toIcon:'teams',toText:'Learning entry point',status:'Available',reason:'The link stays close to the employee’s daily workflow.',owner:'Learning admin',source:'Approved asset',check:'Test access',caption:'The release step connects the approved file to a tested learner entry point.'},
+        {label:'MEASURE',title:'Turn status into follow-up.',text:'A reviewed tracker shows participation and questions that need a person, rather than only a total.',from:'EXCEL',fromIcon:'excel',fromText:'Learner status tracker',to:'REVIEW VIEW',toIcon:'excel',toText:'Exceptions + follow-up',status:'Ready to act',reason:'A status view is useful when its source rows can be checked.',owner:'L&D operations',source:'LMS records',check:'Review exceptions',caption:'The workflow ends with a traceable follow-up, not a decorative dashboard.'}
+      ]
+    },
+    google: {
+      label: 'Google Workspace', rail: [['gmail','Gmail'],['google-drive','Drive'],['google-docs','Docs'],['google-sheets','Sheets']],
+      steps: [
+        {label:'PLAN',title:'Move the request into a shared brief.',text:'The team records purpose, audience, source owner, and due date in a document everyone can find.',from:'GMAIL',fromIcon:'gmail',fromText:'Training request',to:'GOOGLE DOCS',toIcon:'google-docs',toText:'Shared launch brief',status:'Scoped',reason:'A shared brief keeps the original request from becoming the only source.',owner:'L&D lead',source:'Shared Drive',check:'Confirm access',caption:'The request moves from an inbox to a team-owned brief.'},
+        {label:'BUILD',title:'Keep the asset with its sources.',text:'Working files and approved references live in a shared drive with clear names and permissions.',from:'GOOGLE DOCS',fromIcon:'google-docs',fromText:'Learning outline',to:'SHARED DRIVE',toIcon:'google-drive',toText:'Current build + sources',status:'In production',reason:'Team-owned storage protects continuity when a contributor changes.',owner:'Designer',source:'Shared Drive',check:'Version files',caption:'Production has one location for current files and source context.'},
+        {label:'REVIEW',title:'Resolve comments in context.',text:'Reviewers comment on the current document and the owner records the approved decision.',from:'GOOGLE DOCS',fromIcon:'google-docs',fromText:'SME comments',to:'DECISION LOG',toIcon:'google-drive',toText:'Approved revision',status:'Human check',reason:'A comment is complete when the decision and edit are checked.',owner:'SME + designer',source:'Current version',check:'Close feedback',caption:'The review loop closes around a specific version.'},
+        {label:'LAUNCH',title:'Publish a controlled resource link.',text:'The approved learning asset is released through the organization’s chosen channel after a permissions check.',from:'SHARED DRIVE',fromIcon:'google-drive',fromText:'Approved file',to:'LEARNING LINK',toIcon:'google-drive',toText:'Tested access path',status:'Available',reason:'People should reach the current resource without a permission dead end.',owner:'Learning admin',source:'Approved file',check:'Test permissions',caption:'The resource reaches learners through a verified link.'},
+        {label:'MEASURE',title:'Make follow-up visible.',text:'A shared tracker separates completed items, open questions, and ownership for the next update.',from:'GOOGLE SHEETS',fromIcon:'google-sheets',fromText:'Status rows',to:'TEAM VIEW',toIcon:'google-sheets',toText:'Follow-up list',status:'Review-ready',reason:'The team can trace each status back to its row and owner.',owner:'L&D operations',source:'Verified rows',check:'Review outliers',caption:'The final view supports action and future maintenance.'}
+      ]
+    }
+  };
+  const workspaceDemo = byId('workspaceDemo');
+  let workspacePlatform = 'microsoft', workspaceStage = 0;
+  const workspaceRail = byId('workspaceRail');
+  const showWorkspace = () => {
+    const group = workspace[workspacePlatform], item = group.steps[workspaceStage];
+    workspaceDemo.dataset.platform = workspacePlatform;
+    animate(workspaceDemo);
+    put('workspaceWindowTitle', `Training Operations · ${group.label}`);
+    put('workspaceStepLabel', `${String(workspaceStage + 1).padStart(2,'0')} · ${item.label}`);
+    put('workspaceStepTitle', item.title); put('workspaceStepText', item.text);
+    put('workspaceSourceTool', item.from); picture('workspaceSourceIcon', icon(item.fromIcon)); put('workspaceSourceText', item.fromText);
+    put('workspaceOutputTool', item.to); picture('workspaceOutputIcon', icon(item.toIcon)); put('workspaceOutputText', item.toText); put('workspaceOutputStatus', item.status);
+    put('workspaceReason', item.reason); put('workspaceOwner', item.owner); put('workspaceSource', item.source); put('workspaceCheck', item.check); put('workspaceCaption', item.caption);
+    workspaceRail.replaceChildren(...group.rail.map(([file,name]) => { const row=document.createElement('span'); const image=document.createElement('img'); image.src=icon(file); image.alt=''; row.append(image,document.createTextNode(name)); return row; }));
+  };
+  const workspaceStages = tabs('[data-workspace-stage]', (button) => { workspaceStage=Number(button.dataset.workspaceStage); showWorkspace(); });
+  const stopWorkspace = player(byId('workspacePlay'), 4, (index) => workspaceStages.choose(workspaceStages.buttons[index]));
+  workspaceStages.buttons.forEach((button) => { button.addEventListener('click', stopWorkspace); button.addEventListener('keydown', (event) => { if (event.key.startsWith('Arrow') || ['Home','End'].includes(event.key)) stopWorkspace(); }); });
+  tabs('[data-workspace-platform]', (button) => { stopWorkspace(); workspacePlatform=button.dataset.workspacePlatform; workspaceStages.choose(workspaceStages.buttons[0]); });
+  const hotspotAnswers = {
+    source:'Keep the approved brief and current file in one shared location; chat points people to it rather than becoming the only record.',
+    access:'Name who owns the next action, who may edit the source, and who can approve the release. Test the learner’s access path.',
+    flow:'Teams or Slack can host reminders and cohort conversation. Viva Learning or an approved LMS entry point can surface learning when the organization has configured it.'
+  };
+  tabs('[data-workspace-hotspot]', (button) => put('workspaceHotspotAnswer',hotspotAnswers[button.dataset.workspaceHotspot]));
+  showWorkspace();
+
+  const managementStages = [
+    {label:'INTAKE',title:'The brief becomes an assigned project.',text:'The request is scoped before production tasks receive owners and dates.',state:'Intake',dependency:'Script approval unlocks voiceover.',gate:'Gate visible',caption:'An intake record becomes work with a clear owner and first review gate.',card:'Training request',support:['Audience + need','Source owner','Launch date'],column:0},
+    {label:'BUILD',title:'Production follows approved inputs.',text:'The script, voiceover, and screens move in sequence instead of starting from conflicting drafts.',state:'In progress',dependency:'Voiceover waits for the signed-off script.',gate:'Blocked until approval',caption:'A visible dependency prevents production from outrunning the approved source.',card:'Scenario build',support:['Script approved','Voiceover queued','Screens in build'],column:1},
+    {label:'REVIEW',title:'Feedback becomes tracked change.',text:'A contextual comment gets an owner, a revision, and a decision before the task closes.',state:'Review',dependency:'SME accuracy check precedes final QA.',gate:'Human decision',caption:'The review card stays open until the edit is checked in the lesson.',card:'SME review',support:['Review 360 note','Designer revision','SME confirmation'],column:2},
+    {label:'PUBLISH',title:'Launch with a maintenance owner.',text:'The final file, access check, and next update owner remain attached to the project.',state:'Release ready',dependency:'Final QA and access test precede LMS release.',gate:'Release check',caption:'The project ends with a tested handoff and a named update path.',card:'Release package',support:['Final QA','LMS handoff','Update owner'],column:2}
   ];
-  const asana = {
-    review:[
-      {step:'Comment', source:'Review 360 comment needs a change.', meta:'Source: in-course review', column:'NEW / SOURCE', owner:'Review note', action:'Capture the requested change.', status:'Unassigned', icon:asset('workflows/asana','task-document.png'), caption:'A reviewer comment becomes a task rather than a loose note.'},
-      {step:'Assign', source:'The change has an owner and scope.', meta:'Source: reviewed comment', column:'ASSIGNED', owner:'Owner: designer', action:'Translate feedback into a specific edit.', status:'In progress', icon:asset('workflows/asana','task-board.png'), caption:'Task ownership makes the next action visible.'},
-      {step:'Check', source:'The revised lesson is ready to inspect.', meta:'Source: updated build', column:'REVIEW', owner:'Reviewer: SME', action:'Confirm the change in context.', status:'Awaiting review', icon:asset('workflows/asana','search-review.png'), caption:'The task stays open until the change is checked in the learning experience.'},
-      {step:'Close', source:'The comment and edit agree.', meta:'Source: review record', column:'COMPLETE', owner:'Decision: accepted', action:'Close the change and preserve its trail.', status:'Resolved', icon:asset('workflows/asana','approved-checklist.png'), caption:'Completion means the review loop is closed, not only that a card moved.'}
-    ],
-    intake:[
-      {step:'Form', source:'A new request captures audience and need.', meta:'Illustrative platform pattern', column:'NEW REQUEST', owner:'Intake form', action:'Create a structured task.', status:'Submitted', icon:asset('workflows/asana','task-document.png'), caption:'Structured intake gives the next owner usable context.'},
-      {step:'Rule', source:'The request type is evaluated.', meta:'Illustrative platform pattern', column:'ROUTING RULE', owner:'Rule: request type', action:'Route to the correct work queue.', status:'Routed', icon:asset('workflows/asana','automation-rule.png'), caption:'A rule moves repeatable work while unusual cases remain visible.'},
-      {step:'Owner', source:'The task reaches its responsible team.', meta:'Illustrative platform pattern', column:'ASSIGNED', owner:'Owner: learning team', action:'Track the work and dependency.', status:'Working', icon:asset('workflows/asana','linked-work.png'), caption:'Assignment and dependencies keep the handoff clear.'},
-      {step:'Approve', source:'The output needs an expert decision.', meta:'Illustrative platform pattern', column:'APPROVAL', owner:'Reviewer: source owner', action:'Approve, request changes, or hold.', status:'Human checkpoint', icon:asset('workflows/asana','approval-branch.png'), caption:'Automation pauses where source accuracy requires judgment.'},
-      {step:'Visible', source:'A decision updates the work record.', meta:'Illustrative platform pattern', column:'DASHBOARD', owner:'Team: shared view', action:'Show status, owner, and next action.', status:'Visible', icon:asset('workflows/asana','analytics-dashboard.png'), caption:'A dashboard is useful when the underlying task and decision are trustworthy.'}
-    ]
+  const managementPlatforms = {
+    asana:{label:'Asana',icon:'asana',columns:['READY','IN PROGRESS','REVIEW / RELEASE'],prefix:'TASK',className:'asana'},
+    monday:{label:'Monday.com',icon:'monday-com',columns:['ITEM','OWNER','STATUS'],prefix:'ITEM',className:'monday'},
+    jira:{label:'Jira',icon:'jira',columns:['TO DO','IN PROGRESS','READY FOR QA'],prefix:'LND',className:'jira'}
   };
-  const tools = {
-    support:{label:'Support + knowledge', title:'Turn recurring issues into guidance people can reuse.', text:'An LMS support question becomes a checked response template, a reference note, or an escalation path instead of being redrafted each time.', practice:'Keep send-ready messages distinct from internal reference notes.', boundary:'Confirm the current access path before reusing a template.', link:'../lms-administration/index.html', linkText:'Explore LMS Administration →', heading:'SUPPORT DESK · FICTIONAL', steps:[
-      {step:'Issue', app:'OUTLOOK', action:'Access request arrives', status:'Needs triage', icon:asset('work-tools','outlook.webp'), caption:'Identify the issue type before selecting guidance.'},
-      {step:'Check', app:'LMS + SOURCE GUIDE', action:'Confirm the current access path', status:'Guidance verified', icon:asset('work-tools','docebo.webp'), caption:'A template should follow current platform behavior, not memory.'},
-      {step:'Respond', app:'RESPONSE TEMPLATE', action:'Send the tailored answer', status:'Learner informed', icon:asset('workflows/support-resources','documentation.webp'), caption:'The reusable message keeps the response consistent.'},
-      {step:'Improve', app:'KNOWLEDGE RECORD', action:'Update the issue guidance', status:'Pattern retained', icon:asset('workflows/support-resources','guidance.webp'), caption:'Repeated cases become a better process and reference.'}
-    ]},
-    handoff:{label:'System handoff', title:'Verify the source record before mapping it to learning access.', text:'A learner email starts a Salesforce account lookup. Verified fields become an LMS-ready department or placement record, while uncertain matches wait for review.', practice:'Document field mappings and matching keys before automating the transfer.', boundary:'No-match and ambiguous records stop before final placement.', link:'ai-automation/salesforce-lms-account-automation/index.html', linkText:'Explore the Salesforce-to-LMS case →', heading:'ACCOUNT MAPPING · FICTIONAL', steps:[
-      {step:'Lookup', app:'SALESFORCE', action:'Search by learner key', status:'Account candidate', icon:asset('work-tools','salesforce.webp'), caption:'Browser automation repeats the lookup.'},
-      {step:'Verify', app:'SOURCE RECORD', action:'Check account context', status:'Match confirmed', icon:asset('workflows/asana','search-review.png'), caption:'An ambiguous match is held for a person.'},
-      {step:'Map', app:'LMS FIELD MAP', action:'Translate account fields', status:'LMS-ready record', icon:asset('workflows/systems-administration','integrations.webp'), caption:'Documented rules connect source and destination fields.'},
-      {step:'Review', app:'ABSORB LMS', action:'Prepare placement for review', status:'Human checkpoint', icon:asset('work-tools','absorb.webp'), caption:'The automated path stops before uncertain placement.'}
-    ]},
-    reporting:{label:'Data + reporting', title:'Turn repeated exports into a reviewable status picture.', text:'Saved LMS reports become comparable spreadsheet data and a workbook that exposes completion status and exceptions.', practice:'Validate expected exports and a stable learner key before comparison.', boundary:'Review unusual or unmatched records before distributing results.', link:'data-reporting/certification-reporting-automation/index.html', linkText:'Explore Reporting Automation →', heading:'REPORT WORKSPACE · FICTIONAL', steps:[
-      {step:'Export', app:'LMS REPORTS', action:'Download four saved reports', status:'Input package', icon:asset('lms-admin/reporting-automation','exporting-reports.png'), caption:'The same required reports begin each run.'},
-      {step:'Analyze', app:'PYTHON', action:'Normalize and compare records', status:'Evidence joined', icon:asset('work-tools','python.webp'), caption:'Stable keys connect activity and certificate evidence.'},
-      {step:'Review', app:'EXCEPTION QUEUE', action:'Hold unusual records', status:'Human QA', icon:asset('workflows/asana','approval-branch.png'), caption:'Missing or ambiguous data stays visible.'},
-      {step:'Deliver', app:'EXCEL', action:'Write review-ready workbook', status:'Complete / Incomplete', icon:asset('work-tools','excel.webp'), caption:'The final file is organized for stakeholder review.'}
-    ]},
-    agents:{label:'Reusable knowledge', title:'Give an assistant a defined job and trusted source set.', text:'I structure agent instructions and prompt libraries around a repeatable retrieval, drafting, or synthesis task. Sources, boundaries, and review criteria remain part of the workflow.', practice:'Keep instructions, reference material, and version context reusable.', boundary:'Review output for accuracy, privacy, and fit before anyone uses it.', link:'../ai-training-and-evaluation/index.html', linkText:'Explore AI Training + Evaluation →', heading:'KNOWLEDGE SYSTEM · FICTIONAL', steps:[
-      {step:'Define', app:'TASK BRIEF', action:'Name the repeatable job', status:'Scope set', icon:asset('workflows/content-creation','templates.webp'), caption:'A clear job prevents an assistant from guessing its role.'},
-      {step:'Ground', app:'SOURCE LIBRARY', action:'Connect approved references', status:'Sources attached', icon:asset('work-tools','documentation.webp'), caption:'The source set and context can be updated without rebuilding the task.'},
-      {step:'Run', app:'AGENT INSTRUCTIONS', action:'Draft from trusted material', status:'Draft produced', icon:asset('ai-evaluation','workflow-automation.webp'), caption:'Reusable instructions handle routine synthesis and formatting.'},
-      {step:'Review', app:'HUMAN REVIEW', action:'Check claims and boundaries', status:'Approved or revised', icon:asset('ai-evaluation','workflow-reviewer.webp'), caption:'A person checks accuracy, privacy, context, and usefulness.'}
-    ]}
+  const roleAnswers = {
+    designer:'My view: source files, blocked production tasks, and the next review decision.',
+    sme:'SME view: the current lesson, the exact accuracy questions, and the approval deadline.',
+    manager:'Program manager view: launch risk, pending approvals, owners, and upcoming milestones.'
   };
+  const roleCards = {
+    designer:['Clarify learning scope','Build scenario screens','Apply reviewed edit','Package source files'],
+    sme:['Confirm source material','Validate script facts','Resolve accuracy note','Sign off final meaning'],
+    manager:['Set launch milestone','Watch production gate','Review approval risk','Confirm release owner']
+  };
+  const managementDemo=byId('managementDemo');
+  let managementPlatform='asana',managementStage=0,managementRole='designer';
+  const managementBoard=byId('managementBoard');
+  const showManagement=()=>{
+    const platform=managementPlatforms[managementPlatform],stage=managementStages[managementStage];
+    managementDemo.dataset.platform=managementPlatform;managementDemo.dataset.role=managementRole;
+    animate(managementDemo);
+    put('managementWindowTitle', `${platform.label} · Product training launch`);picture('managementIcon',icon(platform.icon));
+    put('managementStageLabel',`${String(managementStage+1).padStart(2,'0')} · ${stage.label}`);put('managementStageTitle',stage.title);put('managementStageText',stage.text);put('managementStageState',stage.state);
+    put('managementDependency',stage.dependency);put('managementGate',stage.gate);put('managementCaption',stage.caption);put('managementRoleAnswer',roleAnswers[managementRole]);
+    managementBoard.replaceChildren();
+    platform.columns.forEach((heading,index)=>{
+      const column=document.createElement('div');column.className=`workflow-board-column${index===stage.column?' is-current':''}`;
+      const label=document.createElement('small');label.textContent=heading;column.append(label);
+      const card=document.createElement('div');card.className='workflow-board-card';
+      const image=document.createElement('img');image.alt='';image.src=`../../assets/icons/pixel/workflows/asana/${index===0?'task-document.png':index===1?'task-board.png':'search-review.png'}`;
+      const body=document.createElement('span');const code=document.createElement('b');code.textContent=`${platform.prefix}-${String(managementStage*3+index+1).padStart(2,'0')}`;
+      const title=document.createElement('strong');title.textContent=index===stage.column?roleCards[managementRole][managementStage]:stage.support[index];
+      const foot=document.createElement('em');foot.textContent=index===stage.column?stage.state:stage.support[index];body.append(code,title,foot);card.append(image,body);column.append(card);managementBoard.append(column);
+    });
+  };
+  const managementStagesTabs=tabs('[data-management-stage]',(button)=>{managementStage=Number(button.dataset.managementStage);showManagement();});
+  const stopManagement=player(byId('managementPlay'),3,(index)=>managementStagesTabs.choose(managementStagesTabs.buttons[index]));
+  managementStagesTabs.buttons.forEach((button) => { button.addEventListener('click', stopManagement); button.addEventListener('keydown', (event) => { if (event.key.startsWith('Arrow') || ['Home','End'].includes(event.key)) stopManagement(); }); });
+  tabs('[data-management-platform]',(button)=>{stopManagement();managementPlatform=button.dataset.managementPlatform;managementStagesTabs.choose(managementStagesTabs.buttons[0]);});
+  tabs('[data-management-role]',(button)=>{managementRole=button.dataset.managementRole;showManagement();});
+  showManagement();
 
-  const setText=(id,value)=>{const node=document.getElementById(id);if(node)node.textContent=value;};
-  const setImage=(id,src)=>{const node=document.getElementById(id);if(node)node.src=src;};
-  const setupSequence=(root,getSteps,paint)=>{
-    if(!root)return null;
-    const list=root.querySelector('.workflow-sim-steps');
-    const play=root.querySelector('.workflow-sim-play');
-    let index=0,timer=null;
-    const stop=()=>{if(timer)clearInterval(timer);timer=null;if(play)play.textContent='Play sequence';};
-    const render=(next,focus=false)=>{
-      const steps=getSteps();
-      index=(next+steps.length)%steps.length;
-      root.classList.remove('is-changing');void root.offsetWidth;root.classList.add('is-changing');
-      [...list.children].forEach((button,i)=>{const active=i===index;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;if(active&&focus)button.focus();});
-      paint(steps[index],index);
-    };
-    const rebuild=()=>{
-      stop();index=0;list.replaceChildren();
-      getSteps().forEach((entry,i)=>{
-        const button=document.createElement('button');button.type='button';button.setAttribute('role','tab');button.textContent=`${String(i+1).padStart(2,'0')} ${entry.step}`;
-        button.addEventListener('click',()=>{stop();render(i);});
-        button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();stop();const next=event.key==='Home'?0:event.key==='End'?getSteps().length-1:event.key==='ArrowRight'||event.key==='ArrowDown'?i+1:i-1;render(next,true);});
-        list.append(button);
-      });render(0);
-    };
-    play?.addEventListener('click',()=>{if(timer){stop();return;}play.textContent='Pause sequence';render(0);timer=setInterval(()=>{if(index>=getSteps().length-1){stop();play.textContent='Replay sequence';return;}render(index+1);if(index===getSteps().length-1){stop();play.textContent='Replay sequence';}},2600);});
-    rebuild();return {rebuild,stop};
+  const reviewStages=[
+    ['AUTHOR','Prepare a reviewable lesson and name what feedback is needed.','Source: approved product brief'],
+    ['L&D QA','Check navigation, practice, accessibility, and missing states.','Decision: ready for SME or return to author'],
+    ['SUBJECT EXPERT','Validate facts and examples in the lesson context.','Decision: correction, clarification, or approval'],
+    ['STAKEHOLDER','Check approved terminology and launch fit.','Decision: align competing requests before edit'],
+    ['L&D + AUTHOR','Confirm required changes in the revised version.','Decision: close only after checking the new build'],
+    ['RELEASE OWNER','Publish the approved file and retain its source.','Decision: access test and update owner recorded']
+  ];
+  const comments={
+    sme:{type:'TECHNICAL ACCURACY',text:'“The customer would not know the solution yet. The question should identify the constraint first.”',decision:'Required correction',action:'Revise the choice and feedback, then ask the SME to confirm the technical meaning.',task:'Asana task · Owner: instructional designer',icon:'task-document.png',status:'Needs change'},
+    brand:{type:'APPROVED TERMINOLOGY',text:'“Use the approved product term on this screen and in the facilitator notes.”',decision:'Check source language',action:'Compare the comment with the current terminology guide before changing both assets.',task:'Asana task · Owner: content editor',icon:'search-review.png',status:'Source check'},
+    ld:{type:'LEARNING + ACCESSIBILITY',text:'“Make the feedback explain why the discovery question is the better next step.”',decision:'Learning design revision',action:'Rewrite feedback for the learner decision, then check focus order and screen-reader language.',task:'Asana task · Owner: instructional designer',icon:'approval-branch.png',status:'QA required'}
   };
-
-  setupSequence(document.querySelector('[data-sim="microsoft"]'),()=>ms,entry=>{
-    setText('msSourceLabel',entry.source);setText('msSourceText',entry.input);setText('msSourceMeta',entry.meta);setText('msTargetLabel',entry.target);setText('msTargetText',entry.action);setText('msStatus',entry.status);setText('msCaption',entry.caption);setImage('msAsset',entry.icon);
-  });
-  let asanaMode='review';
-  const asanaSequence=setupSequence(document.querySelector('[data-sim="asana"]'),()=>asana[asanaMode],entry=>{
-    setText('asanaModeLabel',asanaMode==='review'?'REVIEW COORDINATION':'INTAKE + RULES · ILLUSTRATIVE');setText('asanaTask',entry.source);setText('asanaTaskMeta',entry.meta);setText('asanaColumn',entry.column);setText('asanaOwner',entry.owner);setText('asanaAction',entry.action);setText('asanaStatus',entry.status);setText('asanaCaption',entry.caption);setImage('asanaAsset',entry.icon);
-  });
-  const asanaButtons=[...document.querySelectorAll('[data-asana-mode]')];
-  const selectAsana=(button,focus=false)=>{asanaMode=button.dataset.asanaMode;asanaButtons.forEach(other=>{const active=other===button;other.classList.toggle('active',active);other.setAttribute('aria-selected',String(active));other.tabIndex=active?0:-1;});asanaSequence?.rebuild();if(focus)button.focus();};
-  asanaButtons.forEach((button,i)=>{button.addEventListener('click',()=>selectAsana(button));button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?asanaButtons.length-1:event.key==='ArrowRight'?(i+1)%asanaButtons.length:(i+asanaButtons.length-1)%asanaButtons.length;selectAsana(asanaButtons[next],true);});});
-  let toolMode='support';
-  const toolSurfaceViews={
-    support:[['Access question','Needs triage'],['Current access path','Guide verified'],['Tailored answer','Response sent'],['Recurring issue','Template updated']],
-    handoff:[['Account candidate','Unmapped'],['Verified account','Review if unclear'],['Account fields','LMS fields'],['Verified context','Placement review']],
-    reporting:[['Four files','Raw rows','Pending'],['Learner 0142','Joined','Calculated'],['Learner 0142','Conflict','Hold'],['Workbook','Complete','QA ready']],
-    agents:[['Support synthesis','Source needed','Criteria set'],['Defined job','Approved guide','Source check'],['Draft summary','Linked excerpts','Review pending'],['Reviewed output','Sources cited','Claims checked']]
+  const reviewDemo=byId('reviewDemo');
+  let reviewStage=0,reviewComment='sme';
+  const showReview=()=>{
+    const stage=reviewStages[reviewStage],comment=comments[reviewComment];
+    animate(reviewDemo);
+    put('reviewStageOwner',stage[0]);put('reviewStagePurpose',stage[1]);put('reviewStageBoundary',stage[2]);
+    put('reviewCommentType',comment.type);put('reviewCommentText',comment.text);put('reviewDecision',comment.decision);put('reviewAction',comment.action);put('reviewTask',comment.task);picture('reviewActionIcon',`../../assets/icons/pixel/workflows/asana/${comment.icon}`);
+    const finished=reviewStage>=4;put('reviewStatus',finished?'Checked in v04':comment.status);put('reviewVersion',finished?'Revision v04 · checked':'Draft v03 → revised v04');
+    put('reviewWindowVersion',finished?'VERSION 04':'VERSION 03');
+    put('reviewLessonChoice',finished?'Ask which constraints are shaping the customer’s decision.':'Ask a discovery question before recommending a solution.');
+    put('reviewCaption',finished?'The revised lesson is checked before the comment is resolved and the approved file is published.':'A contextual comment becomes an assigned change, then returns for confirmation before resolution.');
+    reviewDemo.dataset.reviewState=finished?'checked':'open';
   };
-  const toolSequence=setupSequence(document.querySelector('[data-sim="tools"]'),()=>tools[toolMode].steps,(entry,index)=>{
-    setText('toolSimApp',entry.app);setText('toolSimAction',entry.action);setText('toolSimStatus',entry.status);setText('toolSimCaption',entry.caption);setImage('toolSimAsset',entry.icon);
-    document.querySelectorAll(`.workflow-tool-surface-${toolMode} i`).forEach((node,i)=>{node.textContent=toolSurfaceViews[toolMode][index][i];});
-  });
-  const toolButtons=[...document.querySelectorAll('button[data-tool-mode]')];
-  const selectTool=(button,focus=false)=>{
-    toolMode=button.dataset.toolMode;const group=tools[toolMode];
-    toolButtons.forEach(other=>{const active=other===button;other.classList.toggle('active',active);other.setAttribute('aria-selected',String(active));other.tabIndex=active?0:-1;});
-    document.querySelector('[data-sim="tools"]')?.setAttribute('data-tool-mode',toolMode);
-    setText('toolModeLabel',group.label);setText('toolModeTitle',group.title);setText('toolModeText',group.text);setText('toolModePractice',group.practice);setText('toolModeBoundary',group.boundary);setText('toolSimHeading',group.heading);
-    const link=document.getElementById('toolModeLink');if(link){link.href=group.link;link.textContent=group.linkText;}
-    toolSequence?.rebuild();if(focus)button.focus();
-  };
-  toolButtons.forEach((button,i)=>{button.addEventListener('click',()=>selectTool(button));button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?toolButtons.length-1:event.key==='ArrowRight'||event.key==='ArrowDown'?(i+1)%toolButtons.length:(i+toolButtons.length-1)%toolButtons.length;selectTool(toolButtons[next],true);});});
+  tabs('[data-review-stage]',(button)=>{reviewStage=Number(button.dataset.reviewStage);showReview();});
+  tabs('[data-review-comment]',(button)=>{reviewComment=button.dataset.reviewComment;showReview();});
+  showReview();
 })();
