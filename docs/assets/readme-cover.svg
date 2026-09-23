@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Haley Reeder instructional design portfolio</title>
+  <desc id="desc">A dark teal portfolio cover with four illustrated areas: instructional design, AI evaluation, LMS administration, and workflows.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#142b30"/><stop offset=".55" stop-color="#214644"/><stop offset="1" stop-color="#365b4e"/></linearGradient>
+    <linearGradient id="glow" x2="1" y2="0"><stop stop-color="#78c9a8"/><stop offset=".5" stop-color="#b0e685"/><stop offset="1" stop-color="#d8ed8f"/></linearGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#c7eee0" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="1200" height="560" rx="28" fill="url(#bg)"/>
+  <rect width="1200" height="560" rx="28" fill="url(#grid)"/>
+  <circle cx="1050" cy="72" r="230" fill="#9fe1af" opacity=".07"/>
+  <circle cx="40" cy="520" r="210" fill="#a8e5ca" opacity=".06"/>
+  <text x="68" y="80" fill="#bce6d5" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">HALEY REEDER  /  PORTFOLIO</text>
+  <text x="68" y="190" fill="#ffffff" font-family="Arial, sans-serif" font-size="63" font-weight="800">Simple designs for</text>
+  <text x="68" y="263" fill="url(#glow)" font-family="Arial, sans-serif" font-size="63" font-weight="800">complex training needs.</text>
+  <text x="68" y="321" fill="#d1e7dc" font-family="Arial, sans-serif" font-size="23">Explore the learning, the platforms, and the thinking behind both.</text>
+  <path d="M68 366H1128" stroke="url(#glow)" stroke-width="3" opacity=".9"/>
+  <g font-family="Arial, sans-serif" font-weight="700" font-size="19" fill="#f5fff7">
+    <g transform="translate(68 399)"><rect width="248" height="104" rx="17" fill="#f5fff7" fill-opacity=".1" stroke="#a6ddbd" stroke-opacity=".55"/><rect x="18" y="22" width="58" height="58" rx="13" fill="#f1fff3"/><path d="M30 38h34M30 49h26M30 60h32" stroke="#2f806f" stroke-width="5" stroke-linecap="round"/><text x="91" y="48">Instructional</text><text x="91" y="74">design</text></g>
+    <g transform="translate(333 399)"><rect width="248" height="104" rx="17" fill="#f5fff7" fill-opacity=".1" stroke="#a6ddbd" stroke-opacity=".55"/><rect x="18" y="22" width="58" height="58" rx="13" fill="#f1fff3"/><circle cx="47" cy="50" r="18" fill="none" stroke="#2f806f" stroke-width="5"/><path d="M47 27v46M24 50h46" stroke="#2f806f" stroke-width="3"/><text x="91" y="48">AI training</text><text x="91" y="74">+ evaluation</text></g>
+    <g transform="translate(598 399)"><rect width="248" height="104" rx="17" fill="#f5fff7" fill-opacity=".1" stroke="#a6ddbd" stroke-opacity=".55"/><rect x="18" y="22" width="58" height="58" rx="13" fill="#f1fff3"/><rect x="30" y="37" width="34" height="27" rx="3" fill="none" stroke="#2f806f" stroke-width="4"/><path d="M37 69h20" stroke="#2f806f" stroke-width="4" stroke-linecap="round"/><text x="91" y="48">LMS</text><text x="91" y="74">administration</text></g>
+    <g transform="translate(863 399)"><rect width="269" height="104" rx="17" fill="#f5fff7" fill-opacity=".1" stroke="#a6ddbd" stroke-opacity=".55"/><rect x="18" y="22" width="58" height="58" rx="13" fill="#f1fff3"/><circle cx="33" cy="51" r="6" fill="#2f806f"/><circle cx="61" cy="36" r="6" fill="#2f806f"/><circle cx="61" cy="66" r="6" fill="#2f806f"/><path d="M39 48l16-10M39 54l16 10" stroke="#2f806f" stroke-width="4"/><text x="91" y="48">Workflows</text><text x="91" y="74">+ reporting</text></g>
+  </g>
+</svg>
