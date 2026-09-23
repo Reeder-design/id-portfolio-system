@@ -266,7 +266,7 @@
 
   const initSectionRhythm = () => {
     const family = document.body.dataset.pageFamily;
-    if (!family || family === 'demo' || family === 'hiring') return;
+    if (!family || family === 'demo' || family === 'hiring' || document.body.dataset.manualSurfaces === 'true') return;
 
     const main = document.querySelector('main');
     if (!main) return;

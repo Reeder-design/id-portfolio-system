@@ -14,9 +14,9 @@
     },
     support: {
       title: 'Performance support',
-      text: 'A job aid, guide, or tool provides the answer or steps while someone is doing the work.',
-      scope: 'A live task or reference need', action: 'Finds and applies information', finish: 'The task moves forward',
-      contrast: 'How they connect', link: 'A microlearning can teach the decision; a job aid can remain available when that decision comes up again.'
+      text: 'A point-of-need strategy helps someone find, interpret, and act on trusted information while doing the work.',
+      scope: 'A live task or reliable answer', action: 'Finds, interprets, and acts', finish: 'Acts or reaches the right owner',
+      contrast: 'How they connect', link: 'Microlearning can build understanding and practice; maintained support remains available during real work.'
     }
   };
   const tabs = [...document.querySelectorAll('.micro-compare-tabs [data-format]')];
