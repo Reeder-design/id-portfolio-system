@@ -1,58 +1,44 @@
 (() => {
-  const samples = {
-    premiere: {
-      file: 'multimedia-premiere-editing.webp',
-      label: 'Video editing and sequencing',
-      tool: 'Premiere Pro',
-      alt: 'Public-safe reconstructed video editing workspace with timeline, footage, graphics, narration, and music tracks.',
-      text: 'I use timeline-based editing to combine footage, narration, graphics, on-screen text, and music while controlling pacing and visual hierarchy.',
-      role: 'Sequence, edit, caption, polish',
-      qa: 'Timing, readability, audio balance, export'
+  const studio = {
+    video: {
+      label: 'VIDEO PRODUCTION', workspace: 'VIDEO EDITOR', title: 'Show a process unfolding.',
+      purpose: 'Video helps when a learner needs to see timing, sequence, or a real action before trying it.',
+      make: 'Edited footage, screen capture, narration, on-screen text, and captions.',
+      path: 'Script → storyboard → edit → caption',
+      qa: 'Pacing, readability, audio balance, captions, and export.',
+      tool: 'Premiere Pro · learning platform'
     },
     motion: {
-      file: 'multimedia-after-effects-motion.webp',
-      label: 'Motion graphics and visual explanation',
-      tool: 'After Effects',
-      alt: 'Public-safe reconstructed motion graphics workspace with a learning visual, layered composition, timeline, and effects panel.',
-      text: 'I use motion when movement helps explain sequence, hierarchy, change, or emphasis, rather than adding animation for decoration.',
-      role: 'Storyboard, animate, refine',
-      qa: 'Legibility, timing, contrast, visual purpose'
+      label: 'MOTION GRAPHICS', workspace: 'MOTION COMPOSITION', title: 'Make change visible.',
+      purpose: 'Motion clarifies a sequence, relationship, or transition that is hard to grasp in a still frame.',
+      make: 'Animated visual explanations, layered compositions, and reusable motion elements.',
+      path: 'Map the idea → animate keyframes → review timing',
+      qa: 'Visual purpose, legibility, contrast, pacing, and accessibility.',
+      tool: 'After Effects · motion library'
     },
-    ai: {
-      file: 'multimedia-ai-visuals.webp',
-      label: 'AI-assisted visual ideation',
-      tool: 'AI image generation',
-      alt: 'Public-safe reconstructed AI image generation interface showing learning-focused visual concepts and refinement controls.',
-      text: 'I use AI-assisted visual generation to explore concepts and create public-safe custom imagery, then refine the output for consistency, composition, and learning fit.',
-      role: 'Prompt, iterate, select, refine',
-      qa: 'Consistency, composition, accuracy, tone'
+    visuals: {
+      label: 'IMAGES + GRAPHICS', workspace: 'VISUAL ARTBOARD', title: 'Focus the eye.',
+      purpose: 'A well-composed image or graphic guides attention to the important part of an idea or interface.',
+      make: 'Illustrations, diagrams, annotations, icons, and reusable visual assets.',
+      path: 'Compose → annotate → optimize → save for reuse',
+      qa: 'Hierarchy, brand consistency, contrast, alt text, and responsive clarity.',
+      tool: 'Illustrator · asset library'
     },
     audio: {
-      file: 'multimedia-audio-production.webp',
-      label: 'Narration cleanup and audio finishing',
-      tool: 'Adobe Audition',
-      alt: 'Public-safe reconstructed audio production workspace showing waveform editing, effects, properties, and level meters.',
-      text: 'I clean narration, tighten pacing, balance levels, reduce distracting noise, and prepare audio that works cleanly with captions and visual timing.',
-      role: 'Edit, clean, level, export',
-      qa: 'Noise, clipping, pacing, caption alignment'
+      label: 'AUDIO PRODUCTION', workspace: 'AUDIO SESSION', title: 'Guide the ear.',
+      purpose: 'Narration and sound can set pace and focus while giving the screen room to breathe.',
+      make: 'Edited narration, balanced audio, and sound that supports the visual sequence.',
+      path: 'Write → record → clean → mix',
+      qa: 'Noise, clipping, pacing, levels, and caption alignment.',
+      tool: 'Audition · accessible delivery'
     },
-    library: {
-      file: 'multimedia-asset-library.webp',
-      label: 'Reusable visual design system',
-      tool: 'Illustrator + asset library',
-      alt: 'Public-safe reconstructed visual asset library with brand elements, icons, illustrations, templates, fonts, and color palette.',
-      text: 'I organize reusable icons, illustrations, templates, and brand elements so production stays consistent and future updates do not require rebuilding every visual from scratch.',
-      role: 'Design, organize, standardize',
-      qa: 'Consistency, reuse, accessibility, maintainability'
-    },
-    storyboard: {
-      file: 'multimedia-storyboard-plan.webp',
-      label: 'Storyboard and video planning',
-      tool: 'Storyboard workflow',
-      alt: 'Public-safe reconstructed storyboard with scenes, visual frames, descriptions, narration, and production notes.',
-      text: 'I plan scenes, narration, visuals, motion notes, and transitions before production so the finished media supports the learning sequence and stays maintainable.',
-      role: 'Script, storyboard, align',
-      qa: 'Scope, flow, narration, production readiness'
+    ai: {
+      label: 'AI-ASSISTED VISUALS', workspace: 'VISUAL IDEATION', title: 'Prototype, then verify.',
+      purpose: 'Generated visuals help explore a learning-focused concept when custom imagery is needed.',
+      make: 'Visual directions, selected concepts, and refined public-safe learning assets.',
+      path: 'Brief → generate → compare → refine',
+      qa: 'Accuracy, consistency, composition, access, and fit for the learner task.',
+      tool: 'AI generation · Photoshop refinement'
     }
   };
 
@@ -88,33 +74,6 @@
       decision: 'Media should support the learning flow, not interrupt it.',
       output: 'A finished learning experience with media connected to context, practice, or performance support.',
       qa: 'Test playback, responsive behavior, accessibility, loading, navigation, and the learner transition before and after the asset.'
-    }
-  };
-
-  const projects = {
-    vertical: {
-      label: 'AI-presenter video',
-      title: 'Vertical Positioning Microlearning',
-      text: 'I combined Rise content, industry visuals, scenario practice, and a short Colossyan presenter segment to orient sellers before they moved into the learning.',
-      tags: ['Rise 360','Colossyan','Scenario'],
-      href: '../microlearning-performance-support/vertical-positioning-microlearning/index.html',
-      link: 'Explore the project →'
-    },
-    certification: {
-      label: 'Mixed media curriculum',
-      title: 'Enterprise Sales Certification',
-      text: 'I used graphics, multimedia, comparisons, Storyline interactions, knowledge checks, and assessments across a larger certification experience.',
-      tags: ['Rise 360','Storyline','Media'],
-      href: '../complete-learning-paths/enterprise-sales-certification/index.html',
-      link: 'Explore the project →'
-    },
-    launch: {
-      label: 'Visual + interactive support',
-      title: 'Product Launch Microlearning',
-      text: 'I paired a concise product overview with an interactive customer-facing scenario so visual explanation led directly into seller practice.',
-      tags: ['Rise 360','Storyline','Feedback'],
-      href: '../microlearning-performance-support/product-launch-microlearning/index.html',
-      link: 'Explore the project →'
     }
   };
 
@@ -160,24 +119,26 @@
     });
   };
 
-  setupTabs('[data-media-sample]', 'mediaSample', (key) => {
-    const data = samples[key];
-    const image = document.getElementById('mediaEvidenceImage');
-    const frame = image?.closest('.media-evidence-frame');
-    if (!data || !image) return;
+  setupTabs('[data-media-studio]', 'mediaStudio', (key) => {
+    const data = studio[key];
+    const panel = document.getElementById('media-studio-panel');
+    const workbench = panel?.querySelector('.media-studio-workbench');
+    if (!data || !panel) return;
 
-    image.style.opacity = '0';
-    window.setTimeout(() => {
-      image.src = '../../../assets/project-images/multimedia/' + data.file;
-      image.alt = data.alt;
-      setText('mediaEvidenceLabel', data.label);
-      setText('mediaEvidenceTool', data.tool);
-      setText('mediaEvidenceText', data.text);
-      setText('mediaEvidenceRole', data.role);
-      setText('mediaEvidenceQa', data.qa);
-      image.style.opacity = '1';
-      restartAnimation(frame);
-    }, 80);
+    panel.dataset.media = key;
+    panel.setAttribute('aria-labelledby', 'media-tab-' + key);
+    if (workbench) workbench.setAttribute('aria-label', 'Animated ' + data.label.toLowerCase() + ' environment and media preview');
+    panel.querySelectorAll('[data-studio-scene]').forEach((scene) => {
+      scene.hidden = scene.dataset.studioScene !== key;
+    });
+    setText('mediaStudioWorkspaceLabel', data.workspace);
+    setText('mediaStudioLabel', data.label);
+    setText('mediaStudioTitle', data.title);
+    setText('mediaStudioPurpose', data.purpose);
+    setText('mediaStudioMake', data.make);
+    setText('mediaStudioPath', data.path);
+    setText('mediaStudioQa', data.qa);
+    setText('mediaStudioTool', data.tool);
   });
 
   setupTabs('[data-media-workflow]', 'mediaWorkflow', (key) => {
@@ -199,53 +160,25 @@
     }
   });
 
-  setupTabs('[data-media-project]', 'mediaProject', (key) => {
-    const data = projects[key];
-    const tags = document.getElementById('mediaProjectTags');
-    const link = document.getElementById('mediaProjectLink');
-    const flow = document.querySelector('.media-project-flow');
-    if (!data) return;
-
-    setText('mediaProjectLabel', data.label);
-    setText('mediaProjectTitle', data.title);
-    setText('mediaProjectText', data.text);
-
-    if (tags) {
-      tags.replaceChildren(...data.tags.map((tag) => {
-        const chip = document.createElement('span');
-        chip.textContent = tag;
-        return chip;
-      }));
-    }
-
-    if (link) {
-      link.href = data.href;
-      link.textContent = data.link;
-    }
-
-    if (flow) {
-      flow.dataset.project = key;
-      flow.setAttribute('aria-label', 'Animated media integration for ' + data.title);
-      restartAnimation(flow);
-    }
-  });
-
   const navLinks = [...document.querySelectorAll('.case-nav a')];
   const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) return;
-      navLinks.forEach((link) => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + visible.target.id);
-      });
-    }, {rootMargin:'-28% 0px -58% 0px', threshold:[0.1,.35,.6]});
-
-    sections.forEach((section) => observer.observe(section));
+  if (sections.length) {
+    let navFrame = 0;
+    const updateNav = () => {
+      navFrame = 0;
+      const marker = window.scrollY + Math.max(110, window.innerHeight * .3);
+      const current = sections.reduce((active, section) => section.offsetTop <= marker ? section : active, sections[0]);
+      navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === '#' + current.id));
+    };
+    const queueNavUpdate = () => {
+      if (!navFrame) navFrame = window.requestAnimationFrame(updateNav);
+    };
+    window.addEventListener('scroll', queueNavUpdate, {passive:true});
+    window.addEventListener('resize', queueNavUpdate);
+    updateNav();
   }
+
 })();
