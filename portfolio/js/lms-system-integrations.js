@@ -1,30 +1,51 @@
 (() => {
-  'use strict';
-  const data = {
-    business: {evidence:'Direct matching work + platform-informed HR pattern',title:'Match business data before changing placement.',summary:'CRM or HR fields can drive audience, account, role, and region rules. I have used a reviewed Salesforce browser workflow to check account context for Absorb placement; I keep ambiguous matches out of the automatic path.',lesson:'A learner email may find a record, but the account context still needs verification. The safe output is a reviewable placement recommendation, not a silent user move.',source:'CRM / HR',key:'Email + account',target:'LMS audience',check:'No-match queue',icon:'extended-enterprise/salesforce.png'},
-    identity: {evidence:'Platform-informed identity pattern',title:'Make access a testable consequence of identity.',summary:'SSO and user provisioning can pass a login identity while role, group, and catalog membership arrive separately. I design a test learner for each audience route and check what that person can actually see.',lesson:'A successful sign-in does not prove access is correct. Validate the resolved group and learner view, especially after role or account changes.',source:'Identity provider',key:'Stable user ID',target:'Group + catalog',check:'Persona test',icon:'integrations-connectivity/sso-okta.webp'},
-    content: {evidence:'Direct course QA + platform-informed standards pattern',title:'Test the learning event, not only the upload.',summary:'SCORM or xAPI packages exchange launch, progress, score, and completion information with the LMS. The tracking standard and package settings must support the specific record the learning program needs.',lesson:'A course can launch beautifully and still fail to record the intended result. Test resume, score, pass/fail, and completion from the learner path.',source:'Course package',key:'Learner + activity',target:'LMS record',check:'Launch + status',icon:'general/cloud-upload.png'},
-    reporting: {evidence:'Direct multi-export certification reporting',title:'Reconcile status before anyone acts on it.',summary:'Exports can carry different identifiers, timestamps, and status meanings. In my certification-reporting work, four LMS reports became a controlled workbook with Complete and Incomplete views for review.',lesson:'A clean spreadsheet is not proof of correct logic. Compare identifiers and totals to the source, keep missing records visible, and document the status rule.',source:'LMS exports',key:'Learner + course ID',target:'Review workbook',check:'Totals + exceptions',icon:'reporting-insights/reports.webp'}
-  };
-  const buttons=[...document.querySelectorAll('[data-integration]')];
-  const asset=name=>`../../assets/icons/pixel/lms-admin/${name}`;
-  const scenes={
-    business:`<div class="int-business"><div class="int-account"><img src="${asset('extended-enterprise/salesforce.png')}" alt=""><strong>CRM account</strong><span>Partner · West</span><span class="int-account-alert">Account match?</span></div><div class="int-mapping"><small>FIELD CROSSWALK</small><div><span>Email</span><b>→</b><span>User ID</span></div><div><span>Account</span><b>→</b><span>Audience</span></div><div><span>Region</span><b>→</b><span>Catalog</span></div></div><div class="int-placement"><img src="${asset('administration/user-management.webp')}" alt=""><strong>Partner path</strong><span>Validated placement</span></div></div>`,
-    identity:`<div class="int-identity"><div class="int-login"><img src="${asset('integrations-connectivity/sso-okta.webp')}" alt=""><strong>SSO passed</strong><span>Stable user ID</span></div><div class="int-permissions"><small>RESOLVED ACCESS</small><span>Partner group</span><span>West catalog</span><span>Learning plan</span></div><div class="int-learner"><img src="${asset('administration/user-management.webp')}" alt=""><strong>Learner view</strong><span>3 expected items</span></div></div>`,
-    content:`<div class="int-content"><div class="int-player"><div class="int-player-bar">COURSE PLAYER <span>▶</span></div><img src="${asset('general/cloud-upload.png')}" alt=""><strong>Product readiness</strong><div class="int-progress"><i></i></div><small>Learning package</small></div><div class="int-events"><span>Launch ✓</span><span>Score 86%</span><span>Complete ✓</span></div><div class="int-transcript"><img src="${asset('general/checklist.png')}" alt=""><strong>Transcript</strong><span>Status recorded</span></div></div>`,
-    reporting:`<div class="int-reporting"><div class="int-exports"><span>Enrollment</span><span>Completion</span><span>Certificate</span><span>Audience</span></div><div class="int-join"><small>RECONCILE</small><strong>IDs + status rules</strong><div><i></i><i></i><i></i></div></div><div class="int-workbook"><img src="${asset('reporting-insights/reports.webp')}" alt=""><strong>Review workbook</strong><span>Complete / Incomplete</span></div></div>`
-  };
-  const render=key=>{const d=data[key];if(!d)return;for(const [id,value] of [['integrationEvidence',d.evidence],['integrationTitle',d.title],['integrationSummary',d.summary],['integrationLesson',d.lesson]])document.getElementById(id).textContent=value;const screen=document.getElementById('integrationScreen');screen.innerHTML=`<div class="integration-screen-top"><span>● ● ●</span><strong>${key.toUpperCase()} / ADMIN VIEW</strong></div><div class="integration-scene integration-scene-${key}">${scenes[key]}</div><div class="integration-scene-footer"><span>${d.check}</span><button type="button" aria-expanded="false">Inspect exception</button></div><div class="integration-exception" hidden><strong>Admin review</strong><p>${d.lesson}</p></div>`;screen.querySelector('.integration-scene-footer button').addEventListener('click',event=>{const note=screen.querySelector('.integration-exception');note.hidden=!note.hidden;event.currentTarget.setAttribute('aria-expanded',String(!note.hidden));});buttons.forEach(button=>{const selected=button.dataset.integration===key;button.classList.toggle('active',selected);button.setAttribute('aria-selected',String(selected));button.tabIndex=selected?0:-1;});};
-  buttons.forEach((button,index)=>{button.addEventListener('click',()=>render(button.dataset.integration));button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:event.key==='ArrowRight'?(index+1)%buttons.length:(index-1+buttons.length)%buttons.length;buttons[next].focus();render(buttons[next].dataset.integration);});});
-  render('business');
-  const practices={
-    ownership:['Start with ownership','SOURCE OF TRUTH','Name the source, receiving field, rule owner, and learner outcome before building a feed.','Named owner','general/goal-target.png'],
-    key:['Choose a stable key','MATCHING RULE','Confirm which identifier joins people, accounts, courses, and credentials. Ambiguous matches stay in review.','Verified key','administration/user-management.webp'],
-    views:['Test both views','LEARNER + ADMIN QA','Verify the admin record and the learner experience: access, launch, completion, and status.','Persona test','general/checklist.png'],
-    exceptions:['Keep exceptions visible','REVIEW QUEUE','Preserve unmatched, duplicate, late, and conflicting records with an owner and retest step.','Review route','administration/audit-logs.webp'],
-    output:['Reconcile the output','REPORT VALIDATION','Compare samples and totals to source data before a team acts on a completion or certification report.','Totals check','reporting-insights/reports.webp'],
-    maintenance:['Plan for maintenance','CHANGE CONTROL','Record timing, permissions, versions, rule changes, and who responds when a field changes.','Change owner','administration/system-settings.webp']
-  };
-  const practiceButtons=[...document.querySelectorAll('[data-practice]')];
-  practiceButtons.forEach((button,index)=>button.addEventListener('click',()=>{const [title,kicker,description,rule,icon]=practices[button.dataset.practice];document.getElementById('contractTitle').textContent=title;document.getElementById('contractKicker').textContent=kicker;document.getElementById('contractDescription').textContent=description;document.getElementById('contractRule').textContent=rule;document.getElementById('contractIcon').src=asset(icon);document.getElementById('contractCount').textContent=`0${index+1} / 06`;practiceButtons.forEach(item=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));});const panel=document.querySelector('.integration-contract-screen');panel.classList.remove('contract-changed');void panel.offsetWidth;panel.classList.add('contract-changed');}));
+'use strict';
+const cases={
+  business:{
+    evidence:'DIRECT MATCHING WORK · SALESFORCE → ABSORB',title:'Verify the account before placing the learner.',
+    summary:'In my Salesforce-to-Absorb review workflow, an email could locate a person while the related account determined the correct partner audience. Ambiguous account matches stayed in a review queue.',
+    lesson:'A matching email is only the starting point. I check account and region together before recommending an LMS placement.',
+    instruction:'Select the CRM record to inspect the placement rule.',
+    result:'Morgan Lee · Partner / West → Partner certification route. Missing or conflicting account data remains in review.',
+    visual:'<div class="ix-stage ix-business"><div class="ix-source"><span>SALESFORCE / ACCOUNT</span><button type="button" data-inspect><b>ML</b><strong>Morgan Lee</strong><small>Partner · West</small><em>Inspect record ↗</em></button></div><div class="ix-conduit"><i></i><span>email + account + region</span></div><div class="ix-target"><span>ABSORB / AUDIENCE</span><strong>Partner path</strong><small>Certification + resources</small><b>Pending verification</b></div></div>'
+  },
+  identity:{
+    evidence:'PLATFORM-INFORMED PATTERN · IDENTITY → LEARNER VIEW',title:'Test more than a successful sign-in.',
+    summary:'A login can pass while the resolved group or catalog is wrong. I use a test learner for each audience and verify the route that appears after provisioning.',
+    lesson:'The stable ID, group membership, and visible catalog should be checked together after an account or role change.',
+    instruction:'Select the test learner to reveal their access.',
+    result:'Test learner · Partner / West → sign-in passed, partner group resolved, West catalog visible. Customer-only content remains hidden.',
+    visual:'<div class="ix-stage ix-identity"><div class="ix-id-card"><span>IDENTITY PROVIDER</span><strong>UID 2048</strong><small>SSO passed</small></div><div class="ix-conduit"><i></i><span>stable ID + group</span></div><button type="button" class="ix-user-card" data-inspect><span>LEARNER TEST</span><strong>Partner · West</strong><small>Inspect visible learning ↗</small></button><div class="ix-access-circles"><i></i><i></i><i></i></div></div>'
+  },
+  content:{
+    evidence:'DIRECT COURSE QA · PACKAGE → LMS RECORD',title:'Confirm launch, resume, score, and completion.',
+    summary:'A course package can open successfully while its progress or score fails to reach the LMS. I test the complete learner journey and compare the resulting transcript.',
+    lesson:'I check the configured completion condition against the event the package actually sends, including a resumed session.',
+    instruction:'Launch the sample course and inspect the recorded events.',
+    result:'Launch → resume → score 86% → complete. The transcript status changes only after the required completion event is received.',
+    visual:'<div class="ix-stage ix-content"><div class="ix-course"><span>COURSE PLAYER / v2.1</span><strong>Product readiness</strong><div class="ix-progress"><i></i></div><button type="button" data-inspect>▶ Launch test</button></div><div class="ix-event-stream"><span>EVENT STREAM</span><i>launch</i><i>resume</i><i>score</i><i>complete</i></div><div class="ix-transcript"><span>LMS TRANSCRIPT</span><strong>Awaiting event</strong></div></div>'
+  },
+  reporting:{
+    evidence:'DIRECT WORK · FOUR EXPORTS → REVIEW WORKBOOK',title:'Reconcile the record before sending follow-up.',
+    summary:'In certification reporting, I combined enrollment, completion, certificate, and audience exports into Complete and Incomplete review sheets. The join and exception rules stayed visible.',
+    lesson:'A clean sheet is not proof of a correct result. I compare counts with source reports and preserve missing identifiers for review.',
+    instruction:'Select the export set to inspect the reconciliation.',
+    result:'Four files joined by learner and course ID → Complete / Incomplete views. Unmatched identifiers are held in an exception list.',
+    visual:'<div class="ix-stage ix-reporting"><button type="button" class="ix-export-stack" data-inspect><span>ENROLLMENT</span><span>COMPLETION</span><span>CERTIFICATE</span><span>AUDIENCE</span><b>Inspect exports ↗</b></button><div class="ix-reconcile"><span>ID + COURSE</span><i></i><strong>RECONCILE</strong></div><div class="ix-workbook"><span>REVIEW WORKBOOK</span><strong>Complete</strong><strong>Incomplete</strong><small>Exceptions retained</small></div></div>'
+  }
+};
+const buttons=[...document.querySelectorAll('[data-integration]')];
+const screen=document.getElementById('integrationScreen');
+if(!screen||!buttons.length)return;
+function render(key,open=false){
+  const d=cases[key];if(!d)return;
+  [['integrationEvidence',d.evidence],['integrationTitle',d.title],['integrationSummary',d.summary],['integrationLesson',d.lesson]].forEach(([id,value])=>document.getElementById(id).textContent=value);
+  buttons.forEach(button=>{const on=button.dataset.integration===key;button.classList.toggle('active',on);button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;});
+  screen.dataset.case=key;
+  screen.innerHTML='<div class="integration-screen-top"><span>● ● ●</span><strong>DATA HANDOFF / '+key.toUpperCase()+'</strong><small>ILLUSTRATIVE</small></div><div class="integration-prompt">'+d.instruction+'</div>'+d.visual+'<div class="ix-inspector" '+(open?'':'hidden')+' role="status"><span>ADMIN CHECK</span><p>'+d.result+'</p><button type="button" data-close aria-label="Close admin check">×</button></div>';
+  if(open){screen.classList.add('inspected');}else screen.classList.remove('inspected');
+}
+screen.addEventListener('click',event=>{if(event.target.closest('[data-inspect]'))render(screen.dataset.case,true);if(event.target.closest('[data-close]'))render(screen.dataset.case,false);});
+buttons.forEach((button,index)=>{button.addEventListener('click',()=>render(button.dataset.integration));button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(event.key==='ArrowLeft'?-1:1)+buttons.length)%buttons.length;buttons[next].focus();render(buttons[next].dataset.integration);});});
+render('business');
 })();

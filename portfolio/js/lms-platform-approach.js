@@ -340,89 +340,76 @@
     }
   };
 
-  const esc = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const cell = (value, tag) => '<' + tag + '>' + esc(value) + '</' + tag + '>';
-  function renderContent(scene) {
-    if (scene.kind === 'metrics') {
-      return '<div class="pui-metrics">' + scene.values.map((v) => '<div class="pui-metric"><span>' + esc(v[0]) + '</span><strong>' + esc(v[1]) + '</strong><small>' + esc(v[2]) + '</small></div>').join('') + '</div><div class="pui-list"><h5>Attention and activity</h5>' + scene.list.map((row) => '<div class="pui-list-row"><span>' + esc(row[0]) + '</span><b>' + esc(row[1]) + '</b></div>').join('') + '</div>';
-    }
-    if (scene.kind === 'table' || scene.kind === 'matrix') {
-      return '<div class="pui-table-wrap"><table class="pui-table"><thead><tr>' + scene.columns.map((c) => cell(c, 'th')).join('') + '</tr></thead><tbody>' + scene.rows.map((row) => '<tr>' + row.map((c) => cell(c, 'td')).join('') + '</tr>').join('') + '</tbody></table></div>' + (scene.note ? '<p class="pui-note">' + esc(scene.note) + '</p>' : '');
-    }
-    if (scene.kind === 'tree') {
-      return '<div class="pui-tree">' + scene.nodes.map((node) => '<div class="pui-tree-node depth-' + node[0] + '"><i aria-hidden="true"></i><strong>' + esc(node[1]) + '</strong><small>' + esc(node[2]) + '</small></div>').join('') + '</div>';
-    }
-    if (scene.kind === 'designer') {
-      return '<div class="pui-designer"><div class="pui-designer-config"><h5>Experience controls</h5>' + scene.fields.map((field) => '<div class="pui-field"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong></div>').join('') + '</div><div class="pui-learner-preview"><div class="pui-preview-header">Partner Academy <small>LEARNER VIEW</small></div><div class="pui-preview-welcome"><b>Welcome back</b><span>Your certification route is ready.</span></div><div class="pui-preview-nav">' + scene.blocks.map((block) => '<span>' + esc(block[1]) + '</span>').join('') + '</div><div class="pui-preview-course"><strong>Partner Sales Certification</strong><small>Continue learning →</small></div></div></div>';
-    }
-    if (scene.kind === 'editor') {
-      return '<div class="pui-editor"><div class="pui-blocks"><h5>Course structure</h5>' + scene.blocks.map((block) => '<div class="pui-block"><b>' + esc(block[0]) + '</b><strong>' + esc(block[1]) + '</strong><small>' + esc(block[2]) + '</small></div>').join('') + '</div><div class="pui-fields"><h5>Configuration</h5>' + scene.fields.map((field) => '<div class="pui-field"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong></div>').join('') + '</div></div>';
-    }
-    if (scene.kind === 'rules') {
-      return '<div class="pui-rules"><div class="pui-rules-list"><h5>Rule conditions</h5>' + scene.fields.map((field, i) => '<div class="pui-rule"><span>' + esc(field[0]) + '</span><strong>' + esc(field[1]) + '</strong>' + (i < scene.fields.length - 1 ? '<em>AND</em>' : '') + '</div>').join('') + '</div><div class="pui-rule-result"><span>Population preview</span><strong>' + esc(scene.note) + '</strong><i></i><small>Source attributes → assignment</small></div></div>';
-    }
-    if (scene.kind === 'timeline') {
-      return '<div class="pui-timeline">' + scene.steps.map((step, i) => '<div class="pui-step"><b>' + String(i + 1).padStart(2, '0') + '</b><strong>' + esc(step[0]) + '</strong><span>' + esc(step[1]) + '</span></div>').join('') + '</div><p class="pui-note">' + esc(scene.note) + '</p>';
-    }
-    if (scene.kind === 'funnel') {
-      return '<div class="pui-funnel">' + scene.values.map((v, i) => '<div class="pui-funnel-row" style="--bar:' + Math.max(30, 100 - i * 12) + '%"><span>' + esc(v[0]) + '</span><i></i><strong>' + esc(v[1]) + '</strong></div>').join('') + '</div>';
-    }
+  const esc=value=>String(value==null?'':value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const focusTargets={
+    absorb:['Courses requiring attention','Cybersecurity Essentials','Cybersecurity Basics','Morgan Lee'],
+    docebo:['Partner Academy','Certifications','Enrollments','Solution Partners — West'],
+    cornerstone:['Expiring in 30 days','Final Assessment','Division','North America'],
+    sap:['Curricula','Safety Foundations','Job code','Taylor Kim'],
+    workday:['Campaigns','Report','Approval','Past due'],
+    blackboard:['College of Engineering','Engineering','Academic Integrity Statement','ART105-02'],
+    canvas:['College of Engineering','ID Administrator','Pending changes','ENG101-03'],
+    sharepoint:['Learning Hub','Product Guide','External guests','Pending approval']
+  };
+  const dragCases={
+    'docebo:2':{source:'Reports · view',target:'Solution Partners — West',result:'Effective access: partner manager can see West reports; other branches stay outside the resource scope.'},
+    'workday:1':{source:'People Managers — Active',target:'Campaign audience',result:'Saved HCM report connected to the campaign; 3,218 active managers appear in the preview.'},
+    'canvas:2':{source:'04 pending changes',target:'18 associated courses',result:'Sync preview shows four changes across 18 courses; local due dates remain editable.'}
+  };
+  let activePrompt='';
+  function item(label,kind,index,selected){
+    return '<button type="button" class="pui-inspect '+(selected===label?'is-selected':'')+' '+(activePrompt&&label.includes(activePrompt)?'is-target':'')+'" data-inspect="'+esc(label)+'" aria-label="Inspect '+esc(label)+'"><span>'+esc(label)+'</span><i aria-hidden="true">↗</i></button>';
+  }
+  function renderContent(scene,selected){
+    if(scene.kind==='metrics')return '<div class="pui-metrics">'+scene.values.map((v,i)=>'<div class="pui-metric"><small>'+esc(v[0])+'</small>'+item(v[1]+' '+v[0],scene.kind,i,selected)+'<span>'+esc(v[2])+'</span></div>').join('')+'</div><div class="pui-list"><h5>Attention and activity</h5>'+scene.list.map((v,i)=>'<div class="pui-list-row">'+item(v[0],scene.kind,i,selected)+'<b>'+esc(v[1])+'</b></div>').join('')+'</div>';
+    if(scene.kind==='table'||scene.kind==='matrix')return '<div class="pui-table-wrap"><table class="pui-table"><thead><tr>'+scene.columns.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+scene.rows.map((row,i)=>'<tr class="'+(selected===row[0]?'is-selected':'')+'">'+row.map((v,j)=>'<td>'+(j===0?item(v,scene.kind,i,selected):esc(v))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'+(scene.note?'<p class="pui-note">'+esc(scene.note)+'</p>':'')+(scene.heading==='Course Activity Report'&&selected==='Morgan Lee'?'<div class="pui-learner-profile"><div><b>ML</b><span><strong>Morgan Lee</strong><small>Sales · Cybersecurity Essentials</small></span></div><p>Current progress: 60% · score not recorded</p><div class="pui-profile-actions"><button type="button" data-profile="enrollment">Enrollment</button><button type="button" data-profile="transcript">Transcript</button><button type="button" data-profile="support">Support action</button></div></div>':'');
+    if(scene.kind==='tree')return '<div class="pui-tree">'+scene.nodes.map((node,i)=>'<div class="pui-tree-node depth-'+node[0]+'">'+item(node[1],scene.kind,i,selected)+'<small>'+esc(node[2])+'</small></div>').join('')+'</div>';
+    if(scene.kind==='editor')return '<div class="pui-editor"><div class="pui-blocks"><h5>Course structure</h5>'+scene.blocks.map((b,i)=>'<div class="pui-block"><b>'+esc(b[0])+'</b>'+item(b[1],scene.kind,i,selected)+'<small>'+esc(b[2])+'</small></div>').join('')+'</div><div class="pui-fields"><h5>Configuration</h5>'+scene.fields.map((f,i)=>'<div class="pui-field">'+item(f[0],scene.kind,i,selected)+'<strong>'+esc(f[1])+'</strong></div>').join('')+'</div></div>';
+    if(scene.kind==='designer')return '<div class="pui-designer"><div class="pui-designer-config"><h5>Experience controls</h5>'+scene.fields.map((f,i)=>'<div class="pui-field">'+item(f[0],scene.kind,i,selected)+'<strong>'+esc(f[1])+'</strong></div>').join('')+'</div><div class="pui-learner-preview"><div class="pui-preview-header">Partner Academy <small>LEARNER VIEW</small></div><div class="pui-preview-welcome"><b>Welcome back</b><span>Your certification route is ready.</span></div><div class="pui-preview-nav">'+scene.blocks.map((b,i)=>item(b[1],scene.kind,i,selected)).join('')+'</div><div class="pui-preview-course"><strong>Partner Sales Certification</strong><small>Continue learning →</small></div></div></div>';
+    if(scene.kind==='rules')return '<div class="pui-rules"><div class="pui-rules-list"><h5>Rule conditions</h5>'+scene.fields.map((f,i)=>'<div class="pui-rule">'+item(f[0],scene.kind,i,selected)+'<strong>'+esc(f[1])+'</strong>'+(i<scene.fields.length-1?'<em>AND</em>':'')+'</div>').join('')+'</div><div class="pui-rule-result"><span>Population preview</span><strong>'+esc(scene.note)+'</strong><i></i><small>Source attributes → assignment</small></div></div>';
+    if(scene.kind==='timeline')return '<div class="pui-timeline">'+scene.steps.map((step,i)=>'<div class="pui-step"><b>'+String(i+1).padStart(2,'0')+'</b>'+item(step[0],scene.kind,i,selected)+'<span>'+esc(step[1])+'</span></div>').join('')+'</div>'+(scene.note?'<p class="pui-note">'+esc(scene.note)+'</p>':'');
+    if(scene.kind==='funnel')return '<div class="pui-funnel">'+scene.values.map((v,i)=>'<div class="pui-funnel-row" style="--bar:'+Math.max(30,100-i*12)+'%">'+item(v[0],scene.kind,i,selected)+'<i></i><strong>'+esc(v[1])+'</strong></div>').join('')+'</div>';
     return '';
   }
-
-  function makeWorkbench(root) {
-    const ids = root.dataset.platforms.split(',');
-    let platformId = ids[0];
-    let sceneIndex = 0;
-    let activated = false;
-    function render() {
-      const platform = demos[platformId];
-      const scene = platform.scenes[sceneIndex];
-      root.dataset.theme = platform.className;
-      root.dataset.scene = String(sceneIndex);
-      root.innerHTML =
-        '<div class="platform-tabs" role="tablist" aria-label="Choose a platform">' +
-          ids.map((id) => '<button type="button" role="tab" data-platform="' + id + '" tabindex="' + (id === platformId ? '0' : '-1') + '" aria-selected="' + (id === platformId) + '" class="platform-tab' + (id === platformId ? ' active' : '') + '">' + '<img src="' + esc(demos[id].icon) + '" alt="">' + esc(demos[id].name) + '</button>').join('') +
-        '</div><div class="platform-scene-nav" role="tablist" aria-label="' + esc(platform.name) + ' administration stages">' +
-          platform.scenes.map((item, i) => '<button type="button" role="tab" data-scene="' + i + '" tabindex="' + (i === sceneIndex ? '0' : '-1') + '" aria-selected="' + (i === sceneIndex) + '" class="' + (i === sceneIndex ? 'active' : '') + '"><b>' + String(i + 1).padStart(2, '0') + '</b><span>' + esc(item.tab) + '</span></button>').join('') +
-        '</div><div class="platform-panel" role="tabpanel" aria-live="polite">' +
-          '<div class="platform-screen"><div class="platform-screen-bar"><span class="pui-brand"><img src="' + esc(platform.icon) + '" alt=""><strong>' + esc(platform.name) + '</strong></span><span class="pui-sim-tag">Portfolio-safe simulation</span></div>' +
-            '<div class="pui-app"><aside class="pui-sidebar" aria-hidden="true">' + platform.menu.map((label, i) => '<span class="' + (i === Math.min(sceneIndex, platform.menu.length - 1) ? 'current' : '') + '">' + esc(label) + '</span>').join('') + '</aside>' +
-            '<div class="pui-work"><div class="pui-toolbar"><div><small>' + esc(platform.name) + ' / Administration</small><h4>' + esc(scene.heading) + '</h4></div><span class="pui-scene-count">' + (sceneIndex + 1) + ' / 4</span></div>' +
-              '<div class="pui-body pui-' + scene.kind + '">' + renderContent(scene) + '</div>' +
-              '<div class="pui-actionbar"><button type="button" data-activate aria-pressed="' + activated + '">' + esc(scene.action) + ' <span aria-hidden="true">→</span></button><span>Click to inspect this decision</span></div>' +
-              (activated ? '<div class="pui-result" role="status"><span class="pui-result-check" aria-hidden="true">✓</span><strong>' + esc(scene.outcome) + '</strong><button type="button" data-dismiss aria-label="Close result">×</button></div>' : '') +
-            '</div></div></div>' +
-          '<div class="platform-story"><p class="eyebrow">' + esc(platform.label) + ' · ' + esc(scene.tab) + '</p><h3>' + esc(scene.title) + '</h3><p>' + esc(scene.summary) + '</p><div class="platform-insight"><span>My configuration decision</span><strong>' + esc(scene.decision) + '</strong></div><div class="platform-insight"><span>What I verify</span><strong>' + esc(scene.check) + '</strong></div><div class="platform-progress"><i style="width:' + ((sceneIndex + 1) * 25) + '%"></i></div><button type="button" data-next>' + (sceneIndex === 3 ? 'Replay this workflow' : 'Next: ' + esc(platform.scenes[sceneIndex + 1].tab)) + ' <span aria-hidden="true">→</span></button></div>' +
-        '</div>';
+  function makeWorkbench(root){
+    const ids=root.dataset.platforms.split(',');
+    let platformId=ids[0],sceneIndex=0,selected='',detailOverride='',dragPicked=false;
+    const getScene=()=>demos[platformId].scenes[sceneIndex];
+    function promptTarget(){
+      const preferred=focusTargets[platformId][sceneIndex];
+      return preferred;
     }
-    root.addEventListener('click', (event) => {
-      const platformButton = event.target.closest('[data-platform]');
-      const sceneButton = event.target.closest('[data-scene]');
-      if (platformButton) { platformId = platformButton.dataset.platform; sceneIndex = 0; activated = false; render(); return; }
-      if (sceneButton) { sceneIndex = Number(sceneButton.dataset.scene); activated = false; render(); return; }
-      if (event.target.closest('[data-next]')) { sceneIndex = (sceneIndex + 1) % 4; activated = false; render(); return; }
-      if (event.target.closest('[data-activate]')) { activated = !activated; render(); return; }
-      if (event.target.closest('[data-dismiss]')) { activated = false; render(); }
+    function render(){
+      const platform=demos[platformId],scene=getScene(),preferred=promptTarget(),drag=dragCases[platformId+':'+sceneIndex];
+      activePrompt=preferred;
+      root.dataset.theme=platform.className;
+      root.innerHTML='<div class="platform-tabs" role="tablist" aria-label="Choose a platform">'+ids.map(id=>'<button type="button" role="tab" data-platform="'+id+'" aria-selected="'+(id===platformId)+'" class="platform-tab'+(id===platformId?' active':'')+'"><img src="'+esc(demos[id].icon)+'" alt="">'+esc(demos[id].name)+'</button>').join('')+'</div>'+
+        '<div class="platform-scene-nav" role="tablist" aria-label="'+esc(platform.name)+' walkthrough screens">'+platform.scenes.map((s,i)=>'<button type="button" role="tab" data-scene="'+i+'" aria-selected="'+(i===sceneIndex)+'" class="'+(i===sceneIndex?'active':'')+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+esc(s.tab)+'</span></button>').join('')+'</div>'+
+        '<div class="platform-panel" role="tabpanel" aria-live="polite"><div class="platform-screen"><div class="platform-screen-bar"><span class="pui-brand"><img src="'+esc(platform.icon)+'" alt=""><strong>'+esc(platform.name)+'</strong></span><span class="pui-sim-tag">Portfolio-safe simulation</span></div><div class="pui-app"><aside class="pui-sidebar" aria-hidden="true">'+platform.menu.map((v,i)=>'<span class="'+(i===Math.min(sceneIndex,platform.menu.length-1)?'current':'')+'">'+esc(v)+'</span>').join('')+'</aside>'+
+        '<div class="pui-work"><div class="pui-toolbar"><div><small>'+esc(platform.name)+' / administration</small><h4>'+esc(scene.heading)+'</h4></div><span class="pui-scene-count">'+(sceneIndex+1)+' / 4</span></div>'+
+        '<div class="pui-guide"><strong>YOUR TASK</strong><span>Inspect '+esc(preferred)+' in this screen.</span></div>'+
+        '<div class="pui-body pui-'+scene.kind+'">'+renderContent(scene,selected)+(drag?'<div class="pui-drag-lane"><span>TRY A CONFIGURATION MATCH</span><button type="button" data-drag-source draggable="true" class="'+(dragPicked?'picked':'')+'">'+esc(drag.source)+'</button><i>→</i><button type="button" data-drag-target>'+esc(drag.target)+'</button><small>Drag or select both</small></div>':'')+'</div>'+
+        (selected?'<div class="pui-detail" role="status"><button type="button" data-close-detail aria-label="Close detail">×</button><small>INSPECTING / '+esc(selected)+'</small><strong>'+esc(detailOverride|| (selected.includes(preferred)?scene.outcome:'Review '+selected+' in this '+scene.tab.toLowerCase()+' view.'))+'</strong><p>'+esc(scene.check)+'</p></div>':'')+
+        '<div class="pui-screen-footer"><span>'+(selected?'Record inspected · ready for next screen':'Select a highlighted record or control')+'</span><button type="button" data-next-screen>'+(sceneIndex===3?'Replay workflow':'Next: '+esc(platform.scenes[sceneIndex+1].tab))+' →</button></div></div></div></div>'+
+        '<aside class="platform-story"><p class="eyebrow">'+esc(platform.label)+' · '+esc(scene.tab)+'</p><h3>'+esc(scene.title)+'</h3><p>'+esc(scene.summary)+'</p><div class="platform-insight"><span>Configuration decision</span><strong>'+esc(scene.decision)+'</strong></div><div class="platform-insight"><span>Before release</span><strong>'+esc(scene.check)+'</strong></div><div class="platform-progress"><i style="width:'+((sceneIndex+1)*25)+'%"></i></div></aside></div>';
+    }
+    function show(text,detail=''){selected=text;detailOverride=detail;render();}
+    root.addEventListener('click',event=>{
+      const platform=event.target.closest('[data-platform]'),stage=event.target.closest('[data-scene]'),inspect=event.target.closest('[data-inspect]');
+      if(platform){platformId=platform.dataset.platform;sceneIndex=0;selected='';detailOverride='';dragPicked=false;render();return;}
+      if(stage){sceneIndex=Number(stage.dataset.scene);selected='';detailOverride='';dragPicked=false;render();return;}
+      if(inspect){show(inspect.dataset.inspect);return;}
+      const profile=event.target.closest('[data-profile]');
+      if(profile){const details={enrollment:'Enrollment remains active at 60%; the package change did not create a second enrollment.',transcript:'No score or completion event is recorded yet. Compare the learner launch with the LMS transcript before editing progress.',support:'Message the learner or inspect the launch log first. A progress reset requires review because it changes the learner record.'};selected='Morgan Lee';detailOverride=details[profile.dataset.profile];render();return;}
+      if(event.target.closest('[data-next-screen]')){sceneIndex=(sceneIndex+1)%4;selected='';detailOverride='';dragPicked=false;render();return;}
+      if(event.target.closest('[data-close-detail]')){selected='';detailOverride='';render();return;}
+      if(event.target.closest('[data-drag-source]')){dragPicked=true;root.querySelector('[data-drag-source]').classList.add('picked');return;}
+      if(event.target.closest('[data-drag-target]')){if(dragPicked){const d=dragCases[platformId+':'+sceneIndex];show(d.target,d.result);dragPicked=false;}else root.querySelector('[data-drag-source]').focus();return;}
     });
-    root.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-      const tab = event.target.closest('[role="tab"]');
-      if (!tab) return;
-      const buttons = Array.from(tab.parentElement.querySelectorAll('[role="tab"]'));
-      const current = buttons.indexOf(tab);
-      if (current < 0) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 :
-        (current + (event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
-      const selected = buttons[next];
-      if (selected.dataset.platform) { platformId = selected.dataset.platform; sceneIndex = 0; }
-      else sceneIndex = Number(selected.dataset.scene);
-      activated = false;
-      render();
-      if (selected.dataset.platform) root.querySelector('[data-platform="' + platformId + '"]')?.focus();
-      else root.querySelector('[data-scene="' + sceneIndex + '"]')?.focus();
-    });
+    root.addEventListener('dragstart',event=>{if(event.target.closest('[data-drag-source]')){dragPicked=true;event.dataTransfer.setData('text/plain','configuration');}});
+    root.addEventListener('dragover',event=>{if(event.target.closest('[data-drag-target]'))event.preventDefault();});
+    root.addEventListener('drop',event=>{if(event.target.closest('[data-drag-target]')){event.preventDefault();const d=dragCases[platformId+':'+sceneIndex];if(d)show(d.target,d.result);dragPicked=false;}});
+    root.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;const tab=event.target.closest('[role="tab"]');if(!tab)return;const all=[...tab.parentElement.querySelectorAll('[role="tab"]')],i=all.indexOf(tab);if(i<0)return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?all.length-1:(i+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+all.length)%all.length;all[next].click();if(all[next].dataset.platform)root.querySelector('[data-platform="'+all[next].dataset.platform+'"]')?.focus();else root.querySelector('[data-scene="'+next+'"]')?.focus();});
     render();
   }
   document.querySelectorAll('.platform-workbench[data-platforms]').forEach(makeWorkbench);
