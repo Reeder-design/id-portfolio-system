@@ -52,7 +52,6 @@
     document.addEventListener('visibilitychange', syncSequence);
   }
 
-  const iconBase = '../../../../assets/icons/pixel/';
   const stages = {
     prepare: {
       label: 'Prepare',
@@ -140,31 +139,24 @@
 
   const feedback = {
     questions: {
-      source: 'hiring-guide/qa-bubbles.webp', sourceLabel: 'Question pattern',
-      target: 'performance-support/reference.webp', targetLabel: 'Reference support',
       title: 'Clarify the explanation and reference support.',
       description: 'A question that keeps returning suggests the next version needs a clearer explanation, a concrete seller example, or a quick reference learners can revisit.'
     },
     misconceptions: {
-      source: 'interactive-learning/multiple-choice-options.webp', sourceLabel: 'Unclear distinction',
-      target: 'interactive-learning/scenarios-branching-simulations.webp', targetLabel: 'Scenario feedback',
       title: 'Practice the distinction in a scenario.',
       description: 'When responses suggest a category distinction is unclear, future scenario choices and feedback could show which evidence fits best and why another interpretation is weaker.'
     },
     examples: {
-      source: 'hiring-guide/team.webp', sourceLabel: 'Seller experience',
-      target: 'microlearning-performance-support/real-world-application.webp', targetLabel: 'Realistic practice',
       title: 'Build practice from credible seller situations.',
       description: 'Useful examples can inform fictionalized cases that feel relevant across audiences while keeping real customer and opportunity details private.'
     },
     timing: {
-      source: 'hiring-guide/calendar.webp', sourceLabel: 'Timing friction',
-      target: 'hiring-guide/workflow-tree.webp', targetLabel: 'Session guidance',
       title: 'Simplify background and protect application.',
       description: 'Timing friction points to lower-value narration that could be shortened in the next facilitator guide, leaving room for practice and debrief.'
     }
   };
   const feedbackButtons = [...document.querySelectorAll('[data-feedback-key]')];
+  const feedbackScenes = [...document.querySelectorAll('[data-feedback-scene]')];
   const feedbackOutput = document.getElementById('feedbackOutput');
   function activateFeedback(button) {
     const state = feedback[button.dataset.feedbackKey];
@@ -174,12 +166,7 @@
       item.classList.toggle('is-active', selected);
       item.setAttribute('aria-pressed', String(selected));
     });
-    const source = document.getElementById('feedbackSourceIcon');
-    const target = document.getElementById('feedbackTargetIcon');
-    if (source) source.src = iconBase + state.source;
-    if (target) target.src = iconBase + state.target;
-    setText('feedbackSourceLabel', state.sourceLabel);
-    setText('feedbackTargetLabel', state.targetLabel);
+    feedbackScenes.forEach((scene) => scene.classList.toggle('is-active', scene.dataset.feedbackScene === button.dataset.feedbackKey));
     setText('feedbackTitle', state.title);
     setText('feedbackDescription', state.description);
     if (feedbackOutput && !reducedMotion.matches) {
