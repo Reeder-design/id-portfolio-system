@@ -37,13 +37,26 @@ body.pursuit-lab-page{background:#f5f9f6}
 @keyframes pursuitNode{50%{transform:translateY(-6px) rotate(2deg)}}
 @keyframes pursuitOrbit{to{transform:rotate(360deg)}}
 
+.matrix-explainer{padding:28px 0!important;background:#fff!important}
+.matrix-explainer-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);gap:30px;align-items:center}
+.matrix-explainer .eyebrow{margin:0 0 5px;color:#3d7a60!important}
+.matrix-explainer h2{margin:0 0 8px;color:#203f36;font-size:clamp(1.4rem,2.6vw,2rem)}
+.matrix-explainer p:not(.eyebrow){max-width:660px;margin:0 0 15px;color:#4f6659;font-size:.76rem;line-height:1.52}
+.explainer-map{position:relative;width:min(100%,410px);margin-left:auto;padding:0 0 23px 28px}
+.explainer-quadrants{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:1.9;overflow:hidden;border:1px solid #b7d9c4;border-radius:12px;background:#f4faf6}
+.explainer-quadrants span{display:grid;place-items:center;padding:8px;color:#315b46;font:800 .58rem/1.2 var(--font-heading);text-align:center}
+.explainer-quadrants span:nth-child(1){background:#e9f4ee;border-right:1px solid #c7ddce;border-bottom:1px solid #c7ddce}
+.explainer-quadrants span:nth-child(2){background:#dff1df;border-bottom:1px solid #c7ddce}
+.explainer-quadrants span:nth-child(3){background:#f4f6f2;border-right:1px solid #c7ddce}
+.explainer-quadrants span:nth-child(4){background:#eef5e8}
+.explainer-x,.explainer-y{position:absolute;color:#547b62;font:800 .53rem/1 var(--font-heading);white-space:nowrap}
+.explainer-x{bottom:0;left:50%;transform:translateX(-40%)}
+.explainer-y{top:50%;left:3px;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg)}
 .workbench-section{padding:33px 0 45px!important;background:linear-gradient(150deg,#e8f2eb,#f7faf8 62%,#e9f5ed)!important;scroll-margin-top:75px}
-.workbench-intro{display:flex;justify-content:space-between;align-items:end;gap:25px;width:min(100%,1160px);margin:0 auto 16px}
+.workbench-intro{width:min(100%,1160px);margin:0 auto 16px}
 .workbench-intro .eyebrow{margin:0 0 5px;color:#37735c!important}
 .workbench-intro h2{margin:0 0 5px;color:#203f36;font-size:clamp(1.45rem,2.8vw,2.2rem)}
 .workbench-intro p:last-child{max-width:730px;margin:0;color:#526a5d;font-size:.78rem;line-height:1.45}
-.scenario-chip{display:flex;align-items:center;gap:8px;flex:none;padding:9px 11px;border:1px solid #b7d8c4;border-radius:999px;background:#fff;color:#315755;font:800 .6rem/1.2 var(--font-heading)}
-.scenario-chip img{width:27px;height:27px;object-fit:contain}
 .lab-layout{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(320px,.86fr);gap:14px;align-items:start;width:min(100%,1160px);margin:auto}
 .question-card{display:flex;flex-direction:column;min-height:505px;padding:23px;border:1px solid #b9d8c6;border-radius:22px;background:#fff;box-shadow:0 16px 34px rgba(34,74,59,.08)}
 .question-progress{display:flex;align-items:center;gap:12px;color:#4c7967;font:800 .62rem/1 var(--font-heading)}
@@ -70,9 +83,10 @@ body.pursuit-lab-page{background:#f5f9f6}
 .question-nav .btn:disabled{cursor:not-allowed;opacity:.46}
 #questionStatus{margin-left:auto;color:#577363;font:750 .59rem/1.2 var(--font-heading);text-align:right}
 .matrix-card{position:sticky;top:82px;padding:19px;border:1px solid rgba(167,220,185,.22);border-radius:22px;background:radial-gradient(circle at 86% 10%,rgba(151,219,79,.1),transparent 12rem),linear-gradient(145deg,#173039,#264948);color:#dce9e2;box-shadow:0 16px 34px rgba(0,0,0,.13)}
+.matrix-header{display:flex;justify-content:space-between;align-items:start;gap:10px}
 .matrix-card .eyebrow{margin:0 0 4px;color:#bfe6ce!important}
 .matrix-card h3{margin:0;color:#fff;font-size:1.05rem}
-.matrix-wrap{position:relative;margin:15px 12px 24px 34px}
+.matrix-wrap{position:relative;margin:15px 12px 44px 34px}
 .matrix{position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:1.55;overflow:hidden;border:1px solid rgba(255,255,255,.19);border-radius:12px}
 .quadrant{display:grid;place-items:center;padding:8px;color:#edf5f1;font:800 .64rem/1.18 var(--font-heading);text-align:center}
 .quadrant:nth-child(1){background:rgba(121,201,158,.08);border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
@@ -87,9 +101,9 @@ body.pursuit-lab-page{background:#f5f9f6}
 .matrix-marker.benchmark-marker{z-index:5;border-color:#ffdc74;border-radius:3px;background:#fff;box-shadow:0 0 0 3px #193b43;transform:translate(-50%,-50%) rotate(45deg)}
 .matrix-marker[hidden],.benchmark-panel[hidden],.matrix-legend [hidden]{display:none!important}
 .axis-label{position:absolute;z-index:6;color:#d9f0e0;font:800 .55rem/1 var(--font-heading);white-space:nowrap}
-.axis-x{left:50%;bottom:-21px;transform:translateX(-50%)}
+.axis-x{left:50%;bottom:-24px;transform:translateX(-50%)}
 .axis-y{left:-30px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg)}
-.matrix-legend{display:flex;justify-content:center;gap:17px;margin:0 0 11px;color:#d6e8dd;font:800 .55rem/1 var(--font-heading)}
+.matrix-legend{display:flex;justify-content:center;gap:17px;margin:0 0 13px;padding-top:9px;border-top:1px solid rgba(219,241,226,.15);color:#d6e8dd;font:800 .55rem/1 var(--font-heading)}
 .matrix-legend span{display:flex;align-items:center;gap:6px}
 .matrix-legend i{width:10px;height:10px;border:2px solid #97db4f;border-radius:50%;background:#4a4238}
 .matrix-legend #benchmarkLegend i{border-color:#ffdc74;background:#fff;border-radius:2px;transform:rotate(45deg)}
@@ -97,8 +111,8 @@ body.pursuit-lab-page{background:#f5f9f6}
 .matrix-score{padding:10px 8px;border-radius:9px;background:rgba(255,255,255,.07);color:#dbece3;text-align:center;font-size:.61rem;line-height:1.2}
 .matrix-score strong{display:block;margin-bottom:4px;color:#fff;font:800 1.12rem/1 var(--font-heading)}
 .matrix-status{min-height:39px;margin:11px 0 0;color:#d9f1df;font-size:.67rem;line-height:1.4;text-align:center}
-.matrix-reset{display:block;margin:8px auto 0;padding:5px 9px;border:0;background:transparent;color:#c9e8d5;font:800 .59rem/1 var(--font-heading);text-decoration:underline;cursor:pointer}
-.matrix-reset:hover,.matrix-reset:focus-visible{color:#fff}
+.matrix-reset{flex:none;padding:7px 10px;border:1px solid rgba(202,236,214,.32);border-radius:8px;background:rgba(255,255,255,.08);color:#e5f4e9;font:800 .58rem/1 var(--font-heading);cursor:pointer}
+.matrix-reset:hover,.matrix-reset:focus-visible{border-color:#a8dfb4;background:rgba(168,223,180,.16);color:#fff}
 .benchmark-panel{width:min(100%,1160px);margin:16px auto 0;padding:20px;border:1px solid #bcd9c7;border-radius:18px;background:#fff;box-shadow:0 12px 25px rgba(34,74,59,.07);scroll-margin-top:85px}
 .benchmark-panel .eyebrow{margin:0 0 4px;color:#437e61!important}
 .benchmark-panel h2{margin:0 0 5px;color:#203f36;font-size:1.25rem}
@@ -118,8 +132,8 @@ body.pursuit-lab-page{background:#f5f9f6}
 .benchmark-row.tone-far{border-left:3px solid #bd6557}
 .lab-back-link{display:inline-block;margin-top:22px;color:#315755;text-decoration:none;font:800 .67rem/1.2 var(--font-heading)}
 .lab-back-link:hover,.lab-back-link:focus-visible{text-decoration:underline}
-@media(max-width:940px){.pursuit-hero-grid{grid-template-columns:1fr}.pursuit-hero-visual{min-height:210px}.lab-layout{grid-template-columns:1fr}.matrix-card{position:static}.workbench-intro{align-items:start}}
-@media(max-width:640px){.pursuit-hero{padding:22px 0 32px!important}.pursuit-hero-grid{gap:8px}.pursuit-hero-visual{min-height:190px}.pursuit-hero-core{width:104px;height:104px}.pursuit-hero-core img{width:82px;height:82px}.pursuit-hero-node{width:55px;height:55px}.pursuit-hero-node img{width:44px;height:44px}.pursuit-orbit{width:190px;height:190px}.workbench-intro{display:block}.scenario-chip{width:max-content;margin-top:12px}.question-card{min-height:0;padding:17px}.question-evidence{grid-template-columns:42px 1fr;gap:8px;padding:11px}.question-evidence>img{width:40px;height:40px}.question-nav{flex-wrap:wrap}.question-nav .btn{flex:1}.question-nav #questionStatus{width:100%;margin:0;text-align:left}.benchmark-summary,.benchmark-list{grid-template-columns:1fr}.matrix-wrap{margin-left:35px}}
+@media(max-width:940px){.pursuit-hero-grid{grid-template-columns:1fr}.pursuit-hero-visual{min-height:210px}.lab-layout{grid-template-columns:1fr}.matrix-card{position:static}.matrix-explainer-grid{grid-template-columns:1fr}.explainer-map{margin:0}}
+@media(max-width:640px){.pursuit-hero{padding:22px 0 32px!important}.pursuit-hero-grid{gap:8px}.pursuit-hero-visual{min-height:190px}.pursuit-hero-core{width:104px;height:104px}.pursuit-hero-core img{width:82px;height:82px}.pursuit-hero-node{width:55px;height:55px}.pursuit-hero-node img{width:44px;height:44px}.pursuit-orbit{width:190px;height:190px}.matrix-explainer{padding:23px 0!important}.matrix-explainer-grid{gap:18px}.question-card{min-height:0;padding:17px}.question-evidence{grid-template-columns:42px 1fr;gap:8px;padding:11px}.question-evidence>img{width:40px;height:40px}.question-nav{flex-wrap:wrap}.question-nav .btn{flex:1}.question-nav #questionStatus{width:100%;margin:0;text-align:left}.benchmark-summary,.benchmark-list{grid-template-columns:1fr}.matrix-wrap{margin-left:35px}}
 @media(prefers-reduced-motion:reduce){.pursuit-hero-core,.pursuit-hero-node,.pursuit-orbit{animation:none!important}.matrix-marker,#questionProgressFill,.score-button{transition:none!important}}
 
 </style>
@@ -149,11 +163,26 @@ body.pursuit-lab-page{background:#f5f9f6}
     </div>
   </section>
 
+  <section class="section matrix-explainer" aria-labelledby="matrixExplainerTitle">
+    <div class="container matrix-explainer-grid">
+      <div>
+        <p class="eyebrow">Before you score</p>
+        <h2 id="matrixExplainerTitle">What is a pursuit determination matrix?</h2>
+        <p>It maps an opportunity on two axes: how well the solution fits the customer’s problem, and how strong the evidence is for pursuing it now. The quadrant suggests a next move based on what the team knows today.</p>
+        <a class="btn btn-primary" href="#workbench">Start the demo →</a>
+      </div>
+      <div class="explainer-map" role="img" aria-label="Solution Fit runs left to right and Pursuit Strength runs bottom to top. The four outcomes are Develop Fit, Prioritize, Deprioritize, and Nurture.">
+        <div class="explainer-quadrants" aria-hidden="true"><span>Develop Fit</span><span>Prioritize</span><span>Deprioritize</span><span>Nurture</span></div>
+        <span class="explainer-x" aria-hidden="true">Solution Fit →</span>
+        <span class="explainer-y" aria-hidden="true">Pursuit Strength ↑</span>
+      </div>
+    </div>
+  </section>
+
   <section class="section workbench-section" id="workbench">
     <div class="container">
       <div class="workbench-intro">
         <div><p class="eyebrow">Interactive decision lab</p><h2>Make the pursuit decision.</h2><p>Harborview Regional Medical Center is considering the fictional VitaTrack Mobile Imaging Cart. Use the evidence in each question to score solution fit and pursuit strength.</p></div>
-        <span class="scenario-chip"><img src="../../../../assets/icons/pixel/pursuit-determination/opportunity-intake.webp" alt="">Fictional scenario · 6 questions</span>
       </div>
 
       <div class="lab-layout">
@@ -176,12 +205,11 @@ body.pursuit-lab-page{background:#f5f9f6}
         </section>
 
         <aside class="matrix-card" aria-labelledby="matrixTitle">
-          <p class="eyebrow">Live placement</p><h3 id="matrixTitle">Pursuit matrix</h3>
+          <div class="matrix-header"><div><p class="eyebrow">Live placement</p><h3 id="matrixTitle">Pursuit matrix</h3></div><button class="matrix-reset" id="resetButton" type="button" aria-label="Reset all scores and return to question one">Reset scores</button></div>
           <div class="matrix-wrap"><div class="matrix" id="matrix" role="img" aria-label="No scores yet. The matrix dot appears after the first score."><div class="quadrant">Develop Fit</div><div class="quadrant">Prioritize</div><div class="quadrant">Deprioritize</div><div class="quadrant">Nurture</div><div class="matrix-marker" id="matrixMarker" hidden></div><div class="matrix-marker benchmark-marker" id="benchmarkMarker" hidden></div></div><span class="axis-label axis-x">Solution Fit →</span><span class="axis-label axis-y">Pursuit Strength ↑</span></div>
           <div class="matrix-legend"><span><i></i>Your position</span><span id="benchmarkLegend" hidden><i></i>Benchmark</span></div>
           <div class="matrix-scores"><div class="matrix-score"><strong id="solutionAverage">?</strong>Solution Fit</div><div class="matrix-score"><strong id="pursuitAverage">?</strong>Pursuit Strength</div></div>
           <p class="matrix-status" id="matrixStatus" role="status">Choose your first score to place the dot.</p>
-          <button class="matrix-reset" id="resetButton" type="button">Start over</button>
         </aside>
       </div>
 
