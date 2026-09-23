@@ -81,8 +81,7 @@ body.performance-support-page .ps-consulting-section{background:#f3f8f4;color:#2
 .ps-lens-selector img{box-sizing:border-box;width:39px;height:39px;padding:4px;border-radius:9px;background:#fff;object-fit:contain}
 .ps-lens-analysis{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px;margin-top:12px}
 .ps-findings{display:flex;min-width:0;min-height:330px;flex-direction:column;padding:17px;border-radius:17px;background:#183c42;color:#e8f5ea}
-.ps-findings-head{display:flex;justify-content:space-between;align-items:center;gap:9px;color:#bde6c5;font:800 .6rem/1.2 var(--font-heading);letter-spacing:.08em}
-.ps-findings-status{padding:6px 9px;border-radius:6px;background:#bce7b8;color:#1b4538;font-size:.57rem;letter-spacing:0;white-space:nowrap}
+.ps-findings-head{display:flex;align-items:center;color:#bde6c5;font:800 .6rem/1.2 var(--font-heading);letter-spacing:.08em}
 .ps-findings h3{margin:15px 0 4px;color:#fff;font:800 1.05rem/1.25 var(--font-heading)}
 .ps-finding-summary{max-width:570px;margin:0;color:#d6eadd;font-size:.74rem;line-height:1.45}
 .ps-findings dl{display:grid;gap:6px;margin:13px 0}
@@ -131,11 +130,8 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
 .ps-lens-workspace{margin-top:22px}
 .ps-diagnostic-stage{position:relative;min-width:0;min-height:330px;padding:17px;border:1px solid #376359;border-radius:17px;background:radial-gradient(circle at 52% 55%,rgba(94,166,123,.16),transparent 42%),linear-gradient(145deg,#102f37,#1c4645);color:#edf8ef;overflow:hidden}
 .ps-diagnostic-stage::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(154,219,170,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(154,219,170,.04) 1px,transparent 1px);background-size:24px 24px;mask-image:linear-gradient(90deg,transparent,#000 20% 80%,transparent);pointer-events:none}
-.ps-stage-head,.ps-stage-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:8px;color:#bce5c2;font:750 .58rem/1.2 var(--font-heading);letter-spacing:.11em}
-.ps-stage-live{display:flex;align-items:center;gap:7px}.ps-stage-live i{width:7px;height:7px;border-radius:50%;background:#a8eb8d;box-shadow:0 0 0 4px rgba(168,235,141,.13)}
-.ps-stage-foot{position:absolute;right:17px;bottom:15px;left:17px;justify-content:center;gap:14px;border-top:1px solid rgba(180,232,197,.17);padding-top:11px;font-size:.54rem}
-.ps-stage-foot i{width:28px;height:1px;background:#6ba78d}.ps-stage-foot strong{color:#dcf5c1}
-.ps-diagnostic-scene{position:absolute;z-index:1;inset:49px 17px 42px;display:none;min-width:0}
+.ps-stage-head{position:relative;z-index:2;color:#bce5c2;font:750 .58rem/1.2 var(--font-heading);letter-spacing:.11em}
+.ps-diagnostic-scene{position:absolute;z-index:1;inset:49px 17px 16px;display:none;min-width:0}
 .ps-diagnostic-scene.is-active{display:block;animation:ps-scene-reveal .52s cubic-bezier(.2,.7,.2,1) both}
 @keyframes ps-scene-reveal{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:none}}
 .ps-scene-caption{display:flex;justify-content:space-between;gap:8px;padding-bottom:8px;border-bottom:1px solid rgba(186,231,199,.2);color:#b7d9c2;font-size:.66rem;line-height:1.2}.ps-scene-caption b{color:#d6f0b8;font:800 .58rem/1.2 var(--font-heading);letter-spacing:.09em}.ps-scene-caption span{text-align:right}
@@ -204,6 +200,100 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
 .ps-playbook-board{position:relative;z-index:1;display:grid;grid-template-columns:.72fr 1.28fr;gap:9px;width:92%;min-height:225px;margin:16px auto 0}.ps-playbook-cues{display:grid;gap:6px}.ps-playbook-cues>div{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid #b5d8bf;border-radius:7px;background:#fff}.ps-playbook-cues b{display:grid;width:20px;height:20px;flex:none;place-items:center;border-radius:5px;background:#d9efdf;color:#2f7752;font:800 .52rem/1 var(--font-heading)}.ps-playbook-cues span{color:#355f49;font:750 .54rem/1.1 var(--font-heading)}.ps-form-row.is-visible .ps-playbook-cues>div{animation:ps-card-in .45s both}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(2){animation-delay:.2s}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(3){animation-delay:.4s}.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(4){animation-delay:.6s}
 .ps-playbook-sheet{padding:10px;border:1px solid #a6cbb2;border-radius:9px;background:#fff;box-shadow:0 11px 25px rgba(34,80,54,.12)}.ps-playbook-sheet>div{display:flex;align-items:center;gap:6px;padding-bottom:7px;border-bottom:1px solid #e2eee5}.ps-playbook-sheet img{width:31px;height:31px}.ps-playbook-sheet strong{color:#2c654c;font:800 .61rem/1.1 var(--font-heading)}.ps-playbook-sheet label{display:block;margin-top:9px;color:#62826d;font:750 .5rem/1 var(--font-heading)}.ps-playbook-sheet label i{display:block;width:100%;height:5px;margin-top:5px;border-radius:4px;background:#deebe0;transform:scaleX(.15);transform-origin:left}.ps-form-row.is-visible .ps-playbook-sheet label i{animation:ps-fill-line .65s .55s forwards}.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(2) i{animation-delay:.85s}.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(3) i{animation-delay:1.15s}.ps-playbook-sheet>span{display:block;margin-top:11px;padding:6px;border-radius:5px;background:#e5f4e7;color:#2a7750;font:800 .49rem/1 var(--font-heading)}.ps-playbook-sheet>span b{float:right}.ps-form-row.is-visible .ps-playbook-sheet>span{animation:ps-card-in .5s 1.4s both}
 
+/* Motion follows the decision or action in each material. Scenes run only while in view. */
+.ps-motion-paused .ps-form-visual *,
+.ps-motion-paused .ps-form-visual *::before,
+.ps-motion-paused .ps-form-visual *::after{animation-play-state:paused!important}
+
+/* Job aid: a pointer follows the steps while a completion rail advances. */
+.ps-job-pointer{position:absolute;z-index:3;top:103px;left:4%;display:grid;width:34px;height:34px;place-items:center;border:1px solid #a6d4b1;border-radius:9px;background:#fff;box-shadow:0 8px 16px rgba(34,80,54,.15);pointer-events:none}
+.ps-job-pointer img{width:29px;height:29px;padding:2px}
+.ps-form-row.is-visible .ps-job-pointer{animation:ps-job-follow 8s ease-in-out infinite}
+@keyframes ps-job-follow{0%,5%{opacity:0;transform:translate(-8px,-11px)}12%,24%{opacity:1;transform:translate(0,0)}36%,43%{transform:translate(0,33px)}55%,62%{transform:translate(0,66px)}74%,85%{opacity:1;transform:translate(0,99px)}96%,100%{opacity:0;transform:translate(8px,105px)}}
+.ps-form-row.is-visible .ps-job-steps>div{animation:ps-job-focus 8s ease-in-out infinite}
+.ps-form-row.is-visible .ps-job-steps>div:nth-child(2){animation-delay:1.4s}
+.ps-form-row.is-visible .ps-job-steps>div:nth-child(3){animation-delay:2.8s}
+.ps-form-row.is-visible .ps-job-steps>div:nth-child(4){animation-delay:4.2s}
+@keyframes ps-job-focus{0%,4%,22%,100%{background:#eff7f0;box-shadow:none}9%,15%{background:#dcf3df;box-shadow:inset 3px 0 #3b9964,0 0 0 2px rgba(77,157,98,.11)}}
+.ps-form-row.is-visible .ps-job-progress i{animation:ps-job-fill 8s ease-in-out infinite}
+@keyframes ps-job-fill{0%,6%{transform:scaleX(.06)}73%,90%{transform:scaleX(1)}100%{transform:scaleX(.06)}}
+
+/* Decision guide: a choice token travels from the question into one rule branch. */
+.ps-decision-tracer{position:absolute;z-index:3;top:40px;left:50%;display:grid;width:29px;height:29px;place-items:center;border:1px solid #81bb8e;border-radius:50%;background:#f0fbec;box-shadow:0 5px 12px rgba(34,80,54,.14);pointer-events:none}
+.ps-decision-tracer img{width:24px;height:24px;padding:2px}
+.ps-form-row.is-visible .ps-decision-tracer{animation:ps-trace-choice 7.4s cubic-bezier(.3,.7,.2,1) infinite}
+@keyframes ps-trace-choice{0%,9%{opacity:0;left:50%;top:40px;transform:translate(-50%,-16px) scale(.7)}15%,31%{opacity:1;left:50%;top:40px;transform:translate(-50%,0) scale(1)}51%,69%{opacity:1;left:75%;top:68px;transform:translate(-50%,0) scale(1)}79%,100%{opacity:0;left:75%;top:74px;transform:translate(-50%,0) scale(.72)}}
+.ps-form-row.is-visible .ps-decision-branches::before{animation:ps-branch-trace 7.4s ease-in-out infinite}
+@keyframes ps-branch-trace{0%,18%{border-color:#adcdb5}36%,69%{border-color:#3f9a62;box-shadow:0 -2px 8px rgba(64,157,98,.15)}88%,100%{border-color:#adcdb5;box-shadow:none}}
+.ps-form-row.is-visible .ps-decision-chosen{animation:ps-choice-card 7.4s ease-in-out infinite}
+@keyframes ps-choice-card{0%,35%,100%{background:#e5f6e8;box-shadow:0 0 0 4px rgba(68,151,101,.1)}49%,72%{background:#d1f0d4;box-shadow:0 0 0 8px rgba(68,151,101,.16)}}
+.ps-form-row.is-visible .ps-decision-output{animation:ps-result-reveal 7.4s ease-in-out infinite}
+@keyframes ps-result-reveal{0%,40%{opacity:.45;transform:translateY(8px)}58%,87%{opacity:1;transform:none}100%{opacity:.45;transform:translateY(8px)}}
+
+/* Knowledge base: enter a query, rank results, and confirm the maintained source. */
+.ps-kb-search .ps-kb-query{flex:1;overflow:hidden;white-space:nowrap;color:#3b7554;font-weight:800;clip-path:inset(0 0 0 0)}
+.ps-kb-caret{flex:none;width:2px;height:15px;background:#2b8b5c}
+.ps-form-row.is-visible .ps-kb-query{animation:ps-query-type 7.6s steps(14,end) infinite}
+@keyframes ps-query-type{0%,5%{clip-path:inset(0 100% 0 0)}28%,86%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 100% 0 0)}}
+.ps-form-row.is-visible .ps-kb-caret{animation:ps-caret-blink .7s steps(1,end) infinite}
+@keyframes ps-caret-blink{50%{opacity:0}}
+.ps-kb-results{position:relative}.ps-kb-scan{position:absolute;z-index:0;inset:-4px -3px;display:block;border-radius:8px;background:linear-gradient(90deg,transparent 0%,rgba(89,168,111,.15) 44%,transparent 60%);background-size:220% 100%;pointer-events:none}
+.ps-form-row.is-visible .ps-kb-scan{animation:ps-kb-sweep 7.6s ease-in-out infinite}
+@keyframes ps-kb-sweep{0%,27%{background-position:100% 0;opacity:0}35%,62%{opacity:1}75%,100%{background-position:0 0;opacity:0}}
+.ps-kb-primary,.ps-kb-glossary{position:relative;z-index:1}
+.ps-form-row.is-visible .ps-kb-primary{animation:ps-kb-reveal 7.6s ease-in-out infinite}
+.ps-form-row.is-visible .ps-kb-glossary{animation:ps-kb-reveal 7.6s .35s ease-in-out infinite}
+.ps-form-row.is-visible .ps-kb-owner{animation:ps-kb-reveal 7.6s .7s ease-in-out infinite}
+@keyframes ps-kb-reveal{0%,25%{opacity:.42;transform:translateY(7px)}43%,89%{opacity:1;transform:none}100%{opacity:.42;transform:translateY(7px)}}
+
+/* Microlearning: the video rotates through three visual beats; audio and the progress line follow. */
+.ps-micro-video>.ps-micro-screen{position:relative;display:block;width:71px;height:71px;margin:0;border-radius:15px;background:#fff;overflow:hidden}
+.ps-micro-screen img{position:absolute;inset:0;width:100%;height:100%;padding:7px;opacity:0}
+.ps-micro-screen img:first-child{opacity:1}
+.ps-form-row.is-visible .ps-micro-screen img{animation:ps-micro-frame 9s ease-in-out infinite}
+.ps-form-row.is-visible .ps-micro-screen img:nth-child(2){animation-delay:3s}
+.ps-form-row.is-visible .ps-micro-screen img:nth-child(3){animation-delay:6s}
+@keyframes ps-micro-frame{0%,29%{opacity:1;transform:none}33%,100%{opacity:0;transform:translateX(-9px) scale(.92)}}
+.ps-form-row.is-visible .ps-micro-video>i::after{animation:ps-micro-progress 9s linear infinite}
+@keyframes ps-micro-progress{0%{transform:scaleX(.05)}92%{transform:scaleX(1)}100%{transform:scaleX(.05)}}
+.ps-form-row.is-visible .ps-micro-audio>span i{animation:ps-wave-transform .85s ease-in-out infinite alternate;transform-origin:center}
+.ps-form-row.is-visible .ps-micro-audio>span i:nth-child(2n){animation-delay:.19s}
+.ps-form-row.is-visible .ps-micro-audio>span i:nth-child(3n){animation-delay:.38s}
+@keyframes ps-wave-transform{from{transform:scaleY(.45)}to{transform:scaleY(1.14)}}
+.ps-form-row.is-visible .ps-micro-info>div b{animation:ps-micro-node 9s ease-in-out infinite}
+.ps-form-row.is-visible .ps-micro-info>div b:nth-of-type(2){animation-delay:3s}
+.ps-form-row.is-visible .ps-micro-info>div b:nth-of-type(3){animation-delay:6s}
+@keyframes ps-micro-node{0%,8%,39%,100%{color:#2f7254;transform:scale(1)}16%,28%{color:#fff;background:#4d9e6c;border-radius:3px;transform:scale(1.2)}}
+
+/* In-app guidance: the pointer reaches a field, then its source-backed tip appears. */
+.ps-app-cursor{position:absolute;z-index:4;top:66px;left:63%;display:grid;width:32px;height:32px;place-items:center;border:1px solid #9ccaac;border-radius:8px;background:#fff;box-shadow:0 5px 12px rgba(28,73,50,.17);pointer-events:none}
+.ps-app-cursor img{width:27px;height:27px;padding:2px}
+.ps-form-row.is-visible .ps-app-cursor{animation:ps-app-point 8s ease-in-out infinite}
+@keyframes ps-app-point{0%,8%{opacity:0;transform:translate(-26px,-17px) scale(.82)}20%,32%{opacity:1;transform:translate(0,0) scale(1)}44%,62%{opacity:1;transform:translate(28px,26px) scale(1)}78%,100%{opacity:0;transform:translate(34px,31px) scale(.82)}}
+.ps-form-row.is-visible .ps-app-field-focus{animation:ps-app-field-cycle 8s ease-in-out infinite}
+@keyframes ps-app-field-cycle{0%,23%,100%{border-color:#dae9de;background:#f7faf7;box-shadow:none}35%,72%{border-color:#5dab7a;background:#eaf7eb;box-shadow:0 0 0 7px rgba(84,171,112,.15)}}
+.ps-form-row.is-visible .ps-app-tooltip{animation:ps-app-tip-cycle 8s ease-in-out infinite}
+@keyframes ps-app-tip-cycle{0%,35%{opacity:0;transform:translateY(14px) scale(.95)}49%,85%{opacity:1;transform:none}100%{opacity:0;transform:translateY(8px) scale(.98)}}
+.ps-form-row.is-visible .ps-app-source{animation:ps-app-source-cycle 8s ease-in-out infinite}
+@keyframes ps-app-source-cycle{0%,47%{opacity:.5}60%,90%{opacity:1;color:#266e4b}100%{opacity:.5}}
+
+/* Playbook: prompts take turns while the worksheet fills and the example is committed. */
+.ps-playbook-cursor{position:absolute;z-index:3;top:25px;right:8px;display:grid;width:31px;height:31px;place-items:center;border:1px solid #9fcbac;border-radius:7px;background:#fff;box-shadow:0 6px 13px rgba(34,80,54,.15);pointer-events:none}
+.ps-playbook-cursor img{width:26px;height:26px;padding:2px}
+.ps-form-row.is-visible .ps-playbook-cursor{animation:ps-playbook-pen 8s ease-in-out infinite}
+@keyframes ps-playbook-pen{0%,14%{opacity:0;transform:translate(-34px,-15px)}26%,39%{opacity:1;transform:translate(-4px,27px)}51%,64%{transform:translate(-4px,79px)}73%,85%{opacity:1;transform:translate(-4px,126px)}100%{opacity:0;transform:translate(4px,135px)}}
+.ps-form-row.is-visible .ps-playbook-cues>div{animation:ps-playbook-step 8s ease-in-out infinite}
+.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(2){animation-delay:1.4s}
+.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(3){animation-delay:2.8s}
+.ps-form-row.is-visible .ps-playbook-cues>div:nth-child(4){animation-delay:4.2s}
+@keyframes ps-playbook-step{0%,4%,24%,100%{border-color:#b5d8bf;background:#fff;transform:none}10%,18%{border-color:#4b9f6c;background:#e4f6e8;transform:translateX(3px)}}
+.ps-form-row.is-visible .ps-playbook-sheet label i{animation:ps-playbook-write 8s ease-in-out infinite}
+.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(2) i{animation-delay:.7s}
+.ps-form-row.is-visible .ps-playbook-sheet label:nth-of-type(3) i{animation-delay:1.4s}
+@keyframes ps-playbook-write{0%,23%{transform:scaleX(.08);background:#deebe0}52%,92%{transform:scaleX(1);background:#8cca9b}100%{transform:scaleX(.08);background:#deebe0}}
+.ps-form-row.is-visible .ps-playbook-sheet>span{animation:ps-playbook-done 8s ease-in-out infinite}
+@keyframes ps-playbook-done{0%,58%{opacity:.35;transform:translateY(5px)}73%,92%{opacity:1;transform:none}100%{opacity:.35;transform:translateY(5px)}}
+
 @media(max-width:1120px){
   .ps-hero-grid{grid-template-columns:1fr}
   .ps-hero-copy{max-width:850px}
@@ -238,7 +328,7 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
   .ps-lens-selector button{min-height:50px}
   .ps-lens-selector img{width:33px;height:33px}
   .ps-diagnostic-stage{min-height:315px;padding:13px}
-  .ps-diagnostic-scene{inset:44px 12px 40px}
+  .ps-diagnostic-scene{inset:44px 12px 12px}
   .ps-scene-caption{font-size:.56rem}.ps-scene-caption b{font-size:.53rem}
   .ps-access-route,.ps-system-pipeline{gap:4px;margin-top:44px}
   .ps-access-route>div,.ps-system-pipeline>div{min-width:56px;padding:6px}
@@ -247,21 +337,23 @@ body.performance-support-page[data-page-family="category"] main>.ps-hero{padding
   .ps-process-lanes>div{grid-template-columns:68px 1fr 8px;padding:8px 7px}.ps-process-lanes small{font-size:.45rem}.ps-process-lanes span{font-size:.55rem}
   .ps-source-compare{gap:4px;grid-template-columns:1fr 17px 1fr}.ps-source-compare>div{gap:4px;padding:5px}.ps-source-compare img{width:32px;height:32px}.ps-source-compare b{font-size:.55rem}
   .ps-feedback-flow{grid-template-columns:1fr 12px 1fr 12px 1fr;gap:3px;margin-top:38px}.ps-feedback-flow>div{padding:7px 2px}.ps-feedback-flow img{width:33px;height:33px}.ps-feedback-flow strong{font-size:.53rem}.ps-feedback-flow small{font-size:.45rem}
-  .ps-findings-head{font-size:.52rem}.ps-findings-status{font-size:.48rem;padding:5px 6px}
+  .ps-findings-head{font-size:.52rem}
   .ps-findings dl div{grid-template-columns:57px 1fr}.ps-findings dd{font-size:.65rem}
   .ps-form-visual{height:315px;padding:12px}
   .ps-visual-top{font-size:.53rem}.ps-visual-top img{width:37px;height:37px}
   .ps-job-sheet{width:94%;min-height:220px;margin-top:12px;padding:9px}
+  .ps-job-pointer{display:none}
   .ps-job-steps>div{min-height:27px}.ps-job-progress{bottom:11px}
   .ps-decision-canvas{width:98%;margin-top:20px}.ps-decision-branches{gap:7px}.ps-decision-branches>div{padding:8px}.ps-decision-output{padding:8px 7px}.ps-decision-output span{font-size:.42rem}.ps-decision-output strong{font-size:.53rem}
   .ps-knowledge-browser{width:98%;min-height:224px;margin-top:14px;padding:8px}.ps-kb-results{gap:5px}.ps-kb-primary,.ps-kb-glossary{padding:7px}
-  .ps-micro-kit{grid-template-columns:1fr;grid-template-rows:137px 71px;gap:6px;height:214px;margin:13px 2px 0}.ps-micro-side{grid-template-columns:1fr 1fr;gap:5px}.ps-micro-side>div{grid-template-columns:28px 1fr;gap:4px;padding:5px}.ps-micro-side img{width:27px;height:27px}.ps-micro-video>img{width:52px;height:52px}.ps-micro-play{transform:translate(14px,-50px)}
+  .ps-micro-kit{grid-template-columns:1fr;grid-template-rows:137px 71px;gap:6px;height:214px;margin:13px 2px 0}.ps-micro-side{grid-template-columns:1fr 1fr;gap:5px}.ps-micro-side>div{grid-template-columns:28px 1fr;gap:4px;padding:5px}.ps-micro-side img{width:27px;height:27px}.ps-micro-video>.ps-micro-screen{width:52px;height:52px}.ps-micro-play{transform:translate(14px,-50px)}
   .ps-app-window{width:100%;height:213px;margin-top:12px;grid-template-columns:40px 1fr}.ps-app-sidebar{padding:9px 3px}.ps-app-sidebar img{width:30px;height:30px}.ps-app-form{padding:10px}.ps-app-field{grid-template-columns:69px 1fr 18px;gap:4px}.ps-app-tooltip{width:62%;padding:6px}.ps-app-source{font-size:.45rem}
-  .ps-playbook-board{width:100%;grid-template-columns:.72fr 1.28fr;gap:5px;margin-top:13px}.ps-playbook-cues>div{padding:5px;gap:4px}.ps-playbook-cues span{font-size:.48rem}.ps-playbook-sheet{padding:7px}.ps-playbook-sheet strong{font-size:.54rem}
+  .ps-playbook-board{width:100%;grid-template-columns:.72fr 1.28fr;gap:5px;margin-top:13px}.ps-playbook-cues>div{padding:5px;gap:4px}.ps-playbook-cues span{font-size:.48rem}.ps-playbook-sheet{padding:7px}.ps-playbook-sheet strong{font-size:.54rem}.ps-playbook-cursor{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   .performance-support-page *, .performance-support-page *::before, .performance-support-page *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .ps-system-connector span,.ps-access-line,.ps-system-pipeline>i,.ps-feedback-flow>i,.ps-job-progress i,.ps-micro-video>i::after,.ps-playbook-sheet label i{transform:none}
   .ps-job-steps i{opacity:1}
+  .ps-job-pointer,.ps-decision-tracer,.ps-app-cursor,.ps-playbook-cursor{display:none}
   .ps-type-indicator{transition:none}
 }

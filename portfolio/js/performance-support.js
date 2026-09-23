@@ -129,15 +129,16 @@
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
-    }, { threshold: .25 });
+    }, { threshold: .12 });
     rows.forEach(row => observer.observe(row));
   } else {
     rows.forEach(row => row.classList.add('is-visible'));
   }
+  document.addEventListener('visibilitychange', () => {
+    document.body.classList.toggle('ps-motion-paused', document.hidden);
+  });
 
   const typeNav = document.querySelector('.ps-type-nav');
   const typeLinks = [...document.querySelectorAll('.ps-type-nav a[href^="#"]')];
