@@ -6,7 +6,7 @@
   "category": "lms-administration",
   "subcategory": null,
   "status": "live",
-  "summary": "I supported the Absorb-to-Docebo migration through learning-structure setup, content and learning-plan configuration, UAT, learner support, documentation, and immediate post-launch reporting.",
+  "summary": "I supported the Absorb-to-Docebo migration through course and enrollment crosswalks, learning-structure setup, content and plan configuration, persona-based UAT, exceptions, learner guidance, and post-launch support.",
   "page_path": "portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html",
   "featured": true,
   "confidentiality": "sanitized",
@@ -20,10 +20,10 @@
       "Build repeatable support and documentation workflows and support immediate post-launch reporting and action planning."
     ],
     "role": "Instructional designer and LMS content administrator supporting setup, configuration, UAT, learner support, documentation, and post-launch operations during the Absorb-to-Docebo migration.",
-    "design_approach": "I used the existing Absorb environment as a baseline, helped configure the corresponding Docebo learning structures, then tested the learner journeys and operational processes around them. My work connected platform setup, content administration, learner experience, support, and reporting rather than treating migration as a file-transfer exercise.",
-    "development_process": "I helped set up learning structures, learning plans, content relationships, catalogs, certifications, and learner-facing assets in Docebo; participated in UAT for employee, partner, and customer experiences; documented and retested issues; supported the learner inbox; helped create support documentation and reusable customer-support email templates; and supported immediate post-launch reporting and action planning.",
+    "design_approach": "I treated the Absorb environment as a source of learner routes and decision history, not just a file collection. Course and enrollment crosswalks, destination relationships, persona testing, and exception review connected instructional design to Docebo administration.",
+    "development_process": "I reviewed owned courses and relationships in Absorb; helped map course and enrollment crosswalks to Docebo; supported learning-plan, content, certification, and audience configuration; participated in UAT for employee, partner, customer, and edge-case experiences; documented and retested issues; supported learner guidance, inbox workflows, reusable support templates, and post-launch reporting.",
     "outcomes": [
-      "Helped configure and validate Docebo learning structures, plans, content, certifications, and audience experiences.",
+      "Helped map, configure, and validate Docebo learning structures, plans, content, certifications, and audience experiences.",
       "Documented migration issues and supported triage and retesting across employee, partner, and customer journeys.",
       "Supported learner inbox operations, repeatable support responses, documentation workflows, and immediate post-launch reporting and follow-up."
     ]
@@ -117,5 +117,5 @@
       }
   ],
   "source_material_notes": "Generalized from completed LMS migration and launch-support work moving learning operations from Absorb LMS into Docebo LMS. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted. Public interface visuals and the learner-route simulator are representative reconstructions. Sample names, numbers, and UAT scenarios are illustrative, not production screenshots, actual results, or historical issue records.",
-  "dates": {"created": "2026-09-15", "updated": "2026-09-17"}
+  "dates": {"created": "2026-09-15", "updated": "2026-09-22"}
 }
