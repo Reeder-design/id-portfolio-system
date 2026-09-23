@@ -27,183 +27,97 @@
     });
   });
 
-  const branchButtons = [...document.querySelectorAll('[data-branch]')];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loop = (render, count, duration, staticPhase = 0) => {
+    let phase = reducedMotion ? staticPhase : 0;
+    render(phase);
+    if (!reducedMotion) window.setInterval(() => {
+      phase = (phase + 1) % count;
+      render(phase);
+    }, duration);
+  };
+
   const branchMap = document.querySelector('.branch-map');
   const branchFeedback = document.getElementById('branchFeedback');
-  branchButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(branchButtons, button);
-    const probe = button.dataset.branch === 'probe';
-    branchMap.dataset.route = probe ? 'probe' : 'pitch';
-    branchFeedback.textContent = probe
-      ? 'Probing reveals why the handoff slows. A better decision becomes possible.'
-      : 'Pitching early skips the underlying cause. The next choice has less evidence.';
-  }));
+  loop(phase => {
+    branchMap.dataset.route = phase === 2 ? 'probe' : phase === 3 ? 'pitch' : 'none';
+    branchFeedback.textContent = [
+      'A customer explains that orders are delayed between teams.',
+      'The learner considers two responses.',
+      'Asking where work stalls reveals the bottleneck.',
+      'Pitching early leaves the root cause hidden.'
+    ][phase];
+  }, 4, 1900, 2);
 
-  const quizButtons = [...document.querySelectorAll('[data-quiz-answer]')];
+  const quizAnswers = [...document.querySelectorAll('[data-quiz-answer]')];
   const quizFeedback = document.getElementById('quizFeedback');
-  quizButtons.forEach(button => button.addEventListener('click', () => {
-    quizButtons.forEach(item => item.classList.remove('correct', 'incorrect'));
-    const correct = button.dataset.quizAnswer === 'yes';
-    button.classList.add(correct ? 'correct' : 'incorrect');
-    document.getElementById('quizScore').textContent = correct ? 'EVIDENCE FOUND ✓' : 'TRY ANOTHER DETAIL';
-    quizFeedback.textContent = correct
-      ? 'Correct. Lost time is a customer problem, not just product or meeting information.'
-      : 'Not quite. Look for an impact the customer actually experiences.';
-  }));
+  loop(phase => {
+    document.querySelector('.quiz-visual').dataset.phase = String(phase);
+    quizAnswers.forEach(answer => answer.classList.remove('correct', 'incorrect'));
+    if (phase === 1) quizAnswers[0].classList.add('incorrect');
+    if (phase >= 2) quizAnswers[1].classList.add('correct');
+    document.getElementById('quizScore').textContent = ['QUESTION 01 / 03', 'TRY ANOTHER DETAIL', 'EVIDENCE FOUND ✓', 'FEEDBACK APPLIED'][phase];
+    quizFeedback.textContent = [
+      'Which detail shows a problem the customer experiences?',
+      'A product feature is not evidence of customer impact.',
+      'Correct: time lost in handoffs is a business pain.',
+      'Specific feedback explains why the evidence fits.'
+    ][phase];
+  }, 4, 1800, 2);
 
-  const videoCues = [
-    { caption: 'Customer describes a slow handoff.', step: 'MOMENT 01 / OBSERVE', title: 'What is the customer describing?', detail: 'Select the detail that signals a real problem.' },
-    { caption: 'Playback paused at a decision.', step: 'MOMENT 02 / DECIDE', title: 'Which detail matters most?', detail: 'Select a clue before the video continues.' },
-    { caption: 'Feedback connects the clue to the task.', step: 'MOMENT 03 / REFLECT', title: 'What would you investigate?', detail: 'Use the feedback to plan the next question.' }
-  ];
-  const videoButtons = [...document.querySelectorAll('[data-video-cue]')];
-  let videoIndex = 0;
-  const videoMoment = document.getElementById('videoMoment');
-  const videoScreen = document.querySelector('.video-screen');
-  videoButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(videoButtons, button);
-    videoIndex = Number(button.dataset.videoCue);
-    const cue = videoCues[videoIndex];
-    videoScreen.dataset.videoFrame = String(videoIndex);
-    videoScreen.classList.remove('has-answer');
-    document.querySelectorAll('[data-video-answer]').forEach(item => item.classList.remove('correct', 'incorrect'));
-    document.getElementById('videoSceneStep').textContent = cue.step;
-    document.getElementById('videoSceneTitle').textContent = cue.title;
-    document.getElementById('videoSceneDetail').textContent = cue.detail;
-    document.getElementById('videoCaption').textContent = cue.caption;
-    videoMoment.querySelector('p').textContent = 'The video pauses so the learner can select evidence in the scene.';
-  }));
-  const videoAnswers = [...document.querySelectorAll('[data-video-answer]')];
-  videoAnswers.forEach(button => button.addEventListener('click', () => {
-    selectOne(videoAnswers, button);
-    videoScreen.classList.add('has-answer');
-    videoAnswers.forEach(item => item.classList.remove('correct', 'incorrect'));
-    button.classList.add(button.dataset.videoAnswer === 'probe' ? 'correct' : 'incorrect');
-    videoMoment.querySelector('p').textContent = button.dataset.videoAnswer === 'probe'
-      ? 'Correct. Time lost in handoffs is the customer impact visible in this moment.'
-      : 'Try again. A feature request does not explain the time the customer loses.';
-  }));
-
-  let softwareIndex = 0;
-  const softwareControls = [...document.querySelectorAll('[data-software-control]')];
-  const softwareTask = document.getElementById('softwareStep');
-  const softwareTitle = document.getElementById('softwareTitle');
-  const softwareTarget = document.getElementById('softwareTarget');
-  const softwareExpected = ['catalog', 'configure', 'submit'];
-  const softwareSubmit = document.querySelector('[data-software-control="submit"]');
   const softwareWindow = document.querySelector('.software-window');
-  softwareControls.forEach(button => button.addEventListener('click', () => {
-    if (softwareIndex >= softwareExpected.length) return;
-    if (button.dataset.softwareControl !== softwareExpected[softwareIndex]) {
-      softwareTask.textContent = `Not yet. ${['Open Catalog first.', 'Configure the package next.', 'Submit the reviewed order.'][softwareIndex]}`;
-      return;
-    }
-    softwareIndex += 1;
-    softwareWindow.dataset.step = String(softwareIndex);
-    softwareControls.forEach(item => item.classList.toggle('active', item === button));
-    if (softwareIndex === 1) {
-      softwareTitle.textContent = 'Choose a product';
-      softwareTarget.hidden = false;
-      softwareTask.textContent = 'Step 2 of 3: configure the package.';
-    } else if (softwareIndex === 2) {
-      softwareTitle.textContent = 'Review the configured order';
-      softwareTarget.hidden = true;
-      softwareSubmit.hidden = false;
-      softwareTask.textContent = 'Step 3 of 3: submit the order.';
-    } else {
-      softwareTitle.textContent = 'Order submitted ✓';
-      softwareSubmit.hidden = true;
-      softwareTask.textContent = 'Complete: Northstar Supply order #1048 was submitted.';
-    }
-  }));
-  document.getElementById('softwareReset').addEventListener('click', () => {
-    softwareIndex = 0;
-    softwareWindow.dataset.step = '0';
-    softwareControls.forEach(item => item.classList.remove('active'));
-    softwareTitle.textContent = 'Create customer order';
-    softwareTarget.hidden = true;
-    softwareSubmit.hidden = true;
-    softwareTask.textContent = 'Step 1 of 3: open Catalog.';
-  });
+  const softwareTitle = document.getElementById('softwareTitle');
+  const softwareTask = document.getElementById('softwareStep');
+  loop(phase => {
+    softwareWindow.dataset.step = String(phase);
+    softwareTitle.textContent = [
+      'Create customer order',
+      'Choose a product',
+      'Review the configured order',
+      'Order submitted ✓'
+    ][phase];
+    softwareTask.textContent = [
+      'Step 1 of 3: open Catalog.',
+      'Step 2 of 3: configure the package.',
+      'Step 3 of 3: submit the order.',
+      'Complete: Northstar Supply order #1048 was submitted.'
+    ][phase];
+    document.getElementById('orderStatus').textContent = phase === 3
+      ? 'Order #1048 · Submitted'
+      : 'Order #1048 · Draft';
+  }, 4, 1900, 2);
 
-  const hotspotDetails = {
-    signal: ['Signal', 'Start with the clue the learner should notice.'],
-    decision: ['Decision', 'Reveal what evidence changes the choice.'],
-    outcome: ['Outcome', 'Connect the action to what happens next.']
-  };
-  const hotspotButtons = [...document.querySelectorAll('[data-hotspot]')];
-  hotspotButtons.forEach(button => button.addEventListener('click', () => {
-    selectOne(hotspotButtons, button);
-    const [title, detail] = hotspotDetails[button.dataset.hotspot];
-    const reveal = document.getElementById('hotspotReveal');
-    reveal.querySelector('strong').textContent = title;
-    reveal.querySelector('span').textContent = detail;
-  }));
+  const hotspotDetails = [
+    ['Signal', 'Start with the clue the learner should notice.'],
+    ['Decision', 'Reveal what evidence changes the choice.'],
+    ['Outcome', 'Connect the action to what happens next.']
+  ];
+  const hotspotReveal = document.getElementById('hotspotReveal');
+  loop(phase => {
+    document.querySelector('.hotspot-visual').dataset.phase = String(phase);
+    hotspotReveal.querySelector('strong').textContent = hotspotDetails[phase][0];
+    hotspotReveal.querySelector('span').textContent = hotspotDetails[phase][1];
+  }, 3, 2300, 1);
 
-  const safetyLabels = { box: 'Loose packaging', spill: 'Floor spill', helmet: 'Missing hard hat' };
-  const safetyActions = { box: 'recycled the packaging', spill: 'sent the spill to cleanup', helmet: 'returned the hard hat to the PPE rack' };
-  const clearedHazards = new Set();
-  let selectedHazard = null;
-  const gameVisual = document.querySelector('.game-visual');
-  const hazardButtons = [...document.querySelectorAll('[data-hazard]')];
-  const zoneButtons = [...document.querySelectorAll('[data-zone]')];
-  const gameFeedback = document.getElementById('gameFeedback');
-  const renderSafety = () => {
-    const score = clearedHazards.size;
-    gameVisual.dataset.score = String(score);
-    document.getElementById('gameStars').textContent = Array.from({ length: 3 }, (_, index) => index < score ? '★' : '☆').join(' ');
-    document.getElementById('gameCount').textContent = score === 3 ? 'All hazards cleared' : `${3 - score} hazard${3 - score === 1 ? '' : 's'} left`;
-    hazardButtons.forEach(button => {
-      button.hidden = clearedHazards.has(button.dataset.hazard);
-      button.classList.toggle('selected', selectedHazard === button.dataset.hazard);
-      button.setAttribute('aria-pressed', String(selectedHazard === button.dataset.hazard));
-    });
-  };
-  const placeHazard = (hazard, zone) => {
-    if (!hazard || clearedHazards.has(hazard)) return;
-    if (hazard !== zone) {
-      gameFeedback.textContent = `${safetyLabels[hazard]} needs a different station. Try another location.`;
-      return;
-    }
-    clearedHazards.add(hazard);
-    selectedHazard = null;
-    gameFeedback.textContent = clearedHazards.size === 3
-      ? 'All three hazards cleared. Three stars earned!'
-      : `Great work: you ${safetyActions[hazard]}. Keep looking for hazards.`;
-    renderSafety();
-  };
-  hazardButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      selectedHazard = button.dataset.hazard;
-      gameFeedback.textContent = `${safetyLabels[selectedHazard]} selected. Choose its destination.`;
-      renderSafety();
-    });
-    button.addEventListener('dragstart', event => {
-      selectedHazard = button.dataset.hazard;
-      event.dataTransfer.setData('text/plain', selectedHazard);
-      event.dataTransfer.effectAllowed = 'move';
-      renderSafety();
-    });
-  });
-  zoneButtons.forEach(button => {
-    button.addEventListener('click', () => placeHazard(selectedHazard, button.dataset.zone));
-    button.addEventListener('dragover', event => {
-      event.preventDefault();
-      button.classList.add('drag-over');
-    });
-    button.addEventListener('dragleave', () => button.classList.remove('drag-over'));
-    button.addEventListener('drop', event => {
-      event.preventDefault();
-      button.classList.remove('drag-over');
-      placeHazard(event.dataTransfer.getData('text/plain'), button.dataset.zone);
-    });
-  });
-  document.getElementById('gameReset').addEventListener('click', () => {
-    clearedHazards.clear();
-    selectedHazard = null;
-    gameFeedback.textContent = 'Drag a hazard to the right station, or select it and then select a station.';
-    renderSafety();
-  });
+  const phishingEmails = [
+    { sender: 'IT Helpdesk · external address', subject: 'Urgent: reset your password', cue: 'Unfamiliar sender · rushed deadline', feedback: 'An AI-crafted urgent reset request uses an unfamiliar sender. Report it.' },
+    { sender: 'Executive office · outside domain', subject: 'Buy gift cards before 2 PM', cue: 'Unexpected payment request · urgency', feedback: 'A fake executive asks for gift cards. Report the impersonation.' },
+    { sender: 'Vendor billing · lookalike domain', subject: 'Invoice overdue: open attachment', cue: 'Unexpected attachment · spoofed domain', feedback: 'A lookalike vendor domain and attachment are warning signs. Report it.' }
+  ];
+  const phishingVisual = document.querySelector('.phishing-visual');
+  loop(phase => {
+    const cleared = Math.min(phase, 3);
+    const email = phishingEmails[Math.min(phase, 2)];
+    phishingVisual.dataset.score = String(cleared);
+    document.getElementById('gameStars').textContent = Array.from({ length: 3 }, (_, index) => index < cleared ? '★' : '☆').join(' ');
+    document.getElementById('gameCount').textContent = cleared === 3 ? 'All 3 reported' : `${3 - cleared} threat${3 - cleared === 1 ? '' : 's'} to spot`;
+    document.getElementById('phishingSender').textContent = email.sender;
+    document.getElementById('phishingSubject').textContent = email.subject;
+    document.getElementById('phishingCue').textContent = email.cue;
+    document.getElementById('gameFeedback').textContent = phase === 3
+      ? 'Three suspicious emails reported. The simulation restarts for another practice round.'
+      : email.feedback;
+  }, 4, 2850, 1);
 
   const aiButtons = [...document.querySelectorAll('[data-ai-learner]')];
   aiButtons.forEach(button => button.addEventListener('click', () => {

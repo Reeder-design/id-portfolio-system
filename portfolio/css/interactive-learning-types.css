@@ -452,3 +452,91 @@
   .hero-mini-screen,.hero-demo-pointer,.video-demo-pointer,.video-on-screen-choices button,.software-demo-pointer { animation:none!important; }
   .hero-mini-screen:first-child { outline:3px solid #a5e87d; }.video-on-screen-choices button:last-child { border-color:#49a463; background:#d4f8d6; }
 }
+
+/* Extracted pixel artwork appears inside every white icon bubble. */
+.interactive-landing .icon-drawing { display:block; width:34px; height:34px; object-fit:contain; image-rendering:pixelated; }
+.interactive-landing .type-icon .icon-drawing { width:64px; height:64px; }
+.interactive-landing .kicker-bubble .icon-drawing { width:35px; height:35px; }
+.interactive-landing .hero-mini-icon .icon-drawing { width:26px; height:26px; }
+.interactive-landing .software-bubble .icon-drawing { width:23px; height:23px; }
+.interactive-landing .order-product .icon-drawing { width:25px; height:25px; }
+.interactive-landing .hotspot-node .icon-drawing { width:39px; height:39px; }
+.interactive-landing .ai-core .icon-drawing { width:76px; height:76px; }
+.interactive-landing .ai-art-chip .icon-drawing { width:28px; height:28px; }
+.interactive-landing .visual-kicker .icon-bubble { margin-left:0; }
+.interactive-landing .visual-kicker>span:last-child { margin-left:auto; }
+
+/* Scenario and assessment cycles demonstrate decisions without asking for input. */
+.demo-auto-pointer { width:25px; height:29px; filter:drop-shadow(2px 3px 2px #071f24aa); pointer-events:none; z-index:8; }
+.branch-map .scenario-demo-pointer { position:absolute; top:71%; left:25%; animation:scenarioAutoPointer 7.6s ease-in-out infinite; }
+.meeting-person img { position:absolute; bottom:0; left:0; width:78px; height:91px; object-fit:contain; object-position:bottom; image-rendering:pixelated; }
+.meeting-person .person-head,.meeting-person .person-body { display:none; }
+.meeting-person small { bottom:0; left:6px; right:6px; padding:3px 2px; border-radius:4px; background:#173a42dc; text-align:center; }
+.branch-paths span[data-branch] { display:grid; align-content:center; min-height:57px; padding:8px 10px; border:1px solid #9bccac; border-radius:10px; background:#275d52; color:#fff; font:800 .72rem/1.15 var(--font-heading); }
+.branch-paths span[data-branch] small { display:block; margin-bottom:5px; color:#b8ee91; font:800 .54rem/1 var(--font-heading); letter-spacing:.09em; }
+.branch-map[data-route="probe"] .branch-paths span[data-branch="probe"] { background:#c8f0a2; color:#204436; box-shadow:0 0 0 3px #b8ee91a0; }
+.branch-map[data-route="pitch"] .branch-paths span[data-branch="pitch"] { background:#f9dac1; color:#6f4435; box-shadow:0 0 0 3px #e7a0768a; }
+.branch-map[data-route="probe"] .branch-paths span[data-branch="probe"] small { color:#3b6650; }
+.branch-map[data-route="pitch"] .branch-paths span[data-branch="pitch"] small { color:#87583c; }
+@keyframes scenarioAutoPointer { 0%,20% { left:48%; top:59%; transform:scale(1); } 28%,47% { left:24%; top:75%; transform:scale(1); } 34% { transform:scale(.8); } 53%,70% { left:49%; top:59%; transform:scale(1); } 78%,95% { left:73%; top:75%; transform:scale(1); } 84% { transform:scale(.8); } 100% { left:48%; top:59%; } }
+.quiz-paper { position:relative; }.quiz-paper .quiz-demo-pointer { position:absolute; left:68%; top:50%; animation:quizAutoPointer 7.2s ease-in-out infinite; }
+.quiz-options span[data-quiz-answer] { display:flex; align-items:center; gap:12px; min-height:48px; padding:10px 12px; border:1px solid #d4e5da; border-radius:9px; background:#fff; color:#315547; text-align:left; font:700 .78rem/1.2 var(--font-body); }
+.quiz-options span[data-quiz-answer] small { min-width:56px; color:#578669; font:800 .58rem/1 var(--font-heading); letter-spacing:.06em; }
+.quiz-options span.incorrect { border-color:#d5795f; background:#ffebe3; }.quiz-options span.correct { border-color:#48a06a; background:#dcf4e4; }
+@keyframes quizAutoPointer { 0%,20% { left:68%; top:42%; transform:scale(1); } 27%,43% { left:71%; top:54%; transform:scale(1); } 33% { transform:scale(.8); } 51%,70% { left:71%; top:71%; transform:scale(1); } 57% { transform:scale(.8); } 78%,100% { left:68%; top:71%; } }
+
+/* The video is one self-running scene with no timeline or clickable choices. */
+.video-visual { justify-content:center; }.video-screen { width:100%; min-height:338px; }
+.video-on-screen-choices span[data-video-answer] { display:grid; place-items:center; min-height:36px; padding:6px; border:2px solid #b6d4ba; border-radius:7px; background:#fff; color:#28523f; font:800 .6rem/1.1 var(--font-heading); text-align:center; }
+.video-on-screen-choices span:first-child { animation:mediaWrong 7s infinite; }.video-on-screen-choices span:last-child { animation:mediaRight 7s infinite; }
+.video-demo-pointer { animation:mediaPointer 7s infinite; }
+
+/* The sales screen now advances through all three steps by itself. */
+.software-window { transition:box-shadow .4s ease; }.software-window[data-step="3"] { box-shadow:0 0 0 4px #aaf089,0 15px 27px #0004; }
+.software-side span[data-software-control] { display:block; min-height:33px; padding:8px 6px; border-radius:7px; color:#315b47; font:800 .65rem/1.1 var(--font-body); }
+.software-window[data-step="1"] .software-side span[data-software-control="catalog"],
+.software-window[data-step="2"] .software-side span[data-software-control="catalog"],
+.software-window[data-step="3"] .software-side span[data-software-control="catalog"] { background:#c7e8d1; color:#23563d; }
+.software-window[data-step="1"] .order-product { border-color:#80c862; box-shadow:0 0 0 3px #a8ea8a73; }
+.software-window[data-step="2"] .order-product { background:#effbea; }
+.software-window .software-target,.software-window .software-submit { display:none; cursor:default; }
+.software-window[data-step="1"] .software-target,.software-window[data-step="2"] .software-submit { display:inline-block; }
+.software-demo-pointer { left:12%; top:53%; animation:none; transition:left .65s ease,top .65s ease,transform .2s ease; }
+.software-window[data-step="0"] .software-demo-pointer { left:12%; top:53%; }
+.software-window[data-step="1"] .software-demo-pointer { left:57%; top:75%; }
+.software-window[data-step="2"] .software-demo-pointer { left:59%; top:80%; }
+.software-window[data-step="3"] .software-demo-pointer { display:block; left:70%; top:81%; }
+.software-auto-label { padding:6px 9px; border:1px solid #92c9a5; border-radius:7px; color:#def6d8; font:800 .52rem/1 var(--font-heading); letter-spacing:.04em; white-space:nowrap; }
+
+/* The graphic markers and reveal card advance together. */
+.hotspot-canvas { position:relative; }.hotspot-canvas .hotspot-node span[data-hotspot] { display:grid; place-items:center; width:27px; height:27px; margin-top:3px; border:2px solid #fff; border-radius:50%; background:#97db4f; color:#18472c; font:800 .9rem/1 var(--font-heading); box-shadow:0 3px 10px #0003; }
+.hotspot-visual[data-phase="0"] .hotspot-node:nth-child(1) span[data-hotspot],
+.hotspot-visual[data-phase="1"] .hotspot-node:nth-child(2) span[data-hotspot],
+.hotspot-visual[data-phase="2"] .hotspot-node:nth-child(3) span[data-hotspot] { background:#fff; box-shadow:0 0 0 4px #97db4f; }
+.hotspot-demo-pointer { position:absolute; left:17%; top:74%; transition:left .75s ease; }.hotspot-visual[data-phase="1"] .hotspot-demo-pointer { left:49%; }.hotspot-visual[data-phase="2"] .hotspot-demo-pointer { left:81%; }
+.hotspot-reveal { transition:background .3s ease; }.hotspot-visual[data-phase="1"] .hotspot-reveal { background:#dcf7e4; }.hotspot-visual[data-phase="2"] .hotspot-reveal { background:#e7f6d9; }
+
+/* AI phishing game: the email lifts, travels to the report target, and awards stars. */
+.phishing-visual { gap:10px; justify-content:center; background:radial-gradient(circle at 78% 10%,#30577a,#182e3c 67%); }
+.phishing-head { display:flex; justify-content:space-between; align-items:center; gap:10px; }.phishing-head>div:first-child { display:grid; gap:5px; }.phishing-head small { color:#aef0c2; font:800 .5rem/1 var(--font-heading); letter-spacing:.08em; }.phishing-head strong { color:#fff; font:800 .83rem/1.18 var(--font-heading); }
+.phishing-score { display:grid; gap:4px; min-width:109px; padding:8px; border:1px solid #8fbaa6; border-radius:9px; background:#234e50; text-align:center; }.phishing-score span:first-child { color:#ffdd7e; font:800 .95rem/1 var(--font-heading); }.phishing-score span:last-child { color:#fff; font:800 .5rem/1.1 var(--font-heading); }
+.phishing-workspace { position:relative; display:grid; grid-template-columns:minmax(0,1.7fr) minmax(100px,.7fr); gap:9px; min-height:205px; padding:9px; border:1px solid #77a7a7; border-radius:13px; background:#e3f0ee; color:#254740; }
+.phishing-inbox { overflow:hidden; border:1px solid #b8d4cf; border-radius:9px; background:#fff; box-shadow:0 8px 13px #1a3a3b2b; }.phishing-inbox-head { display:flex; justify-content:space-between; padding:7px 9px; background:#173e49; color:#f4fffb; font:800 .55rem/1 var(--font-heading); }.phishing-inbox-head span { color:#bcecc4; font-weight:600; }
+.phishing-email { display:grid; gap:4px; margin:8px; padding:8px; border:2px solid #e5a973; border-radius:7px; background:#fffaee; animation:phishEmailLift 2.85s ease-in-out infinite; }.phishing-email small { color:#92533d; font:800 .5rem/1 var(--font-heading); }.phishing-email strong { color:#2b4a3e; font:800 .63rem/1.1 var(--font-heading); }.phishing-email span { color:#855a43; font:.48rem/1.1 var(--font-body); }.phishing-email.muted { margin-top:6px; border-color:#d8e5dd; background:#f6faf7; animation:none; opacity:.65; }.phishing-email.muted small,.phishing-email.muted span { color:#678474; }
+.phishing-drop { display:grid; align-content:center; justify-items:center; gap:5px; padding:9px; border:2px dashed #75b995; border-radius:10px; background:#e8f8e9; text-align:center; }.phishing-drop .icon-bubble { width:46px; height:46px; border-radius:11px; }.phishing-drop strong { color:#255d42; font:800 .62rem/1.12 var(--font-heading); }.phishing-drop small { color:#61846b; font:.48rem/1.1 var(--font-body); }.phishing-visual[data-score="3"] .phishing-drop { background:#cbf2c4; box-shadow:0 0 0 4px #a5e07e; }
+.phishing-drag-card { position:absolute; z-index:5; left:10%; top:32%; display:grid; place-items:center; width:36%; min-height:43px; padding:4px; border:2px solid #e9ae71; border-radius:7px; background:#fff8e4; color:#644c39; font:800 .58rem/1.1 var(--font-heading); box-shadow:0 8px 14px #16404250; animation:phishDrag 2.85s ease-in-out infinite; pointer-events:none; }
+.phishing-demo-pointer { position:absolute; left:30%; top:40%; animation:phishPointer 2.85s ease-in-out infinite; }.phishing-feedback { min-height:37px; margin:0; padding:8px 10px; border:1px solid #6a9b93; border-radius:8px; background:#244b51; color:#eff9ee; font:.64rem/1.23 var(--font-body); }
+@keyframes phishEmailLift { 0%,20%,100% { transform:none; box-shadow:none; } 30%,75% { transform:translateY(-2px); box-shadow:0 0 0 3px #f3bb80; } }
+@keyframes phishDrag { 0%,17% { opacity:0; transform:translate(0,0) scale(.9); } 25% { opacity:1; transform:translate(0,0) scale(1); } 70% { opacity:1; transform:translate(145%,45%) scale(.78); } 82%,100% { opacity:0; transform:translate(145%,45%) scale(.7); } }
+@keyframes phishPointer { 0%,18% { left:30%; top:40%; transform:scale(1); } 26% { transform:scale(.78); } 70% { left:80%; top:58%; transform:scale(1); } 78% { transform:scale(.78); } 100% { left:30%; top:40%; transform:scale(1); } }
+@media(max-width:620px) {
+  .interactive-landing .type-icon .icon-drawing { width:53px; height:53px; }
+  .branch-paths span[data-branch] { min-height:68px; font-size:.57rem; }
+  .video-screen { min-height:294px; }.video-on-screen-choices span[data-video-answer] { font-size:.49rem; }
+  .software-auto-label { font-size:.43rem; }.software-side span[data-software-control] { font-size:.52rem; }
+  .phishing-head strong { font-size:.66rem; }.phishing-score { min-width:88px; }.phishing-workspace { grid-template-columns:minmax(0,1.4fr) minmax(79px,.7fr); min-height:208px; }.phishing-email { margin:5px; padding:5px; }.phishing-email strong { font-size:.52rem; }.phishing-email small,.phishing-email span,.phishing-drop small { font-size:.42rem; }.phishing-drop strong { font-size:.52rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .scenario-demo-pointer,.quiz-demo-pointer,.video-demo-pointer,.video-on-screen-choices span,.phishing-email,.phishing-drag-card,.phishing-demo-pointer { animation:none!important; }
+  .phishing-drag-card { opacity:0; }.video-on-screen-choices span:last-child { border-color:#49a463; background:#d4f8d6; }
+}
