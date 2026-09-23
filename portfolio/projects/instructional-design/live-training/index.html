@@ -3,616 +3,316 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Live training work by instructional designer Haley Reeder, including facilitator-led content development and virtual sales workshop facilitation for internal sellers and external partners.">
+  <meta name="description" content="Haley Reeder's live training work: classroom teaching, learning design, and virtual sales workshop facilitation, with an accessible look at in-person, online, and hybrid delivery.">
   <title>Live Training | Haley Reeder</title>
   <link rel="icon" type="image/svg+xml" href="../../../assets/site/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Open+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/styles.css">
   <link rel="stylesheet" href="../../../css/portfolio-refresh.css">
   <link rel="stylesheet" href="../../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../../css/phase1-frame.css">
-  <style>
-    body.live-training-page{background:#fbfaf4}
-    body.live-training-page .section{padding-block:clamp(30px,4vw,44px)}
-    .live-landing-hero{
-      position:relative;
-      overflow:hidden;
-      color:#eef6f2;
-      background:
-        radial-gradient(circle at 82% 14%,rgba(151,219,79,.13),transparent 27%),
-        linear-gradient(145deg,#14252c,#294447);
-    }
-    .live-landing-hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      opacity:.10;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
-      background-size:34px 34px;
-    }
-    .live-landing-hero .container{position:relative;z-index:1}
-    .live-landing-hero h1{color:#fff}
-    .live-landing-hero .body-large{color:#dce9e2}
-    .live-landing-hero .breadcrumbs,
-    .live-landing-hero .breadcrumbs a,
-    .live-landing-hero .breadcrumbs span{color:rgba(248,252,249,.82)!important;font-weight:500}
-    .live-landing-hero .breadcrumbs a:hover,
-    .live-landing-hero .breadcrumbs a:focus-visible{color:#fff!important}
-    .live-landing-hero .btn-secondary{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff}
-    .live-hero-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(300px,.82fr);
-      gap:34px;
-      align-items:center;
-    }
-    .live-training-hero-art{position:relative;min-height:360px;display:grid;place-items:center}
-    .live-training-photo{position:relative;width:min(100%,560px);isolation:isolate}
-    .live-training-photo::before{
-      content:"";
-      position:absolute;
-      z-index:-1;
-      inset:8% -5% -7% 7%;
-      border-radius:42% 58% 46% 54% / 54% 42% 58% 46%;
-      background:radial-gradient(circle at 70% 20%,rgba(151,219,79,.2),transparent 26%),rgba(121,201,158,.08);
-    }
-    .live-training-photo img{
-      display:block;
-      width:100%;
-      height:auto;
-      box-shadow:0 24px 58px rgba(0,0,0,.23);
-      clip-path:polygon(6% 0,100% 0,100% 92%,94% 100%,0 100%,0 8%);
-    }
-    .live-training-cue{
-      position:absolute;
-      z-index:3;
-      padding:7px 10px;
-      border:1px solid rgba(255,255,255,.2);
-      border-radius:999px;
-      background:rgba(12,31,37,.88);
-      color:#eef6f2;
-      font:800 .55rem/1 var(--font-heading);
-      letter-spacing:.045em;
-      text-transform:uppercase;
-      box-shadow:0 9px 20px rgba(0,0,0,.16);
-      backdrop-filter:blur(8px);
-    }
-    .live-training-cue--design{left:-3%;top:15%}
-    .live-training-cue--facilitate{right:-2%;top:42%}
-    .live-training-cue--adapt{left:7%;bottom:7%}
-    .live-training-flow{
-      position:absolute;
-      z-index:2;
-      right:7%;
-      bottom:8%;
-      display:flex;
-      gap:5px;
-      align-items:center;
-      padding:7px 9px;
-      border-radius:999px;
-      background:rgba(12,31,37,.68);
-    }
-    .live-training-flow i{
-      display:block;
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:var(--mint-leaf);
-      animation:liveTrainingCue 2.2s ease-in-out infinite;
-    }
-    .live-training-flow i:nth-child(2){animation-delay:.25s}
-    .live-training-flow i:nth-child(3){animation-delay:.5s}
-    @keyframes liveTrainingCue{0%,100%{opacity:.35;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
-
-    /* Facilitation foundation, contextual rather than a case study */
-    .live-foundation-band{
-      padding:18px 0;
-      border-bottom:1px solid rgba(80,132,132,.1);
-      background:#eef4f0;
-    }
-    .live-foundation-shell{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(330px,.85fr);
-      gap:28px;
-      align-items:center;
-    }
-    .live-foundation-copy .eyebrow{margin-bottom:4px;color:#4a796e!important}
-    .live-foundation-copy h2{margin:0 0 6px;color:#263d37;font-size:clamp(1.05rem,1.8vw,1.3rem)}
-    .live-foundation-copy p{margin:0;max-width:720px;color:#5b6a64;font-size:.78rem;line-height:1.5}
-    .live-foundation-motion{
-      position:relative;
-      display:grid;
-      grid-template-columns:1fr 28px 1fr 28px 1fr;
-      gap:5px;
-      align-items:center;
-      padding:12px;
-      overflow:hidden;
-      border:1px solid rgba(80,132,132,.14);
-      border-radius:16px;
-      background:#fff;
-    }
-    .foundation-node{
-      display:grid;
-      place-items:center;
-      min-height:58px;
-      padding:8px;
-      border-radius:11px;
-      background:#f4f8f5;
-      color:#315755;
-      font:800 .56rem/1.2 var(--font-heading);
-      text-align:center;
-    }
-    .foundation-node small{display:block;margin-top:4px;color:#74817c;font:.49rem/1.2 var(--font-body)}
-    .foundation-line{position:relative;height:2px;background:linear-gradient(90deg,#508484,#79c99e,#97db4f)}
-    .foundation-line i{
-      position:absolute;
-      left:0;
-      top:50%;
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      transform:translateY(-50%);
-      background:#97db4f;
-      box-shadow:0 0 11px rgba(151,219,79,.5);
-      animation:foundationFlow 2.6s linear infinite;
-    }
-    .foundation-line:nth-of-type(2) i{animation-delay:1.1s}
-    @keyframes foundationFlow{0%{left:0;opacity:0}18%{opacity:1}82%{opacity:1}100%{left:calc(100% - 7px);opacity:0}}
-
-    /* Two-role interaction */
-    #live-work{
-      position:relative;
-      overflow:hidden;
-      color:#edf5f1;
-      background:
-        radial-gradient(circle at 10% 18%,rgba(80,132,132,.22),transparent 28%),
-        radial-gradient(circle at 88% 70%,rgba(151,219,79,.08),transparent 24%),
-        linear-gradient(145deg,#14262d,#233f43)!important;
-    }
-    #live-work::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      opacity:.08;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-      background-size:28px 28px;
-    }
-    #live-work .container{position:relative;z-index:1}
-    #live-work .section-heading .eyebrow{color:#bfe6ce!important}
-    #live-work .section-heading h2{color:#fff!important}
-    #live-work .section-heading .body-large{color:#d2ded8!important}
-    .live-mode-shell{
-      display:grid;
-      grid-template-columns:minmax(190px,.46fr) minmax(0,1.54fr);
-      gap:14px;
-      align-items:start;
-    }
-    .live-mode-tabs{display:grid;gap:8px}
-    .live-mode-tab{
-      display:grid;
-      grid-template-columns:48px 1fr;
-      gap:10px;
-      align-items:center;
-      min-height:68px;
-      padding:9px 11px;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:15px;
-      background:rgba(8,25,31,.72);
-      color:#d7e4dd;
-      font:700 .76rem/1.3 var(--font-heading);
-      text-align:left;
-      cursor:pointer;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
-      transition:transform .16s ease,border-color .16s ease,background .16s ease;
-    }
-    .live-mode-pixel{
-      display:block;
-      width:46px;
-      height:46px;
-      object-fit:contain;
-      padding:5px;
-      border-radius:11px;
-      background:#edf5f0;
-      filter:drop-shadow(0 7px 12px rgba(0,0,0,.16));
-    }
-    .live-mode-tab:hover,.live-mode-tab:focus-visible,.live-mode-tab.active{
-      transform:translateY(-2px);
-      border-color:rgba(151,219,79,.52);
-      background:#244642;
-      color:#fff;
-      outline:none;
-    }
-    .live-mode-panel{
-      min-height:0;
-      padding:16px;
-      border:1px solid rgba(121,201,158,.17);
-      border-radius:20px;
-      background:
-        radial-gradient(circle at 92% 8%,rgba(151,219,79,.07),transparent 22%),
-        #10262d;
-      box-shadow:0 16px 34px rgba(0,0,0,.13);
-    }
-    .live-mode-head{
-      display:grid;
-      grid-template-columns:minmax(0,1.15fr) minmax(230px,.85fr);
-      gap:16px;
-      align-items:center;
-    }
-    .live-mode-copy .eyebrow{margin-bottom:3px;color:#bfe6ce!important}
-    .live-mode-copy h2{margin:4px 0 7px;color:#fff;font-size:clamp(1.15rem,2vw,1.45rem)}
-    .live-mode-copy>p{margin:0;max-width:760px;color:#c8d7cf;font-size:.79rem;line-height:1.5}
-    .live-mode-visual{
-      display:grid;
-      grid-template-columns:76px minmax(0,1fr);
-      gap:12px;
-      align-items:center;
-      min-height:112px;
-      padding:11px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:15px;
-      background:#0b2027;
-    }
-    .live-mode-art-frame{
-      display:grid;
-      place-items:center;
-      width:76px;
-      height:76px;
-      border-radius:16px;
-      background:linear-gradient(145deg,#f4f8f5,#e3efe7);
-      box-shadow:0 10px 22px rgba(0,0,0,.16);
-    }
-    .live-mode-art-frame img{display:block;width:62px;height:62px;object-fit:contain}
-    .live-mode-flow{
-      display:grid;
-      grid-template-columns:1fr 18px 1fr 18px 1fr;
-      gap:4px;
-      align-items:center;
-    }
-    .live-mode-flow span{
-      display:grid;
-      place-items:center;
-      min-height:42px;
-      padding:6px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:9px;
-      background:#16343a;
-      color:#dce9e2;
-      font:800 .5rem/1.15 var(--font-heading);
-      text-align:center;
-    }
-    .live-mode-flow i{
-      position:relative;
-      height:2px;
-      background:linear-gradient(90deg,#508484,#97db4f);
-    }
-    .live-mode-flow i::after{
-      content:"";
-      position:absolute;
-      top:50%;
-      left:0;
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      transform:translateY(-50%);
-      background:#97db4f;
-      box-shadow:0 0 10px rgba(151,219,79,.55);
-      animation:modeFlowDot 2.3s linear infinite;
-    }
-    .live-mode-flow i:nth-of-type(2)::after{animation-delay:1s}
-    @keyframes modeFlowDot{0%{left:0;opacity:0}18%{opacity:1}82%{opacity:1}100%{left:calc(100% - 6px);opacity:0}}
-    .live-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
-    .live-detail-card{
-      padding:10px;
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:12px;
-      background:#0e2229;
-    }
-    .live-detail-card .portfolio-icon{width:21px;height:21px;margin-bottom:6px;color:var(--mint-leaf)}
-    .live-detail-card h3{margin:0 0 4px;color:#fff;font-size:.75rem}
-    .live-detail-card p{margin:0;color:#c4d2cb;font-size:.64rem;line-height:1.4}
-
-    /* One current featured case */
-    .live-examples-section{
-      color:#26383f;
-      background:
-        radial-gradient(circle at 88% 16%,rgba(121,201,158,.08),transparent 22rem),
-        #f8faf8!important;
-    }
-    .live-examples-section .section-heading .eyebrow{color:#4a796e!important}
-    .live-examples-section .section-heading h2{color:#26383f!important}
-    .live-examples-section .section-heading .body-large{color:#5a6964!important}
-    .live-case-feature{
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);
-      gap:24px;
-      align-items:center;
-      padding:20px;
-      border:1px solid rgba(151,219,79,.25);
-      border-radius:20px;
-      background:linear-gradient(145deg,#163039,#244744);
-      box-shadow:0 16px 36px rgba(0,0,0,.13);
-    }
-    .live-case-feature h3{margin:5px 0 7px;color:#fff;font-size:1.12rem}
-    .live-case-feature p{margin:0;color:#cad8d1;font-size:.8rem;line-height:1.5}
-    .live-case-label{
-      display:inline-flex;
-      width:max-content;
-      padding:5px 8px;
-      border-radius:999px;
-      background:rgba(151,219,79,.12);
-      color:#dff2e6;
-      font:800 .56rem/1.2 var(--font-heading);
-      letter-spacing:.05em;
-      text-transform:uppercase;
-    }
-    .live-case-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px}
-    .live-case-points span{
-      padding:8px 9px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:10px;
-      background:#10272e;
-      color:#cbd9d2;
-      font-size:.63rem;
-      line-height:1.3;
-    }
-    .live-case-motion{
-      position:relative;
-      min-height:170px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
-      background:#10242b;
-    }
-    .case-room{
-      position:absolute;
-      inset:16px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-    }
-    .case-facilitator,.case-audience{
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:12px;
-      color:#dceae3;
-      font:800 .55rem/1.2 var(--font-heading);
-    }
-    .case-facilitator{background:#1b3c3e}
-    .case-audience{background:#122d34}
-    .case-room-signal{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#97db4f;
-      box-shadow:0 0 15px rgba(151,219,79,.6);
-      animation:caseSignal 2.5s ease-in-out infinite;
-    }
-    @keyframes caseSignal{0%,100%{transform:translate(-55px,-4px);opacity:.25}50%{transform:translate(44px,-4px);opacity:1}}
-    .live-case-action{
-      display:inline-flex;
-      align-items:center;
-      gap:9px;
-      margin-top:13px;
-      padding:9px 12px;
-      border-radius:11px;
-      background:linear-gradient(135deg,var(--mint-leaf),var(--yellow-green));
-      color:#173028;
-      text-decoration:none;
-      font:800 .68rem/1.2 var(--font-heading);
-    }
-
-    @media(max-width:900px){
-      .live-hero-grid,.live-foundation-shell,.live-mode-shell,.live-case-feature{grid-template-columns:1fr}
-      .live-mode-head{grid-template-columns:1fr}
-      .live-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-    @media(max-width:650px){
-      .live-training-hero-art{min-height:310px}
-      .live-training-photo{width:94%}
-      .live-training-cue{font-size:.48rem}
-      .live-foundation-motion{grid-template-columns:1fr}
-      .foundation-line{width:2px;height:22px;margin:auto;background:linear-gradient(180deg,#508484,#79c99e,#97db4f)}
-      .foundation-line i{display:none}
-      .live-detail-grid,.live-case-points{grid-template-columns:1fr}
-      .live-mode-visual{grid-template-columns:64px minmax(0,1fr)}
-      .live-mode-art-frame{width:64px;height:64px}
-      .live-mode-art-frame img{width:52px;height:52px}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .live-training-flow i,.foundation-line i,.case-room-signal,.live-mode-flow i::after{animation:none!important}
-      .live-mode-tab{transition:none}
-    }
-  
-    .foundation-career-motion{grid-template-columns:1fr 34px 1fr 34px 1fr!important;gap:7px!important;padding:14px!important;background:linear-gradient(145deg,#fff,#f6faf7)!important}
-    .foundation-career-stage{position:relative;display:grid;justify-items:center;align-content:center;min-height:112px;padding:10px;border:1px solid rgba(80,132,132,.13);border-radius:14px;background:#fff;text-align:center}
-    .foundation-career-stage>span{position:absolute;left:8px;top:8px;color:#8b9993;font:900 .48rem/1 var(--font-heading)}
-    .foundation-career-stage img{width:58px;height:58px;object-fit:contain;image-rendering:pixelated}
-    .foundation-career-stage strong{margin-top:4px;color:#315755;font:800 .62rem/1.15 var(--font-heading)}
-    .foundation-career-stage small{margin-top:3px;color:#6c7a74;font:.52rem/1.2 var(--font-body)}
-    .foundation-career-link{position:relative;height:2px;background:linear-gradient(90deg,#508484,#79c99e,#97db4f)}
-    .foundation-career-link b{position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#97db4f;box-shadow:0 0 11px rgba(151,219,79,.45);animation:foundationFlow 2.6s linear infinite}
-    .foundation-career-link:nth-of-type(2) b{animation-delay:1.1s}
-    .case-adaptation-motion{display:grid!important;grid-template-columns:1fr 24px 1fr 24px 1fr!important;gap:6px!important;align-items:center!important;padding:16px!important}
-    .case-adapt-node{position:relative;z-index:2;display:grid;justify-items:center;gap:5px;padding:10px 7px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:#173139}
-    .case-adapt-node img{width:56px;height:56px;object-fit:contain}.case-adapt-node small{color:#d9e7e0;font:800 .52rem/1.15 var(--font-heading)}
-    .case-adapt-link{position:relative;height:2px;background:linear-gradient(90deg,#508484,#97db4f)}
-    .case-adapt-link b{position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:#97db4f;animation:modeFlowDot 2.3s linear infinite}
-    .case-adapt-link:nth-of-type(2) b{animation-delay:1s}
-    .case-adapt-return{position:absolute;left:18%;right:18%;bottom:12px;height:28px;border-right:2px solid rgba(121,201,158,.25);border-bottom:2px solid rgba(121,201,158,.25);border-left:2px solid rgba(121,201,158,.25);border-radius:0 0 24px 24px}
-    @media(max-width:650px){.foundation-career-motion,.case-adaptation-motion{grid-template-columns:1fr!important}.foundation-career-link,.case-adapt-link,.case-adapt-return{display:none}}
-
-    /* Live hero top-spacing correction */
-    .live-landing-hero{padding:20px 0 30px!important}
-    .live-landing-hero .breadcrumbs{margin:0 0 10px!important}
-    .live-landing-hero .live-hero-grid{margin-top:0!important}
-    @media(max-width:760px){.live-landing-hero{padding:18px 0 26px!important}}
-</style>
+  <link rel="stylesheet" href="../../../css/live-training-landing-v2.css">
+  <link rel="stylesheet" href="../../../css/live-workshop-spotlight-visual.css">
   <script defer src="../../../js/portfolio-motion.js"></script>
+  <script defer src="../../../js/live-training-landing-v2.js"></script>
 </head>
 <body class="live-training-page">
-<header class="site-header"><div class="container nav-container"><a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../../index.html">Home</a><a href="../../../about/index.html">About Me</a><a class="active" href="../../index.html">Projects</a><a href="../../../contact/index.html">Contact</a></nav></div></header>
+<header class="site-header">
+  <div class="container nav-container">
+    <a class="site-brand" href="../../../index.html">Haley <span>Reeder</span></a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../../../index.html">Home</a>
+      <a href="../../../about/index.html">About Me</a>
+      <a class="active" href="../../index.html">Projects</a>
+      <a href="../../../contact/index.html">Contact</a>
+    </nav>
+  </div>
+</header>
 <main>
-  <section class="page-hero refresh-hero live-landing-hero">
+  <section class="page-hero live-landing-hero">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span><a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span><a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span><span>Live Training</span></nav>
-      <div class="live-hero-grid">
-        <div class="refresh-hero-copy">
-          <p class="eyebrow">Instructional Design / Live Learning</p>
+      <div class="lt-hero-grid">
+        <div class="lt-hero-copy">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="../../../index.html">Home</a><span class="breadcrumb-separator">/</span>
+            <a href="../../index.html">Projects</a><span class="breadcrumb-separator">/</span>
+            <a href="../index.html">Instructional Design</a><span class="breadcrumb-separator">/</span>
+            <span>Live Training</span>
+          </nav>
+          <p class="lt-hero-kicker">Instructional Design / Live Learning</p>
           <h1>Live Training</h1>
-          <p class="body-large">I develop facilitator-led content and facilitate virtual sales workshops for internal sellers and external partners.</p>
-          <div class="button-row"><a class="btn btn-primary" href="#live-work">Explore the Work</a><a class="btn btn-secondary" href="../index.html">Instructional Design</a></div>
+          <p class="lt-hero-lead">A useful live session has a plan—and room to change it.</p>
+          <p class="body-large">I design activities and support materials around a clear learning goal, then use questions, discussion, and practice to see what learners need in the moment. My direct delivery experience spans high-school classrooms and assigned modules in virtual sales workshops.</p>
         </div>
-        <aside class="live-training-hero-art" aria-label="Virtual sales workshop facilitation visual">
-          <div class="live-training-photo">
-            <img src="../../../assets/project-images/live-training/virtual-training-facilitation.webp" alt="Illustrated virtual training session with a facilitator, participant grid, and shared learning content." loading="eager">
-            <span class="live-training-cue live-training-cue--design">Design the session</span>
-            <span class="live-training-cue live-training-cue--facilitate">Facilitate live</span>
-            <span class="live-training-cue live-training-cue--adapt">Adapt to the room</span>
-            <div class="live-training-flow" aria-hidden="true"><i></i><i></i><i></i></div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <aside class="live-foundation-band" aria-label="Facilitation foundation">
-    <div class="container live-foundation-shell">
-      <div class="live-foundation-copy">
-        <p class="eyebrow">Facilitation Foundation</p>
-        <h2>Live adaptation started before corporate L&amp;D.</h2>
-        <p>Before moving into instructional design, I spent three years teaching high-school history and English. That experience built the habits I still use in live learning: explain clearly, check understanding, and change the approach when the room needs something different.</p>
-      </div>
-      <div class="live-foundation-motion foundation-career-motion" aria-label="Career stages shaping my facilitation methodology">
-        <article class="foundation-career-stage"><span>01</span><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><strong>Classroom</strong><small>Teach + observe</small></article>
-        <i class="foundation-career-link" aria-hidden="true"><b></b></i>
-        <article class="foundation-career-stage"><span>02</span><img src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""><strong>Learning design</strong><small>Structure + practice</small></article>
-        <i class="foundation-career-link" aria-hidden="true"><b></b></i>
-        <article class="foundation-career-stage"><span>03</span><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""><strong>Enterprise L&amp;D</strong><small>Facilitate + adapt</small></article>
-      </div>
-    </div>
-  </aside>
-
-  <section class="section" id="live-work">
-    <div class="container">
-      <div class="section-heading refresh-section-intro">
-        <p class="eyebrow">Live Training Work</p>
-        <h2>Two parts of my role</h2>
-        <p class="body-large reading-width">I either build the session and facilitator materials, facilitate the session, or contribute to both parts of the work.</p>
-      </div>
-      <div class="live-mode-shell">
-        <div class="live-mode-tabs" role="tablist" aria-label="Live training perspectives">
-          <button class="live-mode-tab active" type="button" role="tab" aria-selected="true" data-mode="content"><img class="live-mode-pixel" src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt="" aria-hidden="true"><span>Content Development</span></button>
-          <button class="live-mode-tab" type="button" role="tab" aria-selected="false" data-mode="facilitation"><img class="live-mode-pixel" src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt="" aria-hidden="true"><span>Facilitation</span></button>
-        </div>
-        <div class="live-mode-panel" role="tabpanel" aria-live="polite">
-          <div class="live-mode-head">
-            <div class="live-mode-copy">
-              <p class="eyebrow" id="modeLabel">Content Development</p>
-              <h2 id="modeTitle">Build the session, materials, and facilitator guidance.</h2>
-              <p id="modeSummary">I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.</p>
+        <figure class="lt-route" aria-labelledby="lt-route-title">
+          <figcaption class="lt-route-head">
+            <span class="lt-route-kicker">Live learning formats</span>
+            <strong id="lt-route-title">One goal. Different rooms.</strong>
+          </figcaption>
+          <div class="lt-gallery" role="img" aria-label="Four illustrative live facilitation views: an in-person classroom, an online workshop, a hybrid classroom connected to remote learners, and a webinar.">
+            <div class="lt-gallery-card lt-gallery-classroom">
+              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span><span>Classroom</span><i aria-hidden="true"></i></div>
+              <div class="lt-mini-room" aria-hidden="true">
+                <div class="lt-g-board"><span class="lt-board-line"></span><span class="lt-board-line"></span><span class="lt-board-marker"></span></div>
+                <div class="lt-g-facilitator"><span></span></div>
+                <div class="lt-g-learners"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+              </div>
             </div>
-            <div class="live-mode-visual" aria-hidden="true">
-              <span class="live-mode-art-frame"><img id="modeArt" src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""></span>
-              <div class="live-mode-flow">
-                <span id="modeFlowOne">Plan</span><i></i><span id="modeFlowTwo">Build</span><i></i><span id="modeFlowThree">Deliver</span>
+            <div class="lt-gallery-card lt-gallery-online">
+              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><span>Online workshop</span><i aria-hidden="true"></i></div>
+              <div class="lt-mini-online" aria-hidden="true">
+                <div class="lt-g-share"><span class="lt-g-chart"></span><span class="lt-g-line"></span><span class="lt-g-line"></span></div>
+                <div class="lt-g-people"><span></span><span></span><span></span><span></span></div>
+                <div class="lt-g-controls"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="lt-gallery-card lt-gallery-hybrid">
+              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/people-collaboration/team.webp" alt=""></span><span>Hybrid classroom</span><i aria-hidden="true"></i></div>
+              <div class="lt-mini-hybrid" aria-hidden="true">
+                <div class="lt-g-hybrid-room"><span class="lt-g-hybrid-board"></span><span class="lt-g-hybrid-person"></span><span class="lt-g-hybrid-person"></span></div>
+                <span class="lt-g-hybrid-link"></span>
+                <div class="lt-g-hybrid-remote"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="lt-gallery-card lt-gallery-webinar">
+              <div class="lt-gallery-card-head"><span class="lt-gallery-icon"><img src="../../../assets/icons/pixel/content-design/video.webp" alt=""></span><span>Webinar</span><i aria-hidden="true"></i></div>
+              <div class="lt-mini-webinar" aria-hidden="true">
+                <div class="lt-g-webinar-slide"><span class="lt-g-webinar-bars"><i></i><i></i><i></i></span><span class="lt-g-webinar-line"></span><span class="lt-g-webinar-line"></span><span class="lt-g-webinar-host"></span></div>
+                <div class="lt-g-webinar-side"><span class="lt-g-webinar-live"></span><span class="lt-g-webinar-attendees"><i></i><i></i><i></i></span><span class="lt-g-webinar-question"></span></div>
               </div>
             </div>
           </div>
-          <div class="live-detail-grid" id="modeDetails">
-            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg><h3>Structure the session</h3><p>Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.</p></article>
-            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg><h3>Build the materials</h3><p>Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.</p></article>
-            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-interaction"></use></svg><h3>Add practice</h3><p>Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.</p></article>
-            <article class="live-detail-card"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><h3>Prepare for delivery</h3><p>Document timing, instructions, transitions, resources, and backup plans for the facilitator.</p></article>
-          </div>
-        </div>
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="section live-examples-section" id="facilitation-examples">
+  <section class="section lt-fit" aria-labelledby="fit-title">
     <div class="container">
-      <div class="section-heading refresh-section-intro">
-        <p class="eyebrow">Facilitation Case Study</p>
-        <h2>Virtual MEDDPICC Sales Workshop</h2>
-        <p class="body-large reading-width">A current corporate example of facilitating assigned sales-learning modules for internal sellers and external partners across U.S. and international audiences.</p>
+      <div class="lt-section-intro">
+        <p class="eyebrow">Choose the format for the job</p>
+        <h2 id="fit-title">Live training vs. other training types</h2>
+        <p>Different formats serve different moments in learning. The choice depends on what people need to do, and when they need support.</p>
       </div>
-      <article class="live-case-feature">
-        <div>
-          <span class="live-case-label">Featured case study</span>
-          <h3>Facilitate, diagnose, and adapt in real time.</h3>
-          <p>I prepared from facilitator and participant materials, used questions and polling to check understanding, brought seller examples into the discussion, and changed pacing or framing when the room needed a different route.</p>
-          <div class="live-case-points"><span>Questions + polling</span><span>Seller examples</span><span>Live reframing</span><span>Internal + partner audiences</span></div>
-          <a class="live-case-action" href="virtual-sales-workshop-facilitation/index.html"><span>View the Facilitation Case Study</span><span aria-hidden="true">→</span></a>
-        </div>
-        <div class="live-case-motion case-adaptation-motion" aria-label="Facilitation feedback loop from learner signal to live adaptation">
-          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt=""><small>Prompt</small></div>
-          <i class="case-adapt-link" aria-hidden="true"><b></b></i>
-          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""><small>Read room</small></div>
-          <i class="case-adapt-link" aria-hidden="true"><b></b></i>
-          <div class="case-adapt-node"><img src="../../../assets/icons/pixel/hiring-guide/idea-bulb.webp" alt=""><small>Reframe</small></div>
-          <span class="case-adapt-return" aria-hidden="true"></span>
-        </div>
-      </article>
+      <div class="lt-format-compare" aria-label="Comparison of live and self-paced learning">
+        <article class="lt-format-live">
+          <span class="lt-format-label">Facilitator-led / shared time</span>
+          <h3>Live training</h3>
+          <p>Use live time when learners need to explain a decision, hear other reasoning, ask questions, and practice with feedback.</p>
+          <div class="lt-format-line"><span>Discuss a choice</span><span>Hear the signal</span><span>Adjust and practice</span></div>
+        </article>
+        <article class="lt-format-async">
+          <span class="lt-format-label">Self-paced / on demand</span>
+          <h3>Other training types</h3>
+          <dl>
+            <div><dt>eLearning</dt><dd>Foundation and individual practice at the learner's pace.</dd></div>
+            <div><dt>Microlearning</dt><dd>A focused refresher on one concept.</dd></div>
+            <div><dt>Job aid</dt><dd>Steps or reminders at the moment of work.</dd></div>
+          </dl>
+        </article>
+      </div>
     </div>
   </section>
 
+  <section class="section lt-foundation" aria-labelledby="foundation-title">
+    <div class="container">
+      <div class="lt-section-intro">
+        <p class="eyebrow">Experience foundation</p>
+        <h2 id="foundation-title">Teaching, design, and live judgment</h2>
+        <p>My classroom experience shaped how I read participation and adjust an explanation. Instructional design gives that judgment a prepared structure; virtual facilitation puts it to work with sellers and partners.</p>
+      </div>
+      <div class="lt-evidence-grid">
+        <article class="lt-evidence-card">
+          <span class="lt-icon-bubble"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""></span>
+          <span class="lt-evidence-tag">Direct experience</span>
+          <h3>Three years in the classroom</h3>
+          <p>I taught high-school history and English, planned activities, watched for understanding, and adjusted instruction based on what students showed me.</p>
+        </article>
+        <article class="lt-evidence-card">
+          <span class="lt-icon-bubble"><img src="../../../assets/icons/pixel/hiring-guide/workflow-tree.webp" alt=""></span>
+          <span class="lt-evidence-tag">Instructional design practice</span>
+          <h3>Build for delivery</h3>
+          <p>I structure objectives, examples, practice, timing, prompts, materials, and facilitator guidance so a live session has a usable path.</p>
+        </article>
+        <article class="lt-evidence-card">
+          <span class="lt-icon-bubble"><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span>
+          <span class="lt-evidence-tag">Direct experience</span>
+          <h3>Facilitate virtual modules</h3>
+          <p>In a larger MEDDPICC workshop, I facilitated assigned modules for internal sellers and external partners in U.S. and international virtual sessions.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section lt-environments" id="environments" aria-labelledby="environments-title">
+    <div class="container">
+      <div class="lt-section-intro">
+        <p class="eyebrow">Three delivery environments</p>
+        <h2 id="environments-title">One goal, three ways to design and facilitate</h2>
+        <p>Consider the same goal in each setting: learners examine a fictional sales conversation, explain which evidence matters, and choose a useful next question. The interaction and the signals available to a facilitator change with the room.</p>
+      </div>
+      <div class="lt-tab-shell">
+        <div class="lt-tab-list" role="tablist" aria-label="Training environment">
+          <button id="lt-tab-room" class="lt-tab" type="button" role="tab" aria-selected="true" aria-controls="lt-panel-room" tabindex="0" data-lt-tab="room"><img src="../../../assets/icons/pixel/portfolio-general/learning.webp" alt=""><span>In-Person</span></button>
+          <button id="lt-tab-online" class="lt-tab" type="button" role="tab" aria-selected="false" aria-controls="lt-panel-online" tabindex="-1" data-lt-tab="online"><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""><span>Live Online</span></button>
+          <button id="lt-tab-hybrid" class="lt-tab" type="button" role="tab" aria-selected="false" aria-controls="lt-panel-hybrid" tabindex="-1" data-lt-tab="hybrid"><img src="../../../assets/icons/pixel/people-collaboration/team.webp" alt=""><span>Hybrid</span></button>
+        </div>
+
+        <section class="lt-tab-panel" id="lt-panel-room" role="tabpanel" aria-labelledby="lt-tab-room" tabindex="0">
+          <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Grounded in direct classroom teaching</span><h3>Design for what the room can show you.</h3></div><p>Physical materials and face-to-face conversation make thinking visible, but every learner still needs a way into the activity.</p></div>
+          <div class="lt-panel-body">
+            <div class="lt-setting-visual lt-room-visual" data-lt-scene="room" data-step="0">
+              <div class="lt-scene-top"><span>In-person session</span><button type="button" data-scene-toggle aria-label="Pause in-person simulation">Pause</button></div>
+              <div class="lt-room-scene" role="img" aria-label="A facilitator shares one prompt, pairs compare reasoning at tables, the facilitator listens, then reframes the question for the room.">
+                <div class="lt-room-board"><span>Shared prompt</span><strong>Which evidence?</strong></div>
+                <div class="lt-room-desks" aria-hidden="true"><span class="lt-room-desk"><i></i><i></i></span><span class="lt-room-desk"><i></i><i></i></span><span class="lt-room-desk"><i></i><i></i></span></div>
+                <div class="lt-room-guide" aria-hidden="true">F</div>
+                <div class="lt-room-signal">Different reasons</div>
+                <div class="lt-room-reframe">Compare why</div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share one prompt</strong></div>
+            </div>
+            <div class="lt-lenses">
+              <div class="lt-lens"><h4>Build / Design</h4><p>Prepare a visible prompt, handouts, grouping, timed pair discussion, a share-back, and a backup route if materials or space change.</p></div>
+              <div class="lt-lens"><h4>Facilitate / Deliver</h4><p>Circulate, listen for reasoning, watch who participates, compare responses aloud, and adjust grouping or pace before the final practice check.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="lt-tab-panel" id="lt-panel-online" role="tabpanel" aria-labelledby="lt-tab-online" tabindex="0" hidden>
+          <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Direct virtual facilitation</span><h3>Make thinking visible through the interface.</h3></div><p>Prompts, polls, chat, and participant examples give a remote facilitator signals to interpret while keeping application time intact.</p></div>
+          <div class="lt-panel-body">
+            <div class="lt-setting-visual lt-online-visual" data-lt-scene="online" data-step="0">
+              <div class="lt-scene-top"><span>Live online session</span><button type="button" data-scene-toggle aria-label="Pause live online simulation">Pause</button></div>
+              <div class="lt-online-scene" role="img" aria-label="A shared screen presents fictional evidence, a poll surfaces interpretations, chat reveals reasoning, then breakout pairs practice a next question.">
+                <div class="lt-online-chrome"><span>Session view</span><span>Shared screen</span></div>
+                <div class="lt-online-share"><span>Fictional discovery note</span><strong>Which evidence matters?</strong><i></i><i></i></div>
+                <div class="lt-online-poll"><strong>Poll</strong><span><i></i></span><span><i></i></span><span><i></i></span></div>
+                <div class="lt-online-chat"><strong>Chat</strong><span>Why?</span><span>What is missing?</span></div>
+                <div class="lt-online-breakout"><strong>Breakout pairs</strong><span>Choose a next question</span></div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Share the example</strong></div>
+            </div>
+            <div class="lt-lenses">
+              <div class="lt-lens"><h4>Build / Design</h4><p>Plan a screen-first sequence, short instructions, a poll and chat prompt, breakout practice, technical transitions, and a backup if a tool fails.</p></div>
+              <div class="lt-lens"><h4>Facilitate / Deliver</h4><p>Read poll interpretations, recurring questions, examples, silence, and technical friction; then reframe or pause as needed while protecting practice and debrief.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="lt-tab-panel" id="lt-panel-hybrid" role="tabpanel" aria-labelledby="lt-tab-hybrid" tabindex="0" hidden>
+          <div class="lt-panel-heading"><div><span class="lt-evidence-tag">Transferable design and facilitation model</span><h3>Let self-paced prep lead into live practice.</h3></div><p>Hybrid learning can mix locations, as in the gallery's hybrid classroom, or combine formats over time. This model shows a short self-paced lesson flowing into live practice; it is not a documented hybrid-delivery project.</p></div>
+          <div class="lt-panel-body">
+            <div class="lt-setting-visual lt-hybrid-visual" data-lt-scene="hybrid" data-step="0">
+              <div class="lt-scene-top"><span>Self-paced + live workshop</span><button type="button" data-scene-toggle aria-label="Pause hybrid simulation">Pause</button></div>
+              <div class="lt-hybrid-scene" role="img" aria-label="Split-screen blended-learning model: a learner completes an online lesson and check, then brings that preparation into a facilitated virtual workshop for discussion and feedback.">
+                <div class="lt-hybrid-pane lt-hybrid-async">
+                  <div class="lt-hybrid-pane-head"><span class="lt-hybrid-mode">01 / Online · self-paced</span><span class="lt-hybrid-status">Lesson</span></div>
+                  <div class="lt-hybrid-course"><div class="lt-hybrid-course-top"><span>Sales conversation</span><span>2 / 3</span></div><div class="lt-hybrid-progress"><i></i></div><div class="lt-hybrid-course-prompt">Which detail changes your next question?</div><div class="lt-hybrid-answer"><span class="lt-hybrid-answer-mark"></span><span>Customer impact</span></div><div class="lt-hybrid-ready">✓ Prep complete</div></div>
+                </div>
+                <div class="lt-hybrid-handoff" aria-hidden="true"><span>→</span></div>
+                <div class="lt-hybrid-pane lt-hybrid-live">
+                  <div class="lt-hybrid-pane-head"><span class="lt-hybrid-mode">02 / Live workshop</span><span class="lt-hybrid-status">Live</span></div>
+                  <div class="lt-hybrid-meeting"><div class="lt-hybrid-slide"><small>Shared case</small><strong>What would you ask next?</strong><div class="lt-hybrid-slide-cue"><i></i><span>Customer impact</span></div></div><div class="lt-hybrid-participants"><span class="lt-hybrid-person lt-hybrid-person-a"></span><span class="lt-hybrid-person lt-hybrid-person-b"></span><span class="lt-hybrid-person lt-hybrid-person-c"></span></div></div>
+                  <div class="lt-hybrid-discuss"><span>Discussion</span><strong>Compare your reasoning</strong></div>
+                </div>
+              </div>
+              <div class="lt-scene-caption"><span data-scene-count>01 / 04</span><strong data-scene-caption>Explore the example independently</strong></div>
+            </div>
+            <div class="lt-lenses">
+              <div class="lt-lens"><h4>Build / Design</h4><p>Put concise context and a short knowledge check in accessible self-paced prep. Carry the same case into a live discussion rather than repeating the lesson.</p></div>
+              <div class="lt-lens"><h4>Facilitate / Deliver</h4><p>Use prework responses to spot a misconception, ask learners to defend a choice, compare reasoning, and give feedback while the decision is fresh.</p></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section lt-comparison" aria-labelledby="comparison-title">
+    <div class="container">
+      <div class="lt-section-intro">
+        <p class="eyebrow">Same learning goal</p>
+        <h2 id="comparison-title">What changes across the settings</h2>
+        <p>In every version, learners justify an evidence-based decision and choose a next question. The design changes so the facilitator can hear their reasoning and respond.</p>
+      </div>
+      <div class="lt-compare-motion" data-active-mode="room">
+        <div class="lt-compare-motion-head"><span>One goal / three delivery paths</span><button type="button" data-compare-toggle aria-label="Pause comparison animation">Pause</button></div>
+        <div class="lt-compare-tracks" role="group" aria-label="Select a delivery path to inspect">
+          <button type="button" class="lt-compare-track is-active" data-compare-mode="room" aria-pressed="true">
+            <span class="lt-compare-track-label">In-Person</span>
+            <span class="lt-compare-chain"><span>Pair annotation</span><i aria-hidden="true">→</i><span>Hear reasoning</span><i aria-hidden="true">→</i><span>Adjust discussion</span></span>
+          </button>
+          <button type="button" class="lt-compare-track" data-compare-mode="online" aria-pressed="false">
+            <span class="lt-compare-track-label">Live Online</span>
+            <span class="lt-compare-chain"><span>Poll + chat</span><i aria-hidden="true">→</i><span>Read responses</span><i aria-hidden="true">→</i><span>Reframe for practice</span></span>
+          </button>
+          <button type="button" class="lt-compare-track" data-compare-mode="hybrid" aria-pressed="false">
+            <span class="lt-compare-track-label">Hybrid: prep + live</span>
+            <span class="lt-compare-chain"><span>Online prep</span><i aria-hidden="true">→</i><span>Read the check</span><i aria-hidden="true">→</i><span>Discuss live</span></span>
+          </button>
+        </div>
+      </div>
+      <div class="lt-table-wrap">
+        <table class="lt-comparison-table" data-active-mode="room">
+          <caption>Comparison of practice, learner signals, and facilitation risks for the same sales-conversation goal</caption>
+          <thead><tr><th scope="col">Design choice</th><th scope="col">In-Person</th><th scope="col">Live Online</th><th scope="col">Hybrid: prep + live</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Practice</th><td>Pairs annotate the example, then explain a choice aloud.</td><td>Poll first, discuss in chat or breakouts, then share reasoning.</td><td>Complete a short online check, then apply the same case in a live workshop.</td></tr>
+            <tr><th scope="row">Signal to read</th><td>Table talk, written work, and who has not contributed.</td><td>Poll patterns, questions, chat, examples, and silence.</td><td>Prework choices alongside live explanations and questions.</td></tr>
+            <tr><th scope="row">Risk to manage</th><td>A few voices dominate or transitions consume practice time.</td><td>Unclear instructions or technical friction obscure understanding.</td><td>Repeating the online lesson in the live session instead of using time for application.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section lt-case" id="featured-case" aria-labelledby="case-title">
+    <div class="container lt-case-grid">
+      <div>
+        <p class="eyebrow">Featured direct facilitation case</p>
+        <h2 id="case-title">Virtual MEDDPICC Sales Workshop</h2>
+        <p class="lt-case-lead">Assigned modules within a larger virtual workshop for internal sellers and external partners in U.S. and international sessions.</p>
+        <div class="lt-case-arc" aria-label="Workshop facilitation arc"><span>Prepare</span><span>Facilitate</span><span>Check</span><span>Adapt</span><span>Debrief</span></div>
+        <p>I prepared from facilitator and participant materials, used questions and polling to surface reasoning, invited seller examples, and adjusted explanation or pace in response. Recurring questions informed reflection after the session.</p>
+        <p class="lt-case-scope"><strong>Scope:</strong> I prepared for and facilitated assigned modules within an existing workshop, then reflected on learner questions and pacing after delivery.</p>
+        <a class="btn btn-primary" href="virtual-sales-workshop-facilitation/index.html">Explore the case study <span aria-hidden="true">→</span></a>
+      </div>
+      <figure class="lt-case-image">
+        <div class="workshop-room-visual" role="img" aria-label="The same illustrative virtual MEDDPICC workshop view used in the case-study hero: a shared slide, formative poll, and audience panel.">
+          <div class="workshop-meeting-bar" aria-hidden="true"><span class="workshop-window-dots"><i></i><i></i><i></i></span><strong>Virtual workshop</strong><span class="workshop-live-pill"><i></i>Live</span></div>
+          <div class="workshop-meeting-layout" aria-hidden="true">
+            <div class="workshop-shared-screen">
+              <div class="workshop-screen-bar"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/workflows/analytics-insights/presentation.webp" alt=""></span><span>MEDDPICC · shared presentation</span><i class="workshop-share-dot"></i></div>
+              <div class="workshop-slide">
+                <span class="workshop-slide-kicker">Opportunity evidence</span>
+                <strong>What do we know?</strong>
+                <div class="workshop-evidence-cards">
+                  <div class="workshop-evidence-card workshop-evidence-known"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/meddpicc/paper-process.webp" alt=""></span><span>Paper<br>Process</span><i aria-hidden="true">✓</i></div>
+                  <div class="workshop-evidence-card workshop-evidence-open"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/meddpicc/economic-buyer.webp" alt=""></span><span>Economic<br>Buyer</span><i aria-hidden="true">?</i></div>
+                </div>
+                <div class="workshop-slide-underline"><span></span></div>
+                <div class="workshop-hero-poll"><span class="workshop-poll-label">Quick poll</span><strong>Which is confirmed?</strong><div><span>Paper Process</span><span>Economic Buyer</span></div></div>
+              </div>
+              <div class="workshop-screen-footer"><span><i></i> Screen shared</span><span>Assigned module</span></div>
+            </div>
+            <div class="workshop-audience-panel">
+              <span class="workshop-audience-title">Audience</span>
+              <div class="workshop-audience-tile workshop-audience-facilitator"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/hiring-guide/video-call.webp" alt=""></span><span>Facilitator</span><i></i></div>
+              <div class="workshop-audience-tile workshop-audience-seller"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/hiring-guide/person-woman.webp" alt=""></span><span>Seller</span><i></i></div>
+              <div class="workshop-audience-tile workshop-audience-partner"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span><span>Partner</span><i></i></div>
+              <div class="workshop-audience-chat"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/hiring-guide/chat-bubbles.webp" alt=""></span><span class="workshop-chat-lines"><i></i><i></i></span></div>
+            </div>
+          </div>
+          <div class="workshop-meeting-footer" aria-hidden="true"><span class="workshop-hero-icon"><img src="../../../assets/icons/pixel/hiring-guide/analytics-growth.webp" alt=""></span><strong>Ask · listen · adapt</strong><span>Illustrative concept</span></div>
+        </div>
+        <figcaption>Questions and learner examples create the signals that guide live decisions.</figcaption>
+      </figure>
+    </div>
+  </section>
 </main>
 <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
-<script>
-const sprite='../../../assets/icons/portfolio-icons.svg';
-const modeData={
-  content:{label:'Content Development',title:'Build the session, materials, and facilitator guidance.',summary:'I create virtual or in-person training content with the objectives, pacing, presentation content, activities, participant materials, prompts, and facilitator notes needed for delivery.',art:'../../../assets/icons/pixel/hiring-guide/workflow-tree.webp',flow:['Plan','Build','Deliver'],details:[['icon-workflow','Structure the session','Define objectives, agenda, pacing, transitions, activities, and debriefs around what learners need to do.'],['icon-multimedia','Build the materials','Create presentation content, facilitator notes, participant resources, polls, prompts, handouts, and shared references.'],['icon-interaction','Add practice','Use discussion, scenarios, activities, and guided questions so learners apply the content during the session.'],['icon-feedback','Prepare for delivery','Document timing, instructions, transitions, resources, and backup plans for the facilitator.']]},
-  facilitation:{label:'Facilitation',title:'Adjust the delivery based on learner response.',summary:'When I facilitate, I use questions, polling, discussion, and examples to check understanding and decide when to reframe an explanation or change the pace.',art:'../../../assets/icons/pixel/hiring-guide/video-call.webp',flow:['Listen','Adapt','Guide'],details:[['icon-live-instruction','Explain','Break down the content and change the explanation when learners need another angle.'],['icon-interaction','Engage','Use questions, discussion, practice, polls, and learner examples throughout the session.'],['icon-feedback','Adapt','Watch questions, confidence, examples, and timing to decide what needs more or less attention.'],['icon-analytics','Bring it back','Use recurring questions and misconceptions as input for future content, scenarios, or facilitator notes.']]}
-};
-const modeButtons=[...document.querySelectorAll('[data-mode]')];
-const details=document.getElementById('modeDetails');
-function selectMode(button){
-  const data=modeData[button.dataset.mode];
-  modeButtons.forEach((item)=>{const selected=item===button;item.classList.toggle('active',selected);item.setAttribute('aria-selected',String(selected));item.tabIndex=selected?0:-1;});
-  document.getElementById('modeLabel').textContent=data.label;
-  document.getElementById('modeTitle').textContent=data.title;
-  document.getElementById('modeSummary').textContent=data.summary;
-  document.getElementById('modeArt').src=data.art;
-  document.getElementById('modeFlowOne').textContent=data.flow[0];
-  document.getElementById('modeFlowTwo').textContent=data.flow[1];
-  document.getElementById('modeFlowThree').textContent=data.flow[2];
-  const flow=document.querySelector('.live-mode-flow');
-  flow.classList.remove('is-switching');
-  void flow.offsetWidth;
-  flow.classList.add('is-switching');
-  details.replaceChildren(...data.details.map(([icon,title,text])=>{
-    const card=document.createElement('article');
-    card.className='live-detail-card';
-    card.innerHTML='<svg class="portfolio-icon" aria-hidden="true"><use href="'+sprite+'#'+icon+'"></use></svg><h3>'+title+'</h3><p>'+text+'</p>';
-    return card;
-  }));
-}
-modeButtons.forEach((button,index)=>{
-  button.tabIndex=button.getAttribute('aria-selected')==='true'?0:-1;
-  button.addEventListener('click',()=>selectMode(button));
-  button.addEventListener('keydown',(event)=>{
-    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
-    event.preventDefault();
-    let next=index;
-    if(event.key==='Home') next=0;
-    else if(event.key==='End') next=modeButtons.length-1;
-    else if(event.key==='ArrowRight'||event.key==='ArrowDown') next=(index+1)%modeButtons.length;
-    else next=(index-1+modeButtons.length)%modeButtons.length;
-    modeButtons[next].focus();
-    selectMode(modeButtons[next]);
-  });
-});
-</script>
 </body>
 </html>

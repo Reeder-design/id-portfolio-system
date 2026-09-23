@@ -520,6 +520,30 @@
       }
     }
 
+    /* Compact letter rail keeps the active note visible without repeated labels. */
+    .practice-section{background:linear-gradient(150deg,#e8f2eb,#f8faf8 62%,#edf5ef)!important}
+    .match-workbench{grid-template-columns:minmax(0,1fr);gap:10px}
+    .match-progress{position:static;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 16px;border-color:#badac8;background:#eff8f1}
+    .progress-summary{display:grid;grid-template-columns:auto auto;column-gap:9px;align-items:baseline;min-width:137px}
+    .progress-summary .eyebrow{grid-column:1/-1;margin:0 0 2px!important}
+    .match-progress .progress-summary strong{display:inline;font-size:1.18rem;white-space:nowrap}
+    .match-progress .progress-summary small{display:inline;margin:0;font-size:.55rem;white-space:nowrap}
+    .progress-rail{min-width:0}
+    .progress-dots{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin:0 0 7px}
+    .progress-dot{display:grid;place-items:center;min-width:0}
+    .progress-dot i{width:32px;height:32px;border:2px solid #bfd6c9;background:#fff;color:#4b7562;font:900 .68rem/1 var(--font-heading)}
+    .progress-dot.current i{border-color:#2f765b;background:#244d42;color:#fff;box-shadow:0 0 0 4px #bce9b4}
+    .progress-dot.done i{border-color:#6bc589;background:#a5e781;color:#1d4b36}
+    .match-progress-track{height:5px;overflow:hidden;border-radius:999px;background:#d6e6dc}
+    .match-progress-track span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#508484,#79c99e,#a5e781);transition:width .3s ease}
+    .match-reset{width:auto;min-width:75px;background:#fff}
+    .match-stage{min-height:0;border-color:#bdd8c9;background:linear-gradient(150deg,#fff,#f8fcf9);box-shadow:0 16px 32px rgba(32,73,57,.1)}
+    .active-evidence{min-height:220px;background:#eef7f0}
+    @media(min-width:761px){.match-stage{min-height:0}.active-evidence{height:auto;min-height:220px;max-height:none;overflow:visible}.match-feedback{height:auto;min-height:42px;max-height:none;overflow:visible}}
+    @media(max-width:900px){.match-progress{grid-template-columns:auto minmax(0,1fr) auto}.progress-dots{grid-column:auto;grid-template-columns:repeat(8,minmax(0,1fr));margin:0 0 7px}.progress-dot{display:grid}.progress-dot i{margin:auto}}
+    @media(max-width:620px){.match-progress{grid-template-columns:1fr auto;gap:9px}.progress-summary{grid-column:1}.progress-rail{grid-column:1/-1;grid-row:2}.match-reset{grid-column:2;grid-row:1}.progress-dots{gap:3px}.progress-dot i{width:28px;height:28px}}
+    @media(prefers-reduced-motion:reduce){.match-progress-track span{transition:none}}
+
 </style>
   <script defer src="../../../../js/portfolio-motion.js"></script>
 </head>
@@ -533,7 +557,7 @@
         <div>
           <h1>MEDDPICC Qualification Lab</h1>
           <p class="body-large">Classify detailed discovery evidence by the MEDDPICC component it most directly supports. The goal is qualification judgment, not memorizing eight definitions in isolation.</p>
-          <div class="button-row"><a class="btn btn-primary" href="#practice">Start Practice</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
+          <div class="button-row"><a class="btn btn-primary" href="#how-to-demo">Start Practice</a><a class="btn btn-secondary" href="../index.html">Interactive Learning</a></div>
         </div>
         <aside class="puzzle-hero" aria-label="Animated MEDDPICC matching visual">
           <span class="puzzle-hero-piece"><img src="../../../../assets/icons/pixel/meddpicc/discovery-metrics.webp" alt="" aria-hidden="true"></span>
@@ -547,7 +571,7 @@
     <div class="container">
       <div class="demo-primer-head">
         <div><p class="eyebrow">MEDDPICC Quick Start</p><h2>Learn what each letter is trying to prove before you classify the evidence.</h2><p>The main demo gives you fictional discovery notes. Use this decoder first if MEDDPICC is new to you, or skip straight to practice if you already use the framework.</p></div>
-        <a class="btn btn-secondary demo-skip" href="#practice">I know MEDDPICC · Start the lab</a>
+        <a class="btn btn-secondary demo-skip" href="#how-to-demo">I know MEDDPICC · Start the lab</a>
       </div>
       <div class="med-primer-console" data-stable-interaction>
         <div class="med-primer-letters" role="tablist" aria-label="MEDDPICC framework components">
@@ -573,7 +597,7 @@
     </div>
   </section>
 
-  <section class="section demo-use-callout med-demo-use">
+  <section class="section demo-use-callout med-demo-use" id="how-to-demo">
     <div class="container">
       <div class="demo-use-card">
         <div class="demo-use-icon"><img src="../../../../assets/icons/pixel/meddpicc/qualified-opportunity.webp" alt=""></div>
@@ -596,10 +620,8 @@
 
       <div class="match-workbench">
         <aside class="match-progress" aria-label="Practice progress">
-          <p class="eyebrow">Progress</p>
-          <strong id="progressCount">0 / 8</strong>
-          <small id="attemptCount">0 attempts</small>
-          <div class="progress-dots" id="progressDots"></div>
+          <div class="progress-summary"><p class="eyebrow">Progress</p><strong id="progressCount">0 / 8</strong><small id="attemptCount">0 attempts</small></div>
+          <div class="progress-rail"><div class="progress-dots" id="progressDots"></div><div class="match-progress-track" aria-hidden="true"><span id="matchProgressFill"></span></div></div>
           <button class="match-reset" type="button" id="resetMatch">Reset</button>
         </aside>
 
@@ -704,14 +726,14 @@ const arena=document.getElementById('matchArena');
 function renderProgress(){
   progressCount.textContent=matched.size+' / 8';
   attemptCount.textContent=attempts+' attempt'+(attempts===1?'':'s');
+  document.getElementById('matchProgressFill').style.width=(matched.size/evidenceItems.length*100)+'%';
   progressDots.replaceChildren(...evidenceItems.map((item,index)=>{
     const row=document.createElement('span');
     row.className='progress-dot'+(matched.has(item.key)?' done':index===currentIndex?' current':'');
+    row.setAttribute('aria-label','Note '+String.fromCharCode(65+index)+': '+(matched.has(item.key)?'complete':index===currentIndex?'current':'upcoming'));
     const dot=document.createElement('i');
-    dot.textContent=matched.has(item.key)?'✓':String(index+1);
-    const label=document.createElement('span');
-    label.textContent=matched.has(item.key)?categories.find(c=>c.key===item.key).name:'Note '+String.fromCharCode(65+index);
-    row.append(dot,label);
+    dot.textContent=String.fromCharCode(65+index);
+    row.append(dot);
     return row;
   }));
 }
