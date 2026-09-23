@@ -322,11 +322,28 @@
 .workflow-gate>span{color:#a1e368;white-space:nowrap}
 .workflow-gate>strong{color:#fff;font:800 .68rem/1.32 var(--font-heading)}
 .workflow-gate>b{margin-left:auto;color:#a1e368;font:900 .51rem/1 var(--font-heading);white-space:nowrap}
-.workflow-gate-release{flex-wrap:wrap;justify-content:space-between}
-.workflow-gate-release>div{display:flex;align-items:center;gap:5px}
-.workflow-gate-release>div b{padding:6px;border:1px solid rgba(173,233,194,.25);border-radius:5px;color:#fff;font:800 .49rem/1 var(--font-heading)}
-.workflow-gate-release>div i{color:#a1e368;font-size:.7rem;font-style:normal}
-.workflow-gate-release small{width:100%;color:#c8e7d3;font:800 .53rem/1.2 var(--font-heading)}
+.workflow-gate-release{display:none;flex-direction:column;align-items:stretch;gap:8px;padding:11px 13px;background:linear-gradient(115deg,#183941,#21443e)}
+.release-gate-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.release-gate-heading span{color:#a1e368;font:900 .5rem/1.2 var(--font-heading);letter-spacing:.08em;white-space:nowrap}
+.release-gate-heading strong{color:#e9f8ed;font:800 .58rem/1.2 var(--font-heading);text-align:right}
+.release-transfer{--release-arrival-offset:168px;position:relative;display:grid;grid-template-columns:92px minmax(28px,1fr) 186px;align-items:center;min-width:0;height:94px;overflow:hidden;border:1px solid rgba(173,233,194,.2);border-radius:9px;background:linear-gradient(90deg,rgba(10,34,42,.94),rgba(31,73,66,.7));padding:7px}
+.release-course-file{position:absolute;z-index:3;top:20px;left:9px;display:grid;justify-items:center;align-content:center;gap:2px;width:77px;height:55px;border:1px solid #b6e7c4;border-radius:7px;background:linear-gradient(145deg,#eafbf0,#ccebd5);box-shadow:0 5px 15px rgba(0,0,0,.24);color:#254e41;opacity:0}
+.release-file-icon{font:900 1rem/1 var(--font-heading)}
+.release-course-file b{font:900 .44rem/1 var(--font-heading);letter-spacing:.04em}
+.release-course-file small{font:700 .4rem/1 var(--font-heading);white-space:nowrap}
+.release-transfer-line{grid-column:2;position:relative;height:2px;margin:0 7px;border-top:2px dashed rgba(161,227,104,.65)}
+.release-transfer-line i{position:absolute;top:-6px;left:0;width:9px;height:9px;border-radius:50%;background:#a1e368;box-shadow:0 0 10px #a1e368;opacity:0}
+.release-lms-console{grid-column:3;position:relative;align-self:stretch;display:flex;flex-direction:column;gap:6px;min-width:0;padding:8px 9px;border:1px solid #8abfa5;border-radius:7px;background:#e8f5ec;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.release-lms-header{display:flex;align-items:center;gap:5px;color:#2c6350;font:900 .43rem/1 var(--font-heading);letter-spacing:.05em;white-space:nowrap}
+.release-lms-mark{font-size:.78rem}
+.release-lms-progress{height:8px;overflow:hidden;border-radius:8px;background:#c4deca}
+.release-lms-progress i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#65bd90,#a1e368)}
+.release-importing,.release-imported,.release-launch-button,.release-live{position:absolute;left:9px;bottom:8px;color:#32634f;font:900 .44rem/1 var(--font-heading);white-space:nowrap}
+.release-importing,.release-imported,.release-launch-button{opacity:0}
+.release-launch-button{left:auto;right:8px;bottom:7px;padding:5px 6px;border-radius:4px;background:#375e4b;color:#fff}
+.release-live{padding:5px 7px;border-radius:5px;background:#d5efd8;color:#2e7449}
+.release-live i{color:#57b94e;font-style:normal}
+.workflow-gate-release>small{color:#c8e7d3;font:800 .49rem/1.2 var(--font-heading)}
 .media-workflow-motion[data-phase="frame"] .workflow-gate-frame,
 .media-workflow-motion[data-phase="compose"] .workflow-gate-compose,
 .media-workflow-motion[data-phase="verify"] .workflow-gate-verify,
@@ -358,10 +375,14 @@
 .media-workflow-motion.is-switching[data-phase="verify"] .workflow-qa-before{animation:workflowBefore 4.4s ease both}
 .media-workflow-motion.is-switching[data-phase="verify"] .workflow-qa-after{animation:workflowAfter 4.4s ease both}
 .media-workflow-motion.is-switching[data-phase="verify"] .workflow-preview-focus{animation:workflowCorrection 4.4s ease both}
-.media-workflow-motion.is-switching[data-phase="release"] .workflow-ready-badge{animation:workflowReady .75s 1s ease both}
-.media-workflow-motion.is-switching[data-phase="release"] .workflow-gate-release>div b{animation:workflowRelease .5s ease both}
-.media-workflow-motion.is-switching[data-phase="release"] .workflow-gate-release>div b:nth-of-type(2){animation-delay:.35s}
-.media-workflow-motion.is-switching[data-phase="release"] .workflow-gate-release>div b:nth-of-type(3){animation-delay:.7s}
+.media-workflow-motion.is-switching[data-phase="release"] .workflow-ready-badge{animation:workflowReleaseReady 8s linear infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-course-file{animation:workflowPackage 8s ease-in-out infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-transfer-line i{animation:workflowTransfer 8s ease-in-out infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-lms-progress i{animation:workflowImportProgress 8s linear infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-importing{animation:workflowImportLabel 8s linear infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-imported{animation:workflowImported 8s linear infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-launch-button{animation:workflowLaunchButton 8s ease infinite both}
+.media-workflow-motion.is-switching[data-phase="release"] .release-live{animation:workflowLive 8s ease infinite both}
 .media-workflow-motion[data-paused="true"] *, .media-workflow-motion[data-paused="true"] *::before,.media-workflow-motion[data-paused="true"] *::after{animation-play-state:paused!important;transition:none!important}
 .workflow-canvas-caption{margin:9px 2px 0;color:#bdd8c9;font:.69rem/1.45 var(--font-body)}
 @keyframes workflowSeal{from{opacity:0;transform:scale(.75) rotate(-7deg)}to{opacity:1;transform:none}}
@@ -374,7 +395,14 @@
 @keyframes workflowAfter{0%,53%{opacity:0;transform:translateY(6px)}75%,100%{opacity:1;transform:none}}
 @keyframes workflowCorrection{0%,40%{border-color:#d3a54e;box-shadow:0 0 0 5px rgba(211,165,78,.18)}70%,100%{border-color:#97db4f;box-shadow:0 0 0 5px rgba(151,219,79,.14)}}
 @keyframes workflowReady{from{opacity:0;transform:translateY(8px) scale(.92)}to{opacity:1;transform:none}}
-@keyframes workflowRelease{from{opacity:.3;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes workflowPackage{0%,5%{left:9px;opacity:1;transform:scale(1)}30%{left:calc(100% - var(--release-arrival-offset));opacity:1;transform:scale(.85)}38%,100%{left:calc(100% - var(--release-arrival-offset));opacity:0;transform:scale(.68)}}
+@keyframes workflowTransfer{0%,8%{left:0;opacity:0}14%{opacity:1}31%{left:100%;opacity:1}39%,100%{left:100%;opacity:0}}
+@keyframes workflowImportProgress{0%,29%{width:0}51%,100%{width:100%}}
+@keyframes workflowImportLabel{0%,30%{opacity:0}36%,50%{opacity:1}56%,100%{opacity:0}}
+@keyframes workflowImported{0%,51%{opacity:0}55%,60%{opacity:1}64%,100%{opacity:0}}
+@keyframes workflowLaunchButton{0%,63%{opacity:0;transform:scale(.92)}67%,70%{opacity:1;transform:scale(1)}72%{opacity:1;transform:scale(.87)}76%,100%{opacity:0;transform:scale(.87)}}
+@keyframes workflowLive{0%,72%{opacity:0;transform:translateY(6px)}78%,100%{opacity:1;transform:none}}
+@keyframes workflowReleaseReady{0%,72%{opacity:0;transform:translateY(6px)}78%,100%{opacity:1;transform:none}}
 @media(max-width:1040px){.media-workflow-detail{grid-template-columns:1fr}.workflow-example-brief{grid-template-columns:145px minmax(0,1fr)}.workflow-example-brief small{grid-column:2}.media-workflow-motion{min-height:0}}
 @media(max-width:700px){.workflow-example-brief{grid-template-columns:1fr;gap:7px}.workflow-example-brief small{grid-column:1}.media-workflow-grid{grid-template-columns:1fr}.multimedia-page .media-workflow-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){
@@ -382,8 +410,14 @@
   .workflow-canvas-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(205px,auto) auto 105px auto}
   .workflow-brief-card,.workflow-preview,.workflow-beat-map,.workflow-channel-map,.workflow-gate{grid-column:1;grid-row:auto}
   .workflow-brief-card{min-height:94px}.workflow-preview{min-height:215px}.workflow-beat-map{min-height:91px}.workflow-channel-map{min-height:105px}.workflow-gate{min-height:70px}
-  .workflow-gate-release>div{width:100%}.workflow-gate-release small{font-size:.48rem}
+  .release-gate-heading{flex-wrap:wrap}.release-gate-heading strong{font-size:.5rem;text-align:left}
+  .release-transfer{--release-arrival-offset:115px;grid-template-columns:72px minmax(12px,1fr) 130px;height:88px;padding:5px}
+  .release-course-file{top:18px;left:6px;width:63px;height:51px}.release-course-file small{font-size:.34rem}
+  .release-lms-console{padding:7px 6px}.release-lms-header{font-size:.38rem}.release-lms-progress{height:7px}
+  .release-importing,.release-imported,.release-live{left:6px;font-size:.39rem}.release-launch-button{right:5px;font-size:.36rem}
+  .workflow-gate-release>small{font-size:.41rem}
 }
+@media(max-width:380px){.release-transfer{--release-arrival-offset:100px;grid-template-columns:55px minmax(8px,1fr) 108px}.release-course-file{width:49px}.release-course-file small{font-size:.3rem}.release-lms-header{font-size:.31rem}.release-lms-mark{font-size:.6rem}.release-live{font-size:.32rem}}
 @media(prefers-reduced-motion:reduce){
   .media-workflow-motion *, .media-workflow-motion *::before,.media-workflow-motion *::after{animation:none!important;transition:none!important}
   .media-workflow-tab{transition:none!important}.media-workflow-tab:hover{transform:none}
@@ -391,6 +425,7 @@
   .media-workflow-motion[data-phase="verify"] .workflow-qa-before{display:none}
   .media-workflow-motion[data-phase="verify"] .workflow-qa-after{opacity:1}
   .media-workflow-motion[data-phase="frame"] .workflow-brief-seal,.media-workflow-motion[data-phase="frame"] .workflow-beat-map b{opacity:1;transform:none}
+  .media-workflow-motion[data-phase="release"] .release-course-file,.media-workflow-motion[data-phase="release"] .release-transfer-line i{display:none}
 }
 
 /* Multimedia in the design process */

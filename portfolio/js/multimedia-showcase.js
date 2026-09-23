@@ -77,15 +77,15 @@
       canvasLabel: 'A quality flag identifies a weak customer cue, then a corrected cue is confirmed in the same preview.'
     },
     release: {
-      label: '04 / RELEASE IN CONTEXT', canvasStage: '04 / RELEASE', previewStatus: 'IN COURSE',
-      title: 'Place the asset where the learner can act.',
-      text: 'I put the asset after concise context and before the learner’s decision. I test it at small sizes and in its delivery format, check navigation and access support, and retain editable sources so the media can change with the learning.',
-      decision: 'Does this asset lead naturally into practice or performance support?',
-      output: 'A tested learning experience plus organized source files and an update path.',
-      qa: 'Mobile, playback, captions or text alternatives, loading, and the transition into practice work end to end.',
-      medium: 'The delivery check applies to every format; the exact export and source package depend on the asset.',
-      caption: 'Context prepares the learner; the media leads into a decision.',
-      canvasLabel: 'The finished media asset sits between context and a learner decision, with mobile, accessibility, and source checks complete.'
+      label: '04 / RELEASE TO LEARNERS', canvasStage: '04 / RELEASE', previewStatus: 'IN COURSE',
+      title: 'Import the course into the LMS and launch it.',
+      text: 'I place the finished media inside the course, after context and before the learner’s decision. Then I package the experience, import it into the LMS, test the launch as a learner, and publish it. I keep editable sources ready for future updates.',
+      decision: 'Does the launched course let learners reach the media and complete the practice?',
+      output: 'A live course in the LMS, verified learner access, and organized source files.',
+      qa: 'Test the imported course for mobile playback, captions or text alternatives, navigation, completion tracking, and the transition into practice.',
+      medium: 'The same launch check applies to each media type; the exact media export and course package depend on the delivery format.',
+      caption: 'The course package moves into the LMS, passes a launch check, and becomes available to learners.',
+      canvasLabel: 'A course package containing context, media, and practice moves into a learning platform. The import progresses, the course launches, and learner access is confirmed.'
     }
   };
 
