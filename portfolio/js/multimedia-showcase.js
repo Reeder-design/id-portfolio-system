@@ -43,37 +43,49 @@
   };
 
   const workflow = {
-    plan: {
-      label: 'Pre-production',
-      title: 'Plan the message before opening the production tool.',
-      text: 'I define the purpose, script, storyboard, screen or shot plan, visual hierarchy, and where the finished asset belongs in the learner journey.',
-      decision: 'Choose the medium only when it supports the learning objective or learner task.',
-      output: 'Script, storyboard, production notes, and a clear role for the asset.',
-      qa: 'Check scope, length, accessibility needs, and maintenance expectations before production begins.'
+    frame: {
+      label: '01 / FRAME THE MOMENT', canvasStage: '01 / FRAME', previewStatus: 'WIRE FRAME',
+      title: 'Define the decision the learner must make.',
+      text: 'I identify the cue the learner needs to notice, the response they need to choose, and the approved source behind it. I set audience, placement, duration, and accessibility needs before choosing a format.',
+      decision: 'What needs to be seen, heard, or practiced for the learner to choose well?',
+      output: 'A media brief with source boundaries, content beats, and the intended learner action.',
+      qa: 'A reviewer can trace each beat to the learning goal and approved content.',
+      medium: 'A still may need a clear reading path; timed media needs pacing; generated visuals need an explicit accuracy boundary.',
+      caption: 'The brief sets the learning target before any asset is polished.',
+      canvasLabel: 'The learner action and approved source become three content beats: orient, notice the cue, and decide.'
     },
-    build: {
-      label: 'Production',
-      title: 'Build the asset around clarity, not production complexity.',
-      text: 'I edit footage or screen capture, build motion and graphics, clean audio, create supporting visuals, and keep the production focused on what the learner needs to notice.',
-      decision: 'Use the simplest production approach that communicates the idea well.',
-      output: 'A working media asset with the core visual, audio, and instructional elements in place.',
-      qa: 'Check pacing, visual hierarchy, audio quality, brand fit, and whether the message stays clear.'
+    compose: {
+      label: '02 / COMPOSE THE MESSAGE', canvasStage: '02 / COMPOSE', previewStatus: 'FIRST PASS',
+      title: 'Sequence attention around the cue.',
+      text: 'I turn the brief into a clear progression: orient the learner, make the customer cue noticeable, then leave room for a decision. Visual focus, words, and support elements work together without competing for attention.',
+      decision: 'What should the learner notice first, and where should they pause to decide?',
+      output: 'A composition map and first pass with the content beats aligned to the preview.',
+      qa: 'The cue remains clear when the asset is viewed or heard at its intended size and pace.',
+      medium: 'Timed assets align narration, captions, and changes on screen. Still assets use reading order, hierarchy, and annotation.',
+      caption: 'The same three beats now guide the preview and its supporting channels.',
+      canvasLabel: 'The first pass aligns visual focus, words, and support elements while a playhead moves across the composition map.'
     },
-    refine: {
-      label: 'Post-production',
-      title: 'Refine the details that affect learner comprehension.',
-      text: 'I tighten edits, adjust pacing, correct audio, refine transitions, add captions or text support, and remove anything that distracts from the learning message.',
-      decision: 'Cut or simplify elements that compete with the core point.',
-      output: 'A polished asset ready for accessibility and delivery checks.',
-      qa: 'Review captions, readability, audio levels, timing, contrast, pronunciation, and export quality.'
+    verify: {
+      label: '03 / VERIFY AND REVISE', canvasStage: '03 / VERIFY', previewStatus: 'REVIEW PASS',
+      title: 'Find what weakens understanding or access.',
+      text: 'I compare the preview with the approved source and learner task. In this example, the customer cue needs stronger emphasis; I correct it and review the result again. I also check timing, readability, audio, accessibility, and any generated detail used.',
+      decision: 'Which issue could change the learner’s interpretation or prevent access?',
+      output: 'An annotated QA pass, targeted fixes, and a rechecked master asset.',
+      qa: 'The corrected cue, content accuracy, and access support hold up in the final preview.',
+      medium: 'Moving media needs caption and timing checks; stills need contrast and alt text; audio needs clean levels and a transcript; AI visuals need accuracy review.',
+      caption: 'A visible issue becomes a specific correction and a second check.',
+      canvasLabel: 'A quality flag identifies a weak customer cue, then a corrected cue is confirmed in the same preview.'
     },
-    integrate: {
-      label: 'Learning integration',
-      title: 'Place the media where it helps the learner do something next.',
-      text: 'I integrate the finished asset into Rise, Storyline, or another delivery format and check how it works with the surrounding explanation, practice, navigation, and assessment.',
-      decision: 'Media should support the learning flow, not interrupt it.',
-      output: 'A finished learning experience with media connected to context, practice, or performance support.',
-      qa: 'Test playback, responsive behavior, accessibility, loading, navigation, and the learner transition before and after the asset.'
+    release: {
+      label: '04 / RELEASE IN CONTEXT', canvasStage: '04 / RELEASE', previewStatus: 'IN COURSE',
+      title: 'Place the asset where the learner can act.',
+      text: 'I put the asset after concise context and before the learner’s decision. I test it at small sizes and in its delivery format, check navigation and access support, and retain editable sources so the media can change with the learning.',
+      decision: 'Does this asset lead naturally into practice or performance support?',
+      output: 'A tested learning experience plus organized source files and an update path.',
+      qa: 'Mobile, playback, captions or text alternatives, loading, and the transition into practice work end to end.',
+      medium: 'The delivery check applies to every format; the exact export and source package depend on the asset.',
+      caption: 'Context prepares the learner; the media leads into a decision.',
+      canvasLabel: 'The finished media asset sits between context and a learner decision, with mobile, accessibility, and source checks complete.'
     }
   };
 
@@ -144,6 +156,8 @@
   setupTabs('[data-media-workflow]', 'mediaWorkflow', (key) => {
     const data = workflow[key];
     const motion = document.getElementById('mediaWorkflowMotion');
+    const panel = document.getElementById('media-workflow-panel');
+    const pauseButton = document.getElementById('workflowPause');
     if (!data) return;
 
     setText('mediaWorkflowLabel', data.label);
@@ -152,12 +166,38 @@
     setText('mediaWorkflowDecision', data.decision);
     setText('mediaWorkflowOutput', data.output);
     setText('mediaWorkflowQa', data.qa);
+    setText('mediaWorkflowMedium', data.medium);
+    setText('workflowCanvasStage', data.canvasStage);
+    setText('workflowPreviewStatus', data.previewStatus);
+    setText('workflowCanvasCaption', data.caption);
+    if (panel) panel.setAttribute('aria-labelledby', 'workflow-tab-' + key);
 
     if (motion) {
       motion.dataset.phase = key;
-      motion.setAttribute('aria-label', 'Animated demonstration of ' + data.label.toLowerCase());
+      motion.dataset.paused = 'false';
+      motion.setAttribute('aria-label', data.canvasLabel);
       restartAnimation(motion);
     }
+    if (pauseButton) {
+      pauseButton.setAttribute('aria-pressed', 'false');
+      pauseButton.textContent = 'Pause motion';
+    }
+  });
+
+  const workflowCanvas = document.getElementById('mediaWorkflowMotion');
+  const workflowPause = document.getElementById('workflowPause');
+  const workflowReplay = document.getElementById('workflowReplay');
+  workflowPause?.addEventListener('click', () => {
+    const paused = workflowCanvas.dataset.paused !== 'true';
+    workflowCanvas.dataset.paused = String(paused);
+    workflowPause.setAttribute('aria-pressed', String(paused));
+    workflowPause.textContent = paused ? 'Resume motion' : 'Pause motion';
+  });
+  workflowReplay?.addEventListener('click', () => {
+    workflowCanvas.dataset.paused = 'false';
+    workflowPause.setAttribute('aria-pressed', 'false');
+    workflowPause.textContent = 'Pause motion';
+    restartAnimation(workflowCanvas);
   });
 
   const navLinks = [...document.querySelectorAll('.case-nav a')];

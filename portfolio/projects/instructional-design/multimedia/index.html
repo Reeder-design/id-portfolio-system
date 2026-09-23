@@ -59,34 +59,34 @@
           </div>
         </div>
 
-        <aside class="media-flow-visual" aria-label="Motion graphic showing the multimedia production workflow from plan to integration">
+        <aside class="media-flow-visual" aria-label="Motion graphic showing the multimedia production workflow from framing the learning need to release">
           <div class="media-flow-stage" aria-hidden="true">
             <article class="media-flow-node">
               <span>01</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-learning-design"></use></svg>
-              <strong>Plan</strong>
-              <small>Script + storyboard</small>
+              <strong>Frame</strong>
+              <small>Learning brief</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>02</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg>
-              <strong>Produce</strong>
-              <small>Video + graphics + audio</small>
+              <strong>Compose</strong>
+              <small>Sequence + preview</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>03</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg>
-              <strong>Refine</strong>
-              <small>Edit + caption + QA</small>
+              <strong>Verify</strong>
+              <small>QA + accessibility</small>
             </article>
             <div class="media-flow-line"><i></i></div>
             <article class="media-flow-node">
               <span>04</span>
               <svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-elearning"></use></svg>
-              <strong>Integrate</strong>
-              <small>Course + interaction</small>
+              <strong>Release</strong>
+              <small>Context + practice</small>
             </article>
           </div>
           <div class="media-flow-output" aria-hidden="true">
@@ -186,83 +186,53 @@
         <span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span>
         <p class="eyebrow">Production Workflow</p>
       </div>
-      <h2>Media decisions start with the learning need.</h2>
-      <p class="short-copy">I do not add multimedia just to make a course look busy. I choose the medium based on what needs to be explained, demonstrated, reinforced, or remembered.</p>
+      <h2>From learner need to release-ready media.</h2>
+      <p class="short-copy">One illustrative brief moves through four checkpoints: define the learner decision, compose the message, correct quality issues, and test the result in context. The same checkpoints apply across still, moving, narrated, and generated media.</p>
 
       <div class="media-workflow-shell">
+        <div class="workflow-example-brief"><span>ILLUSTRATIVE LEARNING BRIEF</span><strong>Help a learner choose a useful response when a customer asks for more time.</strong><small>Recognize the cue → decide what to do next</small></div>
         <div class="media-workflow-tabs" role="tablist" aria-label="Multimedia production workflow">
-          <button class="media-workflow-tab active" type="button" role="tab" aria-selected="true" data-media-workflow="plan"><span>01</span><strong>Plan</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="build"><span>02</span><strong>Build</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="refine"><span>03</span><strong>Refine</strong></button>
-          <button class="media-workflow-tab" type="button" role="tab" aria-selected="false" data-media-workflow="integrate"><span>04</span><strong>Integrate</strong></button>
+          <button class="media-workflow-tab active" id="workflow-tab-frame" type="button" role="tab" aria-selected="true" aria-controls="media-workflow-panel" data-media-workflow="frame"><span>01 / STRATEGY</span><strong>Frame</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-compose" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="compose"><span>02 / DESIGN</span><strong>Compose</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-verify" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="verify"><span>03 / QUALITY</span><strong>Verify</strong></button>
+          <button class="media-workflow-tab" id="workflow-tab-release" type="button" role="tab" aria-selected="false" aria-controls="media-workflow-panel" data-media-workflow="release"><span>04 / DELIVERY</span><strong>Release</strong></button>
         </div>
 
-        <div class="media-workflow-panel" role="tabpanel" aria-live="polite">
+        <div class="media-workflow-panel" id="media-workflow-panel" role="tabpanel" aria-labelledby="workflow-tab-frame" tabindex="0" aria-live="polite">
           <div class="media-workflow-detail">
             <div class="media-workflow-copy">
-              <p class="eyebrow" id="mediaWorkflowLabel">Pre-production</p>
-              <h3 id="mediaWorkflowTitle">Plan the message before opening the production tool.</h3>
-              <p id="mediaWorkflowText">I define the purpose, script, storyboard, screen or shot plan, visual hierarchy, and where the finished asset belongs in the learner journey.</p>
+              <p class="eyebrow" id="mediaWorkflowLabel">01 / FRAME THE MOMENT</p>
+              <h3 id="mediaWorkflowTitle">Define the decision the learner must make.</h3>
+              <p id="mediaWorkflowText">I identify the cue the learner needs to notice, the response they need to choose, and the approved source behind it. I set audience, placement, duration, and accessibility needs before choosing a format.</p>
               <div class="media-workflow-grid">
-                <article><span>Decision</span><p id="mediaWorkflowDecision">Choose the medium only when it supports the learning objective or learner task.</p></article>
-                <article><span>Output</span><p id="mediaWorkflowOutput">Script, storyboard, production notes, and a clear role for the asset.</p></article>
-                <article><span>QA lens</span><p id="mediaWorkflowQa">Check scope, length, accessibility needs, and maintenance expectations before production begins.</p></article>
+                <article><span>Decision</span><p id="mediaWorkflowDecision">What needs to be seen, heard, or practiced for the learner to choose well?</p></article>
+                <article><span>Artifact</span><p id="mediaWorkflowOutput">A media brief with source boundaries, content beats, and the intended learner action.</p></article>
+                <article><span>Evidence</span><p id="mediaWorkflowQa">A reviewer can trace each beat to the learning goal and approved content.</p></article>
               </div>
+              <div class="workflow-medium-note"><span>Across formats</span><p id="mediaWorkflowMedium">A still may need a clear reading path; timed media needs pacing; generated visuals need an explicit accuracy boundary.</p></div>
             </div>
 
-            <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-phase="plan" aria-label="Animated demonstration of the selected production phase">
-              <div class="workflow-motion-scene motion-plan" aria-hidden="true">
-                <div class="motion-storyboard">
-                  <span class="story-frame frame-one"><i></i><b></b></span>
-                  <span class="story-frame frame-two"><i></i><b></b></span>
-                  <span class="story-frame frame-three"><i></i><b></b></span>
+            <div class="workflow-canvas-shell">
+              <div class="workflow-canvas-topline"><div><span>PRODUCTION CANVAS</span><strong id="workflowCanvasStage">01 / FRAME</strong></div><div class="workflow-motion-controls"><button id="workflowPause" type="button" aria-pressed="false">Pause motion</button><button id="workflowReplay" type="button">Replay stage</button></div></div>
+              <div class="media-workflow-motion is-switching" id="mediaWorkflowMotion" data-phase="frame" data-paused="false" role="img" aria-label="An illustrative learning brief becomes a structured media sequence, receives quality corrections, and is placed before learner practice.">
+                <div class="workflow-canvas-grid" aria-hidden="true">
+                  <div class="workflow-brief-card"><span>LEARNER ACTION</span><strong>Choose the next response</strong><small>Approved source · audience · decision</small><i class="workflow-brief-seal">BRIEF SET</i></div>
+                  <div class="workflow-preview"><div class="workflow-preview-bar"><span>TRAINING MOMENT / PREVIEW</span><b id="workflowPreviewStatus">WIRE FRAME</b></div><div class="workflow-preview-body"><div class="workflow-customer-bubble"><span>CUSTOMER CUE</span><strong>“I need more time.”</strong></div><div class="workflow-response"><span>LEARNER CHOICE</span><b>Ask what they need</b><b>Repeat the pitch</b></div><div class="workflow-preview-focus"></div><div class="workflow-qa-before">CHECK: cue needs clearer focus</div><div class="workflow-qa-after">FIXED: cue leads into the choice ✓</div><div class="workflow-ready-badge">READY FOR PRACTICE ✓</div></div></div>
+                  <div class="workflow-beat-map"><span>CONTENT BEATS</span><div><b>01 <em>Orient</em></b><i></i><b>02 <em>Notice cue</em></b><i></i><b>03 <em>Decide</em></b></div></div>
+                  <div class="workflow-channel-map"><span>COMPOSITION MAP</span><div><b>FOCUS</b><i><em></em></i></div><div><b>WORDS</b><i><em></em></i></div><div><b>SUPPORT</b><i><em></em></i></div><u class="workflow-playhead"></u></div>
+                  <div class="workflow-gate workflow-gate-frame"><span>FRAME GATE</span><strong>Goal, source, and decision agree.</strong><b>01 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-compose"><span>COMPOSE GATE</span><strong>One clear cue leads to one learner action.</strong><b>02 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-verify"><span>VERIFY GATE</span><strong>Issue found → corrected → checked again.</strong><b>03 / 04</b></div>
+                  <div class="workflow-gate workflow-gate-release"><span>RELEASE GATE</span><div><b>Context</b><i>→</i><b>Media</b><i>→</i><b>Decision</b></div><small>Mobile ✓ &nbsp; Access ✓ &nbsp; Source retained ✓</small></div>
                 </div>
-                <div class="motion-script">
-                  <span></span><span></span><span></span><span></span>
-                  <i class="motion-cursor"></i>
-                </div>
-                <small>Storyboard + script align before production starts.</small>
               </div>
-
-              <div class="workflow-motion-scene motion-build" aria-hidden="true">
-                <div class="motion-preview-window"><span class="preview-object"></span><span class="preview-caption"></span></div>
-                <div class="motion-timeline">
-                  <span class="track track-video"><i></i></span>
-                  <span class="track track-graphic"><i></i></span>
-                  <span class="track track-audio"><i></i></span>
-                  <b class="motion-playhead"></b>
-                </div>
-                <small>Visual, audio, and graphic layers build into one asset.</small>
-              </div>
-
-              <div class="workflow-motion-scene motion-refine" aria-hidden="true">
-                <div class="motion-waveform">
-                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-                </div>
-                <div class="motion-refine-controls">
-                  <span><b></b></span><span><b></b></span>
-                </div>
-                <div class="motion-caption-line"><span>Accessible caption timing</span><i></i></div>
-                <small>Edit, balance, caption, and remove anything that distracts.</small>
-              </div>
-
-              <div class="workflow-motion-scene motion-integrate" aria-hidden="true">
-                <div class="motion-course">
-                  <span class="course-context">Context</span>
-                  <span class="course-media"><svg class="portfolio-icon"><use href="../../../assets/icons/portfolio-icons.svg#icon-multimedia"></use></svg></span>
-                  <span class="course-practice">Practice</span>
-                </div>
-                <span class="integration-pulse pulse-one"></span>
-                <span class="integration-pulse pulse-two"></span>
-                <small>The finished asset connects to context and learner action.</small>
-              </div>
+              <p class="workflow-canvas-caption" id="workflowCanvasCaption">The brief sets the learning target before any asset is polished.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-
 
 </main>
 
