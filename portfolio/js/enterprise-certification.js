@@ -767,9 +767,9 @@
   renderHistory();
 
   const changeData = {
-    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA', visual:'<div class="cert-revision-visual term" aria-hidden="true"><span>Old term</span><i></i><span>Approved term</span><b>2 lessons + 1 check</b></div>' },
-    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support', visual:'<div class="cert-revision-visual audience" aria-hidden="true"><span>Seller</span><span>Partner</span><i></i><b>Shared core</b><em>Route test ✓</em></div>' },
-    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest', visual:'<div class="cert-revision-visual product" aria-hidden="true"><span>Source update</span><i></i><b>Scenario cue</b><em>Retest ✓</em></div>' }
+    terminology: { source:'Portfolio term revised', affected:'Module labels + one knowledge check', stable:'Objectives, route, assessment gate', action:'Revise wording → review → QA', visual:'<div class="redesign-window-head"><b>CONTENT EDITOR / VERSION 02</b><span>Terminology update</span></div><div class="redesign-term-change"><small>APPROVED SOURCE</small><div><del>Legacy product term</del><i>→</i><strong>Approved portfolio term</strong></div></div><div class="redesign-term-links"><span><b>01</b> Lesson label <em>Updated</em></span><span><b>02</b> Scenario prompt <em>Updated</em></span><span><b>03</b> Knowledge check <em>Updated</em></span></div><div class="redesign-window-foot"><span>Source trace ✓</span><span>SME review ✓</span><span>Language QA ✓</span></div>' },
+    audience: { source:'New learner population', affected:'Entry support + LMS route', stable:'Shared seller core', action:'Add route → UAT → support', visual:'<div class="redesign-window-head"><b>LMS / AUDIENCE ROUTES</b><span>Rule test</span></div><div class="redesign-audience-entry"><small>LEARNER PROFILE</small><strong>Role + organization</strong><i>↓</i></div><div class="redesign-audience-branches"><div><b>Seller</b><span>Entry guidance A</span></div><div><b>Partner</b><span>Entry guidance B</span></div></div><div class="redesign-shared-core"><span>Shared certification core</span><strong>One curriculum · two routes</strong></div><div class="redesign-window-foot"><span>Visibility ✓</span><span>Enrollment ✓</span><span>Support route ✓</span></div>' },
+    product: { source:'Product information updated', affected:'Feature explanation + scenario cue', stable:'Decision sequence and course map', action:'Trace source → revise → retest', visual:'<div class="redesign-window-head"><b>REVIEW WORKSPACE / VERSION 03</b><span>Product change</span></div><div class="redesign-product-source"><small>SOURCE UPDATE</small><strong>Capability detail changed</strong><span>Owner confirmed · revision noted</span></div><div class="redesign-product-path"><span><b>1</b> Explain</span><i>→</i><span><b>2</b> Scenario cue</span><i>→</i><span><b>3</b> Check</span></div><div class="redesign-product-preview"><b>Scenario preview</b><span>Customer signal → revised response cue</span><em>Retest passed ✓</em></div><div class="redesign-window-foot"><span>Source ✓</span><span>Interaction ✓</span><span>Assessment stable ✓</span></div>' }
   };
   const changeButtons = [...document.querySelectorAll('[data-change]')];
   const changeDisplay = document.getElementById('certChangeDisplay');
@@ -780,7 +780,7 @@
     const selected = changeButtons.find((button) => button.dataset.change === key);
     if (selected) changeDisplay.setAttribute('aria-labelledby', selected.id);
     changeDisplay.dataset.change = key;
-    changeDisplay.innerHTML = `<div class="cert-redesign-cycle" aria-label="Change is traced, revised, reviewed, released, and monitored before the next change"><div class="cert-cycle-ring" aria-hidden="true"><span class="cert-cycle-step step-one">Trace</span><span class="cert-cycle-step step-two">Revise</span><span class="cert-cycle-step step-three">Review</span><span class="cert-cycle-step step-four">Release</span><span class="cert-cycle-step step-five">Monitor</span><span class="cert-cycle-center"><img src="../../../../assets/icons/pixel/lms/mini-sync.webp" alt=""><b>Next version</b></span></div></div><div class="cert-cycle-explain">${data.visual}<small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
+    changeDisplay.innerHTML = `<div class="cert-redesign-scene" data-scene="${key}" role="img" aria-label="${key === 'terminology' ? 'Approved terminology is traced into two lessons and a knowledge check, then reviewed' : key === 'audience' ? 'Seller and partner profiles take separate entry routes into one shared certification core' : 'A product source update moves through the explanation and scenario cue before a retest'}">${data.visual}</div><div class="cert-cycle-explain"><small>Change detected</small><strong>${data.source}</strong><small>Targeted revision</small><strong>${data.affected}</strong><small>Still stable</small><strong>${data.stable}</strong><span>${data.action}</span></div>`;
   };
   changeButtons.forEach((button, index) => {
     button.tabIndex = index === 0 ? 0 : -1;
@@ -840,7 +840,10 @@
     const completionTab = curriculumButtons.find((button) => button.dataset.curriculum === 'complete');
     if (completionTab) { completionTab.disabled = !checkedAnswer; completionTab.setAttribute('aria-disabled', String(!checkedAnswer)); }
     curriculumPlayer?.setAttribute('aria-labelledby',curriculumButtons[index].id);
-    document.getElementById('curriculumProgress').textContent=(index+1)+' / '+curriculumButtons.length;
+    const currentProgress=(index+1)+' / '+curriculumButtons.length;
+    document.getElementById('curriculumProgress').textContent=currentProgress;
+    document.getElementById('curriculumScreenProgress').textContent=currentProgress;
+    document.getElementById('curriculumScreenProgressFill').style.width=((index+1)/curriculumButtons.length*100)+'%';
     document.getElementById('curriculumLabel').textContent=data.label;
     document.getElementById('curriculumTitle').textContent=data.title;
     document.getElementById('curriculumSummary').textContent=data.summary;

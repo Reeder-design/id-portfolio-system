@@ -726,3 +726,17 @@
 @media(max-width:650px){.reporting-automation-page .reporting-step-panel{min-height:0}.report-ui-grid{grid-template-columns:1fr}.reporting-automation-page .reporting-stage-visual{min-height:260px}.report-ui-head{align-items:flex-start}.report-ui-head span{max-width:105px;text-align:right}}
 @media(prefers-reduced-motion:reduce){.reporting-automation-page .reporting-stage-visual *{animation:none!important}}
 .reporting-hero-ledger{position:absolute;right:12px;bottom:11px;left:12px;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.reporting-hero-ledger span{padding:7px 4px;border:1px solid rgba(181,230,188,.22);border-radius:7px;background:rgba(12,41,38,.78);color:#d9f2de;font:800 .48rem/1.15 var(--font-heading);text-align:center;animation:reportLedger 7s ease-in-out infinite}.reporting-hero-ledger span:nth-child(2){animation-delay:1.2s}.reporting-hero-ledger span:nth-child(3){animation-delay:2.4s}@keyframes reportLedger{40%{border-color:#a5df8f;background:#285947;color:#fff;box-shadow:0 0 0 3px rgba(165,223,143,.1)}}@media(max-width:520px){.reporting-hero-ledger span{font-size:.39rem;padding-inline:2px}}@media(prefers-reduced-motion:reduce){.reporting-hero-ledger span{animation:none}}
+
+/* Match type to each section's fixed surface, independent of shared rhythm classes. */
+body.reporting-automation-page section.reporting-workflow-section h2,
+body.reporting-automation-page section.reporting-output-section h2{color:#fff!important}
+body.reporting-automation-page section.reporting-workflow-section .eyebrow,
+body.reporting-automation-page section.reporting-output-section .eyebrow{color:#b9e9ce!important}
+body.reporting-automation-page section.reporting-workflow-section .short-copy,
+body.reporting-automation-page section.reporting-output-section .short-copy{color:#e0eee7!important}
+body.reporting-automation-page section.reporting-exception-section h2,
+body.reporting-automation-page section.reporting-need-section h2{color:#263a34!important}
+body.reporting-automation-page section.reporting-exception-section .eyebrow,
+body.reporting-automation-page section.reporting-need-section .eyebrow{color:#397563!important}
+body.reporting-automation-page section.reporting-exception-section .short-copy,
+body.reporting-automation-page section.reporting-need-section .short-copy{color:#455d54!important}

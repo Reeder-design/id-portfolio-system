@@ -13,3 +13,10 @@
 @media(max-width:500px){.gh-motion-route{grid-template-columns:1fr 7px 1fr 7px 1fr 7px 1fr;gap:1px}.gh-motion-route>div{min-height:93px}.gh-motion-route img{width:37px;height:37px}.gh-motion-route b{font-size:.54rem}.gh-motion-route small{font-size:.47rem}.gh-stage-screen{font-size:.9em}.gh-ui-body{padding:10px}.gh-stage-copy h3{font-size:1.8rem}}
 @media(prefers-reduced-motion:reduce){.github-workflow-page *{animation:none!important;transition:none!important}.gh-motion-pulse{display:none}}
 .gh-support-tools{display:grid;grid-template-columns:minmax(190px,.8fr) repeat(2,minmax(0,1fr));gap:12px;align-items:stretch;margin-top:19px}.gh-support-tools>div{align-self:center;padding:12px}.gh-support-tools>div .eyebrow{color:#4b8a67}.gh-support-tools h3{margin:5px 0 0;color:#28483b;font-size:1.1rem}.gh-support-tools>a{display:grid;align-content:center;gap:6px;padding:14px;border:1px solid #cfe3d4;border-radius:13px;background:#f8fcf8;color:#315a44;text-decoration:none}.gh-support-tools>a:hover,.gh-support-tools>a:focus-visible{border-color:#72b885;background:#eaf7ec;outline:none}.gh-support-tools>a strong{font:800 .76rem/1.2 var(--font-heading)}.gh-support-tools>a span{color:#5b705f;font:.68rem/1.35 var(--font-body)}.gh-support-tools>a b{color:#2e7549;font:800 .62rem/1.2 var(--font-heading)}@media(max-width:800px){.gh-support-tools{grid-template-columns:1fr 1fr}.gh-support-tools>div{grid-column:1/-1;padding:0}}@media(max-width:500px){.gh-support-tools{grid-template-columns:1fr}}
+
+/* The closing panel keeps its dark palette even when section rhythm marks it light. */
+body.github-workflow-page .github-maintain-section.fs-surface-light,
+body.github-workflow-page .github-maintain-section.fs-surface-dark{background:linear-gradient(135deg,#17363b,#2b514a)!important;color:#e9f3eb!important}
+body.github-workflow-page .github-maintain-section .eyebrow{color:#b8e9c7!important}
+body.github-workflow-page .github-maintain-section h2{color:#fff!important}
+body.github-workflow-page .github-maintain-section p:not(.eyebrow){color:#d7e9de!important}

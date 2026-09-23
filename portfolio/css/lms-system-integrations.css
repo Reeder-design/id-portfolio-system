@@ -45,3 +45,10 @@ body.lms-admin-page .integration-use-cases .section-heading{max-width:980px}
 body.lms-admin-page .integration-featured .integration-spotlight>div:last-child>span{box-shadow:0 0 0 1px #8acb96}
 @media(max-width:800px){.integration-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.integration-stage{grid-template-columns:1fr}.integration-spotlight{grid-template-columns:1fr}}
 @media(max-width:480px){.integration-tabs{grid-template-columns:1fr 1fr}.integration-tabs button{font-size:.65rem}.integration-contract-rail{grid-template-columns:1fr 1fr}.integration-spotlight-art{min-height:190px}}
+
+/* Embedded use cases remain a light section regardless of automatic section rhythm. */
+body.lms-admin-page section.integration-use-cases.fs-surface-dark,
+body.lms-admin-page section.integration-use-cases.fs-surface-light{background:linear-gradient(140deg,#f7fcf8,#e7f6ec)!important;color:#263e35!important}
+body.lms-admin-page section.integration-use-cases .section-heading h2{color:#243e35!important}
+body.lms-admin-page section.integration-use-cases .section-heading .eyebrow{color:#3d7768!important}
+body.lms-admin-page section.integration-use-cases .section-heading p:not(.eyebrow){color:#526b5d!important}
