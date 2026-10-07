@@ -128,7 +128,7 @@ def main() -> int:
     require("principle-grid" not in about, "About page must not retain unused learning-principles layout.", errors)
 
     home = HOME.read_text(encoding="utf-8")
-    require("focused on sales and partner enablement for complex products" in home, "Homepage should keep the tightened concrete introduction.", errors)
+    require("I design sales and partner learning for complex products" in home, "Homepage should describe Haley's work in direct, concrete language.", errors)
 
     css = REFRESH_CSS.read_text(encoding="utf-8")
     for marker in [

@@ -28,7 +28,7 @@
       <div class="flagship-hero-grid reporting-hero-grid">
         <div class="flagship-hero-copy">
           <h1>Certification Reporting Automation</h1>
-          <p class="body-large">I automated a recurring certification-reporting workflow that depended on four LMS exports. Selenium handled the repeated report generation and downloads; pandas and openpyxl normalized the data, compared learner records, and produced review-ready Complete and Incomplete worksheets.</p>
+          <p class="body-large">I automated a recurring certification report built from four LMS exports. Selenium generated and downloaded the reports, then pandas and openpyxl compared learner records and produced Complete and Incomplete worksheets for review.</p>
           <div class="tag-row"><span class="tag">Python</span><span class="tag">Selenium</span><span class="tag">pandas</span><span class="tag">openpyxl</span><span class="tag">Absorb LMS</span><span class="tag">Excel</span></div>
           <div class="button-row"><a class="btn btn-primary" href="#workflow">Explore the Workflow</a></div>
         </div>
@@ -71,7 +71,7 @@
       <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-workflow"></use></svg></span><p class="eyebrow">Business Need</p></div>
       <div class="reporting-section-intro">
         <div>
-          <h2>Remove repetitive reporting work without hiding the logic behind the result.</h2>
+          <h2>Make the recurring report repeatable and checkable.</h2>
           <p class="short-copy">The recurring reporting package required the same four LMS reports and the same comparison work each time. I automated the repeatable steps while keeping failed downloads, missing matches, and unusual records visible for review.</p>
         </div>
       </div>
@@ -92,11 +92,11 @@
   <section class="section flagship-section reporting-simulation-section" id="simulation">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><p class="eyebrow">Simulated System Views</p></div>
-      <h2>Follow the run from browser to review package.</h2>
-      <p class="short-copy">These fictional screens show the steps and checkpoints, not private production systems. The certification-report run starts in the LMS. A related Salesforce account lookup is shown separately because it supported a different LMS placement workflow.</p>
+      <h2>Follow the four-report run.</h2>
+      <p class="short-copy">Start the sample run and follow the four LMS exports into the review workbook. The Salesforce lookup is a separate placement workflow.</p>
       <div class="report-demo-modes" role="tablist" aria-label="Automation paths"><button type="button" role="tab" aria-selected="true" class="active" data-report-demo-mode="reports">Certification reporting <small>Completed workflow</small></button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-report-demo-mode="accounts">Salesforce account context <small>Related, separate workflow</small></button></div>
       <div class="report-demo-shell" id="reportDemoShell" data-demo-mode="reports">
-        <div class="report-demo-top"><div><span>PUBLIC-SAFE PRODUCTION SIMULATION</span><strong id="reportDemoPath">REPORTING / LMS → WORKBOOK</strong></div><button type="button" id="reportDemoPlay">Play sequence</button></div>
+        <div class="report-demo-top"><div><span>REPORTING WALKTHROUGH</span><strong id="reportDemoPath">REPORTING / LMS → WORKBOOK</strong></div><button type="button" id="reportDemoPlay">Play sequence</button></div>
         <div class="report-demo-steps" id="reportDemoSteps" role="tablist" aria-label="Selected automation stages"></div>
         <div class="report-demo-layout" aria-live="polite">
           <div class="report-demo-browser"><div class="report-demo-browser-bar"><span><i></i><i></i><i></i></span><strong id="reportDemoWindowLabel">TERMINAL / RUN</strong></div><div class="report-demo-screen"><div class="report-demo-art"><img id="reportDemoAsset" src="../../../../assets/icons/pixel/lms-admin/reporting-automation/terminal-run-reports.png" alt=""></div><div class="report-demo-screen-copy"><small id="reportDemoSource">SCHEDULED RUN</small><strong id="reportDemoAction">Start the saved-report workflow.</strong><span id="reportDemoScreenStatus">Browser opening</span></div></div></div>
@@ -112,8 +112,8 @@
   <section class="section flagship-section reporting-workflow-section" id="workflow">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-automation"></use></svg></span><p class="eyebrow">Automation Workflow</p></div>
-      <h2>Step through the reporting pipeline.</h2>
-      <p class="short-copy">Each stage automates a repeatable task, but it also has a validation point so bad inputs do not quietly become a bad final workbook.</p>
+      <h2>Check each reporting stage.</h2>
+      <p class="short-copy">Choose a stage to see what the script does and what I check before moving on.</p>
 
       <div class="reporting-workflow-shell">
         <div class="reporting-step-tabs" role="tablist" aria-label="Reporting automation stages">
@@ -143,7 +143,7 @@
   <section class="section flagship-section reporting-exception-section" id="exceptions">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg></span><p class="eyebrow">Exception Handling</p></div>
-      <h2>The script does not pretend every record is clean.</h2>
+      <h2>Keep exceptions visible.</h2>
       <p class="short-copy">Choose an exception to see what stays automated and where I deliberately preserve a review checkpoint.</p>
 
       <div class="exception-lab">
@@ -171,8 +171,8 @@
   <section class="section flagship-section reporting-output-section" id="output">
     <div class="container">
       <div class="section-kicker"><span class="icon-badge"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-analytics"></use></svg></span><p class="eyebrow">Workbook Output</p></div>
-      <h2>Reporting and analytics outputs built for clearer review.</h2>
-      <p class="short-copy">These public-safe samples show the reporting and analytics surfaces I designed around the workflow, from row-level exports to higher-level completion views.</p>
+      <h2>Review the outputs.</h2>
+      <p class="short-copy">These samples show the row-level exports and completion views I use for review.</p>
 
       <div class="reporting-evidence-viewer">
         <div class="reporting-evidence-tabs" role="tablist" aria-label="Reporting and analytics samples">
@@ -184,8 +184,8 @@
           <button class="reporting-evidence-tab" type="button" role="tab" aria-selected="false" data-report-evidence="detail"><strong>Detailed Export</strong><small>Row-level data</small></button>
         </div>
         <figure class="reporting-evidence-frame">
-          <figcaption><span id="reportEvidenceLabel">Course completion report</span><strong>Public-safe sample asset</strong></figcaption>
-          <div class="reporting-evidence-screen"><img id="reportEvidenceImage" src="../../../../assets/project-images/reporting-automation/report-course-completion.webp" alt="Public-safe fictional course completion report with learner, department, course, status, completion date, and time-spent columns."></div>
+          <figcaption><span id="reportEvidenceLabel">Course completion report</span><strong>Sample report view</strong></figcaption>
+          <div class="reporting-evidence-screen"><img id="reportEvidenceImage" src="../../../../assets/project-images/reporting-automation/report-course-completion.webp" alt="fictional course completion report with learner, department, course, status, completion date, and time-spent columns."></div>
           <p id="reportEvidenceCaption">A spreadsheet-style reporting view showing the kind of completion evidence the workflow consolidates for review.</p>
         </figure>
       </div>
@@ -202,7 +202,7 @@
         <article><span>02</span><h3>Cleaner review</h3><p>Complete and Incomplete worksheets replaced manual comparison across four separate exports.</p></article>
         <article><span>03</span><h3>Exceptions stay visible</h3><p>Missing, duplicate, unmatched, or unusual records remain available for human QA instead of being silently discarded.</p></article>
       </div>
-      <p class="public-safe-note"><svg class="portfolio-icon" aria-hidden="true"><use href="../../../../assets/icons/portfolio-icons.svg#icon-feedback"></use></svg><span><strong>Public-safe scope:</strong> course identifiers, report names, learner data, account details, and internal file structures are intentionally omitted.</span></p>
+
     </div>
   </section>
 

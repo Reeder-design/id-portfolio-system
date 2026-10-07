@@ -13,7 +13,7 @@
       label: 'Facilitate',
       title: 'Connect framework language to a seller decision.',
       summary: 'Live time let participants name evidence, compare interpretations, and connect a category to a next discovery action.',
-      action: 'Explain briefly, ask for reasoning, and invite public-safe seller examples into the discussion.',
+      action: 'Explain briefly, ask for reasoning, and invite seller examples into the discussion.',
       signal: 'The examples and questions reveal which parts of the framework already feel usable.',
       next: 'Use a focused poll or question to test the distinction before moving into application.'
     },

@@ -6,7 +6,7 @@
   const paths = {
     seaport: {
       name: 'Seaport', icon: 'icon-ship', image: 'smarter-seaports.webp',
-      alt: 'Sanitized seaport learner screen', caption: 'Sanitized learner screen · seaport positioning',
+      alt: 'Seaport learner screen', caption: 'Learner screen · seaport positioning',
       intro: 'Seaport positioning starts with distributed terminal and field operations. The seller needs to understand where equipment status and team handoffs become hard to see before discussing a solution.',
       pains: [
         { label: 'Equipment status reaches field teams after a handoff.', differentiator: 'Stress a shared view of the handoff and faster access to the status the field team needs.',
@@ -28,7 +28,7 @@
     },
     airport: {
       name: 'Airport', icon: 'icon-plane', image: 'airports-connected.webp',
-      alt: 'Sanitized airport learner screen', caption: 'Sanitized learner screen · airport positioning',
+      alt: 'Airport learner screen', caption: 'Learner screen · airport positioning',
       intro: 'Airport positioning begins with time-sensitive coordination among gate, ramp, and service teams. A change in one area can affect several others, so sellers need to locate the handoff before naming a differentiator.',
       pains: [
         { label: 'Gate changes reach ramp and service teams at different times.', differentiator: 'Stress a shared view of a change and the teams it affects, rather than a generic speed claim.',
@@ -129,7 +129,7 @@
     if (stage === 1) fields.stageVisual.innerHTML = `<div class="vertical-visual-scene vertical-cue-scene"><span class="vertical-visual-place">${asset('strategy-impact/global')} ${data.name.toUpperCase()} · CUSTOMER CUE</span><div class="vertical-cue-route"><span>${asset('people-collaboration/user-learner')}<b>Customer situation</b><small>${data.name === 'Seaport' ? 'Terminal handoff' : 'Gate change'}</small></span><i>→</i><span>${asset('support-resources/information')}<b>Listen for friction</b><small>${painIndex === null ? 'Choose a cue below' : pain.label}</small></span><i>→</i><span>${asset('analytics-insights/insights')}<b>Connect value</b><small>Use a relevant differentiator</small></span></div></div>`;
     if (stage === 2) fields.stageVisual.innerHTML = `<div class="vertical-visual-scene vertical-roi-scene"><span class="vertical-visual-place">${asset('analytics-insights/analytics')} CLIENT ROI CONVERSATION</span><div class="vertical-roi-dashboard"><div class="vertical-roi-bars"><i></i><i></i><i></i><i></i><i></i></div><div><strong>Start with the client’s baseline</strong><span>${asset('planning-projects/tasks')} Frequency</span><span>${asset('analytics-insights/data')} Delay per handoff</span><span>${asset('people-collaboration/communication')} Validate together</span></div></div><small>Use the sliders below to model a question, not to claim savings.</small></div>`;
     if (stage === 3) fields.stageVisual.innerHTML = `<div class="vertical-visual-scene vertical-scenario-scene"><span class="vertical-visual-place">${asset('strategy-impact/global')} ${data.name.toUpperCase()} · CUSTOMER SETTING</span><div class="vertical-scenario-setting"><div class="vertical-setting-silhouette" aria-hidden="true"><i></i><i></i><i></i></div><div class="vertical-scenario-person">${asset('people-collaboration/user-learner')}<span><strong>Customer</strong><small>${data.name === 'Seaport' ? 'Terminal operations' : 'Airport operations'}</small></span></div><div class="vertical-scenario-prompt">A real cue shapes the response. Choose below to see the customer reply and coaching.</div></div></div>`;
-    if (stage === 4) fields.stageVisual.innerHTML = `<div class="vertical-visual-scene vertical-takeaway-scene"><span class="vertical-visual-place">${asset('support-resources/resources')} ${data.name.toUpperCase()} · TALKING GUIDE</span><div class="vertical-onepager"><header>${asset('support-resources/resources')}<strong>${data.name} positioning · one page</strong><small>Takeaway</small></header><div><span>${asset('support-resources/information')} Customer cues</span><span>${asset('analytics-insights/insights')} Value frame</span><span>${asset('people-collaboration/communication')} ROI prompts</span></div></div><small>Download the public-safe guide below.</small></div>`;
+    if (stage === 4) fields.stageVisual.innerHTML = `<div class="vertical-visual-scene vertical-takeaway-scene"><span class="vertical-visual-place">${asset('support-resources/resources')} ${data.name.toUpperCase()} · TALKING GUIDE</span><div class="vertical-onepager"><header>${asset('support-resources/resources')}<strong>${data.name} positioning · one page</strong><small>Takeaway</small></header><div><span>${asset('support-resources/information')} Customer cues</span><span>${asset('analytics-insights/insights')} Value frame</span><span>${asset('people-collaboration/communication')} ROI prompts</span></div></div><small>Download the conversation guide below.</small></div>`;
   }
 
   function render() {
@@ -212,7 +212,7 @@
         fields.feedback.dataset.result = choice.correct ? 'strong' : 'coach';
         fields.feedback.textContent = choice.feedback;
       }
-      setDesign('I designed a short, learner-facing AI practice after positioning and the ROI conversation so the learner could apply both.', 'Branch on the vertical and selected pain point, then show the consequence of the learner’s response.', 'The original included AI practice; this public-safe version scripts each reply and coaching message without a live model.', 'Learner-facing AI practice · scripted preview');
+      setDesign('I designed a short, learner-facing AI practice after positioning and the ROI conversation so the learner could apply both.', 'Branch on the vertical and selected pain point, then show the consequence of the learner’s response.', 'The original module used AI practice. This demo scripts the replies and coaching.', 'Learner-facing AI practice · scripted preview');
     } else {
       fields.stageIcon.setAttribute('href', iconRoot + 'icon-workflow');
       fields.title.textContent = 'Take the conversation guide with you.';

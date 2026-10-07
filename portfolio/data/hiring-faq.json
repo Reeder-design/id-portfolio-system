@@ -237,7 +237,7 @@
       "keywords": ["multimedia", "video", "motion graphics", "audio", "premiere", "after effects", "audition", "camtasia", "colossyan", "media", "production"],
       "answer": "I use multimedia when it helps explain, orient, demonstrate, or add useful visual context to the learning. My production toolkit includes Adobe Premiere, After Effects, Audition, Camtasia, and AI-presenter media such as Colossyan, alongside graphics and interactive web assets. I do not treat video as the default; I choose it when motion, voice, demonstration, or visual sequencing does something that static content cannot.",
       "evidence": [
-        {"title": "Multimedia", "path": "projects/instructional-design/multimedia/index.html", "note": "Video, motion, audio, AI-presenter media, and public-safe sample slots."},
+        {"title": "Multimedia", "path": "projects/instructional-design/multimedia/index.html", "note": "Video, motion, audio, AI-presenter media, and sample media examples."},
         {"title": "Vertical-Positioning Microlearning", "path": "projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html", "note": "Selective multimedia inside a short Rise module."}
       ],
       "followups": ["toolkit", "technical-training", "interactive-learning"]
@@ -291,8 +291,8 @@
       "short_label": "Evidence + metrics",
       "prompt": "How do you talk about results when confidential metrics or direct ROI are not available?",
       "featured": false,
-      "keywords": ["results", "roi", "metrics", "confidential", "evidence", "outcome", "impact", "privacy", "public safe"],
-      "answer": "I do not manufacture ROI or imply that a metric exists when I cannot support it publicly. I use the evidence I actually have: what was delivered, how the learner path changed, what decisions the design supported, what QA or reporting problem was solved, and what operational workflow was created. When confidential or unapproved metrics are not available, I say that clearly and use public-safe recreated examples to show the quality of the work instead.",
+      "keywords": ["results", "roi", "metrics", "confidential", "evidence", "outcome", "impact", "privacy"],
+      "answer": "I do not manufacture ROI or imply that a metric exists when I cannot support it publicly. I use the evidence I actually have: what was delivered, how the learner path changed, what decisions the design supported, what QA or reporting problem was solved, and what operational workflow was created. When confidential or unapproved metrics are not available, I say that clearly and use portfolio examples to show the quality of the work instead.",
       "evidence": [
         {"title": "Projects", "path": "projects/index.html", "note": "Public case studies use explicit, supportable project evidence."},
         {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Concrete workflow evidence without exposing learner records."}

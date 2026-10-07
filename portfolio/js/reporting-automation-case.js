@@ -130,37 +130,37 @@
   const evidenceData = {
     course: {
       src: '../../../../assets/project-images/reporting-automation/report-course-completion.webp',
-      alt: 'Public-safe fictional course completion report with learner, department, course, status, completion date, and time-spent columns.',
+      alt: 'Sample course completion report with learner, department, course, status, completion date, and time-spent columns.',
       label: 'Course completion report',
       caption: 'A spreadsheet-style reporting view showing the kind of completion evidence the workflow consolidates for review.'
     },
     certification: {
       src: '../../../../assets/project-images/reporting-automation/report-certification.webp',
-      alt: 'Public-safe fictional certification report with learner, certification, status, completion date, and expiration date columns.',
+      alt: 'Sample certification report with learner, certification, status, completion date, and expiration date columns.',
       label: 'Certification report',
       caption: 'A certification-focused export showing the second evidence source used when reviewing learner completion status.'
     },
     progress: {
       src: '../../../../assets/project-images/reporting-automation/report-learner-progress.webp',
-      alt: 'Public-safe fictional learner progress export with enrolled, completed, in-progress, not-started, and completion percentage fields.',
+      alt: 'Sample learner progress export with enrolled, completed, in-progress, not-started, and completion percentage fields.',
       label: 'Learner progress export',
       caption: 'A consolidated progress view demonstrating how multiple learning states can be made easier to scan after data cleanup.'
     },
     courseAnalytics: {
       src: '../../../../assets/project-images/reporting-automation/analytics-course-completion.webp',
-      alt: 'Public-safe fictional course completion analytics dashboard with learner rows, departments, course names, status, and completion dates.',
+      alt: 'Sample course completion analytics dashboard with learner rows, departments, course names, status, and completion dates.',
       label: 'Course completion analytics',
       caption: 'A dashboard-style completion view that turns learner status data into a faster scan for learning-operations review.'
     },
     analytics: {
       src: '../../../../assets/project-images/reporting-automation/analytics-certification-status.webp',
-      alt: 'Public-safe fictional certification analytics dashboard with certified, in-progress, and not-started learner status summaries.',
+      alt: 'Sample certification analytics dashboard with certified, in-progress, and not-started learner status summaries.',
       label: 'Certification analytics view',
       caption: 'An analytics layer built from the same type of learning data, showing how certification outputs can support faster interpretation.'
     },
     detail: {
       src: '../../../../assets/project-images/reporting-automation/analytics-detailed-export.webp',
-      alt: 'Public-safe fictional detailed learner data export with course activity, completion percentage, and certificate status.',
+      alt: 'Sample detailed learner data export with course activity, completion percentage, and certificate status.',
       label: 'Detailed reporting export',
       caption: 'A row-level export view showing the type of granular evidence available when a summary status needs closer review.'
     }
