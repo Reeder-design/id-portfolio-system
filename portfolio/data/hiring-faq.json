@@ -76,12 +76,13 @@
       "id": "audience-design",
       "category": "Instructional Design",
       "short_label": "Different audiences",
-      "prompt": "How do you design for learners with different levels of experience?",
+      "prompt": "How do you design for different learner roles and experience levels?",
       "featured": false,
-      "keywords": ["audience", "beginner", "experienced", "new seller", "mixed experience", "different learners", "role based", "personalization", "optional content"],
-      "answer": "I separate what everyone needs from what only some learners need. In certification work, that has meant keeping shared seller decisions in the core path, separating regional requirements, and moving deeper technical foundations into optional learning when they are not necessary for every seller. I also use expandable detail, comparisons, quick references, and scenarios so experienced learners can move efficiently without leaving newer learners without context.",
+      "keywords": ["audience", "beginner", "experienced", "new seller", "mixed experience", "different learners", "role based", "seller and partner", "seller pathway", "partner pathway", "learning path", "personalization", "optional content"],
+      "answer": "I start with the task each role needs to perform, then decide what belongs in a shared core and what needs its own practice or check. On my pathway page, sellers diagnose a customer need while partners select current resources and check the handoff. In certification work, I have also separated shared seller decisions, regional requirements, and optional technical foundations. Within a route, I use expandable detail and references so experienced learners can move quickly without leaving newer learners without context.",
       "evidence": [
-        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Core, regional, and optional learning routes for mixed-experience sellers."}
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Core, regional, and optional learning routes for mixed-experience sellers."},
+        {"title": "Complete eLearning Pathways", "path": "projects/instructional-design/complete-learning-paths/index.html", "note": "Seller and partner demo routes with different tasks and checks."}
       ],
       "followups": ["technical-training", "assessment-design", "global-audiences"]
     },
@@ -120,11 +121,11 @@
       "short_label": "LMS experience",
       "prompt": "What LMS administration and learning operations experience do you have?",
       "featured": true,
-      "keywords": ["lms", "absorb", "docebo", "learning management system", "learning operations", "admin", "learning plan", "certification", "enrollment", "support"],
-      "answer": "I have hands-on LMS administration and learning-operations experience across Absorb and Docebo. My work includes course and content setup, learning plans, catalogs, certifications, audience and access rules, enrollment behavior, renewals, learner support, reporting, documentation, and troubleshooting. I think about the full learner path from finding the right content through completion, renewal, and support rather than treating the LMS as only a publishing destination.",
+      "keywords": ["lms", "absorb", "docebo", "learning management system", "learning operations", "admin", "administrator training", "learning plan", "certification", "enrollment", "support", "content governance"],
+      "answer": "I have worked across LMS administration and learning operations in Absorb and Docebo: content and learning-plan setup, audience access, certifications, completion rules, learner support, documentation, and reporting. I plan the content and LMS route together because a strong course is hard to use when assignment, navigation, or records fail. When an issue comes in, I trace the learner path and underlying rule before changing a live setup. I also train administrators and document ownership, versions, and review points so the system stays maintainable.",
       "evidence": [
-        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Content administration, learning plans, certifications, support, and reporting."},
-        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Absorb-to-Docebo setup, UAT, support, and post-launch operations."},
+        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "How I connect content, platform rules, learner support, and records."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Configuration, UAT, administrator training, support, and reporting."},
         {"title": "How I Approach Different LMS Platforms", "path": "projects/lms-administration/my-approach-for-various-lms-platforms/index.html", "note": "Audience and platform decisions, with direct Absorb and Docebo work separated from illustrative models."}
       ],
       "followups": ["lms-migration", "measurement-reporting", "coding-automation"]
@@ -135,10 +136,10 @@
       "short_label": "LMS migration",
       "prompt": "What did you do during the Absorb to Docebo migration?",
       "featured": true,
-      "keywords": ["migration", "absorb to docebo", "docebo", "uat", "platform transition", "configuration", "learning plan", "inbox", "support documentation", "post launch"],
-      "answer": "My migration work covered the content and learner-experience layer of the move from Absorb to Docebo. I helped set up learning structures, configured learning plans and content, tested employee, partner, and customer learner journeys, documented issues, retested fixes, supported the learner inbox, helped establish support documentation and reusable customer-support email responses, and supported immediate post-launch reporting and action planning. I was part of the broader migration team rather than the sole owner of platform architecture.",
+      "keywords": ["migration", "absorb to docebo", "docebo", "uat", "platform transition", "configuration", "learning plan", "administrator training", "inbox", "support documentation", "post launch", "power bi", "snowflake"],
+      "answer": "I helped move the content and learner routes from Absorb to Docebo. I configured learning plans and content, tested employee, partner, and customer journeys, documented issues, and retested fixes. After launch, I helped train LMS administrators, supported learners and administrators, created guidance and reusable support responses, and developed Power BI dashboards using LMS and Snowflake-connected reporting data. This was my contribution within the broader migration team.",
       "evidence": [
-        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Detailed migration scope, UAT, launch support, and ownership boundaries."}
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Configuration, learner-route testing, administrator training, post-launch support, and Power BI reporting."}
       ],
       "followups": ["lms-experience", "measurement-reporting", "ownership-boundaries"]
     },
@@ -148,11 +149,12 @@
       "short_label": "Measurement + reporting",
       "prompt": "How do you measure learning or work with reporting?",
       "featured": false,
-      "keywords": ["measurement", "reporting", "analytics", "completion", "certificate", "excel", "data", "learning analytics", "outcomes", "metrics", "report"],
-      "answer": "I work with the evidence that the system and project can actually support. That includes completion and certificate data, assessment results, learner-path exceptions, support patterns, and operational reporting. When LMS reporting has not matched the learning design, I have built supplemental workflows instead of pretending the limitation did not exist. One example uses four recurring LMS reports and Python-based analysis to produce Complete and Incomplete review sheets with learner type and visible exceptions.",
+      "keywords": ["measurement", "reporting", "analytics", "completion", "certificate", "excel", "data", "learning analytics", "outcomes", "metrics", "report", "power bi", "snowflake", "dashboard"],
+      "answer": "I look at completion and certificate records, assessment results, learner-path exceptions, and support patterns to see where people stall. When a standard LMS report did not show what a certification review needed, I built a workflow that combines four recurring reports into Complete and Incomplete review sheets with visible exceptions. I have also developed Power BI dashboards using LMS and Snowflake-connected reporting data for post-launch review.",
       "evidence": [
         {"title": "Certification Reporting Automation", "path": "projects/workflows/data-reporting/certification-reporting-automation/index.html", "note": "Automated report downloads and completion analysis."},
-        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Certification reporting workaround and assessment evidence."}
+        {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Certification reporting workaround and assessment evidence."},
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Post-launch Power BI dashboards using LMS and Snowflake-connected data."}
       ],
       "followups": ["coding-automation", "lms-experience", "evidence-boundaries"]
     },
@@ -248,8 +250,8 @@
       "short_label": "Tools I use",
       "prompt": "What tools and platforms are you comfortable working in?",
       "featured": false,
-      "keywords": ["tools", "platforms", "software", "rise", "storyline", "articulate", "absorb", "docebo", "python", "selenium", "adobe", "powerpoint", "html", "javascript"],
-      "answer": "My learning-development stack includes Articulate Rise and Storyline, Review 360, PowerPoint, Adobe creative tools, Camtasia, and browser-based HTML/CSS/JavaScript work. On the learning-operations side I have hands-on experience with Absorb and Docebo. For workflow and reporting work I use Python, Selenium, pandas, openpyxl, and Excel. I choose the tool after the learning or operational need is clear rather than designing the project around a favorite platform.",
+      "keywords": ["tools", "platforms", "software", "rise", "storyline", "articulate", "absorb", "docebo", "python", "selenium", "adobe", "powerpoint", "html", "javascript", "power bi", "power apps", "sharepoint", "highspot", "snowflake"],
+      "answer": "For learning development I use Rise, Storyline, Review 360, PowerPoint, Adobe tools, Camtasia, and HTML/CSS/JavaScript. In learning operations I work in Absorb and Docebo, and I use Power BI and Snowflake-connected reporting data. I also work with Power Apps, SharePoint, and Highspot Sites where those systems support the work. For automation and analysis I use Python, Selenium, pandas, openpyxl, and Excel. I choose the tool based on the learner or operational task.",
       "evidence": [
         {"title": "Instructional Design", "path": "projects/instructional-design/index.html", "note": "Authoring and learning-development work."},
         {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Absorb and Docebo operations."},
@@ -263,11 +265,12 @@
       "short_label": "Changing content",
       "prompt": "How do you handle fast-changing product content or shifting source material?",
       "featured": false,
-      "keywords": ["change", "changing content", "maintenance", "update", "product update", "source material", "version", "rapid change", "scope change"],
-      "answer": "I design for maintenance from the beginning when I know the product or source material will keep changing. I keep modules and interactions as independent as practical, track which source owns a claim or section, avoid publishing information that is not approved yet, and isolate regional or optional content when it will change on a different schedule. That makes future updates smaller and reduces the chance that one change forces a complete rebuild.",
+      "keywords": ["change", "changing content", "maintenance", "update", "product update", "source material", "version", "rapid change", "scope change", "content governance", "review ownership"],
+      "answer": "I keep source files, review ownership, versions, and LMS placement traceable so a product change reaches the right course, resource, assessment, and learner group. I separate content that changes on different schedules, such as regional or optional material. Before updating a live route, I check what the change affects and who approves it. That keeps a small revision from becoming a full rebuild or leaving stale content elsewhere in the system.",
       "evidence": [
         {"title": "Enterprise Sales Certification Pathway", "path": "projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html", "note": "Maintenance approach across a changing product portfolio."},
-        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Independent launch assets with different update cycles."}
+        {"title": "Product-Launch Microlearning", "path": "projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html", "note": "Independent launch assets with different update cycles."},
+        {"title": "LMS Administration", "path": "projects/lms-administration/index.html", "note": "Ownership, documentation, and platform rules that keep learning maintainable."}
       ],
       "followups": ["sme-collaboration", "end-to-end-project", "ownership-boundaries"]
     },
