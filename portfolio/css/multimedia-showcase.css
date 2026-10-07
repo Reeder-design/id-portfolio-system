@@ -359,7 +359,7 @@
 .workflow-export-flow em{padding:3px 4px;border:1px solid #b3d6ba;border-radius:3px;background:#fff;color:#37634e;font:900 .36rem/1 var(--font-heading);font-style:normal}.workflow-export-flow>i{color:#419266;font:900 .48rem/1 var(--font-heading);font-style:normal}
 .workflow-export-flow u{position:absolute;bottom:-4px;left:0;width:7px;height:7px;border-radius:50%;background:#64bf83;box-shadow:0 0 7px #64bf83}
 .workflow-export-progress{height:7px;overflow:hidden;border-radius:5px;background:#c8dfcf}.workflow-export-progress i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#6ac68f,#a1e368)}
-.workflow-export strong{color:#376951;font:900 .42rem/1 var(--font-heading)}.workflow-export b{position:absolute;right:8px;bottom:7px;padding:4px;border-radius:4px;background:#d0edcf;color:#26784c;font:900 .41rem/1 var(--font-heading)}
+.workflow-export strong{color:#376951;font:900 .42rem/1 var(--font-heading)}.workflow-export b{position:absolute;right:8px;bottom:7px;padding:4px;border-radius:4px;background:#d0edcf;color:#247249;font:900 .41rem/1 var(--font-heading)}
 .media-workflow-motion[data-phase="release"] .workflow-export{display:grid}
 .workflow-editor-handoff{display:flex;align-items:center;gap:7px;min-width:0;padding:6px 10px;border-top:1px solid #4b806b;background:#1d4845}
 .workflow-editor-handoff span{color:#a1e368;font:900 .4rem/1 var(--font-heading);white-space:nowrap}.workflow-editor-handoff strong{overflow:hidden;color:#eef9ef;font:800 .46rem/1.2 var(--font-heading);text-overflow:ellipsis;white-space:nowrap}.workflow-editor-handoff i{margin-left:auto;width:7px;height:7px;flex:0 0 7px;border-top:2px solid #a1e368;border-right:2px solid #a1e368;transform:rotate(45deg)}

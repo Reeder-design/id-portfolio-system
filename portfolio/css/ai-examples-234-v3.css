@@ -96,8 +96,8 @@
 .ai-v3-assessment-action>span{color:#527364;font-size:.78rem;font-weight:700}
 .ai-v3-assessment-results{display:grid;grid-template-columns:.76fr 1.24fr;gap:8px;flex:1;min-height:110px}
 .ai-v3-assessment-criteria,.ai-v3-assessment-feedback{display:grid;align-content:start;gap:6px;padding:10px;border:1px solid #cbddd0;border-radius:10px;background:#eef6f0}
-.ai-v3-assessment-criteria>div{display:flex;justify-content:space-between;gap:6px;align-items:center;padding:7px;border:1px solid #d2e0d5;border-radius:7px;background:#fff;color:#476758;font-size:.77rem;font-weight:700;opacity:.5}
-.ai-v3-assessment-criteria b{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#e5ede7;color:#647d6a}
+.ai-v3-assessment-criteria>div{display:flex;justify-content:space-between;gap:6px;align-items:center;padding:7px;border:1px solid #d2e0d5;border-radius:7px;background:#fff;color:#476758;font-size:.77rem;font-weight:700;opacity:1}
+.ai-v3-assessment-criteria b{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#e5ede7;color:#586d5d}
 .ai-v3-assessment[data-step="2"] [data-ai-v3-criterion],.ai-v3-assessment[data-step="3"] [data-ai-v3-criterion]{opacity:1}
 .ai-v3-assessment[data-step="2"] [data-ai-v3-criterion="evidence"],.ai-v3-assessment[data-step="3"] [data-ai-v3-criterion="evidence"]{border-color:#82c99a}
 .ai-v3-assessment[data-step="2"] [data-ai-v3-criterion="evidence"] b,.ai-v3-assessment[data-step="3"] [data-ai-v3-criterion="evidence"] b{background:#b9e5c7;color:#245a3a}

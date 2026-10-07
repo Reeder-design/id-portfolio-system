@@ -33,11 +33,10 @@
   const film = document.getElementById("solutionFilm");
   if (film) {
     const filmScenes = [
-      {kind:"POINT OF NEED", title:"Job aid", description:"One answer, exactly where the task happens.", visual:`<div class="cp-film-device cp-film-aid"><div class="cp-film-device-top"><img src="${icon('mini-document')}" alt=""><span>Quick reference</span></div><div class="cp-film-search">⌕ &nbsp; Find the approved answer</div><div class="cp-film-aid-result"><i></i><span>Clarify the handoff</span><b>↗</b></div></div>`},
-      {kind:"ONE LEARNING GOAL", title:"Microlearning", description:"A short prompt builds one useful distinction.", visual:`<div class="cp-film-device cp-film-micro"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Micro lesson</span></div><div class="cp-film-micro-question">What is the first move?</div><div class="cp-film-micro-answer"><img src="${icon('mini-chat')}" alt=""><span>Ask where the delay occurs</span></div></div>`},
-      {kind:"ONE DECISION", title:"Single interaction", description:"A learner tries a choice and sees its consequence.", visual:`<div class="cp-film-device cp-film-decision"><div class="cp-film-device-top"><img src="${icon('mini-user')}" alt=""><span>Decision practice</span></div><div class="cp-film-decision-path"><span>Customer signal</span><i>→</i><span>Choose response</span><i>→</i><span>Feedback</span></div><div class="cp-film-choice-highlight"><img src="${icon('mini-verified')}" alt=""> Ask a discovery question</div></div>`},
-      {kind:"ONE CAPABILITY", title:"Focused course", description:"Explanation, practice, and a check support one objective.", visual:`<div class="cp-film-device cp-film-course"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Course player</span></div><div class="cp-film-course-steps"><span><img src="${icon('mini-document')}" alt="">Explain</span><i>→</i><span><img src="${icon('mini-chat')}" alt="">Practice</span><i>→</i><span><img src="${icon('mini-document-list')}" alt="">Check</span></div></div>`},
-      {kind:"CONNECTED ROUTE", title:"Complete pathway", description:"Multiple experiences, rules, support, and records lead to a meaningful milestone.", visual:`<div class="cp-film-device cp-film-pathway"><div class="cp-film-pathway-top"><img src="${icon('mini-hierarchy')}" alt=""><span>Role-based route</span><b>IN PROGRESS</b></div><div class="cp-film-pathway-stages"><span><img src="${icon('mini-user')}" alt="">Route</span><span><img src="${icon('mini-book')}" alt="">Learn</span><span><img src="${icon('mini-chat')}" alt="">Practice</span><span><img src="${icon('mini-document-list')}" alt="">Validate</span><span><img src="${icon('mini-certificate')}" alt="">Qualify</span></div><div class="cp-film-pathway-base">LMS rules · support · reporting · revision</div></div>`}
+      {kind:"POINT OF NEED", title:"Job aid", description:"One answer at the moment of need.", difference:"It does not sequence courses or award a completion milestone.", visual:`<div class="cp-film-device cp-film-aid"><div class="cp-film-device-top"><img src="${icon('mini-document')}" alt=""><span>Quick reference</span></div><div class="cp-film-search">⌕ &nbsp; Find the approved answer</div><div class="cp-film-aid-result"><i></i><span>Clarify the handoff</span><b>↗</b></div></div>`},
+      {kind:"ONE LEARNING GOAL", title:"Microlearning", description:"One short lesson targets a specific need.", difference:"It can be part of a pathway, but does not provide the full course sequence or final gate by itself.", visual:`<div class="cp-film-device cp-film-micro"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Micro lesson</span></div><div class="cp-film-micro-question">What is the first move?</div><div class="cp-film-micro-answer"><img src="${icon('mini-chat')}" alt=""><span>Ask where the delay occurs</span></div></div>`},
+      {kind:"ONE DECISION", title:"Single interaction", description:"A learner makes one choice and sees feedback.", difference:"It provides practice, while a pathway connects practice to courses, assessment, and a recorded outcome.", visual:`<div class="cp-film-device cp-film-decision"><div class="cp-film-device-top"><img src="${icon('mini-user')}" alt=""><span>Decision practice</span></div><div class="cp-film-decision-path"><span>Customer signal</span><i>→</i><span>Choose response</span><i>→</i><span>Feedback</span></div><div class="cp-film-choice-highlight"><img src="${icon('mini-verified')}" alt=""> Ask a discovery question</div></div>`},
+      {kind:"ONE COURSE", title:"Focused course", description:"One course develops a defined capability.", difference:"A pathway connects multiple courses and activities to a shared completion requirement.", visual:`<div class="cp-film-device cp-film-course"><div class="cp-film-device-top"><img src="${icon('mini-book')}" alt=""><span>Course player</span></div><div class="cp-film-course-steps"><span><img src="${icon('mini-document')}" alt="">Explain</span><i>→</i><span><img src="${icon('mini-chat')}" alt="">Practice</span><i>→</i><span><img src="${icon('mini-document-list')}" alt="">Check</span></div></div>`}
     ];
     let filmIndex = 0;
     let filmTimer = 0;
@@ -50,10 +49,11 @@
     const renderFilm = (index) => {
       filmIndex = index;
       const scene = filmScenes[index];
-      document.getElementById("solutionCount").textContent = `${String(index + 1).padStart(2,"0")} / 05`;
+      document.getElementById("solutionCount").textContent = `${String(index + 1).padStart(2,"0")} / 04`;
       document.getElementById("solutionKind").textContent = scene.kind;
       document.getElementById("solutionTitle").textContent = scene.title;
       document.getElementById("solutionDescription").textContent = scene.description;
+      document.getElementById("solutionDifference").textContent = scene.difference;
       document.getElementById("solutionStage").innerHTML = scene.visual;
       film.querySelectorAll(".cp-film-timeline i").forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === index));
       film.dataset.scene = String(index);
@@ -79,19 +79,25 @@
   }
 
   const learner = {
-    route: {title:"Choose a route", caption:"A route that fits the learner", copy:"Role-based entry points connect shared content with what each audience needs next.", foundation:"A route that fits the audience", why:"Role-based entry keeps the pathway relevant from the first screen. Learners see a clear starting point that fits their responsibilities.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">START / CHOOSE YOUR ROLE</p><h4>Which route fits your work?</h4><div class="cp-route-choices"><button type="button" data-route="seller"><img src="${icon('mini-user')}" alt=""><strong>Seller</strong><span>Customer conversations</span></button><button type="button" data-route="partner"><img src="${icon('mini-audience')}" alt=""><strong>Partner</strong><span>Channel conversations</span></button></div><div class="cp-ui-motion-line" aria-hidden="true"><i></i></div></div>`},
+    route: {title:"Choose a route", caption:"Different roles, different learning", copy:"The seller and partner routes use different tasks, resources, and checks.", foundation:"Start with the role", why:"I decide what each audience needs to do, then build its content and validation around that work.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">START / CHOOSE YOUR ROLE</p><h4>Which route fits your work?</h4><div class="cp-route-choices"><button type="button" data-route="seller"><img src="${icon('mini-user')}" alt=""><strong>Seller</strong><span>Diagnose a customer need</span></button><button type="button" data-route="partner"><img src="${icon('mini-audience')}" alt=""><strong>Partner</strong><span>Prepare approved resources</span></button></div><div class="cp-ui-motion-line" aria-hidden="true"><i></i></div></div>`},
     module: {title:"Set the priority", caption:"Practice before the check", copy:"A small decision makes the learner apply the concept before assessment.", foundation:"Practice turns information into judgment", why:"Learners make a decision with feedback while the stakes are low. This gives them a reason to use the information instead of only reading it.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">PRACTICE / CUSTOMER SIGNAL</p><h4>Remote teams keep losing service.</h4><div class="cp-priority-scene"><img src="${icon('mini-analytics')}" alt=""><div class="cp-priority-waves" aria-hidden="true"><i></i><i></i><i></i></div><img src="${icon('mini-user')}" alt=""></div><label class="cp-range-label" for="priorityRange">What matters most?</label><div class="cp-range-ends"><span>Fast setup</span><span>Reliable reach</span></div><input id="priorityRange" type="range" min="0" max="100" value="50" aria-label="Slide toward reliable reach for remote teams"><div class="cp-range-meter" aria-hidden="true"><i id="priorityMeter"></i></div><p class="cp-guided-feedback" id="priorityFeedback" role="status">Move the slider toward the stronger priority.</p></div>`},
     progress: {title:"Match the evidence", caption:"Validation of applied reasoning", copy:"The learner connects a signal to the outcome it supports.", foundation:"Evidence makes the check meaningful", why:"Matching the customer signal to a defensible outcome checks whether the learner can use the idea in context. The result is more informative than completion alone.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">CHECK / MATCH THE SIGNAL</p><h4>Match each signal to an outcome.</h4><div class="cp-match-board"><div class="cp-match-sources"><button type="button" draggable="true" data-match-source="coverage"><img src="${icon('mini-analytics')}" alt=""><span>Dropouts</span></button><button type="button" draggable="true" data-match-source="security"><img src="${icon('mini-shield')}" alt=""><span>Sensitive data</span></button></div><div class="cp-match-connectors" aria-hidden="true"><i></i><i></i></div><div class="cp-match-targets"><button type="button" data-match-target="security"><img src="${icon('mini-database')}" alt=""><span>Protected access</span></button><button type="button" data-match-target="coverage"><img src="${icon('mini-verified')}" alt=""><span>Reliable reach</span></button></div></div><p class="cp-guided-feedback" id="matchFeedback" role="status">Drag an icon to an outcome, or select both.</p></div>`},
     milestone: {title:"Milestone earned", caption:"Completion with a purpose", copy:"The milestone is visible and the completion record is ready for the next step.", foundation:"Completion carries forward", why:"The learner sees why the route mattered. A trustworthy record makes that milestone usable for support, reporting, qualification, or access decisions.", screen:`<div class="cp-learner-ui cp-guided-ui cp-guided-complete"><p class="cp-ui-kicker">PATHWAY COMPLETE</p><div class="cp-complete-burst" aria-hidden="true"><i></i><i></i><i></i><img src="${icon('mini-certificate')}" alt=""></div><h4>Ready for the next step</h4><div class="cp-complete-record"><img src="${icon('mini-database')}" alt=""><span>Completion recorded</span><b>✓</b></div><button type="button" class="cp-ui-action" data-reset-learner>Reset ↺</button></div>`}
   };
+  const partnerLearner = {
+    module: {title:"Choose partner resources", caption:"Build from approved materials", copy:"Partners select the current product brief and channel conversation guide before sharing a customer-facing message.", foundation:"Give partners their own content", why:"This route starts with approved channel materials. The seller route starts with diagnosing a customer need.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">PARTNER / RESOURCE SET</p><h4>Which materials belong in your kit?</h4><div class="cp-partner-resources"><button type="button" data-partner-resource="brief"><img src="${icon('mini-document')}" alt=""><strong>Current product brief</strong></button><button type="button" data-partner-resource="guide"><img src="${icon('mini-chat')}" alt=""><strong>Channel conversation guide</strong></button><button type="button" data-partner-resource="old"><img src="${icon('mini-book')}" alt=""><strong>Old slide deck</strong></button></div><p class="cp-guided-feedback" id="partnerResourceFeedback" role="status">Choose the two current resources.</p></div>`},
+    progress: {title:"Review the partner handoff", caption:"Check before sharing", copy:"Partners check the approved message and version before handing material to a customer.", foundation:"Assess the partner decision", why:"The partner check is about using current, approved material. It differs from the seller's evidence-matching task.", screen:`<div class="cp-learner-ui cp-guided-ui"><p class="cp-ui-kicker">PARTNER / HANDOFF CHECK</p><h4>A customer asks for a summary. What comes first?</h4><div class="cp-partner-handoff"><button type="button" data-partner-answer="correct"><img src="${icon('mini-verified')}" alt=""><span>Confirm the current approved message and version</span></button><button type="button" data-partner-answer="old"><img src="${icon('mini-document')}" alt=""><span>Send the deck saved from the last launch</span></button></div><p class="cp-guided-feedback" id="partnerHandoffFeedback" role="status">Choose how you would prepare the handoff.</p></div>`},
+    milestone: {title:"Partner route complete", caption:"Partner enablement recorded", copy:"The partner completed a resource and handoff check suited to the channel role.", foundation:"Record the right completion", why:"The partner route confirms approved resources and a sound handoff. The seller route confirms customer diagnosis and evidence use.", screen:`<div class="cp-learner-ui cp-guided-ui cp-guided-complete"><p class="cp-ui-kicker">PARTNER ROUTE COMPLETE</p><div class="cp-complete-burst" aria-hidden="true"><i></i><i></i><i></i><img src="${icon('mini-certificate')}" alt=""></div><h4>Ready for a customer handoff</h4><div class="cp-complete-record"><img src="${icon('mini-database')}" alt=""><span>Partner completion recorded</span><b>✓</b></div><button type="button" class="cp-ui-action" data-reset-learner>Choose another route ↺</button></div>`}
+  };
   const demo = document.querySelector(".cp-learner-demo");
   let learnerTimer = 0;
   let selectedMatch = "";
+  let selectedRoute = "seller";
   const renderLearner = (key) => {
     if (!demo) return;
     window.clearTimeout(learnerTimer);
     selectedMatch = "";
-    const data = learner[key];
+    const data = key === "route" ? learner.route : selectedRoute === "partner" ? partnerLearner[key] : learner[key];
     const screen = document.getElementById("learnerScreen");
     screen.setAttribute("aria-label", data.title);
     screen.classList.remove("is-entering");
@@ -101,6 +107,7 @@
     document.getElementById("demoWindowTitle").textContent = data.title;
     document.getElementById("demoCaptionTitle").textContent = data.caption;
     document.getElementById("demoCaption").textContent = data.copy;
+    document.getElementById("demoChangeRoute").hidden = key === "route";
     document.getElementById("anatomyFoundationTitle").textContent = data.foundation;
     document.getElementById("anatomyFoundationCopy").textContent = data.why;
     const index = ["route","module","progress","milestone"].indexOf(key);
@@ -111,14 +118,34 @@
       step.classList.toggle("is-complete", stepIndex < index);
       if (stepIndex === index) step.setAttribute("aria-current", "step"); else step.removeAttribute("aria-current");
     });
+    const stepLabels = key === "route" ? ["Choose route", "Role task", "Role check", "Milestone"] : selectedRoute === "partner" ? ["Choose route", "Choose resources", "Review handoff", "Partner milestone"] : ["Choose route", "Set priority", "Match evidence", "Seller milestone"];
+    demo.querySelectorAll(".cp-demo-step-label").forEach((label, labelIndex) => { label.textContent = stepLabels[labelIndex + 1]; });
     document.querySelectorAll(".cp-anatomy-foundation-rail i").forEach((item, itemIndex) => item.classList.toggle("is-current", itemIndex === index));
     if (key === "route") {
       screen.querySelectorAll("[data-route]").forEach((button) => button.addEventListener("click", () => {
+        selectedRoute = button.dataset.route;
         button.classList.add("is-selected");
         learnerTimer = window.setTimeout(() => renderLearner("module"), 450);
       }));
     }
-    if (key === "module") {
+    if (key === "module" && selectedRoute === "partner") {
+      const chosen = new Set();
+      const feedback = screen.querySelector("#partnerResourceFeedback");
+      screen.querySelectorAll("[data-partner-resource]").forEach((button) => button.addEventListener("click", () => {
+        const resource = button.dataset.partnerResource;
+        if (resource === "old") {
+          feedback.classList.add("is-wrong");
+          feedback.textContent = "That deck may be out of date. Use the current resources.";
+          return;
+        }
+        chosen.add(resource);
+        button.classList.add("is-selected");
+        feedback.classList.remove("is-wrong");
+        feedback.textContent = chosen.size === 2 ? "Resource kit ready. Moving to the handoff check…" : "Choose one more current resource.";
+        if (chosen.size === 2) learnerTimer = window.setTimeout(() => renderLearner("progress"), 850);
+      }));
+    }
+    if (key === "module" && selectedRoute === "seller") {
       const range = screen.querySelector("#priorityRange");
       const feedback = screen.querySelector("#priorityFeedback");
       range.addEventListener("input", () => {
@@ -130,7 +157,17 @@
         if (value >= 70) learnerTimer = window.setTimeout(() => renderLearner("progress"), 850);
       });
     }
-    if (key === "progress") {
+    if (key === "progress" && selectedRoute === "partner") {
+      const feedback = screen.querySelector("#partnerHandoffFeedback");
+      screen.querySelectorAll("[data-partner-answer]").forEach((button) => button.addEventListener("click", () => {
+        const correct = button.dataset.partnerAnswer === "correct";
+        feedback.classList.toggle("is-wrong", !correct);
+        feedback.textContent = correct ? "Current message confirmed. Partner route complete…" : "Check the current approved message before sharing.";
+        button.classList.toggle("is-selected", correct);
+        if (correct) learnerTimer = window.setTimeout(() => renderLearner("milestone"), 900);
+      }));
+    }
+    if (key === "progress" && selectedRoute === "seller") {
       const feedback = screen.querySelector("#matchFeedback");
       const match = (source, target) => {
         if (!source || !target || source.disabled || target.disabled) return;
@@ -169,6 +206,7 @@
     }
     if (key === "milestone") screen.querySelector("[data-reset-learner]").addEventListener("click", () => renderLearner("route"));
   };
+  document.getElementById("demoChangeRoute")?.addEventListener("click", () => renderLearner("route"));
   renderLearner("route");
 
   const weight = {
