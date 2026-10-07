@@ -21,10 +21,10 @@
       "id": "lms",
       "label": "LMS + Learning Operations",
       "icon": "icon-lms",
-      "summary": "Content administration, pathways, certifications, migrations, learner support, testing, reporting, and enterprise delivery rules.",
+      "summary": "Content and platform setup, learner routes, certifications, administrator training, support, and reporting.",
       "hands_on": ["Absorb LMS", "Docebo"],
       "familiarity": ["Canvas", "Schoology", "Cornerstone Galaxy / OnDemand", "Workday Learning", "Moodle", "SAP SuccessFactors Learning"],
-      "capabilities": ["Course setup", "Learning plans", "Catalogs", "Certifications", "Enrollment logic", "Audience rules", "UAT", "Learner support", "Migration validation", "Completion + renewal workflows"]
+      "capabilities": ["Course setup", "Learning plans", "Catalogs", "Certifications", "Enrollment logic", "Audience rules", "UAT", "Administrator training", "Learner support", "Migration validation", "Documentation + review ownership", "Completion + renewal workflows"]
     },
     {
       "id": "integrations",
@@ -40,8 +40,8 @@
       "label": "Data + Automation",
       "icon": "icon-workflow",
       "summary": "Browser automation, data cleaning, reporting workflows, QA, and repetitive-task reduction around learning operations.",
-      "hands_on": ["Python", "Selenium", "pandas", "openpyxl", "Excel", "Git", "GitHub", "VS Code"],
-      "capabilities": ["Browser automation", "Data joins", "Report generation", "QA workflows", "System handoffs", "Structured data", "Version control", "Exception handling", "Repeatable operational workflows"]
+      "hands_on": ["Python", "Selenium", "pandas", "openpyxl", "Excel", "Power BI", "Snowflake-connected reporting", "Power Apps", "Git", "GitHub", "VS Code"],
+      "capabilities": ["Browser automation", "Data joins", "Power BI dashboards", "Report generation", "QA workflows", "System handoffs", "Structured data", "Version control", "Exception handling", "Repeatable operational workflows"]
     },
     {
       "id": "web",
@@ -81,7 +81,7 @@
       "label": "Project + Collaboration",
       "icon": "icon-feedback",
       "summary": "Cross-functional planning, review, source management, task tracking, stakeholder alignment, and launch coordination.",
-      "hands_on": ["Microsoft Teams", "Slack", "Asana", "Smartsheet", "Jira", "Monday.com", "Trello", "OneDrive", "Microsoft 365", "Review 360"],
+      "hands_on": ["Microsoft Teams", "Slack", "Asana", "Smartsheet", "Jira", "Monday.com", "Trello", "SharePoint", "Highspot Sites", "OneDrive", "Microsoft 365", "Review 360"],
       "capabilities": ["SME review", "QA tracking", "Source management", "Feedback cycles", "Documentation", "Milestone planning", "Localization tracking", "Launch coordination", "Agile iteration"]
     }
   ],

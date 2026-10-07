@@ -80,12 +80,12 @@
     },
     release: {
       phase: 'Release · guidance', title: 'Prepare people for the new environment.',
-      text: 'I supported learner-facing guidance, documentation, and reusable support responses so a platform change did not leave learners guessing where to go or how to get help.',
+      text: 'I created learner navigation and support guidance, including videos and reusable responses, so people could find their way through the new platform.',
       evidence: 'Check the published route, support instructions, and known-issue owner before launch.'
     },
     sustain: {
       phase: 'Sustain · after launch', title: 'Treat support signals as system feedback.',
-      text: 'I helped with learner inbox triage, post-launch reporting, issue follow-up, and documentation updates as the migrated experience reached real users.',
+      text: 'I continue to help troubleshoot issues, train administrators, refine guidance and practices, and build reports that show where follow-up is needed.',
       evidence: 'Connect recurring tickets and report exceptions to a fix, owner, and next validation cycle.'
     }
   };
@@ -102,23 +102,23 @@
       ]
     },
     docs: {
-      label: 'Documentation + Templates',
-      title: 'I helped turn common support questions into reusable responses.',
-      text: 'I documented support processes and helped build customer-support email templates so repeat questions did not require starting from scratch every time.',
+      label: 'Admin Training + Guidance',
+      title: 'I help administrators support the platform after launch.',
+      text: 'I create navigation videos, user guides, reporting guidance, and train-the-trainer resources. I also help administrators work through post-launch questions and establish practices they can maintain.',
       cards: [
-        ['Inputs', 'Recurring questions, known fixes, escalation paths, and common account issues.'],
-        ['My work', 'Document the response process and draft reusable customer email templates.'],
-        ['Output', 'More consistent support responses and clearer handoff guidance.']
+        ['Inputs', 'Recurring questions, known fixes, reporting steps, and changes to the platform.'],
+        ['My work', 'Train administrators and create videos, guides, templates, and reporting instructions.'],
+        ['Output', 'Guidance administrators can reuse and update when the platform changes.']
       ]
     },
     reporting: {
-      label: 'Post-Launch Reporting',
-      title: 'I helped make unresolved issues and follow-up work visible.',
-      text: 'I supported immediate post-launch reporting and action planning so open issues, exceptions, and next steps were easier to track.',
+      label: 'Reporting + Analytics',
+      title: 'I build reporting that helps teams see what needs attention.',
+      text: 'I create Power BI dashboards for learning review and work with reporting data connected to Snowflake. I check LMS records, exceptions, and support patterns before sharing a conclusion.',
       cards: [
-        ['Inputs', 'Support trends, known issues, exceptions, retest status, and follow-up needs.'],
-        ['My work', 'Organize reporting and surface items that still needed an owner or action.'],
-        ['Output', 'A clearer immediate plan of action after launch.']
+        ['Inputs', 'LMS records, reporting data, support trends, and known exceptions.'],
+        ['My work', 'Build Power BI views and check source records and reporting connections.'],
+        ['Output', 'Dashboards and follow-up reports that show what needs an owner or a fix.']
       ]
     }
   };
@@ -127,12 +127,12 @@
     supported: [
       ['Configuration', 'I helped set up learning structures, learning plans, content, catalogs, and learner-facing relationships in Docebo.'],
       ['UAT + retesting', 'I tested employee, partner, and customer experiences, documented migration problems, and retested fixes.'],
-      ['Support + reporting', 'I supported the learner inbox, documentation and email-template workflows, and immediate post-launch reporting and action planning.']
+      ['After launch', 'I help train administrators, create learner and admin guidance, resolve issues, and build Power BI reporting.']
     ],
     learned: [
-      ['Design for the platform route', 'Migration made me more attentive to how assignment, prerequisites, completion, and records shape instructional design—not only how a course is built.'],
-      ['Test with a learner persona', 'A plan that looks correct in an admin view can still fail for a partner, customer, returning learner, or partial completer.'],
-      ['Keep the decision history', 'Crosswalks, exceptions, support patterns, and reporting provide the reasoning needed to maintain a learning system after launch.']
+      ['Design content and LMS setup together', 'A strong course still fails if learners cannot find it, launch it, or get credit for it. I design with those platform rules in mind.'],
+      ['Check the learner view', 'A plan can look right to an admin and still fail for a partner, customer, returning learner, or partial completer.'],
+      ['Keep ownership traceable', 'I document where content lives, its source and version, who owns it, and when it needs review. That makes later fixes safer.']
     ]
   };
 
@@ -336,8 +336,8 @@
     document.getElementById('supportOpsText').textContent = data.text;
     const demo = {
       inbox: `<div class="support-demo-top"><span>SUPPORT INBOX</span><strong>3 items · 1 pattern</strong></div><div class="support-demo-body"><div class="support-ticket selected"><b>Access</b><span>Partner cannot see required path</span><small>New · 09:42</small></div><div class="support-ticket"><b>Navigation</b><span>Where is my certificate?</span><small>Open · 10:18</small></div><div class="support-ticket"><b>Access</b><span>Customer catalog not visible</span><small>Open · 10:31</small></div></div><div class="support-demo-action"><span>Notice repeated access questions</span><strong>Check audience rule → route issue</strong></div>`,
-      docs: `<div class="support-demo-top"><span>RESPONSE LIBRARY</span><strong>Draft for review</strong></div><div class="support-demo-body"><div class="support-doc"><b>Common question</b><p>“I finished the course. Where is my certificate?”</p><i></i><b>Reusable guidance</b><p>Open My Activities → Certifications. If status is missing, send the course name and completion date to support.</p></div></div><div class="support-demo-action"><span>Document the fix once</span><strong>Template + escalation owner</strong></div>`,
-      reporting: `<div class="support-demo-top"><span>POST-LAUNCH REVIEW</span><strong>Illustrative issue register</strong></div><div class="support-demo-body"><div class="support-report"><span>Issue</span><span>Owner</span><span>Next check</span><b>Catalog visibility</b><b>Platform admin</b><b>Retest partner route</b><b>Certificate status</b><b>Learning ops</b><b>Compare transcript</b><b>Help article</b><b>Support</b><b>Publish update</b></div></div><div class="support-demo-action"><span>Keep exceptions visible</span><strong>Owner → fix → retest</strong></div>`
+      docs: `<div class="support-demo-top"><span>ADMIN ENABLEMENT</span><strong>Guidance library</strong></div><div class="support-demo-body"><div class="support-doc"><b>New administrator</b><p>Navigation video + train-the-trainer session</p><i></i><b>Ongoing support</b><p>Reporting guide, known fixes, content owner, and next review date</p></div></div><div class="support-demo-action"><span>Keep guidance current</span><strong>Owner → update → review</strong></div>`,
+      reporting: `<div class="support-demo-top"><span>LEARNING REPORTING</span><strong>Example review flow</strong></div><div class="support-demo-body"><div class="support-report"><span>Source</span><span>Check</span><span>Use</span><b>LMS records</b><b>Completion</b><b>Power BI view</b><b>Snowflake data</b><b>Matching IDs</b><b>Compare</b><b>Support trends</b><b>Exceptions</b><b>Follow up</b></div></div><div class="support-demo-action"><span>Validate the data</span><strong>Source → dashboard → action</strong></div>`
     };
     document.getElementById('supportOpsDemo').innerHTML = demo[key];
   };

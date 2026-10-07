@@ -66,8 +66,8 @@
       const choices = [...workbenchDemo.querySelectorAll('[data-workbench-choice]')];
       const feedback = workbenchDemo.querySelector('[data-workbench-feedback]');
       const messages = {
-        sanitize: 'Good call. Make a public-safe copy, then review it before anything is shared.',
-        publish: 'Pause here. The example needs a public-safe edit and human review first.'
+        sanitize: 'Good call. Remove identifying details and review the example before sharing it.',
+        publish: 'Pause here. Review and revise the example before sharing it.'
       };
       choices.forEach((choice) => {
         choice.addEventListener('click', () => {

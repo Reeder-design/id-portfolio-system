@@ -902,7 +902,7 @@
 .vertical-demo-controls button{min-height:42px}
 .vertical-demo-controls>button:first-child{padding:8px 13px;border:1px solid #b8cdc0;border-radius:9px;background:#fff;color:#28564a;font:700 .76rem/1.3 var(--font-heading);cursor:pointer}
 .vertical-demo-controls>button:first-child:hover,.vertical-demo-controls>button:first-child:focus-visible{border-color:#4e9e73;outline:2px solid #b5e9b0;outline-offset:2px}
-.vertical-demo-controls button:disabled{opacity:.5;cursor:not-allowed}
+.vertical-demo-controls button:disabled{opacity:.8;cursor:not-allowed}
 .vertical-evidence-section{background:#fff}
 .vertical-evidence-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
 .vertical-evidence-grid article{padding:22px;border:1px solid #dae8df;border-radius:19px;background:#f6faf7}

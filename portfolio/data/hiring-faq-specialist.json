@@ -65,11 +65,11 @@
       "category": "Learning Technology",
       "short_label": "Enterprise integrations",
       "prompt": "How comfortable are you with the technical ecosystem around an enterprise LMS?",
-      "keywords": ["sso", "saml", "okta", "api", "hris", "workday", "sap", "salesforce", "integration", "lms integration", "crm"],
-      "answer": "My direct integration work is with LMS exports, account matching, migration crosswalks, and learner-path validation. I map what each system sends or expects, identify who owns the rule, and test exceptions before a learner or completion record is trusted. I also understand how identity, CRM or HR data, content tracking, and reporting fit around the LMS, but the System Integrations page labels those broader examples as platform-informed patterns. I work with identity and backend owners on implementation rather than claiming those roles as mine.",
+      "keywords": ["sso", "saml", "okta", "api", "hris", "workday", "sap", "salesforce", "integration", "lms integration", "crm", "power bi", "snowflake", "reporting connection"],
+      "answer": "My direct work includes LMS exports, account matching, migration crosswalks, learner-path validation, and Power BI dashboards using LMS and Snowflake-connected reporting data. I map what the systems send, who owns each rule, and where exceptions need review. The identity, CRM, and HR examples on my System Integrations page also show platform-informed patterns; implementation of those connections belongs with the relevant technical owners.",
       "evidence": [
         {"title": "System Integrations", "path": "projects/lms-administration/system-integrations/index.html", "note": "LMS data handoffs, validation, and clear boundaries between direct work and platform-informed patterns."},
-        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Platform setup, learner-path testing, launch support, and operational validation across a migration."}
+        {"title": "LMS Migration Experience", "path": "projects/lms-administration/learning-platform-operations-migration-readiness/index.html", "note": "Learner-path validation and Power BI reporting using LMS and Snowflake-connected data."}
       ]
     },
     {

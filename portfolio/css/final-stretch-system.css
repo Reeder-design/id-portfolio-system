@@ -350,12 +350,12 @@ nav[aria-label="Project sections"] a.active{
   border-radius:50%;
 }
 .fs-surface-light>.container{position:relative;z-index:1}
-.fs-surface-light .section-heading h2,
+.fs-surface-light>.container>.section-heading h2,
 .fs-surface-light>.container>h2,
 .portfolio-explore-section.fs-surface-light h2{color:#263a34!important}
-.fs-surface-light .section-heading .eyebrow,
+.fs-surface-light>.container>.section-heading .eyebrow,
 .portfolio-explore-section.fs-surface-light .eyebrow{color:#447d71!important}
-.fs-surface-light .section-heading>p:not(.eyebrow),
+.fs-surface-light>.container>.section-heading>p:not(.eyebrow),
 .portfolio-explore-section.fs-surface-light .refresh-section-intro>p:not(.eyebrow){color:#5e6f68!important}
 
 .fs-surface-dark,
@@ -381,12 +381,12 @@ nav[aria-label="Project sections"] a.active{
   background-size:112px 112px,146px 146px;
 }
 .fs-surface-dark>.container{position:relative;z-index:1}
-.fs-surface-dark .section-heading h2,
+.fs-surface-dark>.container>.section-heading h2,
 .fs-surface-dark>.container>h2,
 .portfolio-explore-section.fs-surface-dark h2{color:#fff!important}
-.fs-surface-dark .section-heading .eyebrow,
+.fs-surface-dark>.container>.section-heading .eyebrow,
 .portfolio-explore-section.fs-surface-dark .eyebrow{color:#b2e9c6!important}
-.fs-surface-dark .section-heading>p:not(.eyebrow),
+.fs-surface-dark>.container>.section-heading>p:not(.eyebrow),
 .fs-surface-dark>.container>p.body-large,
 .portfolio-explore-section.fs-surface-dark .refresh-section-intro>p:not(.eyebrow){color:#d4e2db!important}
 

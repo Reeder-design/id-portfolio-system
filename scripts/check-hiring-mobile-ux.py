@@ -58,7 +58,7 @@ def main() -> int:
 
     page_markers = [
         "Interactive portfolio chat",
-        "Ask me what you would ask in the interview.",
+        "Ask me about my work.",
         '<span aria-current="page">Ask Haley</span>',
         "hm-transfer-scene",
         "hm-transfer-track",
@@ -68,15 +68,15 @@ def main() -> int:
         "person-woman.webp",
         "Question → curated answer → portfolio evidence.",
         "What this chat helps you evaluate",
-        "This is a chatbot demo, but there is no AI model behind it.",
-        "hm-chatbot-note",
+        "I wrote and reviewed the answers",
+        "hm-evaluate-track",
         'id="ask-haley"',
-        "Ask your own question, use a quick starter, or browse the Question Library.",
-        "Not AI, just pre-built me",
+        "Type a question, choose a starter, or browse the Question Library.",
+        "Browse Question Library",
         "data-hm-library",
         "data-hm-topic-list",
         "data-hm-prompt-panel",
-        "I wrote and reviewed the answer library myself.",
+        "Question Library",
         'id="quick-scan"',
         "Hiring manager quick scan",
         "What I bring",
@@ -167,12 +167,12 @@ def main() -> int:
     require("data-hm-expand-key" in controller, "Quick Scan chips must support expand/collapse behavior.", errors)
     require("openEvidencePreview" in controller and "bindEvidenceCards" in controller, "Evidence cards must open the preview drawer before navigation.", errors)
     require("EVIDENCE_PREVIEWS" in controller and "interactive-sales-overview.webp" in controller, "Evidence previews must use curated project visuals instead of arbitrary first-page images.", errors)
-    require("hm-chatbot-note" in page and "browser-conversation.webp" in page, "The chatbot/not-AI explanation must be a visual icon-supported callout.", errors)
+    require("hm-transfer-scene" in page and "I wrote and reviewed the answers" in page, "The Hiring Guide must show the question-to-evidence route and Haley's answer ownership.", errors)
     require("ask-haley-session-v1" in motion and "ask-haley-return-dock" in motion, "Project pages must provide the Ask Haley return dock for evidence navigation.", errors)
     require("left:18px" in motion and "right:auto" in motion, "Ask Haley return dock must stay away from the bottom-right assistant UI.", errors)
 
     home_markers = [
-        "Hiring? Ask the portfolio.",
+        "Ask me about my work.",
         "home-hiring-section",
         "Open Hiring Manager Guide",
         "Curated self-written answers",

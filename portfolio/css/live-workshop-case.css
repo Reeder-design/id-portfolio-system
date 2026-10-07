@@ -501,7 +501,7 @@
 .adapt-session-live{display:flex;align-items:center;gap:5px;margin-left:auto;color:#d5eecb;font-size:.61rem;white-space:nowrap}.adapt-session-live i,.adapt-session-toolbar i{width:7px;height:7px;border-radius:50%;background:#aae16f;box-shadow:0 0 0 3px rgba(170,225,111,.14)}
 .adapt-session-body{display:grid;grid-template-columns:minmax(0,1fr) 214px;gap:7px;min-height:0;padding:7px}
 .adapt-share{display:grid;grid-template-rows:21px minmax(0,1fr);min-width:0;min-height:0;overflow:hidden;border-radius:7px;background:#f7fbf6;color:#1e3b34}
-.adapt-share-header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 9px;background:#e3f0e6;color:#547864;font:900 .58rem/1 var(--font-heading);letter-spacing:.04em}.adapt-share-header span:last-child{color:#6c8c74;letter-spacing:0;white-space:nowrap}
+.adapt-share-header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 9px;background:#e3f0e6;color:#4f705e;font:900 .58rem/1 var(--font-heading);letter-spacing:.04em}.adapt-share-header span:last-child{color:#6c8c74;letter-spacing:0;white-space:nowrap}
 .adapt-slide-stack{position:relative;min-width:0;min-height:0;overflow:hidden;background:linear-gradient(135deg,#fff 71%,#edf6e9 71%)}
 .adapt-slide{position:absolute;inset:0;display:grid;align-content:center;gap:7px;min-width:0;padding:13px clamp(12px,2.5vw,27px)}
 .adapt-slide-planned{opacity:0}.adapt-slide-example{opacity:1}

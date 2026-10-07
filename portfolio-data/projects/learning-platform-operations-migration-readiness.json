@@ -6,7 +6,7 @@
   "category": "lms-administration",
   "subcategory": null,
   "status": "live",
-  "summary": "I supported the Absorb-to-Docebo migration through course and enrollment crosswalks, learning-structure setup, content and plan configuration, persona-based UAT, exceptions, learner guidance, and post-launch support.",
+  "summary": "I helped configure and test the Absorb-to-Docebo migration, then continued with administrator training, learner support, guidance, and reporting.",
   "page_path": "portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html",
   "featured": true,
   "confidentiality": "sanitized",
@@ -19,13 +19,13 @@
       "Document migration issues, retest fixes, and support learner-facing troubleshooting.",
       "Build repeatable support and documentation workflows and support immediate post-launch reporting and action planning."
     ],
-    "role": "Instructional designer and LMS content administrator supporting setup, configuration, UAT, learner support, documentation, and post-launch operations during the Absorb-to-Docebo migration.",
+    "role": "Instructional designer and LMS content administrator supporting configuration, UAT, administrator training, learner support, documentation, and post-launch reporting within the migration team.",
     "design_approach": "I treated the Absorb environment as a source of learner routes and decision history, not just a file collection. Course and enrollment crosswalks, destination relationships, persona testing, and exception review connected instructional design to Docebo administration.",
-    "development_process": "I reviewed owned courses and relationships in Absorb; helped map course and enrollment crosswalks to Docebo; supported learning-plan, content, certification, and audience configuration; participated in UAT for employee, partner, customer, and edge-case experiences; documented and retested issues; supported learner guidance, inbox workflows, reusable support templates, and post-launch reporting.",
+    "development_process": "I reviewed courses and relationships in Absorb, helped map them into Docebo, configured content and learning plans, tested learner routes, documented and retested issues, and created learner and administrator guidance. After launch, I continued supporting administrators and users and developing Power BI dashboards using LMS and Snowflake-connected reporting data.",
     "outcomes": [
       "Helped map, configure, and validate Docebo learning structures, plans, content, certifications, and audience experiences.",
       "Documented migration issues and supported triage and retesting across employee, partner, and customer journeys.",
-      "Supported learner inbox operations, repeatable support responses, documentation workflows, and immediate post-launch reporting and follow-up."
+      "Continued post-launch support through administrator training, learner guidance, issue follow-up, and Power BI reporting."
     ]
   },
   "detail_sections": [
@@ -58,13 +58,13 @@
     {
       "id": "support-operations",
       "eyebrow": "Support + Operations",
-      "title": "What I helped establish for launch and immediate follow-up.",
-      "summary": "Migration support continued after testing through learner communication, documentation, reporting, and action planning.",
+      "title": "How I support the system after launch.",
+      "summary": "I help administrators and learners use the new environment, resolve issues, and review learning data.",
       "layout": "cards",
       "items": [
-        {"title": "Inbox support", "body": "Helped respond to learner and customer issues as people entered the new Docebo environment.", "tag": "Support"},
-        {"title": "Documentation + email templates", "body": "Helped document support processes and create reusable customer-support email templates for common migration questions.", "tag": "Process"},
-        {"title": "Post-launch reporting", "body": "Supported immediate reporting and action planning so unresolved issues, exceptions, and follow-up work stayed visible.", "tag": "Reporting"}
+        {"title": "Learner support", "body": "Troubleshoot learner and customer issues and use repeat questions to improve guidance.", "tag": "Support"},
+        {"title": "Administrator training", "body": "Create navigation videos, user guides, reporting instructions, and train-the-trainer resources.", "tag": "Training"},
+        {"title": "Reporting", "body": "Build Power BI dashboards and review LMS records alongside Snowflake-connected reporting data.", "tag": "Analytics"}
       ]
     },
     {
@@ -76,7 +76,7 @@
       "items": [
         {"title": "Setup + configuration", "body": "Learning structures, learning plans, content, catalogs, certifications, and learner-facing relationships in Docebo.", "tag": "Supported"},
         {"title": "UAT + support", "body": "Learner-journey testing, issue documentation, retesting, inbox support, and learner guidance.", "tag": "Supported"},
-        {"title": "Post-launch operations", "body": "Documentation workflows, reusable support responses, reporting, and immediate action planning.", "tag": "Supported"}
+        {"title": "Post-launch operations", "body": "Administrator training, learner guidance, issue follow-up, Power BI dashboards, and reporting review.", "tag": "Supported"}
       ]
     }
   ],
@@ -84,8 +84,8 @@
     {"project_id": "enterprise-sales-certification", "relationship": "Learning-path implementation, certification behavior, and LMS administration"},
     {"project_id": "certification-reporting-automation", "relationship": "LMS reporting, completion analysis, and operational review"}
   ],
-  "skills": ["LMS Administration", "User Acceptance Testing", "LMS Migration", "Learning Plan Configuration", "Content Governance", "Learner Experience", "Certification Workflows", "Learner Support", "Documentation", "Reporting", "Launch Readiness"],
-  "tools": ["Absorb LMS", "Docebo LMS", "Articulate Rise 360", "xAPI / SCORM", "Microsoft 365"],
+  "skills": ["LMS Administration", "User Acceptance Testing", "LMS Migration", "Learning Plan Configuration", "Content Governance", "Learner Experience", "Certification Workflows", "Learner Support", "Documentation", "Reporting", "Launch Readiness", "Administrator Training", "Power BI", "Learning Analytics"],
+  "tools": ["Absorb LMS", "Docebo LMS", "Articulate Rise 360", "xAPI / SCORM", "Microsoft 365", "Power BI", "Snowflake"],
   "assets": [
       {
           "type": "image",
@@ -117,5 +117,5 @@
       }
   ],
   "source_material_notes": "Generalized from completed LMS migration and launch-support work moving learning operations from Absorb LMS into Docebo LMS. Internal configurations, learner records, issue logs, credentials, proprietary screenshots, implementation details, and company-specific terminology are intentionally omitted. Public interface visuals and the learner-route simulator are representative reconstructions. Sample names, numbers, and UAT scenarios are illustrative, not production screenshots, actual results, or historical issue records.",
-  "dates": {"created": "2026-09-15", "updated": "2026-09-22"}
+  "dates": {"created": "2026-09-15", "updated": "2026-10-07"}
 }
