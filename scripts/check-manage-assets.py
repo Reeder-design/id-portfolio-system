@@ -59,7 +59,7 @@ def main() -> int:
 
     require("asset_return_url" in asset_routes, "Asset actions must return to their originating editor through a dedicated allowlisted helper.", errors)
     require('return_to == "project"' in asset_routes, "Asset return routing must explicitly allow the structured project editor.", errors)
-    require('return_to.startswith("page:")' in asset_routes and "CUSTOM_PROJECT_PAGES.get(project_id) == page_id" in asset_routes, "Custom page returns must be constrained to the known project/page mapping.", errors)
+    require('return_to.startswith("page:")' in asset_routes and 'page_id_for_path(str(project.get("page_path", ""))) == page_id' in asset_routes, "Page returns must match the project record's registered public page.", errors)
     require("redirect(asset_return_url(project_id), code=303)" in asset_routes, "Inline upload/update/replace/remove actions must use POST/redirect/GET back to the editor.", errors)
     require("require_public_safe_confirmation()" in asset_routes, "Public asset upload/replacement must retain the explicit public-safe confirmation.", errors)
     require("find_asset_references(path)" in asset_routes, "Asset removal must retain the reference scan before deleting a public file.", errors)
@@ -67,7 +67,7 @@ def main() -> int:
     require("_project-assets-inline.html" in project_template, "Structured project editor must render the inline asset workspace.", errors)
     require("asset_return_to = 'project'" in project_template, "Structured project editor must identify itself as the trusted asset return destination.", errors)
     require("asset_project" in page_template and "_project-assets-inline.html" in page_template, "Custom page editor must render connected project assets when available.", errors)
-    require("CUSTOM_PAGE_PROJECTS" in site_routes and '"meddpicc-demo": "meddpicc-practice"' in site_routes, "Custom page editor must use an explicit page-to-project asset mapping.", errors)
+    require("project_for_page(page_id)" in site_routes and 'page_id_for_path(str(project.get("page_path", ""))) == page_id' in site_routes, "Page editor must connect project assets through the registered public page path.", errors)
     require('asset_return_to=f"page:{page_id}" if asset_project else ""' in site_routes, "Custom page asset actions must return to the same page editor.", errors)
 
     require('id="project-assets"' in inline_template, "Inline asset workspace must expose a stable editor marker for runtime checks and anchor returns.", errors)

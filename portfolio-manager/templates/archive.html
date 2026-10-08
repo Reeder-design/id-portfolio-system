@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Removed Content Archive | Portfolio Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v2-foundation.css') }}">
+</head>
+<body>
+    <div class="manager-shell">
+        <header class="subpage-header">
+            <div>
+                <p class="eyebrow">Manage Content</p>
+                <h1>Removed Content Archive</h1>
+                <p class="hero-copy">Sections removed from the portfolio are saved here for reference. Open an item to see its former text and source. The archive stays in this local Portfolio Manager workspace.</p>
+            </div>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="{{ url_for('content.content_manager') }}">Back to Manage Content</a>
+                <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </header>
+
+        <main class="v2-manage-layout">
+            <section class="dashboard-card full-width">
+                <p class="eyebrow">{{ sections|length }} saved section{% if sections|length != 1 %}s{% endif %}</p>
+                {% if sections %}
+                <div class="v2-site-tree">
+                    {% for section in sections %}
+                    <details class="v2-tree-group archive-entry">
+                        <summary><span><span class="v2-level-label">Removed section</span><strong>{{ section.title }}</strong></span></summary>
+                        <div class="v2-tree-group-body">
+                            {% if section.notes %}<p class="section-copy">{{ section.notes }}</p>{% endif %}
+                            {% if section.source_url %}<p><a class="btn btn-secondary" href="{{ section.source_url }}" target="_blank" rel="noopener noreferrer">View original in GitHub</a></p>{% endif %}
+                            {% if section.visible %}<div><h3>Former visible text</h3><pre class="archive-text">{{ section.visible }}</pre></div>{% endif %}
+                            {% if section.original %}<details class="v2-tree-group"><summary><span><strong>Original markup or script</strong></span></summary><div class="v2-tree-group-body"><pre class="archive-text archive-code">{{ section.original }}</pre></div></details>{% endif %}
+                        </div>
+                    </details>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-note">No removed sections have been added to this local Manager workspace yet.</p>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+    {% include '_help_drawer.html' %}
+    <script src="{{ url_for('static', filename='help.js') }}"></script>
+</body>
+</html>

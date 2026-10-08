@@ -74,6 +74,10 @@ Project records follow the same rule: structured data supports metadata and work
 
 The current files under `portfolio/` are the presentation source of truth for existing pages.
 
+Portfolio Manager **Manage Content** builds its area and section navigation from `portfolio-data/taxonomy.json` and current project records. Its page-copy registry covers the current public pages, including LMS Administration, Hiring Manager, and project case studies. A structured project's editor links to its current page-copy editor and associated asset files; older assets already under `portfolio/assets/` can be previewed or replaced in place. The page-copy editor also inventories images referenced by its current HTML but absent from the project asset record. Replacing one of these files keeps its path and checks whether other pages or scripts use it. The page-copy editor changes safely identified text, while structural or interaction changes still require a reviewed source edit or page-aware proposal.
+
+The **Removed Content Archive** is available from Manage Content. Its source file is `.portfolio-manager/removed-content/archive.json`, so it remains local and Git-ignored. The archived markup and script are displayed as text and are never executed or copied into the public site by browsing them. A fresh checkout without this local file shows an empty archive until the private file is restored.
+
 Do not use the standard project template, renderer, structured project JSON, old PRs, or older Git history to reconstruct an existing public page. Those sources may predate later UAT fixes.
 
 The supported rule is:

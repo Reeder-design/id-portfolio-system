@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 from pathlib import Path
+import re
 import sys
+from urllib.parse import unquote, urlsplit
 
 from flask import Blueprint, flash, redirect, render_template, request, send_file, url_for
 from werkzeug.utils import secure_filename
 
 from asset_security import validate_public_asset_file
 from content_routes import load_project, list_projects, refresh_docs, run_command, write_json
+from page_copy_service import page_id_for_path, page_info
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -30,11 +33,6 @@ ALLOWED_EXTENSIONS = {
 }
 
 REFERENCE_SCAN_EXTENSIONS = {".html", ".css", ".js"}
-CUSTOM_PROJECT_PAGES = {
-    "meddpicc-practice": "meddpicc-demo",
-    "pursuit-positioning": "pursuit-determination-demo",
-    "ai-training-and-evaluation-demo": "ai-evaluation-demo",
-}
 
 asset_bp = Blueprint("assets", __name__)
 
@@ -89,10 +87,45 @@ def resolve_asset_path(asset: dict) -> Path:
         raise ValueError("Asset path is not safe.")
 
     path = (REPO_ROOT / relative).resolve()
-    root = PUBLIC_ASSET_ROOT.resolve()
-    if root not in path.parents:
-        raise ValueError("Asset is outside the managed public asset library.")
+    root = (PORTFOLIO_ROOT / "assets").resolve()
+    if root not in path.parents or path.is_symlink():
+        raise ValueError("Asset is outside the public asset library.")
     return path
+
+
+def page_media(page_id: str) -> list[dict]:
+    _, page_path = page_info(page_id)
+    html_text = page_path.read_text(encoding="utf-8")
+    asset_root = (PORTFOLIO_ROOT / "assets").resolve()
+    found: list[dict] = []
+    seen: set[Path] = set()
+    for tag in re.finditer(r"(?is)<(?:img|video|source)\b[^>]*>", html_text):
+        source = re.search(r"\b(?:src|poster)\s*=\s*([\"'])(.*?)\1", tag.group(0), flags=re.I | re.S)
+        if not source:
+            continue
+        parsed = urlsplit(source.group(2))
+        if parsed.scheme or parsed.netloc or not parsed.path or parsed.path.startswith("/"):
+            continue
+        candidate = (page_path.parent / unquote(parsed.path)).resolve()
+        if asset_root not in candidate.parents or not candidate.is_file() or candidate in seen:
+            continue
+        seen.add(candidate)
+        alt_match = re.search(r"\balt\s*=\s*([\"'])(.*?)\1", tag.group(0), flags=re.I | re.S)
+        found.append({
+            "index": len(found),
+            "path": candidate.relative_to(REPO_ROOT).as_posix(),
+            "alt": alt_match.group(2) if alt_match else "",
+            "image": candidate.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp", ".gif"},
+        })
+    return found
+
+
+def resolve_page_media(page_id: str, media_index: int) -> tuple[dict, Path]:
+    media = page_media(page_id)
+    if media_index < 0 or media_index >= len(media):
+        raise IndexError("Page media was not found. Reload the page editor.")
+    asset = media[media_index]
+    return asset, resolve_asset_path(asset)
 
 
 def find_asset_references(asset_path: Path) -> list[str]:
@@ -126,6 +159,10 @@ def find_asset_references(asset_path: Path) -> list[str]:
 
         if any(needle and needle in text for needle in needles):
             references.append(source.relative_to(REPO_ROOT).as_posix())
+
+    for project in list_projects():
+        if any(str(item.get("path", "")).strip() == asset_path.relative_to(REPO_ROOT).as_posix() for item in project.get("assets", [])):
+            references.append(f"portfolio-data/projects/{project['id']}.json")
 
     return sorted(set(references))
 
@@ -174,8 +211,12 @@ def asset_return_url(project_id: str) -> str:
 
     if return_to.startswith("page:"):
         page_id = return_to.split(":", 1)[1].strip()
-        if CUSTOM_PROJECT_PAGES.get(project_id) == page_id:
-            return f"{url_for('site_content.v2_page_editor', page_id=page_id)}#project-assets"
+        try:
+            project, _ = load_project(project_id)
+            if page_id_for_path(str(project.get("page_path", ""))) == page_id:
+                return f"{url_for('site_content.v2_page_editor', page_id=page_id)}#project-assets"
+        except FileNotFoundError:
+            pass
 
     return url_for("assets.asset_library", project=project_id)
 
@@ -353,7 +394,7 @@ def remove_asset(project_id: str, asset_index: int):
         path = resolve_asset_path(asset)
         original_bytes = path.read_bytes() if path.exists() else None
 
-        references = find_asset_references(path)
+        references = [source for source in find_asset_references(path) if source != f"portfolio-data/projects/{project_id}.json"]
         if references:
             shown = ", ".join(references[:5])
             extra = f" (+{len(references) - 5} more)" if len(references) > 5 else ""
@@ -416,3 +457,46 @@ def preview_asset(project_id: str, asset_index: int):
     except Exception as exc:
         flash(f"Could not preview asset: {exc}", "error")
         return redirect(url_for("assets.asset_library", project=project_id))
+
+
+@asset_bp.route("/manage/pages/<page_id>/media/<int:media_index>/preview")
+def preview_page_media(page_id: str, media_index: int):
+    try:
+        _, path = resolve_page_media(page_id, media_index)
+        return send_file(path, as_attachment=False, conditional=True)
+    except Exception as exc:
+        flash(f"Could not preview page image: {exc}", "error")
+        return redirect(url_for("site_content.v2_page_editor", page_id=page_id))
+
+
+@asset_bp.route("/manage/pages/<page_id>/media/<int:media_index>/replace", methods=["POST"])
+def replace_page_media(page_id: str, media_index: int):
+    try:
+        require_public_safe_confirmation()
+        asset, path = resolve_page_media(page_id, media_index)
+        if request.form.get("original_path") != asset["path"]:
+            raise ValueError("This page image changed after the editor opened. Reload before replacing it.")
+        upload = request.files.get("replacement_file")
+        if upload is None:
+            raise ValueError("Choose a replacement image first.")
+        filename, _ = allowed_asset(upload.filename or "")
+        if Path(filename).suffix.lower() != path.suffix.lower():
+            raise ValueError(f"Replacement must use the same {path.suffix.lower()} extension.")
+        references = [source for source in find_asset_references(path) if not source.endswith(".json")]
+        if len(references) > 1 and request.form.get("confirm_shared") != "on":
+            raise ValueError("This file is used by more than one public page or script. Confirm the shared-file change before replacing it: " + ", ".join(references[:6]))
+
+        original_bytes = path.read_bytes()
+        upload.save(path)
+        try:
+            validate_public_asset_file(path, path.suffix.lower())
+            site_ok, site_output = run_command([sys.executable, "scripts/check-site.py"])
+            if not site_ok:
+                raise RuntimeError("Site validation failed. " + site_output)
+        except Exception:
+            path.write_bytes(original_bytes)
+            raise
+        flash("Page image replaced locally. Its path stayed the same; nothing was published.", "success")
+    except Exception as exc:
+        flash(f"Could not replace page image: {exc}", "error")
+    return redirect(f"{url_for('site_content.v2_page_editor', page_id=page_id)}#page-media", code=303)

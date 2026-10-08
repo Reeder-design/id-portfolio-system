@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+from io import BytesIO
+import json
 import os
 import sys
+import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +27,7 @@ manager_security.load_local_env = lambda *args, **kwargs: None
 manager_ai_settings.ENV_PATH = ROOT / ".portfolio-manager" / "__runtime-test-no-ai.env"
 
 import app as manager_app  # noqa: E402
+from page_copy_service import PAGE_REGISTRY  # noqa: E402
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -45,6 +49,7 @@ def main() -> int:
         ("/create/", "Create Content"),
         ("/related-references/", "Related References"),
         ("/component-registry/", "Component Registry"),
+        ("/archive", "Removed Content Archive"),
     ]:
         unauthenticated = client.get(protected_path, follow_redirects=False)
         require(
@@ -110,8 +115,13 @@ def main() -> int:
     require(b"Theme Editor" in content_manager.data, "Manage Content must retain the deferred Theme Editor placeholder.", errors)
     require(b"Interactive Learning" in content_manager.data, "Manage Content must mirror the instructional-design hierarchy.", errors)
     require(b"AI Training and Evaluation" in content_manager.data, "Manage Content must mirror the AI portfolio hierarchy.", errors)
-    require(b"Systems and Workflows" in content_manager.data, "Manage Content must mirror the workflows hierarchy.", errors)
+    require(b"Workflows" in content_manager.data, "Manage Content must mirror the workflows hierarchy.", errors)
+    for label in (b"LMS Administration", b"Microlearning", b"Performance Support", b"Live Training", b"LMS Migration Experience", b"For Hiring Managers", b"Removed Content Archive"):
+        require(label in content_manager.data, f"Manage Content must expose current area/page: {label.decode()}.", errors)
     require(b"Edit Demo Copy" not in content_manager.data, "Manage Content must not expose duplicate edit entry points for AI Evaluation.", errors)
+    public_pages = {path.relative_to(ROOT).as_posix() for path in (ROOT / "portfolio").rglob("index.html")}
+    registered_pages = {str(page["path"]) for page in PAGE_REGISTRY.values()}
+    require(public_pages == registered_pages, f"Manager page registry must match current public pages: missing={sorted(public_pages - registered_pages)}, stale={sorted(registered_pages - public_pages)}", errors)
 
     related_workspace = client.get("/related-references/")
     require(related_workspace.status_code == 200, "Related References workspace must render.", errors)
@@ -145,6 +155,62 @@ def main() -> int:
     ai_project_editor = client.get("/content/projects/ai-training-and-evaluation-demo")
     require(ai_project_editor.status_code == 200, "AI Evaluation project editor must render.", errors)
     require(b"Edit Visible Page Copy" in ai_project_editor.data, "AI Evaluation project editor must expose one route into demo copy editing.", errors)
+
+    lms_project_editor = client.get("/content/projects/learning-platform-operations-migration-readiness")
+    require(lms_project_editor.status_code == 200, "LMS project editor must render.", errors)
+    require(b"Edit Visible Page Copy" in lms_project_editor.data, "LMS project editor must link to its current public page.", errors)
+    lms_page_editor = client.get("/manage/pages/learning-platform-operations-migration-readiness")
+    require(lms_page_editor.status_code == 200, "LMS page editor must render.", errors)
+    require(b'id="project-assets"' in lms_page_editor.data, "LMS page editor must expose its existing project assets.", errors)
+    require(b'id="page-media"' in lms_page_editor.data, "LMS page editor must show other images already used on its public page.", errors)
+    lms_asset = client.get("/assets/projects/learning-platform-operations-migration-readiness/0/preview")
+    require(lms_asset.status_code == 200, "Existing LMS assets outside the newer upload folder must preview.", errors)
+    import asset_routes  # noqa: E402
+    current_media = asset_routes.page_media("learning-platform-operations-migration-readiness")
+    require(bool(current_media), "Current LMS page image inventory must not be empty.", errors)
+    if current_media:
+        media_preview = client.get(f"/manage/pages/learning-platform-operations-migration-readiness/media/{current_media[0]['index']}/preview")
+        require(media_preview.status_code == 200, "Current page images must preview inside Manager.", errors)
+        _, media_path = asset_routes.resolve_page_media("learning-platform-operations-migration-readiness", current_media[0]["index"])
+        original_media_bytes = media_path.read_bytes()
+        with client.session_transaction() as session:
+            session["_csrf_token"] = "runtime-media-csrf"
+        try:
+            rejected = client.post(
+                f"/manage/pages/learning-platform-operations-migration-readiness/media/{current_media[0]['index']}/replace",
+                data={
+                    "csrf_token": "runtime-media-csrf",
+                    "original_path": current_media[0]["path"],
+                    "public_safe": "on",
+                    "confirm_shared": "on",
+                    "replacement_file": (BytesIO(b"not a real image"), "replacement" + media_path.suffix),
+                },
+                content_type="multipart/form-data",
+                follow_redirects=True,
+            )
+            require(b"Could not replace page image" in rejected.data, "Invalid page-image upload must fail visibly.", errors)
+            require(media_path.read_bytes() == original_media_bytes, "Invalid page-image upload must restore the original file.", errors)
+        finally:
+            if media_path.read_bytes() != original_media_bytes:
+                media_path.write_bytes(original_media_bytes)
+
+    archive = client.get("/archive")
+    require(archive.status_code == 200, "Private removed-content archive must render.", errors)
+    import archive_routes  # noqa: E402
+    previous_archive = archive_routes.ARCHIVE_PATH
+    try:
+        with tempfile.TemporaryDirectory() as directory:
+            archive_routes.ARCHIVE_PATH = Path(directory) / "archive.json"
+            archive_routes.ARCHIVE_PATH.write_text(json.dumps({
+                "schema_version": "1.0.0",
+                "blocks": ["## Former section", "### Visible text", "<img src=x onerror=alert(1)>", "### Original HTML", "```html\n<section>Old text</section>\n```"],
+            }), encoding="utf-8")
+            archived_content = client.get("/archive")
+            require(b"Former section" in archived_content.data, "Archive must display saved sections.", errors)
+            require(b"&lt;img src=x onerror=alert(1)&gt;" in archived_content.data, "Archived text must be escaped before display.", errors)
+            require(b"<img src=x onerror=alert(1)>" not in archived_content.data, "Archived markup must never execute in Manager.", errors)
+    finally:
+        archive_routes.ARCHIVE_PATH = previous_archive
 
     legacy_general = client.get("/site-content", follow_redirects=False)
     require(

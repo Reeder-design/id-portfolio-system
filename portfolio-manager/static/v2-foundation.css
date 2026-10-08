@@ -88,6 +88,30 @@
     margin-top: 22px;
 }
 
+.archive-entry .v2-tree-group-body {
+    min-width: 0;
+}
+
+.archive-text {
+    max-height: 28rem;
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+    border: 1px solid rgba(232, 221, 199, 0.18);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.18);
+    color: var(--cream);
+    font: inherit;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.archive-code {
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.82rem;
+}
+
 .v2-tree-page,
 .v2-project-row {
     display: flex;
