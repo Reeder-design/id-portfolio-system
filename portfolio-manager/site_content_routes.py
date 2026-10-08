@@ -7,14 +7,16 @@ import sys
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ai_settings_service import get_local_ai_settings
+from asset_routes import page_media
 from page_ai_service import find_active_page_edit_proposal
-from content_routes import load_project, run_command
+from content_routes import list_projects, load_project, run_command
 from notes_service import load_note, save_note
 from page_copy_service import (
     apply_page_edits,
     extract_script_fields,
     extract_visible_fields,
     page_info,
+    page_id_for_path,
     preview_url,
 )
 
@@ -23,11 +25,6 @@ APP_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = APP_ROOT.parent
 SITE_CONTENT_PATH = REPO_ROOT / "portfolio-data" / "site-content.json"
 SCRIPTS_ROOT = REPO_ROOT / "scripts"
-CUSTOM_PAGE_PROJECTS = {
-    "meddpicc-demo": "meddpicc-practice",
-    "pursuit-determination-demo": "pursuit-positioning",
-    "ai-evaluation-demo": "ai-training-and-evaluation-demo",
-}
 if str(SCRIPTS_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_ROOT))
 
@@ -35,6 +32,13 @@ from site_content_model import extract_page_fields  # noqa: E402
 
 
 site_content_bp = Blueprint("site_content", __name__)
+
+
+def project_for_page(page_id: str) -> dict | None:
+    return next(
+        (project for project in list_projects() if page_id_for_path(str(project.get("page_path", ""))) == page_id),
+        None,
+    )
 
 
 def load_site_content() -> dict:
@@ -75,8 +79,9 @@ def save_page(page_id: str):
 def v2_page_editor(page_id: str):
     try:
         page, page_path = page_info(page_id)
+        matching_project = project_for_page(page_id)
         html_text = page_path.read_text(encoding="utf-8")
-        visible_fields = extract_visible_fields(html_text)
+        visible_fields = extract_visible_fields(html_text, skip_h1=matching_project is not None)
         script_fields = extract_script_fields(page_id, html_text)
     except Exception as exc:
         flash(f"Could not open page editor: {exc}", "error")
@@ -87,12 +92,15 @@ def v2_page_editor(page_id: str):
     versioned_preview = f"{preview}{separator}v={page_path.stat().st_mtime_ns}"
 
     asset_project = None
-    asset_project_id = CUSTOM_PAGE_PROJECTS.get(page_id)
+    asset_project_id = matching_project["id"] if matching_project else None
     if asset_project_id:
         try:
             asset_project, _ = load_project(asset_project_id)
         except FileNotFoundError:
             asset_project = None
+
+    recorded_asset_paths = {asset.get("path") for asset in asset_project.get("assets", [])} if asset_project else set()
+    other_page_media = [media for media in page_media(page_id) if media["path"] not in recorded_asset_paths]
 
     return render_template(
         "page-editor-v2.html",
@@ -106,6 +114,7 @@ def v2_page_editor(page_id: str):
         active_ai_proposal=find_active_page_edit_proposal(page_id),
         asset_project=asset_project,
         asset_return_to=f"page:{page_id}" if asset_project else "",
+        other_page_media=other_page_media,
     )
 
 
@@ -115,7 +124,9 @@ def v2_save_page(page_id: str):
         page, page_path = page_info(page_id)
         original_html = page_path.read_text(encoding="utf-8")
         original_json = SITE_CONTENT_PATH.read_text(encoding="utf-8")
-        updated_html, change_count = apply_page_edits(page_id, original_html, request.form)
+        updated_html, change_count = apply_page_edits(
+            page_id, original_html, request.form, skip_h1=project_for_page(page_id) is not None
+        )
 
         if change_count and request.form.get("public_safe") != "on":
             raise ValueError(

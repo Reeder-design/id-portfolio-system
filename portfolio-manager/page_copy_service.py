@@ -12,20 +12,43 @@ PORTFOLIO_ROOT = (REPO_ROOT / "portfolio").resolve()
 PAGE_REGISTRY: dict[str, dict[str, object]] = {
     "home": {"label": "Home", "path": "portfolio/index.html"},
     "about": {"label": "About Me", "path": "portfolio/about/index.html"},
+    "expertise": {"label": "What I Do", "path": "portfolio/expertise/index.html"},
+    "hiring-manager": {"label": "For Hiring Managers", "path": "portfolio/hiring-manager/index.html"},
     "projects": {"label": "Projects", "path": "portfolio/projects/index.html"},
     "instructional-design": {"label": "Instructional Design", "path": "portfolio/projects/instructional-design/index.html"},
     "interactive-learning": {"label": "Interactive Learning", "path": "portfolio/projects/instructional-design/interactive-learning/index.html"},
+    "ai-integrations-in-learning": {"label": "AI Integrations in Learning", "path": "portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html"},
     "meddpicc-demo": {"label": "MEDDPICC Practice", "path": "portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html", "skip_h1": True},
     "pursuit-determination-demo": {"label": "Pursuit Determination Lab", "path": "portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html", "skip_h1": True},
+    "microlearning": {"label": "Microlearning", "path": "portfolio/projects/instructional-design/microlearning-performance-support/microlearning/index.html"},
+    "performance-support": {"label": "Performance Support", "path": "portfolio/projects/instructional-design/microlearning-performance-support/performance-support/index.html"},
+    "vertical-positioning-microlearning": {"label": "Vertical Positioning Microlearning", "path": "portfolio/projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning/index.html"},
+    "product-launch-microlearning": {"label": "Product Launch Microlearning", "path": "portfolio/projects/instructional-design/microlearning-performance-support/product-launch-microlearning/index.html"},
     "multimedia": {"label": "Multimedia Training Content", "path": "portfolio/projects/instructional-design/multimedia/index.html"},
-    "complete-learning-paths": {"label": "Complete Learning Pathways", "path": "portfolio/projects/instructional-design/complete-learning-paths/index.html"},
+    "live-training": {"label": "Live Training", "path": "portfolio/projects/instructional-design/live-training/index.html"},
+    "virtual-sales-workshop-facilitation": {"label": "Virtual Sales Workshop Facilitation", "path": "portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html"},
+    "complete-learning-paths": {"label": "Complete eLearning Pathways", "path": "portfolio/projects/instructional-design/complete-learning-paths/index.html"},
+    "enterprise-sales-certification": {"label": "Enterprise Sales Certification", "path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html"},
     "ai-training-and-evaluation": {"label": "AI Training and Evaluation", "path": "portfolio/projects/ai-training-and-evaluation/index.html"},
     "ai-evaluation-demo": {"label": "AI Evaluation Demo", "path": "portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html", "skip_h1": True},
     "rubric-demo": {"label": "Rubric Demo", "path": "portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html"},
     "workflow-demo": {"label": "Workflow Demo", "path": "portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html"},
-    "workflows": {"label": "Systems and Workflows", "path": "portfolio/projects/workflows/index.html"},
+    "lms-administration": {"label": "LMS Administration", "path": "portfolio/projects/lms-administration/index.html"},
+    "learning-platform-operations-migration-readiness": {"label": "LMS Migration Experience", "path": "portfolio/projects/lms-administration/learning-platform-operations-migration-readiness/index.html"},
+    "my-approach-for-various-lms-platforms": {"label": "LMS Platform Experience", "path": "portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html"},
+    "system-integrations": {"label": "System Integrations", "path": "portfolio/projects/lms-administration/system-integrations/index.html"},
+    "workflows": {"label": "Workflows", "path": "portfolio/projects/workflows/index.html"},
+    "certification-reporting-automation": {"label": "Certification Reporting Automation", "path": "portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html"},
+    "github-workflow": {"label": "GitHub Workflow", "path": "portfolio/projects/github-workflow/index.html"},
     "contact": {"label": "Contact", "path": "portfolio/contact/index.html"},
 }
+
+
+def page_id_for_path(path: str) -> str | None:
+    return next(
+        (page_id for page_id, page in PAGE_REGISTRY.items() if page["path"] == path),
+        None,
+    )
 
 MAIN_PATTERN = re.compile(r"(?is)<main\b[^>]*>(?P<body>.*?)</main>")
 LEAF_PATTERN = re.compile(

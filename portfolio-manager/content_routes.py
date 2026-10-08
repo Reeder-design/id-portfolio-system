@@ -15,6 +15,7 @@ from component_registry_service import (
     validate_component_refs,
 )
 from custom_title_sync import sync_custom_page_title
+from page_copy_service import PAGE_REGISTRY, page_id_for_path, preview_url
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -198,6 +199,62 @@ def list_projects() -> list[dict]:
     return sorted(projects, key=lambda item: item.get("title", "").lower())
 
 
+EXTRA_PAGE_PLACEMENTS = {
+    "ai-integrations-in-learning": ("instructional-design", "interactive-learning"),
+    "rubric-demo": ("ai-training-and-evaluation", None),
+    "workflow-demo": ("ai-training-and-evaluation", None),
+    "system-integrations": ("lms-administration", None),
+    "github-workflow": ("workflows", None),
+}
+
+
+def manager_navigation(taxonomy: dict, projects: list[dict]) -> dict:
+    def page_item(page_id: str) -> dict | None:
+        page = PAGE_REGISTRY.get(page_id)
+        if page is None or not (REPO_ROOT / str(page["path"])).is_file():
+            return None
+        return {"id": page_id, "label": page["label"], "preview": preview_url(page)}
+
+    standalone = [item for page_id in ("home", "about", "expertise", "hiring-manager", "contact") if (item := page_item(page_id))]
+    structured_paths = {project.get("page_path") for project in projects}
+    areas = []
+    for category in taxonomy.get("categories", []):
+        category_id = category["id"]
+        subcategory_ids = {item["id"] for item in category.get("subcategories", [])}
+        area = {
+            "label": category["label"],
+            "page": page_item(category_id),
+            "projects": [project for project in projects if project.get("category") == category_id and project.get("subcategory") not in subcategory_ids],
+            "extras": [],
+            "subcategories": [],
+        }
+        for subcategory in category.get("subcategories", []):
+            subcategory_id = subcategory["id"]
+            area["subcategories"].append({
+                "label": subcategory["label"],
+                "page": page_item(subcategory_id),
+                "projects": [project for project in projects if project.get("category") == category_id and project.get("subcategory") == subcategory_id],
+                "extras": [],
+            })
+        areas.append((category_id, area))
+
+    area_map = dict(areas)
+    for page_id, (category_id, subcategory_id) in EXTRA_PAGE_PLACEMENTS.items():
+        page = page_item(page_id)
+        if page is None or PAGE_REGISTRY[page_id]["path"] in structured_paths:
+            continue
+        area = area_map.get(category_id)
+        if area is None:
+            continue
+        destination = next((item for item in area["subcategories"] if subcategory_id and item["page"] and item["page"]["id"] == subcategory_id), area)
+        destination["extras"].append(page)
+
+    for project in projects:
+        project["_page_preview"] = preview_url({"path": project["page_path"]}) if project.get("_has_public_page") else None
+
+    return {"standalone": standalone, "projects_page": page_item("projects"), "areas": [area for _, area in areas]}
+
+
 def refresh_docs() -> tuple[bool, str]:
     return run_command([sys.executable, str(UPDATE_DOCS_SCRIPT)])
 
@@ -335,9 +392,11 @@ def save_project_record(project_id: str, form) -> tuple[bool, str]:
 @content_bp.route("/content")
 def content_manager():
     taxonomy = load_json(TAXONOMY_PATH)
+    projects = list_projects()
     return render_template(
         "content-manager.html",
-        projects=list_projects(),
+        projects=projects,
+        navigation=manager_navigation(taxonomy, projects),
         placements=placement_options(taxonomy),
     )
 
@@ -435,6 +494,7 @@ def project_editor(project_id: str):
     return render_template(
         "project-editor.html",
         project=project,
+        custom_copy_page_id=page_id_for_path(str(project.get("page_path", ""))),
         component_context=component_context,
         learning_objectives="\n".join(
             content.get("learning_objectives", [])

@@ -1,0 +1,36 @@
+<section class="v2-assets-workspace" id="page-media">
+    <details class="v2-tree-group">
+        <summary><span><span class="eyebrow">Images on this page</span><strong>{{ other_page_media|length }} other current file{% if other_page_media|length != 1 %}s{% endif %}</strong></span></summary>
+        <div class="v2-tree-group-body">
+            <p class="section-copy">These files appear in the current page but are not in its project asset record. Replace a file in place to keep its page links working. Some icons are shared across pages, so check the shared-file box only when that change is intended.</p>
+            <div class="v2-inline-asset-grid">
+                {% for media in other_page_media %}
+                <article class="asset-card v2-inline-asset-card">
+                    <div class="asset-preview-frame">
+                        {% if media.image %}<img src="{{ url_for('assets.preview_page_media', page_id=page_id, media_index=media.index) }}" alt="{{ media.alt or 'Current page image preview' }}">
+                        {% else %}<div class="asset-file-icon">MEDIA</div>{% endif %}
+                    </div>
+                    <div class="asset-card-body">
+                        <p class="asset-path"><code>{{ media.path }}</code></p>
+                        {% if media.alt %}<p class="field-help">Alt text: {{ media.alt }}</p>{% endif %}
+                        <details class="v2-asset-controls">
+                            <summary>Replace this file</summary>
+                            <div class="v2-asset-controls-body">
+                                <form method="post" action="{{ url_for('assets.replace_page_media', page_id=page_id, media_index=media.index) }}" enctype="multipart/form-data" class="asset-form-stack">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="original_path" value="{{ media.path }}">
+                                    <p class="field-help">Choose a file with the same extension as the current file.</p>
+                                    <input name="replacement_file" type="file" aria-label="Replacement for {{ media.path }}" required>
+                                    <label class="checkbox-label"><input type="checkbox" name="confirm_shared"> I intend to change any other pages that use this same file.</label>
+                                    <label class="checkbox-label public-safe-confirm"><input type="checkbox" name="public_safe" required> I confirm the replacement is safe for the public portfolio.</label>
+                                    <button class="btn btn-secondary" type="submit">Replace File</button>
+                                </form>
+                            </div>
+                        </details>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </details>
+</section>

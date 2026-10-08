@@ -103,7 +103,7 @@
                 <h2>Where information lives: private vs. public</h2>
                 <div class="guide-definition-grid">
                     <div><strong><code>.env</code></strong><br>Local secrets: password hash, Flask secret, optional AI API key. Git-ignored.</div>
-                    <div><strong><code>.portfolio-manager/</code></strong><br>Private working data: notes, AI proposals/reviews, backups, Content Briefs, Reference Library files, Hiring Guide editorial libraries, temporary uploads. Git-ignored.</div>
+                    <div><strong><code>.portfolio-manager/</code></strong><br>Private working data: notes, AI proposals/reviews, backups, Content Briefs, Reference Library files, Hiring Guide editorial libraries, removed-content archive, temporary uploads. Git-ignored.</div>
                     <div><strong><code>portfolio-data/</code></strong><br>Git-tracked structured content. Treat it as publishable repository content.</div>
                     <div><strong><code>portfolio/</code></strong><br>Public-candidate website files and managed assets. Anything here may become reachable after publishing.</div>
                 </div>
@@ -113,7 +113,7 @@
 
             <section class="guide-section" id="manage" data-guide-section data-guide-tags="manage existing page project edit copy visible content notes interactive states title related references preview assets">
                 <h2>Manage existing portfolio work</h2>
-                <p>Use <strong>Manage Content</strong> when the page/project already exists. The hierarchy mirrors the public portfolio so you can think in pages rather than repository architecture.</p>
+                <p>Use <strong>Manage Content</strong> when the page/project already exists. Its sections follow the current portfolio taxonomy. Structured projects link to their record, current page, and associated assets.</p>
                 <ul>
                     <li><strong>Visible content:</strong> edit recognizable headings, paragraphs, labels, lists, buttons, and supported interaction text.</li>
                     <li><strong>Private notes:</strong> use for reminders/ideas you do not want public.</li>
@@ -121,6 +121,7 @@
                     <li><strong>Related References:</strong> review outgoing project connections, incoming references, and deterministic relationship suggestions. Suggestions are never added automatically.</li>
                     <li><strong>Component Registry:</strong> check which reusable interaction/presentation patterns already exist and where they are implemented before creating another version.</li>
                     <li><strong>Project Assets:</strong> upload/preview/replace/remove public-candidate assets beside the relevant project editor.</li>
+                    <li><strong>Removed Content Archive:</strong> browse the full sections cut during the copy review. The archive is local to this Manager and does not publish with the site.</li>
                     <li><strong>Structural/visual/code change:</strong> use page-aware AI rather than forcing the change through a plain-text field.</li>
                 </ul>
                 <p><strong>Related References has two jobs.</strong> The project workspace manages structured project-to-project relationships; the rename workflow checks existing visible labels/cards after a title change. Both are deterministic—not AI—and both require your approval before relationship/reference changes are written.</p>
@@ -129,7 +130,7 @@
 
             <section class="guide-section" id="assets" data-guide-section data-guide-tags="asset image png jpg file caption alt text upload replace remove public safe project asset library">
                 <h2>Images and project assets</h2>
-                <p>Routine project assets live inside the relevant project/custom-page editor. Use the full Asset Library only when you want the broader asset-management view.</p>
+                <p>Current project assets appear in their project and page editors, including files already stored in older portfolio asset folders. The page editor also lists images used by its current HTML that are not in the project asset record. Use the full Asset Library for the broader view.</p>
                 <ul>
                     <li>Uploading an asset associates it with a project; it does <strong>not</strong> automatically place it into the public page layout.</li>
                     <li>Images require alt text.</li>
