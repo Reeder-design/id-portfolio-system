@@ -66,8 +66,10 @@ body.home-primary .home-domain-row span{
   background:rgba(255,255,255,.9);
 }
 body.home-primary .home-brand-visual{
-  display:grid;
-  place-items:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   min-width:0;
   min-height:455px;
   overflow:hidden;
@@ -80,6 +82,16 @@ body.home-primary .home-brand-visual img{
   height:auto;
   filter:drop-shadow(0 16px 22px rgba(3,72,84,.2));
 }
+body.home-primary .home-brand-wordmark{
+  position:relative;
+  display:block;
+  margin-top:-54px;
+  color:#173540;
+  font:800 clamp(1.8rem,3vw,2.65rem)/1.05 var(--font-heading);
+  letter-spacing:-.045em;
+  white-space:nowrap;
+}
+body.home-primary .home-brand-wordmark strong{color:#147e82;font-weight:800}
 
 body.home-primary .home-hiring-section{
   padding:clamp(58px,7vw,84px) 0;
