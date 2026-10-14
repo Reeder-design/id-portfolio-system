@@ -2074,3 +2074,173 @@
     height: 240px;
   }
 }
+
+/* Reeder Design refresh: match the public page's sharper teal identity. */
+.hiring-manager-page {
+  --hm-ink: #29383f;
+  --hm-muted: #42525a;
+  --hm-line: rgba(9, 101, 111, .26);
+  --hm-deep: #082f3a;
+  --hm-dark: #173f46;
+}
+
+.hm-hero {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(178, 242, 99, .24), transparent 27rem),
+    radial-gradient(circle at 9% 76%, rgba(30, 206, 210, .17), transparent 30rem),
+    linear-gradient(125deg, #f2fbfb, #e1f4f3 58%, #e2f4e8);
+}
+
+.hm-hero h1 { color: #172e38; }
+.hm-hero h1::after {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 5px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0b7888, #2ad4ca 62%, #d0f64f);
+}
+
+.hm-hero-lede {
+  padding: 14px 18px;
+  border: 1px solid rgba(10, 123, 132, .21);
+  border-left: 4px solid #17bfc5;
+  border-radius: 0 16px 16px 0;
+  background: rgba(255, 255, 255, .77);
+  color: #35464e;
+  box-shadow: 0 12px 28px rgba(7, 68, 76, .07);
+}
+
+.hm-hero-proof span {
+  border-color: rgba(8, 92, 103, .24);
+  background: rgba(255, 255, 255, .92);
+  color: #41545b;
+  box-shadow: 0 5px 15px rgba(8, 69, 77, .06);
+}
+
+.hm-hero-actions .btn-primary {
+  border-color: #0b737c;
+  background: linear-gradient(110deg, #096a77, #159b9b);
+  color: #fff;
+  box-shadow: 0 10px 23px rgba(8, 105, 115, .19);
+}
+
+.hm-hero-actions .btn-secondary {
+  border-color: #0b737c;
+  color: #215761;
+  background: rgba(255, 255, 255, .76);
+}
+
+.hm-transfer-scene {
+  grid-template-areas:
+    "brand brand brand"
+    "manager lane haley"
+    "caption caption caption";
+  border-color: rgba(12, 151, 158, .43);
+  background:
+    linear-gradient(rgba(8, 96, 105, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 96, 105, .055) 1px, transparent 1px),
+    rgba(255, 255, 255, .94);
+  background-size: 24px 24px;
+  box-shadow: 0 25px 56px rgba(5, 67, 76, .16);
+}
+
+.hm-scene-brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 5px 13px 5px 3px;
+  border: 1px solid rgba(40, 216, 218, .48);
+  border-radius: 15px;
+  background: linear-gradient(105deg, #053541, #0a5860);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 10px 25px rgba(8, 77, 84, .16);
+}
+
+.hm-scene-brand img {
+  flex: none;
+  width: 59px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.hm-scene-wordmark {
+  color: #fff;
+  font: 800 clamp(.95rem, 1.7vw, 1.28rem)/1.1 var(--font-heading);
+  letter-spacing: -.035em;
+  white-space: nowrap;
+}
+
+.hm-scene-wordmark strong { color: #c7f55a; }
+.hm-scene-label {
+  margin-left: auto;
+  color: #d7f4ed;
+  font: 800 .63rem/1.2 var(--font-heading);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.hm-participant-card,
+.hm-transfer-caption {
+  border-color: rgba(8, 106, 114, .25);
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 8px 22px rgba(7, 72, 78, .06);
+}
+
+.hm-evaluate-section,
+.hm-quick-scan {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(41, 214, 214, .14), transparent 24rem),
+    linear-gradient(135deg, #0c323d, #194a4d 68%, #245650);
+}
+
+.hm-evaluate-card { border-color: rgba(56, 216, 213, .26); }
+.hm-evaluate-card p { color: rgba(255, 255, 255, .82); }
+
+.hm-conversation-section {
+  background: radial-gradient(circle at 6% 10%, rgba(26, 202, 205, .1), transparent 25rem), #f7fbfa;
+}
+
+.hm-chat-shell {
+  border-color: rgba(10, 126, 136, .36);
+  box-shadow: 0 26px 65px rgba(6, 69, 77, .15);
+}
+
+.hm-chat-header {
+  background:
+    radial-gradient(circle at 88% 20%, rgba(187, 242, 80, .17), transparent 15rem),
+    linear-gradient(115deg, #093440, #12616a);
+}
+
+.hm-library-toggle,
+.hm-evidence-card,
+.hm-next-card { border-color: rgba(9, 108, 118, .24); }
+.hm-chat-log { background-color: #f5fbfa; }
+.hm-message-bubble { border-color: rgba(9, 108, 118, .22); color: #33454d; }
+.hm-message-user .hm-message-bubble { background: linear-gradient(125deg, #075a68, #0b8289); }
+
+.hm-next-section { background: linear-gradient(145deg, #eaf7f6, #f5faf8); }
+.hm-next-shell {
+  border-color: rgba(9, 108, 118, .3);
+  box-shadow: 0 20px 44px rgba(6, 69, 77, .1);
+}
+
+@media (max-width: 700px) {
+  .hm-transfer-scene {
+    grid-template-areas:
+      "brand"
+      "manager"
+      "lane"
+      "haley"
+      "caption";
+  }
+}
+
+@media (max-width: 420px) {
+  .hm-scene-brand { gap: 3px; }
+  .hm-scene-brand img { width: 47px; height: 43px; }
+  .hm-scene-wordmark { font-size: .91rem; }
+  .hm-scene-label { font-size: .52rem; }
+}

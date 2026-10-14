@@ -249,6 +249,8 @@
   };
 
   const initHeroCleanup = () => {
+    // The Hiring Guide's hero links are in-page navigation to its chat and scan.
+    if (document.body.classList.contains('hiring-manager-page')) return;
     if (currentRelativePath() === 'projects/instructional-design/complete-learning-paths') return;
     const hero = document.querySelector('main > section:first-of-type');
     const h1 = hero?.querySelector('h1');
