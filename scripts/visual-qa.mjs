@@ -82,6 +82,18 @@ try {
         const breadcrumbs = document.querySelector('.breadcrumbs');
         const primaryButton = document.querySelector('.btn-primary');
         const buttonStyle = primaryButton ? getComputedStyle(primaryButton) : null;
+        const textPalette = new Map();
+        document.querySelectorAll('main h1, main h2, main h3, main h4, main h5, main h6, main p, main a, main button, main span, main small, main strong, main label, main li, main summary, main th, main td').forEach((element) => {
+          const ownText = [...element.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent.trim()).join(' ').trim();
+          if (!ownText || !element.getClientRects().length) return;
+          const style = getComputedStyle(element);
+          if (style.visibility === 'hidden' || style.display === 'none' || Number(style.opacity) === 0) return;
+          const color = style.color;
+          const entry = textPalette.get(color) || { color, count: 0, examples: [] };
+          entry.count += 1;
+          if (entry.examples.length < 2) entry.examples.push(`${element.tagName.toLowerCase()}${element.className && typeof element.className === 'string' ? `.${element.className.trim().split(/\s+/).slice(0, 2).join('.')}` : ''}: ${ownText.slice(0, 65)}`);
+          textPalette.set(color, entry);
+        });
         return {
           paper: getComputedStyle(document.documentElement).getPropertyValue('--portfolio-paper').trim().toLowerCase(),
           brandLoaded: Boolean(brandImage?.complete && brandImage.naturalWidth),
@@ -91,6 +103,7 @@ try {
           horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
           buttonForeground: buttonStyle?.color || null,
           buttonBackground: buttonStyle?.backgroundColor || null,
+          textPalette: [...textPalette.values()].sort((a, b) => b.count - a.count),
         };
       });
       const buttonContrast = details.buttonForeground && details.buttonBackground
@@ -105,9 +118,7 @@ try {
       if (buttonContrast !== null && buttonContrast < 4.5) throw new Error(`${item.name} ${view.name}: primary button contrast ${buttonContrast}`);
       if (errors.length) throw new Error(`${item.name} ${view.name}: ${errors.join('; ')}`);
 
-      if (previewNames.has(item.path)) {
-        await page.screenshot({ path: resolve(output, `${item.name}-${view.name}.png`) });
-      }
+      await page.screenshot({ path: resolve(output, `${item.name}-${view.name}.png`) });
       if (item.name === 'case-study' && view.name === 'desktop') {
         await page.locator('#overview').scrollIntoViewIfNeeded();
         await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('#overview .compact-section')).opacity) > 0.95);
