@@ -61,11 +61,14 @@ try {
       await page.evaluate(() => document.fonts.ready.then(() => true));
       const details = await page.evaluate(() => {
         const brandImage = document.querySelector('.site-brand-mark img');
+        const breadcrumbs = document.querySelector('.breadcrumbs');
         const primaryButton = document.querySelector('.btn-primary');
         const buttonStyle = primaryButton ? getComputedStyle(primaryButton) : null;
         return {
           paper: getComputedStyle(document.documentElement).getPropertyValue('--portfolio-paper').trim().toLowerCase(),
           brandLoaded: Boolean(brandImage?.complete && brandImage.naturalWidth),
+          breadcrumbTone: breadcrumbs?.dataset.breadcrumbTone || null,
+          breadcrumbColor: breadcrumbs?.querySelector('a') ? getComputedStyle(breadcrumbs.querySelector('a')).color : null,
           horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
           buttonForeground: buttonStyle?.color || null,
           buttonBackground: buttonStyle?.backgroundColor || null,
@@ -75,11 +78,20 @@ try {
         ? contrast(details.buttonForeground, details.buttonBackground) : null;
       if (details.paper !== '#f4f9f8') throw new Error(`${item.name} ${view.name}: wrong paper token ${details.paper}`);
       if (!details.brandLoaded) throw new Error(`${item.name} ${view.name}: selected logo did not load`);
+      if (['instructional-design', 'case-study'].includes(item.name) &&
+          (details.breadcrumbTone !== 'light' || details.breadcrumbColor !== 'rgb(232, 235, 232)')) {
+        throw new Error(`${item.name} ${view.name}: dark hero breadcrumbs are not light gray`);
+      }
       if (details.horizontalOverflow) throw new Error(`${item.name} ${view.name}: horizontal overflow`);
       if (buttonContrast !== null && buttonContrast < 4.5) throw new Error(`${item.name} ${view.name}: primary button contrast ${buttonContrast}`);
       if (errors.length) throw new Error(`${item.name} ${view.name}: ${errors.join('; ')}`);
 
       await page.screenshot({ path: resolve(output, `${item.name}-${view.name}.png`) });
+      if (item.name === 'case-study' && view.name === 'desktop') {
+        await page.locator('#overview').scrollIntoViewIfNeeded();
+        await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('#overview .compact-section')).opacity) > 0.95);
+        await page.screenshot({ path: resolve(output, 'case-study-desktop-overview.png') });
+      }
       if (view.name === 'phone' && item.name === 'projects') {
         const menu = page.locator('.site-nav-toggle');
         if (!await menu.isVisible()) throw new Error('Phone menu toggle is missing.');

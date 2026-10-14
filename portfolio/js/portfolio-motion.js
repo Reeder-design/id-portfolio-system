@@ -436,15 +436,12 @@
     const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
     const forceLight = Boolean(breadcrumbs.closest('.ai-eval-hero, .ai-demo-hero, .flagship-hero, .cp-hero, .ai-learning-hero, .micro-hero')) || document.body.classList.contains('ai-eval-page') || document.body.classList.contains('cert-case-page');
     const lightText = forceLight || luminance > 0.58;
-    const aiLearningHero = Boolean(breadcrumbs.closest('.ai-learning-hero'));
-    const primary = aiLearningHero ? '#ffffff' : lightText ? 'rgba(248,252,249,.84)' : '#40554d';
-    const current = lightText ? '#ffffff' : '#263d37';
-    const separator = aiLearningHero ? '#ffffff' : lightText ? 'rgba(248,252,249,.56)' : '#7a8781';
+    const textColor = lightText ? 'var(--portfolio-ink-inverse)' : 'var(--portfolio-ink)';
 
     breadcrumbs.dataset.breadcrumbTone = lightText ? 'light' : 'dark';
-    breadcrumbs.querySelectorAll('a').forEach((node) => node.style.setProperty('color', primary, 'important'));
-    breadcrumbs.querySelectorAll('[aria-current="page"]').forEach((node) => node.style.setProperty('color', current, 'important'));
-    breadcrumbs.querySelectorAll('.breadcrumb-separator').forEach((node) => node.style.setProperty('color', separator, 'important'));
+    breadcrumbs.querySelectorAll('a, [aria-current="page"], .breadcrumb-separator').forEach((node) => {
+      node.style.setProperty('color', textColor, 'important');
+    });
   };
 
   const cleanLinkLabel = (value) => String(value || '')
@@ -902,6 +899,7 @@
   initFooterLinks();
   initCanonicalBreadcrumbs();
   initBreadcrumbTone();
+  window.addEventListener('load', initBreadcrumbTone, { once: true });
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();

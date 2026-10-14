@@ -1166,7 +1166,7 @@ nav[aria-label="Project sections"] a.active{
   display:block;
   flex:none;
   width:100px;
-  height:51px;
+  height:48px;
   overflow:hidden;
 }
 .site-brand-mark img{
@@ -1283,7 +1283,7 @@ nav[aria-label="Project sections"] a.active{
     padding:8px 0;
   }
   .site-header.has-mobile-nav .site-brand{min-width:0;min-height:50px;font-size:1rem}
-  .site-header.has-mobile-nav .site-brand-mark{width:88px;height:46px}
+  .site-header.has-mobile-nav .site-brand-mark{width:88px;height:43px}
   .site-header.has-mobile-nav .site-brand-mark img{width:94px;height:94px;left:-3px;top:-21px}
   .site-header.has-mobile-nav .site-nav-toggle{
     display:inline-flex;
@@ -1329,6 +1329,6 @@ nav[aria-label="Project sections"] a.active{
 }
 @media(max-width:390px){
   .site-header.has-mobile-nav .site-brand{font-size:.88rem;gap:.25rem}
-  .site-header.has-mobile-nav .site-brand-mark{width:76px;height:42px}
+  .site-header.has-mobile-nav .site-brand-mark{width:76px;height:39px}
   .site-header.has-mobile-nav .site-brand-mark img{width:83px;height:83px;left:-3px;top:-18px}
 }
