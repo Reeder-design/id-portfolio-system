@@ -70,7 +70,7 @@ try {
   }));
 
   for (const view of views) {
-    const context = await browser.newContext(view);
+    const context = await browser.newContext({ ...view, reducedMotion: 'reduce' });
     for (const item of pages) {
       const page = await context.newPage();
       const errors = [];

@@ -1219,6 +1219,9 @@ nav[aria-label="Project sections"] a.active{
   border-radius:999px;
   background:linear-gradient(90deg,var(--mint-leaf),var(--yellow-green));
 }
+section[data-hero-text="light"] :is(h1,.eyebrow,.body-large,.hm-kicker,.hm-hero-lede){color:var(--portfolio-ink-inverse)!important}
+section[data-hero-text="dark"] :is(h1,.eyebrow,.body-large,.hm-kicker,.hm-hero-lede){color:var(--portfolio-ink)!important}
+.hm-evaluate-section :is(.eyebrow,.hm-evaluate-card strong,.hm-evaluate-card p){color:var(--portfolio-ink-inverse)!important}
 .fs-surface-light>.container>.section-heading h2,
 .fs-surface-light>.container>h2,
 .fs-surface-light>.container>.section-heading .eyebrow,

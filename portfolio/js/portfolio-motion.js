@@ -438,6 +438,7 @@
     const lightText = forceLight || luminance > 0.58;
     const textColor = lightText ? 'var(--portfolio-ink-inverse)' : 'var(--portfolio-ink)';
 
+    if (hero?.tagName === 'SECTION') hero.dataset.heroText = lightText ? 'light' : 'dark';
     breadcrumbs.dataset.breadcrumbTone = lightText ? 'light' : 'dark';
     breadcrumbs.querySelectorAll('a, [aria-current="page"], .breadcrumb-separator').forEach((node) => {
       node.style.setProperty('color', textColor, 'important');
