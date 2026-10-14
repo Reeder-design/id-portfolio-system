@@ -118,7 +118,10 @@
   const initHiringGuideNav = () => {
     const nav = document.querySelector('.site-nav');
     if (!nav) return;
-    let link = [...nav.querySelectorAll('a[href]')].find((item) => /hiring-manager/i.test(item.getAttribute('href') || ''));
+    // The SEO build uses href="index.html" on the Guide itself, so identify its
+    // generated link by class before falling back to its path on other pages.
+    let link = nav.querySelector('a.site-nav-hiring[href]')
+      || [...nav.querySelectorAll('a[href]')].find((item) => /hiring-manager/i.test(item.getAttribute('href') || ''));
     if (!link) {
       link = document.createElement('a');
       link.href = new URL('hiring-manager/', portfolioRoot).href;
