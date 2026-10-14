@@ -118,7 +118,10 @@
   const initHiringGuideNav = () => {
     const nav = document.querySelector('.site-nav');
     if (!nav) return;
-    let link = [...nav.querySelectorAll('a[href]')].find((item) => /hiring-manager/i.test(item.getAttribute('href') || ''));
+    // The SEO build uses href="index.html" on the Guide itself, so identify its
+    // generated link by class before falling back to its path on other pages.
+    let link = nav.querySelector('a.site-nav-hiring[href]')
+      || [...nav.querySelectorAll('a[href]')].find((item) => /hiring-manager/i.test(item.getAttribute('href') || ''));
     if (!link) {
       link = document.createElement('a');
       link.href = new URL('hiring-manager/', portfolioRoot).href;
@@ -128,6 +131,37 @@
     link.classList.add('nav-hiring-guide');
     const path = currentRelativePath();
     link.classList.toggle('active', path === 'hiring-manager');
+  };
+
+  const initMobileNav = () => {
+    const header = document.querySelector('.site-header');
+    const button = header?.querySelector('.brand-nav-toggle');
+    const nav = header?.querySelector('#site-nav');
+    if (!button || !nav) return;
+
+    const setOpen = (open) => {
+      nav.classList.toggle('brand-nav-open', open);
+      button.setAttribute('aria-expanded', String(open));
+      button.textContent = open ? 'Close' : 'Menu';
+    };
+
+    button.addEventListener('click', () => {
+      setOpen(button.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        button.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (button.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+    window.matchMedia('(min-width: 701px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
   };
 
   const initFooterLinks = () => {
@@ -215,6 +249,8 @@
   };
 
   const initHeroCleanup = () => {
+    // The Hiring Guide's hero links are in-page navigation to its chat and scan.
+    if (document.body.classList.contains('hiring-manager-page')) return;
     if (currentRelativePath() === 'projects/instructional-design/complete-learning-paths') return;
     const hero = document.querySelector('main > section:first-of-type');
     const h1 = hero?.querySelector('h1');
@@ -841,9 +877,11 @@
 
   initPageFamily();
   initHiringGuideNav();
+  initMobileNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
   initBreadcrumbTone();
+  window.addEventListener('load', initBreadcrumbTone, { once: true });
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();

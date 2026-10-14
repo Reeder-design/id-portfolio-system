@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Ask Haley is an interactive portfolio chat for hiring managers, built from curated self-written interview answers and direct portfolio evidence.">
-  <title>Ask Haley | Interactive Portfolio Chat</title>
-  <link rel="icon" type="image/svg+xml" href="../assets/site/favicon.svg">
+  <title>Ask Haley | Reeder Design</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/site/reeder-design-favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
 <body class="hiring-manager-page">
   <header class="site-header">
     <div class="container nav-container">
-      <a class="site-brand" href="../index.html">Haley <span>Reeder</span></a>
-      <nav class="site-nav" aria-label="Main navigation">
+      <a class="site-brand" href="../index.html" aria-label="Reeder Design home"><span class="brand-mark"><img src="../assets/site/reeder-design-rd.png" alt=""></span><span class="brand-name">Reeder <strong>Design</strong></span></a>
+      <button class="brand-nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">Menu</button><nav id="site-nav" class="site-nav" aria-label="Main navigation">
         <a href="../index.html">Home</a>
         <a href="../about/index.html">About Me</a>
         <a href="../projects/index.html">Projects</a>
@@ -52,6 +52,11 @@
         </div>
 
         <div class="hm-transfer-scene" aria-label="A hiring manager question moving through Haley's curated answer and evidence system">
+          <div class="hm-scene-brand" aria-label="Reeder Design Hiring Guide">
+            <img src="../assets/site/reeder-design-rd.png" alt="" width="1254" height="1254">
+            <span class="hm-scene-wordmark">Reeder <strong>Design</strong></span>
+            <span class="hm-scene-label">Hiring Guide</span>
+          </div>
           <div class="hm-participant-card hm-participant-manager">
             <span class="hm-participant-icon"><img src="../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span>
             <div><strong>Hiring manager</strong><span>asks a real interview question</span></div>
@@ -276,7 +281,7 @@
       </div>
       <div class="hm-evidence-companion-slot" data-hm-mascot-slot>
         <span class="hm-icon-bubble"><img src="../assets/icons/pixel/hiring-guide/person-man.webp" alt=""></span>
-        <p><strong>Hiring-manager companion slot</strong><span>Your custom mascot can drop in here next.</span></p>
+        <p><strong>See the work for yourself</strong><span>Open the full project to inspect the public case study behind this answer.</span></p>
       </div>
     </div>
   </aside>

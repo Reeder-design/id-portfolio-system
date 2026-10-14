@@ -65,29 +65,33 @@ body.home-primary .home-domain-row span{
   border-color:rgba(80,132,132,.17);
   background:rgba(255,255,255,.9);
 }
-body.home-primary .home-work-stack{min-height:455px}
-body.home-primary .home-work-screen{
-  display:grid;
-  place-items:center;
-  padding:8px;
-  border-color:rgba(80,132,132,.18);
-  background:rgba(255,255,255,.9);
+body.home-primary .home-brand-visual{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  min-height:455px;
+  overflow:hidden;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.9),rgba(191,238,237,.42) 48%,transparent 72%);
 }
-body.home-primary .home-work-screen img{
+body.home-primary .home-brand-visual img{
+  display:block;
   width:100%;
-  height:100%;
-  padding:8px;
-  object-fit:contain!important;
+  max-width:540px;
+  height:auto;
+  filter:drop-shadow(0 16px 22px rgba(3,72,84,.2));
 }
-body.home-primary .home-work-screen--id{left:11%;top:84px;width:78%;height:292px}
-body.home-primary .home-work-screen--ai{right:0;top:10px;width:46%;height:176px}
-body.home-primary .home-work-screen--lms{left:0;top:12px;width:45%;height:172px}
-body.home-primary .home-work-screen--workflow{right:1%;bottom:10px;width:47%;height:166px}
-body.home-primary .home-work-caption{display:none!important}
-body.home-primary .home-work-orbit{
-  inset:45px 28px 46px;
-  border-color:rgba(80,132,132,.15);
+body.home-primary .home-brand-wordmark{
+  position:relative;
+  display:block;
+  margin-top:-54px;
+  color:#173540;
+  font:800 clamp(1.8rem,3vw,2.65rem)/1.05 var(--font-heading);
+  letter-spacing:-.045em;
+  white-space:nowrap;
 }
+body.home-primary .home-brand-wordmark strong{color:#147e82;font-weight:800}
 
 body.home-primary .home-hiring-section{
   padding:clamp(58px,7vw,84px) 0;
@@ -1136,7 +1140,7 @@ body.contact-primary .contact-quick-link span{display:block;margin-top:3px;color
   body.contact-primary .contact-quick-grid{grid-template-columns:1fr}
 }
 @media(max-width:560px){
-  body.home-primary .home-work-stack{min-height:350px}
+  body.home-primary .home-brand-visual{min-height:330px}
   body.home-primary .home-hiring-prompt{display:none}
   body.home-primary .home-hiring-visual-link{min-height:300px}
   body.about-primary .about-work-collage{min-height:340px}
@@ -1500,3 +1504,69 @@ body.contact-primary .contact-card-art-link .contact-card-art{
   box-shadow:none!important;
   object-fit:contain!important;
 }
+
+/* Approved cool, crisp direction for the primary portfolio pages. */
+body[data-page-family="primary"] main>section:first-of-type{
+  border-bottom:3px solid #419fa9!important;
+  background:radial-gradient(circle at 90% 8%,rgba(190,248,94,.3),transparent 21rem),radial-gradient(circle at 7% 100%,rgba(2,182,197,.27),transparent 26rem),linear-gradient(125deg,#e8f9f8 0%,#cceff0 51%,#a9e0e5 100%)!important;
+  box-shadow:inset 0 1px 0 #fff,0 13px 32px rgba(8,74,85,.18)!important;
+}
+body[data-page-family="primary"] main>section:first-of-type::before{
+  background:radial-gradient(circle at 35% 35%,rgba(208,246,79,.33),transparent 36%),radial-gradient(circle at 60% 55%,rgba(9,205,206,.23),transparent 56%)!important;
+}
+body[data-page-family="primary"] main>section:first-of-type h1,
+body[data-page-family="primary"] main>section:first-of-type .hero-copy,
+body[data-page-family="primary"] main>section:first-of-type .refresh-hero-copy>p:not(.eyebrow){color:#19333b!important}
+body[data-page-family="primary"] main>section:first-of-type h1{
+  text-wrap:balance;
+  letter-spacing:-.045em!important;
+  text-shadow:none!important;
+}
+body[data-page-family="primary"] main>section:first-of-type .hero-accent{
+  background:linear-gradient(108deg,#075867,#16868a 56%,#427a50 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  text-shadow:none!important;
+}
+body[data-page-family="primary"] main>section:first-of-type h1::after{
+  content:"";
+  display:block;
+  width:112px;
+  height:6px;
+  margin-top:19px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#08afbd,#34d2bc,#d1ef48)!important;
+  box-shadow:0 4px 14px rgba(3,146,153,.25);
+}
+body.home-primary main>section:first-of-type .hero-copy{
+  padding:13px 18px;
+  border-left:4px solid #0a9eaa;
+  border-radius:0 14px 14px 0;
+  background:linear-gradient(90deg,rgba(255,255,255,.84),rgba(255,255,255,.22));
+  box-shadow:0 8px 22px rgba(15,91,99,.09),inset 0 1px 0 #fff;
+}
+body[data-page-family="primary"] main>section:first-of-type .home-domain-row span,
+body[data-page-family="primary"] main>section:first-of-type .refresh-chip,
+body[data-page-family="primary"] main>section:first-of-type .hero-context-chip{
+  border:1px solid #5d9ba1!important;
+  background:linear-gradient(140deg,#fff,#eafafa)!important;
+  box-shadow:0 6px 15px rgba(10,93,102,.17),inset 0 2px 0 #fff!important;
+  color:#19333b!important;
+}
+body[data-page-family="primary"] main>section:first-of-type .projects-hero-stage{
+  border:2px solid #2f9ca8!important;
+  box-shadow:0 0 0 4px rgba(255,255,255,.7),0 29px 52px rgba(4,68,78,.27)!important;
+}
+body.home-primary main>section.project-areas{
+  background:radial-gradient(circle at 88% 16%,rgba(179,237,64,.18),transparent 21rem),linear-gradient(145deg,#e6f7f7,#ccebed)!important;
+}
+body.home-primary .project-family-card,
+body.home-primary .home-next-step-section .primary-link-card,
+body.projects-primary .project-family-card,
+body.projects-primary .featured-case-card{
+  border-color:#6099a0!important;
+  box-shadow:0 18px 40px rgba(7,69,78,.18),inset 0 2px 0 rgba(255,255,255,.75)!important;
+}
+body.primary-page .btn-primary{box-shadow:0 5px 0 rgba(5,66,75,.28),0 11px 20px rgba(9,63,70,.15)!important}
+@media(max-width:620px){body.home-primary main>section:first-of-type .hero-copy{padding:12px 14px}}

@@ -1150,3 +1150,101 @@ nav[aria-label="Project sections"] a.active{
   .snapshot-band::before,
   .portfolio-explore-section::after{animation:none!important}
 }
+
+/* Reeder Design identity and the compact navigation used across public pages. */
+:root{--charcoal:#29383f;--muted-text:#42525a}
+.site-header{
+  overflow:visible;
+  border-bottom:2px solid #18c5ca;
+  background:radial-gradient(circle at 4% 0%,rgba(16,197,204,.22),transparent 28rem),linear-gradient(110deg,#062f3b 0%,#0b3942 56%,#0b5053 100%)!important;
+  box-shadow:0 13px 29px rgba(3,43,51,.22);
+}
+.site-header::after{
+  inset:auto 0 0;
+  height:2px;
+  opacity:.85;
+  background:linear-gradient(90deg,transparent,#22dce0 20%,#d0f64f 78%,transparent);
+}
+.site-header .site-brand,
+.site-header .site-brand:hover,
+.site-header .site-brand:focus-visible{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  color:#fff;
+  text-decoration:none;
+}
+.site-header .site-brand::before{display:none}
+.site-header .brand-mark{
+  display:grid;
+  flex:none;
+  place-items:center;
+  width:68px;
+  height:55px;
+  border:1px solid rgba(42,234,223,.38);
+  border-radius:12px;
+  background:linear-gradient(145deg,rgba(0,35,42,.72),rgba(8,75,78,.42));
+  box-shadow:0 0 0 2px rgba(11,185,190,.11),inset 0 1px 0 rgba(255,255,255,.13);
+}
+.site-header .brand-mark img{display:block;width:66px;height:52px;object-fit:contain}
+.site-header .brand-name{
+  display:inline-block;
+  color:#f9ffff;
+  font:800 clamp(1rem,1.7vw,1.25rem)/1.1 var(--font-heading);
+  letter-spacing:-.035em;
+  white-space:nowrap;
+}
+.site-header .brand-name strong{color:#b9f75f;font-weight:800}
+.site-header .site-nav a:not(.nav-hiring-guide).active{border-color:rgba(39,222,225,.65)}
+.site-header .site-nav a:not(.nav-hiring-guide):hover,
+.site-header .site-nav a:not(.nav-hiring-guide):focus-visible{box-shadow:inset 0 -2px 0 #b9f75f}
+.brand-nav-toggle{display:none}
+@media(max-width:700px){
+  .site-header .nav-container{
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:10px;
+    min-height:68px;
+    padding-block:9px;
+  }
+  .site-header .site-brand{grid-column:1;margin:0;gap:7px}
+  .site-header .brand-mark{width:50px;height:45px;border-radius:10px}
+  .site-header .brand-mark img{width:48px;height:42px}
+  .site-header .brand-name{font-size:1rem}
+  .brand-nav-toggle{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    grid-column:2;
+    min-width:72px;
+    min-height:44px;
+    padding:8px 12px;
+    border:1px solid rgba(232,243,240,.48);
+    border-radius:10px;
+    background:rgba(255,255,255,.09);
+    color:#e9f2f4;
+    font:700 14px var(--font-heading);
+    cursor:pointer;
+  }
+  .brand-nav-toggle:focus-visible{outline:3px solid #d0f64f;outline-offset:3px}
+  .site-header .site-nav{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:12px;
+    right:12px;
+    z-index:100;
+    width:auto;
+    padding:12px;
+    border:1px solid rgba(232,243,240,.22);
+    border-radius:14px;
+    background:#203a3e;
+    box-shadow:0 18px 38px rgba(15,40,44,.28);
+  }
+  .site-header .site-nav.brand-nav-open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .site-header .site-nav a{display:flex;align-items:center;justify-content:center;min-height:44px;margin:0;padding:9px 7px;font-size:13px;text-align:center}
+  .site-header .site-nav a:last-child{grid-column:1/-1}
+}
