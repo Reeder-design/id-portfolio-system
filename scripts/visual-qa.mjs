@@ -1,7 +1,7 @@
 // Render the public page families at desktop and phone sizes in CI.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const output = resolve(process.env.VISUAL_QA_OUTPUT || 'visual-qa');
@@ -35,6 +35,26 @@ const contrast = (foreground, background) => {
 };
 
 const report = [];
+const previewNames = new Map([
+  ['/index.html', 'home'],
+  ['/projects/index.html', 'projects'],
+  ['/projects/instructional-design/index.html', 'instructional-design'],
+  ['/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html', 'case-study'],
+  ['/projects/ai-training-and-evaluation/index.html', 'ai-evaluation'],
+  ['/projects/lms-administration/index.html', 'lms-administration'],
+  ['/projects/workflows/index.html', 'workflows'],
+  ['/projects/instructional-design/interactive-learning/meddpicc-practice/index.html', 'interactive-demo'],
+  ['/hiring-manager/index.html', 'hiring-guide'],
+]);
+const listPublicPages = async (relative = '') => {
+  const entries = await readdir(resolve('portfolio', relative), { withFileTypes: true });
+  const paths = [];
+  for (const entry of entries) {
+    if (entry.isDirectory()) paths.push(...await listPublicPages(`${relative}${entry.name}/`));
+    else if (entry.name.endsWith('.html')) paths.push(`/${relative}${entry.name}`);
+  }
+  return paths;
+};
 let browser;
 try {
   await mkdir(output, { recursive: true });
@@ -44,12 +64,10 @@ try {
     { name: 'desktop', viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
     { name: 'phone', viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
   ];
-  const pages = [
-    { name: 'home', path: '/index.html' },
-    { name: 'projects', path: '/projects/index.html' },
-    { name: 'instructional-design', path: '/projects/instructional-design/index.html' },
-    { name: 'case-study', path: '/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html' },
-  ];
+  const pages = (await listPublicPages()).sort().map((path) => ({
+    path,
+    name: previewNames.get(path) || path.slice(1).replace(/\/index\.html$/, '').replaceAll('/', '-'),
+  }));
 
   for (const view of views) {
     const context = await browser.newContext(view);
@@ -86,7 +104,9 @@ try {
       if (buttonContrast !== null && buttonContrast < 4.5) throw new Error(`${item.name} ${view.name}: primary button contrast ${buttonContrast}`);
       if (errors.length) throw new Error(`${item.name} ${view.name}: ${errors.join('; ')}`);
 
-      await page.screenshot({ path: resolve(output, `${item.name}-${view.name}.png`) });
+      if (previewNames.has(item.path)) {
+        await page.screenshot({ path: resolve(output, `${item.name}-${view.name}.png`) });
+      }
       if (item.name === 'case-study' && view.name === 'desktop') {
         await page.locator('#overview').scrollIntoViewIfNeeded();
         await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('#overview .compact-section')).opacity) > 0.95);
@@ -107,7 +127,7 @@ try {
     await context.close();
   }
   await writeFile(resolve(output, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
-  console.log(`Rendered ${report.length} page/viewport combinations; desktop and phone checks passed.`);
+  console.log(`Checked ${report.length} page/viewport combinations; desktop and phone checks passed.`);
 } finally {
   await browser?.close();
   server.kill();
