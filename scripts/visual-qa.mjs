@@ -98,7 +98,7 @@ try {
       if (!details.brandLoaded) throw new Error(`${item.name} ${view.name}: selected logo did not load`);
       if (['instructional-design', 'case-study'].includes(item.name) &&
           (details.breadcrumbTone !== 'light' || details.breadcrumbColor !== 'rgb(232, 235, 232)')) {
-        throw new Error(`${item.name} ${view.name}: dark hero breadcrumbs are not light gray`);
+        throw new Error(`${item.name} ${view.name}: dark hero breadcrumbs are not light gray (${details.breadcrumbTone}, ${details.breadcrumbColor})`);
       }
       if (details.horizontalOverflow) throw new Error(`${item.name} ${view.name}: horizontal overflow`);
       if (buttonContrast !== null && buttonContrast < 4.5) throw new Error(`${item.name} ${view.name}: primary button contrast ${buttonContrast}`);

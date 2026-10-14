@@ -430,6 +430,8 @@
     const heading = hero?.querySelector('h1') || document.querySelector('main h1');
     if (!heading) return;
 
+    // Read the page's own hero styling, not the neutral text rule set by a previous pass.
+    if (hero?.tagName === 'SECTION') hero.removeAttribute('data-hero-text');
     const match = window.getComputedStyle(heading).color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
     if (!match) return;
     const [r,g,b] = match.slice(1,4).map(Number);
