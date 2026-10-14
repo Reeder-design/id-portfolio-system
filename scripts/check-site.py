@@ -28,6 +28,8 @@ class ReferenceParser(HTMLParser):
         self.ids: list[str] = []
         self.new_tab_links: list[tuple[str, str]] = []
         self.images_without_alt: list[str] = []
+        self.favicons: list[str] = []
+        self.static_final_styles: list[str] = []
         self.main_count = 0
         self.h1_count = 0
 
@@ -44,6 +46,11 @@ class ReferenceParser(HTMLParser):
             self.h1_count += 1
         elif tag == "img" and "alt" not in attrs_dict:
             self.images_without_alt.append(attrs_dict.get("src") or "<unknown image>")
+        elif tag == "link":
+            if "icon" in (attrs_dict.get("rel") or "").lower().split():
+                self.favicons.append(attrs_dict.get("href") or "")
+            if "data-final-stretch-styles" in attrs_dict:
+                self.static_final_styles.append(attrs_dict.get("href") or "")
 
         if tag == "a" and (attrs_dict.get("target") or "").lower() == "_blank":
             self.new_tab_links.append((attrs_dict.get("href") or "", attrs_dict.get("rel") or ""))
@@ -180,6 +187,14 @@ def main() -> int:
             errors.append(f"{relative}: expected exactly one <main>, found {parser.main_count}")
         if parser.h1_count != 1:
             errors.append(f"{relative}: expected exactly one <h1>, found {parser.h1_count}")
+
+        expected_icon = (SITE_ROOT / "assets/site/reeder-design-favicon.svg").resolve()
+        if len(parser.favicons) != 1 or resolve_local_reference(html_file, parser.favicons[0]) != expected_icon:
+            errors.append(f"{relative}: expected one Reeder Design favicon link")
+        if re.search(r'<header\b[^>]*class=["\'][^"\']*\bsite-header\b', text, re.IGNORECASE):
+            expected_styles = (SITE_ROOT / "css/final-stretch-system.css").resolve()
+            if len(parser.static_final_styles) != 1 or resolve_local_reference(html_file, parser.static_final_styles[0]) != expected_styles:
+                errors.append(f"{relative}: shared header styles must load directly in <head>")
 
         main_nav = re.search(
             r'<nav\b[^>]*class=["\'][^"\']*\bsite-nav\b[^"\']*["\'][^>]*>(.*?)</nav>',
