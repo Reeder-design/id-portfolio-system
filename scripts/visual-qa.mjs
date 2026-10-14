@@ -85,6 +85,7 @@ try {
         return {
           paper: getComputedStyle(document.documentElement).getPropertyValue('--portfolio-paper').trim().toLowerCase(),
           brandLoaded: Boolean(brandImage?.complete && brandImage.naturalWidth),
+          pageFamily: document.body.dataset.pageFamily || null,
           breadcrumbTone: breadcrumbs?.dataset.breadcrumbTone || null,
           breadcrumbColor: breadcrumbs?.querySelector('a') ? getComputedStyle(breadcrumbs.querySelector('a')).color : null,
           horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
@@ -96,7 +97,7 @@ try {
         ? contrast(details.buttonForeground, details.buttonBackground) : null;
       if (details.paper !== '#f4f9f8') throw new Error(`${item.name} ${view.name}: wrong paper token ${details.paper}`);
       if (!details.brandLoaded) throw new Error(`${item.name} ${view.name}: selected logo did not load`);
-      if (['instructional-design', 'case-study'].includes(item.name) &&
+      if (['discipline', 'category', 'case'].includes(details.pageFamily) &&
           (details.breadcrumbTone !== 'light' || details.breadcrumbColor !== 'rgb(232, 235, 232)')) {
         throw new Error(`${item.name} ${view.name}: dark hero breadcrumbs are not light gray (${details.breadcrumbTone}, ${details.breadcrumbColor})`);
       }
