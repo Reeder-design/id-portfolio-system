@@ -65,28 +65,20 @@ body.home-primary .home-domain-row span{
   border-color:rgba(80,132,132,.17);
   background:rgba(255,255,255,.9);
 }
-body.home-primary .home-work-stack{min-height:455px}
-body.home-primary .home-work-screen{
+body.home-primary .home-brand-visual{
   display:grid;
   place-items:center;
-  padding:8px;
-  border-color:rgba(80,132,132,.18);
-  background:rgba(255,255,255,.9);
+  min-width:0;
+  min-height:455px;
+  overflow:hidden;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.9),rgba(191,238,237,.42) 48%,transparent 72%);
 }
-body.home-primary .home-work-screen img{
+body.home-primary .home-brand-visual img{
+  display:block;
   width:100%;
-  height:100%;
-  padding:8px;
-  object-fit:contain!important;
-}
-body.home-primary .home-work-screen--id{left:11%;top:84px;width:78%;height:292px}
-body.home-primary .home-work-screen--ai{right:0;top:10px;width:46%;height:176px}
-body.home-primary .home-work-screen--lms{left:0;top:12px;width:45%;height:172px}
-body.home-primary .home-work-screen--workflow{right:1%;bottom:10px;width:47%;height:166px}
-body.home-primary .home-work-caption{display:none!important}
-body.home-primary .home-work-orbit{
-  inset:45px 28px 46px;
-  border-color:rgba(80,132,132,.15);
+  max-width:540px;
+  height:auto;
+  filter:drop-shadow(0 16px 22px rgba(3,72,84,.2));
 }
 
 body.home-primary .home-hiring-section{
@@ -1136,7 +1128,7 @@ body.contact-primary .contact-quick-link span{display:block;margin-top:3px;color
   body.contact-primary .contact-quick-grid{grid-template-columns:1fr}
 }
 @media(max-width:560px){
-  body.home-primary .home-work-stack{min-height:350px}
+  body.home-primary .home-brand-visual{min-height:330px}
   body.home-primary .home-hiring-prompt{display:none}
   body.home-primary .home-hiring-visual-link{min-height:300px}
   body.about-primary .about-work-collage{min-height:340px}
@@ -1550,7 +1542,6 @@ body[data-page-family="primary"] main>section:first-of-type .hero-context-chip{
   box-shadow:0 6px 15px rgba(10,93,102,.17),inset 0 2px 0 #fff!important;
   color:#19333b!important;
 }
-body[data-page-family="primary"] main>section:first-of-type .home-work-screen,
 body[data-page-family="primary"] main>section:first-of-type .projects-hero-stage{
   border:2px solid #2f9ca8!important;
   box-shadow:0 0 0 4px rgba(255,255,255,.7),0 29px 52px rgba(4,68,78,.27)!important;
