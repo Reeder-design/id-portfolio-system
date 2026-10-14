@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Reeder Design RD">
+  <defs>
+    <linearGradient id="tile" x2="1" y2="1">
+      <stop stop-color="#07343e"/>
+      <stop offset="1" stop-color="#0c5258"/>
+    </linearGradient>
+    <linearGradient id="letters" x2="1" y2="1">
+      <stop stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#8cf4e5"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="url(#tile)" stroke="#14cbd0" stroke-width="2"/>
+  <text x="5" y="47" textLength="52" lengthAdjust="spacingAndGlyphs" fill="url(#letters)" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="900" letter-spacing="-5">RD</text>
+  <path d="M51 5 54 11 60 14 54 17 51 23 48 17 42 14 48 11Z" fill="#d6f34b" stroke="#07343e" stroke-width="1.5"/>
+</svg>

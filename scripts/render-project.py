@@ -336,7 +336,7 @@ def render_project_text(project_path: Path) -> tuple[str, Path]:
     tokens = {
         "META_DESCRIPTION": esc(project["summary"]),
         "PAGE_TITLE": esc(f"{project['title']} | Haley Reeder"),
-        "FAVICON_PATH": esc(relative_href(final_output, "portfolio/assets/site/favicon.svg")),
+        "FAVICON_PATH": esc(relative_href(final_output, "portfolio/assets/site/reeder-design-favicon.svg")),
         "CSS_PATH": esc(relative_href(final_output, "portfolio/css/styles.css")),
         "REFRESH_CSS_PATH": esc(relative_href(final_output, "portfolio/css/portfolio-refresh.css")),
         "THEME_CSS_PATH": esc(relative_href(final_output, "portfolio/css/phase1-theme.css")),

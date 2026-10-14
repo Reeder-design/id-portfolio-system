@@ -130,6 +130,37 @@
     link.classList.toggle('active', path === 'hiring-manager');
   };
 
+  const initMobileNav = () => {
+    const header = document.querySelector('.site-header');
+    const button = header?.querySelector('.brand-nav-toggle');
+    const nav = header?.querySelector('#site-nav');
+    if (!button || !nav) return;
+
+    const setOpen = (open) => {
+      nav.classList.toggle('brand-nav-open', open);
+      button.setAttribute('aria-expanded', String(open));
+      button.textContent = open ? 'Close' : 'Menu';
+    };
+
+    button.addEventListener('click', () => {
+      setOpen(button.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        button.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (button.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+    window.matchMedia('(min-width: 701px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  };
+
   const initFooterLinks = () => {
     document.querySelectorAll('.site-footer .footer-links').forEach((links) => {
       links.innerHTML = `
@@ -841,9 +872,11 @@
 
   initPageFamily();
   initHiringGuideNav();
+  initMobileNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
   initBreadcrumbTone();
+  window.addEventListener('load', initBreadcrumbTone, { once: true });
   initProjectFamilyVisuals();
   initFeaturedCaseVisuals();
   initHeroCleanup();
