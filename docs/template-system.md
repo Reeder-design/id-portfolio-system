@@ -99,6 +99,10 @@ It documents:
 
 Recording a component reference does not grant the Manager or renderer authority to rewrite bespoke page markup.
 
+## Visual tokens for new pages
+
+New page scaffolds use the live shared style sheets and `portfolio/js/portfolio-motion.js` for the selected RD header mark, responsive menu, and common navigation. Use the cool `--portfolio-paper` surface, white card surfaces, and the existing teal, mint, and lime accents. Text should be charcoal on light surfaces and light gray on dark surfaces. Use `.btn` variants for site actions, and check icon backgrounds, focus states, desktop, and phone layouts before review. Existing public pages remain authoritative for their own layouts and interactions.
+
 ## Breadcrumbs
 
 Breadcrumbs are a shared navigation pattern, but current page markup remains authoritative.

@@ -5,7 +5,7 @@ body.primary-page{
   --primary-night:#20383e;
   --primary-night-2:#315755;
   --primary-teal:#4f7f75;
-  --primary-paper:#fbfaf4;
+  --primary-paper:var(--portfolio-paper);
 }
 
 /* Shared primary-page CTA treatment */
@@ -42,7 +42,7 @@ body.primary-page .primary-link-visual{
   padding:16px;
   background:
     radial-gradient(circle at 78% 18%,rgba(151,219,79,.16),transparent 28%),
-    linear-gradient(145deg,#eaf4ee,#fbfaf4);
+    linear-gradient(145deg,#eaf4ee,var(--portfolio-paper));
   border-bottom:1px solid rgba(80,132,132,.12);
 }
 body.primary-page .primary-link-visual img{
@@ -217,7 +217,7 @@ body.home-primary .home-next-step-section .primary-link-visual{
   padding:12px;
   border-right:1px solid rgba(80,132,132,.12);
   border-bottom:0;
-  background:linear-gradient(145deg,#eaf4ee,#fbfaf4);
+  background:linear-gradient(145deg,#eaf4ee,var(--portfolio-paper));
 }
 body.home-primary .home-next-step-section .primary-link-visual img{
   width:86px;
@@ -269,7 +269,7 @@ body.about-primary .about-work-shot{
   border-color:rgba(80,132,132,.18);
   box-shadow:0 18px 42px rgba(40,69,62,.13);
 }
-body.about-primary .about-work-shot img{object-fit:contain!important;background:#fbfaf4}
+body.about-primary .about-work-shot img{object-fit:contain!important;background:var(--portfolio-paper)}
 body.about-primary .about-work-shot--desk{left:9%;top:66px;width:82%;height:286px;z-index:2}
 body.about-primary .about-work-shot--storyboard{left:0;top:8px;width:38%;height:128px;z-index:4}
 body.about-primary .about-work-shot--visual-plan{right:0;top:10px;width:37%;height:125px;z-index:4}
@@ -1176,7 +1176,7 @@ body.projects-primary #featured-case-studies{
   overflow:hidden;
   background:
     radial-gradient(circle at 92% 10%,rgba(151,219,79,.08),transparent 18rem),
-    linear-gradient(180deg,#f5f8f6,#fbfaf4)!important;
+    linear-gradient(180deg,#f5f8f6,var(--portfolio-paper))!important;
 }
 body.projects-primary #featured-case-studies .refresh-section-intro{
   max-width:860px;
@@ -1355,7 +1355,7 @@ body.contact-primary .contact-quick-action{
   overflow:hidden;
   border:1px solid rgba(80,132,132,.13);
   border-radius:17px;
-  background:linear-gradient(145deg,#eaf4ee,#fbfaf4);
+  background:linear-gradient(145deg,#eaf4ee,var(--portfolio-paper));
   color:#29463e;
   text-decoration:none;
   outline:none;

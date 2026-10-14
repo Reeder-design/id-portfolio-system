@@ -1,4 +1,4 @@
-.interactive-landing{background:#fbfaf4}
+.interactive-landing{background:var(--portfolio-paper)}
 .interactive-landing .section{padding-block:clamp(21px,2.8vw,30px)!important}
 .interactive-hero{position:relative;overflow:hidden;padding:20px 0 32px!important;color:#edf5f1;background:radial-gradient(circle at 86% 18%,rgba(151,219,79,.12),transparent 26rem),radial-gradient(circle at 12% 88%,rgba(80,132,132,.22),transparent 28rem),linear-gradient(145deg,#14272e,#28474a)}
 .interactive-hero:before{content:"";position:absolute;inset:0;opacity:.09;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:30px 30px}

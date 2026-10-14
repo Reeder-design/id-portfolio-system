@@ -21,6 +21,15 @@ For a new page:
 
 Do not copy an old branch, recovery page, historical template, or prior PR as the starting point when a current live page exists.
 
+## Shared visual system
+
+- Use `--portfolio-paper` (`#F4F9F8`) for the cool light page surface. White remains a card surface; teal, mint, and lime remain accents.
+- Use `--portfolio-ink` (charcoal) for text on light surfaces and `--portfolio-ink-inverse` (light gray) for text on dark surfaces. Keep accent colors in borders, icons, fills, and focus states; verify text contrast on the actual surface.
+- Use the selected RD artwork in the shared header and the simplified RD/star mark in `portfolio/assets/site/favicon.svg`. The header markup and mobile menu are initialized by `portfolio/js/portfolio-motion.js`.
+- Use `.btn` with `.btn-primary`, `.btn-secondary`, or `.btn-highlight` for site navigation actions. Interactive demo controls may retain their own shapes when the task requires them, but their focus and text contrast must be checked in every state.
+- Prefer transparent or vector icon assets on light surfaces. Do not place an icon with a baked-in pale rectangle on a rounded or colored badge; check the source image at its rendered size.
+- Keep hero structure appropriate to each page family. Align the shared spacing, navigation, text tone, and button treatment without replacing a finished page's approved layout.
+
 ## Landing and category pages
 
 Good references:

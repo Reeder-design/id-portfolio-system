@@ -706,7 +706,7 @@ button:focus-visible,a:focus-visible,[role="tabpanel"]:focus-visible{outline:3px
 @media(max-width:650px){.lms-support-workspace .transition-lens-nav{grid-template-columns:1fr}.lms-support-workspace .transition-lens-panel{min-height:0}}
 
 /* Scope and migration-stage visual refresh. */
-.lms-scope-section{background:linear-gradient(145deg,#fbfaf4,#edf6f0)!important;color:#33463f!important}
+.lms-scope-section{background:linear-gradient(145deg,var(--portfolio-paper),#edf6f0)!important;color:#33463f!important}
 .lms-scope-section h2{color:#263a34!important}.lms-scope-section>.container>.eyebrow{color:#447d71!important}
 .lms-scope-grid{gap:16px;margin-top:28px}
 .lms-scope-grid .support-card{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;min-height:225px;padding:23px;overflow:hidden;border:1px solid rgba(80,132,132,.17);border-radius:24px;background:#fff!important;box-shadow:0 16px 36px rgba(47,75,67,.08)}

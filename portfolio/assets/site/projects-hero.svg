@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Layered project cards">
+  <defs>
+    <linearGradient id="paper" x1="81" y1="45" x2="320" y2="281" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#e5f5f1"/></linearGradient>
+    <linearGradient id="lime" x1="276" y1="102" x2="337" y2="173" gradientUnits="userSpaceOnUse"><stop stop-color="#b7ee78"/><stop offset="1" stop-color="#79c99e"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="15" stdDeviation="13" flood-color="#244b47" flood-opacity=".18"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M87 72h122l20 19h106a16 16 0 0 1 16 16v157a16 16 0 0 1-16 16H87a16 16 0 0 1-16-16V88a16 16 0 0 1 16-16z" fill="#315c5c" stroke="#143d41" stroke-width="4"/>
+    <path d="M72 120h278v143a17 17 0 0 1-17 17H89a17 17 0 0 1-17-17z" fill="url(#paper)" stroke="#143d41" stroke-width="4"/>
+    <rect x="102" y="141" width="126" height="94" rx="13" fill="#e8f6f2" stroke="#508484" stroke-width="3"/>
+    <path d="M118 188l23-22 18 15 23-27 30 35" fill="none" stroke="#508484" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="190" cy="164" r="7" fill="#97db4f"/>
+    <path d="M247 153h62M247 175h49M247 198h62M247 220h39" fill="none" stroke="#508484" stroke-width="8" stroke-linecap="round"/>
+    <rect x="273" y="94" width="50" height="39" rx="9" fill="url(#lime)" stroke="#143d41" stroke-width="3"/>
+    <path d="M287 113h22M298 103v21" stroke="#17383d" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <path d="M355 51l4.5 12.5L372 68l-12.5 4.5L355 85l-4.5-12.5L338 68l12.5-4.5z" fill="#dcf784" stroke="#315c5c" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="46" y="196" width="12" height="12" rx="2" fill="#97db4f"/><rect x="57" y="216" width="8" height="8" rx="2" fill="#79c99e"/>
+</svg>

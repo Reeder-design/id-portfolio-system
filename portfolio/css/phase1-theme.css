@@ -3,7 +3,7 @@
 
 :root {
   --portfolio-mist: #eef5f1;
-  --portfolio-fog: #f8faf8;
+  --portfolio-fog: var(--portfolio-paper);
   --portfolio-lilac: #ddd5e5;
   --portfolio-lilac-deep: #b8aac3;
   --portfolio-line: rgba(80, 132, 132, 0.18);
@@ -18,7 +18,7 @@ body {
   background:
     radial-gradient(circle at 12% 6%, rgba(121, 201, 158, 0.09), transparent 24rem),
     radial-gradient(circle at 88% 22%, rgba(184, 170, 195, 0.08), transparent 22rem),
-    var(--white);
+    var(--portfolio-paper);
 }
 
 .site-header {

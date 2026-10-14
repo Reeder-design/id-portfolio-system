@@ -130,6 +130,63 @@
     link.classList.toggle('active', path === 'hiring-manager');
   };
 
+  const initSiteBrandAndMobileNav = () => {
+    const header = document.querySelector('.site-header');
+    const brand = header?.querySelector('.site-brand');
+    const nav = header?.querySelector('.site-nav');
+    if (!header || !brand || !nav) return;
+
+    if (!brand.querySelector('.site-brand-mark')) {
+      const label = document.createElement('span');
+      label.className = 'site-brand-label';
+      while (brand.firstChild) label.appendChild(brand.firstChild);
+
+      const mark = document.createElement('span');
+      mark.className = 'site-brand-mark';
+      mark.setAttribute('aria-hidden', 'true');
+      const image = document.createElement('img');
+      image.src = new URL('assets/site/rd-haley-selected-logo.png', portfolioRoot).href;
+      image.alt = '';
+      image.width = 107;
+      image.height = 107;
+      mark.appendChild(image);
+      brand.append(mark, label);
+    }
+
+    if (header.querySelector('.site-nav-toggle')) return;
+    nav.id ||= 'site-primary-nav';
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'site-nav-toggle';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<span class="site-nav-toggle-icon" aria-hidden="true"></span><span>Menu</span>';
+    brand.after(toggle);
+    header.classList.add('has-mobile-nav');
+
+    const closeMenu = () => {
+      header.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    toggle.addEventListener('click', () => {
+      const open = !header.classList.contains('is-open');
+      header.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a')) closeMenu();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.classList.contains('is-open')) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) closeMenu();
+    });
+  };
+
   const initFooterLinks = () => {
     document.querySelectorAll('.site-footer .footer-links').forEach((links) => {
       links.innerHTML = `
@@ -184,7 +241,7 @@
     const visualMap = [
       {
         match: 'enterprise-sales-certification',
-        image: 'assets/icons/pixel/portfolio-general/learning.webp',
+        image: 'assets/site/icon-learning.svg',
         alt: 'Learning pathway pixel illustration.'
       },
       {
@@ -404,8 +461,8 @@
     if (haystack.includes('pursuit')) return 'assets/icons/pixel/pursuit-determination/pursue-confidence.webp';
     if (haystack.includes('microlearning') || haystack.includes('performance support')) return 'assets/icons/pixel/microlearning-performance-support/microlearning.webp';
     if (haystack.includes('live training') || haystack.includes('facilitation')) return 'assets/icons/pixel/portfolio-general/collaboration.webp';
-    if (haystack.includes('multimedia') || haystack.includes('video')) return 'assets/icons/pixel/portfolio-general/ideas.webp';
-    if (haystack.includes('certification') || haystack.includes('elearning') || haystack.includes('learning path')) return 'assets/icons/pixel/portfolio-general/learning.webp';
+    if (haystack.includes('multimedia') || haystack.includes('video')) return 'assets/site/icon-ideas.svg';
+    if (haystack.includes('certification') || haystack.includes('elearning') || haystack.includes('learning path')) return 'assets/site/icon-learning.svg';
     return 'assets/icons/pixel/portfolio-general/portfolio.webp';
   };
 
@@ -841,6 +898,7 @@
 
   initPageFamily();
   initHiringGuideNav();
+  initSiteBrandAndMobileNav();
   initFooterLinks();
   initCanonicalBreadcrumbs();
   initBreadcrumbTone();
