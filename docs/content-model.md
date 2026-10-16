@@ -87,7 +87,7 @@ Structured groupings currently include:
 
 ### Developer Space
 
-The Portfolio System and Learning Content Lab are the public system spotlights. GitHub connects their source, review, and publishing workflow. This category has no required structured subcategory.
+The Portfolio System and Learning Content Lab are the public system spotlights. Code Block Composer is a separate spotlight for Haley's local authoring workflow, shown with a sanitized interface illustration. GitHub connects the public systems' source, review, and publishing workflow. This category has no required structured subcategory.
 
 Do not copy this list into new code as a parallel taxonomy. Read `taxonomy.json` when behavior depends on category values or paths.
 

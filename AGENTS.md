@@ -39,7 +39,7 @@ Instructional Design currently includes:
 
 Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
 
-Developer Space features the public Portfolio System and Learning Content Lab interface, with GitHub as part of their build and review workflow.
+Developer Space features the public Portfolio System and Learning Content Lab interface, the local Code Block Composer authoring tool, and GitHub as part of the public systems' build and review workflow.
 
 ## Source-of-Truth Order
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.
