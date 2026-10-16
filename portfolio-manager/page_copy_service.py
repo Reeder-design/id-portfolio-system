@@ -29,7 +29,7 @@ PAGE_REGISTRY: dict[str, dict[str, object]] = {
     "virtual-sales-workshop-facilitation": {"label": "Virtual Sales Workshop Facilitation", "path": "portfolio/projects/instructional-design/live-training/virtual-sales-workshop-facilitation/index.html"},
     "complete-learning-paths": {"label": "Complete eLearning Pathways", "path": "portfolio/projects/instructional-design/complete-learning-paths/index.html"},
     "enterprise-sales-certification": {"label": "Enterprise Sales Certification", "path": "portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html"},
-    "ai-training-and-evaluation": {"label": "AI Training and Evaluation", "path": "portfolio/projects/ai-training-and-evaluation/index.html"},
+    "ai-training-and-evaluation": {"label": "AI Training and Evaluation", "path": "portfolio/projects/ai-training-and-evaluation/index.html", "maintenance_note": "The Human Evaluation + Training section uses a six-stage response review. Stage content, response annotations, playback, and calibration are maintained together in the page’s interaction script; a page-copy change alone does not update that scripted state."},
     "ai-evaluation-demo": {"label": "AI Evaluation Demo", "path": "portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html", "skip_h1": True},
     "rubric-demo": {"label": "Rubric Demo", "path": "portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html"},
     "workflow-demo": {"label": "Workflow Demo", "path": "portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html"},
@@ -38,11 +38,11 @@ PAGE_REGISTRY: dict[str, dict[str, object]] = {
     "my-approach-for-various-lms-platforms": {"label": "LMS Platform Experience", "path": "portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html"},
     "system-integrations": {"label": "System Integrations", "path": "portfolio/projects/lms-administration/system-integrations/index.html"},
     "workflows": {"label": "Workflows", "path": "portfolio/projects/workflows/index.html"},
-    "developer-space": {"label": "Developer Space", "path": "portfolio/projects/developer-space/index.html"},
-    "code-block-composer": {"label": "Code Block Composer", "path": "portfolio/projects/developer-space/code-block-composer/index.html"},
+    "developer-space": {"label": "Developer Space", "path": "portfolio/projects/developer-space/index.html", "maintenance_note": "This landing page owns the software walkthroughs, spotlight cards, build process, and toolbox. Full Code Block Composer content is maintained on its separate project page. Tab timing and animations are maintained in the shared Developer Space script and stylesheet."},
+    "code-block-composer": {"label": "Code Block Composer", "path": "portfolio/projects/developer-space/code-block-composer/index.html", "maintenance_note": "This project owns the four CBC feature tabs and authoring example. Edit descriptive copy and product assets here. The example’s editable values, learner feedback, preview widths, and reset behavior are controlled by developer-space.js; changes to those behaviors need a source update."},
     "microsoft-365-intelligence-workspace": {"label": "Microsoft 365 Intelligence Workspace", "path": "portfolio/projects/workflows/microsoft-365-intelligence-workspace/index.html"},
     "certification-reporting-automation": {"label": "Certification Reporting Automation", "path": "portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html"},
-    "github-workflow": {"label": "Portfolio Creation and Management", "path": "portfolio/projects/github-workflow/index.html"},
+    "github-workflow": {"label": "Portfolio Creation and Management", "path": "portfolio/projects/github-workflow/index.html", "maintenance_note": "This is the Portfolio Creation and Management project under Developer Space. Its existing address is retained. The connection map and four site/Manager previews belong here; broader software content belongs on Developer Space."},
     "contact": {"label": "Contact", "path": "portfolio/contact/index.html"},
 }
 

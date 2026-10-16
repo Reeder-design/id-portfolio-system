@@ -73,9 +73,7 @@ No required subcategory currently.
 
 ### LMS Administration
 
-Structured subcategories currently include:
-
-- System Integrations
+No required structured subcategory currently. System Integrations is an additional managed page under this area.
 
 ### Workflows
 
@@ -87,7 +85,7 @@ Structured groupings currently include:
 
 ### Developer Space
 
-The Portfolio System and Learning Content Lab are the public system spotlights. Code Block Composer is a separate spotlight for Haley's local authoring workflow, shown with a sanitized interface illustration. GitHub connects the public systems' source, review, and publishing workflow. This category has no required structured subcategory.
+Developer Space is the software overview. Its two structured spotlight projects are **Portfolio Creation and Management** (public portfolio, Content Library, and local Managers) and **Code Block Composer** (a dedicated authoring-product page with approved owned assets). The former retains the `github-workflow` public path and Manager page ID. This category has no required structured subcategory. See [Developer Space maintenance](developer-space-maintenance.md) for the page/record crosswalk and interaction owners.
 
 Do not copy this list into new code as a parallel taxonomy. Read `taxonomy.json` when behavior depends on category values or paths.
 

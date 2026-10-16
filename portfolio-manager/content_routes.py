@@ -204,7 +204,7 @@ EXTRA_PAGE_PLACEMENTS = {
     "rubric-demo": ("ai-training-and-evaluation", None),
     "workflow-demo": ("ai-training-and-evaluation", None),
     "system-integrations": ("lms-administration", None),
-    "github-workflow": ("workflows", None),
+    "github-workflow": ("developer-space", None),
 }
 
 

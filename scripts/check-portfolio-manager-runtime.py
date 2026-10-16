@@ -123,6 +123,25 @@ def main() -> int:
     registered_pages = {str(page["path"]) for page in PAGE_REGISTRY.values()}
     require(public_pages == registered_pages, f"Manager page registry must match current public pages: missing={sorted(public_pages - registered_pages)}, stale={sorted(registered_pages - public_pages)}", errors)
 
+    from content_routes import manager_navigation, list_projects, load_json, TAXONOMY_PATH
+    from page_copy_service import page_id_for_path, extract_visible_fields, apply_page_edits
+    navigation = manager_navigation(load_json(TAXONOMY_PATH), list_projects())
+    developer = next(area for area in navigation["areas"] if area["label"] == "Developer Space")
+    expected_software = {"code-block-composer", "portfolio-creation-and-management"}
+    require(expected_software <= {project["id"] for project in developer["projects"]}, "Both software spotlight records must appear under Developer Space.", errors)
+    require(not any(page["id"] == "github-workflow" for area in navigation["areas"] for page in area["extras"]), "Structured portfolio-management project must not also appear as an extra page in Workflows or Developer Space.", errors)
+    for project in developer["projects"]:
+        page_id = page_id_for_path(project["page_path"])
+        require(page_id is not None, f"Software project {project['id']} must resolve its page-copy editor by path.", errors)
+        record_response = client.get(f"/content/projects/{project['id']}")
+        require(record_response.status_code == 200 and f"/manage/pages/{page_id}".encode() in record_response.data, f"Software project {project['id']} must link to its current page editor.", errors)
+        page_response = client.get(f"/manage/pages/{page_id}")
+        require(page_response.status_code == 200 and b"How this page is maintained" in page_response.data, f"Software page {page_id} must render editing guidance.", errors)
+    cbc_html = (ROOT / PAGE_REGISTRY["code-block-composer"]["path"]).read_text(encoding="utf-8")
+    field = next(field for field in extract_visible_fields(cbc_html, skip_h1=True) if field["tag"] == "p")
+    changed, count = apply_page_edits("code-block-composer", cbc_html, {f"visible__{field['key']}": "Updated descriptive copy for the local regression check.", f"original__{field['key']}": field["value"]}, skip_h1=True)
+    require(count == 1 and 'id="dev-reset"' in changed and 'data-cbc-panel="blueprint"' in changed and '<h1>Code Block Composer</h1>' in changed, "CBC descriptive copy edits must preserve product identity and authoring controls.", errors)
+
     related_workspace = client.get("/related-references/")
     require(related_workspace.status_code == 200, "Related References workspace must render.", errors)
     require(b"Portfolio relationship map" in related_workspace.data, "Related References must expose the project relationship map.", errors)

@@ -61,6 +61,13 @@
                     </div>
                     <p class="action-note">These fields come from the page you are previewing. Portfolio Manager edits the existing text in place and does not rebuild the layout around it.</p>
 
+                    {% if page.maintenance_note %}
+                    <details class="dashboard-card">
+                        <summary>How this page is maintained</summary>
+                        <p class="action-note">{{ page.maintenance_note }}</p>
+                    </details>
+                    {% endif %}
+
                     <div class="v2-copy-list">
                         {% for field in visible_fields %}
                         <div class="general-field-card v2-copy-field">

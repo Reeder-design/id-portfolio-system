@@ -306,3 +306,7 @@ This changes future commit metadata only. It does not rewrite existing history.
 The guiding principle is:
 
 > Build it once, understand how it works, and make it reusable.
+
+## Software spotlight maintenance
+
+Developer Space contains two managed project records: Portfolio Creation and Management and Code Block Composer. Their public pages, copy editors, assets, and custom interactions are mapped in [Developer Space maintenance](developer-space-maintenance.md). Content Library publishing remains a separate workflow in its own repository and Library Manager.

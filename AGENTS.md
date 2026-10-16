@@ -39,7 +39,7 @@ Instructional Design currently includes:
 
 Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
 
-Developer Space features the public Portfolio System and Learning Content Lab interface, the local Code Block Composer authoring tool, and GitHub as part of the public systems' build and review workflow.
+Developer Space is the software overview with two separate spotlight projects: Portfolio Creation and Management (portfolio, Content Library, and local Managers) and Code Block Composer (its own product page). The former retains the `github-workflow` public path. Use `docs/developer-space-maintenance.md` for page IDs, structured records, assets, and interaction ownership.
 
 ## Source-of-Truth Order
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.
