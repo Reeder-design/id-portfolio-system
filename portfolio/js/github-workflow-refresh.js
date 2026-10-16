@@ -23,10 +23,11 @@
         item.setAttribute('aria-selected', String(active));
         item.tabIndex = active ? 0 : -1;
       });
-      panels.forEach((panel) => { panel.hidden = panel.dataset.livePanel !== selected; });
+      panels.forEach((panel) => { panel.hidden = panel.dataset.livePanel !== selected; panel.inert = panel.hidden; });
       if (focus) tab.focus();
     };
 
+    panels.forEach(panel => { panel.inert = panel.hidden; });
     tabs.forEach((tab, index) => {
       tab.addEventListener('click', () => selectTab(tab));
       tab.addEventListener('keydown', (event) => {
@@ -60,22 +61,6 @@
         button.textContent = result.hidden ? originalLabel : 'Hide sample ↑';
       });
     });
-
-    const workbenchDemo = explorer.querySelector('[data-workbench-demo]');
-    if (workbenchDemo) {
-      const choices = [...workbenchDemo.querySelectorAll('[data-workbench-choice]')];
-      const feedback = workbenchDemo.querySelector('[data-workbench-feedback]');
-      const messages = {
-        sanitize: 'Good call. Remove identifying details and review the example before sharing it.',
-        publish: 'Pause here. Review and revise the example before sharing it.'
-      };
-      choices.forEach((choice) => {
-        choice.addEventListener('click', () => {
-          choices.forEach((item) => item.setAttribute('aria-pressed', String(item === choice)));
-          if (feedback) feedback.textContent = messages[choice.dataset.workbenchChoice] || '';
-        });
-      });
-    }
 
     panels.forEach((panel) => {
       const launch = panel.querySelector('[data-launch-live]');

@@ -495,3 +495,24 @@ body.gh-page[data-page-family] main > section.gh-hero { min-height: 0; padding: 
   .gh-mini-workbench-feedback { margin-top: 0; font-size: .7rem; }
   .gh-demo-result { padding: 13px; }.gh-demo-result p { font-size: .72rem; }
 }
+
+/* Portfolio creation and management case study. */
+.portfolio-management-page .gh-hero h1{font-size:clamp(2.5rem,4.5vw,4.8rem);line-height:1.06;max-width:800px}
+.pm-hero-visual{position:relative;min-width:0;padding:30px 0 40px}
+.pm-window{border:1px solid #addbbc73;border-radius:20px;overflow:hidden;background:#f1f8f0;box-shadow:0 28px 65px #051f2855;transform:rotate(-2deg)}
+.pm-window>div{display:flex;align-items:center;gap:6px;background:#17363a;padding:17px;color:#d7eee0;font-size:.7rem}.pm-window i{width:7px;height:7px;background:#a5d3ae;border-radius:50%}.pm-window>div>span{margin-left:12px}
+.pm-window section{padding:30px 25px 45px;color:#345e4b}.pm-window small{font-size:.65rem;font-weight:800;color:#4d7e63}.pm-window h3{color:#204c3c!important;font-size:1.65rem;margin:16px 0}.pm-window p{font-size:.8rem;color:#42654f!important}.pm-window section>span{display:block;margin-top:23px;padding:15px;background:#d8eadc;border-radius:10px;color:#315c45;font-size:.8rem;font-weight:800}
+.pm-public-window{position:relative;display:flex;gap:18px;align-items:center;padding:22px;margin:-20px -10px 0 35px;border:1px solid #95c8ae;border-radius:17px;background:#224e43;box-shadow:0 15px 35px #082d3344;color:#e7f6ea;transform:rotate(2deg)}
+.pm-public-window>img{width:65px;height:65px;object-fit:contain;padding:6px;background:#f1faf0;border-radius:12px}.pm-public-window small,.pm-public-window strong,.pm-public-window span{display:block}.pm-public-window small{font-size:.6rem;color:#bde6b8}.pm-public-window strong{font-size:.9rem;margin:8px 0}.pm-public-window span{font-size:.72rem}
+.pm-routes{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:35px}.pm-routes article{display:grid;justify-items:center;text-align:center;padding:30px;border:1px solid #accfbf;border-radius:21px;background:#fff}.pm-routes img{width:75px;height:75px;object-fit:contain;margin-bottom:16px}.pm-routes h3{color:#264e40;margin:0 0 12px}.pm-routes p{font-size:.88rem;max-width:410px;color:#4d6d5c}.pm-routes span{width:100%;padding:18px;margin:5px 0 23px;border-top:1px dashed #98bda8;border-bottom:1px dashed #98bda8;font-size:.8rem;font-weight:800;color:#3a7758}.pm-routes strong{color:#264e40;font:800 1.2rem var(--font-heading);margin-bottom:12px}
+.portfolio-management-page .gh-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.portfolio-management-page .gh-live-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}
+.portfolio-management-page .gh-live-explorer{display:grid;grid-template-columns:minmax(0,1fr)}
+.portfolio-management-page .gh-live-tabs{grid-area:1/1}
+.portfolio-management-page .gh-live-panel{grid-area:2/1;min-width:0}
+.portfolio-management-page .gh-live-panel[hidden]{display:block!important;visibility:hidden;pointer-events:none}
+@media(max-width:800px){.pm-routes,.portfolio-management-page .gh-project-grid{grid-template-columns:1fr}.portfolio-management-page .gh-live-tabs{grid-template-columns:1fr 1fr}.pm-public-window{margin-left:15px;margin-right:0}.pm-hero-visual{padding:15px 6px 30px}.pm-window section{padding:26px 20px 40px}.pm-routes article{padding:25px}.portfolio-management-page .gh-hero h1{font-size:clamp(2.5rem,7vw,4rem)}}
+.portfolio-management-page .gh-live-tabs{display:grid;overflow:visible}
+.portfolio-management-page .gh-live-tabs button{min-width:0;white-space:normal}
+.portfolio-management-page .gh-closing-section h2{color:#fff}
+.portfolio-management-page .gh-closing-section p{color:#d9ece2}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="scenario">
+<defs>
+  <linearGradient id="glow" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#65e6f5"/><stop offset=".5" stop-color="#91b6ff"/><stop offset="1" stop-color="#f39bdd"/></linearGradient>
+  <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0v24" fill="none" stroke="#91b6ff" stroke-opacity=".12"/></pattern>
+</defs>
+
+<rect width="640" height="360" fill="#1b1830"/><rect width="640" height="360" fill="url(#grid)"/>
+<text x="35" y="50" fill="#f39bdd" font-family="system-ui,sans-serif" font-size="17" font-weight="700" letter-spacing="3">SCENARIO</text>
+<text x="35" y="94" fill="#f4f8fc" font-family="system-ui,sans-serif" font-size="29" font-weight="750">A decision changes the path</text>
+<g fill="none" stroke-width="3"><path d="M160 215h135l42-61h118M295 215l42 67h118" stroke="#91b6ff"/><circle cx="126" cy="215" r="42" stroke="#65e6f5"/><circle cx="477" cy="154" r="43" stroke="#ffd079"/><circle cx="477" cy="282" r="43" stroke="#f39bdd"/></g>
+<g font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#f4f8fc" text-anchor="middle"><text x="126" y="222">Start</text><text x="477" y="161">Path A</text><text x="477" y="289">Path B</text></g><circle cx="295" cy="215" r="7" fill="#91b6ff"/>
+</svg>
