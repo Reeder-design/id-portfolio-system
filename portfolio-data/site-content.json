@@ -122,17 +122,12 @@
         "overview_heading": {
           "label": "Overview heading",
           "type": "short",
-          "value": "From evidence to a review decision."
+          "value": "How I evaluate an AI response."
         },
         "overview_body_one": {
           "label": "Overview paragraph 1",
           "type": "long",
-          "value": "A reliable evaluation program gives reviewers one traceable path: define the question, apply the standard, capture the evidence, explain the judgment, and compare it with a benchmark."
-        },
-        "overview_body_two": {
-          "label": "Overview paragraph 2",
-          "type": "long",
-          "value": "Explore each decision to see how I focus a review, apply criteria, and turn evidence into feedback another person can act on."
+          "value": "I evaluate the response against the task, the evidence, and the rubric. I document what failed, why it matters, and what a better response needs to do. Calibration turns those individual judgments into a consistent review standard."
         }
       }
     },

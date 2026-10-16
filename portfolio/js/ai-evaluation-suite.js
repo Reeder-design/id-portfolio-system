@@ -17,16 +17,22 @@ const lensButtons=qa('[data-ai-lens]');
 const renderLens=btn=>{const d=lensData[btn?.dataset.aiLens];if(!d)return;setActive(lensButtons,btn);set('aiLensLabel',d.label);set('aiLensTitle',d.title);set('aiLensText',d.text);set('aiLensArtifact',d.artifact);set('aiLensBoundary',d.boundary);const checks=q('#aiLensChecks');if(checks)checks.replaceChildren(...d.checks.map(v=>{const s=document.createElement('span');s.textContent=v;return s;}));set('aiLensVisual',d.visual);const motion=q('#aiContentMotion');if(motion)motion.dataset.contentType=btn.dataset.aiLens;};
 lensButtons.forEach(b=>b.addEventListener('click',()=>renderLens(b)));keyboardTabs(lensButtons,renderLens);if(lensButtons[0])renderLens(lensButtons[0]);
 
-const signalData={
- 'assigned-lens':{label:'01 / Assigned lens',title:'Start with one question.',text:'Decide what this review owns. An evidence reviewer traces claims; a presentation reviewer checks hierarchy and legibility.',response:'Name the lens and evidence boundary before looking for a score.'},
- rubric:{label:'02 / Rubric standard',title:'Make the expectation observable.',text:'Turn quality into criteria and anchored examples another reviewer can apply consistently.',response:'Define the standard before deciding whether the output feels strong.'},
- evidence:{label:'03 / Observable evidence',title:'Find the signal that changes the judgment.',text:'Capture the unsupported claim, missing requirement, lost qualifier, or usability problem that affects the decision.',response:'Record one or two specific examples before assigning a score.'},
- rationale:{label:'04 / Specific rationale',title:'Explain why the evidence matters.',text:'Connect the signal to the lens, its consequence for the audience, and the correction that would improve the output.',response:'Write an explanation another reviewer or creator can act on.'},
- calibration:{label:'05 / Calibration check',title:'Compare the judgment, not just the number.',text:'Compare evidence, score anchors, and rationale with a benchmark to expose ambiguity and align decisions.',response:'Record the comparison and clarify the rubric when reviewers disagree.'}
-};
-const signalButtons=qa('[data-quality-signal]');
-const renderSignal=btn=>{const d=signalData[btn?.dataset.qualitySignal];if(!d)return;setActive(signalButtons,btn);set('qualitySignalLabel',d.label);set('qualitySignalTitle',d.title);set('qualitySignalText',d.text);set('qualitySignalResponse',d.response);const sceneDeck=q('[data-decision-scene]');if(sceneDeck)sceneDeck.dataset.decisionScene=btn.dataset.qualitySignal;const pipeline=q('[data-ai-decision-pipeline]');if(pipeline)pipeline.dataset.currentStep=btn.dataset.qualitySignal;const panel=q('#aiDecisionPanel');if(panel&&btn.id)panel.setAttribute('aria-labelledby',btn.id);};
-signalButtons.forEach(b=>b.addEventListener('click',()=>renderSignal(b)));keyboardTabs(signalButtons,renderSignal);if(signalButtons[0])renderSignal(signalButtons[0]);
+// One response remains visible as the evaluator progresses through the review.
+const process=q('.review-process');
+if(process){
+ const steps=qa('[data-review-step]',process),panels=qa('.review-panel',process);
+ const play=q('#review-play'),next=q('#review-next');let current=0,timer=null;
+ const labels=['Establish the task and criteria','Annotate claims and omissions','Compare the response with the source','Apply criterion-specific ratings','Record the rationale and correction','Align reviewers around the same anchor'];
+ const stop=()=>{clearInterval(timer);timer=null;play.textContent='Play walkthrough';play.setAttribute('aria-pressed','false');};
+ const show=i=>{current=i;setActive(steps,steps[i]);process.dataset.reviewStage=steps[i].dataset.reviewStep;q('.review-missing',process).setAttribute('aria-hidden',String(i===0));panels.forEach((p,n)=>{p.classList.toggle('is-active',n===i);p.setAttribute('aria-hidden',String(n!==i));p.inert=n!==i;});q('.review-response-status',process).textContent=`${String(i+1).padStart(2,'0')} / ${labels[i]}`;next.textContent=i===steps.length-1?'Start again ↺':'Next step →';};
+ const select=b=>{stop();show(steps.indexOf(b));};
+ steps.forEach(b=>b.addEventListener('click',()=>select(b)));keyboardTabs(steps,select);
+ next.addEventListener('click',()=>{stop();show((current+1)%steps.length);});
+ play.addEventListener('click',()=>{if(timer){stop();return;}if(current===steps.length-1)show(0);play.textContent='Pause walkthrough';play.setAttribute('aria-pressed','true');timer=setInterval(()=>{if(current===steps.length-1){stop();return;}show(current+1);},8500);});
+ process.addEventListener('focusin',e=>{if(e.target!==play&&timer)stop();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+ show(0);
+}
 
 const evalScenarios={
  partner:{name:'Partner sales summary',tag:'CASE 01',task:'Write a concise partner summary of the fictional Atlas XR500. Use only the brief. Include the use case, two capabilities, and one limitation. Do not add pricing or performance claims.',source:'Atlas XR500 is a fictional edge gateway. It supports managed failover and centralized policy updates. The brief includes no performance, price, deployment-time, cost, or downtime guarantees.',output:'Atlas XR500 gives distributed teams always-on connectivity with industry-leading performance. It prevents downtime, deploys in minutes, and reduces networking costs. Partners can use managed failover and centralized policy updates.',scan:'Unsupported claims: always-on connectivity, industry-leading performance, downtime prevention, quick deployment, and cost savings.',benchmark:'Critical',feedback:'The draft adds unsupported performance, deployment, cost, and downtime outcomes, so it is unsafe to use.'},
