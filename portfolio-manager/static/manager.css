@@ -1,33 +1,33 @@
 :root {
     /* Portfolio core colors */
-    --taupe: #4A4238;
-    --charcoal: #4D5359;
-    --pine-blue: #508484;
-    --mint-leaf: #79C99E;
-    --yellow-green: #97DB4F;
+    --taupe: #193B38;
+    --charcoal: #35514F;
+    --pine-blue: #479D95;
+    --mint-leaf: #98E2BE;
+    --yellow-green: #C3EAB2;
 
     /* Lighter dashboard palette */
-    --cream: #F3F0E8;
-    --soft-cream: #E9E5DA;
-    --sage: #A8C3AC;
-    --light-sage: #C9D9C7;
-    --dusty-mint: #A9D8C1;
-    --moss: #6F8E75;
-    --forest: #344A42;
+    --cream: #F0F8F2;
+    --soft-cream: #E1EDE8;
+    --sage: #A8D5C4;
+    --light-sage: #CEEADD;
+    --dusty-mint: #A9E7D0;
+    --moss: #7FAD9D;
+    --forest: #163D37;
 
     /* Fantasy-inspired accents */
-    --dusty-lavender: #B8AAC3;
-    --soft-plum: #76677D;
-    --moonstone: #D8E8DF;
-    --parchment: #E8DDC7;
+    --dusty-lavender: #C7B8E9;
+    --soft-plum: #9180AC;
+    --moonstone: #D9F4EB;
+    --parchment: #C9EBDD;
 
     /* UI colors */
-    --surface-dark: #313B39;
-    --surface-mid: #3B4642;
-    --surface-light: #46524D;
-    --text-light: #F7F8F5;
-    --text-soft: #D8E0DB;
-    --muted-text: #B8C2BC;
+    --surface-dark: #102E2C;
+    --surface-mid: #193D39;
+    --surface-light: #254D46;
+    --text-light: #F4FCF6;
+    --text-soft: #D8EEE4;
+    --muted-text: #B7D3C8;
 
     --font-heading: "Montserrat", Arial, sans-serif;
     --font-body: "Open Sans", Arial, sans-serif;
@@ -66,7 +66,7 @@ body {
         ),
         radial-gradient(
             circle at 92% 8%,
-            rgba(184, 170, 195, 0.20),
+            rgba(199, 184, 233, 0.20),
             transparent 28%
         ),
         radial-gradient(
@@ -76,9 +76,9 @@ body {
         ),
         linear-gradient(
             180deg,
-            #4A5550 0%,
-            #394540 45%,
-            #303B38 100%
+            #234A45 0%,
+            #153C38 45%,
+            #102E2C 100%
         );
 }
 
@@ -185,20 +185,20 @@ textarea {
     overflow: hidden;
 
     border:
-        1px solid rgba(232, 221, 199, 0.26);
+        1px solid rgba(194, 235, 218, 0.26);
 
     border-radius: 26px;
 
     background:
         radial-gradient(
             circle at top right,
-            rgba(184, 170, 195, 0.20),
+            rgba(199, 184, 233, 0.20),
             transparent 35%
         ),
         linear-gradient(
             135deg,
-            rgba(77, 96, 88, 0.96),
-            rgba(55, 68, 63, 0.96)
+            rgba(38, 91, 82, 0.96),
+            rgba(21, 55, 53, 0.96)
         );
 
     box-shadow: var(--shadow);
@@ -232,7 +232,7 @@ textarea {
     right: 24px;
 
     color:
-        rgba(232, 221, 199, 0.40);
+        rgba(194, 235, 218, 0.40);
 
     font-size: 1rem;
     letter-spacing: 7px;
@@ -377,7 +377,7 @@ textarea {
     padding: 25px;
 
     border:
-        1px solid rgba(232, 221, 199, 0.18);
+        1px solid rgba(194, 235, 218, 0.18);
 
     border-radius: var(--radius-large);
 
@@ -389,8 +389,8 @@ textarea {
         ),
         linear-gradient(
             180deg,
-            rgba(70, 82, 77, 0.97),
-            rgba(56, 68, 64, 0.97)
+            rgba(35, 76, 67, 0.97),
+            rgba(22, 56, 51, 0.97)
         );
 
     box-shadow: var(--shadow);
@@ -552,7 +552,7 @@ textarea {
     padding: 18px;
 
     border:
-        1px solid rgba(232, 221, 199, 0.16);
+        1px solid rgba(194, 235, 218, 0.16);
 
     border-radius: 15px;
 
@@ -706,11 +706,11 @@ textarea {
     gap: 24px;
     margin-bottom: 28px;
     padding: 28px;
-    border: 1px solid rgba(232, 221, 199, 0.22);
+    border: 1px solid rgba(194, 235, 218, 0.22);
     border-radius: 24px;
     background:
-        radial-gradient(circle at top right, rgba(184, 170, 195, 0.16), transparent 34%),
-        linear-gradient(135deg, rgba(77, 96, 88, 0.96), rgba(55, 68, 63, 0.96));
+        radial-gradient(circle at top right, rgba(199, 184, 233, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(38, 91, 82, 0.96), rgba(21, 55, 53, 0.96));
     box-shadow: var(--shadow);
 }
 
@@ -741,7 +741,7 @@ textarea {
 
 .project-manager-card {
     padding: 18px;
-    border: 1px solid rgba(232, 221, 199, 0.16);
+    border: 1px solid rgba(194, 235, 218, 0.16);
     border-radius: 15px;
     background: rgba(243, 240, 232, 0.07);
 }
@@ -841,7 +841,7 @@ textarea {
 
 .project-meta-list div {
     padding-bottom: 12px;
-    border-bottom: 1px solid rgba(232, 221, 199, 0.12);
+    border-bottom: 1px solid rgba(194, 235, 218, 0.12);
 }
 
 .project-meta-list dt {
@@ -881,3 +881,5 @@ textarea {
         justify-content: flex-start;
     }
 }
+/* Match the portfolio's mint, teal, and lavender surfaces. */
+.manager-header{background:radial-gradient(ellipse at 85% 5%,#c3b4f23d,transparent 55%),linear-gradient(125deg,#2b6759,#173d3c 70%);border-color:#a7e5c957;box-shadow:0 18px 48px #061e2538,inset 0 1px #e0ffed24}.manager-header h1{color:#f1fff4}.manager-header::after{color:#d7c9ff}.btn-primary{background:linear-gradient(115deg,#c5edb9,#a9e6d0);color:#173b34;border-color:#bdebd2}.btn-primary:hover{background:linear-gradient(115deg,#d8f5cb,#c4f4e1);color:#102e29}.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid #d1c0ff;outline-offset:4px}.dashboard-card,.category-card,.project-manager-card{border-color:#b4e4cb38}.header-badge{border-color:#d3c2f47a;background:#c6b4ef17}
