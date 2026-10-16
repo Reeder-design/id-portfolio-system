@@ -38,6 +38,8 @@ PAGE_REGISTRY: dict[str, dict[str, object]] = {
     "my-approach-for-various-lms-platforms": {"label": "LMS Platform Experience", "path": "portfolio/projects/lms-administration/my-approach-for-various-lms-platforms/index.html"},
     "system-integrations": {"label": "System Integrations", "path": "portfolio/projects/lms-administration/system-integrations/index.html"},
     "workflows": {"label": "Workflows", "path": "portfolio/projects/workflows/index.html"},
+    "developer-space": {"label": "Developer Space", "path": "portfolio/projects/developer-space/index.html"},
+    "microsoft-365-intelligence-workspace": {"label": "Microsoft 365 Intelligence Workspace", "path": "portfolio/projects/workflows/microsoft-365-intelligence-workspace/index.html"},
     "certification-reporting-automation": {"label": "Certification Reporting Automation", "path": "portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html"},
     "github-workflow": {"label": "GitHub Workflow", "path": "portfolio/projects/github-workflow/index.html"},
     "contact": {"label": "Contact", "path": "portfolio/contact/index.html"},

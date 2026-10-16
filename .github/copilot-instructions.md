@@ -31,6 +31,7 @@ Top-level portfolio areas:
 - AI Training and Evaluation
 - LMS Administration
 - Workflows
+- Developer Space
 
 Instructional Design currently includes:
 - Interactive Learning

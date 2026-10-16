@@ -138,3 +138,21 @@
   .project-areas .project-family-card:hover,
   .project-areas .project-family-link:hover { transform: none; }
 }
+
+.m365-project-spotlight{background:radial-gradient(circle at 8% 90%,rgba(121,201,158,.14),transparent 32%),linear-gradient(140deg,#f7fbf6,#e8f2e9)!important}
+.project-areas .developer-space-card{grid-column:1/-1;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-rows:1fr;min-height:250px}
+.project-areas .developer-space-card .project-family-header,.project-areas .developer-space-card .project-family-body{display:flex;flex-direction:column;justify-content:center}
+.project-areas .developer-space-card .project-family-icon img{width:54px;height:54px;object-fit:contain}
+@media(max-width:960px){.project-areas .developer-space-card{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:0}}
+.m365-project-spotlight-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.9fr);gap:clamp(30px,5vw,76px);align-items:center}
+.m365-project-spotlight-copy h2{max-width:680px;margin:10px 0 18px;color:#173b36;font:800 clamp(2rem,3.5vw,3.3rem)/1.12 var(--font-heading)}
+.m365-project-spotlight-copy>p:not(.eyebrow){max-width:660px;color:#4c6257;line-height:1.65}
+.m365-project-spotlight-tags{display:flex;flex-wrap:wrap;gap:8px;margin:23px 0}
+.m365-project-spotlight-tags span{padding:7px 10px;border:1px solid #b7d5bd;border-radius:999px;background:#fff;color:#285b3f;font-size:.7rem;font-weight:800}
+.m365-project-spotlight-art{overflow:hidden;border:1px solid #3c755e;border-radius:20px;background:linear-gradient(145deg,#173c3e,#102d32);box-shadow:0 22px 45px rgba(25,69,57,.17);color:#fff}
+.m365-project-spotlight-art-top{display:flex;justify-content:space-between;gap:10px;padding:17px 22px;border-bottom:1px solid rgba(255,255,255,.12);color:#bce6bf;font:800 .63rem/1.2 var(--font-heading);letter-spacing:.08em}
+.m365-project-spotlight-art-body{display:grid;gap:10px;padding:22px}
+.m365-project-spotlight-art-body>div{display:grid;gap:4px;padding:17px 20px;border:1px solid rgba(121,201,158,.22);border-radius:12px;background:rgba(255,255,255,.06)}
+.m365-project-spotlight-art-body small{color:#b6e8c2;font:800 .58rem/1.2 var(--font-heading);letter-spacing:.06em}.m365-project-spotlight-art-body strong{color:#fff;font:800 1.03rem/1.2 var(--font-heading)}.m365-project-spotlight-art-body span{color:#d2e5d7;font-size:.75rem}
+@media(max-width:900px){.m365-project-spotlight-grid{grid-template-columns:1fr}.m365-project-spotlight-art{max-width:700px}}
+@media(max-width:520px){.m365-project-spotlight-art-top{font-size:.5rem;padding:14px}.m365-project-spotlight-art-body{padding:14px}}

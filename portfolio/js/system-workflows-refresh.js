@@ -175,35 +175,4 @@
   tabGroup('[data-management-role]', (button) => { managementRole = button.dataset.managementRole; showManagement(); });
   showManagement();
 
-  const comments = {
-    sme: ['Technical SME', 'The regulatory date needs to reflect the approved 2026 guidance.', 'Update source date'],
-    brand: ['Brand reviewer', 'Please use the approved product name on this screen.', 'Check terminology'],
-    ld: ['L&D reviewer', 'Explain why the discovery question is the best next step.', 'Improve feedback']
-  };
-  let reviewStage = 0, reviewComment = 'sme';
-  const course = () => `<div class="wf-review-course"><small>INTRODUCTION / PRODUCT CONVERSATIONS</small><h3>Should we recommend a solution yet?</h3><p>Before recommending a product, identify the customer's goal and constraints. Choose the strongest next question.</p><label><i></i> Which outcome matters most to your team?</label><label><i></i> What is the current limitation?</label><label><i></i> Which feature would you like to buy?</label></div>`;
-  const reviewBar = (title, badge) => `<div class="wf-review-bar"><span>‹</span><b>${title}</b><span class="wf-review-icon"><img src="${root}workflows/people-collaboration/feedback.webp" alt=""></span><em>${badge}</em></div>`;
-  const reviewScene = () => {
-    const [person, text, action] = comments[reviewComment];
-    if (reviewStage === 0) return `<div class="wf-review-ui wf-review-publish">${reviewBar('Rise 360 / Product conversations', 'AUTHORING')}<div class="wf-review-editor"><aside><small>LESSON OUTLINE</small><span>Introduction</span><span class="active">Scenario practice</span><span>Takeaways</span></aside>${course()}<div class="wf-review-publish-menu"><b>Publish ▾</b><strong>Publish to Review 360</strong><div><span>◉ Create a new item</span><span>○ New version of existing item</span></div><em>Publish for feedback →</em></div></div></div>`;
-    if (reviewStage === 1) return `<div class="wf-review-ui wf-review-feedback">${reviewBar('Introduction', 'PREVIEW')}<div class="wf-review-layout">${course()}<aside class="wf-review-sidebar"><small>All Comments ▾</small><div class="wf-review-compose">Add a comment</div><span>Introduction</span><div class="wf-review-card"><b>● &nbsp; ${person}</b><p>${text}</p><small>Screenshot · Screen 02</small><div>Add a reply</div></div><div class="wf-review-card muted"><b>● &nbsp; L&D reviewer</b><p>Can the feedback explain the better choice?</p></div></aside></div></div>`;
-    if (reviewStage === 2) return `<div class="wf-review-ui wf-review-track">${reviewBar('Product conversations / Comments', 'REVIEW 360')}<div class="wf-review-filters"><b>Current Version ▾</b><b>Unresolved Comments ▾</b><span>3 open</span></div><div class="wf-review-track-list"><div class="wf-review-track-item"><small>SCREEN 02 · ${person.toUpperCase()}</small><strong>${text}</strong><span>Owner: instructional designer · ${action}</span><button type="button" aria-label="Illustrative resolve control">✓ Resolve after checking</button></div><div class="wf-review-track-item"><small>SCREEN 03 · L&D REVIEWER</small><strong>Explain the feedback after the learner chooses.</strong><span>Owner: instructional designer · Revise feedback</span><button type="button" aria-label="Illustrative resolve control">✓ Resolve after checking</button></div></div></div>`;
-    return `<div class="wf-review-ui wf-review-history">${reviewBar('Product conversations / Version history', 'REVIEW 360')}<div class="wf-review-versions"><div><small>VERSION 1 · ORIGINAL</small><h3>Ask about the product.</h3><p>The first version used an outdated date and a broad prompt.</p></div><div class="current"><small>VERSION 2 · REVISED</small><h3>Ask about the customer's constraint.</h3><p>The scenario now uses approved 2026 guidance and specific feedback.</p></div></div><div class="wf-review-resolved"><span>✓ Resolved · ${person}</span><p>${text}</p><b>Instructional designer:</b> Updated the text and visual. Republished for final check.</div></div>`;
-  };
-  const reviewCaptions = [
-    '',
-    'I ask reviewers to comment on the exact lesson element that needs a change.',
-    'I filter unresolved comments, assign the edit, and check the new build before resolving.',
-    'I keep the revision and original feedback together so the decision remains traceable.'
-  ];
-  const showReview = () => {
-    const demo = byId('reviewDemo'); demo.dataset.stage = String(reviewStage);
-    byId('reviewScene').innerHTML = reviewScene();
-    byId('reviewCommentPicker').hidden = reviewStage !== 1 && reviewStage !== 2;
-    byId('reviewCaption').hidden = reviewStage === 0;
-    put('reviewCaption', reviewCaptions[reviewStage]); animate(demo);
-  };
-  tabGroup('[data-review-stage]', (button) => { reviewStage = Number(button.dataset.reviewStage); showReview(); });
-  tabGroup('[data-review-comment]', (button) => { reviewComment = button.dataset.reviewComment; showReview(); });
-  showReview();
 })();

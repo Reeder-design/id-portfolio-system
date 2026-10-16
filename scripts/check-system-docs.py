@@ -185,6 +185,7 @@ def main() -> int:
         "AI Training and Evaluation",
         "LMS Administration",
         "Workflows",
+        "Developer Space",
     ]
     require(category_labels == expected_categories, "taxonomy top-level category labels do not match the expected current IA", errors)
 
