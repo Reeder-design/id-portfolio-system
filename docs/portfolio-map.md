@@ -39,6 +39,7 @@ Current portfolio version: **1.0.0**
     - Microsoft 365 Intelligence Workspace — `portfolio/projects/workflows/microsoft-365-intelligence-workspace/index.html` (live)
 - **Developer Space** — `portfolio/projects/developer-space/index.html`
   - Code Block Composer — `portfolio/projects/developer-space/code-block-composer/index.html` (live)
+  - Portfolio Creation and Management — `portfolio/projects/github-workflow/index.html` (live)
 
 ## Other Public HTML Pages
 
@@ -48,7 +49,6 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/hiring-manager/index.html`
 - `portfolio/projects/ai-training-and-evaluation/rubric-demo/index.html`
 - `portfolio/projects/ai-training-and-evaluation/workflow-demo/index.html`
-- `portfolio/projects/github-workflow/index.html`
 - `portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html`
 
 Total public HTML pages: **33**

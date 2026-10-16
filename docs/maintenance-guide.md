@@ -66,6 +66,12 @@ After every merge to `main`, re-check every remaining open PR immediately. Sync 
 The pull-request validation workflow also rejects a PR branch that does not contain the latest `main`, providing an automated guard against accidentally validating a stale branch.
 
 
+## Developer Space and software spotlights
+
+Both software projects are maintained under **Developer Space** in Manage Content. Portfolio Creation and Management has its own structured record even though its public address remains `projects/github-workflow/`. Code Block Composer has a dedicated page, recorded product assets, and an editable authoring example. The page editors explain which copy is editable there and which interaction content is script-owned.
+
+Use [Developer Space maintenance](developer-space-maintenance.md) for the current page IDs, project IDs, dependencies, related work, and Content Library boundary.
+
 ## Existing Public Page Preservation
 
 Structured general-page copy is a mirror/validation layer, not an HTML-generation source. The retired `render-site-content.py` process must not be restored. For an existing page, edit the current public HTML through the current page-copy workflow or directly in source, then synchronize structured values from that page.

@@ -196,6 +196,16 @@ Current expectations:
 - repeated content is consolidated rather than duplicated across pages
 - interaction controls remain mobile-friendly
 
+## Software product and management experiences
+
+- `portfolio/projects/developer-space/index.html` — software-category walkthroughs, separate spotlight cards, animated build process, and the illustrated toolbox.
+- `portfolio/projects/developer-space/code-block-composer/index.html` — dedicated product hero, four feature tabs, original product artwork, editable authoring controls, and learner preview.
+- `portfolio/projects/github-workflow/index.html` — Portfolio Creation and Management: connected system map and four site/Manager interface previews.
+
+The CBC details belong on the dedicated product page. Keep the landing page focused on software types and project discovery. Preserve stable tab heights, manual playback controls, reduced motion, and the full reset of authoring state. The Human Evaluation + Training section on the AI landing page uses a persistent response across six review stages; preserve the response/source relationship rather than substituting generic motion.
+
+See [Developer Space maintenance](developer-space-maintenance.md) for exact implementation owners.
+
 ## Default reference scaffold
 
 `templates/project-page/index.html` is intentionally much simpler than the live pages above.

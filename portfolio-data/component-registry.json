@@ -172,6 +172,80 @@
         "motion",
         "animation"
       ]
+    },
+    {
+      "id": "software-walkthrough",
+      "label": "Software Walkthrough",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Three-step software-category walkthrough with selectable stages, play/pause, stable panels, and reduced-motion styling.",
+      "best_for": "Explaining how input becomes a working result.",
+      "avoid_when": "A static explanation is sufficient.",
+      "implementation_files": [
+        "portfolio/projects/developer-space/index.html",
+        "portfolio/css/developer-space.css",
+        "portfolio/js/developer-space.js"
+      ],
+      "markers": [
+        "data-studio-step",
+        "data-studio-play"
+      ]
+    },
+    {
+      "id": "live-authoring-preview",
+      "label": "Live Authoring Preview",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Editable content and visual controls connected to learner-facing tab panels, preview widths, feedback visibility, and reset.",
+      "best_for": "Demonstrating the consequence of an authoring edit.",
+      "avoid_when": "The content is informational and has no meaningful editable state.",
+      "implementation_files": [
+        "portfolio/projects/developer-space/code-block-composer/index.html",
+        "portfolio/css/developer-space.css",
+        "portfolio/js/developer-space.js"
+      ],
+      "markers": [
+        "dev-editor",
+        "dev-reset"
+      ]
+    },
+    {
+      "id": "connected-system-map",
+      "label": "Connected System Map",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Animated paths behind illustrated nodes connect content preparation, local management, and public destinations.",
+      "best_for": "Explaining ownership and movement between connected systems.",
+      "avoid_when": "There is no real connection or sequence to explain.",
+      "implementation_files": [
+        "portfolio/projects/github-workflow/index.html",
+        "portfolio/css/github-workflow-refresh.css"
+      ],
+      "markers": [
+        "gh-flow",
+        "gh-flow-node"
+      ]
+    },
+    {
+      "id": "human-evaluation-walkthrough",
+      "label": "Human Evaluation Walkthrough",
+      "category": "interaction",
+      "status": "stable",
+      "support": "custom-pattern",
+      "summary": "Six review stages keep the response in context while showing requirements, annotations, sources, ratings, feedback, and calibration.",
+      "best_for": "Explaining human judgment across an AI evaluation process.",
+      "avoid_when": "The task requires a different review model or lacks source evidence.",
+      "implementation_files": [
+        "portfolio/projects/ai-training-and-evaluation/index.html",
+        "portfolio/css/ai-evaluation-suite.css",
+        "portfolio/js/ai-evaluation-suite.js"
+      ],
+      "markers": [
+        "review-process"
+      ]
     }
   ]
 }

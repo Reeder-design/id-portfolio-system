@@ -12,6 +12,8 @@
 2. **Explore platform work:** [LMS administration](https://reeder-design.github.io/id-portfolio-system/projects/lms-administration/) and the [LMS demos](https://reeder-design.github.io/id-portfolio-system/projects/lms-administration/my-approach-for-various-lms-platforms/).
 3. **See how the work connects:** [workflows, automation, and reporting](https://reeder-design.github.io/id-portfolio-system/projects/workflows/).
 
+4. **Explore the software:** [Developer Space](https://reeder-design.github.io/id-portfolio-system/projects/developer-space/), [Code Block Composer](https://reeder-design.github.io/id-portfolio-system/projects/developer-space/code-block-composer/), and [Portfolio Creation and Management](https://reeder-design.github.io/id-portfolio-system/projects/github-workflow/).
+
 ## Public portfolio · private workspace
 
 **Public:** The [portfolio](https://reeder-design.github.io/id-portfolio-system/) and its project demos open in a browser without an account.

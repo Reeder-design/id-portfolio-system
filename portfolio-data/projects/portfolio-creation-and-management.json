@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "id": "portfolio-creation-and-management",
+  "title": "Portfolio Creation and Management",
+  "slug": "portfolio-creation-and-management",
+  "category": "developer-space",
+  "subcategory": null,
+  "status": "live",
+  "summary": "A public portfolio and Content Library with local applications for creating, organizing, previewing, and maintaining their content.",
+  "page_path": "portfolio/projects/github-workflow/index.html",
+  "featured": false,
+  "confidentiality": "public",
+  "content": {
+    "business_need": "Present complete project stories and organize reusable learning work while keeping content maintenance manageable.",
+    "audience": "Portfolio visitors, learning designers, and the owner maintaining the sites.",
+    "learning_objectives": [
+      "Explore project case studies and reusable learning resources.",
+      "Understand the distinct portfolio and library management workflows."
+    ],
+    "role": "Interface design, development, content structure, and local management workflow design.",
+    "design_approach": "Pair two purpose-built public experiences with local management tools for the different content tasks.",
+    "development_process": "Built custom public HTML/CSS/JavaScript experiences and local content management, preview, validation, and publishing workflows.",
+    "outcomes": [
+      "A public portfolio with custom case studies and interactive experiences.",
+      "A Content Library browsing interface with a separate local Library Manager.",
+      "Portfolio Manager supports project records, page copy, assets, references, and controlled publishing."
+    ]
+  },
+  "skills": [
+    "Interface design",
+    "Content management",
+    "Workflow design",
+    "Front-end development"
+  ],
+  "tools": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Python",
+    "Flask",
+    "JSON",
+    "GitHub Pages"
+  ],
+  "assets": [],
+  "source_material_notes": "Describes the public systems and local management workflows presented in the approved portfolio page.",
+  "dates": {
+    "created": "2026-10-16",
+    "updated": "2026-10-16"
+  },
+  "links": {
+    "repository": "https://github.com/Reeder-design/id-portfolio-system",
+    "live_project": "https://reeder-design.github.io/id-portfolio-system/projects/github-workflow/"
+  },
+  "related_work": [
+    {
+      "project_id": "code-block-composer",
+      "relationship": "A separate authoring product within Developer Space; creates learning interactions while these systems present and maintain content."
+    }
+  ],
+  "component_refs": [
+    "tabs-switcher",
+    "connected-system-map"
+  ]
+}

@@ -35,10 +35,49 @@
     "CSS",
     "JavaScript"
   ],
-  "assets": [],
+  "assets": [
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/developer-space/cbc-mark.svg",
+      "alt": "Code Block Composer product logo",
+      "caption": "Owned product identity.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/developer-space/scenario.svg",
+      "alt": "CBC scenario pattern",
+      "caption": "Guided scenario authoring pattern.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/developer-space/layerlift.svg",
+      "alt": "LayerLift source artwork and editable layers",
+      "caption": "Source comparison and editable media.",
+      "publish": true
+    },
+    {
+      "type": "image",
+      "path": "portfolio/assets/project-images/developer-space/blueprint.svg",
+      "alt": "Blueprint Builder template structure",
+      "caption": "Mapped fields for reusable authoring patterns.",
+      "publish": true
+    }
+  ],
   "source_material_notes": "Product details and owned assets approved by Haley for this portfolio presentation.",
   "dates": {
     "created": "2026-10-16",
     "updated": "2026-10-16"
-  }
+  },
+  "related_work": [
+    {
+      "project_id": "portfolio-creation-and-management",
+      "relationship": "Related software work covering public content presentation and local content management."
+    }
+  ],
+  "component_refs": [
+    "tabs-switcher",
+    "live-authoring-preview"
+  ]
 }
