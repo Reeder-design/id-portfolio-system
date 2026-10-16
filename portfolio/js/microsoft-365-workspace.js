@@ -27,3 +27,9 @@
     });
   });
 })();
+
+(() => {
+ const tabs=[...document.querySelectorAll('[data-model-tab]')],panels=[...document.querySelectorAll('[data-model-panel]')];
+ const select=i=>{tabs.forEach((t,n)=>{t.setAttribute('aria-selected',n===i);t.tabIndex=n===i?0:-1;});panels.forEach((p,n)=>{p.classList.toggle('is-active',n===i);p.setAttribute('aria-hidden',n!==i);p.inert=n!==i;});};
+ tabs.forEach((t,i)=>{t.addEventListener('click',()=>select(i));t.addEventListener('keydown',e=>{const n=e.key==='ArrowRight'?(i+1)%tabs.length:e.key==='ArrowLeft'?(i+tabs.length-1)%tabs.length:e.key==='Home'?0:e.key==='End'?tabs.length-1:null;if(n!==null){e.preventDefault();select(n);tabs[n].focus();}});});
+})();

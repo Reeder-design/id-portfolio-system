@@ -249,6 +249,11 @@
   };
 
   const initHeroCleanup = () => {
+    if (document.body.dataset.cleanHero === 'true') {
+      const hero = document.querySelector('main > section:first-of-type');
+      hero?.querySelectorAll('.hero-context-row, .refresh-chip-row, .developer-hero-copy > .eyebrow, .m365-kicker, .expertise-hero-copy > .eyebrow, .parent-page-hero-content > .eyebrow, .refresh-hero-copy > .eyebrow, .gh-overline').forEach(node => node.remove());
+      return;
+    }
     // The Hiring Guide's hero links are in-page navigation to its chat and scan.
     if (document.body.classList.contains('hiring-manager-page')) return;
     if (currentRelativePath() === 'projects/instructional-design/complete-learning-paths') return;
@@ -338,6 +343,8 @@
     ['contact', 'Contact'],
     ['projects', 'Projects'],
     ['projects/github-workflow', 'GitHub Build Lab'],
+    ['projects/developer-space', 'Developer Space'],
+    ['expertise', 'Expertise'],
     ['projects/instructional-design', 'Instructional Design'],
     ['projects/instructional-design/complete-learning-paths', 'Complete eLearning Pathways'],
     ['projects/instructional-design/interactive-learning', 'Interactive Learning'],
@@ -349,7 +356,8 @@
     ['projects/ai-training-and-evaluation', 'AI Training & Evaluation'],
     ['projects/lms-administration', 'LMS Administration'],
     ['projects/lms-administration/system-integrations', 'System Integrations'],
-    ['projects/workflows', 'Workflows']
+    ['projects/workflows', 'Workflows'],
+    ['projects/workflows/microsoft-365-intelligence-workspace', 'Microsoft 365 Intelligence Workspace']
   ];
 
   const initCanonicalBreadcrumbs = () => {
