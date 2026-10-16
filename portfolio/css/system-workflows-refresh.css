@@ -67,6 +67,15 @@
 .workflow-demo-caption{margin:12px 2px 0;color:#e2f1e6;font-size:.79rem;line-height:1.4}
 
 /* Stage-specific fictional platform windows. Each transition explains a different action. */
+.workflow-m365-section{background:linear-gradient(145deg,#f7fbf7,#e9f3eb)!important}
+.workflow-m365-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.85fr);gap:clamp(30px,5vw,72px);align-items:center}
+.workflow-m365-grid h2{max-width:660px;margin:8px 0 16px;color:#173d36;font:800 clamp(2rem,3.4vw,3.25rem)/1.13 var(--font-heading)}
+.workflow-m365-grid .body-large{max-width:650px;color:#4c6558;line-height:1.65}.workflow-m365-grid .btn{margin-top:10px}
+.workflow-m365-section.fs-surface-dark h2{color:#fff!important}.workflow-m365-section.fs-surface-dark .body-large{color:#dce9df!important}.workflow-m365-section.fs-surface-dark .eyebrow{color:#b9e9c8!important}
+.workflow-m365-visual{display:grid;gap:10px;padding:24px;border:1px solid #3b7962;border-radius:20px;background:linear-gradient(145deg,#173e40,#102e35);box-shadow:0 20px 45px rgba(23,64,55,.16)}
+.workflow-m365-visual>div{display:grid;gap:5px;padding:17px 20px;border:1px solid rgba(121,201,158,.23);border-radius:11px;background:rgba(255,255,255,.06)}
+.workflow-m365-visual small{color:#b7dfbf;font:800 .58rem/1.2 var(--font-heading);letter-spacing:.07em}.workflow-m365-visual strong{color:#fff;font:800 .96rem/1.2 var(--font-heading)}.workflow-m365-visual span{color:#d2e5d8;font-size:.74rem}
+@media(max-width:760px){.workflow-m365-grid{grid-template-columns:1fr}.workflow-m365-visual{max-width:620px}}
 .workflow-digital-section{background:radial-gradient(circle at 92% 10%,rgba(158,223,99,.12),transparent 30%),#274a49!important;color:#e7f1e8}
 .workflow-digital-section .eyebrow{color:#bceabc}
 .workflow-digital-section h2{color:#fff!important}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "id": "microsoft-365-intelligence-workspace",
+  "title": "Microsoft 365 Intelligence Workspace",
+  "slug": "microsoft-365-intelligence-workspace",
+  "category": "workflows",
+  "subcategory": "data-reporting",
+  "status": "live",
+  "summary": "A working Microsoft 365 environment connects a multi-page SharePoint site, role-based Highspot training routes, market intelligence, reporting, and content health workflows.",
+  "page_path": "portfolio/projects/workflows/microsoft-365-intelligence-workspace/index.html",
+  "featured": true,
+  "confidentiality": "sanitized",
+  "content": {
+    "business_need": "Bring training, tool access guidance, market intelligence, and content health review into a connected workspace so people can find current information and act on it.",
+    "audience": "People using role-specific learning and access routes, market reporting, and cross-team content workflows.",
+    "learning_objectives": [
+      "Find the training path and access guidance relevant to a person's role.",
+      "Read market snapshots with reporting and source context.",
+      "Review content health signals derived from recordings and other source material before follow-up."
+    ],
+    "role": "Learning and workflow design across the SharePoint entry, training routes, intelligence views, and content health process.",
+    "design_approach": "Connect the entry points around the person's next decision: find the relevant learning route, interpret intelligence with context, and review the signal before acting.",
+    "development_process": "Organized a multi-page SharePoint experience with role-specific Highspot training links and tool guidance, connected the Intelligence Hub's market and reporting views with cross-team communication, and linked source-content intake to content health review.",
+    "outcomes": [
+      "A working SharePoint site brings together pages for training, tool entry, and intelligence.",
+      "The Intelligence Hub supports market analytics, reporting, communications, and snapshot views.",
+      "Connected workflows turn meeting recordings and other source content into content health checks and analytics for review."
+    ]
+  },
+  "skills": [
+    "SharePoint Information Architecture",
+    "Learning Operations",
+    "Role-Based Training Routes",
+    "Market Intelligence",
+    "Reporting",
+    "Workflow Automation",
+    "Content Health Review"
+  ],
+  "tools": ["Microsoft 365", "SharePoint", "Highspot"],
+  "assets": [],
+  "source_material_notes": "Haley confirmed the current working system and public portfolio direction on 2026-10-16. The page omits company identifiers, tenant URLs, internal links, confidential records, actual screenshots, and performance metrics. All interface names, labels, charts, and content are representative reconstructions. Specific Microsoft platform components beyond SharePoint are not named without confirmation.",
+  "dates": {"created": "2026-10-16", "updated": "2026-10-16"}
+}
