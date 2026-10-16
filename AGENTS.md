@@ -27,6 +27,7 @@ Current top-level areas are:
 2. AI Training and Evaluation
 3. LMS Administration
 4. Workflows
+5. Developer Space
 
 Instructional Design currently includes:
 - Interactive Learning
@@ -37,6 +38,8 @@ Instructional Design currently includes:
 - Complete eLearning Pathways
 
 Workflows currently includes the structured groupings Design + Development, AI + Automation, and Data + Reporting.
+
+Developer Space features the public Portfolio System and Learning Content Lab interface, with GitHub as part of their build and review workflow.
 
 ## Source-of-Truth Order
 When files disagree, resolve the conflict before editing instead of choosing the most convenient version.

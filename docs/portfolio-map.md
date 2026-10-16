@@ -37,6 +37,7 @@ Current portfolio version: **1.0.0**
   - **Data + Reporting**
     - Certification Reporting Automation — `portfolio/projects/workflows/data-reporting/certification-reporting-automation/index.html` (live)
     - Microsoft 365 Intelligence Workspace — `portfolio/projects/workflows/microsoft-365-intelligence-workspace/index.html` (live)
+- **Developer Space** — `portfolio/projects/developer-space/index.html`
 
 ## Other Public HTML Pages
 
@@ -49,4 +50,4 @@ These pages exist in the public site but are not represented by a structured pro
 - `portfolio/projects/github-workflow/index.html`
 - `portfolio/projects/instructional-design/interactive-learning/ai-integrations-in-learning/index.html`
 
-Total public HTML pages: **31**
+Total public HTML pages: **32**

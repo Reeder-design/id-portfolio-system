@@ -29,6 +29,7 @@ Good references:
 - `portfolio/projects/ai-training-and-evaluation/index.html`
 - `portfolio/projects/lms-administration/index.html`
 - `portfolio/projects/workflows/index.html`
+- `portfolio/projects/developer-space/index.html`
 
 Use these for:
 - category introductions

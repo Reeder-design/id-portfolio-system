@@ -85,6 +85,10 @@ Structured groupings currently include:
 - AI + Automation
 - Data + Reporting
 
+### Developer Space
+
+The Portfolio System and Learning Content Lab are the public system spotlights. GitHub connects their source, review, and publishing workflow. This category has no required structured subcategory.
+
 Do not copy this list into new code as a parallel taxonomy. Read `taxonomy.json` when behavior depends on category values or paths.
 
 ## Status Values
