@@ -101,15 +101,15 @@
 .type-tabs button { min-height:69px; padding:8px 5px; border:0; border-radius:12px; background:transparent; color:#e5f2e9; font:800 .67rem/1.24 var(--font-heading); cursor:pointer; transition:background .2s,color .2s,transform .2s; }
 .type-tabs button:hover,.type-tabs button:focus-visible { background:#35625a; color:#fff; outline:2px solid #d6efa9; outline-offset:-2px; }
 .type-tabs button[aria-selected="true"] { background:#c5ee8e; color:#1d4439; box-shadow:0 5px 15px #071c2345; }
-.type-tab-panels { max-width:1180px; margin:auto; border:1px solid #bcd7c8; border-top:0; border-radius:0 0 23px 23px; background:#fff; box-shadow:0 23px 48px #2853401b; overflow:hidden; }
-.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { display:grid; grid-template-columns:minmax(0,.79fr) minmax(0,1.21fr); gap:24px; max-width:none; min-height:420px; margin:0; padding:clamp(18px,2.7vw,34px); border:0; border-radius:0; box-shadow:none; animation:panelEnter .32s ease both; }
+.type-tab-panels { height:560px; max-width:1180px; margin:auto; border:1px solid #bcd7c8; border-top:0; border-radius:0 0 23px 23px; background:#fff; box-shadow:0 23px 48px #2853401b; overflow:hidden; }
+.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { display:grid; grid-template-columns:minmax(0,.79fr) minmax(0,1.21fr); gap:24px; height:100%; max-width:none; min-height:0; margin:0; padding:clamp(18px,2.7vw,34px); border:0; border-radius:0; box-shadow:none; animation:panelEnter .32s ease both; }
 .type-tab-panels .type-row[hidden] { display:none!important; }
 .type-tab-panels .type-row:nth-of-type(even) .type-story,
 .type-tab-panels .type-row:nth-of-type(even) .type-visual { order:initial; }
-.type-tab-panels .type-story { padding:5px 7px; }
+.type-tab-panels .type-story { min-height:0; padding:5px 7px; overflow-y:auto; }
 .type-tab-panels .type-story h3 { margin-bottom:15px; font-size:clamp(1.8rem,2.8vw,2.8rem); line-height:1.1; }
 .type-tab-panels .type-story>p:not(.eyebrow) { font-size:.91rem; line-height:1.65; }
-.type-tab-panels .type-visual { min-height:350px; }
+.type-tab-panels .type-visual { min-height:0; overflow-y:auto; }
 @keyframes panelEnter { from { opacity:.3; transform:translateY(8px); } to { opacity:1; transform:none; } }
 
 /* The AI tab shows an actual learner response and task-scoped coaching. */
@@ -182,8 +182,9 @@
 @keyframes medMatch { 50% { transform:translateY(-10px); background:#bce887; box-shadow:0 8px 17px #0b252950; } }
 @keyframes medReveal { 0%,25%,100% { opacity:.4; } 40%,82% { opacity:1; } }
 
-@media(max-width:950px) { .type-tabs { grid-template-columns:repeat(4,minmax(0,1fr)); }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even),.spotlight-inner { grid-template-columns:1fr; }.spotlight-art { min-height:340px; } }
-@media(max-width:620px) { .type-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }.type-tabs button { min-height:49px; }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { padding:15px; }.type-tab-panels .type-visual { min-height:280px; }.spotlight-inner { min-height:0; }.spotlight-art { min-height:310px; }.ai-art-chip { font-size:.54rem; }.ai-art-chip img { width:26px; height:26px; }.med-tiles { gap:3px; }.med-tiles span { border-radius:5px; } }
+@media(max-width:950px) { .type-tabs { grid-template-columns:repeat(4,minmax(0,1fr)); }.type-tab-panels { height:850px; }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even),.spotlight-inner { grid-template-columns:1fr; }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { grid-template-rows:270px minmax(0,1fr); }.spotlight-art { min-height:340px; } }
+@media(max-width:620px) { .type-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }.type-tabs button { min-height:49px; }.type-tab-panels { height:790px; }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { grid-template-rows:250px minmax(0,1fr); padding:15px; }.spotlight-inner { min-height:0; }.spotlight-art { min-height:310px; }.ai-art-chip { font-size:.54rem; }.ai-art-chip img { width:26px; height:26px; }.med-tiles { gap:3px; }.med-tiles span { border-radius:5px; } }
+@media(max-width:460px) { .type-tab-panels { height:840px; }.type-tab-panels .type-row,.type-tab-panels .type-row:nth-of-type(even) { grid-template-rows:290px minmax(0,1fr); } }
 @media(prefers-reduced-motion:reduce) { .type-tab-panels .type-row,.ai-coach-line,.ai-orbit,.pursuit-marker,.med-tiles span,.med-feedback { animation:none!important; } }
 
 /* Screenshot follow-up: complete, legible motion scenes with dependable vector icons. */

@@ -661,6 +661,29 @@
   .ai-suite-landing .ai-content-orbit{max-width:320px}.ai-suite-landing .ai-orbit-bubble{width:75px;min-height:68px;padding:4px}.ai-suite-landing .ai-orbit-bubble>span{font-size:.33rem}.ai-suite-landing .ai-orbit-bubble img{width:27px;height:27px}.ai-orbit-bot{width:92px;height:92px}.ai-orbit-bot img{width:55px;height:55px}
   .ai-content-motion-art{grid-template-columns:1fr 17px 1fr 17px 1fr}.ai-content-motion-node img{width:35px;height:35px}.ai-content-motion .ai-lens-rank strong{font-size:.36rem}
 }
+
+/* Keep the content-type lens at one size while its copy and visuals change. */
+.ai-suite-landing #aiContentTypePanel{height:500px;min-height:500px;overflow:hidden}
+.ai-suite-landing #aiContentTypePanel .ai-lens-summary{min-height:0;overflow-y:auto}
+@media(max-width:700px){
+  .ai-suite-landing #aiContentTypePanel{height:560px;min-height:560px}
+}
+@media(max-width:460px){
+  .ai-suite-landing #aiContentTypePanel{height:680px;min-height:680px}
+}
+
+/* Keep the QA artifact and scene anchored while the stage copy changes. */
+.ai-workflow-page #aiWorkflowPanel{height:440px;min-height:440px;overflow:hidden}
+.ai-workflow-page #aiWorkflowPanel .ai-workflow-scenes{height:230px;min-height:230px;margin-top:auto;flex:none}
+.ai-workflow-page #aiWorkflowPanel .ai-workflow-scene{height:100%;min-height:0}
+@media(max-width:700px){
+  .ai-workflow-page #aiWorkflowPanel{height:600px;min-height:600px}
+  .ai-workflow-page #aiWorkflowPanel .ai-workflow-scenes{height:280px;min-height:280px}
+}
+@media(max-width:460px){
+  .ai-workflow-page #aiWorkflowPanel{height:740px;min-height:740px}
+  .ai-workflow-page #aiWorkflowPanel .ai-workflow-scenes{height:340px;min-height:340px}
+}
 @media(prefers-reduced-motion:reduce){
   .ai-why-motion::after,.ai-review-lane::before,.ai-review-signal,.ai-orbit-bot-pulse,.ai-orbit-bubble,.ai-content-motion::after,.ai-content-motion-line::after,.ai-content-motion[data-content-type="presentation"] .ai-content-motion-node{animation:none!important}
   .ai-suite-landing .ai-process-orbit .ai-process-packet,.ai-decision-pipeline-track::after,.ai-decision-stage,.ai-process-station{transition:none!important}
