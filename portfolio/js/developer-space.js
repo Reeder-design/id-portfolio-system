@@ -41,6 +41,7 @@
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden) walkthroughs.forEach(stop => stop()); });
   const heading=$('#dev-block-title'), state=$('#dev-editor-state');
+  if (!heading) return;
   heading.addEventListener('input',()=>{$('#dev-preview-heading').textContent=heading.value||'Untitled block';state.textContent='Heading updated';});
   document.querySelectorAll('[data-dev-theme]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-dev-theme]').forEach(t=>{t.classList.toggle('active',t===b);t.setAttribute('aria-pressed',t===b);});$('[data-dev-theme-preview]').dataset.devThemePreview=b.dataset.devTheme;state.textContent='Visual treatment updated';}));
   const resources={course:['Build understanding','Use a course when someone needs a connected explanation, practice, and a way to check understanding.','Match the format to the learning need.'],aid:['Support a task','Use a job aid when someone knows the task but needs a concise reference while doing it.','Keep the next action easy to find.'],practice:['Develop judgment','Use practice when someone needs to make a decision, see its consequence, and try again.','Feedback explains why the choice matters.']};

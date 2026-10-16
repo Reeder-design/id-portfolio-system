@@ -344,6 +344,7 @@
     ['projects', 'Projects'],
     ['projects/github-workflow', 'Portfolio Creation and Management'],
     ['projects/developer-space', 'Developer Space'],
+    ['projects/developer-space/code-block-composer', 'Code Block Composer'],
     ['expertise', 'Expertise'],
     ['projects/instructional-design', 'Instructional Design'],
     ['projects/instructional-design/complete-learning-paths', 'Complete eLearning Pathways'],

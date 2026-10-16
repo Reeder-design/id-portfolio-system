@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "id": "code-block-composer",
+  "title": "Code Block Composer",
+  "slug": "code-block-composer",
+  "category": "developer-space",
+  "subcategory": null,
+  "status": "live",
+  "summary": "Visual and guided authoring, editable media, and reusable templates for interactive learning blocks.",
+  "page_path": "portfolio/projects/developer-space/code-block-composer/index.html",
+  "featured": false,
+  "confidentiality": "public",
+  "content": {
+    "business_need": "Create and adapt interactive learning without reconstructing content, layout, and behavior for each block.",
+    "audience": "Learning designers and content authors.",
+    "learning_objectives": [
+      "Compose and refine an interactive learning block.",
+      "Adapt a guided pattern and prepare reusable media or template inputs."
+    ],
+    "role": "Product design and development.",
+    "design_approach": "Separate visual composition, guided authoring, editable media, and template creation into connected paths.",
+    "development_process": "Connect editable content and interaction state to a responsive learner preview; support saving, review, and block export.",
+    "outcomes": [
+      "A visual authoring workspace and a guided route for mapped learning patterns.",
+      "LayerLift for reviewing editable media and Blueprint Builder for preparing reusable templates."
+    ]
+  },
+  "skills": [
+    "Interaction design",
+    "Authoring tools",
+    "Responsive interfaces"
+  ],
+  "tools": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "assets": [],
+  "source_material_notes": "Product details and owned assets approved by Haley for this portfolio presentation.",
+  "dates": {
+    "created": "2026-10-16",
+    "updated": "2026-10-16"
+  }
+}

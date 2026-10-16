@@ -6,8 +6,8 @@ Current portfolio version: **1.0.0**
 
 ## Summary
 
-- Structured projects: **11**
-- Live: **11**
+- Structured projects: **12**
+- Live: **12**
 - Building: **0**
 - Planned: **0**
 - Archived: **0**
@@ -19,6 +19,7 @@ Current portfolio version: **1.0.0**
 | Project | Category | Subcategory | Status | Featured | Confidentiality | Page |
 | --- | --- | --- | --- | --- | --- | --- |
 | AI Training and Evaluation Demo | AI Training and Evaluation | — | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/ai-training-and-evaluation/ai-training-and-evaluation-demo/index.html` |
+| Code Block Composer | Developer Space | — | Live | No | Public | `portfolio/projects/developer-space/code-block-composer/index.html` |
 | Ericsson Cellular Networking Sales Certification | Instructional Design | Complete eLearning Pathways | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/complete-learning-paths/enterprise-sales-certification/index.html` |
 | MEDDPICC Qualification Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/meddpicc-practice/index.html` |
 | Pursuit Determination Lab | Instructional Design | Interactive Learning | Live | Yes | Sanitized / Fictionalized | `portfolio/projects/instructional-design/interactive-learning/pursuit-positioning/index.html` |

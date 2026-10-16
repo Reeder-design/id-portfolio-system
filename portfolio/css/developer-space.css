@@ -175,3 +175,12 @@ body.developer-page .developer-hero{padding:40px 0 55px!important;background:rad
 @media(max-width:900px){.studio-panel{grid-template-columns:1fr}.dev-spotlight-grid{grid-template-columns:1fr}.studio-canvas{min-height:330px}.dev-spotlight-art{height:190px}}
 @media(max-width:600px){.dev-system-tabs{grid-template-columns:1fr 1fr}.dev-system-tabs button{font-size:.76rem;padding:14px 8px}.studio-panel{padding:18px;gap:24px}.studio-canvas{padding:17px;min-height:340px}.studio-pattern,.studio-result{padding:19px}.studio-machine .dev-machine-bar{flex-wrap:nowrap}.studio-captions{padding:19px;min-height:176px}.dev-spotlight-art{padding:20px;gap:12px}.portfolio-spotlight-art>img{width:42px;height:42px;padding:5px}.portfolio-spotlight-art>span{font-size:.6rem}.cbc-spotlight-art>img{width:80px;height:80px}.cbc-spotlight-art b{padding:10px 7px;font-size:.6rem}.dev-spotlight-copy{padding:24px}}
 @media(prefers-reduced-motion:reduce){.studio-canvas *{transition:none!important}}
+
+/* Dedicated CBC spotlight, retaining the existing authoring interaction. */
+.cbc-project-art{padding:30px;border:1px solid #8fc5b077;border-radius:24px;background:radial-gradient(circle at 50% 10%,#7cd5c02b,transparent 60%),#133538;box-shadow:0 25px 55px #071c2833}
+.cbc-project-art>img{display:block;width:180px;height:180px;object-fit:contain;margin:0 auto 25px;filter:drop-shadow(0 0 22px #48d3d344)}
+.cbc-hero-paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cbc-hero-paths span{padding:18px 10px;border:1px solid #94cdb26b;border-radius:12px;background:#28574c;color:#e5f7e9;text-align:center;font:800 .8rem var(--font-heading)}
+.cbc-hero-output{padding:23px 0 0;text-align:center;color:#bfe5b7;font-size:.8rem}
+body.cbc-project-page .developer-hero h1{font-size:clamp(2.8rem,5.5vw,5rem);line-height:1.03}
+.cbc-back{background:#eef6ef;color:#274f40}.cbc-back h2{color:#214c3d}
+@media(max-width:600px){.cbc-project-art{padding:23px}.cbc-project-art>img{width:130px;height:130px}.cbc-hero-paths span{font-size:.7rem}.cbc-project-hero .developer-hero-grid{gap:28px}}

@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="../../css/portfolio-refresh.css">
   <link rel="stylesheet" href="../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../css/phase1-frame.css">
-  <link rel="stylesheet" href="../../css/github-workflow-refresh.css?v=20261016-management">
-  <script defer src="../../js/portfolio-motion.js?v=20261016-management"></script>
-  <script defer src="../../js/github-workflow-refresh.js?v=20261016-management"></script>
+  <link rel="stylesheet" href="../../css/github-workflow-refresh.css?v=20261016-restored">
+  <script defer src="../../js/portfolio-motion.js?v=20261016-restored"></script>
+  <script defer src="../../js/github-workflow-refresh.js?v=20261016-restored"></script>
 
   <link rel="stylesheet" href="../../css/hiring-support.css" data-hiring-support-styles>
   <link rel="stylesheet" href="../../css/experience-polish.css" data-experience-polish-styles>
@@ -48,12 +48,31 @@
       </div>
     </section>
 
-    <section class="gh-statement" aria-labelledby="gh-statement-title"><div class="container"><div class="gh-statement-copy"><h2 id="gh-statement-title">Two sites. <span>Two management workflows.</span></h2><p>I gave each site a local workspace because maintaining project stories and preparing reusable files involve different tasks.</p></div><div class="pm-routes"><article><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><h3>Portfolio Manager</h3><p>Page editing, project briefs, assets, references, and Hiring Guide content.</p><span>Preview + validate ↓</span><strong>Public portfolio</strong><p>Custom case studies and interactive project experiences.</p></article><article><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><h3>Library Manager</h3><p>File imports, editable metadata suggestions, resource previews, and publishing.</p><span>Preview + validate ↓</span><strong>Content Library</strong><p>Search, categories, and previews for reusable learning materials.</p></article></div></div></section>
+    <section class="gh-statement" id="connections" aria-labelledby="gh-statement-title">
+      <div class="container">
+        <div class="gh-statement-copy"><h2 id="gh-statement-title">How the sites <span>and tools connect.</span></h2><p>I edit in local tools, review the result, then publish the approved files to the portfolio or Content Library.</p></div>
+        <div class="gh-flow" role="group" aria-label="Source content and prepared assets connect to Portfolio Manager and Library Manager, then to the public portfolio and Content Library.">
+          <svg class="gh-flow-lines" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="gh-flow-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z"/></marker></defs><path d="M180 180H200M180 180H190V90H460M180 180H190V270H460M440 180H450V90H460M440 180H450V270H460M800 90H820M800 270H820"/></svg>
+          <div class="gh-flow-node gh-flow-source"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><div><small>THE RAW MATERIAL</small><strong>Stories, assets &amp; files</strong><span>Project evidence and reusable learning materials</span></div></div>
+          <div class="gh-flow-node gh-flow-workbench"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><div><small>PREPARE THE CONTENT</small><strong>Content preparation</strong><span>Shape the project brief, organize source files, and prepare assets for the selected site.</span></div></div>
+          <div class="gh-flow-managers">
+            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><div><small>LOCAL MANAGER</small><b class="gh-ai-marker">✦ AI-enabled</b><strong>Portfolio Manager</strong><span>Imports and edits portfolio content; AI proposes page changes and reviews for QA, unsupported claims, and common errors. I approve and publish.</span></div></div>
+            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><div><small>LOCAL MANAGER · RULE BASED</small><strong>Library Manager</strong><span>Imports reusable content; local smart prefill, preview, validation, and deliberate publishing.</span></div></div>
+          </div>
+          <div class="gh-flow-outputs">
+            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><div><small>PUBLIC</small><strong>Portfolio</strong><span>Spotlight projects &amp; work experience</span></div></div>
+            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><div><small>PUBLIC</small><strong>Library</strong><span>General projects &amp; reusable work</span></div></div>
+          </div>
+        </div>
+        <p class="gh-flow-caption">I built two connected routes: project stories move through Portfolio Manager, while reusable resources move through Library Manager.</p>
+      </div>
+    </section>
 
     <div class="gh-nav-marker" data-nav-marker aria-hidden="true"></div>
     <nav class="gh-page-nav" data-page-nav aria-label="Explore this page">
       <div class="container gh-page-nav-inner">
         <span class="gh-nav-brand">PORTFOLIO SYSTEMS <b aria-hidden="true">✳</b></span>
+        <a href="#connections" data-section-link="connections"><img src="../../assets/icons/pixel/github/branch.webp" alt=""><span>Connections</span></a>
         <a href="#projects" data-section-link="projects"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span>Projects</span></a>
         <a href="#repo-tour" data-section-link="repo-tour"><img src="../../assets/icons/pixel/navigation-ui/explore.webp" alt=""><span>Interfaces</span></a>
       </div>
@@ -81,6 +100,14 @@
         </div>
         <p class="gh-project-note">Public experiences and local maintenance tools have different jobs. The separation is part of the design.</p>
       </div>
+    </section>
+
+    <section class="gh-why" aria-labelledby="gh-why-title">
+      <div class="container gh-why-grid">
+        <div class="gh-why-intro"><p class="gh-overline">CREATING + MAINTAINING</p><h2 id="gh-why-title">Why I built <span>the tools.</span></h2><p>The managers help me review and maintain the sites.</p></div>
+        <div class="gh-why-points"><article><img src="../../assets/icons/pixel/github/develop.webp" alt=""><div><h3>Custom project experiences</h3><p>I built bespoke pages because each project needs the right mix of interaction, visuals, and explanation.</p></div></article><article><img src="../../assets/icons/pixel/github/branch.webp" alt=""><div><h3>Content tools that fit</h3><p>I built the Managers because editing pages, preparing resources, and maintaining source context belong in a connected workspace.</p></div></article><article><img src="../../assets/icons/pixel/github/track-progress.webp" alt=""><div><h3>Lightweight public delivery</h3><p>I use static public sites and local management tools so visitors can explore the work without entering an editing workspace.</p></div></article></div>
+      </div>
+
     </section>
 
     <section class="gh-section gh-live" id="repo-tour" aria-labelledby="gh-live-title">
