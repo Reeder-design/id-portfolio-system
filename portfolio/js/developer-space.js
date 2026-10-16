@@ -3,6 +3,7 @@
   const tabs = [...document.querySelectorAll('[data-dev-system]')];
   const panels = [...document.querySelectorAll('[data-dev-panel]')];
   function select(tab) {
+    walkthroughs.forEach(stop => stop());
     tabs.forEach(t => { const on=t===tab; t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1; });
     panels.forEach(p => {const on=p.dataset.devPanel===tab.dataset.devSystem;p.classList.toggle('is-active',on);p.setAttribute('aria-hidden',!on);p.inert=!on;});
   }
@@ -13,8 +14,32 @@
     featureTabs.forEach(tab=>{const active=tab===button;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});
     document.querySelectorAll('[data-cbc-panel]').forEach(panel=>{const active=panel.dataset.cbcPanel===button.dataset.cbcFeature;panel.classList.toggle('is-active',active);panel.setAttribute('aria-hidden',String(!active));panel.inert=!active;});
   });
-  const formats={interaction:['Practice a decision','A focused task, a learner response, and feedback that explains the consequence.','Prompt','Choice','Feedback'],template:['Start with a structure','Reusable structure keeps the author focused on the content and the learner task.','Structure','Content','Adapt'],aid:['Support the next step','A concise reference helps someone complete a task at the point of need.','Find','Check','Act']};
-  $('#dev-format').addEventListener('change',e=>{const v=formats[e.target.value];['title','copy','a','b','c'].forEach((k,i)=>$('#dev-format-'+k).textContent=v[i]);});
+  const walkthroughs = [];
+  panels.forEach(panel => {
+    const steps = [...panel.querySelectorAll('[data-studio-step]')];
+    const play = panel.querySelector('[data-studio-play]');
+    let timer;
+    const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Play walkthrough'; play.setAttribute('aria-pressed', 'false'); };
+    const show = index => {
+      panel.dataset.stage = String(index);
+      steps.forEach((button, n) => button.setAttribute('aria-pressed', String(n === index)));
+      panel.querySelectorAll('[data-studio-caption]').forEach((caption, n) => { caption.hidden = n !== index; });
+      panel.querySelector('[data-studio-counter]').textContent = `0${index + 1} / 03`;
+    };
+    steps.forEach((button, index) => button.addEventListener('click', () => { stop(); show(index); }));
+    play.addEventListener('click', () => {
+      if (timer) { stop(); return; }
+      show(0);
+      play.textContent = 'Pause walkthrough'; play.setAttribute('aria-pressed', 'true');
+      timer = setInterval(() => {
+        const next = Number(panel.dataset.stage) + 1;
+        if (next > 2) { stop(); return; }
+        show(next);
+      }, 4500);
+    });
+    walkthroughs.push(stop);
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) walkthroughs.forEach(stop => stop()); });
   const heading=$('#dev-block-title'), state=$('#dev-editor-state');
   heading.addEventListener('input',()=>{$('#dev-preview-heading').textContent=heading.value||'Untitled block';state.textContent='Heading updated';});
   document.querySelectorAll('[data-dev-theme]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-dev-theme]').forEach(t=>{t.classList.toggle('active',t===b);t.setAttribute('aria-pressed',t===b);});$('[data-dev-theme-preview]').dataset.devThemePreview=b.dataset.devTheme;state.textContent='Visual treatment updated';}));

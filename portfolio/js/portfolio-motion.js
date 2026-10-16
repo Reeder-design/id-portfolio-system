@@ -342,7 +342,7 @@
     ['about', 'About Me'],
     ['contact', 'Contact'],
     ['projects', 'Projects'],
-    ['projects/github-workflow', 'GitHub Build Lab'],
+    ['projects/github-workflow', 'Portfolio Creation and Management'],
     ['projects/developer-space', 'Developer Space'],
     ['expertise', 'Expertise'],
     ['projects/instructional-design', 'Instructional Design'],
@@ -374,6 +374,9 @@
     if (relativePath === 'projects/instructional-design/microlearning-performance-support/product-launch-microlearning' ||
         relativePath === 'projects/instructional-design/microlearning-performance-support/vertical-positioning-microlearning') {
       ancestors.push(['projects/instructional-design/microlearning-performance-support/microlearning', 'Microlearning']);
+    }
+    if (relativePath === 'projects/github-workflow') {
+      ancestors.splice(1, 0, ['projects/developer-space', 'Developer Space']);
     }
     const breadcrumbParentSkips = new Set();
     if (relativePath === 'projects/instructional-design/interactive-learning/ai-integrations-in-learning') {

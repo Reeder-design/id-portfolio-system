@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore Haley Reeder's GitHub build lab: a portfolio, a learning content library, and a Learning Content Workbench built with instructional design, visual design, and code.">
-  <title>GitHub Build Lab | Reeder Design</title>
+  <meta name="description" content="How Haley Reeder built a public portfolio, reusable Content Library, and local applications for creating and managing their content.">
+  <title>Portfolio Creation and Management | Reeder Design</title>
   <link rel="icon" type="image/svg+xml" sizes="any" href="../../assets/site/reeder-design-favicon.svg?v=20261014">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,15 +13,15 @@
   <link rel="stylesheet" href="../../css/portfolio-refresh.css">
   <link rel="stylesheet" href="../../css/phase1-theme.css">
   <link rel="stylesheet" href="../../css/phase1-frame.css">
-  <link rel="stylesheet" href="../../css/github-workflow-refresh.css">
-  <script defer src="../../js/portfolio-motion.js"></script>
-  <script defer src="../../js/github-workflow-refresh.js"></script>
+  <link rel="stylesheet" href="../../css/github-workflow-refresh.css?v=20261016-management">
+  <script defer src="../../js/portfolio-motion.js?v=20261016-management"></script>
+  <script defer src="../../js/github-workflow-refresh.js?v=20261016-management"></script>
 
   <link rel="stylesheet" href="../../css/hiring-support.css" data-hiring-support-styles>
   <link rel="stylesheet" href="../../css/experience-polish.css" data-experience-polish-styles>
   <link rel="stylesheet" href="../../css/final-stretch-system.css" data-final-stretch-styles>
 </head>
-<body data-clean-hero="true" class="gh-page" data-manual-surfaces="true">
+<body data-clean-hero="true" class="gh-page portfolio-management-page" data-manual-surfaces="true">
   <header class="site-header">
     <div class="container nav-container">
       <a class="site-brand" href="../../index.html" aria-label="Reeder Design home"><span class="brand-mark"><img src="../../assets/site/reeder-design-rd.png" alt=""></span><span class="brand-name">Reeder <strong>Design</strong></span></a>
@@ -38,53 +38,24 @@
     <section class="gh-hero" id="top">
       <div class="container gh-hero-grid">
         <div class="gh-hero-copy">
-          <nav class="breadcrumbs gh-breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../index.html">Projects</a><span>/</span><a href="../developer-space/index.html">Developer Space</a><span>/</span><span>GitHub Build Lab</span></nav>
+          <nav class="breadcrumbs gh-breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../index.html">Projects</a><span>/</span><a href="../developer-space/index.html">Developer Space</a><span>/</span><span>Portfolio Creation and Management</span></nav>
 
-          <h1>GitHub Build Lab</h1>
-          <p class="gh-hero-lede">I designed and coded the portfolio, Content Library, and the local tools I use to maintain them. This page shows what each system does and how I review a change before it reaches a public site.</p>
+          <h1>Portfolio Creation and Management</h1>
+          <p class="gh-hero-lede">I built my portfolio and Content Library because I needed a place to present complete projects and a separate way to organize reusable work. I created local management tools to keep both sites useful as the content changes.</p>
           <div class="button-row gh-hero-actions"><button class="btn btn-primary" type="button" data-scroll-to="projects">Meet the projects ↓</button><a class="btn btn-secondary" href="https://github.com/Reeder-design" target="_blank" rel="noopener noreferrer">Open my GitHub ↗</a></div>
         </div>
-        <div class="gh-hero-visual" role="img" aria-label="Haley's pixel wizard mascot in a dark forest cave, with learning design, visual design, and code tools">
-          <div class="gh-cave-layers" aria-hidden="true"><span></span><span></span><span></span></div>
-          <span class="gh-pixel-star gh-pixel-star--one" aria-hidden="true">✦</span><span class="gh-pixel-star gh-pixel-star--two" aria-hidden="true">✳</span><span class="gh-pixel-star gh-pixel-star--three" aria-hidden="true">✦</span>
-          <div class="gh-wizard-glow" aria-hidden="true"></div>
-          <div class="gh-mascot-frame"><img class="gh-hero-wizard" src="../../assets/mascot/future-portfolio/idle/idle-01.png" alt=""></div>
-          <div class="gh-hero-tool gh-hero-tool--id"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><span>LEARNING</span></div>
-          <div class="gh-hero-tool gh-hero-tool--design"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span>DESIGN</span></div>
-          <div class="gh-hero-tool gh-hero-tool--code"><img src="../../assets/icons/pixel/github/code.webp" alt=""><span>CODE</span></div>
-          <div class="gh-ground-pixels" aria-hidden="true"></div>
-        </div>
+        <div class="pm-hero-visual"><div class="pm-window"><div><i></i><i></i><i></i><span>Portfolio Manager</span></div><section><small>CONTENT WORKSPACE</small><h3>Create. Organize. Maintain.</h3><p>Pages · Assets · References · Hiring Guide</p><span>Content → Preview → Publish</span></section></div><div class="pm-public-window"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><div><small>PUBLIC EXPERIENCE</small><strong>Portfolio + Content Library</strong><span>Case studies and reusable resources</span></div></div></div>
       </div>
     </section>
 
-    <section class="gh-statement" aria-labelledby="gh-statement-title">
-      <div class="container">
-        <div class="gh-statement-copy"><p class="gh-overline">THE SIDE QUESTS HAVE SIDE QUESTS</p><h2 id="gh-statement-title">How the sites <span>and tools connect.</span></h2><p>I edit in local tools, review the result, then publish the approved files to the portfolio or Content Library.</p></div>
-        <div class="gh-flow" role="group" aria-label="Content, tools, and scripts flow directly to Portfolio Manager or Library Manager, or through Learning Content Workbench first. The managers review and publish finalized content to the public Portfolio or Library.">
-          <svg class="gh-flow-lines" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="gh-flow-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z"/></marker></defs><path d="M180 180H200M180 180H190V90H460M180 180H190V270H460M440 180H450V90H460M440 180H450V270H460M800 90H820M800 270H820"/></svg>
-          <div class="gh-flow-node gh-flow-source"><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><div><small>THE RAW MATERIAL</small><strong>Content, tools &amp; scripts</strong><span>I make or find</span></div></div>
-          <div class="gh-flow-node gh-flow-workbench"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><div><small>OPTIONAL PREP</small><b class="gh-ai-marker">✦ AI-enabled</b><strong>Learning Content Workbench</strong><span>Prepare and edit learning files and templates. Review proposed changes.</span></div></div>
-          <div class="gh-flow-managers">
-            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><div><small>LOCAL MANAGER</small><b class="gh-ai-marker">✦ AI-enabled</b><strong>Portfolio Manager</strong><span>Imports and edits portfolio content; AI proposes page changes and reviews for QA, unsupported claims, and common errors. I approve and publish.</span></div></div>
-            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><div><small>LOCAL MANAGER · RULE BASED</small><strong>Library Manager</strong><span>Imports reusable content; local smart prefill, preview, validation, and deliberate publishing.</span></div></div>
-          </div>
-          <div class="gh-flow-outputs">
-            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><div><small>PUBLIC</small><strong>Portfolio</strong><span>Spotlight projects &amp; work experience</span></div></div>
-            <div class="gh-flow-node"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><div><small>PUBLIC</small><strong>Library</strong><span>General projects &amp; reusable work</span></div></div>
-          </div>
-        </div>
-        <p class="gh-flow-caption"><b>Two routes:</b> go straight to a manager, or prep the project in the Workbench first. Either way, finalized changes pass through the matching manager before reaching a public site.</p>
-      </div>
-    </section>
+    <section class="gh-statement" aria-labelledby="gh-statement-title"><div class="container"><div class="gh-statement-copy"><h2 id="gh-statement-title">Two sites. <span>Two management workflows.</span></h2><p>I gave each site a local workspace because maintaining project stories and preparing reusable files involve different tasks.</p></div><div class="pm-routes"><article><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><h3>Portfolio Manager</h3><p>Page editing, project briefs, assets, references, and Hiring Guide content.</p><span>Preview + validate ↓</span><strong>Public portfolio</strong><p>Custom case studies and interactive project experiences.</p></article><article><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><h3>Library Manager</h3><p>File imports, editable metadata suggestions, resource previews, and publishing.</p><span>Preview + validate ↓</span><strong>Content Library</strong><p>Search, categories, and previews for reusable learning materials.</p></article></div></div></section>
 
     <div class="gh-nav-marker" data-nav-marker aria-hidden="true"></div>
     <nav class="gh-page-nav" data-page-nav aria-label="Explore this page">
       <div class="container gh-page-nav-inner">
-        <span class="gh-nav-brand">BUILD LAB <b aria-hidden="true">✳</b></span>
+        <span class="gh-nav-brand">PORTFOLIO SYSTEMS <b aria-hidden="true">✳</b></span>
         <a href="#projects" data-section-link="projects"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span>Projects</span></a>
-        <a href="#repo-tour" data-section-link="repo-tour"><img src="../../assets/icons/pixel/navigation-ui/explore.webp" alt=""><span>Demo screens</span></a>
-        <a href="#process" data-section-link="process"><img src="../../assets/icons/pixel/github/develop.webp" alt=""><span>How I build</span></a>
-        <a href="#skills" data-section-link="skills"><img src="../../assets/icons/pixel/portfolio-general/tools.webp" alt=""><span>My toolbox</span></a>
+        <a href="#repo-tour" data-section-link="repo-tour"><img src="../../assets/icons/pixel/navigation-ui/explore.webp" alt=""><span>Interfaces</span></a>
       </div>
       <span class="gh-nav-progress" data-nav-progress aria-hidden="true"></span>
     </nav>
@@ -95,51 +66,37 @@
         <div class="gh-section-heading"><p class="gh-section-number">01 / THE PROJECTS</p><div><h2 id="gh-projects-title">The systems <span>I built.</span></h2><p>I built each tool to solve an upkeep problem in the learning work.</p></div></div>
         <div class="gh-project-grid">
           <article class="gh-project-card">
-            <div class="gh-card-corner" aria-hidden="true"></div><div class="gh-card-top"><span>01 / THE FRONT DOOR</span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""></div>
+            <div class="gh-card-corner" aria-hidden="true"></div><div class="gh-card-top"><span>01 / PORTFOLIO SYSTEM</span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""></div>
             <h3>Instructional Design Portfolio</h3><p>A home for case studies and interactive examples that shows how I think through learning problems, not just what the final screen looked like.</p>
             <div class="gh-card-system"><span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt="">Public portfolio</span><span><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt="">Local Portfolio Manager</span></div>
-            <div class="gh-card-actions"><span class="gh-current-site">✳ This site</span><button class="btn btn-primary" type="button" data-open-demo="portfolio-manager">Manager mini demo ↓</button><a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system" target="_blank" rel="noopener noreferrer">View code ↗</a></div>
+            <div class="gh-card-actions"><span class="gh-current-site">✳ This site</span><button class="btn btn-primary" type="button" data-open-demo="portfolio-manager">Explore the Manager ↓</button><a class="btn btn-secondary" href="https://github.com/Reeder-design/id-portfolio-system" target="_blank" rel="noopener noreferrer">View code ↗</a></div>
           </article>
           <article class="gh-project-card">
-            <div class="gh-card-corner" aria-hidden="true"></div><div class="gh-card-top"><span>02 / THE IDEA SHELF</span><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""></div>
-            <h3>Content Library</h3><p>The good bits deserved their own place: a public library for reusable learning templates, interactions, prompts, code, and experiments.</p>
+            <div class="gh-card-corner" aria-hidden="true"></div><div class="gh-card-top"><span>02 / CONTENT LIBRARY</span><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""></div>
+            <h3>Content Library</h3><p>I built a searchable interface for reusable learning materials and a local Manager for importing files, preparing metadata, and reviewing their presentation.</p>
             <div class="gh-card-system"><span><img src="../../assets/icons/pixel/github-projects/library.webp" alt="">Public Content Library</span><span><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt="">Local Library Manager</span></div>
-            <div class="gh-card-actions"><a class="btn btn-primary" href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Browse library ↗</a><button class="btn btn-secondary" type="button" data-open-demo="library-manager">Manager mini demo ↓</button><a class="btn btn-secondary" href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View code ↗</a></div>
+            <div class="gh-card-actions"><a class="btn btn-primary" href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Browse library ↗</a><button class="btn btn-secondary" type="button" data-open-demo="library-manager">Explore the Manager ↓</button><a class="btn btn-secondary" href="https://github.com/Reeder-design/id-content-library" target="_blank" rel="noopener noreferrer">View code ↗</a></div>
           </article>
-          <article class="gh-project-card">
-            <div class="gh-card-corner" aria-hidden="true"></div><div class="gh-card-top"><span>03 / THE EXPERIMENT</span><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""></div>
-            <h3>Learning Content Workbench</h3><p>A growing space where I prepare editable learning experiences and project files.</p>
-            <div class="gh-card-system"><span><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt="">Private Workbench</span><span><img src="../../assets/icons/pixel/github/branch.webp" alt="">AI changes in password-protected local mode</span></div>
-            <div class="gh-card-actions"><button class="btn btn-primary" type="button" data-open-demo="workbench">Try safe mini demo ↓</button></div>
-          </article>
+
         </div>
         <p class="gh-project-note">Public experiences and local maintenance tools have different jobs. The separation is part of the design.</p>
       </div>
     </section>
 
-    <section class="gh-why" aria-labelledby="gh-why-title">
-      <div class="container gh-why-grid">
-        <div class="gh-why-intro"><p class="gh-overline">WHY GITHUB?</p><h2 id="gh-why-title">Why I built <span>the tools.</span></h2><p>The managers help me review and maintain the sites.</p></div>
-        <div class="gh-why-points"><article><img src="../../assets/icons/pixel/github/develop.webp" alt=""><div><h3>Make it mine</h3><p>More room for personality, custom interactions, and the odd wizard cameo.</p></div></article><article><img src="../../assets/icons/pixel/github/branch.webp" alt=""><div><h3>Own the process</h3><p>Content, code, reviews, and publishing can live in one connected workflow.</p></div></article><article><img src="../../assets/icons/pixel/github/track-progress.webp" alt=""><div><h3>Keep it accessible</h3><p>GitHub Pages lets the public sites run for free.</p></div></article></div>
-      </div>
-
-    </section>
-
     <section class="gh-section gh-live" id="repo-tour" aria-labelledby="gh-live-title">
       <div class="container">
-        <div class="gh-section-heading"><p class="gh-section-number">02 / INSIDE THE REPOS</p><div><h2 id="gh-live-title">Try the <span>tool demos.</span></h2><p>Choose a tool to see how I edit, review, and publish work.</p></div></div>
+        <div class="gh-section-heading"><p class="gh-section-number">02 / INSIDE THE INTERFACES</p><div><h2 id="gh-live-title">Explore the <span>management experience.</span></h2><p>Choose a tool to see how I edit, review, and publish work.</p></div></div>
         <div class="gh-live-explorer" data-live-explorer>
           <div class="gh-live-tabs" role="tablist" aria-label="Project page previews">
             <button type="button" role="tab" id="gh-tab-portfolio-manager" aria-controls="gh-panel-portfolio-manager" aria-selected="true" tabindex="0" data-live-tab="portfolio-manager"><img src="../../assets/icons/pixel/github-projects/portfolio-manager.webp" alt=""><span>Portfolio Manager</span></button>
             <button type="button" role="tab" id="gh-tab-portfolio" aria-controls="gh-panel-portfolio" aria-selected="false" tabindex="-1" data-live-tab="portfolio"><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><span>Portfolio</span></button>
             <button type="button" role="tab" id="gh-tab-library-manager" aria-controls="gh-panel-library-manager" aria-selected="false" tabindex="-1" data-live-tab="library-manager"><img src="../../assets/icons/pixel/github-projects/library-manager.webp" alt=""><span>Library Manager</span></button>
             <button type="button" role="tab" id="gh-tab-library" aria-controls="gh-panel-library" aria-selected="false" tabindex="-1" data-live-tab="library"><img src="../../assets/icons/pixel/github-projects/library.webp" alt=""><span>Content Library</span></button>
-            <button type="button" role="tab" id="gh-tab-workbench" aria-controls="gh-panel-workbench" aria-selected="false" tabindex="-1" data-live-tab="workbench"><img src="../../assets/icons/pixel/github-projects/learning-experience-workbench.webp" alt=""><span>Learning Content Workbench</span></button>
           </div>
           <section class="gh-live-panel" id="gh-panel-portfolio-manager" role="tabpanel" aria-labelledby="gh-tab-portfolio-manager" data-live-panel="portfolio-manager">
-            <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/reeder-design-favicon.svg" alt=""><strong>Portfolio Manager</strong><small>Private local workspace · AI enabled</small></div><span class="gh-preview-private">UI recreation</span></div>
-            <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--portfolio-manager"><div class="gh-cover-nav"><b>Haley’s Portfolio Manager</b><span>User Guide &nbsp; AI Settings &nbsp; Privacy &amp; Security &nbsp; Sign Out</span></div><div class="gh-manager-hero"><small>PORTFOLIO MANAGER · LOCAL WORKSPACE</small><h3>What do you want to do?</h3><p>Supporting AI tools stay inside the workflow where they are used.</p></div><div class="gh-manager-grid"><article><small>AVAILABLE NOW</small><h4>Manage Content</h4><p>Edit pages and projects. Request page-specific AI changes, inspect references, and run portfolio-wide AI review.</p><span>Manage Content →</span></article><article><small>AVAILABLE NOW</small><h4>Create Content</h4><p>Draft a detailed brief and a reviewable AI project plan before any public files are created.</p><span>Create Content →</span></article><article><small>PRIVATE EDITORIAL WORKSPACE</small><h4>Hiring Guide Library</h4><p>Maintain evidence-grounded answers, source basis, and confidence for Ask Haley.</p><span>Open Library →</span></article></div><div class="gh-manager-footer"><b>Publishing</b><span>Review approved changes → Run Full Validation → Save &amp; Publish</span></div></div><div class="gh-demo-result" data-demo-result hidden role="status"><b>Sample review finding</b><p>I review claims such as “guarantees mastery” against the evidence before publishing.</p><small>Illustration only · no AI request sent</small></div></div>
-            <div class="gh-preview-bottom"><p><strong>AI here:</strong> proposes page edits, project plans, and QA findings for human review.</p><button class="btn btn-primary" type="button" data-sample-demo>See sample AI review ↓</button></div>
+            <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/reeder-design-favicon.svg" alt=""><strong>Portfolio Manager</strong><small>Private local workspace · AI enabled</small></div><span class="gh-preview-private">Management interface</span></div>
+            <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--portfolio-manager"><div class="gh-cover-nav"><b>Haley’s Portfolio Manager</b><span>User Guide &nbsp; AI Settings &nbsp; Privacy &amp; Security &nbsp; Sign Out</span></div><div class="gh-manager-hero"><small>PORTFOLIO MANAGER · LOCAL WORKSPACE</small><h3>What do you want to do?</h3><p>Supporting AI tools stay inside the workflow where they are used.</p></div><div class="gh-manager-grid"><article><small>AVAILABLE NOW</small><h4>Manage Content</h4><p>Edit pages and projects. Request page-specific AI changes, inspect references, and run portfolio-wide AI review.</p><span>Manage Content →</span></article><article><small>AVAILABLE NOW</small><h4>Create Content</h4><p>Draft a detailed brief and a reviewable AI project plan before any public files are created.</p><span>Create Content →</span></article><article><small>PRIVATE EDITORIAL WORKSPACE</small><h4>Hiring Guide Library</h4><p>Maintain evidence-grounded answers, source basis, and confidence for Ask Haley.</p><span>Open Library →</span></article></div><div class="gh-manager-footer"><b>Publishing</b><span>Review approved changes → Run Full Validation → Save &amp; Publish</span></div></div><div class="gh-demo-result" data-demo-result hidden role="status"><b>Sample review finding</b><p>I review claims such as “guarantees mastery” against the evidence before publishing.</p><small>Review example: check the wording against its source.</small></div></div>
+            <div class="gh-preview-bottom"><p><strong>AI here:</strong> proposes page edits, project plans, and QA findings for human review.</p><button class="btn btn-primary" type="button" data-sample-demo>Inspect a review example ↓</button></div>
           </section>
           <section class="gh-live-panel" id="gh-panel-portfolio" role="tabpanel" aria-labelledby="gh-tab-portfolio" data-live-panel="portfolio" hidden>
             <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/reeder-design-favicon.svg" alt=""><strong>Instructional Design Portfolio</strong><small>Public website</small></div><span class="gh-preview-private">You are on this site</span></div>
@@ -147,45 +104,20 @@
             <div class="gh-preview-bottom"><p><strong>What you're seeing:</strong> The curated home for my case studies and learning experiences.</p><span class="gh-local-note">This site ✳</span></div>
           </section>
           <section class="gh-live-panel" id="gh-panel-library-manager" role="tabpanel" aria-labelledby="gh-tab-library-manager" data-live-panel="library-manager" hidden>
-            <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/content-lab-favicon.svg" alt=""><strong>Library Manager</strong><small>Private local workspace · rule based automation</small></div><span class="gh-preview-private">UI recreation · example items</span></div>
-            <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--library-manager"><div class="gh-cover-nav"><b>✩ Library Manager</b><span>Library &nbsp; Preview Library &nbsp; Review &amp; Publish &nbsp; ? Guide &nbsp; Add Item</span></div><div class="gh-library-manager-head"><div><small>LOCAL WORKSPACE</small><h3>Library</h3><p>I browse and preview items locally, then review them before publishing.</p></div><span>Add Item ＋</span></div><div class="gh-library-toolbar"><b>Search library</b><span>⌕ &nbsp; Title, type, tool, tag…</span><small>Library items</small></div><div class="gh-library-manager-grid"><article><div class="gh-mini-art">◇</div><small>TEMPLATE · PUBLISHED</small><h4>Reusable learning template</h4><p>Ready to preview, edit, or reuse.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article><article><div class="gh-mini-art">✳</div><small>INTERACTION · PUBLISHED</small><h4>Decision practice</h4><p>A small interactive project with source files.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article><article><div class="gh-mini-art">⌘</div><small>RESOURCE · DRAFT</small><h4>Helpful script</h4><p>Organized for review before publishing.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article></div></div><div class="gh-demo-result" data-demo-result hidden role="status"><b>Sample smart prefill</b><p><code>decision-practice.html</code> → Interaction · HTML · interactive preview. You can change every suggestion before saving.</p><small>Local rules only · no files uploaded</small></div></div>
-            <div class="gh-preview-bottom"><p><strong>Automation here:</strong> local file-based suggestions, previews, checks, and deliberate publishing.</p><button class="btn btn-primary" type="button" data-sample-demo>See sample smart prefill ↓</button></div>
+            <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/content-lab-favicon.svg" alt=""><strong>Library Manager</strong><small>Private local workspace · rule based automation</small></div><span class="gh-preview-private">Resource preparation</span></div>
+            <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--library-manager"><div class="gh-cover-nav"><b>✩ Library Manager</b><span>Library &nbsp; Preview Library &nbsp; Review &amp; Publish &nbsp; ? Guide &nbsp; Add Item</span></div><div class="gh-library-manager-head"><div><small>LOCAL WORKSPACE</small><h3>Library</h3><p>I browse and preview items locally, then review them before publishing.</p></div><span>Add Item ＋</span></div><div class="gh-library-toolbar"><b>Search library</b><span>⌕ &nbsp; Title, type, tool, tag…</span><small>Library items</small></div><div class="gh-library-manager-grid"><article><div class="gh-mini-art">◇</div><small>TEMPLATE · HTML</small><h4>Reusable learning template</h4><p>Ready to preview, edit, or reuse.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article><article><div class="gh-mini-art">✳</div><small>INTERACTION · HTML</small><h4>Decision practice</h4><p>A small interactive project with source files.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article><article><div class="gh-mini-art">⌘</div><small>RESOURCE · CODE</small><h4>Helpful script</h4><p>Organized for review before publishing.</p><span>Preview &nbsp; Edit &nbsp; Open Files</span></article></div></div><div class="gh-demo-result" data-demo-result hidden role="status"><b>Sample smart prefill</b><p><code>decision-practice.html</code> → Interaction · HTML · interactive preview. You can change every suggestion before saving.</p><small>File type and format inform the suggestions.</small></div></div>
+            <div class="gh-preview-bottom"><p><strong>Automation here:</strong> local file-based suggestions, previews, checks, and deliberate publishing.</p><button class="btn btn-primary" type="button" data-sample-demo>Inspect metadata suggestions ↓</button></div>
           </section>
           <section class="gh-live-panel" id="gh-panel-library" role="tabpanel" aria-labelledby="gh-tab-library" data-live-panel="library" hidden>
             <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/content-lab-favicon.svg" alt=""><strong>Content Library</strong><small>Public library</small></div><a href="https://reeder-design.github.io/id-content-library/" target="_blank" rel="noopener noreferrer">Open public library ↗</a></div>
             <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--library" data-live-cover><div class="gh-cover-nav"><b>✩ Content Library</b><span>Reusable ID workbench&nbsp;&nbsp; ? Guide</span></div><div class="gh-cover-hero"><div><small>LEARNING DESIGN LIBRARY</small><h3>Useful things, built to be reused.</h3><p>A growing library of templates, interactions, prompts, code, resources, and experiments.</p></div><aside>This is the workshop, not the museum.</aside></div><div class="gh-cover-search"><b>Find something useful</b><span>⌕ &nbsp; Search titles, tools, tags, formats…</span><small>All &nbsp; Templates &nbsp; Interactions &nbsp; Resources</small></div></div><iframe title="Live Content Library" data-live-frame data-src="https://reeder-design.github.io/id-content-library/" loading="lazy" hidden></iframe></div>
             <div class="gh-preview-bottom"><p><strong>What you're seeing:</strong> Reusable learning work with a separate local tool for upkeep.</p><button class="btn btn-primary" type="button" data-launch-live>Launch live page in frame ↗</button></div>
           </section>
-          <section class="gh-live-panel" id="gh-panel-workbench" role="tabpanel" aria-labelledby="gh-tab-workbench" data-live-panel="workbench" hidden>
-            <div class="gh-preview-top"><div><img class="gh-preview-favicon" src="../../assets/site/content-workbench-favicon.svg" alt=""><strong>Learning Content Workbench</strong><small>Local maintenance tool</small></div><span class="gh-preview-private">Try the demo</span></div>
-            <div class="gh-preview-viewport"><div class="gh-page-cover gh-cover--workbench"><div class="gh-cover-nav"><b>LX &nbsp; Learning Content Workbench</b><span>Example project &nbsp; Source → Change → Preview</span></div><div class="gh-mini-workbench" data-workbench-demo><aside><small>PROJECT TOOL</small><strong>Decision practice</strong><span>Sample project</span><ol><li>01 &nbsp; Reference</li><li>02 &nbsp; Change</li><li>03 &nbsp; Preview</li></ol><p>This preview shows one learning interaction from the Workbench.</p></aside><div class="gh-mini-workbench-stage"><small>LEARNER PREVIEW · SAMPLE PROJECT</small><h3>Before sharing a training example, what would you do?</h3><p>A draft scenario contains a fictional customer name. Choose a path to see how this branching interaction responds.</p><div class="gh-mini-workbench-choices"><button type="button" data-workbench-choice="sanitize" aria-pressed="false">✦ Remove identifying details</button><button type="button" data-workbench-choice="publish" aria-pressed="false">→ Publish the draft as is</button></div><p class="gh-mini-workbench-feedback" data-workbench-feedback aria-live="polite">Choose a path to preview the learner feedback.</p></div></div></div></div>
-            <div class="gh-preview-bottom"><p><strong>Try it:</strong> follow a sample branching scenario in this page.</p><span class="gh-local-note">Sample scenario</span></div>
-          </section>
         </div>
       </div>
     </section>
 
-    <section class="gh-section gh-process" id="process" aria-labelledby="gh-process-title">
-      <div class="container">
-        <div class="gh-section-heading"><p class="gh-section-number">03 / HOW I BUILD</p><div><h2 id="gh-process-title">How I work <span>on a change.</span></h2><p>I find the friction, build the useful part, and check it in context.</p></div></div>
-        <div class="gh-process-grid">
-          <article class="gh-process-card"><span class="gh-process-count">01 / DISCOVER</span><div class="gh-motion-scene gh-motion-scan" aria-hidden="true"><div class="gh-scan-beam"></div><div class="gh-scan-target"><img src="../../assets/icons/pixel/github-support/explore.webp" alt=""></div><i></i><i></i><i></i></div><h3>Find the friction</h3><p>Where is the learner, editor, or builder getting stuck? That becomes the brief.</p></article>
-          <article class="gh-process-card"><span class="gh-process-count">02 / DESIGN</span><div class="gh-motion-scene gh-motion-map" aria-hidden="true"><svg viewBox="0 0 240 128" preserveAspectRatio="none"><path d="M35 66H94V30H158V66H205M94 66V103H158V66"/></svg><span class="gh-map-node gh-map-node--a"><img src="../../assets/icons/pixel/github-support/plans.webp" alt=""></span><span class="gh-map-node gh-map-node--b"></span><span class="gh-map-node gh-map-node--c"></span><span class="gh-map-spark">✳</span></div><h3>Make it make sense</h3><p>Map the content, interactions, and interface before adding more buttons.</p></article>
-          <article class="gh-process-card"><span class="gh-process-count">03 / BUILD</span><div class="gh-motion-scene gh-motion-build" aria-hidden="true"><div class="gh-build-window"><div><span></span><span></span><span></span></div><i></i><i></i><i></i><i></i><b>✓</b></div><img src="../../assets/icons/pixel/github/develop.webp" alt=""></div><h3>Build the thing</h3><p>Turn the design into working pages, tools, structured data, and reusable parts.</p></article>
-          <article class="gh-process-card"><span class="gh-process-count">04 / REFINE</span><div class="gh-motion-scene gh-motion-verify" aria-hidden="true"><div class="gh-verify-ring"></div><img src="../../assets/icons/pixel/github/track-progress.webp" alt=""><span class="gh-verify-check">✓</span><div class="gh-verify-bars"><i></i><i></i><i></i><i></i></div></div><h3>Test, tweak, repeat</h3><p>Preview, review, validate, ship, and leave a clearer path for next time.</p></article>
-        </div>
-        <div class="gh-process-note"><img src="../../assets/icons/pixel/github/pull-request.webp" alt=""><p><strong>Favorite plot twist:</strong> the “supporting tool” often becomes a project of its own. Portfolio Manager and Library Manager both started because the upkeep deserved a better experience.</p></div>
-      </div>
-    </section>
-
-    <section class="gh-section gh-skills" id="skills" aria-labelledby="gh-skills-title">
-      <div class="container">
-        <div class="gh-section-heading"><p class="gh-section-number">04 / WHAT IT SHOWS</p><div><h2 id="gh-skills-title">Design, visuals, <span>and code.</span></h2><p>I use design and code to build the experience and the tools that maintain it.</p></div></div>
-        <div class="gh-toolbox"><div class="gh-toolbox-character"><span class="gh-toolbox-label">HALEY'S TOOLBOX ✳</span><div class="gh-toolbox-glow"></div><div class="gh-mascot-frame"><img src="../../assets/mascot/future-portfolio/idle/idle-01.png" alt="Pixel wizard mascot representing Haley's creative toolbox"></div><p>One curious builder.<br>Several very useful hats.</p></div><div class="gh-toolbox-items"><article><span class="gh-toolbox-number">01</span><img src="../../assets/icons/pixel/content-design/content.webp" alt=""><div><h3>Instructional design</h3><p>Learning flows, practice, feedback, and the question behind every screen: “What does someone need to do next?”</p></div></article><article><span class="gh-toolbox-number">02</span><img src="../../assets/icons/pixel/github-projects/portfolio.webp" alt=""><div><h3>Visual + experience design</h3><p>Clear navigation, helpful interfaces, visual rhythm, and a little personality that makes complex work approachable.</p></div></article><article><span class="gh-toolbox-number">03</span><img src="../../assets/icons/pixel/github/code.webp" alt=""><div><h3>Code + systems</h3><p>Working prototypes, local tools, reusable patterns, and checks that help good ideas survive the next edit.</p></div></article></div></div>
-      </div>
-    </section>
-
-    <section class="gh-closing-section" aria-labelledby="gh-closing-title"><div class="container gh-closing-grid"><div><p class="gh-overline">STILL BUILDING, BY THE WAY ✳</p><h2 id="gh-closing-title">Explore the work.</h2><p>Open the repos, play with the public demos, or say hi. I'm always up for a conversation about learning, design, and the fun stuff in between.</p><div class="button-row"><a class="btn btn-primary" href="https://github.com/Reeder-design" target="_blank" rel="noopener noreferrer">Browse my GitHub ↗</a><a class="btn btn-secondary" href="../../contact/index.html">Let's connect ↗</a></div></div><div class="gh-closing-art" aria-hidden="true"><span>✦</span><div class="gh-mascot-frame"><img src="../../assets/mascot/future-portfolio/idle/idle-01.png" alt=""></div><span>✳</span></div></div></section>
+    <section class="gh-closing-section" aria-labelledby="gh-closing-title"><div class="container"><h2 id="gh-closing-title">Explore more software.</h2><p>Visual authoring, editable media, and reusable template tools are part of my wider development work.</p><div class="button-row"><a class="btn btn-primary" href="../developer-space/index.html">Return to Developer Space →</a><a class="btn btn-secondary" href="https://github.com/Reeder-design" target="_blank" rel="noopener noreferrer">Browse my GitHub ↗</a></div></div></section>
   </main>
   <footer class="site-footer"><div class="container footer-grid"><p>© Haley Reeder</p><div class="footer-links"><a href="https://github.com/Reeder-design" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/haley-reeder" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="../../assets/documents/Haley-Reeder-Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></div></div></footer>
 </body>
