@@ -74,7 +74,6 @@ body.developer-page .developer-library .btn-secondary:hover,body.developer-page 
 .developer-format-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
 .developer-format-chips span{padding:8px 10px;border:1px solid #bddbc7;border-radius:999px;background:#fff;color:#276653;font:800 .66rem/1.1 var(--font-heading)}
 .developer-library-preview p{margin:24px 0 0;color:#4b6f60;font-size:.75rem;line-height:1.5}
-.developer-privacy-note{max-width:590px;margin:0;color:#597366;font-size:.78rem;line-height:1.55}
 .developer-composer-window{border-color:#b5d7c3}
 .developer-composer-preview{display:grid;grid-template-columns:92px minmax(0,1fr) 102px;min-height:388px;background:#edf5ef}
 .developer-composer-side,.developer-composer-checks{display:flex;flex-direction:column;gap:10px;padding:19px 11px;background:#e4f0e7}
